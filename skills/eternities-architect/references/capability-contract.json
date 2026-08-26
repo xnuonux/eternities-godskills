@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "id": "godskill-eternities-architect-v1",
+  "name": "eternities-architect",
+  "category": "architecture-specification",
+  "intent": "Convert a consequential system question into an evidenced architecture decision and implementation-ready handoff.",
+  "successCondition": "The selected design traces to requirements and repository reality, compares viable alternatives, defines interfaces and failure behavior, and terminates with testable acceptance conditions.",
+  "inputs": [
+    "system outcome or decision",
+    "requirements and constraints",
+    "repository or product evidence"
+  ],
+  "outputs": [
+    "evidence map",
+    "architecture decision",
+    "interface and failure contracts",
+    "implementation handoff"
+  ],
+  "operations": [
+    "inspect implementation reality",
+    "resolve requirements",
+    "model boundaries and flows",
+    "compare alternatives",
+    "define acceptance evidence"
+  ],
+  "effects": ["read", "write"],
+  "positiveTriggers": [
+    "design a consequential software system",
+    "reconcile an existing architecture with new requirements",
+    "make and record a durable architecture decision"
+  ],
+  "negativeTriggers": [
+    "routine code edit",
+    "open-ended ideation without a system decision",
+    "implementation of an already approved plan",
+    "simple factual lookup"
+  ],
+  "failureModes": [
+    "requirements remain contradictory",
+    "existing implementation evidence is unavailable",
+    "a decision depends on missing owner authority",
+    "no viable option meets a critical constraint"
+  ],
+  "dependencies": [
+    "eternities-oracle",
+    "brainstorming",
+    "writing-plans"
+  ],
+  "sourceIds": [
+    "skill-0aea1470a8fb8c11",
+    "skill-330342e7e8edc510",
+    "skill-64376ecfd3fc8025",
+    "skill-7030d919fe03611f"
+  ],
+  "explicitOnly": false,
+  "routes": [
+    {
+      "id": "decision-record",
+      "capabilities": ["decision", "tradeoff", "record"],
+      "delegates": []
+    },
+    {
+      "id": "new-system",
+      "capabilities": ["requirements", "design", "decision", "handoff"],
+      "delegates": ["brainstorming", "eternities-oracle", "writing-plans"]
+    },
+    {
+      "id": "existing-system",
+      "capabilities": ["repository-evidence", "requirements", "design", "decision", "handoff"],
+      "delegates": ["eternities-oracle", "brainstorming", "writing-plans"]
+    }
+  ],
+  "terminationConditions": [
+    "the chosen design traces to requirements and evidence",
+    "interfaces, failure behavior, and acceptance conditions are explicit",
+    "unresolved decisions and revisit triggers are named",
+    "the implementation handoff does not require renewed architecture discovery"
+  ]
+}
+

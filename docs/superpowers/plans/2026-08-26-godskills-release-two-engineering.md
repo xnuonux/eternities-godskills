@@ -109,7 +109,7 @@ Expected: failure because the Architect files do not exist.
 
 - [ ] **Step 3: Write the neutral contract and exact provenance rows**
 
-Use source ids `skill-0aea1470a8fb8c11`, `skill-330342e7e8edc510`, `skill-64376ecfd3fc8025`, and `skill-7030d919fe03611`. Record exact release-one paths and digests. Mark permissive sources `independent-implementation`; preserve any unverified detail as `pattern-reference`.
+Use source ids `skill-0aea1470a8fb8c11`, `skill-330342e7e8edc510`, `skill-64376ecfd3fc8025`, and `skill-7030d919fe03611f`. Record exact release-one paths and digests. Mark permissive sources `independent-implementation`; preserve any unverified detail as `pattern-reference`.
 
 - [ ] **Step 4: Write the independent Architect workflow**
 
@@ -120,7 +120,7 @@ The entrypoint must distinguish architecture from ideation and implementation, i
 Run:
 
 ```powershell
-node scripts/evaluate-skill.mjs --skill eternities-architect
+node scripts/evaluate-skill.mjs --skill skills/eternities-architect --policy policies/promotion.v1.json --receipt receipts/promotions/eternities-architect.json
 node --test tests/engineering-godskills.test.mjs
 ```
 
@@ -171,7 +171,7 @@ The workflow must classify the task before selecting process skills, require a f
 Run:
 
 ```powershell
-node scripts/evaluate-skill.mjs --skill eternities-forge
+node scripts/evaluate-skill.mjs --skill skills/eternities-forge --policy policies/promotion.v1.json --receipt receipts/promotions/eternities-forge.json
 node --test tests/engineering-godskills.test.mjs
 ```
 
@@ -222,7 +222,7 @@ The workflow must establish authorization and scope first, inventory assets and 
 Run:
 
 ```powershell
-node scripts/evaluate-skill.mjs --skill eternities-aegis
+node scripts/evaluate-skill.mjs --skill skills/eternities-aegis --policy policies/promotion.v1.json --receipt receipts/promotions/eternities-aegis.json
 node --test tests/engineering-godskills.test.mjs
 ```
 

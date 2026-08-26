@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {"id":"direct-new","kind":"direct","critical":true,"prompt":"Design the architecture for a new governed agent platform, including interfaces, state, failures, and an implementation handoff.","expected":"route:new-system"},
+    {"id":"direct-existing","kind":"direct","critical":true,"prompt":"Redesign this existing service around the new reliability requirements after inspecting what the repository actually does.","expected":"route:existing-system"},
+    {"id":"direct-adr","kind":"direct","critical":true,"prompt":"Decide whether this system should use an event log or direct database writes and record the consequences.","expected":"route:decision-record"},
+    {"id":"paraphrase-new","kind":"paraphrase","critical":true,"prompt":"Turn this product idea into boundaries, contracts, data movement, failure recovery, and something engineers can build.","expected":"route:new-system"},
+    {"id":"paraphrase-existing","kind":"paraphrase","critical":true,"prompt":"First tell me how this codebase really hangs together, then reshape it without breaking its external promises.","expected":"route:existing-system"},
+    {"id":"exclude-rename","kind":"exclusion","critical":true,"prompt":"Rename this function and run its unit test.","expected":"skip"},
+    {"id":"exclude-fact","kind":"exclusion","critical":true,"prompt":"Which port does the local server use?","expected":"skip"},
+    {"id":"conflict-ideation","kind":"conflict","critical":true,"prompt":"I have a vague feature idea. Help me explore what I actually want before designing anything.","expected":"defer:brainstorming"},
+    {"id":"conflict-plan","kind":"conflict","critical":true,"prompt":"The architecture spec is approved. Write the exact implementation plan.","expected":"defer:writing-plans"},
+    {"id":"conflict-implement","kind":"conflict","critical":true,"prompt":"Implement the approved parser design now.","expected":"defer:domain-engineering"}
+  ],
+  "baseline": {
+    "name": "architecture-record-only",
+    "tokenCount": 4600,
+    "sourceCoverage": 1,
+    "results": [
+      {"id":"direct-new","actual":"route:decision-record"},{"id":"direct-existing","actual":"route:decision-record"},{"id":"direct-adr","actual":"route:decision-record"},{"id":"paraphrase-new","actual":"route:decision-record"},{"id":"paraphrase-existing","actual":"route:decision-record"},{"id":"exclude-rename","actual":"route:decision-record"},{"id":"exclude-fact","actual":"route:decision-record"},{"id":"conflict-ideation","actual":"route:decision-record"},{"id":"conflict-plan","actual":"route:decision-record"},{"id":"conflict-implement","actual":"route:decision-record"}
+    ]
+  },
+  "candidate": {
+    "sourceCoverage": 4,
+    "results": [
+      {"id":"direct-new","actual":"route:new-system"},{"id":"direct-existing","actual":"route:existing-system"},{"id":"direct-adr","actual":"route:decision-record"},{"id":"paraphrase-new","actual":"route:new-system"},{"id":"paraphrase-existing","actual":"route:existing-system"},{"id":"exclude-rename","actual":"skip"},{"id":"exclude-fact","actual":"skip"},{"id":"conflict-ideation","actual":"defer:brainstorming"},{"id":"conflict-plan","actual":"defer:writing-plans"},{"id":"conflict-implement","actual":"defer:domain-engineering"}
+    ]
+  }
+}
+
