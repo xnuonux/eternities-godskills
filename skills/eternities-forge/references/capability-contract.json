@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "id": "godskill-eternities-forge-v1",
+  "name": "eternities-forge",
+  "category": "implementation-engineering",
+  "intent": "Coordinate the smallest sufficient set of engineering workflows for a consequential multi-stage software change.",
+  "successCondition": "Requested behavior is implemented, freshly verified against explicit acceptance evidence, reviewed proportional to risk, and left in an explicit integration state.",
+  "inputs": [
+    "settled outcome or approved design",
+    "repository and working-tree state",
+    "acceptance evidence and risk boundary"
+  ],
+  "outputs": [
+    "verified implementation",
+    "claim-to-evidence ledger",
+    "review disposition",
+    "explicit integration state"
+  ],
+  "operations": [
+    "classify engineering route",
+    "establish behavior baseline",
+    "select process skills",
+    "implement bounded slices",
+    "verify claims and integration"
+  ],
+  "effects": ["read", "write"],
+  "positiveTriggers": [
+    "deliver a consequential feature across several engineering phases",
+    "repair and prove a regression whose fix crosses components",
+    "perform a risky refactor or integration with review and rollback"
+  ],
+  "negativeTriggers": [
+    "routine one-file edit",
+    "architecture only",
+    "unexplained bug requiring diagnosis",
+    "already verified branch awaiting only integration"
+  ],
+  "failureModes": [
+    "acceptance behavior is unresolved",
+    "root cause is unknown",
+    "required authority is absent",
+    "verification or review finds a critical regression",
+    "integration target cannot be established safely"
+  ],
+  "dependencies": [
+    "writing-plans",
+    "executing-plans",
+    "test-driven-development",
+    "systematic-debugging",
+    "using-git-worktrees",
+    "requesting-code-review",
+    "verification-before-completion",
+    "finishing-a-development-branch"
+  ],
+  "sourceIds": [
+    "skill-0106e66a5f004bb6",
+    "skill-ef1830eb06a36c46",
+    "skill-b3177aeea9596bb7",
+    "skill-c5d998749ee6b275",
+    "skill-4e367ac15eb8c11"
+  ],
+  "explicitOnly": false,
+  "routes": [
+    {
+      "id": "feature",
+      "capabilities": ["specification", "implementation", "tests", "review", "verification"],
+      "delegates": ["writing-plans", "executing-plans", "test-driven-development", "requesting-code-review", "verification-before-completion"]
+    },
+    {
+      "id": "regression",
+      "capabilities": ["diagnosis", "regression-test", "repair", "verification"],
+      "delegates": ["systematic-debugging", "test-driven-development", "verification-before-completion"]
+    },
+    {
+      "id": "refactor",
+      "capabilities": ["baseline", "tests", "refactor", "review", "verification"],
+      "delegates": ["test-driven-development", "requesting-code-review", "verification-before-completion"]
+    },
+    {
+      "id": "risky-integration",
+      "capabilities": ["isolation", "implementation", "review", "verification", "rollback", "integration"],
+      "delegates": ["using-git-worktrees", "test-driven-development", "requesting-code-review", "verification-before-completion", "finishing-a-development-branch"]
+    }
+  ],
+  "terminationConditions": [
+    "acceptance evidence covers every requested behavior",
+    "fresh relevant verification passes",
+    "critical and important review findings are resolved",
+    "integration and rollback state are explicit",
+    "remaining risks and authority gaps are named"
+  ]
+}
+

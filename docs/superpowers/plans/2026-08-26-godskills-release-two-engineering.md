@@ -160,7 +160,7 @@ Expected: failure naming the absent Forge files.
 
 - [ ] **Step 3: Write the neutral contract and provenance rows**
 
-Use source ids `skill-0106e66a5f004bb6`, `skill-ef1830eb06a36c46`, `skill-b3177aeea9596bb7`, `skill-c5d998749ee6b275`, and `skill-4e367ac15eb8c11`. Preserve all exact source paths and digests.
+Use source ids `skill-0106e66a5f004bb6`, `skill-ef1830eb06a36c46`, `skill-b3177aeea9596bb7`, `skill-c5d998749ee6b275`, and `skill-4e367ac15eb8e30d`. Preserve all exact source paths and digests.
 
 - [ ] **Step 4: Write the independent Forge workflow**
 

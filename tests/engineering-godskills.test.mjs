@@ -113,3 +113,72 @@ test("Architect provenance matches the certified release-one records", async () 
     ),
   );
 });
+
+test("Forge has discriminating metadata and valid contracts", async () => {
+  const markdown = await text("skills/eternities-forge/SKILL.md");
+  const frontmatter = metadata(markdown);
+  const contract = await json(
+    "skills/eternities-forge/references/capability-contract.json",
+  );
+
+  assert.equal(frontmatter.name, "eternities-forge");
+  assert.match(frontmatter.description, /multi-stage/i);
+  assert.match(frontmatter.description, /do not use/i);
+  assert.match(markdown, /references\/operating-contract\.md/);
+  assert.doesNotThrow(() => validateCapabilityContract(contract));
+  assert.doesNotThrow(() => validateCompositionContract(contract));
+});
+
+test("Forge composes development missions and yields exact process skills", async () => {
+  const { suite } = await evaluate("eternities-forge");
+  const expected = new Set(suite.cases.map(({ expected }) => expected));
+
+  assert.ok(expected.has("route:feature"));
+  assert.ok(expected.has("route:regression"));
+  assert.ok(expected.has("route:refactor"));
+  assert.ok(expected.has("route:risky-integration"));
+  assert.ok(expected.has("skip"));
+  assert.ok(expected.has("defer:writing-plans"));
+  assert.ok(expected.has("defer:executing-plans"));
+  assert.ok(expected.has("defer:systematic-debugging"));
+  assert.ok(expected.has("defer:finishing-a-development-branch"));
+});
+
+test("Forge preserves all critical cases and clears promotion gates", async () => {
+  const { candidate, decision } = await evaluate("eternities-forge");
+
+  assert.equal(candidate.criticalPassed, candidate.criticalTotal);
+  assert.equal(decision.status, "promoted");
+});
+
+test("Forge provenance matches the certified release-one records", async () => {
+  const sourceIds = new Set([
+    "skill-0106e66a5f004bb6",
+    "skill-ef1830eb06a36c46",
+    "skill-b3177aeea9596bb7",
+    "skill-c5d998749ee6b275",
+    "skill-4e367ac15eb8e30d",
+  ]);
+  const ledger = (await text("provenance/source-ledger.jsonl"))
+    .trim()
+    .split(/\r?\n/)
+    .map(JSON.parse)
+    .filter(({ sourceId }) => sourceIds.has(sourceId));
+  const certified = new Map(
+    (await text("artifacts/release-one/source-records.jsonl"))
+      .trim()
+      .split(/\r?\n/)
+      .map(JSON.parse)
+      .map((row) => [row.id, row]),
+  );
+
+  assert.equal(ledger.length, sourceIds.size);
+  assert.ok(
+    ledger.every(
+      (row) =>
+        row.proseCopied === false &&
+        row.sourcePath === certified.get(row.sourceId)?.sourcePath &&
+        row.contentDigest === certified.get(row.sourceId)?.contentDigest,
+    ),
+  );
+});
