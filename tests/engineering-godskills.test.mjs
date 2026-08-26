@@ -6,6 +6,7 @@ import { validateCompositionContract } from "../src/composition.mjs";
 import { evaluateSuite } from "../src/evaluate.mjs";
 import { decidePromotion } from "../src/promote.mjs";
 import { validateCapabilityContract } from "../src/schema.mjs";
+import { deriveSourceEvidence } from "../src/provenance-evidence.mjs";
 
 const repositoryRoot = new URL("../", import.meta.url);
 
@@ -33,6 +34,12 @@ async function evaluate(name) {
   const suite = await json(`skills/${name}/evals/cases.json`);
   const skillText = await text(`skills/${name}/SKILL.md`);
   const policy = await json("policies/promotion.v1.json");
+  const contract = await json(`skills/${name}/references/capability-contract.json`);
+  const ledger = (await text("provenance/source-ledger.jsonl"))
+    .trim()
+    .split(/\r?\n/)
+    .map(JSON.parse);
+  const sourceEvidence = deriveSourceEvidence(contract, ledger);
   const baseline = {
     ...evaluateSuite(suite.cases, suite.baseline.results),
     tokenCount: suite.baseline.tokenCount,
@@ -40,7 +47,10 @@ async function evaluate(name) {
   const candidate = {
     ...evaluateSuite(suite.cases, suite.candidate.results),
     tokenCount: Math.ceil(Buffer.byteLength(skillText, "utf8") / 4),
-    improvements: ["sourceCoverage"],
+    improvements:
+      sourceEvidence.sourceCoverage > suite.baseline.sourceCoverage
+        ? ["sourceCoverage"]
+        : [],
   };
   return {
     suite,
@@ -171,8 +181,12 @@ test("Forge provenance matches the certified release-one records", async () => {
       .map(JSON.parse)
       .map((row) => [row.id, row]),
   );
+  const contract = await json(
+    "skills/eternities-forge/references/capability-contract.json",
+  );
 
   assert.equal(ledger.length, sourceIds.size);
+  assert.deepEqual(new Set(contract.sourceIds), sourceIds);
   assert.ok(
     ledger.every(
       (row) =>

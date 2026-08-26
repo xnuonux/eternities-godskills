@@ -24,6 +24,17 @@ function stringArray(value, label, { nonEmpty = true } = {}) {
   }
 }
 
+function validateRoute(route, label, ownerName = null) {
+  object(route, label);
+  nonEmptyString(route.id, `${label}.id`);
+  stringArray(route.capabilities, `${label}.capabilities`);
+  stringArray(route.delegates, `${label}.delegates`, { nonEmpty: false });
+  if (ownerName && route.delegates.includes(ownerName)) {
+    throw new Error(`${label} must not delegate to itself`);
+  }
+  return route;
+}
+
 export function validateCompositionContract(value) {
   object(value, "compositionContract");
   if (value.schemaVersion !== 1) {
@@ -50,21 +61,19 @@ export function validateCompositionContract(value) {
   const routeIds = new Set();
   for (const [index, route] of value.routes.entries()) {
     const label = `compositionContract.routes[${index}]`;
-    object(route, label);
-    nonEmptyString(route.id, `${label}.id`);
+    validateRoute(route, label, value.name);
     if (routeIds.has(route.id)) throw new Error(`duplicate route id: ${route.id}`);
     routeIds.add(route.id);
-    stringArray(route.capabilities, `${label}.capabilities`);
-    stringArray(route.delegates, `${label}.delegates`, { nonEmpty: false });
-    if (route.delegates.includes(value.name)) {
-      throw new Error(`${label} must not delegate to itself`);
-    }
   }
   return value;
 }
 
 export function selectSmallestRoute(routes, requiredCapabilities) {
   stringArray(requiredCapabilities, "requiredCapabilities");
+  if (!Array.isArray(routes) || routes.length === 0) {
+    throw new Error("routes must not be empty");
+  }
+  routes.forEach((route, index) => validateRoute(route, `routes[${index}]`));
   const required = new Set(requiredCapabilities);
   const matches = routes
     .filter((route) => {
@@ -82,4 +91,46 @@ export function selectSmallestRoute(routes, requiredCapabilities) {
     );
   }
   return matches[0];
+}
+
+export function validateCompositionGraph(contracts) {
+  if (!Array.isArray(contracts) || contracts.length === 0) {
+    throw new Error("composition graph must contain contracts");
+  }
+  contracts.forEach(validateCompositionContract);
+  const byName = new Map();
+  for (const contract of contracts) {
+    if (byName.has(contract.name)) {
+      throw new Error(`duplicate composition contract: ${contract.name}`);
+    }
+    byName.set(contract.name, contract);
+  }
+  const edges = new Map(
+    contracts.map((contract) => [
+      contract.name,
+      [...new Set(contract.routes.flatMap(({ delegates }) => delegates))]
+        .filter((name) => byName.has(name))
+        .sort(),
+    ]),
+  );
+  const visiting = new Set();
+  const visited = new Set();
+  const stack = [];
+
+  function visit(name) {
+    if (visiting.has(name)) {
+      const start = stack.indexOf(name);
+      throw new Error(`composition cycle: ${[...stack.slice(start), name].join(" -> ")}`);
+    }
+    if (visited.has(name)) return;
+    visiting.add(name);
+    stack.push(name);
+    for (const next of edges.get(name) ?? []) visit(next);
+    stack.pop();
+    visiting.delete(name);
+    visited.add(name);
+  }
+
+  for (const name of [...byName.keys()].sort()) visit(name);
+  return contracts;
 }

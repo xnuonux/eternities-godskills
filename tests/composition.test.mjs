@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import {
   selectSmallestRoute,
   validateCompositionContract,
+  validateCompositionGraph,
 } from "../src/composition.mjs";
 
 function contract(overrides = {}) {
@@ -66,5 +67,52 @@ test("smallest route selection fails closed on uncovered requirements", () => {
   assert.throws(
     () => selectSmallestRoute(value.routes, ["publish"]),
     /no route covers required capabilities: publish/i,
+  );
+});
+
+test("composition contracts reject duplicate route capabilities", () => {
+  const value = contract();
+  value.routes[0].capabilities.push("inspect");
+  assert.throws(
+    () => validateCompositionContract(value),
+    /capabilities must not contain duplicates/i,
+  );
+});
+
+test("smallest route selection rejects malformed routes", () => {
+  assert.throws(
+    () => selectSmallestRoute([{ id: "broken" }], ["inspect"]),
+    /capabilities must be an array of strings/i,
+  );
+});
+
+test("composition graph rejects two-node delegation cycles", () => {
+  const alpha = contract({
+    name: "alpha",
+    routes: [{ id: "a", capabilities: ["a"], delegates: ["beta"] }],
+  });
+  const beta = contract({
+    name: "beta",
+    routes: [{ id: "b", capabilities: ["b"], delegates: ["alpha"] }],
+  });
+  assert.throws(() => validateCompositionGraph([alpha, beta]), /alpha -> beta -> alpha/i);
+});
+
+test("composition graph rejects longer delegation cycles", () => {
+  const alpha = contract({
+    name: "alpha",
+    routes: [{ id: "a", capabilities: ["a"], delegates: ["beta"] }],
+  });
+  const beta = contract({
+    name: "beta",
+    routes: [{ id: "b", capabilities: ["b"], delegates: ["gamma"] }],
+  });
+  const gamma = contract({
+    name: "gamma",
+    routes: [{ id: "c", capabilities: ["c"], delegates: ["alpha"] }],
+  });
+  assert.throws(
+    () => validateCompositionGraph([alpha, beta, gamma]),
+    /alpha -> beta -> gamma -> alpha/i,
   );
 });
