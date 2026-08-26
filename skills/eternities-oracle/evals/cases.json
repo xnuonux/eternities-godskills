@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "id": "direct-local",
+      "kind": "direct",
+      "critical": true,
+      "prompt": "Investigate these repositories and receipts to determine why the handoff diverged.",
+      "expected": "route:local"
+    },
+    {
+      "id": "direct-official",
+      "kind": "direct",
+      "critical": true,
+      "prompt": "Research the current official API behavior and give me a citation-backed decision.",
+      "expected": "route:official"
+    },
+    {
+      "id": "direct-hybrid",
+      "kind": "direct",
+      "critical": true,
+      "prompt": "Compare our local implementation against the current official specification and reconcile the differences.",
+      "expected": "route:hybrid"
+    },
+    {
+      "id": "paraphrase-local",
+      "kind": "paraphrase",
+      "critical": true,
+      "prompt": "Trace what actually happened from the manifests, commits, and exact files, then tell me what remains uncertain.",
+      "expected": "route:local"
+    },
+    {
+      "id": "paraphrase-hybrid",
+      "kind": "paraphrase",
+      "critical": true,
+      "prompt": "Put the codebase's story beside today's canonical docs and show where reality and contract part ways.",
+      "expected": "route:hybrid"
+    },
+    {
+      "id": "exclude-simple-fact",
+      "kind": "exclusion",
+      "critical": true,
+      "prompt": "What is the capital of France?",
+      "expected": "skip"
+    },
+    {
+      "id": "exclude-routine-code",
+      "kind": "exclusion",
+      "critical": true,
+      "prompt": "Rename this local variable and run the unit test.",
+      "expected": "skip"
+    },
+    {
+      "id": "conflict-warehouse-search",
+      "kind": "conflict",
+      "critical": true,
+      "prompt": "Search the skill warehouse and return the strongest five candidates.",
+      "expected": "defer:arsenal-repo-miner"
+    },
+    {
+      "id": "conflict-exact-product",
+      "kind": "conflict",
+      "critical": true,
+      "prompt": "Explain this current OpenAI Codex setting using its official documentation.",
+      "expected": "defer:installed-exact-skill"
+    },
+    {
+      "id": "conflict-implementation",
+      "kind": "conflict",
+      "critical": true,
+      "prompt": "Implement the already-specified parser fix in this repository.",
+      "expected": "defer:domain-engineering"
+    }
+  ],
+  "baseline": {
+    "name": "local-repository-research-only",
+    "tokenCount": 7200,
+    "sourceCoverage": 2,
+    "results": [
+      { "id": "direct-local", "actual": "route:local" },
+      { "id": "direct-official", "actual": "route:local" },
+      { "id": "direct-hybrid", "actual": "route:local" },
+      { "id": "paraphrase-local", "actual": "route:local" },
+      { "id": "paraphrase-hybrid", "actual": "route:local" },
+      { "id": "exclude-simple-fact", "actual": "route:local" },
+      { "id": "exclude-routine-code", "actual": "route:local" },
+      { "id": "conflict-warehouse-search", "actual": "route:local" },
+      { "id": "conflict-exact-product", "actual": "route:local" },
+      { "id": "conflict-implementation", "actual": "route:local" }
+    ]
+  },
+  "candidate": {
+    "sourceCoverage": 5,
+    "results": [
+      { "id": "direct-local", "actual": "route:local" },
+      { "id": "direct-official", "actual": "route:official" },
+      { "id": "direct-hybrid", "actual": "route:hybrid" },
+      { "id": "paraphrase-local", "actual": "route:local" },
+      { "id": "paraphrase-hybrid", "actual": "route:hybrid" },
+      { "id": "exclude-simple-fact", "actual": "skip" },
+      { "id": "exclude-routine-code", "actual": "skip" },
+      { "id": "conflict-warehouse-search", "actual": "defer:arsenal-repo-miner" },
+      { "id": "conflict-exact-product", "actual": "defer:installed-exact-skill" },
+      { "id": "conflict-implementation", "actual": "defer:domain-engineering" }
+    ]
+  }
+}
