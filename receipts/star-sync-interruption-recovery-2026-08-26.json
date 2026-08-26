@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "incident": "star-sync-process-interrupted-before-final-receipt",
+  "observedAt": "2026-08-26T21:49:00Z",
+  "rootCause": "the first batch process ended while repository checkout was active, before the original end-of-batch receipt write",
+  "evidence": [
+    "framepipe-dev/media-inference-worker had a clean verified checkout",
+    "github/github-mcp-server had a valid head but a dirty interrupted checkout",
+    "heygen-com/hyperframes existed without a valid git repository",
+    "no git process remained and no final receipt existed"
+  ],
+  "recovery": {
+    "mode": "recoverable-quarantine-and-reclone",
+    "deleted": false,
+    "quarantineRoot": "D:\\03-ARSENAL\\warehouse\\_operations\\quarantine\\2026-08-26-star-sync-interrupted",
+    "moved": [
+      {
+        "source": "D:\\03-ARSENAL\\warehouse\\from-stars\\github__github-mcp-server",
+        "destination": "D:\\03-ARSENAL\\warehouse\\_operations\\quarantine\\2026-08-26-star-sync-interrupted\\github__github-mcp-server"
+      },
+      {
+        "source": "D:\\03-ARSENAL\\warehouse\\from-stars\\heygen-com__hyperframes",
+        "destination": "D:\\03-ARSENAL\\warehouse\\_operations\\quarantine\\2026-08-26-star-sync-interrupted\\heygen-com__hyperframes"
+      }
+    ]
+  },
+  "hardening": [
+    "existing repositories must have a clean git status",
+    "invalid or dirty repositories produce failed-verification rows",
+    "apply mode atomically checkpoints the receipt after every completed row",
+    "the final receipt declares complete true only after every plan row is processed"
+  ],
+  "verification": {
+    "tests": 16,
+    "failures": 0,
+    "finalIngestion": {
+      "cloned": 9,
+      "existing": 3,
+      "failed": 0
+    },
+    "idempotence": {
+      "cloned": 0,
+      "existing": 12,
+      "failed": 0
+    }
+  }
+}
