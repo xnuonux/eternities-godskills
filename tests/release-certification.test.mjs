@@ -14,6 +14,10 @@ async function json(relative) {
   return JSON.parse(await text(relative));
 }
 
+async function canonicalTextSha256(relative) {
+  return sha256((await text(relative)).replaceAll("\r\n", "\n"));
+}
+
 test("release one certification reconciles every critical receipt and scope boundary", async () => {
   const [
     certification,
@@ -61,8 +65,14 @@ test("release one certification reconciles every critical receipt and scope boun
 
   assert.equal(refinery.decision.status, "promoted");
   assert.equal(oracle.decision.status, "promoted");
-  assert.equal(certification.promotions.refinery.receiptSha256, sha256(await text("receipts/promotions/sovereign-skill-refinery.json")));
-  assert.equal(certification.promotions.oracle.receiptSha256, sha256(await text("receipts/promotions/eternities-oracle.json")));
+  assert.equal(
+    certification.promotions.refinery.receiptSha256,
+    await canonicalTextSha256("receipts/promotions/sovereign-skill-refinery.json"),
+  );
+  assert.equal(
+    certification.promotions.oracle.receiptSha256,
+    await canonicalTextSha256("receipts/promotions/eternities-oracle.json"),
+  );
   assert.equal(certification.promotions.refinery.tokenCount, refinery.evidence.measuredTokenCount);
   assert.equal(certification.promotions.oracle.tokenCount, oracle.evidence.measuredTokenCount);
 
@@ -71,11 +81,14 @@ test("release one certification reconciles every critical receipt and scope boun
     certification.profile.activeSkills,
     profile.links.map(({ name }) => name),
   );
-  assert.equal(certification.profile.receiptSha256, sha256(await text("receipts/profile-eternities-core.json")));
+  assert.equal(
+    certification.profile.receiptSha256,
+    await canonicalTextSha256("receipts/profile-eternities-core.json"),
+  );
   assert.equal(certification.profile.pantheonDiscoverable, false);
   assert.ok(profile.links.every(({ createdByProfile }) => createdByProfile));
 
-  assert.equal(certification.verification.testTotal, 56);
+  assert.equal(certification.verification.testTotal, 57);
   assert.equal(certification.verification.testFailures, 0);
   assert.ok(certification.remainingUncertainty.length > 0);
 });

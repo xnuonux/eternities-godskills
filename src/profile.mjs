@@ -70,7 +70,7 @@ export async function planProfile(lock, destinationRoot) {
       destination,
       promotionReceipt,
       linkTarget: source,
-      entrypointSha256: sha256(entrypoint),
+      entrypointSha256: sha256(entrypoint.replaceAll("\r\n", "\n")),
     });
   }
   return {

@@ -30,7 +30,7 @@ The global `eternities-core` profile contains exactly two junctions:
 - `C:\Users\Dom\.agents\skills\eternities-oracle`
 - `C:\Users\Dom\.agents\skills\sovereign-skill-refinery`
 
-Both target the certified release-one worktree and are owned by `receipts/profile-eternities-core.json`. Preview after activation reports zero additions and two exact existing links. The rollback drill reports exactly those two links and performs no deletion.
+Both target the merged `C:\dev\eternities-godskills` main checkout and are owned by `receipts/profile-eternities-core.json`. Preview after activation reports zero additions and two exact existing links. The rollback drill reports exactly those two links and performs no deletion.
 
 A fresh `codex debug prompt-input 'say hello'` render returned exit code 0 and contained both skill names. It did not contain `eternities-pantheon`, `source-records.jsonl`, `source-ledger.jsonl`, or `skill-index.json`. The 4,741-source quarry and vector matrix therefore remain cold.
 
@@ -50,7 +50,7 @@ A fresh `codex debug prompt-input 'say hello'` render returned exit code 0 and c
 - 439 records remain in the `general` ontology family.
 - Lexical classification is deterministic but broad. In particular, generic agent terminology makes `agent-orchestration` overlap many records.
 - Fresh prompt testing proves discovery and absence of cold-payload leakage, not every live routing decision.
-- The active junctions target the isolated release-one worktree. Integration must migrate them deliberately or keep that worktree stable.
+- The active junctions target the merged main checkout. Any future repository relocation must migrate them through the exact-target profile workflow.
 
 ## Continuation map
 

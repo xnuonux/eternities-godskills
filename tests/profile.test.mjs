@@ -10,6 +10,7 @@ import {
   removeProfile,
   verifyProfile,
 } from "../src/profile.mjs";
+import { sha256 } from "../src/io.mjs";
 
 async function fixture(context) {
   const root = await mkdtemp(path.join(os.tmpdir(), "godskills-profile-"));
@@ -75,6 +76,14 @@ test("profile refuses an unresolved promotion receipt", async (context) => {
   );
 
   await assert.rejects(() => planProfile(lock, destination), /not promoted/);
+});
+
+test("profile entrypoint digests are stable across checkout line endings", async (context) => {
+  const { lock, destination } = await fixture(context);
+  await writeFile(path.join(lock.skills[0].source, "SKILL.md"), "oracle\r\n", "utf8");
+
+  const plan = await planProfile(lock, destination);
+  assert.equal(plan.operations[0].entrypointSha256, sha256("oracle\n"));
 });
 
 test("activation creates exact directory links and replanning is idempotent", async (context) => {
