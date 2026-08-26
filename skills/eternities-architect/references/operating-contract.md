@@ -39,4 +39,3 @@ The implementation handoff contains ordered dependency slices, not speculative f
 ## Termination
 
 Stop when the architectural choice and proof obligations are explicit. Do not continue into implementation merely to demonstrate momentum. Never route back to `eternities-architect`, and never force optional process skills when a narrow direct answer completes the contract.
-

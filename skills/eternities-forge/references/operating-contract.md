@@ -33,4 +33,3 @@ Review considers correctness, security, performance, failure behavior, compatibi
 ## Termination and recovery
 
 On failed verification, preserve the failing output and return to the smallest responsible slice. On authority or external-state boundaries, stop before mutation. On integration conflict, preserve both states and hand off exact evidence. Never invoke Forge recursively.
-

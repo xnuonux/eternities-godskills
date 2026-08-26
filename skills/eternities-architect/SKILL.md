@@ -44,4 +44,3 @@ Return one coherent design containing:
 - implementation handoff with acceptance conditions and unresolved decisions.
 
 Do not hide uncertainty inside polished prose. A design is complete when a downstream engineer can plan it without rediscovering the architecture, every consequential claim has evidence or an uncertainty label, and no route points back to Eternities Architect.
-

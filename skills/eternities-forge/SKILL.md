@@ -44,4 +44,3 @@ Yield when:
 ## Termination
 
 Forge stops when the requested behavior satisfies its acceptance evidence, the relevant full verification is fresh, review obligations are resolved, integration state is explicit, and remaining risks or authority gaps are named. If one condition cannot be met, return the exact blocker and preserved state instead of rounding the work up to complete.
-

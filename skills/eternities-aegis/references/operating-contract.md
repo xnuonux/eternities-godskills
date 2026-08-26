@@ -26,4 +26,3 @@ Before finalizing, test the strongest alternative explanation for each critical 
 ## Termination
 
 Stop before any ungranted mutation. Report the exact safe next action and required authority. Never route to Aegis recursively, and never imply that a defensive review grants permission for offensive testing.
-

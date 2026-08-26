@@ -45,4 +45,3 @@ Return:
 - explicit actions performed, deferred, refused, or still requiring authority.
 
 Terminate when the decision owner can distinguish proven exposure from suspicion, the smallest mitigations and proof obligations are clear, and no route invokes Eternities Aegis recursively.
-
