@@ -22,3 +22,17 @@ runs third-party repository code during ingestion or mining.
 the approved design and implementation plan live under
 `docs\superpowers\specs` and `docs\superpowers\plans`.
 
+## release-one status
+
+release one is certified. it promotes two compact first-party capabilities:
+
+- `sovereign-skill-refinery` for provenance-backed synthesis and measurable promotion;
+- `eternities-oracle` for local, official, and hybrid evidence research.
+
+both are active through the reversible `eternities-core` profile in
+`C:\Users\Dom\.agents\skills`. the 4,741-source catalog, vectors, duplicate
+evidence, and provenance ledger remain cold and are not injected into ordinary
+Codex prompts.
+
+read `docs\release-one-report.md` for measured outcomes and uncertainty, and
+`receipts\release-one-certification.json` for the machine-readable verdict.

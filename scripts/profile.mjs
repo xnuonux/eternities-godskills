@@ -1,5 +1,6 @@
 import path from "node:path";
 import { existsSync } from "node:fs";
+import { spawnSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
 
 import { readJson, writeJsonAtomic } from "../src/io.mjs";
@@ -66,7 +67,19 @@ async function main() {
   }
   if (command === "verify") {
     const receipt = await readJson(path.resolve(target));
-    const promptText = process.env.CODEX_PROMPT_INPUT ?? "";
+    let promptText = process.env.CODEX_PROMPT_INPUT ?? "";
+    if (!promptText) {
+      const rendered = spawnSync("codex", ["debug", "prompt-input", "hello"], {
+        encoding: "utf8",
+        windowsHide: true,
+      });
+      if (rendered.status !== 0) {
+        throw new Error(
+          `fresh Codex prompt render failed: ${rendered.stderr || rendered.stdout}`,
+        );
+      }
+      promptText = `${rendered.stdout ?? ""}${rendered.stderr ?? ""}`;
+    }
     const result = verifyProfile(receipt, promptText);
     console.log(JSON.stringify(result, null, 2));
     if (!result.valid) process.exitCode = 2;
