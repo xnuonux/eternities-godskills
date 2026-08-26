@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "id": "direct-refine",
+      "kind": "direct",
+      "critical": true,
+      "prompt": "Refine these overlapping agent skills into one tested first-party skill.",
+      "expected": "route"
+    },
+    {
+      "id": "direct-sovereignize",
+      "kind": "direct",
+      "critical": true,
+      "prompt": "Sovereignize these five workflow sources and prove the result is superior.",
+      "expected": "route"
+    },
+    {
+      "id": "paraphrase-quarry",
+      "kind": "paraphrase",
+      "critical": true,
+      "prompt": "Turn this workflow quarry into our own provenance-backed capability.",
+      "expected": "route"
+    },
+    {
+      "id": "paraphrase-forge",
+      "kind": "paraphrase",
+      "critical": true,
+      "prompt": "Forge the useful machinery from these methods into one evaluated operating discipline.",
+      "expected": "route"
+    },
+    {
+      "id": "exclude-invoke",
+      "kind": "exclusion",
+      "critical": true,
+      "prompt": "Use the installed brainstorming skill for this feature idea.",
+      "expected": "skip"
+    },
+    {
+      "id": "exclude-install",
+      "kind": "exclusion",
+      "critical": true,
+      "prompt": "Install this one known skill from its exact repository path.",
+      "expected": "skip"
+    },
+    {
+      "id": "conflict-search",
+      "kind": "conflict",
+      "critical": true,
+      "prompt": "Search the repository warehouse and rank five skills for my task.",
+      "expected": "defer:arsenal-repo-miner"
+    },
+    {
+      "id": "conflict-create",
+      "kind": "conflict",
+      "critical": true,
+      "prompt": "Create one straightforward Codex skill from these settled requirements.",
+      "expected": "defer:skill-creator"
+    }
+  ],
+  "baseline": {
+    "name": "generic-discovery-and-creation-workflows",
+    "tokenCount": 8800,
+    "sourceCoverage": 2,
+    "results": [
+      { "id": "direct-refine", "actual": "route" },
+      { "id": "direct-sovereignize", "actual": "route" },
+      { "id": "paraphrase-quarry", "actual": "skip" },
+      { "id": "paraphrase-forge", "actual": "skip" },
+      { "id": "exclude-invoke", "actual": "route" },
+      { "id": "exclude-install", "actual": "route" },
+      { "id": "conflict-search", "actual": "route" },
+      { "id": "conflict-create", "actual": "route" }
+    ]
+  },
+  "candidate": {
+    "sourceCoverage": 5,
+    "results": [
+      { "id": "direct-refine", "actual": "route" },
+      { "id": "direct-sovereignize", "actual": "route" },
+      { "id": "paraphrase-quarry", "actual": "route" },
+      { "id": "paraphrase-forge", "actual": "route" },
+      { "id": "exclude-invoke", "actual": "skip" },
+      { "id": "exclude-install", "actual": "skip" },
+      { "id": "conflict-search", "actual": "defer:arsenal-repo-miner" },
+      { "id": "conflict-create", "actual": "defer:skill-creator" }
+    ]
+  }
+}
