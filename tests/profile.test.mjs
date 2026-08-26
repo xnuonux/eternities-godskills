@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { lstat, mkdir, mkdtemp, readlink, rm, writeFile } from "node:fs/promises";
+import { lstat, mkdir, mkdtemp, readFile, readlink, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
@@ -152,4 +152,31 @@ test("prompt verification requires core names and rejects cold or explicit-only 
   assert.equal(leaked.valid, false);
   assert.ok(leaked.forbidden.includes("eternities-pantheon"));
   assert.ok(leaked.forbidden.includes("source-records.jsonl"));
+});
+
+test("engineering profile contains exactly five promoted skills", async () => {
+  const profilePath = new URL(
+    "../profiles/eternities-engineering.lock.json",
+    import.meta.url,
+  );
+  const lock = JSON.parse(await readFile(profilePath, "utf8"));
+  const expected = [
+    "eternities-aegis",
+    "eternities-architect",
+    "eternities-forge",
+    "eternities-oracle",
+    "sovereign-skill-refinery",
+  ];
+
+  assert.equal(lock.name, "eternities-engineering");
+  assert.deepEqual(
+    lock.skills.map(({ name }) => name).sort(),
+    expected,
+  );
+  for (const skill of lock.skills) {
+    const receiptPath = new URL(skill.promotionReceipt, profilePath);
+    const receipt = JSON.parse(await readFile(receiptPath, "utf8"));
+    assert.equal(receipt.skillName, skill.name);
+    assert.equal(receipt.decision.status, "promoted");
+  }
 });
