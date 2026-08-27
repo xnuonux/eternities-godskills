@@ -262,3 +262,50 @@ test("Aegis provenance matches the certified release-one records", async () => {
     ),
   );
 });
+
+test("Aegis v2 adds the three candidate governance routes without replacing v1", async () => {
+  const contract = await json(
+    "skills/eternities-aegis/references/capability-contract.json",
+  );
+  assert.equal(contract.id, "godskill-eternities-aegis-v2");
+  assert.deepEqual(
+    contract.routes.map(({ id }) => id),
+    [
+      "source-audit",
+      "threat-model",
+      "mcp-audit",
+      "authority-review",
+      "policy-lifecycle",
+      "identity-access",
+      "security-assurance",
+    ],
+  );
+  assert.deepEqual(contract.sourceEvidence.clusters.map(({ id }) => id), [
+    "governance-identity-access",
+    "governance-policy-lifecycle",
+    "governance-security-assurance",
+  ]);
+});
+
+test("Aegis v2 keeps credential, legal, provider, and mutation boundaries closed", async () => {
+  const markdown = await text("skills/eternities-aegis/SKILL.md");
+  const cases = await json("skills/eternities-aegis/evals/cases.json");
+  for (const phrase of [
+    "credentials",
+    "personal data",
+    "legal conclusions",
+    "current-policy claims",
+    "external mutation",
+    "fail closed",
+  ]) assert.match(markdown, new RegExp(phrase, "i"));
+  assert.deepEqual(
+    cases.candidate.results.slice(-5).map(({ actual }) => actual),
+    [
+      "route:policy-lifecycle",
+      "route:identity-access",
+      "route:security-assurance",
+      "refuse:unauthorized",
+      "defer:current-specialist-evidence",
+    ],
+  );
+});

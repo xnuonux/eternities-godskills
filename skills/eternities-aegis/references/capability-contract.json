@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "godskill-eternities-aegis-v1",
+  "id": "godskill-eternities-aegis-v2",
   "name": "eternities-aegis",
   "category": "governance-security",
   "intent": "Reconcile authorization, system evidence, trust boundaries, and threat hypotheses into a defensible risk and mitigation decision.",
@@ -22,7 +22,10 @@
     "inspect security-relevant evidence",
     "model abuse and failure paths",
     "rank risk and confidence",
-    "design and verify mitigations"
+    "design and verify mitigations",
+    "govern policy lifecycle evidence",
+    "govern identity and access lifecycle",
+    "assure defensive controls and evidence"
   ],
   "effects": ["read", "write"],
   "positiveTriggers": [
@@ -35,14 +38,18 @@
     "ordinary code review",
     "generic security checklist",
     "simple security fact",
-    "unauthorized intrusion or adversary emulation"
+    "unauthorized intrusion or adversary emulation",
+    "credentialed or high-stakes assessment",
+    "legal or current-policy conclusion"
   ],
   "failureModes": [
     "authorization is absent or ambiguous",
     "target evidence is unavailable",
     "a finding cannot be separated from hypothesis",
     "mitigation validation would exceed authority",
-    "critical residual risk has no accountable owner"
+    "critical residual risk has no accountable owner",
+    "credentials or unnecessary personal data would enter evidence",
+    "provider behavior or current policy is assumed without evidence"
   ],
   "dependencies": [
     "eternities-oracle",
@@ -76,13 +83,19 @@
       "id": "authority-review",
       "capabilities": ["identity", "authority", "effects", "target", "rollback", "decision"],
       "delegates": []
-    }
+    },
+    {"id":"policy-lifecycle","capabilities":["policy-objective","control-owner","monitoring","exceptions","evidence","expiry"],"delegates":["eternities-oracle"]},
+    {"id":"identity-access","capabilities":["principals","authenticators","lifecycle","federation","least-privilege","separation-of-duties"],"delegates":["eternities-oracle"]},
+    {"id":"security-assurance","capabilities":["controls","detections","evidence-handling","risk-communication","residual-risk"],"delegates":["verification-before-completion"]}
   ],
   "terminationConditions": [
     "scope and authority are explicit",
     "verified findings are separated from hypotheses",
     "mitigations include verification and rollback",
     "residual risk and required owners are named",
-    "performed and prohibited effects are recorded"
-  ]
+    "performed and prohibited effects are recorded",
+    "policy, identity, and assurance evidence has an owner and expiry",
+    "deferred specialist or current-policy boundaries are explicit"
+  ],
+  "sourceEvidence":{"mode":"cluster-review-v1","clusterSetId":"governance-security-clusters-v1","clusters":[{"id":"governance-identity-access","digest":"ea9e8832e438d2f5643907a4683ea0ca756e8fbf29609c0c90d8ffe5af3e6a7a"},{"id":"governance-policy-lifecycle","digest":"ee19cfc9261ae2fb0ab86bd851958a85e9288ab477243bbec811a8205acdfbb9"},{"id":"governance-security-assurance","digest":"7b60b76b8ce2b7470fe5dfb910480f894c34f119b880f0a2dd9bb031f8c12be5"}]}
 }

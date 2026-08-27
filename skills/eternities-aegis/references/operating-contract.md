@@ -9,11 +9,15 @@
 
 Use one route when possible. Defer to an installed exact security skill when its narrower contract completely covers the task.
 
+The governance routes add three bounded defensive workflows. `policy-lifecycle` covers control objectives, owners, monitoring, exceptions, expiry, and evidence. `identity-access` covers principals, authenticators, federation, lifecycle, trust transitions, least privilege, and separation of duties. `security-assurance` covers controls, detections, evidence handling, and residual-risk communication. These routes do not grant access, handle credentials, establish provider behavior, make legal conclusions, or perform external mutation.
+
 ## Evidence and severity
 
 Every finding states evidence location, precondition, affected path, exploitability, impact, confidence, existing control, proposed mitigation, and verification. Severity follows supported impact and likelihood. Unknown context lowers confidence, not automatically severity.
 
 Never include a full secret, private key, session token, or unnecessary personal data in output. Redact values while retaining the evidence needed to locate and rotate them.
+
+Fail closed when credentials, personal data, legal conclusions, current-policy claims, or an unauthorized security action is requested. Defer high-stakes, credentialed, adversarial, provider-bound, or narrow-evidence work until an explicitly qualified specialist and current evidence are available.
 
 ## Authority lattice
 
