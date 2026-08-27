@@ -114,7 +114,15 @@ test("release two certifies three engineering Godskills and one bounded profile"
     certification.composition.routeCount,
   );
   assert.equal(selectedSourceIds.size, certification.sourceEvidence.selectedSourceCount);
-  assert.equal(ledger.length - 10, certification.sourceEvidence.newProvenanceRows);
+  const provenancePosition = new Map(
+    ledger.map(({ sourceId }, index) => [sourceId, index]),
+  );
+  assert.equal(
+    [...selectedSourceIds].filter(
+      (sourceId) => provenancePosition.get(sourceId) >= 10,
+    ).length,
+    certification.sourceEvidence.newProvenanceRows,
+  );
 
   const activeNames = profile.links.map(({ name }) => name);
   assert.deepEqual(certification.profile.activeSkills, activeNames);

@@ -154,7 +154,7 @@ test("prompt verification requires core names and rejects cold or explicit-only 
   assert.ok(leaked.forbidden.includes("source-records.jsonl"));
 });
 
-test("engineering profile contains exactly five promoted skills", async () => {
+test("engineering profile contains exactly six promoted skills", async () => {
   const profilePath = new URL(
     "../profiles/eternities-engineering.lock.json",
     import.meta.url,
@@ -164,6 +164,7 @@ test("engineering profile contains exactly five promoted skills", async () => {
     "eternities-aegis",
     "eternities-architect",
     "eternities-forge",
+    "eternities-mnemosyne",
     "eternities-oracle",
     "sovereign-skill-refinery",
   ];
