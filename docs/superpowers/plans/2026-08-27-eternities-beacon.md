@@ -236,7 +236,7 @@ Run `npm test`, both deterministic builders, promotion receipt verification, `gi
 
 Use `requesting-code-review` against the full spec-to-feature diff. Correct every confirmed critical or important issue through the smallest tested change and rerun complete verification.
 
-- [ ] **Step 5: Commit and integrate locally**
+- [x] **Step 5: Commit and integrate locally**
 
 Commit certification, integrate `feat/release-eight-beacon` into local `main`, rerun `npm test`, and remove the feature branch and worktree only after the merged tree is green. Do not push or activate globally.
 
