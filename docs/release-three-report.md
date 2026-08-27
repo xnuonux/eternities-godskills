@@ -17,9 +17,9 @@ It deliberately bypasses routine turns, status checks, simple factual recall, an
 - three restricted or copyleft sources remain pattern-only.
 - no copied prose is recorded or intentionally adapted; this is an author and ledger disposition, not an independent legal similarity proof.
 
-## activation boundary
+## canonical activation
 
-The engineering profile lock now contains six promoted skills, including Mnemosyne. The feature branch creates no temporary global link. Canonical activation and a fresh-prompt receipt occur only after merge into `main`.
+The engineering profile now contains six promoted skills, including Mnemosyne. All six junctions target canonical `main`; none target a disposable worktree. Fresh-prompt discovery includes all six names without loading the cold quarry. The cumulative receipt preserves the previous five links and their ownership, while a dedicated release-three migration receipt proves that rollback would remove Mnemosyne only.
 
 ## proof limit
 

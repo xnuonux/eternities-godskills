@@ -33,7 +33,7 @@ test("release two certifies three engineering Godskills and one bounded profile"
   ];
   const [certification, profile, ...receipts] = await Promise.all([
     json("receipts/release-two-certification.json"),
-    json("receipts/profile-eternities-engineering.json"),
+    json("receipts/history/release-two-profile-eternities-engineering.json"),
     ...names.map((name) => json(`receipts/promotions/${name}.json`)),
   ]);
   const ledger = (await text("provenance/source-ledger.jsonl"))
@@ -164,7 +164,9 @@ test("release two certifies three engineering Godskills and one bounded profile"
   assert.equal(certification.profile.pantheonDiscoverable, false);
   assert.equal(
     certification.profile.receiptSha256,
-    await canonicalTextSha256("receipts/profile-eternities-engineering.json"),
+    await canonicalTextSha256(
+      "receipts/history/release-two-profile-eternities-engineering.json",
+    ),
   );
 
   assert.equal(certification.verification.testFailures, 0);

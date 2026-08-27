@@ -27,8 +27,17 @@ async function canonicalSha256(relative) {
   return sha256(canonicalText(await text(relative)));
 }
 
-test("release three certifies Mnemosyne and a deferred canonical profile activation", async () => {
-  const [certification, receipt, contract, suite, policy, profile] =
+test("release three certifies Mnemosyne and canonical profile activation", async () => {
+  const [
+    certification,
+    receipt,
+    contract,
+    suite,
+    policy,
+    profile,
+    profileReceipt,
+    migrationReceipt,
+  ] =
     await Promise.all([
       json("receipts/release-three-certification.json"),
       json("receipts/promotions/eternities-mnemosyne.json"),
@@ -36,6 +45,8 @@ test("release three certifies Mnemosyne and a deferred canonical profile activat
       json("skills/eternities-mnemosyne/evals/cases.json"),
       json("policies/promotion.v1.json"),
       json("profiles/eternities-engineering.lock.json"),
+      json("receipts/profile-eternities-engineering.json"),
+      json("receipts/profile-eternities-engineering-release-three-migration.json"),
     ]);
   const skillText = canonicalText(
     await text("skills/eternities-mnemosyne/SKILL.md"),
@@ -138,7 +149,48 @@ test("release three certifies Mnemosyne and a deferred canonical profile activat
   assert.deepEqual(profileNames, certification.profile.lockedSkills);
   assert.equal(profileNames.includes("eternities-mnemosyne"), true);
   assert.equal(profileNames.length, 6);
-  assert.equal(certification.profile.activationDeferredUntilCanonicalMerge, true);
+  assert.deepEqual(
+    profileReceipt.links.map(({ name }) => name),
+    profileNames,
+  );
+  assert.ok(
+    profileReceipt.links.every(
+      ({ linkTarget, promotionReceipt }) =>
+        linkTarget.startsWith("C:\\dev\\eternities-godskills\\") &&
+        promotionReceipt.startsWith("C:\\dev\\eternities-godskills\\") &&
+        !linkTarget.includes(".worktrees") &&
+        !promotionReceipt.includes(".worktrees"),
+    ),
+  );
+  assert.deepEqual(profileReceipt.verification.required, profileNames);
+  assert.equal(profileReceipt.verification.valid, true);
+  assert.equal(
+    profileReceipt.links.filter(({ createdByProfile }) => createdByProfile).length,
+    certification.profile.cumulativeOwnedLinks,
+  );
+  assert.equal(
+    profileReceipt.links.filter(({ createdByProfile }) => !createdByProfile).length,
+    certification.profile.preservedExactLinks,
+  );
+  assert.deepEqual(
+    migrationReceipt.links.map(({ name }) => name),
+    ["eternities-mnemosyne"],
+  );
+  assert.equal(migrationReceipt.links[0].createdByProfile, true);
+  assert.deepEqual(migrationReceipt.rollbackDryRun.planned, ["eternities-mnemosyne"]);
+  assert.deepEqual(migrationReceipt.rollbackDryRun.refused, []);
+  assert.equal(certification.profile.activationDeferredUntilCanonicalMerge, false);
+  assert.equal(certification.profile.canonicalActivationVerified, true);
+  assert.equal(
+    certification.profile.receiptSha256,
+    await canonicalSha256("receipts/profile-eternities-engineering.json"),
+  );
+  assert.equal(
+    certification.profile.migrationReceiptSha256,
+    await canonicalSha256(
+      "receipts/profile-eternities-engineering-release-three-migration.json",
+    ),
+  );
   assert.equal(certification.verification.testTotal, 92);
   assert.equal(certification.verification.testFailures, 0);
   assert.equal(certification.verification.transitiveCompositionCyclesRejected, true);
