@@ -122,6 +122,11 @@ test("every exact marketing and growth source has one bounded semantic review", 
         `${review.sourceId} contains generic review boilerplate: ${phrase}`,
       );
     }
+    assert.equal(
+      /\[[^\]]+\sconstraint\s+\d+\]/i.test(semanticText),
+      false,
+      `${review.sourceId} contains bracketed template-uniqueness suffixes`,
+    );
   }
 
   assert.equal(reviews.length, 291);
