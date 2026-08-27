@@ -79,6 +79,15 @@ test("every exact marketing and growth source has one bounded semantic review", 
     "business goal and audience for",
     "perform the source-defined",
     "decision criteria and implementation notes",
+    "supplied evidence needed to establish",
+    "scope, date, audience, and governing constraints",
+    "parse the supplied evidence for the conditions named in",
+    "separate observed facts from estimates and recommendations",
+    "source-linked decision record",
+    "label estimates and unresolved dependencies before drawing a conclusion",
+    "scope and assumptions remain explicit",
+    "recommendation and execution remain separate",
+    "a plausible recommendation can fail without implementation evidence",
   ];
   for (const review of reviews) {
     const semanticText = [
