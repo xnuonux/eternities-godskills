@@ -95,6 +95,16 @@ test("every exact marketing and growth source has one bounded semantic review", 
     neutralIntentExamples.length >= 2 &&
     neutralIntentExamples.every((intent) => !intent.trim().startsWith("/")),
   ));
+  for (const review of reviews) {
+    const sourceName = queue.cards.find(({ sourceId }) => sourceId === review.sourceId)?.name;
+    assert.ok(sourceName, `${review.sourceId} requires a queue name`);
+    assert.ok(
+      review.neutralIntentExamples.every((intent) =>
+        !intent.trim().toLowerCase().startsWith(`use ${sourceName.trim().toLowerCase()} `),
+      ),
+      `${review.sourceId} intent examples must express outcomes, not invoke the source skill by name`,
+    );
+  }
   assert.ok(reviews.every((review) => [
     "independent-implementation",
     "pattern-reference",
