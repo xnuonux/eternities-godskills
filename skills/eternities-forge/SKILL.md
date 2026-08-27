@@ -9,6 +9,28 @@ Deliver a consequential software change through the smallest sufficient engineer
 
 Read [references/operating-contract.md](references/operating-contract.md) before selecting a route. Forge coordinates installed process skills; it does not replace their detailed procedures.
 
+## v2 portable workflow extensions
+
+For consequential work needing coordinated planning, delegation, execution, review,
+and handoff, use this agent-neutral spine:
+
+1. bind outcome, constraints, authority, exclusions, acceptance evidence, and rollback
+2. resolve ambiguity before implementation with a settled decision record
+3. delegate only genuinely independent work with disjoint ownership and merge bounds
+4. execute approved plans in bounded slices with a verification command per slice
+5. preserve a source-labeled handoff containing state, evidence, risk, and next action
+6. finish with fresh verification, review disposition, and an explicit integration or rollback decision
+
+Completion claims require direct evidence. Tests and fixtures prove contracts and
+routing only, not live model behavior, reviewer independence, legal or security
+conformance, production readiness, or external effects. Conflicting instructions,
+stale evidence, missing authority, missing preconditions, and failed critical gates
+fail closed and name the deferred specialist or human decision.
+
+The portable route composes at most three capabilities: planning, execution, and
+verification/review. It never recursively routes to Forge, invents authority,
+publishes, deploys, merges, or performs external actions.
+
 ## Entry gate
 
 Invoke only when the requested outcome spans multiple engineering phases or carries integration, migration, authority, or regression risk that one narrow workflow cannot contain.

@@ -3,7 +3,7 @@
   "id": "godskill-eternities-forge-v1",
   "name": "eternities-forge",
   "category": "implementation-engineering",
-  "intent": "Coordinate the smallest sufficient set of engineering workflows for a consequential multi-stage software change.",
+  "intent": "Coordinate the smallest sufficient set of agent-neutral engineering workflows for a consequential multi-stage software change, including bounded delegation and fail-closed evidence gates.",
   "successCondition": "Requested behavior is implemented, freshly verified against explicit acceptance evidence, reviewed proportional to risk, and left in an explicit integration state.",
   "inputs": [
     "settled outcome or approved design",
@@ -21,7 +21,10 @@
     "establish behavior baseline",
     "select process skills",
     "implement bounded slices",
-    "verify claims and integration"
+    "verify claims and integration",
+    "resolve ambiguity and conflicts",
+    "bound delegation and handoff",
+    "block unsupported completion claims"
   ],
   "effects": ["read", "write"],
   "positiveTriggers": [
@@ -61,6 +64,13 @@
   ],
   "explicitOnly": false,
   "routes": [
+    {
+      "id": "portable-workflow",
+      "capabilities": ["bind", "plan", "delegate-bounded", "execute-slices", "handoff", "review", "verify", "integrate-or-defer"],
+      "delegates": ["writing-plans", "brainstorming", "dispatching-parallel-agents", "executing-plans", "requesting-code-review", "receiving-code-review", "verification-before-completion", "finishing-a-development-branch"],
+      "maxComposedCapabilities": 3,
+      "failClosedOn": ["ambiguous-authority", "conflict", "stale-evidence", "failed-critical-gate", "missing-precondition"]
+    },
     {
       "id": "feature",
       "capabilities": ["specification", "implementation", "tests", "review", "verification"],
