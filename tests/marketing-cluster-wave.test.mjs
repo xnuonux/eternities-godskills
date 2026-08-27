@@ -1,8 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFile, readdir } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
 
-import { validateReviewBatch } from "../src/reviews.mjs";
+import { classify } from "../src/ontology.mjs";
+import { loadReviewEvidence } from "../src/reviews.mjs";
 import { validateClusterBatch } from "../src/refinery-clusters.mjs";
 import { sha256 } from "../src/io.mjs";
 
@@ -28,17 +30,18 @@ async function jsonLines(relative) {
 }
 
 async function marketingReviews() {
-  const [queue, bodies, waveFiles] = await Promise.all([
+  const [queue, bodies, records, ontology] = await Promise.all([
     json("artifacts/corpus/families/marketing-growth/queue.json"),
     jsonLines("artifacts/corpus/body-evidence.jsonl"),
-    readdir(new URL("reviews/waves/marketing-growth/", root)),
+    jsonLines("artifacts/release-one/source-records.jsonl"),
+    json("data/ontology.v1.json"),
   ]);
-  const sources = queue.cards.map((card) => ({ id: card.sourceId, families: card.families }));
-  const reviews = [];
-  for (const file of waveFiles.filter((file) => file.endsWith(".json")).sort()) {
-    reviews.push(...validateReviewBatch(await json(`reviews/waves/marketing-growth/${file}`), sources, bodies));
-  }
-  return reviews.sort((left, right) => left.sourceId.localeCompare(right.sourceId));
+  const queueIds = new Set(queue.cards.map(({ sourceId }) => sourceId));
+  return (await loadReviewEvidence(
+    fileURLToPath(new URL("reviews/waves/", root)),
+    records.map((record) => ({ ...record, families: classify(record, ontology) })),
+    bodies,
+  )).filter(({ sourceId }) => queueIds.has(sourceId));
 }
 
 test("the complete marketing family reconciles exactly once into bounded clusters", async () => {
