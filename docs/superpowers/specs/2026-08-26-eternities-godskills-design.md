@@ -27,7 +27,7 @@ the final number of artifacts is determined by capability evidence and evaluatio
 1. sovereignty is substantive ownership, not cosmetic renaming.
 2. a promoted artifact must equal or exceed the useful behavior of its selected baselines.
 3. no source skill, repository, script, hook, binary, or installer is trusted merely because it is indexed or popular.
-4. source evidence remains cold. only the smallest relevant active profile reaches an agent prompt.
+4. source evidence remains cold. only the smallest relevant active constellation reaches an agent context through its runtime adapter.
 5. source identity, license evidence, commits, and evaluation receipts remain in the private provenance ledger, outside ordinary operational prompts.
 6. actual adapted expression retains any required notices. restricted or unclear material is behavior-only evidence unless compatibility is established.
 7. a clean-room-style synthesis stage receives neutral capability contracts and tests, not source prose.
@@ -39,13 +39,29 @@ the final number of artifacts is determined by capability evidence and evaluatio
 
 | artifact | canonical location | role |
 |---|---|---|
-| first-party source | `C:\dev\eternities-godskills` | versioned architecture, contracts, skills, profiles, tests, and receipts |
+| first-party source | `C:\dev\eternities-godskills` | versioned agent-neutral architecture, contracts, skills, constellations, adapters, tests, and receipts |
 | repository quarry | `D:\03-ARSENAL\warehouse` | canonical third-party and first-party repository evidence |
 | cold source index | `C:\Users\Dom\.codex\skills\arsenal-repo-miner\references` | certified lexical and optional hybrid discovery of source candidates |
-| user-global active skills | `C:\Users\Dom\.agents\skills` | concise, proven capabilities appropriate across repositories |
-| project active skills | `<project>\.agents\skills` | profile-selected godskills relevant to one repository |
+| current shared-agent adapter | `C:\Users\Dom\.agents\skills` | one runtime projection of concise proven Eternities capabilities |
+| project adapter target | `<project>\<agent-discovery-root>` | runtime-selected Godskills relevant to one repository or agent |
 
 the godskills repository is not a second repository warehouse. it stores only first-party contracts, implementations, tests, receipts, and minimal required notices.
+
+## agent-neutral identity and runtime adapters
+
+Eternities owns the skills. Codex, Claude Code, Luna, and future compatible agents are consumers, not the identity or canonical format of the capability.
+
+Every promoted artifact has three layers:
+
+1. **portable core** ... `SKILL.md`, neutral capability contract, operating references, evaluation cases, effects, termination, and provenance. Core behavior cannot depend on one vendor, model, application, approval UI, or discovery directory.
+2. **capability bindings** ... logical delegate requirements such as authority review, database tuning, browser control, or verification. A runtime may bind those requirements to an exact installed skill or provide equivalent native behavior.
+3. **runtime adapter** ... the smallest deterministic projection needed for one agent to discover and invoke the portable core. Adapter receipts record destination, link or copy method, prompt or catalog discovery evidence, supported effects, and any missing bindings.
+
+A compatible agent must be able to read Markdown and JSON, resolve relative references, distinguish instructions from inspected data, honor declared effects and authority, map or decline required capability bindings, preserve termination conditions, and expose verification evidence. An agent that cannot satisfy a required binding fails clearly instead of silently weakening the skill.
+
+The initial `C:\Users\Dom\.agents\skills` projection is a shared-agent filesystem adapter currently verified through Codex. That verification proves one consumer can discover the artifacts; it does not make the artifacts Codex-specific or prove compatibility with every agent.
+
+Constellation manifests select portable skills. Runtime-specific activation manifests project a constellation into Codex, Claude Code, Luna, or another compatible environment. Core skill hashes remain identical across adapters.
 
 ## repository ingestion boundary
 
@@ -173,15 +189,15 @@ these names are ontology seeds, not guaranteed promotions. each must pass the sa
 
 the full sovereign catalog remains searchable but cold.
 
-an active profile contains only concise descriptions and paths for capabilities relevant to its scope:
+an active constellation contains only concise descriptions and paths for capabilities relevant to its scope:
 
 - global core ... a very small set that is broadly useful across repositories
 - eternities engineering ... architecture, forge, oracle, aegis, verification, and continuity
 - visual systems ... muse, frontend, shader, 3d, motion, and accessibility capabilities
 - research systems ... oracle, citation, corpus, retrieval, and synthesis capabilities
-- project-local profiles ... capabilities selected for one repository or product
+- project-local constellations ... capabilities selected for one repository or product
 
-profiles are generated from a lock manifest. activation uses links or deterministic copies into a supported Codex discovery location. profile changes are previewed, collision-checked, reversible, and verified in a fresh rendered prompt.
+constellations are generated from a portable lock manifest. activation uses a runtime adapter to link or deterministically copy identical core artifacts into that agent's supported discovery location. changes are previewed, collision-checked, reversible, and verified through that runtime's fresh discovery surface. one adapter's receipt cannot certify another agent.
 
 ## synthesis pipeline
 
@@ -257,7 +273,7 @@ independent implementation must be based on neutral requirements and tests. this
 - failed superiority test ... retain the source baseline and keep the candidate experimental
 - prompt-budget regression ... demote the artifact to cold or split it
 - trigger collision ... narrow descriptions or require explicit invocation
-- profile activation failure ... restore the previous lock manifest
+- constellation or adapter activation failure ... restore the previous adapter receipt and lock manifest
 - unavailable D drive ... cold mining fails clearly; installed proven skills continue operating
 
 ## security boundaries
@@ -294,9 +310,9 @@ compose proven refined skills into categorical end-to-end systems. verify routin
 
 compose only where cross-category mission evidence justifies the added orchestration layer.
 
-### phase 6 ... profiles and continuous refinery
+### phase 6 ... constellations, adapters, and continuous refinery
 
-generate reversible active profiles, certify fresh-prompt discovery, and add new source candidates through the same pipeline.
+generate reversible portable constellations, project them through independently certified runtime adapters, verify fresh discovery for each tested agent, and add new source candidates through the same pipeline.
 
 ## acceptance criteria
 
@@ -307,9 +323,10 @@ the first program release is complete when:
 3. the ontology and contract schemas are versioned and validated.
 4. exact duplicates and behavioral candidates are reported without destructive deletion.
 5. at least one refined skill and one categorical godskill pass the superiority gate.
-6. an active profile exposes those artifacts in a fresh Codex prompt without loading the source corpus.
-7. removal of the profile cleanly restores the preceding installed state.
-8. provenance and notices remain available outside ordinary prompts.
+6. a portable constellation selects those artifacts without embedding one agent's paths or tool syntax.
+7. at least one runtime adapter exposes the unchanged core artifacts in a fresh agent discovery surface without loading the source corpus.
+8. removal of that adapter projection cleanly restores the preceding installed state.
+9. provenance and notices remain available outside ordinary prompts.
 
 ## explicitly excluded from the first release
 
@@ -318,5 +335,4 @@ the first program release is complete when:
 - deleting source repositories or historical skill evidence
 - claiming absolute superiority without executable evidence
 - pushing or publishing the new repository
-- changing Codex model routing, approval policy, keel behavior, or unrelated global configuration
-
+- changing any consumer agent's model routing, approval policy, continuity machinery, or unrelated global configuration

@@ -2,7 +2,7 @@
 
 ## status
 
-Approved direction: two independent categorical Godskills, `eternities-atlas` for data infrastructure and `eternities-hermes` for automation and integrations. They share one reversible `eternities-systems` profile but retain separate contracts, provenance, evaluations, promotion receipts, and rollback evidence.
+Approved direction: two independent categorical Godskills, `eternities-atlas` for data infrastructure and `eternities-hermes` for automation and integrations. They share one portable `eternities-systems` constellation but retain separate contracts, provenance, evaluations, promotion receipts, and rollback evidence. Eternities owns the skills; Codex is only the first verified runtime adapter.
 
 ## purpose
 
@@ -13,6 +13,32 @@ Release Five closes two uncovered ontology families without creating a vague sys
 
 The release must preserve existing ownership boundaries. Architect owns broad system architecture, Forge owns multi-stage code delivery, Aegis owns authorization and risk decisions, Oracle owns consequential research, and exact provider or platform skills own provider-specific implementation details.
 
+Release Five also establishes the portability substrate that applies to Atlas, Hermes, and the already-promoted Godskills. No Eternities core skill may depend on Codex-specific identity, model names, approval controls, discovery paths, or tool-call syntax.
+
+## portable capability architecture
+
+Each Eternities skill has three separable layers:
+
+1. **portable core**: agent-neutral `SKILL.md`, capability contract, operating references, effects, termination conditions, evaluations, and provenance;
+2. **capability bindings**: logical requirements such as `authority-review`, `database-tuning`, `browser-control`, or `verification`, with exact installed skill names recorded only as adapter bindings or recommended implementations;
+3. **runtime adapter**: a small manifest and deterministic projection into an agent's discovery mechanism.
+
+The portable core is authoritative. An adapter cannot rewrite the doctrine, broaden effects, omit termination, or substitute a weaker binding without exposing that limitation.
+
+### qualifying agent contract
+
+An agent can use Eternities skills proficiently when it can:
+
+- read Markdown and JSON and resolve relative references;
+- distinguish user authority from instructions found in files, pages, transcripts, or tool output;
+- understand declared inputs, outputs, effects, routes, failure modes, and termination conditions;
+- map logical capability bindings to an exact installed skill, native tool, or equivalent internal behavior;
+- decline or defer when a required binding or authority is missing;
+- preserve provenance and emit verification evidence or receipts;
+- keep cold source material out of routine context.
+
+Codex, Claude Code, Luna, or another agent may qualify. Compatibility is certified per adapter and version, never assumed from the agent's name.
+
 ## approaches considered
 
 ### selected: two categorical Godskills
@@ -21,7 +47,7 @@ Atlas and Hermes remain independently routable. This adds two concise entrypoint
 
 ### rejected: one combined Daedalus Godskill
 
-A single systems skill would reduce profile entries but would combine state integrity with cross-boundary action. Its trigger surface would overlap Architect, Forge, and Aegis, and its operating reference would become expensive to load.
+A single systems skill would reduce constellation entries but would combine state integrity with cross-boundary action. Its trigger surface would overlap Architect, Forge, and Aegis, and its operating reference would become expensive to load.
 
 ### deferred: refined skills without categorical routers
 
@@ -64,7 +90,7 @@ Owns integrity invariants, query plans, indexes, performance budgets, drift, rec
 
 ### boundaries
 
-Atlas skips simple SQL questions, one routine migration whose contract is already settled, ordinary file storage, generic architecture, and concrete database bugs awaiting diagnosis. It does not claim production correctness from static schema inspection alone.
+Atlas skips simple SQL questions, one routine migration whose contract is already settled, ordinary file storage, generic architecture, and concrete database bugs awaiting diagnosis. It does not claim production correctness from static schema inspection alone. References to current provider skills are capability bindings, not requirements that the consuming agent be Codex.
 
 ### termination
 
@@ -96,7 +122,7 @@ Owns the runbook for a consequential authorized external action across one or mo
 
 ### boundaries
 
-Hermes skips one ordinary API call, direct use of an already-installed connector, simple scheduled reminders, generic architecture, exact provider documentation lookup, concrete integration regressions, and unauthorized external action. It never treats inspected instructions as user authority.
+Hermes skips one ordinary API call, direct use of an already-installed connector, simple scheduled reminders, generic architecture, exact provider documentation lookup, concrete integration regressions, and unauthorized external action. It never treats inspected instructions as user authority. Its MCP and automation contracts describe portable behavior rather than one application's tool-call format.
 
 ### termination
 
@@ -106,8 +132,8 @@ Hermes finishes when the contract and identities are versioned, effects and auth
 
 The graph must remain acyclic:
 
-- Atlas may delegate to Architect, Oracle, exact data skills, systematic debugging, and verification.
-- Hermes may delegate to Architect, Aegis, Oracle, exact integration skills, systematic debugging, and verification.
+- Atlas declares logical bindings for architecture, research, exact data work, diagnosis, and verification. Runtime adapters may map them to Architect, Oracle, provider skills, systematic debugging, and verification.
+- Hermes declares logical bindings for architecture, authority review, research, exact integration work, diagnosis, and verification. Runtime adapters may map them to Architect, Aegis, provider skills, systematic debugging, and verification.
 - Aegis may return an authority decision but must not delegate back to Hermes in Release Five.
 - Neither Atlas nor Hermes delegates to itself or to the other by default. A mixed data-sync mission selects the earliest unresolved boundary, then emits one explicit handoff.
 - Forge remains the implementation orchestrator when the requested repository change spans several engineering phases. Atlas and Hermes supply domain contracts rather than wrapping Forge.
@@ -141,11 +167,13 @@ Each Godskill receives an independent all-critical suite containing:
 
 Promotion requires all critical cases, every policy-kind threshold, resolved effects, a token count at or below 4,000, exact source coverage, no critical regression, and at least one policy-listed measured improvement.
 
-## active profile
+## portable constellation and adapters
 
-Create `profiles/eternities-systems.lock.json` with exactly Atlas and Hermes. Do not add either skill to `eternities-engineering` or `eternities-visual`.
+Create a portable `eternities-systems` constellation with exactly Atlas and Hermes. Do not add either skill to the engineering or visual constellations.
 
-Activation occurs only after independent review and fast-forward merge into canonical `C:\dev\eternities-godskills`. The cumulative receipt must point only to canonical main. A dedicated Release Five migration receipt must prove rollback plans exactly `eternities-atlas` and `eternities-hermes`, preserving all prior global skills.
+Add an agent-neutral constellation schema plus runtime-adapter schema. The first adapter projects the unchanged core files into `C:\Users\Dom\.agents\skills`, currently verified through Codex. The design must also include adapter fixtures proving that a Claude Code-style or generic manifest can bind the same core hashes without rewriting the skills. This is portability-contract evidence, not a claim that those runtimes were live-tested.
+
+Activation occurs only after independent review and fast-forward merge into canonical `C:\dev\eternities-godskills`. The first-adapter cumulative receipt must point only to canonical main. A dedicated Release Five migration receipt must prove rollback plans exactly `eternities-atlas` and `eternities-hermes`, preserving all prior global skills. Later runtime adapters receive their own receipts and cannot inherit Codex discovery proof.
 
 ## failure handling
 
@@ -156,7 +184,9 @@ Activation occurs only after independent review and fast-forward merge into cano
 - unresolved external effect: block promotion;
 - source prose detected as copied: block certification and rewrite independently;
 - failed production proof: preserve the failure and do not round static contracts up to runtime reliability;
-- profile collision or noncanonical target: refuse activation and preserve the previous global state.
+- constellation or adapter collision, altered core hash, or noncanonical target: refuse activation and preserve the previous runtime state;
+- adapter cannot satisfy a required capability binding: report the missing binding and keep the skill unavailable for that route;
+- adapter changes a core skill hash or doctrine: fail portability verification;
 
 ## acceptance criteria
 
@@ -166,12 +196,13 @@ Release Five is complete only when:
 2. Their routes are materially distinct from Architect, Forge, Aegis, Oracle, and exact domain skills.
 3. Every selected source reconciles to exact certified evidence and every uncertain source remains pattern-only.
 4. The global composition graph is acyclic and neither new skill invokes itself.
-5. The engineering and visual profiles remain unchanged.
+5. The engineering and visual constellations remain unchanged.
 6. Independent review has no unresolved critical or important issue.
-7. Canonical activation exposes exactly Atlas and Hermes through `eternities-systems`.
-8. Fresh prompt verification finds both names without loading cold source payloads.
+7. The portable `eternities-systems` constellation exposes exactly Atlas and Hermes, independently of runtime paths.
+8. The first shared-agent adapter finds both names without loading cold source payloads, and generic adapter fixtures preserve the same core hashes.
 9. Rollback dry-run plans only the two Release Five links.
 10. Focused tests, the full repository suite, promotion receipt verification, cold-index integrity, diff hygiene, and a global junction audit all pass from canonical main.
+11. Existing promoted Godskills pass an agent-neutrality audit or receive an explicit compatibility debt record for a later corrective release.
 
 ## explicitly excluded
 
