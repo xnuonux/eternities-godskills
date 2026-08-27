@@ -18,7 +18,9 @@ Choose exactly one dominant route:
 - `motion-story`: shape an emotional arc across scenes or chapters, then specify causal motion, media beats, transitions, reduced-motion behavior, and performance tiers.
 - `visual-acceptance`: prove a built visual system with deterministic captures, diagnostic states, temporal and device coverage, accessibility checks, budgets, invariants, and rejection criteria.
 
-Skip copy changes, spacing fixes, and ordinary component edits. Once direction is settled, yield implementation and local asset selection to `eternities-frontend-arsenal` or `frontend-design`. Yield a direct final-image request to `imagegen`, fixed-window voice production to `narrator`, subtitle burning to `subtitles`, and a concrete visual regression or black canvas to `systematic-debugging`.
+Skip copy changes, spacing fixes, and ordinary component edits. Once direction is settled, yield implementation and local asset selection to `eternities-frontend-arsenal` or `frontend-design`. Yield a direct final-image request to `imagegen`, fixed-window voice production to `narrator`, subtitle burning to `subtitles`, and a concrete visual regression or black canvas to `systematic-debugging`. Do not publish externally, request provider credentials, or mutate source assets destructively.
+
+For bounded 2D/3D and motion systems, add only the smallest evidence-backed behavior: budget geometry, cameras, lighting, render passes, assets, shaders, and animation against device tiers; use semantic motion states and frame-rate-independent timing; and diagnose performance from measured traces. Shader proposals must be bounded, portable, context-loss aware, and rejected when safety or render behavior is unverified. Asset provenance and rights must be explicit before reuse or mutation.
 
 For mixed missions, settle the earliest unresolved route first and emit a handoff contract for the next specialist. Do not load every delegate at once.
 
