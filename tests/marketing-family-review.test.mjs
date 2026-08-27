@@ -88,6 +88,17 @@ test("every exact marketing and growth source has one bounded semantic review", 
     "scope and assumptions remain explicit",
     "recommendation and execution remain separate",
     "a plausible recommendation can fail without implementation evidence",
+    "by turning supplied marketing or growth material",
+    "work product with stated boundaries and review points",
+    "relevant product, audience, channel, or performance context",
+    "organize supplied facts against the mode's required decisions",
+    "draft the relevant artifact or recommendation",
+    "mark assumptions, missing evidence, and owner decisions",
+    "decision points and supporting rationale",
+    "open questions, constraints, and review notes",
+    "the requested objective remains visible in the work product",
+    "external actions require an explicit owner and approval",
+    "overconfident recommendations can cause wasted spend or reputational harm",
   ];
   for (const review of reviews) {
     const semanticText = [
