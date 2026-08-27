@@ -17,12 +17,19 @@ Choose exactly one dominant route:
 - `interface-art-direction`: settle the generative visual law, hierarchy, design tokens, component grammar, responsive behavior, and implementation handoff for a consequential interface or redesign.
 - `motion-story`: shape an emotional arc across scenes or chapters, then specify causal motion, media beats, transitions, reduced-motion behavior, and performance tiers.
 - `visual-acceptance`: prove a built visual system with deterministic captures, diagnostic states, temporal and device coverage, accessibility checks, budgets, invariants, and rejection criteria.
+- `interface-accessibility-audit`: inspect a user-provided interface for keyboard, semantics, focus, contrast, motion, responsive, and assistive-technology risks; propose or implement bounded repairs, then record deterministic fixture evidence and unresolved proof limits.
 
 Skip copy changes, spacing fixes, and ordinary component edits. Once direction is settled, yield implementation and local asset selection to `eternities-frontend-arsenal` or `frontend-design`. Yield a direct final-image request to `imagegen`, fixed-window voice production to `narrator`, subtitle burning to `subtitles`, and a concrete visual regression or black canvas to `systematic-debugging`. Do not publish externally, request provider credentials, or mutate source assets destructively.
 
 For bounded 2D/3D and motion systems, add only the smallest evidence-backed behavior: budget geometry, cameras, lighting, render passes, assets, shaders, and animation against device tiers; use semantic motion states and frame-rate-independent timing; and diagnose performance from measured traces. Shader proposals must be bounded, portable, context-loss aware, and rejected when safety or render behavior is unverified. Asset provenance and rights must be explicit before reuse or mutation.
 
 For mixed missions, settle the earliest unresolved route first and emit a handoff contract for the next specialist. Do not load every delegate at once.
+
+### interface accessibility audit
+
+Freeze the artifact, target browsers or assistive technologies, viewport fixtures, content states, and acceptance criteria before changing code. Inspect semantic structure, name/role/value exposure, keyboard order and operability, visible focus, pointer alternatives, contrast and non-text contrast, zoom and reflow, reduced motion, error/status messaging, and robust fallback behavior. Produce an issue ledger with source location, impact, reproducible fixture, proposed repair, and verification status. Prefer the smallest semantic repair, preserve unrelated visual behavior, and re-run the fixture after each repair.
+
+This route may audit or repair a user-provided local artifact, but it does not certify WCAG conformance, legal compliance, universal assistive-technology support, or live-browser behavior from static inspection or one capture. Live-browser, screen-reader, and legal conclusions remain unproven unless the named environment, version, test protocol, and independent evidence are present. Do not request credentials, publish externally, or alter unrelated product behavior. If evidence conflicts or the target is unavailable, report the conflict and fail closed.
 
 ## common laws
 
