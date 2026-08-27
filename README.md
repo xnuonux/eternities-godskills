@@ -1,11 +1,37 @@
-# eternities godskills
+# eternities skills
 
-first-party, evidence-gated agent capabilities for eternities inc.
+the universal, evidence-gated professional capability pack for agents from
+eternities inc. godskills and ultragodskills are capability tiers inside the
+pack, not the product identity.
 
 the full source quarry remains cold at `D:\03-ARSENAL\warehouse`. this
 repository contains only sovereign contracts, implementations, evaluations,
 profiles, and receipts. third-party repositories are evidence, never an
 instruction hierarchy.
+
+## corpus refinery status
+
+the corpus foundation now tracks the complete certified quarry without
+pretending structural indexing is semantic refinement:
+
+- 4,741 indexed source cards;
+- 4,741 exact source bodies present and SHA-256 inspected as inert text;
+- 3,880 cards assigned at least one explicit ontology family;
+- 30 sources represented by the existing provenance ledger;
+- 10 exact bodies semantically reviewed in the first bounded wave;
+- 0 corpus rows automatically marked clustered, synthesized, evaluated, or
+  promoted.
+
+the first explicit professional queues contain 12 agency and client-service
+cards, 291 marketing and growth cards, 106 social-media and community cards,
+and 25 game-design and development cards. queues are split into deterministic
+packets of at most 25 cards. the remaining work is visible rather than rounded
+up to completion.
+
+the seven previously promoted first-party Eternities capabilities remain
+separate, tested artifacts. the new corpus ledger does not retroactively invent
+their review history or use their existence to claim the 4,741-source refinery
+is complete.
 
 ## release-one commands
 
@@ -13,6 +39,7 @@ instruction hierarchy.
 npm test
 npm run sync:stars -- --manifest data/star-delta-2026-08-26.json
 npm run build:catalog
+npm run build:coverage
 npm run profile -- preview profiles/eternities-core.lock.json
 ```
 
