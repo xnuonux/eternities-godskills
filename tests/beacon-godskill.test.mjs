@@ -3,6 +3,10 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
 import { validateCompositionContract } from "../src/composition.mjs";
+import { evaluateSuite } from "../src/evaluate.mjs";
+import { canonicalText } from "../src/io.mjs";
+import { decidePromotion } from "../src/promote.mjs";
+import { deriveClusterSourceEvidence } from "../src/provenance-evidence.mjs";
 import { validateCapabilityContract } from "../src/schema.mjs";
 
 const root = new URL("../", import.meta.url);
@@ -109,4 +113,57 @@ test("Beacon mining receipt preserves all family evidence and proof boundaries",
   assert.match(receipt, /291.*queue|queue.*291/i);
   assert.match(receipt, /143 selected/i);
   assert.match(receipt, /38 (?:prior|overlapping)/i);
+});
+
+test("Beacon evaluation covers every route and required growth boundary", async () => {
+  const [suite, contract, clusters, reviews, policy, markdown] = await Promise.all([
+    json("skills/eternities-beacon/evals/cases.json"),
+    json("skills/eternities-beacon/references/capability-contract.json"),
+    jsonLines("artifacts/corpus/cluster-evidence.jsonl"),
+    jsonLines("artifacts/corpus/review-evidence.jsonl"),
+    json("policies/promotion.v1.json"),
+    readFile(skillPath, "utf8"),
+  ]);
+  const sourceEvidence = deriveClusterSourceEvidence(contract, clusters, reviews);
+  const baseline = {
+    ...evaluateSuite(suite.cases, suite.baseline.results),
+    tokenCount: suite.baseline.tokenCount,
+  };
+  const candidate = {
+    ...evaluateSuite(suite.cases, suite.candidate.results),
+    tokenCount: Math.ceil(Buffer.byteLength(canonicalText(markdown), "utf8") / 4),
+    improvements: sourceEvidence.sourceCoverage > suite.baseline.sourceCoverage ? ["sourceCoverage"] : [],
+  };
+  const decision = decidePromotion({ baseline, candidate, policy });
+  assert.equal(suite.cases.length, 72);
+  assert.ok(suite.cases.every(({ critical }) => critical === true));
+  const kinds = Object.groupBy(suite.cases, ({ kind }) => kind);
+  for (const kind of ["direct", "paraphrase", "exclusion", "conflict"]) {
+    assert.equal(kinds[kind].length, 18);
+  }
+  const outcomes = new Set(suite.cases.map(({ expected }) => expected));
+  for (const expected of [
+    "route:market-truth-and-positioning",
+    "route:offer-and-commercial-architecture",
+    "route:discoverability-and-search-systems",
+    "route:go-to-market-and-demand-systems",
+    "route:conversion-and-lifecycle-systems",
+    "route:growth-measurement-and-stewardship",
+    "skip",
+    "defer:eternities-oracle",
+    "defer:eternities-aegis",
+    "defer:eternities-muse",
+    "refuse:paid-acquisition-boundary",
+    "refuse:platform-scraping-boundary",
+    "refuse:personal-data-enrichment-boundary",
+    "refuse:privacy-consent-boundary",
+    "refuse:public-action-boundary",
+    "refuse:causal-claim-boundary",
+    "refuse:human-verdict-boundary",
+  ]) assert.ok(outcomes.has(expected), `missing outcome: ${expected}`);
+  assert.equal(sourceEvidence.sourceCoverage, 143);
+  assert.equal(sourceEvidence.proseCopied, false);
+  assert.equal(candidate.criticalPassed, 72);
+  assert.deepEqual(candidate.unresolvedEffects, []);
+  assert.equal(decision.status, "promoted");
 });
