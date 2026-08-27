@@ -21,8 +21,8 @@ test("Daedalus exposes distinct implementation routes and validates its contract
   assert.doesNotThrow(() => validateCompositionContract(contract));
   assert.equal(contract.name, "eternities-daedalus");
   assert.deepEqual(contract.routes.map(({ id }) => id), [
-    "implementation-delivery", "integrations-observability", "language-framework",
-    "migration", "refactoring-quality", "security-specialist",
+    "implementation-delivery", "refactoring-quality", "language-framework",
+    "security-specialist", "integrations-observability", "migration",
     "specialist-methods",
   ]);
   assert.equal(contract.routes.some(({ delegates }) => delegates.includes(contract.name)), false);
@@ -31,7 +31,7 @@ test("Daedalus exposes distinct implementation routes and validates its contract
   assert.match(skill, /fail closed/i);
   assert.match(skill, /credentials|destructive migration|unsafe generated code/i);
   const card = await json("skills/eternities-daedalus/references/routing-card.json");
-  assert.deepEqual(card.provides, contract.routes.map(({ id }) => id));
+  assert.deepEqual(card.provides, [...contract.routes.map(({ id }) => id)].sort());
   assert.equal(card.entrypoint, "skills/eternities-daedalus/SKILL.md");
 });
 
