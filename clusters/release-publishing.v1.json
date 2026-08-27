@@ -1,0 +1,227 @@
+{
+  "schemaVersion": 1,
+  "clusterSetId": "release-publishing-clusters-v1",
+  "familyId": "release-publishing",
+  "clusters": [
+    {
+      "id": "release-change-lifecycle",
+      "intent": "Move a verified change set from pull-request selection through public change communication to an auditable version and tag boundary.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "Queue triage, release-note construction, and version finalization consume successive evidence states and produce distinct artifacts. They form a portable sequence, but each stage retains its own authority checks and stopping conditions.",
+      "members": [
+        { "sourceId": "skill-0dae43bc735c2dd2", "reviewDigest": "2bd3c21a706012c6d5b509fb01c791e4f88370459a3f204a4b54a4c1deb38aa5", "role": "canonical" },
+        { "sourceId": "skill-3ff3701eefce09e5", "reviewDigest": "84d9a1857946c2170e56049feac475a3cd6df0241c45044c3d295a4a488f89cf", "role": "variant" },
+        { "sourceId": "skill-329a14a22032ba01", "reviewDigest": "7695457f8b499a3f4b1bb7b28cddf77b90a412ef8015860b29950286d8fb059a", "role": "variant" }
+      ]
+    },
+    {
+      "id": "release-continuous-delivery-design",
+      "intent": "Derive repository-aware quality gates and staged delivery controls while keeping infrastructure and monitoring extensions separately selectable.",
+      "relationship": "canonical-with-variants",
+      "synthesisDecision": "candidate",
+      "rationale": "The three reviews share stack discovery, repeatable checks, environment stages, and failure feedback. The broader DevOps source adds infrastructure and monitoring rather than replacing the focused pipeline capabilities, so synthesis should preserve those optional specialist branches.",
+      "members": [
+        { "sourceId": "skill-02967270be076b17", "reviewDigest": "366bde97c9ee26d1b4fa8d5fc1749c3fc88eb4e5ef656826e80d185bde8a387b", "role": "canonical" },
+        { "sourceId": "skill-b40dfbfc44d870e3", "reviewDigest": "3ce399165c5b16d38c475c32db8e5e1dfb525a2f1547a7e209c07390517e32c0", "role": "variant" },
+        { "sourceId": "skill-bd0dc5329a68a21b", "reviewDigest": "e90a3edb535906a6085a2c52b16618df035cb67d7834ad5874616cde77f9e473", "role": "variant" }
+      ]
+    },
+    {
+      "id": "release-production-readiness",
+      "intent": "Establish deploy readiness from explicit checks, approvals, migration conditions, health signals, and rollback triggers before production mutation.",
+      "relationship": "canonical-with-variants",
+      "synthesisDecision": "candidate",
+      "rationale": "Both reviews create pre-deployment control evidence. One emphasizes a release-specific checklist while the other contributes portable runtime health and rollback invariants, making them complementary variants of one bounded readiness workflow.",
+      "members": [
+        { "sourceId": "skill-510b795db1e23dda", "reviewDigest": "f2b8a0c38454ee934b1c961668459b60b64f7a9a4ea352876e2cda5176e48ff0", "role": "variant" },
+        { "sourceId": "skill-ed7941ee8d5686c9", "reviewDigest": "c725a7cf7ad0145b7c8f9b4d02681e8b43773fb340188f20bc90483838b4aac9", "role": "canonical" }
+      ]
+    },
+    {
+      "id": "release-dependency-name-screening",
+      "intent": "Screen proposed package identities for likely namespace impersonation before installation or lockfile acceptance.",
+      "relationship": "canonical-with-variants",
+      "synthesisDecision": "candidate",
+      "rationale": "The review describes a coherent read-first supply-chain gate with a portable decision boundary. Its registry-specific detectors can remain adapters while the core comparison and escalation behavior is synthesized independently.",
+      "members": [
+        { "sourceId": "skill-166cd77d1c09286d", "reviewDigest": "1796deed299f2c0bab981a63e7c027f87e4b00105bc61becc741386fb2bbd0d9", "role": "canonical" }
+      ]
+    },
+    {
+      "id": "release-azure-deployment-adapters",
+      "intent": "Model an Azure deployment project and, when applicable, configure its static-site and serverless-API specialization.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "deferred",
+      "rationale": "Project modeling can precede Static Web Apps specialization, but both depend on Azure-specific CLIs, configuration contracts, authentication, and changing platform guidance. Their useful boundaries should remain cold as provider adapters.",
+      "members": [
+        { "sourceId": "skill-9b020c2fafc15bac", "reviewDigest": "d7eeb9273913afc0db7bdcc69494ec5242bf22cf7bbf30c3de91a3df41bdaa23", "role": "deferred" },
+        { "sourceId": "skill-f3a733b17cb1e385", "reviewDigest": "d3b1e237217ad9a4ff26cc60aab6262f884912f824e293ad3f80c24cac7ac7b4", "role": "deferred" }
+      ]
+    },
+    {
+      "id": "release-vercel-preview-adapters",
+      "intent": "Prepare a static or framework project for a confirmed Vercel preview handoff and preserve observable deployment results.",
+      "relationship": "canonical-with-variants",
+      "synthesisDecision": "deferred",
+      "rationale": "The reviews overlap on project validation, preview publication, and result reporting, while one is restricted to accepted static artifacts. They are provider-bound variants with external-write and credential boundaries that require a dedicated current adapter policy.",
+      "members": [
+        { "sourceId": "skill-14f091a090a02524", "reviewDigest": "0e2710bdb660913693c625e33d046c8a00eed80122baad526f1d93f00737f728", "role": "deferred" },
+        { "sourceId": "skill-bed169988b7bbb02", "reviewDigest": "b0c7b3e23d266846e04587f0adc4ef8ef58cc4c8c72fbeadaf0cd569857df486", "role": "deferred" }
+      ]
+    },
+    {
+      "id": "release-microsoft-store-adapter",
+      "intent": "Inspect and submit Windows application releases through an authenticated Microsoft Store publishing boundary.",
+      "relationship": "boundary-deferred",
+      "synthesisDecision": "deferred",
+      "rationale": "The workflow is useful but inseparable from Partner Center identity, package-flight semantics, external submission effects, and temporally changing service behavior.",
+      "members": [
+        { "sourceId": "skill-0ee60d760219cc01", "reviewDigest": "07b8481ac16b4ad99b289d41bc4637d716f57f966bc4fadb2c340ceae713a922", "role": "deferred" }
+      ]
+    },
+    {
+      "id": "release-qdrant-deployment-selection",
+      "intent": "Choose among Qdrant deployment modes from latency, control, residency, and operational ownership requirements.",
+      "relationship": "specialized-alternative",
+      "synthesisDecision": "deferred",
+      "rationale": "The decision frame is coherent, but its option set and feature comparisons are vendor-specific and time-sensitive. It should remain a specialized adapter rather than become a general release primitive.",
+      "members": [
+        { "sourceId": "skill-12ecb52fae8a4e40", "reviewDigest": "9f87f8efc4bd56aa64c41cb1f52753cce862484b492525750e51ef41ebcd63a3", "role": "deferred" }
+      ]
+    },
+    {
+      "id": "release-python-package-publishing",
+      "intent": "Build, verify, version, and publish a Python distribution through ecosystem-specific package infrastructure.",
+      "relationship": "boundary-deferred",
+      "synthesisDecision": "deferred",
+      "rationale": "The review contains a substantial specialist workflow, but backend diversity, PyPI identity, signing, and evolving packaging standards make it unsuitable for immediate portable synthesis.",
+      "members": [
+        { "sourceId": "skill-7c6f97148d85bca3", "reviewDigest": "3d42ca3f1965e89643a1c694fb266eaa2a2d207a8173450b2405ee78c85ed81e", "role": "deferred" }
+      ]
+    },
+    {
+      "id": "release-media-render-and-publication",
+      "intent": "Validate and render a completed media project before routing its publication to a selected distribution platform.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "deferred",
+      "rationale": "Rendering and platform publication are successive but distinct specialist stages. HyperFrames has duplicate-candidate evidence only, not proven equivalence, and both reviews depend on product-specific tooling and external publishing authority.",
+      "members": [
+        { "sourceId": "skill-edd5e724930af750", "reviewDigest": "eaeca7dc9dcd1d2ac6662a26e658f8ca398cf3bcebd8ae7e79990db5580f7170", "role": "deferred" },
+        { "sourceId": "skill-ef85150ccf6e3cc2", "reviewDigest": "cfbfd7f65627d8da8cb2b669327aba20820082ce0cf18b225e2e39c4891825d5", "role": "deferred" }
+      ]
+    },
+    {
+      "id": "release-github-state-observation",
+      "intent": "Observe source-control and CI state over time while keeping read access distinct from authorized repository mutation.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "deferred",
+      "rationale": "GitHub inspection and durable waiting can compose into release observation, but both reviews embed runtime-specific assumptions and one depends on authenticated GitHub state. The portable monitor contract needs separate design.",
+      "members": [
+        { "sourceId": "skill-53d769741d50215e", "reviewDigest": "54121111c44e442f312761c146b7f095819df685f05ae8277f28a77b4ae9f020", "role": "deferred" },
+        { "sourceId": "skill-678d8203d50887f4", "reviewDigest": "aff09e36a3d3e7bdabc11be255f5c53858b3cb3a658db98d8cb9988f1137dd5b", "role": "deferred" }
+      ]
+    },
+    {
+      "id": "release-batch-inference-operations",
+      "intent": "Submit, monitor, and retrieve artifacts for provider-managed batch inference jobs.",
+      "relationship": "boundary-deferred",
+      "synthesisDecision": "deferred",
+      "rationale": "The lifecycle is coherent but the reviewed interface is generated, provider-specific, and dependent on remote file and job semantics that may change independently.",
+      "members": [
+        { "sourceId": "skill-b67b51581999f151", "reviewDigest": "22fc43288e459e20dc745e5fc775972b7e38222071aeb8bb6aca01ce8e362b94", "role": "deferred" }
+      ]
+    },
+    {
+      "id": "release-v8-pin-update",
+      "intent": "Advance a repository-specific V8 pin through checksum, artifact, canary, and release-candidate validation.",
+      "relationship": "boundary-deferred",
+      "synthesisDecision": "deferred",
+      "rationale": "This is a valuable specialist release procedure whose file surfaces, artifact service, and canary behavior belong to one repository and dependency ecosystem rather than a portable workflow.",
+      "members": [
+        { "sourceId": "skill-6d6a5c5d10b9c46a", "reviewDigest": "2f757d7c9631c7fb5bfa4f9382a2bf01099478c50a1fc68648cd813907c6f099", "role": "deferred" }
+      ]
+    },
+    {
+      "id": "release-community-plugin-packaging",
+      "intent": "Package completed project work as a validated community plugin without silently initiating publication.",
+      "relationship": "boundary-deferred",
+      "synthesisDecision": "deferred",
+      "rationale": "The project-derived packaging and confirmation boundary are useful, but the artifact contract and follow-on controls are specific to OpenDesign and require that ecosystem's current schemas.",
+      "members": [
+        { "sourceId": "skill-11ac76817d1316a8", "reviewDigest": "ff4411194729e84aba6895f25c2953b5554e8edc73574eeb01f66fbcff64b7ca", "role": "deferred" }
+      ]
+    },
+    {
+      "id": "release-supply-chain-security-investigation",
+      "intent": "Trace artifact and dependency provenance or identify supply-chain exposure without publishing attack material or crossing an established security boundary.",
+      "relationship": "specialized-alternative",
+      "synthesisDecision": "deferred",
+      "rationale": "The reviews cover complementary internal-sandbox and external-recon scopes. Both are security-sensitive, context-dependent, and capable of approaching offensive activity, so their differing authority and evidence boundaries must remain explicit.",
+      "members": [
+        { "sourceId": "skill-2e3a7afa9bf15864", "reviewDigest": "dda62c5e6e29aa519df8bc5481f16796da91cf070c6a6d89940b742878b3a91d", "role": "boundary" },
+        { "sourceId": "skill-8fcd3059320993e3", "reviewDigest": "a831719a5ff5a4e0439d27d68105cf97a350013e1d06b25de9d7d65a1ff1c435", "role": "deferred" }
+      ]
+    },
+    {
+      "id": "release-model-extraction-monitoring",
+      "intent": "Assess inference traffic and controlled test evidence for signs of model extraction, inversion, or membership probing.",
+      "relationship": "boundary-deferred",
+      "synthesisDecision": "deferred",
+      "rationale": "Detection thresholds, output perturbation, user impact, and adversarial testing are high-stakes security decisions that require current threat models and qualified operational ownership.",
+      "members": [
+        { "sourceId": "skill-ed323ed8a91b04bf", "reviewDigest": "9d84d0c5ad96bca028702d6b6aaff4ea09f5ad18a87032f3340a4250ac776800", "role": "deferred" }
+      ]
+    },
+    {
+      "id": "release-vulnerability-management-platform",
+      "intent": "Centralize scanner findings for deduplication, remediation tracking, integrations, and security reporting.",
+      "relationship": "boundary-deferred",
+      "synthesisDecision": "deferred",
+      "rationale": "The operational pattern is useful but the reviewed implementation is bound to DefectDojo deployment, API, credential, and integration behavior and handles consequential security findings.",
+      "members": [
+        { "sourceId": "skill-f09b98268a5b9f72", "reviewDigest": "ef0a425af3386b46995528826cd134f9ce8d951447cc925d3d52b8b88c061d77", "role": "deferred" }
+      ]
+    },
+    {
+      "id": "release-threat-intelligence-feed",
+      "intent": "Deploy a TAXII service and exchange STIX collections with authorized threat-intelligence consumers.",
+      "relationship": "boundary-deferred",
+      "synthesisDecision": "deferred",
+      "rationale": "Server deployment, collection authorization, indicator handling, and SIEM integration form a specialist security workflow with external effects and changing protocol implementations.",
+      "members": [
+        { "sourceId": "skill-4d8d65f5b76f79d9", "reviewDigest": "ee79cb8356fccd7e3fb50ac36ee2680f08c6ff77e20cf0658cc7e6ab152f89f4", "role": "deferred" }
+      ]
+    },
+    {
+      "id": "release-signed-action-receipts",
+      "intent": "Capture and verify signed evidence for consequential release actions under an explicit policy and identity model.",
+      "relationship": "boundary-deferred",
+      "synthesisDecision": "deferred",
+      "rationale": "Tamper evidence is potentially valuable, but cryptographic claims, identity binding, policy interpretation, dependency trust, and legal framing require independent verification before synthesis.",
+      "members": [
+        { "sourceId": "skill-e5952511aaf38993", "reviewDigest": "5ee343be108bb859926e913b8dc01771c5a51a87f9f3320165aa5ac5d8acc325", "role": "deferred" }
+      ]
+    },
+    {
+      "id": "release-unrelated-note-review",
+      "intent": "Identify a bounded troubleshooting-note clarity review that does not belong to release publishing.",
+      "relationship": "boundary-deferred",
+      "synthesisDecision": "rejected",
+      "rationale": "The source is a real but unrelated document-review capability. Its placement in release publishing is a classification false positive, so no release cluster should inherit it.",
+      "members": [
+        { "sourceId": "skill-2c8762950ce721d7", "reviewDigest": "3aced1b368ff97128b169a2248e3399238437addb2663da8162503db987b3a7f", "role": "boundary" }
+      ]
+    },
+    {
+      "id": "release-incomplete-calibration-fixture",
+      "intent": "Record that a deliberately truncated review fixture supplies no promotable release capability.",
+      "relationship": "boundary-deferred",
+      "synthesisDecision": "rejected",
+      "rationale": "The body is incomplete by design and exists for reviewer calibration. Treating its missing reference as capability evidence would fabricate behavior, dependencies, and boundaries.",
+      "members": [
+        { "sourceId": "skill-f82f2428c0f74399", "reviewDigest": "06c9ea771361aeaac145dd7ed093e6ba6f826995c934b0c0b3db0e66f0cd54a9", "role": "boundary" }
+      ]
+    }
+  ]
+}
