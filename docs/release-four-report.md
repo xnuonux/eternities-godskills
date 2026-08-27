@@ -10,7 +10,7 @@ Muse passed 17 of 17 critical direct, paraphrase, exclusion, and conflict fixtur
 
 Muse is not added to `eternities-engineering`. Release Four creates a separate `eternities-visual` profile whose lock contains only Muse. This keeps the broad engineering prompt unchanged while making visual-system activation independently reversible.
 
-The profile is not activated from the temporary worktree. Activation remains deferred until the reviewed commit is fast-forwarded into canonical `C:\dev\eternities-godskills`.
+The profile was not activated from the temporary worktree. Independent review found no critical or important defect, the release was fast-forwarded into canonical `C:\dev\eternities-godskills`, and only then was the visual profile activated.
 
 ## route system
 
@@ -40,12 +40,15 @@ No third-party script, hook, installer, runtime, browser build, network service,
 - source coverage: 4 exact ledger rows
 - composition: 4 bounded routes, no direct recursion
 - prompt size: 1,294 estimated tokens
-- temporary global links: none
+- temporary worktree links: none
+- canonical global links created by Release Four: 1
+- fresh prompt discovery: valid
+- rollback dry run: plans only `eternities-muse`
 
 ## proof limits
 
 The release proves repository contracts, source reconciliation, deterministic fixture outcomes, token budget, and profile boundaries. It does not prove live-model routing, subjective artistic quality, performance on an unbuilt artifact, production accessibility compliance, or legal non-similarity.
 
-## canonical activation gate
+## canonical activation proof
 
-After independent review, canonical merge must precede profile application. Final certification requires a global Muse junction targeting `C:\dev\eternities-godskills\skills\eternities-muse`, an exact profile receipt, a migration receipt whose rollback plans only Muse, a fresh prompt check, the full repository suite, promotion-receipt verification, cold-index verification, diff hygiene, and a no-worktree-target audit.
+The global Muse junction targets `C:\dev\eternities-godskills\skills\eternities-muse`. The exact profile receipt is `receipts/profile-eternities-visual.json`; the dedicated migration receipt is `receipts/profile-eternities-visual-release-four-migration.json`, and its rollback dry run plans only Muse. A fresh Codex prompt found Muse with no forbidden cold skills. Final repository, receipt, cold-index, diff, and junction verification remains the integration commit gate.
