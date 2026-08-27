@@ -124,3 +124,37 @@ test("oracle receipt separates promotion proof from fresh-prompt recall", async 
   assert.equal(receipt.decision.status, "promoted");
   assert.match(receipt.limitation, /fresh-prompt proof/i);
 });
+
+test("oracle v2 adds only the four exact candidate clusters with bounded behavior", async () => {
+  const markdown = await readFile(new URL("SKILL.md", skillRoot), "utf8");
+  const synthesis = JSON.parse(
+    await readFile(new URL("../syntheses/eternities-oracle.v2.json", import.meta.url), "utf8"),
+  );
+  const receipt = JSON.parse(
+    await readFile(
+      new URL("../receipts/promotions/eternities-oracle-v2.json", import.meta.url),
+      "utf8",
+    ),
+  );
+  assert.deepEqual(synthesis.clusterIds, [
+    "repository-source-research-013",
+    "repository-source-research-020",
+    "repository-source-research-031",
+    "repository-source-research-227",
+  ]);
+  assert.deepEqual(synthesis.sourceIds, [
+    "skill-64376ecfd3fc8025",
+    "skill-ac1f5f663a41bdef",
+    "skill-23ddb32a951b8061",
+    "skill-150968403447b795",
+    "skill-ecbede6d01f386ec",
+  ]);
+  assert.equal(synthesis.deferredSourceCount, 244);
+  assert.match(markdown, /never execute repository code/i);
+  assert.match(markdown, /comparison requires a named baseline/i);
+  assert.match(markdown, /unknown provenance.*pattern-only/i);
+  assert.match(markdown, /credentials|security-sensitive extraction/i);
+  assert.equal(receipt.decision.status, "promoted");
+  assert.deepEqual(receipt.evidence.clusterIds, synthesis.clusterIds);
+  assert.deepEqual(receipt.evidence.sourceIds, synthesis.sourceIds);
+});
