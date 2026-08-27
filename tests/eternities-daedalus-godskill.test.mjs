@@ -30,6 +30,9 @@ test("Daedalus exposes distinct implementation routes and validates its contract
   assert.match(skill, /agent-neutral/i);
   assert.match(skill, /fail closed/i);
   assert.match(skill, /credentials|destructive migration|unsafe generated code/i);
+  const card = await json("skills/eternities-daedalus/references/routing-card.json");
+  assert.deepEqual(card.provides, contract.routes.map(({ id }) => id));
+  assert.equal(card.entrypoint, "skills/eternities-daedalus/SKILL.md");
 });
 
 test("Daedalus preserves every candidate cluster and excludes non-candidates", async () => {
