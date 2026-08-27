@@ -47,6 +47,30 @@ test("every exact marketing and growth source has one bounded semantic review", 
   }
   const queueIds = queue.cards.map(({ sourceId }) => sourceId).sort();
 
+  const forbiddenBoilerplate = [
+    "analyze the source's documented",
+    "as a bounded marketing capability",
+    "inspect the documented",
+    "organize findings into a reusable bounded workflow",
+    "evidence-aware findings, prioritization, and limitations",
+    "authorized output format and portability requirements",
+  ];
+  for (const review of reviews) {
+    const semanticText = [
+      review.neutralCapabilitySummary,
+      ...review.inputs,
+      ...review.operations,
+      ...review.outputs,
+    ].join("\n").toLowerCase();
+    for (const phrase of forbiddenBoilerplate) {
+      assert.equal(
+        semanticText.includes(phrase),
+        false,
+        `${review.sourceId} contains generic review boilerplate: ${phrase}`,
+      );
+    }
+  }
+
   assert.equal(reviews.length, 291);
   assert.equal(new Set(reviews.map(({ sourceId }) => sourceId)).size, 291);
   assert.deepEqual(reviews.map(({ sourceId }) => sourceId).sort(), queueIds);
@@ -93,4 +117,3 @@ test("every exact marketing and growth source has one bounded semantic review", 
     );
   }
 });
-
