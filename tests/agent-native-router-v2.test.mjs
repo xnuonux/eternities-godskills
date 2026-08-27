@@ -329,14 +329,16 @@ test("Agora cannot cross its external, risk, or local-write authority boundary",
 
 test("the certification receipt reconciles exact deterministic routing artifacts", async () => {
   const receipt = await json("receipts/agent-native-router-v2.json");
-  const manifestText = await readFile(new URL("artifacts/routing/manifest.json", repositoryRoot), "utf8");
-  const cardsText = await readFile(new URL("artifacts/routing/cards.jsonl", repositoryRoot), "utf8");
-  const familyMapText = await readFile(new URL("artifacts/routing/family-map.json", repositoryRoot), "utf8");
+  const checkpoint = "artifacts/checkpoints/agent-native-router-v2/";
+  const manifestText = await readFile(new URL(`${checkpoint}manifest.json`, repositoryRoot), "utf8");
+  const cardsText = await readFile(new URL(`${checkpoint}cards.jsonl`, repositoryRoot), "utf8");
+  const familyMapText = await readFile(new URL(`${checkpoint}family-map.json`, repositoryRoot), "utf8");
   const manifest = JSON.parse(manifestText);
 
   assert.equal(receipt.schemaVersion, 1);
   assert.equal(receipt.id, "agent-native-router-v2");
   assert.equal(receipt.status, "certified");
+  assert.equal(receipt.checkpointRoot, checkpoint.slice(0, -1));
   assert.equal(receipt.immutableGitBase, "b217591a91d3c5b96b5c7b7af0aabc16776de847");
   assert.deepEqual(receipt.inputs, manifest.inputs);
   assert.deepEqual(receipt.artifacts, {

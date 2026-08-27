@@ -29,6 +29,16 @@ async function routingCard(id) {
 
 const cases = [
   {
+    expected: "eternities-arcadia",
+    outcome: "reconcile game direction runtime systems player experience and proof into one playable advance",
+    family: "game-design-development",
+    required: ["game-direction", "player-experience", "proof-and-release", "runtime-systems"],
+    effects: ["local-read", "local-write"],
+    authority: ["local-read", "local-write"],
+    preconditions: [],
+    maximumRisk: "moderate",
+  },
+  {
     expected: "eternities-agora",
     outcome: "reconcile prospect assessment account state and client deliverables from authorized evidence",
     family: "agency-client-services",
@@ -134,6 +144,7 @@ test("every promoted Eternities capability exposes one exact compact routing car
   assert.deepEqual(ids, [
     "eternities-aegis",
     "eternities-agora",
+    "eternities-arcadia",
     "eternities-architect",
     "eternities-forge",
     "eternities-mnemosyne",
