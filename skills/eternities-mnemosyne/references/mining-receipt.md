@@ -26,7 +26,7 @@ Exact remotes, Git heads, catalog digests, dispositions, and used concepts are r
 
 ## target changes
 
-The mechanisms were independently expressed in Mnemosyne's entrypoint, neutral capability contract, operating contract, routing fixtures, provenance rows, and deterministic promotion receipt. Restricted and copyleft sources contributed patterns only. Source prose copied is `false`.
+The mechanisms were independently expressed in Mnemosyne's entrypoint, neutral capability contract, operating contract, routing fixtures, provenance rows, and deterministic promotion receipt. Restricted and copyleft sources contributed patterns only. No copied prose is recorded or intentionally adapted; this remains an author and ledger disposition rather than an independent legal similarity proof.
 
 ## verification
 

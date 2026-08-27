@@ -114,12 +114,29 @@ test("release two certifies three engineering Godskills and one bounded profile"
     certification.composition.routeCount,
   );
   assert.equal(selectedSourceIds.size, certification.sourceEvidence.selectedSourceCount);
-  const provenancePosition = new Map(
-    ledger.map(({ sourceId }, index) => [sourceId, index]),
+  const boundary = certification.provenanceBoundary;
+  const canonicalLedgerLines = canonicalText(
+    await text("provenance/source-ledger.jsonl"),
+  )
+    .trimEnd()
+    .split("\n");
+  assert.ok(canonicalLedgerLines.length >= boundary.certifiedAtLedgerLength);
+  assert.equal(
+    sha256(
+      `${canonicalLedgerLines
+        .slice(0, boundary.certifiedAtLedgerLength)
+        .join("\n")}\n`,
+    ),
+    boundary.ledgerPrefixSha256,
+  );
+  assert.deepEqual([...selectedSourceIds].sort(), boundary.sourceIds);
+  const historicalRows = ledger.slice(0, boundary.certifiedAtLedgerLength);
+  const historicalPosition = new Map(
+    historicalRows.map(({ sourceId }, index) => [sourceId, index]),
   );
   assert.equal(
     [...selectedSourceIds].filter(
-      (sourceId) => provenancePosition.get(sourceId) >= 10,
+      (sourceId) => historicalPosition.get(sourceId) >= 10,
     ).length,
     certification.sourceEvidence.newProvenanceRows,
   );

@@ -22,7 +22,7 @@ function parseArgs(argv) {
   return parsed;
 }
 
-export async function evaluateSkill({ skillPath, policyPath, receiptPath }) {
+export async function buildSkillReceipt({ skillPath, policyPath }) {
   const casesPath = path.join(skillPath, "evals", "cases.json");
   const skillFile = path.join(skillPath, "SKILL.md");
   const contractPath = path.join(skillPath, "references", "capability-contract.json");
@@ -55,7 +55,7 @@ export async function evaluateSkill({ skillPath, policyPath, receiptPath }) {
         : [],
   };
   const decision = decidePromotion({ baseline, candidate, policy });
-  const receipt = {
+  return {
     schemaVersion: 1,
     skillName: path.basename(skillPath),
     evidenceLevel: "contract-certified",
@@ -76,6 +76,10 @@ export async function evaluateSkill({ skillPath, policyPath, receiptPath }) {
     candidate,
     decision,
   };
+}
+
+export async function evaluateSkill({ skillPath, policyPath, receiptPath }) {
+  const receipt = await buildSkillReceipt({ skillPath, policyPath });
   await writeJsonAtomic(receiptPath, receipt);
   return receipt;
 }

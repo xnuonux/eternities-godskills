@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
 
 import {
   validateCompositionContract,
@@ -10,6 +11,7 @@ import { evaluateSuite } from "../src/evaluate.mjs";
 import { canonicalText, sha256 } from "../src/io.mjs";
 import { decidePromotion } from "../src/promote.mjs";
 import { deriveSourceEvidence } from "../src/provenance-evidence.mjs";
+import { buildSkillReceipt } from "../scripts/evaluate-skill.mjs";
 
 const root = new URL("../", import.meta.url);
 
@@ -80,7 +82,22 @@ test("release three certifies Mnemosyne and a deferred canonical profile activat
     await canonicalSha256("receipts/promotions/eternities-mnemosyne.json"),
   );
   assert.equal(certification.promotion.tokenCount, candidate.tokenCount);
-  assert.equal(certification.promotion.criticalCases, "12/12");
+  assert.equal(certification.promotion.criticalCases, "14/14");
+  assert.equal(
+    certification.sourceEvidence.sourceProseCopyEvidence,
+    "author-and-ledger-declared",
+  );
+  assert.deepEqual(
+    await buildSkillReceipt({
+      skillPath: fileURLToPath(
+        new URL("../skills/eternities-mnemosyne", import.meta.url),
+      ),
+      policyPath: fileURLToPath(
+        new URL("../policies/promotion.v1.json", import.meta.url),
+      ),
+    }),
+    receipt,
+  );
 
   assert.doesNotThrow(() => validateCompositionContract(contract));
   assert.equal(contract.routes.length, certification.composition.routeCount);
@@ -96,11 +113,17 @@ test("release three certifies Mnemosyne and a deferred canonical profile activat
     ),
   );
   assert.doesNotThrow(() => validateCompositionGraph(globalContracts));
+  const directSelfRoutes = globalContracts
+    .flatMap(({ name, routes }) =>
+      routes.filter(({ delegates }) => delegates.includes(name)),
+    ).length;
   assert.equal(globalContracts.length, certification.composition.globalGodskillCount);
   assert.equal(
     globalContracts.reduce((total, value) => total + value.routes.length, 0),
     certification.composition.globalRouteCount,
   );
+  assert.equal(directSelfRoutes, certification.composition.directSelfRoutes);
+  assert.equal(certification.composition.compositionCycles, 0);
   assert.equal(releaseRows.length, 5);
   assert.equal(
     releaseRows.filter(({ disposition }) => disposition === "pattern-reference").length,

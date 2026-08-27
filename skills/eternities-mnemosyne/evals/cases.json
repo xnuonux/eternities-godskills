@@ -12,20 +12,22 @@
     {"id":"conflict-keel","kind":"conflict","critical":true,"prompt":"The Codex context just compacted. Resume the exact task keel boundary now.","expected":"defer:keel-wake"},
     {"id":"conflict-oracle","kind":"conflict","critical":true,"prompt":"Research current official memory-system benchmarks and reconcile the sources.","expected":"defer:eternities-oracle"},
     {"id":"conflict-debug","kind":"conflict","critical":true,"prompt":"Our retrieval code started returning the wrong session after yesterday's change. Diagnose the regression.","expected":"defer:systematic-debugging"},
-    {"id":"conflict-simple-resume","kind":"conflict","critical":true,"prompt":"Continue this same turn from the summary already in context; nothing was compacted and no history is missing.","expected":"skip"}
+    {"id":"conflict-simple-resume","kind":"conflict","critical":true,"prompt":"Continue this same turn from the summary already in context; nothing was compacted and no history is missing.","expected":"skip"},
+    {"id":"conflict-mixed-audit-research","kind":"conflict","critical":true,"prompt":"Audit our stale memory retrieval against current official benchmarks and keep every supporting source.","expected":"route:memory-audit"},
+    {"id":"conflict-mixed-boundary-debug","kind":"conflict","critical":true,"prompt":"The context just compacted and the previous retrieval was wrong. Restore the exact boundary before diagnosing it.","expected":"defer:keel-wake"}
   ],
   "baseline": {
     "name": "checkpoint-replay-only",
     "tokenCount": 6400,
     "sourceCoverage": 1,
     "results": [
-      {"id":"direct-recovery","actual":"route:continuity-recovery"},{"id":"direct-budget","actual":"route:continuity-recovery"},{"id":"direct-design","actual":"route:continuity-recovery"},{"id":"direct-audit","actual":"route:continuity-recovery"},{"id":"paraphrase-recovery","actual":"route:continuity-recovery"},{"id":"paraphrase-design","actual":"route:continuity-recovery"},{"id":"exclude-status","actual":"route:continuity-recovery"},{"id":"exclude-fact","actual":"route:continuity-recovery"},{"id":"conflict-keel","actual":"route:continuity-recovery"},{"id":"conflict-oracle","actual":"route:continuity-recovery"},{"id":"conflict-debug","actual":"route:continuity-recovery"},{"id":"conflict-simple-resume","actual":"route:continuity-recovery"}
+      {"id":"direct-recovery","actual":"route:continuity-recovery"},{"id":"direct-budget","actual":"route:continuity-recovery"},{"id":"direct-design","actual":"route:continuity-recovery"},{"id":"direct-audit","actual":"route:continuity-recovery"},{"id":"paraphrase-recovery","actual":"route:continuity-recovery"},{"id":"paraphrase-design","actual":"route:continuity-recovery"},{"id":"exclude-status","actual":"route:continuity-recovery"},{"id":"exclude-fact","actual":"route:continuity-recovery"},{"id":"conflict-keel","actual":"route:continuity-recovery"},{"id":"conflict-oracle","actual":"route:continuity-recovery"},{"id":"conflict-debug","actual":"route:continuity-recovery"},{"id":"conflict-simple-resume","actual":"route:continuity-recovery"},{"id":"conflict-mixed-audit-research","actual":"route:continuity-recovery"},{"id":"conflict-mixed-boundary-debug","actual":"route:continuity-recovery"}
     ]
   },
   "candidate": {
     "sourceCoverage": 5,
     "results": [
-      {"id":"direct-recovery","actual":"route:continuity-recovery"},{"id":"direct-budget","actual":"route:context-budget"},{"id":"direct-design","actual":"route:memory-design"},{"id":"direct-audit","actual":"route:memory-audit"},{"id":"paraphrase-recovery","actual":"route:continuity-recovery"},{"id":"paraphrase-design","actual":"route:memory-design"},{"id":"exclude-status","actual":"skip"},{"id":"exclude-fact","actual":"skip"},{"id":"conflict-keel","actual":"defer:keel-wake"},{"id":"conflict-oracle","actual":"defer:eternities-oracle"},{"id":"conflict-debug","actual":"defer:systematic-debugging"},{"id":"conflict-simple-resume","actual":"skip"}
+      {"id":"direct-recovery","actual":"route:continuity-recovery"},{"id":"direct-budget","actual":"route:context-budget"},{"id":"direct-design","actual":"route:memory-design"},{"id":"direct-audit","actual":"route:memory-audit"},{"id":"paraphrase-recovery","actual":"route:continuity-recovery"},{"id":"paraphrase-design","actual":"route:memory-design"},{"id":"exclude-status","actual":"skip"},{"id":"exclude-fact","actual":"skip"},{"id":"conflict-keel","actual":"defer:keel-wake"},{"id":"conflict-oracle","actual":"defer:eternities-oracle"},{"id":"conflict-debug","actual":"defer:systematic-debugging"},{"id":"conflict-simple-resume","actual":"skip"},{"id":"conflict-mixed-audit-research","actual":"route:memory-audit"},{"id":"conflict-mixed-boundary-debug","actual":"defer:keel-wake"}
     ]
   }
 }

@@ -10,12 +10,12 @@ It deliberately bypasses routine turns, status checks, simple factual recall, an
 
 ## evidence
 
-- 12 of 12 critical direct, paraphrase, exclusion, and conflict fixtures pass.
+- 14 of 14 critical direct, paraphrase, exclusion, and mixed-intent conflict fixtures pass.
 - estimated entrypoint cost is 1,099 tokens against the 4,000-token policy ceiling.
 - five exact certified source records are reconciled.
 - two permissive sources support independent implementation.
 - three restricted or copyleft sources remain pattern-only.
-- no source prose, runtime, hook, installer, backend, or example code was copied.
+- no copied prose is recorded or intentionally adapted; this is an author and ledger disposition, not an independent legal similarity proof.
 
 ## activation boundary
 
