@@ -7,6 +7,7 @@ import {
   COMPLETION_STAGES,
   TERMINAL_STATUSES,
   buildCompletionPlan,
+  deriveFamilyStatus,
 } from "../src/completion-waves.mjs";
 import { buildCompletionWaves } from "../scripts/build-completion-waves.mjs";
 import { canonicalText, sha256 } from "../src/io.mjs";
@@ -72,6 +73,13 @@ test("family receipts cover all owners and preserve certified families", async (
     assert.equal(receipt.gates.spending, false);
     assert.equal(receipt.promotionClaims, 0);
   }
+});
+
+test("unfinished family status advances only through earned evidence", () => {
+  assert.equal(deriveFamilyStatus("release-publishing", 10, { cardReviewed: 9, clustered: 0 }), "pending-review");
+  assert.equal(deriveFamilyStatus("release-publishing", 10, { cardReviewed: 10, clustered: 0 }), "reviewed");
+  assert.equal(deriveFamilyStatus("release-publishing", 10, { cardReviewed: 10, clustered: 10 }), "clustered");
+  assert.equal(deriveFamilyStatus("agency-client-services", 12, { cardReviewed: 12, clustered: 12 }), "certified");
 });
 
 test("completion build is byte-stable and restores a missing receipt", async () => {

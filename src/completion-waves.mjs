@@ -22,6 +22,13 @@ const STAGE_BY_FAMILY = new Map(
   COMPLETION_STAGES.flatMap(({ stage, families }) => families.map((familyId) => [familyId, stage])),
 );
 
+const HISTORICALLY_CERTIFIED_FAMILIES = new Set([
+  "agency-client-services",
+  "game-design-development",
+  "marketing-growth",
+  "social-media-community",
+]);
+
 function canonicalJson(value) {
   return `${JSON.stringify(value, null, 2)}\n`;
 }
@@ -29,6 +36,13 @@ function canonicalJson(value) {
 function evidenceCounts(cards) {
   const fields = ["cardReviewed", "clustered", "synthesized", "evaluated", "promoted"];
   return Object.fromEntries(fields.map((field) => [field, cards.filter(({ evidence }) => evidence[field] === true).length]));
+}
+
+export function deriveFamilyStatus(familyId, sourceCount, counts) {
+  if (HISTORICALLY_CERTIFIED_FAMILIES.has(familyId)) return "certified";
+  if (counts.cardReviewed !== sourceCount) return "pending-review";
+  if (counts.clustered !== sourceCount) return "reviewed";
+  return "clustered";
 }
 
 function assertInputs({ ownership, summary, queues }) {
@@ -86,8 +100,7 @@ export function buildCompletionPlan(inputs) {
     const queue = queues.get(familyId);
     if (!queue) throw new Error(`missing owner queue: ${familyId}`);
     const counts = evidenceCounts(queue.cards);
-    const isComplete = counts.cardReviewed === queue.sourceCount && counts.clustered === queue.sourceCount;
-    const status = isComplete ? "certified" : "pending-review";
+    const status = deriveFamilyStatus(familyId, queue.sourceCount, counts);
     if (!TERMINAL_STATUSES.has(status)) throw new Error(`unknown family status: ${status}`);
     const packetDigests = buildReviewPackets(queue).map((packet) => ({
       path: `artifacts/corpus/owners/${familyId}/packets/${String(packet.sequence).padStart(3, "0")}.json`,
@@ -106,7 +119,7 @@ export function buildCompletionPlan(inputs) {
       },
       packets: packetDigests,
       promotionClaims: 0,
-      allowedNextTransition: isComplete ? null : "reviewed",
+      allowedNextTransition: status === "certified" ? null : status === "pending-review" ? "reviewed" : status === "reviewed" ? "clustered" : "promoted-or-deferred",
       gates: {
         externalActivation: false,
         profileMutation: false,
@@ -116,7 +129,7 @@ export function buildCompletionPlan(inputs) {
         accountMutation: false,
         spending: false,
       },
-      proofLimit: isComplete
+      proofLimit: status === "certified"
         ? "historical local certification only; live-agent and production performance remain unproven"
         : "semantic review, clustering, synthesis, evaluation, and promotion remain pending",
     };
