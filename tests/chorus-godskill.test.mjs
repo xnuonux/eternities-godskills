@@ -3,6 +3,10 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
 import { validateCompositionContract } from "../src/composition.mjs";
+import { evaluateSuite } from "../src/evaluate.mjs";
+import { canonicalText } from "../src/io.mjs";
+import { decidePromotion } from "../src/promote.mjs";
+import { deriveClusterSourceEvidence } from "../src/provenance-evidence.mjs";
 import { validateCapabilityContract } from "../src/schema.mjs";
 
 const root = new URL("../", import.meta.url);
@@ -90,4 +94,47 @@ test("Chorus mining receipt preserves every reviewed cluster and proof boundary"
   assert.match(receipt, /no third-party code or instruction was executed/i);
   assert.match(receipt, /106 reviewed sources/i);
   assert.match(receipt, /47 selected/i);
+});
+
+test("Chorus evaluation covers every route and required social boundary", async () => {
+  const [suite, contract, clusters, reviews, policy, markdown] = await Promise.all([
+    json("skills/eternities-chorus/evals/cases.json"),
+    json("skills/eternities-chorus/references/capability-contract.json"),
+    jsonLines("artifacts/corpus/cluster-evidence.jsonl"),
+    jsonLines("artifacts/corpus/review-evidence.jsonl"),
+    json("policies/promotion.v1.json"),
+    readFile(skillPath, "utf8"),
+  ]);
+  const sourceEvidence = deriveClusterSourceEvidence(contract, clusters, reviews);
+  const baseline = {
+    ...evaluateSuite(suite.cases, suite.baseline.results),
+    tokenCount: suite.baseline.tokenCount,
+  };
+  const candidate = {
+    ...evaluateSuite(suite.cases, suite.candidate.results),
+    tokenCount: Math.ceil(Buffer.byteLength(canonicalText(markdown), "utf8") / 4),
+    improvements: sourceEvidence.sourceCoverage > suite.baseline.sourceCoverage ? ["sourceCoverage"] : [],
+  };
+  const decision = decidePromotion({ baseline, candidate, policy });
+  assert.ok(suite.cases.length >= 40);
+  assert.ok(suite.cases.every(({ critical }) => critical === true));
+  const kinds = Object.groupBy(suite.cases, ({ kind }) => kind);
+  assert.ok(kinds.direct.length >= 12);
+  assert.ok(kinds.paraphrase.length >= 12);
+  assert.ok(kinds.exclusion.length >= 3);
+  assert.ok(kinds.conflict.length >= 13);
+  const outcomes = new Set(suite.cases.map(({ expected }) => expected));
+  for (const expected of [
+    "route:identity-and-channel-strategy", "route:editorial-production",
+    "route:community-operations", "route:measurement-and-stewardship", "skip",
+    "defer:eternities-oracle", "defer:eternities-aegis", "defer:eternities-muse",
+    "refuse:paid-acquisition-boundary", "refuse:platform-scraping-boundary",
+    "refuse:public-action-boundary", "refuse:identity-fabrication-boundary",
+    "refuse:participant-dignity-boundary", "refuse:human-sensitive-decision-boundary",
+  ]) assert.ok(outcomes.has(expected), `missing outcome: ${expected}`);
+  assert.equal(sourceEvidence.sourceCoverage, 47);
+  assert.equal(sourceEvidence.proseCopied, false);
+  assert.equal(candidate.criticalPassed, suite.cases.length);
+  assert.deepEqual(candidate.unresolvedEffects, []);
+  assert.equal(decision.status, "promoted");
 });
