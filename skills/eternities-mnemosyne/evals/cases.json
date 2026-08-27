@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {"id":"direct-recovery","kind":"direct","critical":true,"prompt":"Reconstruct the exact state of this prior development task, resolve stale notes, and give me the next safe action without replaying everything.","expected":"route:continuity-recovery"},
+    {"id":"direct-budget","kind":"direct","critical":true,"prompt":"Reduce this agent's active context while preserving decisions, failures, evidence pointers, authority, and the executable next step.","expected":"route:context-budget"},
+    {"id":"direct-design","kind":"direct","critical":true,"prompt":"Design durable agent memory with scoped identities, provenance, retention, retrieval, privacy, invalidation, and recovery tests.","expected":"route:memory-design"},
+    {"id":"direct-audit","kind":"direct","critical":true,"prompt":"Audit this memory system for stale recall, contradictory claims, missing coverage, cross-project leakage, and cold-resume recovery.","expected":"route:memory-audit"},
+    {"id":"paraphrase-recovery","kind":"paraphrase","critical":true,"prompt":"Find where that exact task truly left off and hand me only what I need to continue it.","expected":"route:continuity-recovery"},
+    {"id":"paraphrase-design","kind":"paraphrase","critical":true,"prompt":"Give this agent a trustworthy long memory that knows what belongs to this project, what expires, and where every belief came from.","expected":"route:memory-design"},
+    {"id":"exclude-status","kind":"exclusion","critical":true,"prompt":"Status?","expected":"skip"},
+    {"id":"exclude-fact","kind":"exclusion","critical":true,"prompt":"What branch am I on?","expected":"skip"},
+    {"id":"conflict-keel","kind":"conflict","critical":true,"prompt":"The Codex context just compacted. Resume the exact task keel boundary now.","expected":"defer:keel-wake"},
+    {"id":"conflict-oracle","kind":"conflict","critical":true,"prompt":"Research current official memory-system benchmarks and reconcile the sources.","expected":"defer:eternities-oracle"},
+    {"id":"conflict-debug","kind":"conflict","critical":true,"prompt":"Our retrieval code started returning the wrong session after yesterday's change. Diagnose the regression.","expected":"defer:systematic-debugging"},
+    {"id":"conflict-simple-resume","kind":"conflict","critical":true,"prompt":"Continue this same turn from the summary already in context; nothing was compacted and no history is missing.","expected":"skip"}
+  ],
+  "baseline": {
+    "name": "checkpoint-replay-only",
+    "tokenCount": 6400,
+    "sourceCoverage": 1,
+    "results": [
+      {"id":"direct-recovery","actual":"route:continuity-recovery"},{"id":"direct-budget","actual":"route:continuity-recovery"},{"id":"direct-design","actual":"route:continuity-recovery"},{"id":"direct-audit","actual":"route:continuity-recovery"},{"id":"paraphrase-recovery","actual":"route:continuity-recovery"},{"id":"paraphrase-design","actual":"route:continuity-recovery"},{"id":"exclude-status","actual":"route:continuity-recovery"},{"id":"exclude-fact","actual":"route:continuity-recovery"},{"id":"conflict-keel","actual":"route:continuity-recovery"},{"id":"conflict-oracle","actual":"route:continuity-recovery"},{"id":"conflict-debug","actual":"route:continuity-recovery"},{"id":"conflict-simple-resume","actual":"route:continuity-recovery"}
+    ]
+  },
+  "candidate": {
+    "sourceCoverage": 5,
+    "results": [
+      {"id":"direct-recovery","actual":"route:continuity-recovery"},{"id":"direct-budget","actual":"route:context-budget"},{"id":"direct-design","actual":"route:memory-design"},{"id":"direct-audit","actual":"route:memory-audit"},{"id":"paraphrase-recovery","actual":"route:continuity-recovery"},{"id":"paraphrase-design","actual":"route:memory-design"},{"id":"exclude-status","actual":"skip"},{"id":"exclude-fact","actual":"skip"},{"id":"conflict-keel","actual":"defer:keel-wake"},{"id":"conflict-oracle","actual":"defer:eternities-oracle"},{"id":"conflict-debug","actual":"defer:systematic-debugging"},{"id":"conflict-simple-resume","actual":"skip"}
+    ]
+  }
+}
