@@ -49,6 +49,37 @@ test("body audit records exact inert file evidence", async (context) => {
   assert.equal(result.byteSize, Buffer.byteLength(text));
   assert.equal(result.lineCount, 4);
   assert.equal(result.resolvedRelativePath, "repo\\skill-a\\SKILL.md");
+  assert.deepEqual(result.structure.headings, ["Agency Client"]);
+  assert.equal(result.structure.frontmatterName, null);
+});
+
+test("body audit extracts bounded frontmatter and heading structure", async (context) => {
+  const root = await temporary(context);
+  const target = path.join(root, "repo", "skill-a", "SKILL.md");
+  await mkdir(path.dirname(target), { recursive: true });
+  await writeFile(
+    target,
+    [
+      "---",
+      "name: agency-client",
+      "description: Coordinate client onboarding and reporting.",
+      "---",
+      "# Operating workflow",
+      "## Intake",
+      "## Delivery",
+      "",
+    ].join("\n"),
+    "utf8",
+  );
+
+  const result = await auditBody(root, record());
+
+  assert.equal(result.structure.frontmatterName, "agency-client");
+  assert.equal(
+    result.structure.frontmatterDescription,
+    "Coordinate client onboarding and reporting.",
+  );
+  assert.deepEqual(result.structure.headings, ["Operating workflow", "Intake", "Delivery"]);
 });
 
 test("body audit preserves missing files as explicit evidence", async (context) => {
@@ -85,6 +116,7 @@ test("corpus coverage build is byte-stable and reconciles exact inputs", async (
   const sourceRecordsPath = path.join(root, "source-records.jsonl");
   const ontologyPath = path.join(root, "ontology.json");
   const provenancePath = path.join(root, "provenance.jsonl");
+  const duplicateGroupsPath = path.join(root, "duplicates.json");
   const target = path.join(warehouse, "repo", "skill-a", "SKILL.md");
   await mkdir(path.dirname(target), { recursive: true });
   await writeFile(target, "# Agency Client\n", "utf8");
@@ -101,12 +133,18 @@ test("corpus coverage build is byte-stable and reconciles exact inputs", async (
     "utf8",
   );
   await writeFile(provenancePath, "", "utf8");
+  await writeFile(
+    duplicateGroupsPath,
+    `${JSON.stringify({ schemaVersion: 1, exact: [], aliases: [], candidates: [] })}\n`,
+    "utf8",
+  );
 
   const options = {
     warehouseRoot: warehouse,
     sourceRecordsPath,
     ontologyPath,
     provenancePath,
+    duplicateGroupsPath,
     outputPath: output,
   };
   const first = await buildCorpusCoverage(options);
@@ -124,6 +162,22 @@ test("corpus coverage build is byte-stable and reconciles exact inputs", async (
 
   assert.equal(first.sourceCount, 1);
   assert.equal(first.evidenceCounts.bodyInspected, 1);
+  assert.equal(first.reviewQueues["agency-client-services"].sourceCount, 1);
+  assert.equal(first.reviewQueues["agency-client-services"].packetCount, 1);
+  const queue = JSON.parse(
+    await readFile(
+      path.join(output, "families", "agency-client-services", "queue.json"),
+      "utf8",
+    ),
+  );
+  const packet = JSON.parse(
+    await readFile(
+      path.join(output, "families", "agency-client-services", "packets", "001.json"),
+      "utf8",
+    ),
+  );
+  assert.equal(queue.cards.length, 1);
+  assert.equal(packet.cards.length, 1);
   assert.deepEqual(first, second);
   assert.deepEqual(firstFiles, secondFiles);
 });

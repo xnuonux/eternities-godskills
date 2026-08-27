@@ -6,12 +6,21 @@ import { auditBodies } from "../src/body-audit.mjs";
 import { buildCoverageRows, summarizeCoverage } from "../src/coverage.mjs";
 import { sha256, writeJsonAtomic } from "../src/io.mjs";
 import { classify } from "../src/ontology.mjs";
+import { buildFamilyQueue, buildReviewPackets } from "../src/review-packets.mjs";
+
+const FIRST_WAVE_FAMILIES = Object.freeze([
+  "agency-client-services",
+  "marketing-growth",
+  "social-media-community",
+  "game-design-development",
+]);
 
 const DEFAULTS = Object.freeze({
   warehouseRoot: "D:\\03-ARSENAL\\warehouse",
   sourceRecordsPath: "artifacts/release-one/source-records.jsonl",
   ontologyPath: "data/ontology.v1.json",
   provenancePath: "provenance/source-ledger.jsonl",
+  duplicateGroupsPath: "artifacts/release-one/duplicate-groups.json",
   outputPath: "artifacts/corpus",
 });
 
@@ -52,14 +61,17 @@ export async function buildCorpusCoverage({
   sourceRecordsPath,
   ontologyPath,
   provenancePath,
+  duplicateGroupsPath,
   outputPath,
 }) {
-  const [sourceText, ontologyText, provenanceText] = await Promise.all([
+  const [sourceText, ontologyText, provenanceText, duplicateText] = await Promise.all([
     readFile(sourceRecordsPath, "utf8"),
     readFile(ontologyPath, "utf8"),
     readFile(provenancePath, "utf8"),
+    readFile(duplicateGroupsPath, "utf8"),
   ]);
   const ontology = JSON.parse(ontologyText);
+  const duplicateGroups = JSON.parse(duplicateText);
   const records = parseJsonLines(sourceText, "source records").map((record) => ({
     ...record,
     families: classify(record, ontology),
@@ -69,6 +81,16 @@ export async function buildCorpusCoverage({
   const coverageRows = buildCoverageRows(records, bodyEvidence, provenanceRows);
   const bodyText = jsonLines(bodyEvidence);
   const coverageText = jsonLines(coverageRows);
+  const familyArtifacts = FIRST_WAVE_FAMILIES.map((familyId) => {
+    const queue = buildFamilyQueue(
+      familyId,
+      coverageRows,
+      records,
+      bodyEvidence,
+      duplicateGroups,
+    );
+    return { familyId, queue, packets: buildReviewPackets(queue) };
+  });
   const summary = {
     ...summarizeCoverage(coverageRows),
     warehouseRoot: path.resolve(warehouseRoot),
@@ -77,6 +99,7 @@ export async function buildCorpusCoverage({
       sourceRecordsSha256: sha256(sourceText),
       ontologySha256: sha256(ontologyText),
       provenanceSha256: sha256(provenanceText),
+      duplicateGroupsSha256: sha256(duplicateText),
     },
     artifactDigests: {
       bodyEvidenceSha256: sha256(bodyText),
@@ -88,6 +111,19 @@ export async function buildCorpusCoverage({
         bodyEvidence.filter((row) => row.status === status).length,
       ]),
     ),
+    reviewQueues: Object.fromEntries(
+      familyArtifacts.map(({ familyId, queue, packets }) => [
+        familyId,
+        {
+          sourceCount: queue.sourceCount,
+          packetCount: packets.length,
+          queueSha256: sha256(`${JSON.stringify(queue, null, 2)}\n`),
+          packetsSha256: sha256(
+            `${packets.map((packet) => JSON.stringify(packet)).join("\n")}\n`,
+          ),
+        },
+      ]),
+    ),
   };
 
   await mkdir(outputPath, { recursive: true });
@@ -95,6 +131,18 @@ export async function buildCorpusCoverage({
     writeTextAtomic(path.join(outputPath, "body-evidence.jsonl"), bodyText),
     writeTextAtomic(path.join(outputPath, "coverage-ledger.jsonl"), coverageText),
     writeJsonAtomic(path.join(outputPath, "coverage-summary.json"), summary),
+    ...familyArtifacts.flatMap(({ familyId, queue, packets }) => {
+      const familyPath = path.join(outputPath, "families", familyId);
+      return [
+        writeJsonAtomic(path.join(familyPath, "queue.json"), queue),
+        ...packets.map((packet) =>
+          writeJsonAtomic(
+            path.join(familyPath, "packets", `${String(packet.sequence).padStart(3, "0")}.json`),
+            packet,
+          ),
+        ),
+      ];
+    }),
   ]);
   return summary;
 }
@@ -106,6 +154,7 @@ function parseArgs(argv) {
     "--sources": "sourceRecordsPath",
     "--ontology": "ontologyPath",
     "--provenance": "provenancePath",
+    "--duplicates": "duplicateGroupsPath",
     "--output": "outputPath",
   };
   for (let index = 0; index < argv.length; index += 1) {
@@ -123,6 +172,7 @@ async function main() {
     sourceRecordsPath: path.resolve(args.sourceRecordsPath),
     ontologyPath: path.resolve(args.ontologyPath),
     provenancePath: path.resolve(args.provenancePath),
+    duplicateGroupsPath: path.resolve(args.duplicateGroupsPath),
     outputPath: path.resolve(args.outputPath),
   });
   console.log(JSON.stringify(summary, null, 2));

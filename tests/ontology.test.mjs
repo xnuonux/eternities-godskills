@@ -69,6 +69,21 @@ test("ontology separates the first professional refinery families", () => {
   }
 });
 
+test("agency command family routes from its discriminating name prefix", () => {
+  const families = classify(
+    {
+      name: "agency-stack",
+      description: "Show the operating stack and current setup",
+      sourcePath: "ai-agency-claude\\skills\\agency-stack\\SKILL.md",
+      tags: [],
+      triggers: [],
+    },
+    ontology,
+  );
+
+  assert.ok(families.includes("agency-client-services"));
+});
+
 test("generic design and content language does not enter specialist families", () => {
   const families = classify(
     {
@@ -89,6 +104,21 @@ test("generic design and content language does not enter specialist families", (
   ]) {
     assert.ok(!families.includes(family), family);
   }
+});
+
+test("short marketing keywords do not match inside unrelated words", () => {
+  const families = classify(
+    {
+      name: "microsoft security migration",
+      description: "Move policies across tenants and preserve access controls",
+      sourcePath: "skills\\microsoft-security\\SKILL.md",
+      tags: [],
+      triggers: [],
+    },
+    ontology,
+  );
+
+  assert.ok(!families.includes("marketing-growth"));
 });
 
 test("classifier assigns repository research from deterministic keyword evidence", () => {

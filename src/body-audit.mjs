@@ -19,6 +19,42 @@ function lineCount(text) {
   return text.length === 0 ? 0 : text.split(/\r\n|\n|\r/).length;
 }
 
+function unquote(value) {
+  const trimmed = value.trim();
+  if (
+    trimmed.length >= 2 &&
+    ((trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+      (trimmed.startsWith("'") && trimmed.endsWith("'")))
+  ) {
+    return trimmed.slice(1, -1);
+  }
+  return trimmed;
+}
+
+function frontmatterValue(text, field) {
+  const match = text.match(/^---\s*\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/);
+  if (!match) return null;
+  const line = match[1]
+    .split(/\r?\n/)
+    .find((candidate) => candidate.toLowerCase().startsWith(`${field.toLowerCase()}:`));
+  if (!line) return null;
+  const value = unquote(line.slice(line.indexOf(":") + 1));
+  return value === "" ? null : value;
+}
+
+export function extractBodyStructure(text) {
+  const headings = [];
+  for (const match of text.matchAll(/^#{1,6}\s+(.+?)\s*#*\s*$/gm)) {
+    headings.push(match[1].trim());
+    if (headings.length === 12) break;
+  }
+  return {
+    frontmatterName: frontmatterValue(text, "name"),
+    frontmatterDescription: frontmatterValue(text, "description"),
+    headings,
+  };
+}
+
 export async function auditBody(warehouseRoot, record) {
   if (!record || typeof record !== "object") throw new TypeError("record must be an object");
   if (typeof record.id !== "string" || record.id === "") {
@@ -74,6 +110,7 @@ export async function auditBody(warehouseRoot, record) {
       bodySha256: sha256(bytes),
       byteSize: bytes.byteLength,
       lineCount: lineCount(text),
+      structure: extractBodyStructure(text),
       errorCode: null,
     };
   } catch (error) {

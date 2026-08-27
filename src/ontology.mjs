@@ -15,11 +15,21 @@ function searchableText(record) {
     .join(" ");
 }
 
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function containsKeyword(text, keyword) {
+  const normalized = normalizeText(keyword);
+  if (!normalized) return false;
+  const startsWithWord = /^[\p{L}\p{N}]/u.test(normalized);
+  const endsWithWord = /[\p{L}\p{N}]$/u.test(normalized);
+  const pattern = `${startsWithWord ? "(?:^|[^\\p{L}\\p{N}])" : ""}${escapeRegExp(normalized)}${endsWithWord ? "(?:$|[^\\p{L}\\p{N}])" : ""}`;
+  return new RegExp(pattern, "u").test(text);
+}
+
 function keywordScore(text, keywords) {
-  return keywords.reduce(
-    (score, keyword) => score + (text.includes(normalizeText(keyword)) ? 1 : 0),
-    0,
-  );
+  return keywords.reduce((score, keyword) => score + (containsKeyword(text, keyword) ? 1 : 0), 0);
 }
 
 export function classify(record, ontology) {
