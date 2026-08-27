@@ -2,7 +2,10 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
-import { validateCompositionContract } from "../src/composition.mjs";
+import {
+  validateCompositionContract,
+  validateCompositionGraph,
+} from "../src/composition.mjs";
 import { evaluateSuite } from "../src/evaluate.mjs";
 import { canonicalText, sha256 } from "../src/io.mjs";
 import { decidePromotion } from "../src/promote.mjs";
@@ -82,6 +85,22 @@ test("release three certifies Mnemosyne and a deferred canonical profile activat
   assert.doesNotThrow(() => validateCompositionContract(contract));
   assert.equal(contract.routes.length, certification.composition.routeCount);
   assert.equal(certification.composition.recursiveRoutes, 0);
+  const globalContracts = await Promise.all(
+    [
+      "eternities-architect",
+      "eternities-forge",
+      "eternities-aegis",
+      "eternities-mnemosyne",
+    ].map((name) =>
+      json(`skills/${name}/references/capability-contract.json`),
+    ),
+  );
+  assert.doesNotThrow(() => validateCompositionGraph(globalContracts));
+  assert.equal(globalContracts.length, certification.composition.globalGodskillCount);
+  assert.equal(
+    globalContracts.reduce((total, value) => total + value.routes.length, 0),
+    certification.composition.globalRouteCount,
+  );
   assert.equal(releaseRows.length, 5);
   assert.equal(
     releaseRows.filter(({ disposition }) => disposition === "pattern-reference").length,
@@ -99,5 +118,6 @@ test("release three certifies Mnemosyne and a deferred canonical profile activat
   assert.equal(certification.profile.activationDeferredUntilCanonicalMerge, true);
   assert.equal(certification.verification.testTotal, 92);
   assert.equal(certification.verification.testFailures, 0);
+  assert.equal(certification.verification.transitiveCompositionCyclesRejected, true);
   assert.ok(certification.remainingUncertainty.length > 0);
 });
