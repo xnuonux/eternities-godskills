@@ -21,8 +21,8 @@ test("Daedalus exposes distinct implementation routes and validates its contract
   assert.doesNotThrow(() => validateCompositionContract(contract));
   assert.equal(contract.name, "eternities-daedalus");
   assert.deepEqual(contract.routes.map(({ id }) => id), [
-    "implementation-delivery", "refactoring-quality", "language-framework",
-    "security-specialist", "integrations-observability", "migration",
+    "implementation-delivery", "integrations-observability", "language-framework",
+    "migration", "refactoring-quality", "security-specialist",
     "specialist-methods",
   ]);
   assert.equal(contract.routes.some(({ delegates }) => delegates.includes(contract.name)), false);
