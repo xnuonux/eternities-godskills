@@ -7,6 +7,7 @@ import { buildCoverageRows, summarizeCoverage } from "../src/coverage.mjs";
 import { sha256, writeJsonAtomic } from "../src/io.mjs";
 import { classify } from "../src/ontology.mjs";
 import { loadClusterEvidence } from "../src/refinery-clusters.mjs";
+import { loadCandidateEvidence } from "../src/refinery-candidates.mjs";
 import { buildFamilyQueue, buildReviewPackets } from "../src/review-packets.mjs";
 import { loadReviewEvidence } from "../src/reviews.mjs";
 
@@ -25,6 +26,8 @@ const DEFAULTS = Object.freeze({
   duplicateGroupsPath: "artifacts/release-one/duplicate-groups.json",
   reviewsPath: "reviews/waves",
   clustersPath: "clusters",
+  synthesesPath: "syntheses",
+  repositoryRoot: ".",
   outputPath: "artifacts/corpus",
 });
 
@@ -68,6 +71,8 @@ export async function buildCorpusCoverage({
   duplicateGroupsPath,
   reviewsPath,
   clustersPath,
+  synthesesPath,
+  repositoryRoot,
   outputPath,
 }) {
   const [sourceText, ontologyText, provenanceText, duplicateText] = await Promise.all([
@@ -88,17 +93,22 @@ export async function buildCorpusCoverage({
   const clusterRows = clustersPath
     ? await loadClusterEvidence(clustersPath, reviewRows)
     : [];
+  const candidateRows = synthesesPath
+    ? await loadCandidateEvidence(synthesesPath, repositoryRoot, clusterRows, reviewRows)
+    : [];
   const coverageRows = buildCoverageRows(
     records,
     bodyEvidence,
     provenanceRows,
     reviewRows,
     clusterRows,
+    candidateRows,
   );
   const bodyText = jsonLines(bodyEvidence);
   const coverageText = jsonLines(coverageRows);
   const reviewText = jsonLines(reviewRows);
   const clusterText = jsonLines(clusterRows);
+  const candidateText = jsonLines(candidateRows);
   const familyArtifacts = FIRST_WAVE_FAMILIES.map((familyId) => {
     const queue = buildFamilyQueue(
       familyId,
@@ -124,6 +134,7 @@ export async function buildCorpusCoverage({
       coverageLedgerSha256: sha256(coverageText),
       reviewEvidenceSha256: sha256(reviewText),
       clusterEvidenceSha256: sha256(clusterText),
+      candidateEvidenceSha256: sha256(candidateText),
     },
     bodyStatusCounts: Object.fromEntries(
       ["inspected", "missing", "unreadable"].map((status) => [
@@ -152,6 +163,7 @@ export async function buildCorpusCoverage({
     writeTextAtomic(path.join(outputPath, "coverage-ledger.jsonl"), coverageText),
     writeTextAtomic(path.join(outputPath, "review-evidence.jsonl"), reviewText),
     writeTextAtomic(path.join(outputPath, "cluster-evidence.jsonl"), clusterText),
+    writeTextAtomic(path.join(outputPath, "candidate-evidence.jsonl"), candidateText),
     writeJsonAtomic(path.join(outputPath, "coverage-summary.json"), summary),
     ...familyArtifacts.flatMap(({ familyId, queue, packets }) => {
       const familyPath = path.join(outputPath, "families", familyId);
@@ -179,6 +191,8 @@ function parseArgs(argv) {
     "--duplicates": "duplicateGroupsPath",
     "--reviews": "reviewsPath",
     "--clusters": "clustersPath",
+    "--syntheses": "synthesesPath",
+    "--repository-root": "repositoryRoot",
     "--output": "outputPath",
   };
   for (let index = 0; index < argv.length; index += 1) {
@@ -199,6 +213,8 @@ async function main() {
     duplicateGroupsPath: path.resolve(args.duplicateGroupsPath),
     reviewsPath: path.resolve(args.reviewsPath),
     clustersPath: path.resolve(args.clustersPath),
+    synthesesPath: path.resolve(args.synthesesPath),
+    repositoryRoot: path.resolve(args.repositoryRoot),
     outputPath: path.resolve(args.outputPath),
   });
   console.log(JSON.stringify(summary, null, 2));

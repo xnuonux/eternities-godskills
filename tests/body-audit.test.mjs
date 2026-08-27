@@ -247,13 +247,13 @@ test("corpus coverage build is byte-stable and reconciles exact inputs", async (
   };
   const first = await buildCorpusCoverage(options);
   const firstFiles = await Promise.all(
-    ["body-evidence.jsonl", "coverage-ledger.jsonl", "coverage-summary.json", "cluster-evidence.jsonl"].map(
+    ["body-evidence.jsonl", "coverage-ledger.jsonl", "coverage-summary.json", "cluster-evidence.jsonl", "candidate-evidence.jsonl"].map(
       (name) => readFile(path.join(output, name), "utf8"),
     ),
   );
   const second = await buildCorpusCoverage(options);
   const secondFiles = await Promise.all(
-    ["body-evidence.jsonl", "coverage-ledger.jsonl", "coverage-summary.json", "cluster-evidence.jsonl"].map(
+    ["body-evidence.jsonl", "coverage-ledger.jsonl", "coverage-summary.json", "cluster-evidence.jsonl", "candidate-evidence.jsonl"].map(
       (name) => readFile(path.join(output, name), "utf8"),
     ),
   );
@@ -263,6 +263,7 @@ test("corpus coverage build is byte-stable and reconciles exact inputs", async (
   assert.equal(first.evidenceCounts.cardReviewed, 1);
   assert.equal(first.evidenceCounts.clustered, 1);
   assert.match(first.artifactDigests.clusterEvidenceSha256, /^[0-9a-f]{64}$/);
+  assert.equal(first.artifactDigests.candidateEvidenceSha256, sha256("\n"));
   assert.equal(first.reviewQueues["agency-client-services"].sourceCount, 1);
   assert.equal(first.reviewQueues["agency-client-services"].packetCount, 1);
   const queue = JSON.parse(

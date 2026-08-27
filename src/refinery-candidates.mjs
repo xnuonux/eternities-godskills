@@ -1,0 +1,148 @@
+import { readFile, readdir } from "node:fs/promises";
+import path from "node:path";
+
+import { sha256 } from "./io.mjs";
+
+const STATUSES = new Set(["synthesized", "evaluated", "promoted"]);
+const REQUIRED_ARTIFACTS = ["skill", "capabilityContract", "routingCard", "evaluation"];
+
+function relativeFile(value, label) {
+  if (typeof value !== "string" || value.trim() === "") {
+    throw new Error(`${label} artifact path must be a non-empty string`);
+  }
+  if (value !== value.trim() || /^[a-z]:[\\/]/i.test(value) || value.startsWith("/") || value.includes("\\")) {
+    throw new Error(`${label} artifact path must be normalized repository-relative`);
+  }
+  const segments = value.split("/");
+  if (segments.some((segment) => segment === "" || segment === "." || segment === "..")) {
+    throw new Error(`${label} artifact path must be normalized repository-relative`);
+  }
+  return value;
+}
+
+function digest(value, label) {
+  if (!/^[0-9a-f]{64}$/.test(value)) throw new Error(`${label} must be a lowercase SHA-256 digest`);
+  return value;
+}
+
+function exactSorted(values, label) {
+  if (!Array.isArray(values) || values.length === 0 || values.some((value) => typeof value !== "string" || value.trim() === "")) {
+    throw new Error(`${label} must be a non-empty string array`);
+  }
+  if (new Set(values).size !== values.length) throw new Error(`${label} must not contain duplicates`);
+  const sorted = [...values].sort((left, right) => left.localeCompare(right));
+  if (values.some((value, index) => value !== sorted[index])) throw new Error(`${label} must be lexically sorted`);
+  return values;
+}
+
+function equalArrays(left, right) {
+  return left.length === right.length && left.every((value, index) => value === right[index]);
+}
+
+export function validateCandidateEvidence(record, clusterRows, reviewRows, promotionReceipt) {
+  if (!record || record.schemaVersion !== 1) throw new Error("candidate schemaVersion must be 1");
+  if (typeof record.candidateId !== "string" || record.candidateId.trim() === "") throw new Error("candidateId is required");
+  if (typeof record.familyId !== "string" || record.familyId.trim() === "") throw new Error("familyId is required");
+  if (!STATUSES.has(record.status)) throw new Error(`unknown candidate status: ${record.status}`);
+  if (record.copiedSourceProse !== false) throw new Error("candidate contains copied source prose");
+  if (record.externalMutation !== false) throw new Error("candidate externalMutation must be false");
+  if (record.synthesisMethod !== "independent-cluster-synthesis-v1") {
+    throw new Error("candidate synthesisMethod must be independent-cluster-synthesis-v1");
+  }
+
+  const artifacts = record.artifacts;
+  if (!artifacts || typeof artifacts !== "object" || Array.isArray(artifacts)) throw new Error("candidate artifacts are required");
+  for (const key of REQUIRED_ARTIFACTS) {
+    if (!artifacts[key]) throw new Error(`missing candidate artifact: ${key}`);
+  }
+  for (const [key, artifact] of Object.entries(artifacts)) {
+    relativeFile(artifact?.path, key);
+    digest(artifact?.sha256, `${key}.sha256`);
+  }
+
+  const sourceIds = exactSorted(record.sourceIds, "candidate.sourceIds");
+  if (!Array.isArray(record.clusters) || record.clusters.length === 0) throw new Error("candidate.clusters must not be empty");
+  const declaredClusterIds = record.clusters.map(({ id }) => id);
+  exactSorted(declaredClusterIds, "candidate cluster ids");
+  const selectedMembers = [];
+  for (const declared of record.clusters) {
+    digest(declared.digest, `cluster ${declared.id} digest`);
+    const matches = clusterRows.filter(({ id }) => id === declared.id);
+    if (matches.length === 0) throw new Error(`missing cluster: ${declared.id}`);
+    if (matches.length > 1) throw new Error(`duplicate cluster: ${declared.id}`);
+    const cluster = matches[0];
+    if (cluster.clusterDigest !== declared.digest) throw new Error(`stale cluster digest: ${declared.id}`);
+    if (cluster.familyId !== record.familyId) throw new Error(`cluster family mismatch: ${declared.id}`);
+    if (cluster.synthesisDecision !== "candidate") throw new Error(`cluster is not a synthesis candidate: ${declared.id}`);
+    selectedMembers.push(...cluster.members);
+  }
+  const memberIds = selectedMembers.map(({ sourceId }) => sourceId).sort((a, b) => a.localeCompare(b));
+  if (new Set(memberIds).size !== memberIds.length) throw new Error("duplicate source across candidate clusters");
+  if (!equalArrays(sourceIds, memberIds)) throw new Error("candidate source union does not match cluster membership");
+
+  for (const member of selectedMembers) {
+    const matches = reviewRows.filter(({ sourceId }) => sourceId === member.sourceId);
+    if (matches.length !== 1) throw new Error(`missing or duplicate review: ${member.sourceId}`);
+    const review = matches[0];
+    if (review.reviewDigest !== member.reviewDigest) throw new Error(`stale review digest: ${member.sourceId}`);
+    if (review.copiedSourceProse !== false) throw new Error(`review contains copied source prose: ${member.sourceId}`);
+    if (review.promotionClaim !== false) throw new Error(`review contains promotion claim: ${member.sourceId}`);
+  }
+
+  const evaluated = record.status === "evaluated" || record.status === "promoted";
+  const promoted = record.status === "promoted";
+  if (evaluated) {
+    if (!promotionReceipt || !artifacts.promotionReceipt) throw new Error("evaluated candidate requires promotion receipt");
+    const receiptText = `${JSON.stringify(promotionReceipt, null, 2)}\n`;
+    if (sha256(receiptText) !== artifacts.promotionReceipt.sha256) throw new Error("stale promotion receipt hash");
+    if (promotionReceipt.skillName !== record.candidateId) throw new Error("promotion receipt candidate id mismatch");
+    const receiptSources = [...(promotionReceipt.evidence?.sourceIds ?? [])].sort((a, b) => a.localeCompare(b));
+    if (!equalArrays(sourceIds, receiptSources)) throw new Error("promotion receipt source ids do not match candidate");
+    if (promotionReceipt.candidate?.status !== "evaluated") throw new Error("promotion receipt candidate is not evaluated");
+    if (promoted && promotionReceipt.decision?.status !== "promoted") throw new Error("promotion receipt decision is not promoted");
+  }
+
+  const normalizedWithoutDigest = {
+    schemaVersion: 1,
+    candidateId: record.candidateId,
+    familyId: record.familyId,
+    sourceIds: [...sourceIds],
+    clusterIds: [...declaredClusterIds],
+    evaluated,
+    promoted,
+  };
+  return {
+    ...normalizedWithoutDigest,
+    synthesisDigest: sha256(JSON.stringify(normalizedWithoutDigest)),
+  };
+}
+
+async function jsonFiles(root) {
+  try {
+    return (await readdir(root, { withFileTypes: true }))
+      .filter((entry) => entry.isFile() && entry.name.toLowerCase().endsWith(".json"))
+      .map((entry) => path.join(root, entry.name))
+      .sort((left, right) => left.localeCompare(right));
+  } catch (error) {
+    if (error.code === "ENOENT") return [];
+    throw error;
+  }
+}
+
+export async function loadCandidateEvidence(root, repositoryRoot, clusterRows, reviewRows) {
+  const rows = [];
+  for (const filePath of await jsonFiles(root)) {
+    const record = JSON.parse(await readFile(filePath, "utf8"));
+    for (const [key, artifact] of Object.entries(record.artifacts ?? {})) {
+      const relative = relativeFile(artifact.path, key);
+      const bytes = await readFile(path.join(repositoryRoot, ...relative.split("/")));
+      if (sha256(bytes) !== artifact.sha256) throw new Error(`stale artifact hash: ${key}`);
+    }
+    const receiptArtifact = record.artifacts?.promotionReceipt;
+    const receipt = receiptArtifact
+      ? JSON.parse(await readFile(path.join(repositoryRoot, ...receiptArtifact.path.split("/")), "utf8"))
+      : null;
+    rows.push(validateCandidateEvidence(record, clusterRows, reviewRows, receipt));
+  }
+  return rows.sort((left, right) => left.candidateId.localeCompare(right.candidateId));
+}

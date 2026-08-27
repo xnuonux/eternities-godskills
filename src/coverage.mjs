@@ -51,6 +51,7 @@ export function buildCoverageRows(
   provenanceRows = [],
   reviewRows = [],
   clusterRows = [],
+  candidateRows = [],
 ) {
   if (!Array.isArray(records)) throw new TypeError("records must be an array");
   const sources = uniqueBy(records, (row) => row.id, "source id");
@@ -71,12 +72,21 @@ export function buildCoverageRows(
       clusteredSources.set(member.sourceId, member);
     }
   }
+  const candidateSources = new Map();
+  for (const candidate of candidateRows ?? []) {
+    if (candidate.promoted && !candidate.evaluated) throw new Error(`candidate stage inversion: ${candidate.candidateId}`);
+    for (const sourceId of candidate.sourceIds ?? []) {
+      if (candidateSources.has(sourceId)) throw new Error(`duplicate candidate evidence source id: ${sourceId}`);
+      candidateSources.set(sourceId, candidate);
+    }
+  }
 
   for (const sourceId of [
     ...bodies.keys(),
     ...provenance.keys(),
     ...reviews.keys(),
     ...clusteredSources.keys(),
+    ...candidateSources.keys(),
   ]) {
     if (!sources.has(sourceId)) throw new Error(`unknown evidence source id: ${sourceId}`);
   }
@@ -88,6 +98,7 @@ export function buildCoverageRows(
       const provenanceRow = provenance.get(record.id);
       const reviewRow = reviews.get(record.id);
       const clusterMember = clusteredSources.get(record.id);
+      const candidate = candidateSources.get(record.id);
       if (provenanceRow && provenanceRow.contentDigest !== record.contentDigest) {
         throw new Error(`stale provenance digest for ${record.id}`);
       }
@@ -101,6 +112,9 @@ export function buildCoverageRows(
       }
       if (clusterMember && clusterMember.reviewDigest !== reviewRow.reviewDigest) {
         throw new Error(`stale clustered review digest for ${record.id}`);
+      }
+      if (candidate && (!reviewRow || !clusterMember)) {
+        throw new Error(`candidate evidence requires reviewed cluster evidence for ${record.id}`);
       }
       return {
         schemaVersion: 1,
@@ -119,9 +133,9 @@ export function buildCoverageRows(
           cardReviewed: Boolean(reviewRow),
           provenanceCertified: Boolean(provenanceRow),
           clustered: Boolean(clusterMember),
-          synthesized: false,
-          evaluated: false,
-          promoted: false,
+          synthesized: Boolean(candidate),
+          evaluated: candidate?.evaluated === true,
+          promoted: candidate?.promoted === true,
         },
       };
     });
