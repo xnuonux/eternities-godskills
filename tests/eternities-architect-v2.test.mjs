@@ -44,7 +44,10 @@ test("architect v2 preserves v1 routes and adds six evidence-bounded architectur
   assert.equal(receipt.evidence.externalMutation, false);
   assert.deepEqual(receipt.decision.failedGates, []);
   assert.equal(receipt.decision.status, "promoted");
-  assert.equal(receipt.evidence.synthesisSha256, sha256(`${JSON.stringify(synthesis, null, 2)}\n`));
+  assert.equal(
+    receipt.evidence.synthesisSha256,
+    sha256(await readFile(new URL("syntheses/eternities-architect.v2.json", root), "utf8")),
+  );
   assert.doesNotThrow(() => validateCompositionContract(contract));
 });
 
