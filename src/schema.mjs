@@ -88,6 +88,33 @@ export function validateCapabilityContract(value) {
       throw new Error(`capabilityContract.effects contains invalid value: ${effect}`);
     }
   }
+  if (value.sourceEvidence !== undefined) {
+    const evidence = object(value.sourceEvidence, "capabilityContract.sourceEvidence");
+    if (evidence.mode !== "cluster-review-v1") {
+      throw new Error(`unknown source evidence mode: ${evidence.mode}`);
+    }
+    nonEmptyString(evidence.clusterSetId, "capabilityContract.sourceEvidence.clusterSetId");
+    if (!Array.isArray(evidence.clusters) || evidence.clusters.length === 0) {
+      throw new Error("capabilityContract.sourceEvidence.clusters must not be empty");
+    }
+    const clusterIds = [];
+    for (const [index, cluster] of evidence.clusters.entries()) {
+      object(cluster, `capabilityContract.sourceEvidence.clusters[${index}]`);
+      nonEmptyString(cluster.id, `capabilityContract.sourceEvidence.clusters[${index}].id`);
+      if (!/^[0-9a-f]{64}$/.test(cluster.digest)) {
+        throw new Error(
+          `capabilityContract.sourceEvidence.clusters[${index}].digest must be a lowercase SHA-256 digest`,
+        );
+      }
+      clusterIds.push(cluster.id);
+    }
+    if (new Set(clusterIds).size !== clusterIds.length) {
+      throw new Error("capabilityContract.sourceEvidence contains a duplicate cluster id");
+    }
+    if (clusterIds.some((id, index) => id !== [...clusterIds].sort()[index])) {
+      throw new Error("capabilityContract.sourceEvidence cluster ids must be lexically sorted");
+    }
+  }
   return value;
 }
 

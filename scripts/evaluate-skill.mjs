@@ -5,7 +5,14 @@ import { pathToFileURL } from "node:url";
 import { evaluateSuite } from "../src/evaluate.mjs";
 import { canonicalText, sha256, writeJsonAtomic } from "../src/io.mjs";
 import { decidePromotion } from "../src/promote.mjs";
-import { deriveSourceEvidence } from "../src/provenance-evidence.mjs";
+import {
+  deriveClusterSourceEvidence,
+  deriveSourceEvidence,
+} from "../src/provenance-evidence.mjs";
+
+function parseJsonLines(text) {
+  return text.trim().split(/\r?\n/).filter(Boolean).map(JSON.parse);
+}
 
 function parseArgs(argv) {
   const parsed = {};
@@ -26,21 +33,35 @@ export async function buildSkillReceipt({ skillPath, policyPath }) {
   const casesPath = path.join(skillPath, "evals", "cases.json");
   const skillFile = path.join(skillPath, "SKILL.md");
   const contractPath = path.join(skillPath, "references", "capability-contract.json");
-  const ledgerPath = path.join(path.resolve(skillPath, "..", ".."), "provenance", "source-ledger.jsonl");
+  const repositoryRoot = path.resolve(skillPath, "..", "..");
   const rawTexts = await Promise.all([
     readFile(skillFile, "utf8"),
     readFile(casesPath, "utf8"),
     readFile(policyPath, "utf8"),
     readFile(contractPath, "utf8"),
-    readFile(ledgerPath, "utf8"),
   ]);
-  const [skillText, casesText, policyText, contractText, ledgerText] =
+  const [skillText, casesText, policyText, contractText] =
     rawTexts.map(canonicalText);
   const suite = JSON.parse(casesText);
   const policy = JSON.parse(policyText);
   const contract = JSON.parse(contractText);
-  const ledger = ledgerText.trim().split(/\r?\n/).map(JSON.parse);
-  const sourceEvidence = deriveSourceEvidence(contract, ledger);
+  let sourceEvidence;
+  if (contract.sourceEvidence?.mode === "cluster-review-v1") {
+    const [clusterText, reviewText] = await Promise.all([
+      readFile(path.join(repositoryRoot, "artifacts", "corpus", "cluster-evidence.jsonl"), "utf8"),
+      readFile(path.join(repositoryRoot, "artifacts", "corpus", "review-evidence.jsonl"), "utf8"),
+    ]);
+    sourceEvidence = deriveClusterSourceEvidence(
+      contract,
+      parseJsonLines(canonicalText(clusterText)),
+      parseJsonLines(canonicalText(reviewText)),
+    );
+  } else {
+    const ledgerText = canonicalText(
+      await readFile(path.join(repositoryRoot, "provenance", "source-ledger.jsonl"), "utf8"),
+    );
+    sourceEvidence = deriveSourceEvidence(contract, parseJsonLines(ledgerText));
+  }
   const measuredTokenCount = Math.ceil(Buffer.byteLength(skillText, "utf8") / 4);
   const baseline = {
     ...evaluateSuite(suite.cases, suite.baseline.results),
@@ -71,6 +92,12 @@ export async function buildSkillReceipt({ skillPath, policyPath }) {
       candidateSourceCoverage: sourceEvidence.sourceCoverage,
       sourceIds: sourceEvidence.sourceIds,
       sourceProseCopied: sourceEvidence.proseCopied,
+      ...(sourceEvidence.sourceEvidenceMode
+        ? {
+            sourceEvidenceMode: sourceEvidence.sourceEvidenceMode,
+            clusterIds: sourceEvidence.clusterIds,
+          }
+        : {}),
     },
     baseline,
     candidate,

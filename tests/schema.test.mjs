@@ -47,6 +47,25 @@ function completeContract(overrides = {}) {
   };
 }
 
+const clusterEvidence = {
+  mode: "cluster-review-v1",
+  clusterSetId: "agency-client-services-clusters-v1",
+  clusters: [
+    {
+      id: "agency-operational-state",
+      digest: "bc995745d1abe8130b6e70e0de497f05a5d8a93600a79611fddeff30dc3c841d",
+    },
+    {
+      id: "client-deliverable-construction",
+      digest: "438c10e4d01b0da3a784137822e72efb4ebab3201acc96335b67760513946d8b",
+    },
+    {
+      id: "prospect-assessment-depth",
+      digest: "1648c19ae0c7229dc71bd0d5f2674da11e8b65e36860ab9052c8f56a3b393dd2",
+    },
+  ],
+};
+
 test("capability contracts require negative triggers", () => {
   assert.throws(
     () => validateCapabilityContract(completeContract({ negativeTriggers: undefined })),
@@ -58,6 +77,54 @@ test("capability contracts require at least one declared effect", () => {
   assert.throws(
     () => validateCapabilityContract(completeContract({ effects: [] })),
     /effects must not be empty/,
+  );
+});
+
+test("capability contracts accept exact cluster-review evidence", () => {
+  assert.doesNotThrow(() =>
+    validateCapabilityContract(completeContract({ sourceEvidence: clusterEvidence })),
+  );
+});
+
+test("cluster-review evidence rejects unknown modes, unstable ids, and invalid digests", () => {
+  assert.throws(
+    () => validateCapabilityContract(completeContract({
+      sourceEvidence: { ...clusterEvidence, mode: "generated-summary" },
+    })),
+    /unknown source evidence mode/,
+  );
+  assert.throws(
+    () => validateCapabilityContract(completeContract({
+      sourceEvidence: {
+        ...clusterEvidence,
+        clusters: [clusterEvidence.clusters[1], clusterEvidence.clusters[0]],
+      },
+    })),
+    /lexically sorted/,
+  );
+  assert.throws(
+    () => validateCapabilityContract(completeContract({
+      sourceEvidence: {
+        ...clusterEvidence,
+        clusters: [clusterEvidence.clusters[0], clusterEvidence.clusters[0]],
+      },
+    })),
+    /duplicate cluster id/,
+  );
+  assert.throws(
+    () => validateCapabilityContract(completeContract({
+      sourceEvidence: {
+        ...clusterEvidence,
+        clusters: [{ ...clusterEvidence.clusters[0], digest: "not-a-digest" }],
+      },
+    })),
+    /lowercase SHA-256/,
+  );
+  assert.throws(
+    () => validateCapabilityContract(completeContract({
+      sourceEvidence: { ...clusterEvidence, clusters: [] },
+    })),
+    /clusters must not be empty/,
   );
 });
 
