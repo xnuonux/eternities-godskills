@@ -64,6 +64,8 @@ test("every exact marketing and growth source has one bounded semantic review", 
     "prepare a bounded",
     "choose the next",
     "without executing an external change",
+    "produce an outcome for",
+    "fits the stated need",
   ];
   for (const review of reviews) {
     const semanticText = [
