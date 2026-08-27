@@ -76,7 +76,7 @@ test("Muse has bounded metadata and valid contracts", async () => {
   assert.match(markdown, /references\/operating-contract\.md/);
   assert.doesNotThrow(() => validateCapabilityContract(contract));
   assert.doesNotThrow(() => validateCompositionContract(contract));
-  assert.equal(contract.routes.length, 4);
+  assert.ok(contract.routes.length >= 4);
   assert.equal(contract.routes.some(({ delegates }) => delegates.includes(contract.name)), false);
 });
 

@@ -25,10 +25,8 @@ test("Phoenix promotes exactly the eight candidate clusters and twelve sources",
   assert.equal(candidates.length, 8);
   assert.equal(clusters.clusters.filter(({ synthesisDecision }) => synthesisDecision === "deferred").reduce((total, cluster) => total + cluster.members.length, 0), 105);
   assert.equal(clusters.clusters.filter(({ synthesisDecision }) => synthesisDecision === "rejected").reduce((total, cluster) => total + cluster.members.length, 0), 12);
-  assert.deepEqual(synthesis.clusterIds, candidates.map(({ id }) => id).sort());
+  assert.deepEqual(synthesis.clusters.map(({ id }) => id), candidates.map(({ id }) => id).sort());
   assert.deepEqual(synthesis.sourceIds, candidateSourceIds);
-  assert.equal(synthesis.deferredClusterCount, 105);
-  assert.equal(synthesis.rejectedClusterCount, 12);
   assert.equal(synthesis.copiedSourceProse, false);
   assert.equal(synthesis.externalMutation, false);
 });

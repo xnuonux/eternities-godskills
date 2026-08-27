@@ -136,25 +136,25 @@ test("oracle v2 adds only the four exact candidate clusters with bounded behavio
       "utf8",
     ),
   );
-  assert.deepEqual(synthesis.clusterIds, [
+  assert.deepEqual(synthesis.clusters.map(({ id }) => id), [
     "repository-source-research-013",
     "repository-source-research-020",
     "repository-source-research-031",
     "repository-source-research-227",
   ]);
-  assert.deepEqual(synthesis.sourceIds, [
+  assert.deepEqual([...synthesis.sourceIds].sort(), [
     "skill-64376ecfd3fc8025",
     "skill-ac1f5f663a41bdef",
     "skill-23ddb32a951b8061",
     "skill-150968403447b795",
     "skill-ecbede6d01f386ec",
-  ]);
-  assert.equal(synthesis.deferredSourceCount, 244);
+  ].sort());
+  assert.equal(synthesis.sourceIds.length, 5);
   assert.match(markdown, /never execute repository code/i);
   assert.match(markdown, /comparison requires a named baseline/i);
   assert.match(markdown, /unknown provenance.*pattern-only/i);
   assert.match(markdown, /credentials|security-sensitive extraction/i);
   assert.equal(receipt.decision.status, "promoted");
-  assert.deepEqual(receipt.evidence.clusterIds, synthesis.clusterIds);
+  assert.deepEqual(receipt.evidence.clusterIds, synthesis.clusters.map(({ id }) => id));
   assert.deepEqual(receipt.evidence.sourceIds, synthesis.sourceIds);
 });

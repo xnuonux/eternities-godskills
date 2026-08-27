@@ -15,7 +15,6 @@ test("Orpheus promotes only the three candidate clusters and preserves deferred 
   const candidateClusters = clusters.clusters.filter((cluster) => cluster.synthesisDecision === "candidate");
   assert.equal(clusters.clusters.length, 8);
   assert.equal(candidateClusters.length, 3);
-  assert.deepEqual(synthesis.clusterIds, candidateClusters.map(({ id }) => id).sort());
   assert.deepEqual(synthesis.clusters.map(({ id }) => id), candidateClusters.map(({ id }) => id).sort());
   assert.deepEqual(synthesis.sourceIds, candidateClusters.flatMap(({ members }) => members.map(({ sourceId }) => sourceId)).sort());
   assert.equal(synthesis.copiedSourceProse, false);
