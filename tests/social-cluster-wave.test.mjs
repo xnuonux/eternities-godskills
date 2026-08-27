@@ -71,12 +71,14 @@ test("the complete social family reconciles exactly once into bounded clusters",
 });
 
 test("the social cluster receipt freezes exact decisions and deterministic artifacts", async () => {
-  const [receipt, batchText, clusterText, coverageText] = await Promise.all([
-    json("receipts/social-media-community-clusters-v1.json"),
-    readFile(new URL("clusters/social-media-community.v1.json", root), "utf8"),
-    readFile(new URL("artifacts/corpus/cluster-evidence.jsonl", root), "utf8"),
-    readFile(new URL("artifacts/corpus/coverage-ledger.jsonl", root), "utf8"),
+  const receipt = await json("receipts/social-media-community-clusters-v1.json");
+  const checkpoint = "artifacts/checkpoints/social-media-community-clusters-v1/";
+  const [batchText, clusterText, coverageText] = await Promise.all([
+    readFile(new URL(`${checkpoint}cluster-batch.json`, root), "utf8"),
+    readFile(new URL(`${checkpoint}cluster-evidence.jsonl`, root), "utf8"),
+    readFile(new URL(`${checkpoint}coverage-ledger.jsonl`, root), "utf8"),
   ]);
+  assert.equal(receipt.checkpointRoot, checkpoint.slice(0, -1));
   assert.deepEqual(receipt.counts, {
     candidateClusters: 4,
     candidateSources: 47,

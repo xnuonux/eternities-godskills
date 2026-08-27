@@ -29,6 +29,16 @@ async function routingCard(id) {
 
 const cases = [
   {
+    expected: "eternities-chorus",
+    outcome: "connect identity editorial production community stewardship and measured learning",
+    family: "social-media-community",
+    required: ["community-operations", "editorial-production", "identity-and-channel-strategy", "measurement-and-stewardship"],
+    effects: ["local-read", "local-write"],
+    authority: ["local-read", "local-write"],
+    preconditions: [],
+    maximumRisk: "moderate",
+  },
+  {
     expected: "eternities-arcadia",
     outcome: "reconcile game direction runtime systems player experience and proof into one playable advance",
     family: "game-design-development",
@@ -146,6 +156,7 @@ test("every promoted Eternities capability exposes one exact compact routing car
     "eternities-agora",
     "eternities-arcadia",
     "eternities-architect",
+    "eternities-chorus",
     "eternities-forge",
     "eternities-mnemosyne",
     "eternities-muse",

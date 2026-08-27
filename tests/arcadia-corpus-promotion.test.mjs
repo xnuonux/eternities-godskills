@@ -23,7 +23,8 @@ test("Arcadia synthesis reconciles exact promoted artifacts and candidate cluste
 
 test("Arcadia advances exactly twenty sources through promoted corpus evidence", async () => {
   const [summary, candidates] = await Promise.all([
-    json("artifacts/corpus/coverage-summary.json"), lines("artifacts/corpus/candidate-evidence.jsonl"),
+    json("artifacts/checkpoints/eternities-arcadia-release-v1/coverage-summary.json"),
+    lines("artifacts/checkpoints/eternities-arcadia-release-v1/candidate-evidence.jsonl"),
   ]);
   const arcadia = candidates.filter(({ candidateId }) => candidateId === "eternities-arcadia");
   assert.equal(arcadia.length, 1);

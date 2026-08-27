@@ -14,14 +14,14 @@ async function json(relative) {
 }
 
 async function cards() {
-  return (await readFile(new URL("artifacts/checkpoints/agent-native-router-v3/cards.jsonl", root), "utf8"))
+  return (await readFile(new URL("artifacts/routing/cards.jsonl", root), "utf8"))
     .trim().split(/\r?\n/).map(JSON.parse).map(validateRoutingCard);
 }
 
 function envelope(card, outcome, suffix, overrides = {}) {
   return {
     schemaVersion: 1,
-    requestId: `v3-${card.id}-${suffix}`,
+    requestId: `v4-${card.id}-${suffix}`,
     outcome,
     candidateFamilies: [card.family],
     requiredCapabilities: card.provides,
@@ -42,11 +42,11 @@ function synthetic(index) {
   const suffix = String(index).padStart(4, "0");
   return validateRoutingCard({
     schemaVersion: 1,
-    id: `v3-synthetic-${suffix}`,
-    family: `v3-family-${String(index % 100).padStart(3, "0")}`,
+    id: `v4-synthetic-${suffix}`,
+    family: `v4-family-${String(index % 100).padStart(3, "0")}`,
     intent: `provide synthetic capability ${suffix}`,
     successCondition: `synthetic capability ${suffix} completes locally`,
-    provides: [`v3-capability-${suffix}`],
+    provides: [`v4-capability-${suffix}`],
     requires: [],
     intentExamples: { direct: [`complete synthetic ${suffix}`], paraphrased: [`handle synthetic ${suffix}`], contextual: [`the mission needs synthetic ${suffix}`] },
     negativeIntents: [`skip synthetic ${suffix}`],
@@ -59,16 +59,16 @@ function synthetic(index) {
     contextCost: 100,
     dependencyCost: 1,
     evidenceConfidence: "verified",
-    entrypoint: `skills/v3-synthetic-${suffix}/SKILL.md`,
+    entrypoint: `skills/v4-synthetic-${suffix}/SKILL.md`,
     legacyAliases: [],
   });
 }
 
-test("router v3 certifies twenty-seven commandless outcomes across nine cards", async () => {
+test("router v4 certifies thirty commandless outcomes across ten cards", async () => {
   const values = await cards();
   const aliasFree = values.map((card) => ({ ...card, legacyAliases: [] }));
-  assert.equal(values.length, 9);
-  assert.equal(new Set(values.map(({ family }) => family)).size, 9);
+  assert.equal(values.length, 10);
+  assert.equal(new Set(values.map(({ family }) => family)).size, 10);
   let count = 0;
   for (const card of values) {
     for (const [kind, outcomes] of Object.entries(card.intentExamples)) {
@@ -82,10 +82,10 @@ test("router v3 certifies twenty-seven commandless outcomes across nine cards", 
       count += 1;
     }
   }
-  assert.equal(count, 27);
+  assert.equal(count, 30);
 });
 
-test("router v3 stays bounded at five thousand cards and fails closed on decisions", async () => {
+test("router v4 stays bounded at five thousand cards and fails closed on decisions", async () => {
   const promoted = await cards();
   const all = [...promoted, ...Array.from({ length: 5000 - promoted.length }, (_, i) => synthetic(i))];
   const index = buildRoutingIndex(all);
@@ -100,17 +100,30 @@ test("router v3 stays bounded at five thousand cards and fails closed on decisio
   }).status, "needs-decision");
 });
 
-test("router v3 receipt reconciles exact live artifacts", async () => {
-  const receipt = await json("receipts/agent-native-router-v3.json");
-  const checkpoint = "artifacts/checkpoints/agent-native-router-v3/";
+test("router v4 preserves Chorus authority effect and risk boundaries", async () => {
+  const promoted = await cards();
+  const chorus = promoted.find(({ id }) => id === "eternities-chorus");
+  const request = envelope(chorus, chorus.intentExamples.direct[0], "boundaries");
+  assert.equal(routeCapabilities({
+    envelope: { ...request, availableAuthority: ["local-read"] }, cards: [chorus],
+  }).status, "no-qualified-route");
+  assert.equal(routeCapabilities({
+    envelope: { ...request, permittedEffects: ["external-write"] }, cards: [chorus],
+  }).status, "no-qualified-route");
+  assert.equal(routeCapabilities({
+    envelope: { ...request, maximumRisk: "low" }, cards: [chorus],
+  }).status, "no-qualified-route");
+});
+
+test("router v4 receipt reconciles exact live artifacts", async () => {
+  const receipt = await json("receipts/agent-native-router-v4.json");
   const [manifestText, cardsText, familyText] = await Promise.all([
-    readFile(new URL(`${checkpoint}manifest.json`, root), "utf8"),
-    readFile(new URL(`${checkpoint}cards.jsonl`, root), "utf8"),
-    readFile(new URL(`${checkpoint}family-map.json`, root), "utf8"),
+    readFile(new URL("artifacts/routing/manifest.json", root), "utf8"),
+    readFile(new URL("artifacts/routing/cards.jsonl", root), "utf8"),
+    readFile(new URL("artifacts/routing/family-map.json", root), "utf8"),
   ]);
   const manifest = JSON.parse(manifestText);
-  assert.equal(receipt.id, "agent-native-router-v3");
-  assert.equal(receipt.checkpointRoot, checkpoint.slice(0, -1));
+  assert.equal(receipt.id, "agent-native-router-v4");
   assert.deepEqual(receipt.inputs, manifest.inputs);
   assert.deepEqual(receipt.artifacts, {
     cardsSha256: sha256(cardsText),
@@ -118,8 +131,20 @@ test("router v3 receipt reconciles exact live artifacts", async () => {
     manifestSha256: sha256(manifestText),
   });
   assert.deepEqual(receipt.counts, {
-    aliasRemovalCases: 27, cardCount: 9, commandlessCases: 27,
-    familyCount: 9, maximumComposition: 3, maximumShortlist: 32,
+    aliasRemovalCases: 30, cardCount: 10, commandlessCases: 30,
+    familyCount: 10, maximumComposition: 3, maximumShortlist: 32,
+  });
+  const v3Text = await readFile(new URL(receipt.checkpointEvidence.path, root), "utf8");
+  assert.equal(receipt.checkpointEvidence.receiptSha256, sha256(v3Text));
+  assert.deepEqual(receipt.gates, {
+    aliasRemovalEquality: true,
+    authorityPreserved: true,
+    deterministicArtifacts: true,
+    effectsPreserved: true,
+    progressiveDisclosureBounded: true,
+    selectedEntrypointsOnly: true,
+    unnamedOutcomeRouting: true,
+    unresolvedDecisionsFailClosed: true,
   });
   assert.equal(JSON.stringify(receipt).includes("timestamp"), false);
 });

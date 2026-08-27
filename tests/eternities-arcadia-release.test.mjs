@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFile, readdir } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 
 import { sha256 } from "../src/io.mjs";
 
@@ -14,15 +14,13 @@ test("Arcadia release receipt reconciles the complete local candidate", async ()
     text("receipts/promotions/eternities-arcadia.json"),
     json("receipts/agent-native-router-v2.json"),
     json("receipts/agent-native-router-v3.json"),
-    json("artifacts/corpus/coverage-summary.json"),
+    json("artifacts/checkpoints/eternities-arcadia-release-v1/coverage-summary.json"),
   ]);
-  const promotions = await Promise.all((await readdir(new URL("receipts/promotions/", root)))
-    .filter((name) => name.endsWith(".json")).map((name) => json(`receipts/promotions/${name}`)));
   assert.equal(receipt.schemaVersion, 1);
   assert.equal(receipt.id, "eternities-arcadia-release");
   assert.equal(receipt.status, "certified-local-candidate");
   assert.deepEqual(receipt.capabilities, { added: 1, promotedTotal: 9 });
-  assert.equal(promotions.filter(({ decision }) => decision?.status === "promoted").length, 9);
+  assert.equal(routerV3.counts.cardCount, receipt.capabilities.promotedTotal);
   assert.deepEqual(receipt.evidence, {
     reviewedSources: 25,
     selectedClusters: 4,
