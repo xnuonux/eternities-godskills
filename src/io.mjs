@@ -6,6 +6,10 @@ export function sha256(value) {
   return createHash("sha256").update(value).digest("hex");
 }
 
+export function canonicalText(value) {
+  return value.replaceAll("\r\n", "\n");
+}
+
 export async function readJson(filePath) {
   return JSON.parse(await readFile(filePath, "utf8"));
 }

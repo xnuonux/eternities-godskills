@@ -4,7 +4,12 @@ import { mkdtemp, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 
-import { readJson, sha256, writeJsonAtomic } from "../src/io.mjs";
+import { canonicalText, readJson, sha256, writeJsonAtomic } from "../src/io.mjs";
+
+test("canonicalText removes checkout-specific line endings", () => {
+  assert.equal(canonicalText("alpha\r\nbeta\r\n"), "alpha\nbeta\n");
+  assert.equal(canonicalText("alpha\nbeta\n"), "alpha\nbeta\n");
+});
 
 test("sha256 returns the standard lowercase digest", () => {
   assert.equal(

@@ -7,7 +7,7 @@ import {
   validateCompositionGraph,
 } from "../src/composition.mjs";
 import { evaluateSuite } from "../src/evaluate.mjs";
-import { sha256 } from "../src/io.mjs";
+import { canonicalText, sha256 } from "../src/io.mjs";
 import { decidePromotion } from "../src/promote.mjs";
 import { deriveSourceEvidence } from "../src/provenance-evidence.mjs";
 
@@ -59,7 +59,7 @@ test("release two certifies three engineering Godskills and one bounded profile"
       `skills/${name}/references/capability-contract.json`,
     );
     const suite = await json(`skills/${name}/evals/cases.json`);
-    const skillText = await text(`skills/${name}/SKILL.md`);
+    const skillText = canonicalText(await text(`skills/${name}/SKILL.md`));
     const sourceEvidence = deriveSourceEvidence(contract, ledger);
     const baseline = {
       ...evaluateSuite(suite.cases, suite.baseline.results),
@@ -88,8 +88,14 @@ test("release two certifies three engineering Godskills and one bounded profile"
     assert.deepEqual(receipt.evidence.sourceIds, sourceEvidence.sourceIds);
     assert.equal(receipt.evidence.sourceProseCopied, false);
     assert.equal(receipt.evidence.skillSha256, sha256(skillText));
-    assert.equal(receipt.evidence.casesSha256, sha256(await text(`skills/${name}/evals/cases.json`)));
-    assert.equal(receipt.evidence.policySha256, sha256(await text("policies/promotion.v1.json")));
+    assert.equal(
+      receipt.evidence.casesSha256,
+      sha256(canonicalText(await text(`skills/${name}/evals/cases.json`))),
+    );
+    assert.equal(
+      receipt.evidence.policySha256,
+      sha256(canonicalText(await text("policies/promotion.v1.json"))),
+    );
     assert.equal(promotion.tokenCount, receipt.evidence.measuredTokenCount);
     assert.equal(
       promotion.receiptSha256,
@@ -137,6 +143,6 @@ test("release two certifies three engineering Godskills and one bounded profile"
   );
 
   assert.equal(certification.verification.testFailures, 0);
-  assert.equal(certification.verification.testTotal, 85);
+  assert.equal(certification.verification.testTotal, 87);
   assert.ok(certification.remainingUncertainty.length > 0);
 });

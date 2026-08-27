@@ -3,7 +3,7 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 
 import { evaluateSuite } from "../src/evaluate.mjs";
-import { sha256, writeJsonAtomic } from "../src/io.mjs";
+import { canonicalText, sha256, writeJsonAtomic } from "../src/io.mjs";
 import { decidePromotion } from "../src/promote.mjs";
 import { deriveSourceEvidence } from "../src/provenance-evidence.mjs";
 
@@ -27,13 +27,15 @@ export async function evaluateSkill({ skillPath, policyPath, receiptPath }) {
   const skillFile = path.join(skillPath, "SKILL.md");
   const contractPath = path.join(skillPath, "references", "capability-contract.json");
   const ledgerPath = path.join(path.resolve(skillPath, "..", ".."), "provenance", "source-ledger.jsonl");
-  const [skillText, casesText, policyText, contractText, ledgerText] = await Promise.all([
+  const rawTexts = await Promise.all([
     readFile(skillFile, "utf8"),
     readFile(casesPath, "utf8"),
     readFile(policyPath, "utf8"),
     readFile(contractPath, "utf8"),
     readFile(ledgerPath, "utf8"),
   ]);
+  const [skillText, casesText, policyText, contractText, ledgerText] =
+    rawTexts.map(canonicalText);
   const suite = JSON.parse(casesText);
   const policy = JSON.parse(policyText);
   const contract = JSON.parse(contractText);
