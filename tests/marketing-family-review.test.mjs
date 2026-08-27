@@ -99,6 +99,13 @@ test("every exact marketing and growth source has one bounded semantic review", 
     "the requested objective remains visible in the work product",
     "external actions require an explicit owner and approval",
     "overconfident recommendations can cause wasted spend or reputational harm",
+    "the source material, records, or account state required",
+    "the target, time window, and acceptance measure",
+    "extract the named entities, measures, and constraints",
+    "apply the source method to transform those inputs",
+    "choose priorities using the stated outcome",
+    "source coverage may omit the segment or condition",
+    "a calculated score or route can appear more certain",
   ];
   for (const review of reviews) {
     const semanticText = [
