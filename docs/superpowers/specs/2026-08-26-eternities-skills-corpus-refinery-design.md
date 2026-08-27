@@ -117,6 +117,12 @@ A completed review receipt must be independently authored and include:
 - proposed behavioral cluster and confidence;
 - reviewer and review-method identifier.
 
+Slash commands, named invocations, and command-shaped trigger phrases inside a
+source body are inspected as interface evidence, not adopted as the product
+interface. Reviewers translate them into neutral outcomes and boundaries. A
+review may record the source form as a legacy alias, but the alias cannot be the
+only evidence for the proposed capability or cluster.
+
 Receipts with missing source ids, stale body digests, copied source prose, or
 unsupported promotion language fail validation.
 
@@ -128,11 +134,12 @@ Each family wave follows the same progression:
 2. process review packets without skipping low-confidence or unknown-license
    sources;
 3. reconcile exact duplicates, aliases, specialized variants, and conflicts;
-4. derive neutral capability contracts;
+4. translate named commands into command-independent intent evidence and derive
+   neutral capability contracts;
 5. identify the smallest useful atoms and complete workflows;
 6. synthesize first-party skills without source prose or vendor identity;
-7. test direct, paraphrase, exclusion, conflict, failure, effects, portability,
-   and token behavior;
+7. test direct, paraphrase, unnamed outcome, legacy-command independence,
+   exclusion, conflict, failure, effects, portability, and token behavior;
 8. compare against all material baselines in the cluster;
 9. promote only candidates that pass every gate;
 10. leave incomplete work cold with its exact state and next action.
@@ -147,6 +154,16 @@ Corpus artifacts use JSON, JSONL, and Markdown with relative references. No
 core state depends on Codex, Claude Code, Luna, a specific model, or one
 discovery directory. Runtime adapters consume promoted cores only. Review
 packets and quarry bodies remain cold.
+
+The same rule applies to invocation. The canonical contract accepts a neutral
+request envelope and never requires one runtime's slash-command parser. Agent
+adapters may expose aliases for compatibility, but agents discover and select
+skills from intent, capability, effects, authority, conflicts, and cost.
+
+The 4,741-source catalog is progressively disclosed through a compact family
+map, bounded candidate retrieval, exact capability cards, and selected skill
+bodies. No stage loads the complete catalog or source corpus into ordinary
+agent context.
 
 ## acceptance criteria
 
@@ -172,6 +189,11 @@ The universal refinery is complete only when all non-rejected source bodies
 have valid review and cluster evidence and every family has an explicit
 promotion or deferral receipt. That is a longer program, not a claim attached
 to this foundation milestone.
+
+Every promoted artifact must also route from an unnamed natural-language
+outcome, remain routable after all legacy aliases are removed, and prove that
+the router selected the smallest sufficient capability or compatible
+composition without loading the full catalog.
 
 ## excluded from the foundation milestone
 

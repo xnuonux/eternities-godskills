@@ -72,6 +72,63 @@ The initial `C:\Users\Dom\.agents\skills` projection is a shared-agent filesyste
 
 Constellation manifests select portable skills. Runtime-specific activation manifests project a constellation into Codex, Claude Code, Luna, or another compatible environment. Core skill hashes remain identical across adapters.
 
+## agent-native invocation and deterministic intent routing
+
+The canonical interface is an ordinary user request describing an outcome. A
+user does not need to know that a skill exists, remember its name, or type a
+slash command. The consuming agent owns capability selection.
+
+Slash commands, command names, and exact trigger phrases found in source skills
+are historical interface evidence only. The refinery may retain them as
+`legacyAliases` for compatibility and evaluation, but they are never required
+for discovery, routing, or successful execution. Source command syntax is
+translated into neutral intent, inputs, operations, outputs, effects,
+exclusions, and failure behavior before synthesis.
+
+Every routable capability exposes a compact machine-readable card and a deeper
+capability contract. Together they declare:
+
+- intended outcomes and success conditions;
+- direct, paraphrased, and contextual intent examples;
+- negative triggers and task boundaries;
+- required and provided capabilities;
+- effects, risk class, authority requirements, and preconditions;
+- compatible compositions, conflicts, and delegation boundaries;
+- evidence confidence, context cost, and dependency cost;
+- termination conditions and recovery behavior;
+- optional legacy aliases that carry no routing authority.
+
+The universal router follows one deterministic progression:
+
+1. derive a request envelope containing the desired outcome, artifacts,
+   constraints, required effects, available authority, and uncertainty;
+2. retrieve a small candidate set from cold capability cards without loading
+   source bodies or full skill instructions;
+3. reject candidates whose exclusions, effects, authority, preconditions, or
+   portability requirements conflict with the request;
+4. prefer complete requirement coverage, narrower intent fit, lower effects,
+   lower context and dependency cost, stronger evidence, and then stable id as
+   the final tie-breaker;
+5. select one smallest sufficient skill when possible, or the smallest
+   non-recursive compatible composition when no single skill covers the
+   mission;
+6. load only the selected entrypoints and only the route-specific references
+   they require;
+7. emit a compact route receipt recording request features, candidates,
+   exclusions, selection, composition, confidence, and unresolved uncertainty.
+
+Automatic skill selection does not imply unlimited authority. A high-confidence
+reversible match may run without asking the user to operate the router. A
+material ambiguity involving outcomes, permissions, irreversible effects, or
+external consequences asks about that missing decision, not which skill name to
+choose. If no candidate qualifies, the agent may use its native reasoning
+within its normal authority and record a catalog gap instead of forcing an
+unfitted skill.
+
+Routing policy belongs to the portable core. Runtime adapters translate request
+and tool surfaces into the neutral request envelope, but they may not silently
+change selection order, permission boundaries, or termination conditions.
+
 ## relationship to soul anchor
 
 Soul Anchor and Eternities Skills are complementary Eternities products:
@@ -241,11 +298,19 @@ constellations are generated from a portable lock manifest. activation uses a ru
 
 The root pack stays cold. An agent receives an index of concise capability cards, then loads only the selected skill entrypoint and only the references required by the chosen route. This progressive-disclosure contract is universal and does not depend on a particular model's context window.
 
+Agents initially load only a compact family map and router contract. Family
+cards expose enough information to shortlist capabilities but never contain full
+operating doctrine. Full catalog search remains available on demand, and full
+skill bodies remain addressable by stable id. This makes a catalog containing
+thousands of capabilities usable without placing thousands of descriptions in
+the prompt.
+
 ## synthesis pipeline
 
 1. inventory and certify the source corpus.
 2. parse skill metadata and identify executable or referenced resources.
-3. create neutral capability contracts.
+3. translate source commands and trigger syntax into neutral intent evidence,
+   then create command-independent capability contracts.
 4. deduplicate exact and behavioral equivalents.
 5. cluster related contracts into ontology families.
 6. select baselines using fit, completeness, evidence, security, dependencies, and maintenance state.
@@ -287,6 +352,8 @@ each artifact receives:
 - schema validation
 - positive trigger cases
 - paraphrased trigger cases
+- unnamed natural-language outcome cases
+- legacy-command independence cases
 - exclusion cases
 - conflict cases against nearest siblings
 - golden functional cases
@@ -296,6 +363,12 @@ each artifact receives:
 - dependency and portability checks
 
 godskills additionally receive composition tests proving that they select the smallest sufficient refined-skill set and terminate without recursive orchestration.
+
+router evaluation additionally proves deterministic candidate filtering,
+stable tie-breaking, effect minimization, conflict handling, commandless
+selection, bounded composition, and bounded no-match behavior when no
+capability qualifies. A source slash command may be accepted by an adapter for
+compatibility, but removing every legacy alias must not break canonical routing.
 
 ultragodskills additionally receive mission simulations, context-budget checks, checkpoint behavior, and partial-failure recovery tests.
 
@@ -316,7 +389,12 @@ independent implementation must be based on neutral requirements and tests. this
 - conflicting contracts ... preserve alternatives and require an explicit selection policy
 - failed superiority test ... retain the source baseline and keep the candidate experimental
 - prompt-budget regression ... demote the artifact to cold or split it
-- trigger collision ... narrow descriptions or require explicit invocation
+- trigger collision ... narrow contracts or ask for the disputed outcome or
+  effect to be confirmed
+- router ambiguity ... ask for the missing outcome or authority decision, not a
+  skill name
+- no qualified route ... use bounded native reasoning or return a catalog-gap
+  receipt; never force the nearest skill
 - constellation or adapter activation failure ... restore the previous adapter receipt and lock manifest
 - unavailable D drive ... cold mining fails clearly; installed proven skills continue operating
 
@@ -373,6 +451,13 @@ the first program release is complete when:
 9. provenance and notices remain available outside ordinary prompts.
 10. the generic manifest, CLI, or MCP can expose the same core skill hashes without rewriting doctrine.
 11. the optional Soul Anchor bridge emits structured receipts and remains silent on routine invocations.
+12. every promoted capability is selected from an unnamed natural-language
+    outcome without requiring a slash command or skill name.
+13. deterministic routing chooses the smallest sufficient, least-effect
+    capability or compatible composition and emits a reproducible receipt.
+14. the complete cold catalog remains searchable while ordinary agent context
+    contains only the family map, router contract, selected entrypoints, and
+    route-required references.
 
 ## explicitly excluded from the first release
 
