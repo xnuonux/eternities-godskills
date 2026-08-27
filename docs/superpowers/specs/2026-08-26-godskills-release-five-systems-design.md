@@ -1,8 +1,8 @@
-# Eternities Godskills release five systems design
+# Eternities Skills release five systems design
 
 ## status
 
-Approved direction: two independent categorical Godskills, `eternities-atlas` for data infrastructure and `eternities-hermes` for automation and integrations. They share one portable `eternities-systems` constellation but retain separate contracts, provenance, evaluations, promotion receipts, and rollback evidence. Eternities owns the skills; Codex is only the first verified runtime adapter.
+Approved direction: build Release Five inside the universal `eternities-skills` product, with two independent categorical Godskills: `eternities-atlas` for data infrastructure and `eternities-hermes` for automation and integrations. They share one portable `eternities-systems` constellation but retain separate contracts, provenance, evaluations, promotion receipts, and rollback evidence. Eternities owns the skills; Codex is only the first verified runtime adapter.
 
 ## purpose
 
@@ -14,6 +14,32 @@ Release Five closes two uncovered ontology families without creating a vague sys
 The release must preserve existing ownership boundaries. Architect owns broad system architecture, Forge owns multi-stage code delivery, Aegis owns authorization and risk decisions, Oracle owns consequential research, and exact provider or platform skills own provider-specific implementation details.
 
 Release Five also establishes the portability substrate that applies to Atlas, Hermes, and the already-promoted Godskills. No Eternities core skill may depend on Codex-specific identity, model names, approval controls, discovery paths, or tool-call syntax.
+
+Release Five establishes the product skeleton under the `eternities-skills` identity. The current repository path remains a bootstrap checkout until a later certified migration preserves active adapters and historical receipts. No GitHub publication or remote mutation occurs in this release without separate founder authority.
+
+## soul anchor sidekick contract
+
+Eternities Skills is the capability sidekick to Soul Anchor, not an organ embedded inside it:
+
+| product | owns | does not own |
+|---|---|---|
+| Soul Anchor | continuity, identity, judgment, memory rows, chain of custody, wake and seal | the universal library of professional methods |
+| Eternities Skills | capabilities, routes, execution doctrine, tool and effect contracts, evaluations, skill receipts | identity canon or session memory truth |
+
+Both products remain independently useful. Their optional bridge accepts a completed skill receipt and may propose a Soul Anchor decision, scar, landmine, or checkpoint. The bridge runs only at a meaningful milestone or explicit request. It does not wake or seal on routine turns, does not copy full transcripts into memory, and cannot write founder-gated canon by proxy.
+
+The skill receipt schema contains:
+
+- skill id and semantic version;
+- core content hash and adapter id;
+- selected route and capability bindings;
+- declared and performed effects;
+- input and output evidence digests where safe;
+- verification status and method;
+- unresolved uncertainty and rollback state;
+- optional durable lessons, each labeled as proposal until accepted by the consuming continuity system.
+
+Soul Anchor may store that receipt or promote a durable lesson. Eternities Skills treats Soul Anchor rows as scoped evidence, not instructions that override the current user or skill authority.
 
 ## portable capability architecture
 
@@ -173,6 +199,8 @@ Create a portable `eternities-systems` constellation with exactly Atlas and Herm
 
 Add an agent-neutral constellation schema plus runtime-adapter schema. The first adapter projects the unchanged core files into `C:\Users\Dom\.agents\skills`, currently verified through Codex. The design must also include adapter fixtures proving that a Claude Code-style or generic manifest can bind the same core hashes without rewriting the skills. This is portability-contract evidence, not a claim that those runtimes were live-tested.
 
+Add a generic catalog manifest, CLI contract, and MCP discovery contract. At minimum, universal surfaces support `list`, `search`, `read`, `route`, `verify`, and `doctor`. Mutating installation or bridge operations are separate commands with preview, explicit apply, and receipts.
+
 Activation occurs only after independent review and fast-forward merge into canonical `C:\dev\eternities-godskills`. The first-adapter cumulative receipt must point only to canonical main. A dedicated Release Five migration receipt must prove rollback plans exactly `eternities-atlas` and `eternities-hermes`, preserving all prior global skills. Later runtime adapters receive their own receipts and cannot inherit Codex discovery proof.
 
 ## failure handling
@@ -203,6 +231,9 @@ Release Five is complete only when:
 9. Rollback dry-run plans only the two Release Five links.
 10. Focused tests, the full repository suite, promotion receipt verification, cold-index integrity, diff hygiene, and a global junction audit all pass from canonical main.
 11. Existing promoted Godskills pass an agent-neutrality audit or receive an explicit compatibility debt record for a later corrective release.
+12. The repository identifies the product as `eternities-skills`, with Godskills documented as one tier of the pack.
+13. Generic manifest, CLI, and MCP fixtures return identical core hashes for Atlas and Hermes.
+14. A Soul Anchor bridge fixture accepts a major skill receipt, rejects routine noise, and cannot write founder-gated canon by proxy.
 
 ## explicitly excluded
 

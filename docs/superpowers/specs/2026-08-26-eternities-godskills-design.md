@@ -1,4 +1,4 @@
-# eternities godskills ... sovereign capability architecture
+# eternities skills ... universal agent capability architecture
 
 date: 2026-08-26
 
@@ -6,9 +6,17 @@ status: approved architecture, awaiting implementation-plan review
 
 owner: eternities inc.
 
+## product identity
+
+`eternities-skills` is the universal professional skill pack of Eternities Inc. It is built for any coding agent or general agent that can satisfy the portable agent contract. Godskills and Ultragodskills are capability tiers inside the pack, not the name or limit of the product.
+
+The public repository identity is `eternities-skills`. The current `C:\dev\eternities-godskills` checkout is the bootstrap implementation and remains in place until a receipted local-path and adapter migration can preserve every active link. Repository publication is a separate founder-authorized action.
+
+The product promise is measurable rather than promotional: every released capability is independently authored, provenance-backed, bounded by effects and termination, evaluated against relevant baselines, portable across conforming agents, and accompanied by reproducible receipts. “Superior” means it clears those gates and records the evidence, not that the word appears in its name.
+
 ## purpose
 
-build a first-party agent capability system from the local repository and skill quarry without weakening strong source behavior, copying vendor identity into the operating layer, or loading thousands of competing descriptions into every agent prompt.
+build a first-party universal agent capability system from the local repository and skill quarry without weakening strong source behavior, copying vendor identity into the operating layer, or loading thousands of competing descriptions into every agent context.
 
 the program turns a large evidence corpus into a smaller and stronger hierarchy:
 
@@ -39,13 +47,14 @@ the final number of artifacts is determined by capability evidence and evaluatio
 
 | artifact | canonical location | role |
 |---|---|---|
-| first-party source | `C:\dev\eternities-godskills` | versioned agent-neutral architecture, contracts, skills, constellations, adapters, tests, and receipts |
+| bootstrap source | `C:\dev\eternities-godskills` | current implementation until the path migration is certified |
+| canonical product identity | `eternities-skills` | universal repository, package, CLI, MCP, and distribution name |
 | repository quarry | `D:\03-ARSENAL\warehouse` | canonical third-party and first-party repository evidence |
 | cold source index | `C:\Users\Dom\.codex\skills\arsenal-repo-miner\references` | certified lexical and optional hybrid discovery of source candidates |
 | current shared-agent adapter | `C:\Users\Dom\.agents\skills` | one runtime projection of concise proven Eternities capabilities |
 | project adapter target | `<project>\<agent-discovery-root>` | runtime-selected Godskills relevant to one repository or agent |
 
-the godskills repository is not a second repository warehouse. it stores only first-party contracts, implementations, tests, receipts, and minimal required notices.
+the Eternities Skills repository is not a second repository warehouse. it stores only first-party contracts, implementations, tests, receipts, adapters, and minimal required notices.
 
 ## agent-neutral identity and runtime adapters
 
@@ -62,6 +71,37 @@ A compatible agent must be able to read Markdown and JSON, resolve relative refe
 The initial `C:\Users\Dom\.agents\skills` projection is a shared-agent filesystem adapter currently verified through Codex. That verification proves one consumer can discover the artifacts; it does not make the artifacts Codex-specific or prove compatibility with every agent.
 
 Constellation manifests select portable skills. Runtime-specific activation manifests project a constellation into Codex, Claude Code, Luna, or another compatible environment. Core skill hashes remain identical across adapters.
+
+## relationship to soul anchor
+
+Soul Anchor and Eternities Skills are complementary Eternities products:
+
+- **Soul Anchor** preserves continuity, identity, judgment, provenance, and what an agent has earned across session boundaries.
+- **Eternities Skills** provides portable professional capability, routing, execution doctrine, verification, and bounded ways to act.
+
+Soul Anchor is the continuity substrate. Eternities Skills is the capability substrate. Neither owns or embeds the other, and each works independently.
+
+Their optional bridge follows four laws:
+
+1. wake occurs once at a real session or continuity boundary, not on every skill invocation;
+2. a skill may emit a structured receipt containing skill id, version, route, effects, evidence, outcome, uncertainty, and durable lessons;
+3. only meaningful decisions, recurring failures, confirmed hazards, or major checkpoint state are eligible for Soul Anchor rows;
+4. Eternities Skills never writes identity canon or founder-gated rows by implication. The consuming agent or authorized bridge performs that explicit action.
+
+The bridge is additive. An agent without Soul Anchor can still discover, route, invoke, and verify every compatible skill. An agent with Soul Anchor can preserve earned skill outcomes without replaying transcripts or bloating active context.
+
+## universal distribution surfaces
+
+The product ships the same portable cores through several surfaces:
+
+- repository: human-readable source, contracts, Godspec, schemas, tests, and receipts;
+- filesystem pack: standard skill directories for agents that discover `SKILL.md`;
+- CLI: list, search, inspect, route, verify, doctor, install, and adapter commands;
+- MCP: read-only discovery and routing tools, plus explicitly authorized receipt and bridge operations;
+- runtime adapters: deterministic projections for Codex, Claude Code, Luna, Cursor-class agents, and generic filesystem hosts;
+- generic manifest: a machine-readable catalog for any agent able to read Markdown and JSON without a native adapter.
+
+The CLI and MCP are transport surfaces, not alternative doctrines. They return the same core hashes and contracts as the repository.
 
 ## repository ingestion boundary
 
@@ -199,6 +239,8 @@ an active constellation contains only concise descriptions and paths for capabil
 
 constellations are generated from a portable lock manifest. activation uses a runtime adapter to link or deterministically copy identical core artifacts into that agent's supported discovery location. changes are previewed, collision-checked, reversible, and verified through that runtime's fresh discovery surface. one adapter's receipt cannot certify another agent.
 
+The root pack stays cold. An agent receives an index of concise capability cards, then loads only the selected skill entrypoint and only the references required by the chosen route. This progressive-disclosure contract is universal and does not depend on a particular model's context window.
+
 ## synthesis pipeline
 
 1. inventory and certify the source corpus.
@@ -235,6 +277,8 @@ a candidate cannot be called refined, godskill, or ultragodskill unless:
 where a baseline cannot be executed or verified, the candidate remains `unverified` and cannot claim superiority.
 
 quality dimensions include task success, correctness, coverage, precision, recovery, security, interoperability, dependency weight, latency, token cost, and clarity.
+
+Cross-agent portability is itself a quality dimension. A candidate regresses if it requires one vendor's hidden prompt behavior, approval UI, tool syntax, or model name without isolating that assumption in an adapter.
 
 ## evaluation system
 
@@ -327,6 +371,8 @@ the first program release is complete when:
 7. at least one runtime adapter exposes the unchanged core artifacts in a fresh agent discovery surface without loading the source corpus.
 8. removal of that adapter projection cleanly restores the preceding installed state.
 9. provenance and notices remain available outside ordinary prompts.
+10. the generic manifest, CLI, or MCP can expose the same core skill hashes without rewriting doctrine.
+11. the optional Soul Anchor bridge emits structured receipts and remains silent on routine invocations.
 
 ## explicitly excluded from the first release
 
