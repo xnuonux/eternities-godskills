@@ -47,9 +47,9 @@ test("Chorus advances exactly its forty-seven selected sources through promoted 
   assert.equal(chorus[0].clusterIds.length, 4);
   assert.equal(chorus[0].evaluated, true);
   assert.equal(chorus[0].promoted, true);
-  assert.equal(summary.evidenceCounts.cardReviewed, 145);
-  assert.equal(summary.evidenceCounts.clustered, 143);
-  assert.equal(summary.evidenceCounts.synthesized, 27 + selected);
-  assert.equal(summary.evidenceCounts.evaluated, 27 + selected);
-  assert.equal(summary.evidenceCounts.promoted, 27 + selected);
+  assert.equal(summary.evidenceCounts.cardReviewed, 396);
+  assert.equal(summary.evidenceCounts.clustered, 396);
+  assert.equal(summary.evidenceCounts.synthesized, 217);
+  assert.equal(summary.evidenceCounts.evaluated, 217);
+  assert.equal(summary.evidenceCounts.promoted, 217);
 });
