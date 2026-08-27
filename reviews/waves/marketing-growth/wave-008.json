@@ -1,0 +1,1150 @@
+{
+  "schemaVersion": 1,
+  "familyId": "marketing-growth",
+  "waveId": "marketing-growth-wave-008",
+  "reviewer": "codex:01a03c38-8589-79d2-a007-bf4c128304af",
+  "reviewMethod": "bounded-source-review-v1",
+  "reviews": [
+    {
+      "sourceId": "skill-7e9a69924fb561ea",
+      "bodySha256": "14125e30e4b80a717f21b0f08e8b7b9d3736e88abf0c452fd1c025af694c0aa3",
+      "neutralCapabilitySummary": "compose a single-column product-launch email with masthead, hero, one CTA, and specification grid",
+      "neutralIntentExamples": [
+        "launch a running shoe email that keeps the offer focused on one purchase action",
+        "adapt a product announcement into a responsive table-based message with brand styling"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "brief, product benefits, brand tokens, hero treatment, CTA destination"
+      ],
+      "operations": [
+        "read design tokens; select wordmark and product claim; lay out 600–680px tables; add hero, headline, specs, CTA; check mobile fallback"
+      ],
+      "outputs": [
+        "HTML email",
+        "CTA copy",
+        "responsive layout"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "stop when brand tokens or product facts are missing",
+        "do not send the message or invent a product claim"
+      ],
+      "exclusions": [
+        "do not send the message or invent a product claim"
+      ],
+      "usefulInvariants": [
+        "one primary CTA remains visible",
+        "table fallback preserves the reading order"
+      ],
+      "materialRisks": [
+        "unsupported CSS can break inbox rendering",
+        "a weak claim can undermine trust"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "email-launch-composition",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-7efd1b8cdc49e70a",
+      "bodySha256": "3d64c76f6b23e9b624a724234de78259b5cffdb3e375513a52baf5f3cc502533",
+      "neutralCapabilitySummary": "edit existing marketing copy through focused clarity, structure, voice, and proof passes",
+      "neutralIntentExamples": [
+        "tighten a verbose landing-page draft while keeping its promise intact",
+        "refresh outdated promotional copy without erasing the author’s tone"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "source copy, audience, brand voice, claims, desired action"
+      ],
+      "operations": [
+        "check context; run separate passes for clarity, structure, voice, specificity, and conversion; record reasons for edits; review regressions"
+      ],
+      "outputs": [
+        "edited copy",
+        "before/after rationale",
+        "claim or consistency flags"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "ask for source text and voice context; retain unresolved legal or factual questions",
+        "do not replace the message with unrelated new positioning"
+      ],
+      "exclusions": [
+        "do not replace the message with unrelated new positioning"
+      ],
+      "usefulInvariants": [
+        "each edit has a reason",
+        "core meaning and author voice survive unless explicitly changed"
+      ],
+      "materialRisks": [
+        "over-editing can flatten distinct voice",
+        "unsupported proof points may become more persuasive but still false"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "marketing-copy-editing",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-7f1dbd90319f6345",
+      "bodySha256": "f94b0be2e7a9c29de0358c64fabc2a19fbbb11ef0c5d7b519cb538f1cb87b159",
+      "neutralCapabilitySummary": "query live organic rankings for a domain and keyword list, classify positions, and attach one next action per term",
+      "neutralIntentExamples": [
+        "prioritize which tracked keywords need content or technical attention",
+        "separate page-one winners from terms that are close to visibility"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "domain, keyword list, DataForSEO credentials, location and language settings"
+      ],
+      "operations": [
+        "run credential preflight; submit SERP lookup; map positions to winning/page-one/close/not-ranking bands; assign one action"
+      ],
+      "outputs": [
+        "ranking table",
+        "classification per keyword",
+        "prioritized actions"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "stop on missing credentials or authentication failure; do not fabricate rankings",
+        "do not treat a simulated result as live search evidence"
+      ],
+      "exclusions": [
+        "do not treat a simulated result as live search evidence"
+      ],
+      "usefulInvariants": [
+        "every keyword retains its returned position or an explicit unavailable state",
+        "credential material is never echoed"
+      ],
+      "materialRisks": [
+        "SERP volatility can change prioritization",
+        "API geography or device defaults can distort comparisons"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "live-ranking-classification",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-8120f273e2f12a13",
+      "bodySha256": "edb7c11d193300c871365f489fd9688906c076a40df0735c593d53985a8f9ba6",
+      "neutralCapabilitySummary": "design human-sounding B2B cold-email sequences from sender, prospect, trigger, proof, and ask context",
+      "neutralIntentExamples": [
+        "turn a named prospect trigger into a concise first-touch email with a credible ask",
+        "build follow-ups that add useful context instead of repeating the pitch"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "sender role, offer, prospect segment, trigger, proof, desired reply, compliance constraints"
+      ],
+      "operations": [
+        "gather sender and prospect facts; choose a relevant trigger; draft short personalized touches; sequence follow-ups; check opt-out and claim boundaries"
+      ],
+      "outputs": [
+        "email sequence",
+        "personalization fields",
+        "send-timing and reply guidance"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "ask for missing sender, audience, or proof; flag consent and compliance limits",
+        "do not send messages or imply a relationship that does not exist"
+      ],
+      "exclusions": [
+        "do not send messages or imply a relationship that does not exist"
+      ],
+      "usefulInvariants": [
+        "each touch has a distinct reason to reply",
+        "personalization is grounded in supplied facts"
+      ],
+      "materialRisks": [
+        "thin research leads to creepy personalization",
+        "unsolicited outreach can create legal and reputation risk"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "b2b-cold-outreach-sequencing",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-81bd2521003e5cc1",
+      "bodySha256": "1fd0bed0afa9965a6422005de8d930bdf17e1823d5319ca911a621be9e2c6d6d",
+      "neutralCapabilitySummary": "plan a polished product demo video by coordinating scenes, narration, screenshots, and media compositing options",
+      "neutralIntentExamples": [
+        "turn interface screenshots into a paced feature walkthrough with a clear story arc",
+        "prepare a fallback production package when capture, speech, or video tooling is unavailable"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "screenshots or scene descriptions, audience, duration, narration, available Playwright/edge-tts/ffmpeg tools"
+      ],
+      "operations": [
+        "choose rendering mode; assign a job to each scene; write narration; capture or request assets; composite and verify timing; document fallbacks"
+      ],
+      "outputs": [
+        "scene manifest",
+        "narration script",
+        "video or individual scene assets",
+        "tool availability report"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "stop or fall back to scene files when a required tool is absent",
+        "do not claim a finished video when only source assets exist"
+      ],
+      "exclusions": [
+        "do not claim a finished video when only source assets exist"
+      ],
+      "usefulInvariants": [
+        "every second supports the product story",
+        "audio, visuals, and scene timing remain aligned"
+      ],
+      "materialRisks": [
+        "automated capture may fail on dynamic interfaces",
+        "compression or speech synthesis can reduce clarity"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "demo-video-production",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-8210ba276d7ba4c2",
+      "bodySha256": "53db18c1d7dc08ac55603ac5b34337630ab1afb0393ca7558326851a993ee4f4",
+      "neutralCapabilitySummary": "investigate competitor advertising across platforms, offers, audiences, creative, landing pages, and positioning gaps",
+      "neutralIntentExamples": [
+        "compare how three competitors frame the same category in paid channels",
+        "turn observed ad and landing-page differences into a differentiated campaign brief"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "target business URL, market, competitors, ad libraries, landing pages, research scope"
+      ],
+      "operations": [
+        "fetch business and competitor pages; inspect ad libraries; compare platform, creative, offer, targeting signals, and gaps; assemble swipe file"
+      ],
+      "outputs": [
+        "competitive ad report",
+        "positioning opportunities",
+        "swipe-file template"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "flag inaccessible libraries or unverified targeting; distinguish observation from inference",
+        "do not launch ads or present inferred demographics as fact"
+      ],
+      "exclusions": [
+        "do not launch ads or present inferred demographics as fact"
+      ],
+      "usefulInvariants": [
+        "each claim has a source or observation boundary",
+        "competitor comparisons use the same dimensions"
+      ],
+      "materialRisks": [
+        "ad libraries may omit spend and targeting detail",
+        "stale creative can make a current recommendation misleading"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "competitive-ad-intelligence",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-8291227b5765f61d",
+      "bodySha256": "d7dab398f7ce5c16cb5a7026f7e9465a6cb077a7b16caf024b3b120502d924b4",
+      "neutralCapabilitySummary": "design an economically committed partner ecosystem with tiers, incentives, roadmap alignment, and rollout stages",
+      "neutralIntentExamples": [
+        "decide whether a capability should be built internally or delivered through a partner",
+        "structure a partner tier with mutual investment, executive ownership, and measurable adoption"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "business objective, partner candidates, economics, product dependencies, executive sponsorship, rollout capacity"
+      ],
+      "operations": [
+        "test for economic commitment; compare build and partner paths; define tiers, rights, incentives, roadmap work, governance, and crawl-walk-run rollout"
+      ],
+      "outputs": [
+        "partner architecture",
+        "tier and incentive model",
+        "build-versus-partner decision",
+        "rollout milestones"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "ask for economics and ownership when absent; reject logo-only partnership claims",
+        "do not sign agreements or promise revenue outcomes"
+      ],
+      "exclusions": [
+        "do not sign agreements or promise revenue outcomes"
+      ],
+      "usefulInvariants": [
+        "both parties’ obligations are explicit",
+        "partnership success has adoption and economic measures"
+      ],
+      "materialRisks": [
+        "co-marketing theater can hide absent commitment",
+        "roadmap coupling can create delivery dependency"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "partner-program-economics",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-82d95157033dc112",
+      "bodySha256": "d60e41696796025443fe00caedff26732a71a3b3a1199d122f1f6ab9da98f514",
+      "neutralCapabilitySummary": "design statistically credible A/B tests with hypotheses, baselines, metrics, sample needs, and stopping rules",
+      "neutralIntentExamples": [
+        "choose a measurable experiment for a proposed signup-page change",
+        "write a test brief that separates primary success from guardrail metrics"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "baseline rate, traffic, variants, hypothesis, segment, instrumentation, duration constraints"
+      ],
+      "operations": [
+        "define hypothesis; select primary and guardrail metrics; estimate sample and runtime; randomize exposure; set decision and stopping rules; inspect validity risks"
+      ],
+      "outputs": [
+        "experiment brief",
+        "variant definition",
+        "measurement plan",
+        "readout criteria"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "ask for baseline and traffic; defer when instrumentation cannot distinguish variants",
+        "do not declare a winner from a short or underpowered sample"
+      ],
+      "exclusions": [
+        "do not declare a winner from a short or underpowered sample"
+      ],
+      "usefulInvariants": [
+        "one primary metric governs the test",
+        "allocation and analysis rules are fixed before exposure"
+      ],
+      "materialRisks": [
+        "seasonality and peeking can create false lifts",
+        "multiple variants increase false-positive exposure"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "ab-testing-design",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-84f8b2c706520826",
+      "bodySha256": "cc087247b41768403428424a0aee891bbebc548e189e5e4032014f24ebb8e119",
+      "neutralCapabilitySummary": "redesign website information architecture, URL hierarchy, navigation, breadcrumbs, hubs, and internal links for users and crawlers",
+      "neutralIntentExamples": [
+        "map orphan pages into a navigable topic and product structure",
+        "decide which URL and linking changes improve discovery without breaking valuable pages"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "site inventory, sitemap, current URLs, traffic pages, audience model, target topics, CMS limits"
+      ],
+      "operations": [
+        "inventory pages; identify orphans and duplicates; define hierarchy and hub pages; set URL and redirect rules; map contextual links; check crawl paths"
+      ],
+      "outputs": [
+        "site architecture plan",
+        "URL map",
+        "internal-link map",
+        "redirect and breadcrumb checklist"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "surface CMS or redirect limits; flag ambiguous taxonomy choices",
+        "do not delete or redirect URLs without an approved migration plan"
+      ],
+      "exclusions": [
+        "do not delete or redirect URLs without an approved migration plan"
+      ],
+      "usefulInvariants": [
+        "important pages have an intentional parent and link path",
+        "URL changes preserve canonical and redirect intent"
+      ],
+      "materialRisks": [
+        "large migrations can lose equity or traffic",
+        "overlapping hubs can create competing relevance"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "site-information-architecture",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-86ae2f45256e2556",
+      "bodySha256": "9514bd6f6e227171ae762460697e19ac545d88be6400171bfd085819717c093c",
+      "neutralCapabilitySummary": "resolve .NET timezone identifiers and daylight-saving conversions with cross-platform guidance",
+      "neutralIntentExamples": [
+        "map a customer’s city to Windows and IANA timezone identifiers",
+        "handle a recurring schedule across daylight-saving transitions in a .NET service"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "location or timezone ID, platform targets, UTC timestamps, recurrence rules, .NET stack"
+      ],
+      "operations": [
+        "resolve geography; choose TimeZoneInfo, TimeZoneConverter, or NodaTime; convert with DateTimeOffset; account for ambiguous and invalid local times"
+      ],
+      "outputs": [
+        "timezone mapping",
+        "C# conversion guidance",
+        "DST edge-case policy"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "ask for exact location or recurrence policy; flag unresolved geography",
+        "do not treat this non-marketing utility as campaign or growth analysis"
+      ],
+      "exclusions": [
+        "do not treat this non-marketing utility as campaign or growth analysis"
+      ],
+      "usefulInvariants": [
+        "persist instants with offsets or UTC",
+        "DST ambiguity is surfaced rather than silently rounded"
+      ],
+      "materialRisks": [
+        "daylight-saving transitions can shift a scheduled local time",
+        "ambiguous location mapping can select the wrong civil-time rules"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "location and timezone semantics",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-86c6f85919c91104",
+      "bodySha256": "a7497254dad220c2226e652b8a75241880e3804274f40239f2d022d43c13b9a9",
+      "neutralCapabilitySummary": "design recurring marketing loops with triggers, cadence, inputs, outputs, and escalation rules",
+      "neutralIntentExamples": [
+        "schedule a weekly ranking-drop review that produces owners and follow-up tasks",
+        "define an ad-fatigue check that pauses escalation when evidence is incomplete"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "loop objective, trigger, cadence, data sources, owner, threshold, notification policy"
+      ],
+      "operations": [
+        "choose trigger; define collection and comparison; set thresholds; generate a bounded report; route exceptions; record next run state"
+      ],
+      "outputs": [
+        "loop specification",
+        "scheduled report",
+        "exception and escalation rules"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "pause when data or permissions are unavailable; distinguish a missed run from a negative signal",
+        "do not activate external campaigns or hide failed runs"
+      ],
+      "exclusions": [
+        "do not activate external campaigns or hide failed runs"
+      ],
+      "usefulInvariants": [
+        "each run has a deterministic input window",
+        "alerts include the threshold and evidence that caused them"
+      ],
+      "materialRisks": [
+        "recurring automation can amplify bad thresholds",
+        "notification noise can cause operators to ignore real changes"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "recurring-marketing-monitoring",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-872b991ce0420e47",
+      "bodySha256": "a0285baaeacc916bf45751c06db37745b195ddd4ec30e271ec1472f6cd48e8aa",
+      "neutralCapabilitySummary": "route an academic paper review through structured reading, quality assessment, and concise scholarly synthesis",
+      "neutralIntentExamples": [
+        "extract the central claim and limitations from a supplied paper",
+        "compare a paper’s method and evidence with a stated research question"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "paper text or citation, review question, evaluation criteria, field context"
+      ],
+      "operations": [
+        "identify claim, method, data, results, limitations, and references; assess evidence against criteria; separate summary from critique"
+      ],
+      "outputs": [
+        "paper review",
+        "method and evidence assessment",
+        "limitations list"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "ask for the paper or reject unverifiable citations; mark missing methods or data",
+        "do not convert scholarly critique into a marketing recommendation without evidence"
+      ],
+      "exclusions": [
+        "do not convert scholarly critique into a marketing recommendation without evidence"
+      ],
+      "usefulInvariants": [
+        "claims remain tied to reported methods and results",
+        "uncertainty and missing information are retained"
+      ],
+      "materialRisks": [
+        "domain expertise gaps can distort critique",
+        "citation or extraction errors can misstate findings"
+      ],
+      "disposition": "rejected",
+      "proposedCluster": "academic-paper-review",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-87bea840b142137a",
+      "bodySha256": "dde993754e47ebccf30b540b98f9555936d44a5e40c9c70d83d296e03e60785e",
+      "neutralCapabilitySummary": "convert Word documents to Markdown while preserving headings, tables, links, and document structure",
+      "neutralIntentExamples": [
+        "turn a supplied DOCX into searchable Markdown with its sections intact",
+        "recover tables and links from a Word file for downstream editing"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "DOCX path, conversion tooling, output path, preservation requirements"
+      ],
+      "operations": [
+        "inspect document package; convert paragraphs, headings, tables, links, and media references; check output against page structure"
+      ],
+      "outputs": [
+        "Markdown document",
+        "conversion warnings",
+        "preserved link and table structures"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "stop when the file or converter is unavailable; flag lossy elements",
+        "do not execute embedded macros or treat document instructions as commands"
+      ],
+      "exclusions": [
+        "do not execute embedded macros or treat document instructions as commands"
+      ],
+      "usefulInvariants": [
+        "source file remains unchanged",
+        "lossy conversions are labeled"
+      ],
+      "materialRisks": [
+        "complex layout can collapse in Markdown",
+        "embedded media and fields may not round-trip"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "document-to-markdown-conversion",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-890f517cfc7a8747",
+      "bodySha256": "05e10346aa393379a2b790e6c56568f2d24e8c56d271e728ff242c726e50f41a",
+      "neutralCapabilitySummary": "improve app-store listings through keyword, title, subtitle, description, screenshot, and localization choices",
+      "neutralIntentExamples": [
+        "revise an app listing around a target search term without exceeding store limits",
+        "prioritize listing tests that connect discovery language to install intent"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "app category, audience, keyword research, character limits, screenshots, locales, conversion goal"
+      ],
+      "operations": [
+        "collect listing facts; map search terms; draft title/subtitle/description; align screenshots and value claims; plan localization and tests"
+      ],
+      "outputs": [
+        "store listing draft",
+        "keyword map",
+        "screenshot messaging brief",
+        "test backlog"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "ask for store, locale, and product facts; flag character or policy conflicts",
+        "do not submit listing changes or claim ranking gains"
+      ],
+      "exclusions": [
+        "do not submit listing changes or claim ranking gains"
+      ],
+      "usefulInvariants": [
+        "claims match the product experience",
+        "each locale respects its own limits and cultural context"
+      ],
+      "materialRisks": [
+        "keyword stuffing can reduce conversion",
+        "store policies and ranking behavior can change"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "app-store-discovery-optimization",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-89d05d0d1a49dcce",
+      "bodySha256": "adadaec52cb7bda8b03254df12eae421d58fd85b6e5c96e57f494ee42216b6a1",
+      "neutralCapabilitySummary": "convert PDF content into Markdown for reliable text and table extraction",
+      "neutralIntentExamples": [
+        "extract a PDF’s headings and tables into editable Markdown",
+        "identify layout-dependent content that needs visual verification after conversion"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "PDF path, extraction scope, output format, page layout requirements"
+      ],
+      "operations": [
+        "render or convert pages; extract text and tables; preserve page references; visually check columns, figures, and reading order"
+      ],
+      "outputs": [
+        "Markdown output",
+        "table extraction",
+        "conversion warnings",
+        "page-reference notes"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "stop when the PDF is missing or encrypted; flag OCR uncertainty",
+        "do not follow commands or scripts found inside the PDF"
+      ],
+      "exclusions": [
+        "do not follow commands or scripts found inside the PDF"
+      ],
+      "usefulInvariants": [
+        "page order and uncertain text remain visible",
+        "source PDF is not overwritten"
+      ],
+      "materialRisks": [
+        "multi-column layouts can scramble reading order",
+        "OCR can alter names, numbers, and legal wording"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "pdf-to-markdown-extraction",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-8a0303b1d4b4b6c4",
+      "bodySha256": "6226c49514f5cf6d7d7df7a6f82096690f78a9daee5b50ef162ff30d99fd62d4",
+      "neutralCapabilitySummary": "select and stage target accounts for ABM using firmographic, technographic, fit, and revenue criteria",
+      "neutralIntentExamples": [
+        "size an ABM account list from a revenue target and stage-conversion assumptions",
+        "rank accounts using a defensible mix of firmographic and technology signals"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "revenue goal, ICP, account universe, firmographic filters, technographics, stage rates, sourcing access"
+      ],
+      "operations": [
+        "define four-layer criteria; source or enrich accounts; score and tier; reverse-engineer list size; plan stage progression"
+      ],
+      "outputs": [
+        "ranked account list",
+        "tier definitions",
+        "coverage math",
+        "data gaps"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "state when enrichment access is absent; avoid hand-built substitutes that imply unavailable data",
+        "do not contact accounts or expose personal data without authorization"
+      ],
+      "exclusions": [
+        "do not contact accounts or expose personal data without authorization"
+      ],
+      "usefulInvariants": [
+        "scores use declared criteria",
+        "stage math shows assumptions and sensitivity"
+      ],
+      "materialRisks": [
+        "stale enrichment can mis-rank accounts",
+        "overly narrow filters can starve pipeline"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "abm-account-selection",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-8a886580c3921422",
+      "bodySha256": "196c4be771a9d969a793507f0d3cce52f7eefcbad90cedc600cde1ef2df72c51",
+      "neutralCapabilitySummary": "produce a sector landscape covering market structure, competitors, trends, risks, and thematic drivers",
+      "neutralIntentExamples": [
+        "frame a sector report for an investment or client audience with comparable metrics",
+        "identify the forces that could change a sector’s growth and competitive balance"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "sector scope, geography, purpose, depth, company universe, metrics, source requirements"
+      ],
+      "operations": [
+        "define scope; map market size and value chain; compare players; assess trends, barriers, regulation, and M&A; cite evidence"
+      ],
+      "outputs": [
+        "sector report",
+        "competitive table",
+        "trend and risk map",
+        "source list"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "ask for scope and universe; mark estimates and missing comparables",
+        "do not present unsourced forecasts as facts or make an investment decision for the reader"
+      ],
+      "exclusions": [
+        "do not present unsourced forecasts as facts or make an investment decision for the reader"
+      ],
+      "usefulInvariants": [
+        "company metrics use comparable definitions",
+        "historical facts, estimates, and thesis are separated"
+      ],
+      "materialRisks": [
+        "market-size sources may use incompatible boundaries",
+        "rapid consolidation can age the landscape"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "sector-landscape-research",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-8cc7ca2cca6fb203",
+      "bodySha256": "4f6f3916b9fcdee631fe898f3970e91a6a27e387868919e7feb33c8a0edae002",
+      "neutralCapabilitySummary": "optimize in-product paywalls and upgrade screens around experienced value and clear plan differences",
+      "neutralIntentExamples": [
+        "rework a trial-expiration screen so the next paid step matches the user’s achieved value",
+        "compare upgrade messaging for a usage limit without hiding the free path"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "freemium model, trigger moment, user journey, plan entitlements, current conversion, experiment constraints"
+      ],
+      "operations": [
+        "map value before ask; preview gated capability; compare tiers; place pricing and reassurance; define test and guardrails"
+      ],
+      "outputs": [
+        "paywall wire or copy",
+        "plan comparison",
+        "upgrade experiment brief",
+        "guardrail list"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "ask for entitlements and trigger data; defer claims without baseline",
+        "do not charge users, remove cancellation access, or dark-pattern the choice"
+      ],
+      "exclusions": [
+        "do not charge users, remove cancellation access, or dark-pattern the choice"
+      ],
+      "usefulInvariants": [
+        "paid value is shown after meaningful use",
+        "free and downgrade paths remain legible"
+      ],
+      "materialRisks": [
+        "pressure at the wrong moment damages trust",
+        "plan complexity can reduce comprehension"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "in-product-upgrade-conversion",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-8d289c89d77f4186",
+      "bodySha256": "d2bb182f836de7738a39754fadf996ca10e09348d4415e6c93f9959454323b5f",
+      "neutralCapabilitySummary": "audit a website across technical SEO, content quality, schema, performance, images, sitemap, and AI-search visibility",
+      "neutralIntentExamples": [
+        "triage a site audit into technical blockers and content opportunities",
+        "review one page for crawlability, structured data, speed, and answer usefulness"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "website URL, crawl access, page scope, business type, target audience, performance data"
+      ],
+      "operations": [
+        "detect industry; crawl or inspect pages; assess indexability, Core Web Vitals, schema, E-E-A-T, images, sitemap, and GEO signals; prioritize fixes"
+      ],
+      "outputs": [
+        "SEO audit",
+        "page findings",
+        "priority backlog",
+        "schema and sitemap recommendations"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "flag blocked crawls, unavailable tools, and assumptions; do not fabricate live metrics",
+        "do not change the site or claim search ranking improvements"
+      ],
+      "exclusions": [
+        "do not change the site or claim search ranking improvements"
+      ],
+      "usefulInvariants": [
+        "technical defects and content suggestions are separated",
+        "recommendations map to observed URLs or elements"
+      ],
+      "materialRisks": [
+        "rendered and crawler views can diverge",
+        "algorithm and AI-answer behavior are unstable"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "technical-seo-and-search-visibility",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-8d2a3f5ba022a9e1",
+      "bodySha256": "aeb2ed2843f2cea627a9b3a6c324a3290b1d219953a80a0e08b97deabcb1976e",
+      "neutralCapabilitySummary": "evaluate ecommerce product and marketplace visibility through on-page SEO, schema, Shopping, Amazon, and pricing signals",
+      "neutralIntentExamples": [
+        "diagnose why a product page is weak in organic and Shopping discovery",
+        "compare marketplace keyword and pricing gaps before revising product listings"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "product URL, catalog, target keyword, merchant data access, marketplace, competitor set"
+      ],
+      "operations": [
+        "render product page; parse elements and schema; inspect Shopping or marketplace data when available; compare price and keyword gaps"
+      ],
+      "outputs": [
+        "product SEO audit",
+        "schema corrections",
+        "marketplace comparison",
+        "priority actions"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "separate no-API page checks from credentialed market data; flag missing feeds",
+        "do not alter prices, submit feeds, or claim marketplace placement"
+      ],
+      "exclusions": [
+        "do not alter prices, submit feeds, or claim marketplace placement"
+      ],
+      "usefulInvariants": [
+        "product facts and offers remain current for the analysis window",
+        "required merchant evidence is labeled"
+      ],
+      "materialRisks": [
+        "price changes can invalidate comparisons",
+        "marketplace APIs and policies constrain coverage"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "ecommerce-search-and-marketplace-seo",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-8dc4412fa0630986",
+      "bodySha256": "c5c07fa98752269c1158c20cc777c19476b7614fef30a0526785cc09aea82444",
+      "neutralCapabilitySummary": "generate a conversion-oriented Next.js landing page with structured sections, SEO metadata, schema, and performance constraints",
+      "neutralIntentExamples": [
+        "turn product, audience, pricing, and proof into a complete lead-capture page component",
+        "choose page variants that support a specific conversion goal and Core Web Vitals target"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "product facts, audience, pain point, benefits, pricing, proof, design style, conversion goal"
+      ],
+      "operations": [
+        "gather positioning; choose hero and section variants; write CTA, FAQ, pricing, testimonials; add metadata and structured data; check performance risks"
+      ],
+      "outputs": [
+        "TSX component",
+        "Tailwind styles",
+        "SEO metadata",
+        "structured data",
+        "copy variants"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "ask for missing product or pricing facts; flag absent proof and unsupported promises",
+        "do not deploy or claim measured LCP without a real build and run"
+      ],
+      "exclusions": [
+        "do not deploy or claim measured LCP without a real build and run"
+      ],
+      "usefulInvariants": [
+        "one conversion goal governs page hierarchy",
+        "claims and testimonials are supplied or marked as missing"
+      ],
+      "materialRisks": [
+        "generated components may not match the host design system",
+        "animations and media can hurt LCP or CLS"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "react-landing-page-generation",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-8dd6dded42ba5bc2",
+      "bodySha256": "2c4bce4eaf394a76d6e0f81394c2b13078153408f56cf4b7fe46d3bbb88eacd2",
+      "neutralCapabilitySummary": "define and enforce visual identity, typography, color, logo, imagery, and tone rules across brand assets",
+      "neutralIntentExamples": [
+        "turn scattered brand decisions into a usable style guide",
+        "check a marketing asset for color, type, logo, and voice consistency"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "existing assets, brand attributes, palette, typefaces, logo files, audience, channels"
+      ],
+      "operations": [
+        "inventory rules; document tokens and logo clear space; define imagery and tone matrix; compare asset usage to standards"
+      ],
+      "outputs": [
+        "brand guide",
+        "token and typography rules",
+        "asset audit",
+        "correction list"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "ask whether rules are being created or applied; flag absent source assets",
+        "do not redraw protected marks or approve claims outside brand scope"
+      ],
+      "exclusions": [
+        "do not redraw protected marks or approve claims outside brand scope"
+      ],
+      "usefulInvariants": [
+        "approved variants and forbidden uses are explicit",
+        "creative flexibility does not override core identity rules"
+      ],
+      "materialRisks": [
+        "incomplete guidance invites inconsistent interpretation",
+        "channel constraints can force legibility tradeoffs"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "brand-identity-governance",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-8de323cff74257de",
+      "bodySha256": "2e4d6cb149ec927806e01df2228b7e71025cc11f6db02941a1844e5bdc6bfaab",
+      "neutralCapabilitySummary": "review marketing content against brand voice, style, messaging pillars, terminology, and legal flags",
+      "neutralIntentExamples": [
+        "find where a draft breaks the defined voice and suggest precise before-and-after repairs",
+        "screen campaign copy for unsupported claims, missing disclaimers, and terminology drift"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "draft content, brand guide, messaging pillars, audience, channel, legal review criteria"
+      ],
+      "operations": [
+        "load configured guidance; assess voice, tone, terminology, claims, disclaimers, and consistency; grade deviations; propose fixes"
+      ],
+      "outputs": [
+        "severity-ranked review",
+        "specific before/after edits",
+        "claim and disclaimer flags"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "ask for brand guidance when absent; label general clarity review separately",
+        "do not give legal approval or rewrite content beyond the requested scope"
+      ],
+      "exclusions": [
+        "do not give legal approval or rewrite content beyond the requested scope"
+      ],
+      "usefulInvariants": [
+        "each flag points to text and a rule",
+        "suggestions preserve intended meaning unless a claim is unsafe"
+      ],
+      "materialRisks": [
+        "subjective voice judgments need documented criteria",
+        "legal risk can remain after a language edit"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "brand-content-compliance-review",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-8e34742cf6668d85",
+      "bodySha256": "dc6c4227a1512112717675a3a2b73a9f4dff4b6bbf34f3f1c6f198b39a4ef2f9",
+      "neutralCapabilitySummary": "generate a premium single-page HTML landing experience with inline styling, GSAP motion, and forced positioning intake",
+      "neutralIntentExamples": [
+        "shape a product brief into a distinctive animated one-page site",
+        "lock audience, tone, and brand overrides before writing the page markup"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "product and elevator pitch, audience register, brand overrides, tone, animation tolerance"
+      ],
+      "operations": [
+        "collect and lock positioning; select visual hierarchy; create one self-contained HTML file; add CSS, GSAP motion, parallax, and responsive checks"
+      ],
+      "outputs": [
+        "HTML page",
+        "positioning intake",
+        "animation and interaction system"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "ask for missing product or audience inputs; reduce motion when constraints require it",
+        "do not publish or load unapproved external assets"
+      ],
+      "exclusions": [
+        "do not publish or load unapproved external assets"
+      ],
+      "usefulInvariants": [
+        "positioning is fixed before copy and markup",
+        "page remains usable without relying on motion"
+      ],
+      "materialRisks": [
+        "motion and CDN dependencies can reduce accessibility or reliability",
+        "visual polish can obscure weak product differentiation"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "premium-animated-landing-pages",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-8fb8f9fbfe5ab268",
+      "bodySha256": "1deb39b71ff522db9c678f90f06e62e1d7d4bf5030f2f1b75bc664aa81f8256d",
+      "neutralCapabilitySummary": "evaluate and plan a free marketing tool for traffic, leads, backlinks, or brand awareness",
+      "neutralIntentExamples": [
+        "test whether a calculator or checker solves an adjacent searched problem worth building",
+        "design a free utility with a useful result and a credible path to the paid product"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "core product, audience, searched problem, engineering time, maintenance owner, primary growth goal"
+      ],
+      "operations": [
+        "assess adjacency and demand; select tool type; define inputs and calculation; design result and capture point; plan launch and maintenance"
+      ],
+      "outputs": [
+        "tool concept",
+        "interaction and result design",
+        "lead-capture boundary",
+        "launch plan",
+        "maintenance estimate"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "defer when no adjacent problem or owner exists; state engineering and data dependencies",
+        "do not gate the core result deceptively or promise traffic volume"
+      ],
+      "exclusions": [
+        "do not gate the core result deceptively or promise traffic volume"
+      ],
+      "usefulInvariants": [
+        "free result is useful before the marketing ask",
+        "maintenance burden and success measure are explicit"
+      ],
+      "materialRisks": [
+        "a novelty tool can consume build time without demand",
+        "lead capture can reduce trust and completion"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "free-tool-growth-engineering",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    }
+  ]
+}
