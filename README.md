@@ -18,7 +18,7 @@ pretending structural indexing is semantic refinement:
 - 4,741 exact source bodies present and SHA-256 inspected as inert text;
 - 3,880 cards assigned at least one explicit ontology family;
 - 30 sources represented by the existing provenance ledger;
-- 10 exact bodies semantically reviewed in the first bounded wave;
+- 18 exact bodies semantically reviewed in the first bounded waves;
 - 0 corpus rows automatically marked clustered, synthesized, evaluated, or
   promoted.
 
@@ -33,6 +33,32 @@ separate, tested artifacts. the new corpus ledger does not retroactively invent
 their review history or use their existence to claim the 4,741-source refinery
 is complete.
 
+source slash commands and named invocation forms are retained only as inert,
+non-authoritative review evidence. canonical review intent is written as
+ordinary outcomes, and neither an alias nor a structural scan advances a source
+to clustering, synthesis, evaluation, or promotion.
+
+## agent-native routing
+
+agent-native routing v1 is certified for the seven currently promoted
+capabilities. an adapter translates an ordinary desired outcome into a neutral
+request envelope, retrieves at most 32 compact cards from the cold index, and
+loads only the selected entrypoint. the portable core then selects one smallest
+sufficient capability or an explicitly compatible composition of at most three.
+
+the certification covers 21 direct, paraphrased, and contextual commandless
+envelopes, exact equality after all compatibility aliases are removed, a
+5,000-card bounded-disclosure fixture, authority and effect refusal, risk
+limits, and unresolved-decision refusal. skill selection never expands user
+authority. deterministic envelope routing is certified; live-model conversion
+from free-form language into an envelope remains an adapter-level evaluation,
+not an inflated proof claim.
+
+the portable contract is documented in `runtime\agent-router.md`, its adapter
+manifest is `runtime\portable-adapter.v1.json`, and the exact milestone receipt
+is `receipts\agent-native-router-v1.json`. no global runtime adapter was enabled
+by this release.
+
 ## release-one commands
 
 ```powershell
@@ -40,6 +66,8 @@ npm test
 npm run sync:stars -- --manifest data/star-delta-2026-08-26.json
 npm run build:catalog
 npm run build:coverage
+npm run build:routing
+npm run route -- --request path\to\request.json --output path\to\receipt.json
 npm run profile -- preview profiles/eternities-core.lock.json
 ```
 

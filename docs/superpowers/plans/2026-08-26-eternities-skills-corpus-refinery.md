@@ -18,7 +18,27 @@
 - Review packets contain at most 25 source cards and remain cold.
 - All canonical artifacts must be deterministic and exclude generated timestamps.
 - Existing provenance rows may not fabricate semantic review evidence.
+- Every synthesized capability must expose a validated compact routing card and
+  pass unnamed-outcome, alias-removal, authority, effect, and bounded-disclosure
+  routing cases before promotion.
 - No publishing, pushing, deployment, global activation, or external account mutation occurs.
+
+## Post-foundation family-wave routing gates
+
+The certified portable router is a dependency of every family wave after
+semantic clustering. Completed foundation evidence is not rewritten.
+
+- Clustering produces exact reviewed membership and relationship evidence only;
+  it does not imply that a runtime capability exists.
+- Synthesis produces an independently written candidate core plus one compact
+  routing card containing neutral intent, capabilities, effects, authority,
+  risk, evidence confidence, context cost, compatibility, and entrypoint.
+- Evaluation includes direct, paraphrased, contextual, unnamed-outcome,
+  legacy-alias-removal, exclusion, conflict, authority, effect, portability,
+  and token-budget cases against every material cluster baseline.
+- Promotion requires both the candidate's deterministic promotion receipt and a
+  router certification proving smallest-sufficient selection from a bounded
+  shortlist. Only promoted cores may be exposed through runtime adapters.
 
 ---
 
