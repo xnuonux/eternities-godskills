@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "godskill-eternities-herald-v1",
+  "name": "eternities-herald",
+  "category": "release-publishing",
+  "intent": "Govern local release lifecycle, delivery design, production readiness, and dependency-name screening without crossing external release effects.",
+  "successCondition": "One route produces a verified local release artifact or a bounded refusal or handoff with evidence, authority, risk, and effect boundaries explicit.",
+  "inputs": ["authorized release objective and repository evidence", "change, pipeline, runtime, dependency, authority, risk, and acceptance context"],
+  "outputs": ["local release plan, delivery design, readiness packet, dependency screening, refusal, or specialist handoff", "exact evidence lineage, assumptions, unknowns, gates, proposed effects, and human decision ownership"],
+  "operations": ["select one route from exact evidence", "preserve review and cluster lineage", "define gates and stopping conditions", "separate local work from external effects", "fail closed and terminate"],
+  "effects": ["read", "write"],
+  "explicitOnly": false,
+  "positiveTriggers": ["triage verified changes into an auditable release boundary", "design repository-aware continuous delivery gates and stages", "prepare production readiness and rollback evidence", "screen a dependency name for namespace impersonation before install"],
+  "negativeTriggers": ["deploy or publish a release", "push a tag or mutate a repository or registry", "install a package or accept a lockfile", "use credentials or make an external write", "provider-specific deployment administration", "unresolved authority, risk, or current platform facts"],
+  "failureModes": ["evidence or source lineage is missing or stale", "approval, authority, risk, migration, health, or rollback condition is unresolved", "requested effect is deployment, publication, tag push, installation, credential use, or external write", "package identity remains ambiguous or resembles a protected namespace", "route ownership or specialist boundary is unclear"],
+  "dependencies": ["eternities-oracle", "eternities-aegis", "eternities-forge", "verification-before-completion", "authorized-human"],
+  "sourceIds": ["skill-02967270be076b17", "skill-0dae43bc735c2dd2", "skill-166cd77d1c09286d", "skill-329a14a22032ba01", "skill-3ff3701eefce09e5", "skill-510b795db1e23dda", "skill-b40dfbfc44d870e3", "skill-bd0dc5329a68a21b", "skill-ed7941ee8d5686c9"],
+  "sourceEvidence": {"mode": "cluster-review-v1", "clusterSetId": "release-publishing-clusters-v1", "clusters": [{"id":"release-change-lifecycle","digest":"2bd3c21a706012c6d5b509fb01c791e4f88370459a3f204a4b54a4c1deb38aa5"},{"id":"release-continuous-delivery-design","digest":"366bde97c9ee26d1b4fa8d5fc1749c3fc88eb4e5ef656826e80d185bde8a387b"},{"id":"release-dependency-name-screening","digest":"1796deed299f2c0bab981a63e7c027f87e4b00105bc61becc741386fb2bbd0d9"},{"id":"release-production-readiness","digest":"f2b8a0c38454ee934b1c961668459b60b64f7a9a4ea352876e2cda5176e48ff0"}]},
+  "routes": [
+    {"id":"change-lifecycle","capabilities":["change-communication","change-selection","tag-readiness","version-boundary"],"delegates":["authorized-human","eternities-aegis","eternities-oracle"]},
+    {"id":"continuous-delivery-design","capabilities":["environment-staging","failure-feedback","quality-gates","stack-discovery"],"delegates":["authorized-human","eternities-forge","eternities-oracle"]},
+    {"id":"dependency-name-screening","capabilities":["lockfile-risk-report","namespace-impersonation-screen","package-identity-comparison"],"delegates":["authorized-human","eternities-aegis","eternities-oracle"]},
+    {"id":"production-readiness","capabilities":["approval-evidence","health-and-rollback","migration-conditions","release-checklist"],"delegates":["authorized-human","eternities-aegis","verification-before-completion"]}
+  ]
+}
