@@ -28,6 +28,20 @@ async function promotedCards() {
 
 const cases = [
   {
+    expected: "eternities-agora",
+    family: "agency-client-services",
+    required: ["account-operations", "client-deliverables", "client-service-governance", "evidence-traceability", "prospect-assessment"],
+    effects: ["local-read", "local-write"],
+    authority: ["local-read", "local-write"],
+    preconditions: [],
+    maximumRisk: "moderate",
+    outcomes: [
+      "reconcile prospect assessment account state and client deliverables from authorized evidence",
+      "turn opportunity records and client findings into traceable operational and delivery artifacts",
+      "several client service stages disagree so their evidence and artifacts need one bounded workflow",
+    ],
+  },
+  {
     expected: "eternities-aegis",
     family: "governance-security",
     required: ["authorization", "findings", "mitigation", "residual-risk", "trust-boundaries"],
@@ -179,7 +193,7 @@ function syntheticCard(index) {
   };
 }
 
-test("twenty-one unnamed outcome envelopes select the exact smallest capability", async () => {
+test("twenty-four unnamed outcome envelopes select the exact smallest capability", async () => {
   const cards = await promotedCards();
   const aliasFree = cards.map((card) => ({ ...card, legacyAliases: [] }));
   let caseCount = 0;
@@ -205,7 +219,7 @@ test("twenty-one unnamed outcome envelopes select the exact smallest capability"
     assert.deepEqual(selectedIds, [[item.expected], [item.expected], [item.expected]]);
   }
 
-  assert.equal(caseCount, 21);
+  assert.equal(caseCount, 24);
 });
 
 test("progressive disclosure remains bounded across five thousand compact cards", async () => {
@@ -282,19 +296,48 @@ test("authority, effect, risk, and unresolved decisions fail closed", async () =
   assert.deepEqual(unresolved.selectedIds, []);
 });
 
+test("Agora cannot cross its external, risk, or local-write authority boundary", async () => {
+  const cards = await promotedCards();
+  const agora = cards.find(({ id }) => id === "eternities-agora");
+  const item = cases.find(({ expected }) => expected === "eternities-agora");
+
+  const external = routeCapabilities({
+    envelope: envelope(item, item.outcomes[0], "external", {
+      permittedEffects: ["external-write"],
+      availableAuthority: ["external-write"],
+    }),
+    cards: [agora],
+  });
+  assert.equal(external.status, "no-qualified-route");
+
+  const lowRisk = routeCapabilities({
+    envelope: envelope(item, item.outcomes[0], "low-risk", { maximumRisk: "low" }),
+    cards: [agora],
+  });
+  assert.equal(lowRisk.status, "no-qualified-route");
+  assert.deepEqual(lowRisk.rejected[0].reasons, ["risk-exceeds-maximum"]);
+
+  const missingAuthority = routeCapabilities({
+    envelope: envelope(item, item.outcomes[0], "missing-write", {
+      availableAuthority: ["local-read"],
+    }),
+    cards: [agora],
+  });
+  assert.equal(missingAuthority.status, "no-qualified-route");
+  assert.deepEqual(missingAuthority.rejected[0].reasons, ["authority-missing"]);
+});
+
 test("the certification receipt reconciles exact deterministic routing artifacts", async () => {
-  const receipt = await json("receipts/agent-native-router-v1.json");
-  const checkpointRoot = "artifacts/checkpoints/agent-native-router-v1/";
-  const manifestText = await readFile(new URL(`${checkpointRoot}manifest.json`, repositoryRoot), "utf8");
-  const cardsText = await readFile(new URL(`${checkpointRoot}cards.jsonl`, repositoryRoot), "utf8");
-  const familyMapText = await readFile(new URL(`${checkpointRoot}family-map.json`, repositoryRoot), "utf8");
+  const receipt = await json("receipts/agent-native-router-v2.json");
+  const manifestText = await readFile(new URL("artifacts/routing/manifest.json", repositoryRoot), "utf8");
+  const cardsText = await readFile(new URL("artifacts/routing/cards.jsonl", repositoryRoot), "utf8");
+  const familyMapText = await readFile(new URL("artifacts/routing/family-map.json", repositoryRoot), "utf8");
   const manifest = JSON.parse(manifestText);
 
   assert.equal(receipt.schemaVersion, 1);
-  assert.equal(receipt.id, "agent-native-router-v1");
+  assert.equal(receipt.id, "agent-native-router-v2");
   assert.equal(receipt.status, "certified");
-  assert.equal(receipt.checkpointRoot, "artifacts/checkpoints/agent-native-router-v1");
-  assert.equal(receipt.immutableGitBase, "7b7b5c6b1ad23dcf6d5acfbdaa899c1e916f59af");
+  assert.equal(receipt.immutableGitBase, "b217591a91d3c5b96b5c7b7af0aabc16776de847");
   assert.deepEqual(receipt.inputs, manifest.inputs);
   assert.deepEqual(receipt.artifacts, {
     cardsSha256: sha256(cardsText),
@@ -304,10 +347,10 @@ test("the certification receipt reconciles exact deterministic routing artifacts
   assert.equal(receipt.artifacts.cardsSha256, manifest.outputs.cardsSha256);
   assert.equal(receipt.artifacts.familyMapSha256, manifest.outputs.familyMapSha256);
   assert.deepEqual(receipt.counts, {
-    aliasRemovalCases: 21,
-    cardCount: 7,
-    commandlessCases: 21,
-    familyCount: 7,
+    aliasRemovalCases: 24,
+    cardCount: 8,
+    commandlessCases: 24,
+    familyCount: 8,
     maximumComposition: 3,
     maximumShortlist: 32,
   });

@@ -29,6 +29,16 @@ async function routingCard(id) {
 
 const cases = [
   {
+    expected: "eternities-agora",
+    outcome: "reconcile prospect assessment account state and client deliverables from authorized evidence",
+    family: "agency-client-services",
+    required: ["account-operations", "client-deliverables", "client-service-governance", "evidence-traceability", "prospect-assessment"],
+    effects: ["local-read", "local-write"],
+    authority: ["local-read", "local-write"],
+    preconditions: [],
+    maximumRisk: "moderate",
+  },
+  {
     expected: "eternities-aegis",
     outcome: "audit an authorized agent tool chain and rank mitigations by residual risk",
     family: "governance-security",
@@ -123,6 +133,7 @@ test("every promoted Eternities capability exposes one exact compact routing car
   const ids = await promotedIds();
   assert.deepEqual(ids, [
     "eternities-aegis",
+    "eternities-agora",
     "eternities-architect",
     "eternities-forge",
     "eternities-mnemosyne",
