@@ -57,3 +57,18 @@ test("marks a family with no candidate clusters deferred and emits deterministic
   assert.equal(family.gates.externalActivation, false);
   assert.equal(JSON.stringify(result), JSON.stringify(buildFamilyCompletion(input)));
 });
+
+test("accepts the certified second-order plan object shape", () => {
+  const input = fixture();
+  input.syntheses = [];
+  input.secondOrderPlan = {
+    adjudication: {
+      decisions: {
+        deferred: [{ familyId: "agent-orchestration", clusterId: "c1", decision: "deferred", reason: "bounded evidence remains insufficient" }],
+      },
+    },
+  };
+  const result = buildFamilyCompletion(input);
+  const family = result.families.find(({ familyId }) => familyId === "agent-orchestration");
+  assert.equal(family.clusters.candidate[0].decision, "second-order-deferred");
+});

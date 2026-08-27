@@ -54,7 +54,8 @@ export function buildFamilyCompletion({ owners = [], queues = [], reviews = [], 
         mapped.set(id, { decision: "promoted", synthesisId: synthesis.candidateId });
       }
     }
-    const planEntries = secondOrderPlan?.adjudication?.decisions ?? secondOrderPlan?.decisions ?? [];
+    const decisionSet = secondOrderPlan?.adjudication?.decisions ?? secondOrderPlan?.decisions ?? [];
+    const planEntries = Array.isArray(decisionSet) ? decisionSet : (decisionSet.deferred ?? []);
     for (const entry of planEntries.filter((row) => row.familyId === familyId && row.decision === "deferred")) {
       if (mapped.has(entry.clusterId)) fail(`duplicate cluster mapping: ${entry.clusterId}`);
       const cluster = familyClusters.find((row) => row.id === entry.clusterId);
