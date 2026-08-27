@@ -7,6 +7,7 @@ import { buildCoverageRows, summarizeCoverage } from "../src/coverage.mjs";
 import { sha256, writeJsonAtomic } from "../src/io.mjs";
 import { classify } from "../src/ontology.mjs";
 import { buildFamilyQueue, buildReviewPackets } from "../src/review-packets.mjs";
+import { loadReviewEvidence } from "../src/reviews.mjs";
 
 const FIRST_WAVE_FAMILIES = Object.freeze([
   "agency-client-services",
@@ -21,6 +22,7 @@ const DEFAULTS = Object.freeze({
   ontologyPath: "data/ontology.v1.json",
   provenancePath: "provenance/source-ledger.jsonl",
   duplicateGroupsPath: "artifacts/release-one/duplicate-groups.json",
+  reviewsPath: "reviews/waves",
   outputPath: "artifacts/corpus",
 });
 
@@ -62,6 +64,7 @@ export async function buildCorpusCoverage({
   ontologyPath,
   provenancePath,
   duplicateGroupsPath,
+  reviewsPath,
   outputPath,
 }) {
   const [sourceText, ontologyText, provenanceText, duplicateText] = await Promise.all([
@@ -78,9 +81,11 @@ export async function buildCorpusCoverage({
   }));
   const provenanceRows = parseJsonLines(provenanceText, "provenance ledger");
   const bodyEvidence = await auditBodies(warehouseRoot, records);
-  const coverageRows = buildCoverageRows(records, bodyEvidence, provenanceRows);
+  const reviewRows = await loadReviewEvidence(reviewsPath, records, bodyEvidence);
+  const coverageRows = buildCoverageRows(records, bodyEvidence, provenanceRows, reviewRows);
   const bodyText = jsonLines(bodyEvidence);
   const coverageText = jsonLines(coverageRows);
+  const reviewText = jsonLines(reviewRows);
   const familyArtifacts = FIRST_WAVE_FAMILIES.map((familyId) => {
     const queue = buildFamilyQueue(
       familyId,
@@ -104,6 +109,7 @@ export async function buildCorpusCoverage({
     artifactDigests: {
       bodyEvidenceSha256: sha256(bodyText),
       coverageLedgerSha256: sha256(coverageText),
+      reviewEvidenceSha256: sha256(reviewText),
     },
     bodyStatusCounts: Object.fromEntries(
       ["inspected", "missing", "unreadable"].map((status) => [
@@ -130,6 +136,7 @@ export async function buildCorpusCoverage({
   await Promise.all([
     writeTextAtomic(path.join(outputPath, "body-evidence.jsonl"), bodyText),
     writeTextAtomic(path.join(outputPath, "coverage-ledger.jsonl"), coverageText),
+    writeTextAtomic(path.join(outputPath, "review-evidence.jsonl"), reviewText),
     writeJsonAtomic(path.join(outputPath, "coverage-summary.json"), summary),
     ...familyArtifacts.flatMap(({ familyId, queue, packets }) => {
       const familyPath = path.join(outputPath, "families", familyId);
@@ -155,6 +162,7 @@ function parseArgs(argv) {
     "--ontology": "ontologyPath",
     "--provenance": "provenancePath",
     "--duplicates": "duplicateGroupsPath",
+    "--reviews": "reviewsPath",
     "--output": "outputPath",
   };
   for (let index = 0; index < argv.length; index += 1) {
@@ -173,6 +181,7 @@ async function main() {
     ontologyPath: path.resolve(args.ontologyPath),
     provenancePath: path.resolve(args.provenancePath),
     duplicateGroupsPath: path.resolve(args.duplicateGroupsPath),
+    reviewsPath: path.resolve(args.reviewsPath),
     outputPath: path.resolve(args.outputPath),
   });
   console.log(JSON.stringify(summary, null, 2));

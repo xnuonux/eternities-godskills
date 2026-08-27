@@ -121,6 +121,21 @@ test("short marketing keywords do not match inside unrelated words", () => {
   assert.ok(!families.includes("marketing-growth"));
 });
 
+test("social media repository paths classify cards with broken descriptions", () => {
+  const families = classify(
+    {
+      name: "content-matrix",
+      description: ">",
+      sourcePath: "from-stars\\social-media-skills\\skills\\content-matrix\\SKILL.md",
+      tags: [],
+      triggers: [],
+    },
+    ontology,
+  );
+
+  assert.ok(families.includes("social-media-community"));
+});
+
 test("classifier assigns repository research from deterministic keyword evidence", () => {
   const families = classify(
     {

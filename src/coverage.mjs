@@ -45,7 +45,12 @@ function bodyFields(body) {
   };
 }
 
-export function buildCoverageRows(records, bodyEvidence = [], provenanceRows = []) {
+export function buildCoverageRows(
+  records,
+  bodyEvidence = [],
+  provenanceRows = [],
+  reviewRows = [],
+) {
   if (!Array.isArray(records)) throw new TypeError("records must be an array");
   const sources = uniqueBy(records, (row) => row.id, "source id");
   const bodies = uniqueBy(bodyEvidence, (row) => row.sourceId, "body evidence source id");
@@ -54,8 +59,9 @@ export function buildCoverageRows(records, bodyEvidence = [], provenanceRows = [
     (row) => row.sourceId,
     "provenance source id",
   );
+  const reviews = uniqueBy(reviewRows, (row) => row.sourceId, "review source id");
 
-  for (const sourceId of [...bodies.keys(), ...provenance.keys()]) {
+  for (const sourceId of [...bodies.keys(), ...provenance.keys(), ...reviews.keys()]) {
     if (!sources.has(sourceId)) throw new Error(`unknown evidence source id: ${sourceId}`);
   }
 
@@ -64,11 +70,15 @@ export function buildCoverageRows(records, bodyEvidence = [], provenanceRows = [
     .map((record) => {
       const body = bodies.get(record.id);
       const provenanceRow = provenance.get(record.id);
+      const reviewRow = reviews.get(record.id);
       if (provenanceRow && provenanceRow.contentDigest !== record.contentDigest) {
         throw new Error(`stale provenance digest for ${record.id}`);
       }
       const families = sortedFamilies(record.families);
       const inspected = body?.status === "inspected" && body?.present === true;
+      if (reviewRow && (!inspected || reviewRow.bodySha256 !== body.bodySha256)) {
+        throw new Error(`stale review body digest for ${record.id}`);
+      }
       return {
         schemaVersion: 1,
         sourceId: record.id,
@@ -83,7 +93,7 @@ export function buildCoverageRows(records, bodyEvidence = [], provenanceRows = [
           indexed: true,
           classified: families.some((family) => family !== "general"),
           bodyInspected: inspected,
-          cardReviewed: false,
+          cardReviewed: Boolean(reviewRow),
           provenanceCertified: Boolean(provenanceRow),
           clustered: false,
           synthesized: false,

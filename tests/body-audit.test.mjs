@@ -117,6 +117,7 @@ test("corpus coverage build is byte-stable and reconciles exact inputs", async (
   const ontologyPath = path.join(root, "ontology.json");
   const provenancePath = path.join(root, "provenance.jsonl");
   const duplicateGroupsPath = path.join(root, "duplicates.json");
+  const reviewsPath = path.join(root, "reviews");
   const target = path.join(warehouse, "repo", "skill-a", "SKILL.md");
   await mkdir(path.dirname(target), { recursive: true });
   await writeFile(target, "# Agency Client\n", "utf8");
@@ -128,6 +129,38 @@ test("corpus coverage build is byte-stable and reconciles exact inputs", async (
       version: "test",
       families: [
         { id: "agency-client-services", keywords: ["agency client"] },
+      ],
+    })}\n`,
+    "utf8",
+  );
+  await mkdir(reviewsPath);
+  await writeFile(
+    path.join(reviewsPath, "wave-001.json"),
+    `${JSON.stringify({
+      schemaVersion: 1,
+      waveId: "agency-client-services-wave-001",
+      familyId: "agency-client-services",
+      reviewer: "test-reviewer",
+      reviewMethod: "bounded-source-review-v1",
+      reviews: [
+        {
+          sourceId: "skill-a",
+          bodySha256: sha256("# Agency Client\n"),
+          neutralCapabilitySummary: "Reconcile an authorized client intake into a bounded account contract.",
+          inputs: ["client evidence"],
+          operations: ["reconcile evidence"],
+          outputs: ["account contract"],
+          effects: ["read"],
+          failureBehavior: ["defer on missing authority"],
+          exclusions: ["external communication"],
+          usefulInvariants: ["authority remains explicit"],
+          materialRisks: ["stale evidence"],
+          disposition: "independent-implementation",
+          proposedCluster: "client-intake",
+          confidence: "high",
+          copiedSourceProse: false,
+          promotionClaim: false,
+        },
       ],
     })}\n`,
     "utf8",
@@ -145,6 +178,7 @@ test("corpus coverage build is byte-stable and reconciles exact inputs", async (
     ontologyPath,
     provenancePath,
     duplicateGroupsPath,
+    reviewsPath,
     outputPath: output,
   };
   const first = await buildCorpusCoverage(options);
@@ -162,6 +196,7 @@ test("corpus coverage build is byte-stable and reconciles exact inputs", async (
 
   assert.equal(first.sourceCount, 1);
   assert.equal(first.evidenceCounts.bodyInspected, 1);
+  assert.equal(first.evidenceCounts.cardReviewed, 1);
   assert.equal(first.reviewQueues["agency-client-services"].sourceCount, 1);
   assert.equal(first.reviewQueues["agency-client-services"].packetCount, 1);
   const queue = JSON.parse(
