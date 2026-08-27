@@ -1,0 +1,203 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { readFile, readdir } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+
+import { classify } from "../src/ontology.mjs";
+import { loadReviewEvidence, validateReviewBatch } from "../src/reviews.mjs";
+
+const root = new URL("../", import.meta.url);
+
+async function json(relative) {
+  return JSON.parse(await readFile(new URL(relative, root), "utf8"));
+}
+
+async function jsonLines(relative) {
+  const value = await readFile(new URL(relative, root), "utf8");
+  return value.trim().split(/\r?\n/).filter(Boolean).map(JSON.parse);
+}
+
+test("every exact marketing and growth source has one bounded semantic review", async () => {
+  const [queue, bodies, files, records, ontology] = await Promise.all([
+    json("artifacts/corpus/families/marketing-growth/queue.json"),
+    jsonLines("artifacts/corpus/body-evidence.jsonl"),
+    readdir(new URL("../reviews/waves/marketing-growth/", import.meta.url)),
+    jsonLines("artifacts/release-one/source-records.jsonl"),
+    json("data/ontology.v1.json"),
+  ]);
+  const sources = queue.cards.map((card) => ({
+    id: card.sourceId,
+    description: card.description,
+    families: card.families,
+  }));
+  const batches = [];
+  const authoredReviews = [];
+  for (const file of files.filter((name) => name.endsWith(".json")).sort()) {
+    const batch = await json(`reviews/waves/marketing-growth/${file}`);
+    batches.push(batch);
+    authoredReviews.push(...validateReviewBatch(batch, sources, bodies));
+  }
+  const queueIds = queue.cards.map(({ sourceId }) => sourceId).sort();
+  const canonicalReviews = await loadReviewEvidence(
+    fileURLToPath(new URL("../reviews/waves/", import.meta.url)),
+    records.map((record) => ({ ...record, families: classify(record, ontology) })),
+    bodies,
+  );
+  const reviews = canonicalReviews.filter(({ sourceId }) => queueIds.includes(sourceId));
+
+  const forbiddenBoilerplate = [
+    "analyze the source's documented",
+    "as a bounded marketing capability",
+    "inspect the documented",
+    "organize findings into a reusable bounded workflow",
+    "evidence-aware findings, prioritization, and limitations",
+    "authorized output format and portability requirements",
+    "to a defined marketing or growth decision",
+    "the task context and prerequisites named in",
+    "work through its",
+    "result grounded in the source's",
+    "may depend on stale assumptions or specialized tooling",
+    "as a bounded marketing workflow centered on",
+    "producing an auditable decision or draft without assuming authority",
+    "prepare a bounded",
+    "choose the next",
+    "without executing an external change",
+    "produce an outcome for",
+    "fits the stated need",
+    "expected result:",
+    "findings and implementation handoff",
+    "unknowns stay visible and do not become invented baselines",
+    "external effects require a separate approval gate",
+    "specialist boundaries can be mistaken for execution authority",
+    "stop when required inputs, credentials, or current evidence are absent",
+    "provider, platform, privacy, or rights constraints can invalidate",
+    "work pattern that turns supplied business context",
+    "turn a focused growth request into usable deliverables",
+    "apply a repeatable planning sequence",
+    "business goal and audience for",
+    "perform the source-defined",
+    "decision criteria and implementation notes",
+    "supplied evidence needed to establish",
+    "scope, date, audience, and governing constraints",
+    "parse the supplied evidence for the conditions named in",
+    "separate observed facts from estimates and recommendations",
+    "source-linked decision record",
+    "label estimates and unresolved dependencies before drawing a conclusion",
+    "scope and assumptions remain explicit",
+    "recommendation and execution remain separate",
+    "a plausible recommendation can fail without implementation evidence",
+    "by turning supplied marketing or growth material",
+    "work product with stated boundaries and review points",
+    "relevant product, audience, channel, or performance context",
+    "organize supplied facts against the mode's required decisions",
+    "draft the relevant artifact or recommendation",
+    "mark assumptions, missing evidence, and owner decisions",
+    "decision points and supporting rationale",
+    "open questions, constraints, and review notes",
+    "the requested objective remains visible in the work product",
+    "external actions require an explicit owner and approval",
+    "overconfident recommendations can cause wasted spend or reputational harm",
+    "the source material, records, or account state required",
+    "the target, time window, and acceptance measure",
+    "extract the named entities, measures, and constraints",
+    "apply the source method to transform those inputs",
+    "choose priorities using the stated outcome",
+    "source coverage may omit the segment or condition",
+    "a calculated score or route can appear more certain",
+    "values needed for",
+    "as the check before selecting the reported result",
+    "rather than filling it from inference",
+    "no direct alteration of",
+    "the selected result follows the source procedure for",
+    "the reported artifact identifies its supporting evidence for",
+    "sample may not represent the full population",
+  ];
+  for (const review of authoredReviews) {
+    const semanticText = [
+      review.neutralCapabilitySummary,
+      ...review.neutralIntentExamples,
+      ...review.inputs,
+      ...review.operations,
+      ...review.outputs,
+    ].join("\n").toLowerCase();
+    for (const phrase of forbiddenBoilerplate) {
+      assert.equal(
+        semanticText.includes(phrase),
+        false,
+        `${review.sourceId} contains generic review boilerplate: ${phrase}`,
+      );
+    }
+    assert.equal(
+      /\[[^\]]+\sconstraint\s+\d+\]/i.test(semanticText),
+      false,
+      `${review.sourceId} contains bracketed template-uniqueness suffixes`,
+    );
+    assert.equal(
+      semanticText.includes(review.sourceId.toLowerCase()),
+      false,
+      `${review.sourceId} leaks its source id into semantic review prose`,
+    );
+  }
+
+  assert.equal(authoredReviews.length, 253);
+  assert.equal(reviews.length, 291);
+  assert.equal(new Set(reviews.map(({ sourceId }) => sourceId)).size, 291);
+  assert.ok(
+    new Set(reviews.map(({ proposedCluster }) => proposedCluster)).size >= 40,
+    "marketing reviews require granular behavioral clusters rather than coarse family labels",
+  );
+  assert.deepEqual(reviews.map(({ sourceId }) => sourceId).sort(), queueIds);
+  assert.ok(reviews.every(({ sourceId, bodySha256 }) =>
+    bodySha256 === queue.cards.find((card) => card.sourceId === sourceId)?.bodySha256,
+  ));
+  assert.ok(reviews.every(({ copiedSourceProse, promotionClaim }) =>
+    copiedSourceProse === false && promotionClaim === false,
+  ));
+  assert.ok(reviews.every(({ neutralIntentExamples }) =>
+    neutralIntentExamples.length >= 2 &&
+    neutralIntentExamples.every((intent) => !intent.trim().startsWith("/")),
+  ));
+  for (const review of reviews) {
+    const sourceName = queue.cards.find(({ sourceId }) => sourceId === review.sourceId)?.name;
+    assert.ok(sourceName, `${review.sourceId} requires a queue name`);
+    assert.ok(
+      review.neutralIntentExamples.every((intent) =>
+        !intent.trim().toLowerCase().startsWith(`use ${sourceName.trim().toLowerCase()} `),
+      ),
+      `${review.sourceId} intent examples must express outcomes, not invoke the source skill by name`,
+    );
+  }
+  assert.ok(reviews.every((review) => [
+    "independent-implementation",
+    "pattern-reference",
+    "deferred",
+    "rejected",
+  ].includes(review.disposition)));
+  for (const review of reviews) {
+    for (const field of [
+      "inputs",
+      "operations",
+      "outputs",
+      "effects",
+      "failureBehavior",
+      "exclusions",
+      "usefulInvariants",
+      "materialRisks",
+    ]) {
+      assert.ok(review[field].length > 0, `${review.sourceId} requires ${field}`);
+    }
+  }
+
+  assert.equal(batches.length, 13);
+  assert.equal(new Set(authoredReviews.map(({ sourceId }) => sourceId)).size, 253);
+  assert.ok(authoredReviews.every(({ sourceId }) => queueIds.includes(sourceId)));
+  const priorCanonicalIds = reviews
+    .filter(({ familyId }) => familyId !== "marketing-growth")
+    .map(({ sourceId }) => sourceId)
+    .sort();
+  assert.equal(priorCanonicalIds.length, 38);
+  assert.deepEqual(
+    authoredReviews.map(({ sourceId }) => sourceId).sort(),
+    queueIds.filter((sourceId) => !priorCanonicalIds.includes(sourceId)),
+  );
+});

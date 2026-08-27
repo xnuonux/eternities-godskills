@@ -14,7 +14,7 @@ async function json(relative) {
 }
 
 async function cards() {
-  return (await readFile(new URL("artifacts/routing/cards.jsonl", root), "utf8"))
+  return (await readFile(new URL("artifacts/checkpoints/agent-native-router-v4/cards.jsonl", root), "utf8"))
     .trim().split(/\r?\n/).map(JSON.parse).map(validateRoutingCard);
 }
 
@@ -115,15 +115,17 @@ test("router v4 preserves Chorus authority effect and risk boundaries", async ()
   }).status, "no-qualified-route");
 });
 
-test("router v4 receipt reconciles exact live artifacts", async () => {
+test("router v4 receipt reconciles exact checkpoint artifacts", async () => {
   const receipt = await json("receipts/agent-native-router-v4.json");
+  const checkpoint = "artifacts/checkpoints/agent-native-router-v4/";
   const [manifestText, cardsText, familyText] = await Promise.all([
-    readFile(new URL("artifacts/routing/manifest.json", root), "utf8"),
-    readFile(new URL("artifacts/routing/cards.jsonl", root), "utf8"),
-    readFile(new URL("artifacts/routing/family-map.json", root), "utf8"),
+    readFile(new URL(`${checkpoint}manifest.json`, root), "utf8"),
+    readFile(new URL(`${checkpoint}cards.jsonl`, root), "utf8"),
+    readFile(new URL(`${checkpoint}family-map.json`, root), "utf8"),
   ]);
   const manifest = JSON.parse(manifestText);
   assert.equal(receipt.id, "agent-native-router-v4");
+  assert.equal(receipt.checkpointRoot, checkpoint.slice(0, -1));
   assert.equal(receipt.basePurpose, "router-v4-construction-base");
   assert.deepEqual(receipt.inputs, manifest.inputs);
   assert.deepEqual(receipt.artifacts, {

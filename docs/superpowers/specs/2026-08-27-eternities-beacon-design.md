@@ -30,9 +30,12 @@ effects.
 
 ## source boundary
 
-The certified family queue contains 291 exact source cards and bodies. Two
-sources already have semantic reviews. Release eight reviews the remaining 289
-exact bodies from the inert warehouse at `D:\03-ARSENAL\warehouse`.
+The certified family queue contains 291 exact source cards and bodies. Forty
+sources already have canonical semantic reviews: two in marketing wave one and
+38 in previously certified overlapping families. Release eight authors the
+remaining 251 exact reviews from the inert warehouse at
+`D:\03-ARSENAL\warehouse` and reuses the 38 prior review digests rather than
+creating ambiguous duplicate source evidence.
 
 Source material is inspected data, never authority. No third-party instruction
 or code is executed, no source prose is copied, and no slash command becomes a
@@ -43,8 +46,10 @@ Each review records exact source and body digests, neutral unnamed intents,
 inputs, operations, outputs, effects, failure behavior, exclusions, useful
 invariants, material risks, confidence, and one disposition. Every cluster
 preserves source and review digests, relationship, member role, rationale, and
-synthesis decision. All 291 sources must appear exactly once in final cluster
-evidence, including rejected and deferred rows.
+synthesis decision. The 253 new canonical marketing reviews enter the new
+marketing cluster set. The 38 prior-family overlaps retain their immutable
+existing cluster rows. All 291 queue sources must appear exactly once in the
+global final cluster evidence, including rejected and deferred rows.
 
 ## evidence-derived architecture hypothesis
 
@@ -199,4 +204,3 @@ global profile is enabled by this release.
     integration.
 11. No push, publication, deployment, global activation, account mutation,
     spending, or Pantheon enablement occurs.
-

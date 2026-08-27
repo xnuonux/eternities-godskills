@@ -1,0 +1,1094 @@
+{
+  "schemaVersion": 1,
+  "waveId": "marketing-growth-wave-004",
+  "familyId": "marketing-growth",
+  "reviewer": "codex:01a03c38-8589-79d2-a007-bf4c128304af",
+  "reviewMethod": "bounded-source-review-v1",
+  "reviews": [
+    {
+      "sourceId": "skill-3044bc47387c31e9",
+      "bodySha256": "b2fdeb18c3e4dc313b4b1c60e2911148f9f1f597347d6672f68f69ef544036ae",
+      "neutralCapabilitySummary": "Run a site or topic SEO audit that combines keyword opportunity research, page-level checks, content gaps, technical crawl/index checks, and competitor comparison into scored tables and a prioritized quick-win versus strategic action plan.",
+      "neutralIntentExamples": [
+        "audit a domain for keyword, on-page, technical, content-gap, and competitor SEO issues",
+        "turn competitor keyword gaps and page defects into a ranked SEO action backlog"
+      ],
+      "legacyAliases": [
+        "/seo-audit"
+      ],
+      "inputs": [
+        "site URL or domain or topic",
+        "audit mode, target keywords, competitor domains, connected SEO or analytics data"
+      ],
+      "operations": [
+        "research and classify keywords by demand, difficulty, intent, and funnel role; inspect titles, metadata, headings, links, images, URLs, speed, mobile, schema, crawlability, HTTPS, indexation, and broken links; compare competitor rankings, content, links, and SERP features; score and sort opportunities"
+      ],
+      "outputs": [
+        "executive summary",
+        "keyword opportunity table",
+        "on-page issue table",
+        "content-gap recommendations",
+        "technical checklist",
+        "competitor comparison",
+        "quick-win and strategic action plan"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "ask for missing URL or audit type; default to full audit when type is absent; use web search if tools are unavailable and disclose less precise volume data; ask for property details before competitor work if needed"
+      ],
+      "exclusions": [
+        "does not change site code or publish SEO fixes",
+        "does not treat estimated search signals as measured rankings",
+        "does not promise precise volume without an SEO connector"
+      ],
+      "usefulInvariants": [
+        "every recommendation has impact, effort, and dependencies",
+        "keyword opportunities are classified by intent",
+        "technical checks report pass, fail, or warning"
+      ],
+      "materialRisks": [
+        "web-search estimates can misstate demand and difficulty",
+        "competitor authority and Core Web Vitals observations are proxies without direct data",
+        "the under-300-word thin-content heuristic can overgeneralize across query types"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "seo-audit-and-opportunity-planning",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-307fd027019b6d6a",
+      "bodySha256": "f392579af2e4f3f7ebcb20453299e62d85d1461ef3456973d57243ff036809f0",
+      "neutralCapabilitySummary": "Convert XLSX workbooks into per-workbook Markdown, preserving each sheet as a table and extracting embedded raster images into a mapped image folder so later analysis can operate on text output.",
+      "neutralIntentExamples": [
+        "convert a workbook into searchable Markdown before reviewing its sheets",
+        "batch-convert a folder of XLSX files while retaining embedded pictures by sheet"
+      ],
+      "legacyAliases": [
+        "convert-excel-to-md"
+      ],
+      "inputs": [
+        "one XLSX path or a folder with optional recursive traversal",
+        "optional explicit output parent"
+      ],
+      "operations": [
+        "run the bundled conversion script; render each worksheet as a Markdown table; extract actual embedded raster pictures and place them after their sheet table; skip unsupported file types"
+      ],
+      "outputs": [
+        "workbook-named Markdown folder and Markdown file",
+        "optional img folder with per-sheet image files",
+        "conversion or skipped-file diagnostics"
+      ],
+      "effects": [
+        "write"
+      ],
+      "failureBehavior": [
+        "reject legacy XLS; report missing paths; report individual corrupt or unreadable workbooks while allowing other batch items to continue; warn when charts are absent because charts are not extracted"
+      ],
+      "exclusions": [
+        "does not parse XLS directly",
+        "does not preserve exact image cell positions",
+        "does not extract native Excel charts",
+        "does not interpret workbook contents"
+      ],
+      "usefulInvariants": [
+        "default output is next to the source",
+        "each sheet gets a stable heading and table",
+        "embedded images are raster-only and separately mapped"
+      ],
+      "materialRisks": [
+        "conversion writes artifacts beside source files by default",
+        "image placement is only sheet-level",
+        "the required script and markitdown dependency are runtime assumptions"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "specialist-production-spreadsheet-conversion",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-31c850b66df7a9e0",
+      "bodySha256": "0f970c26b1c167f3d230258d6c32530fd5c32bfd2c9da439c1d9ad376f7f23cc",
+      "neutralCapabilitySummary": "Package an HTML, PPTX, PDF, or Google Slides input for GitHub Pages by checking local CLI prerequisites, converting it to web assets, creating or using a repository, enabling Pages, and returning the published URL.",
+      "neutralIntentExamples": [
+        "publish a supplied presentation as a GitHub Pages site after converting its assets",
+        "turn an HTML or PDF marketing artifact into a shareable GitHub Pages URL"
+      ],
+      "legacyAliases": [
+        "publish-to-pages"
+      ],
+      "inputs": [
+        "HTML, PPTX, PDF, or Google Slides URL",
+        "repository name, GitHub authentication, and local conversion tools"
+      ],
+      "operations": [
+        "check gh, authentication, and Python; detect input type; convert large files to external assets; create or select a repository; publish files and enable Pages; report the URL"
+      ],
+      "outputs": [
+        "converted web bundle",
+        "GitHub repository and Pages deployment",
+        "live URL or prerequisite/error report"
+      ],
+      "effects": [
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "surface missing CLI, authentication, Python, input type, or repository name; allow missing poppler as optional; warn for very large files and route PDF/PPTX asset handling accordingly"
+      ],
+      "exclusions": [
+        "does not publish without a repository name or GitHub authority",
+        "does not support arbitrary input formats",
+        "does not guarantee content quality or marketing compliance"
+      ],
+      "usefulInvariants": [
+        "input detection drives the conversion path",
+        "large files use external assets to avoid GitHub limits",
+        "deployment output includes a live URL"
+      ],
+      "materialRisks": [
+        "creates repositories and public or private Pages state",
+        "requires external GitHub credentials and writes remotely",
+        "conversion fidelity and visibility choices can expose marketing material"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "demand-and-launch-publishing",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-32db5a9a87295680",
+      "bodySha256": "eddbe5788b8bf6806dabe308c0f8babdd7d0e79a04e848d112c016cccd05bc83",
+      "neutralCapabilitySummary": "Plan a content portfolio by combining business goals, customer questions, existing performance, resources, formats, and competitor gaps into pillars, prioritized topics, and topic-cluster maps.",
+      "neutralIntentExamples": [
+        "build a content plan that balances searchable topics with shareable authority content",
+        "prioritize a topic-cluster backlog from customer objections, existing performance, and competitor gaps"
+      ],
+      "legacyAliases": [
+        "content-strategy"
+      ],
+      "inputs": [
+        "product marketing context",
+        "business goal, ICP, customer questions and objections, current content performance, resources, formats, competitors, and gaps"
+      ],
+      "operations": [
+        "load existing context; ask only for missing business and research inputs; distinguish searchable from shareable work; map pillars, priority topics, and clusters; select deliverables and handoffs"
+      ],
+      "outputs": [
+        "content pillars",
+        "ranked topic list",
+        "topic-cluster map",
+        "strategy document and task-specific artifacts"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "request missing context before planning; avoid pretending SEO-specific analysis is covered and route it to SEO audit; preserve open questions when research or capacity is absent"
+      ],
+      "exclusions": [
+        "does not write individual articles",
+        "does not perform a full technical SEO audit",
+        "does not invent customer language or competitor gaps"
+      ],
+      "usefulInvariants": [
+        "each topic ties to a business or audience need",
+        "searchable and shareable roles stay distinguishable",
+        "production capacity informs priorities"
+      ],
+      "materialRisks": [
+        "topic priority can become speculative when performance and customer evidence are thin",
+        "bundled tooling and context filenames are environment-dependent",
+        "content calendars can optimize traffic without proving revenue impact"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "content-strategy-and-topic-planning",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-332b0f7f2af0f676",
+      "bodySha256": "49a272e5050fab85de5e7148b422d6e9e33dd206684c09ed145ee6435620ce07",
+      "neutralCapabilitySummary": "Operate a command-oriented Google SEO toolkit for PageSpeed and CrUX, Search Console inspection and sitemaps, Indexing API submissions, GA4 reports, YouTube research, NLP entities, keyword data, safety checks, quotas, and reports.",
+      "neutralIntentExamples": [
+        "check a URL's PageSpeed, CrUX, indexation, and Search Console state through the available Google endpoints",
+        "combine GA4 pages, YouTube search, keyword volumes, and NLP entities into an SEO evidence packet"
+      ],
+      "legacyAliases": [
+        "seo-google",
+        "/seo google"
+      ],
+      "inputs": [
+        "Google credential tier and API access",
+        "URL, Search Console property, inspection batch file, GA4 property id, YouTube query or video id, text, seed, keywords, or quota request"
+      ],
+      "operations": [
+        "preflight credential tier; dispatch the selected command to the matching Google API; collect and format measurements, inspection results, submissions, traffic, video, NLP, keyword, safety, quota, or report data"
+      ],
+      "outputs": [
+        "API-backed SEO measurements and reports",
+        "indexing or sitemap operation results",
+        "keyword, entity, video, traffic, and safety outputs"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "block commands whose credential tier or endpoint access is missing; expose API errors, quotas, and partial data rather than fabricating results"
+      ],
+      "exclusions": [
+        "does not create content or fix a website",
+        "does not imply Indexing API submission equals ranking or indexing",
+        "does not replace Search Console ownership and consent"
+      ],
+      "usefulInvariants": [
+        "command selects a specific endpoint",
+        "credential preflight precedes API work",
+        "read metrics and write-like indexing submissions remain separable"
+      ],
+      "materialRisks": [
+        "Indexing API calls can alter search-engine crawl requests",
+        "quota and credential differences make results nonportable",
+        "current API behavior and 2026-specific claims require verification"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "seo-provider-operation-and-measurement",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-368e87c610f333e6",
+      "bodySha256": "d18357f4292cdf84eba1e550c427ae9ccb5108ce777f5f128f4bd797adc9ac49",
+      "neutralCapabilitySummary": "Guide a Portuguese-language founder interview across twelve business phases and materialize an Open Knowledge Format company bundle as linked, versionable Markdown files with reserved index and log files.",
+      "neutralIntentExamples": [
+        "structure a new company's market, commercial, marketing, and operating knowledge as linked Markdown files",
+        "conduct a phased founder interview and turn answers into a navigable business knowledge graph"
+      ],
+      "legacyAliases": [
+        "arquiteto-de-empresa"
+      ],
+      "inputs": [
+        "founder answers and corrections",
+        "business foundation, strategy, market, finance, sales, marketing, product, operations, technology, people, legal, and governance facts"
+      ],
+      "operations": [
+        "ask one phase at a time; create typed Markdown concepts and links; preserve index.md and log.md roles; organize the bundle for human and agent reading"
+      ],
+      "outputs": [
+        "OKF directory tree",
+        "linked concept files",
+        "index and change log"
+      ],
+      "effects": [
+        "write"
+      ],
+      "failureBehavior": [
+        "pause for missing founder answers or unresolved phase decisions; avoid filling unknown company facts; maintain structure when a phase is incomplete"
+      ],
+      "exclusions": [
+        "does not itself validate legal, financial, or market claims",
+        "does not run campaigns or publish marketing",
+        "does not collapse all business phases into a marketing-only plan"
+      ],
+      "usefulInvariants": [
+        "links form a navigable graph",
+        "files remain versionable and human-readable",
+        "interview advances one phase at a time"
+      ],
+      "materialRisks": [
+        "a generated business canon can institutionalize founder assumptions",
+        "Portuguese-only interaction limits portability",
+        "writing many files creates durable state that needs correction history"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "business-knowledge-and-marketing-context",
+      "confidence": "medium",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-3898f0b8dcbb3535",
+      "bodySha256": "c2b1fe51416b7e4e951ce55072d937c4c5783b92573c88714c58e27cefa862fe",
+      "neutralCapabilitySummary": "Audit and improve content for answer-engine citation by assessing authoritative evidence, extractable answers, E-E-A-T signals, and citation visibility, then return a report or pipeline JSON.",
+      "neutralIntentExamples": [
+        "audit a knowledge page for its likelihood of being cited by AI answer engines",
+        "turn an AEO review into concrete content structure and authority improvements with uncertainty noted"
+      ],
+      "legacyAliases": [
+        "aeo"
+      ],
+      "inputs": [
+        "target content or URL",
+        "topic, audience, competing cited pages, authority evidence, and desired markdown or JSON output"
+      ],
+      "operations": [
+        "inspect answerability and evidence signals; compare citation-oriented structure and authority; identify gaps; propose content and measurement changes"
+      ],
+      "outputs": [
+        "AEO audit report",
+        "citation-friendly recommendations",
+        "optional JSON pipeline payload"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "mark unsupported authority or citation claims as uncertain; preserve gaps when source access or citation observations are unavailable"
+      ],
+      "exclusions": [
+        "does not guarantee inclusion in any model answer",
+        "does not replace ordinary SEO or fabricate citations",
+        "does not alter the source page without explicit publishing authority"
+      ],
+      "usefulInvariants": [
+        "recommendations are tied to observable content or evidence",
+        "citation and ranking goals remain distinct",
+        "output mode is explicit"
+      ],
+      "materialRisks": [
+        "model behavior and answer-engine interfaces change quickly",
+        "citation audits can mistake transient retrieval for durable authority",
+        "provider-specific optimization can encourage unsupported claims"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "discoverability-ai-answer-engines",
+      "confidence": "medium",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-38b2874d189881b2",
+      "bodySha256": "7092f3767a56d6e1a5e8211d27c693e9e4034a9e98a24ec065d3cbb111fd4d32",
+      "neutralCapabilitySummary": "Plan SMS or MMS lifecycle and promotional programs, including welcome, cart, post-purchase, win-back, transactional, compliance, and provider-specific flows, while routing email and popup work elsewhere.",
+      "neutralIntentExamples": [
+        "design a compliant abandoned-cart SMS flow with opt-in, timing, copy, and exit rules",
+        "choose SMS versus email for a post-purchase or win-back sequence and define the operational handoff"
+      ],
+      "legacyAliases": [
+        "sms"
+      ],
+      "inputs": [
+        "business goal, audience, lifecycle event, offer, phone consent and region",
+        "provider, number type, message limits, timing, and compliance constraints"
+      ],
+      "operations": [
+        "select flow type; define audience entry and exit, message cadence, copy, personalization, suppression, provider setup, and compliance checks; distinguish transactional from promotional traffic"
+      ],
+      "outputs": [
+        "SMS/MMS flow plan",
+        "message sequence and branching rules",
+        "compliance and provider checklist"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "stop or request consent and jurisdiction details when TCPA/A2P or opt-in state is unclear; route email, copy-only, and phone-capture popup tasks to their specialist paths"
+      ],
+      "exclusions": [
+        "does not send messages or configure carrier accounts",
+        "does not treat promotional SMS as transactional",
+        "does not infer consent from a phone number alone"
+      ],
+      "usefulInvariants": [
+        "every promotional path has consent and suppression logic",
+        "entry event and exit condition are explicit",
+        "channel choice reflects urgency and message purpose"
+      ],
+      "materialRisks": [
+        "noncompliant sends can create legal and carrier penalties",
+        "provider and jurisdiction rules vary",
+        "frequency and personalization can cause customer fatigue"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "lifecycle-sms-messaging-and-compliance",
+      "confidence": "medium",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-38e4301c4f80325e",
+      "bodySha256": "49fa97bd3c4084bb14e5a32f2ac1b09085185ebc0e169f93b2371ba410beaf07",
+      "neutralCapabilitySummary": "Score named target accounts against an ICP matrix, assign ABM tiers, layer intent signals, and build lookalike groups for account prioritization, while separating ICP definition from contact discovery.",
+      "neutralIntentExamples": [
+        "rank a target-account list with firmographic fit, intent evidence, and ABM tier rules",
+        "turn high-fit accounts into an ordered ABM list and derive a defensible lookalike set"
+      ],
+      "legacyAliases": [
+        "qualify-accounts"
+      ],
+      "inputs": [
+        "account list and ICP criteria",
+        "firmographics, technology, use case, engagement and intent signals, exclusions, tier thresholds, and lookalike seed accounts"
+      ],
+      "operations": [
+        "normalize account attributes; score fit and intent separately; assign tiers; apply disqualifiers; rank accounts; derive lookalikes from accepted seeds"
+      ],
+      "outputs": [
+        "account scores",
+        "ABM tier assignments",
+        "prioritized target list",
+        "lookalike criteria and accounts"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "flag missing firmographic or intent fields; avoid treating absent intent as negative fit without a rule; route ICP-definition and contact-finding requests elsewhere"
+      ],
+      "exclusions": [
+        "does not define the ICP from scratch",
+        "does not find individual contacts",
+        "does not authorize outreach or claim intent proves purchase readiness"
+      ],
+      "usefulInvariants": [
+        "fit and intent remain distinguishable",
+        "tier thresholds are explicit",
+        "disqualifiers can override a high score"
+      ],
+      "materialRisks": [
+        "vendor intent data can be stale or opaque",
+        "lookalikes amplify seed-account bias",
+        "account scoring can encourage privacy-sensitive targeting without governance"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "segmentation-abm-account-qualification",
+      "confidence": "medium",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-397d3c90556e4f4f",
+      "bodySha256": "cb1ecdd172e583ed7e7960214c46330cef2e4c5f99e6386487117353fae90e67",
+      "neutralCapabilitySummary": "Plan scalable SEO page systems by choosing a data-backed template, URL pattern, internal-linking model, uniqueness requirements, and quality gates for directories, integrations, locations, comparisons, or other repeated pages.",
+      "neutralIntentExamples": [
+        "design a programmatic SEO template and data model for unique integration landing pages",
+        "set URL, internal-linking, thin-content, and quality gates before generating location pages at scale"
+      ],
+      "legacyAliases": [
+        "programmatic-seo"
+      ],
+      "inputs": [
+        "target keyword pattern and page inventory",
+        "structured source data, template fields, URL constraints, internal-linking relationships, uniqueness and quality thresholds"
+      ],
+      "operations": [
+        "assess data sufficiency; select page pattern; define URL rules and canonical structure; map data into templates; generate links; test uniqueness, usefulness, indexability, and scale abuse risks"
+      ],
+      "outputs": [
+        "pSEO architecture",
+        "template and field specification",
+        "URL and linking rules",
+        "quality gate and page backlog"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "stop or narrow the program when source data cannot support materially useful pages; flag thin or near-duplicate output; avoid scaling pages before quality gates pass"
+      ],
+      "exclusions": [
+        "does not guarantee rankings",
+        "does not endorse doorway or mass low-value pages",
+        "does not substitute for a conventional SEO audit or content strategy"
+      ],
+      "usefulInvariants": [
+        "each generated page has distinct useful data",
+        "URL patterns are stable and canonicalized",
+        "thin-content checks precede scale"
+      ],
+      "materialRisks": [
+        "large-scale generation can trigger search-engine spam enforcement",
+        "template defects multiply across the site",
+        "data freshness and licensing may be overlooked"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "seo-programmatic-pages-and-quality-gates",
+      "confidence": "medium",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-3af685dc808bb130",
+      "bodySha256": "1f6b91999fdcd783e2630281a6887b48635b7fa7894472d0ef0508c70f29590a",
+      "neutralCapabilitySummary": "Review marketing claims for support, wording, risk, and publication readiness, distinguishing evidence-backed statements from claims that need qualification or proof.",
+      "neutralIntentExamples": [
+        "check landing-page claims against available product evidence before publication",
+        "rewrite unsupported performance and superiority claims into qualified, evidence-linked language"
+      ],
+      "legacyAliases": [
+        "marketing-claims-review"
+      ],
+      "inputs": [
+        "draft marketing copy or claim inventory",
+        "product facts, test results, customer proof, legal or policy constraints, audience, and publication channel"
+      ],
+      "operations": [
+        "extract factual and comparative claims; map each to evidence; classify substantiation and risk; identify implied promises; propose qualified wording or evidence requests"
+      ],
+      "outputs": [
+        "claim-by-claim review",
+        "evidence gaps and risk flags",
+        "approved, qualified, or blocked wording"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "block or qualify claims lacking support; preserve uncertainty rather than inventing proof; escalate legal or regulated claims when the body does not resolve them"
+      ],
+      "exclusions": [
+        "does not provide legal approval",
+        "does not manufacture testimonials, benchmarks, or guarantees",
+        "does not publish revised copy"
+      ],
+      "usefulInvariants": [
+        "claim text remains traceable to evidence",
+        "comparative claims identify the comparison basis",
+        "unsupported absolutes are not silently retained"
+      ],
+      "materialRisks": [
+        "false or unqualified claims can create consumer, platform, or regulatory exposure",
+        "review quality depends on completeness and recency of evidence",
+        "marketing and legal standards differ by jurisdiction"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "marketing-claims-and-compliance-review",
+      "confidence": "medium",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-3bf90cb549b19417",
+      "bodySha256": "7b92d0f653fb30784c1317cd60fb58a7a15220debd1ea6884ee5893098acc15a",
+      "neutralCapabilitySummary": "Design SaaS pricing and packaging by selecting tiers and value metrics, planning price changes, and improving pricing-page communication while separating monetization design from broader product strategy and renewals.",
+      "neutralIntentExamples": [
+        "redesign SaaS tiers around a measurable value metric and clear upgrade triggers",
+        "plan a price increase with packaging, customer impact, communication, and experiment considerations"
+      ],
+      "legacyAliases": [
+        "pricing-strategy"
+      ],
+      "inputs": [
+        "product value drivers and customer segments",
+        "current tiers, usage or seat data, willingness-to-pay evidence, cost-to-serve, competitors, conversion, expansion, and constraints"
+      ],
+      "operations": [
+        "map value metrics to segments; compare seat, usage, hybrid, and freemium structures; define tier boundaries and upgrade triggers; review price-page clarity; model increase scenarios"
+      ],
+      "outputs": [
+        "tier and packaging design",
+        "pricing-page recommendations",
+        "price-change plan and decision criteria"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "retain ranges and assumptions when willingness-to-pay or cost data is missing; distinguish hypotheses from observed conversion; route deal discounts and renewals away"
+      ],
+      "exclusions": [
+        "does not approve individual discounts",
+        "does not own whole-company revenue strategy",
+        "does not choose a single price without trade-off evidence"
+      ],
+      "usefulInvariants": [
+        "tiers map to customer value",
+        "upgrade triggers are understandable",
+        "price changes account for existing customers and economics"
+      ],
+      "materialRisks": [
+        "pricing advice can overfit competitor pages",
+        "packaging changes can disrupt retention and trust",
+        "WTP evidence is often biased by survey framing"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "offer-pricing-and-packaging",
+      "confidence": "medium",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-3c50c31e08990c12",
+      "bodySha256": "a351ad1eb48f779a5ab63c9d3a29cea39de64997006bfdd3df2c88b2353ce7dd",
+      "neutralCapabilitySummary": "Advise startup engineering leaders on delivery throughput, hiring-funnel conversion, team topology, and production discipline using DORA-style metrics, bottleneck diagnosis, and staffing thresholds.",
+      "neutralIntentExamples": [
+        "diagnose an engineering delivery slowdown from deployment, lead-time, failure, and recovery signals",
+        "decide whether hiring or a team-structure change addresses a verified engineering bottleneck"
+      ],
+      "legacyAliases": [
+        "vpe-advisor"
+      ],
+      "inputs": [
+        "engineering delivery metrics and bottleneck evidence",
+        "hiring funnel stages, team size, ownership, on-call, deployment cadence, incidents, and organizational constraints"
+      ],
+      "operations": [
+        "measure throughput and reliability; locate bottlenecks; inspect sourcing-to-offer conversion and time-to-fill; map squads, tribes, chapters, and manager triggers; recommend production practices"
+      ],
+      "outputs": [
+        "engineering operating diagnosis",
+        "hiring funnel and pipeline gaps",
+        "team-structure and production-discipline recommendations"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "separate missing metrics from poor performance; avoid staffing recommendations without capacity and bottleneck evidence; route architecture ownership to a CTO path"
+      ],
+      "exclusions": [
+        "does not own product marketing, demand generation, or campaign execution",
+        "does not design system architecture",
+        "does not treat sprint velocity as a sufficient health metric"
+      ],
+      "usefulInvariants": [
+        "recommendations follow an identified bottleneck",
+        "delivery, hiring, structure, and production signals stay distinct",
+        "CTO architecture scope remains excluded"
+      ],
+      "materialRisks": [
+        "DORA metrics can be gamed or misread outside context",
+        "organizational templates may not fit small teams",
+        "staffing advice affects people and budget materially"
+      ],
+      "disposition": "rejected",
+      "proposedCluster": "false-positive-engineering-operations",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-3cc72ba6a745fea8",
+      "bodySha256": "e70594ef4e24afa4cdfb75948743be148d1485771b1415bd725beb5e409e1a34",
+      "neutralCapabilitySummary": "Optimize site content for generative search and answer engines by improving crawlable structure, direct answers, entity clarity, source support, and citation-oriented content design.",
+      "neutralIntentExamples": [
+        "revise a knowledge page so answer engines can extract direct, well-supported responses",
+        "audit generative-search visibility and prioritize entity, structure, and evidence improvements"
+      ],
+      "legacyAliases": [
+        "seo-geo"
+      ],
+      "inputs": [
+        "target URL or content",
+        "query set, audience, entities, source evidence, current visibility observations, and desired content format"
+      ],
+      "operations": [
+        "inspect answer structure and entity coverage; identify extractable passages and evidence gaps; compare competing answers; propose structured content and measurement changes"
+      ],
+      "outputs": [
+        "GEO audit or optimization plan",
+        "structured answer blocks and content recommendations",
+        "visibility measurement suggestions"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "mark model visibility as volatile and unverifiable when no observation is available; avoid claims that optimization ensures citation"
+      ],
+      "exclusions": [
+        "does not guarantee AI citations",
+        "does not replace technical SEO, editorial review, or source verification",
+        "does not publish changes"
+      ],
+      "usefulInvariants": [
+        "answer clarity and source support are evaluated together",
+        "entity and query scope are explicit",
+        "model-specific observations are time-stamped or qualified"
+      ],
+      "materialRisks": [
+        "provider behavior changes rapidly",
+        "citation optimization can reward oversimplification",
+        "unsupported authority signals can damage trust"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "discoverability-generative-search-optimization",
+      "confidence": "medium",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-3f3f444f9b08796e",
+      "bodySha256": "9dde4cf67e73ed2a32e1d310c4324dd55f66b395334971c2a560bb572349f544",
+      "neutralCapabilitySummary": "Design and draft multi-email lifecycle sequences with timing, branching, exit conditions, complete copy, benchmarks, and A/B test ideas for onboarding, nurture, re-engagement, win-back, or launches.",
+      "neutralIntentExamples": [
+        "build an onboarding email sequence with behavior branches, suppression, and complete message drafts",
+        "map a launch or win-back drip campaign from entry event through exit and measurement"
+      ],
+      "legacyAliases": [
+        "email-sequence"
+      ],
+      "inputs": [
+        "sequence goal, audience, trigger, product context, lifecycle state, offer, voice, events, timing, compliance, and performance baseline"
+      ],
+      "operations": [
+        "define entry and exit; segment recipients; sequence messages; branch on opens, clicks, activation, purchase, or inactivity; draft copy; add benchmarks and tests"
+      ],
+      "outputs": [
+        "sequence map",
+        "email copy",
+        "branching and exit logic",
+        "A/B tests and benchmark plan"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "request missing trigger, audience, or offer; suppress recipients who convert or unsubscribe; avoid invented benchmark certainty"
+      ],
+      "exclusions": [
+        "does not send email or configure ESP automations",
+        "does not guarantee deliverability or conversion",
+        "does not substitute SMS compliance rules"
+      ],
+      "usefulInvariants": [
+        "every branch has a condition and next state",
+        "conversion and unsubscribe exits are explicit",
+        "copy, timing, and measurement align to one lifecycle goal"
+      ],
+      "materialRisks": [
+        "over-messaging can cause complaints and unsubscribes",
+        "benchmarks vary by list quality and sector",
+        "branching complexity can fail in implementation"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "lifecycle-email-sequencing",
+      "confidence": "medium",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-4000154c9c833704",
+      "bodySha256": "0dcefcdeb60a2c319a0c12119290d1f812919ef7fe98aed9748aee2f9e79c9e6",
+      "neutralCapabilitySummary": "Recommend a pricing model and price range by analyzing seat, usage, value, freemium, or hybrid economics, Van Westendorp willingness-to-pay data, and Good-Better-Best packaging trade-offs.",
+      "neutralIntentExamples": [
+        "select a pricing model from usage pattern, value metric, cost structure, and customer buying motion",
+        "analyze Van Westendorp survey responses and turn them into a price range and tier trade-off memo"
+      ],
+      "legacyAliases": [
+        "pricing-strategist"
+      ],
+      "inputs": [
+        "product and customer context, current prices, cost and value drivers, usage or seat pattern, competitors, survey responses, and sales motion"
+      ],
+      "operations": [
+        "assess model fit; calculate Van Westendorp intersections when data exists; design tier fences; compare trade-offs; recommend a range rather than one number"
+      ],
+      "outputs": [
+        "pricing-model recommendation",
+        "price range",
+        "tier packaging",
+        "trade-off and evidence memo"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "do not produce a point estimate when evidence supports only a range; expose sample and survey limitations; route discounting, renewals, and broad product strategy away"
+      ],
+      "exclusions": [
+        "does not approve deal-by-deal discounts",
+        "does not guarantee optimal willingness to pay",
+        "does not silently convert survey preference into realized demand"
+      ],
+      "usefulInvariants": [
+        "model and range are distinguished",
+        "survey calculations preserve response definitions",
+        "tier differences correspond to value or service"
+      ],
+      "materialRisks": [
+        "Van Westendorp results are sensitive to sample and framing",
+        "range recommendations can be mistaken for validated prices",
+        "packaging can create artificial upgrade pressure"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "offer-pricing-research-and-packaging",
+      "confidence": "medium",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-406cfa1005c04b07",
+      "bodySha256": "c72dccd7609be927bef06c96dad97d8c5b8bf8a2d3abdd312f9f30fae979865f",
+      "neutralCapabilitySummary": "Select and configure ComfyUI identity-preserving image, video, and voice workflows for consistent characters, including reference-image likeness, pose control, iterative edits, multi-reference variation, and optional talking-head pipelines.",
+      "neutralIntentExamples": [
+        "choose an identity-preservation pipeline for converting a 3D character reference into consistent portraits",
+        "design a ComfyUI workflow that keeps a character's face stable across image and video variations"
+      ],
+      "legacyAliases": [
+        "comfyui-character-gen"
+      ],
+      "inputs": [
+        "reference images, target modality, likeness and consistency requirement, GPU/VRAM constraints, pose or edit needs, and desired voice or video output"
+      ],
+      "operations": [
+        "select among InfiniteYou, FLUX, PuLID, InstantID, IP-Adapter, ControlNet, video, and TTS methods; set workflow stages and parameters; recommend nodes and hardware optimizations"
+      ],
+      "outputs": [
+        "ComfyUI node workflow",
+        "method and model choice",
+        "settings, node requirements, and variation pipeline"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "route general image generation, training, animation-only, explanations, or debugging elsewhere; disclose model/node availability and VRAM dependencies"
+      ],
+      "exclusions": [
+        "does not cover general image generation",
+        "does not train LoRAs or models",
+        "does not promise exact likeness or consent for a real person's face",
+        "does not debug a broken workflow"
+      ],
+      "usefulInvariants": [
+        "identity method is chosen from the stated consistency need",
+        "reference inputs and resolution/settings remain explicit",
+        "face preservation is separated from generic styling"
+      ],
+      "materialRisks": [
+        "face identity transfer can enable impersonation or non-consensual use",
+        "model recommendations and 2026 claims can age quickly",
+        "large models and custom nodes create reproducibility and licensing risk"
+      ],
+      "disposition": "rejected",
+      "proposedCluster": "specialist-production-identity-media",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-40ee15556f7eebee",
+      "bodySha256": "05b2f4c0a340e9edd78b2f2fe8485dbc12350c44b26274cdcb7f70af9102410f",
+      "neutralCapabilitySummary": "Synthesize multi-source search results by deduplicating overlapping evidence, preserving distinct claims, ranking sources by authority and freshness, resolving conflicts, and producing cited summaries sized to the result set.",
+      "neutralIntentExamples": [
+        "combine search results about a market decision while keeping corroborating sources and conflicts visible",
+        "deduplicate a large result set, score confidence by freshness and authority, and produce a cited synthesis"
+      ],
+      "legacyAliases": [
+        "knowledge-synthesis"
+      ],
+      "inputs": [
+        "raw search results with source, author, date, text, and entity references",
+        "requested answer scope, result-set size, authority and freshness context"
+      ],
+      "operations": [
+        "identify duplicate claims; merge corroboration; retain meaningful disagreement; assess freshness and authority; select small, medium, or large-set summarization; attach source attribution"
+      ],
+      "outputs": [
+        "coherent deduplicated answer",
+        "source list and attribution",
+        "confidence levels and conflict notes"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "lower confidence for stale, weak, or conflicting evidence; retain unresolved disagreement; avoid collapsing distinct claims merely because entities overlap"
+      ],
+      "exclusions": [
+        "does not independently verify source truth",
+        "does not perform the search itself",
+        "does not turn correlation into a decision without user context"
+      ],
+      "usefulInvariants": [
+        "claims remain traceable to sources",
+        "duplicate evidence is compressed without losing provenance",
+        "freshness and authority affect confidence separately"
+      ],
+      "materialRisks": [
+        "authority heuristics can privilege established but wrong sources",
+        "summarization can erase minority or conflicting evidence",
+        "source dates and attribution may be missing or malformed"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "market-research-evidence-synthesis",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-4298f69cfe13fe71",
+      "bodySha256": "afb71bdbcbc0bfe8ec1ba210b0184e9b03466f3db9c3e9805fb898d76bb90460",
+      "neutralCapabilitySummary": "Advise on technical-product pricing by matching cost, value, sales motion, usage pattern, freemium boundaries, enterprise packaging, price increases, and price-as-positioning signals.",
+      "neutralIntentExamples": [
+        "choose between usage, seat, value, or hybrid pricing for a developer product",
+        "plan a technical SaaS price increase with enterprise packaging, support justification, and customer-risk checks"
+      ],
+      "legacyAliases": [
+        "gtm-technical-product-pricing"
+      ],
+      "inputs": [
+        "product type and value delivered",
+        "current price and age, GTM motion, marginal cost, usage pattern, competitors, enterprise requirements, and customer adoption data"
+      ],
+      "operations": [
+        "assess model fit; compare seat, usage, and hybrid failure modes; set freemium thresholds; structure enterprise conversations; model increase rationale and timing; evaluate pricing as a quality signal"
+      ],
+      "outputs": [
+        "pricing model decision",
+        "freemium and enterprise design",
+        "price-increase plan",
+        "positioning implications"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "request missing economics and customer context; treat illustrative price-increase story as an example rather than evidence; preserve uncertainty around willingness to pay"
+      ],
+      "exclusions": [
+        "does not set a universal price",
+        "does not approve discounts or renewals",
+        "does not replace customer research or legal review of pricing communication"
+      ],
+      "usefulInvariants": [
+        "price relates to customer value and cost-to-serve",
+        "free limits have a deliberate conversion boundary",
+        "enterprise price is paired with service and risk handling"
+      ],
+      "materialRisks": [
+        "technical-founder cost anchoring and anecdotal success stories can bias recommendations",
+        "usage pricing can create bill shock",
+        "price changes can alter perceived positioning and retention"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "offer-pricing-technical-products",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-44406586f6febf05",
+      "bodySha256": "964e110b3d4b486edc007279a98e0d359ffb0134a6d61ff6289594bb7931beca",
+      "neutralCapabilitySummary": "Generate a real-estate listing package from researched property facts, neighborhood context, features, buyer-style variations, platform keywords, social captions, and a fair-housing review.",
+      "neutralIntentExamples": [
+        "turn verified property details into an MLS description with headlines, highlights, local context, and channel-ready captions",
+        "produce several listing tones while screening language for fair-housing and unsupported property claims"
+      ],
+      "legacyAliases": [
+        "realestate-listing",
+        "/realestate listing"
+      ],
+      "inputs": [
+        "full address and property facts",
+        "photos, features, price, size, neighborhood evidence, buyer style, platform, and available listing sources"
+      ],
+      "operations": [
+        "research listing, assessor, photos, and neighborhood information; extract selling points; draft headline and 250-500 word description; create highlights, style variants, SEO terms, captions, reference table; run fair-housing checks"
+      ],
+      "outputs": [
+        "MLS-style listing report",
+        "headlines and description",
+        "feature and neighborhood sections",
+        "style variations, keyword sets, social captions, and property reference table"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "ask for missing core property details; disclose limited data or absent photos; adapt niche property treatment; require professional review before publishing"
+      ],
+      "exclusions": [
+        "does not provide financial or investment advice",
+        "does not invent property features or neighborhood demographics",
+        "does not replace licensed real-estate or fair-housing review"
+      ],
+      "usefulInvariants": [
+        "property facts remain distinguishable from marketing language",
+        "protected-class references are excluded",
+        "limited evidence is disclosed"
+      ],
+      "materialRisks": [
+        "incorrect property facts can mislead buyers",
+        "neighborhood language can create fair-housing exposure",
+        "SEO keywords and style variants can encourage unsupported superlatives"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "specialist-production-real-estate-listing",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-4474cde22996ff32",
+      "bodySha256": "1b50c866840071c0c43253077d084fc8cc4306a7feff85662251dc42b2e4664f",
+      "neutralCapabilitySummary": "Conduct customer research from first-party assets or online communities by extracting jobs, pains, triggers, outcomes, language, alternatives, and contradictions, then synthesize themes, personas, quotes, and research gaps with confidence and bias checks.",
+      "neutralIntentExamples": [
+        "synthesize interview, survey, support, win-loss, and churn evidence into segmented customer themes and verbatim quote banks",
+        "research a buyer community for triggers and pain language, then build provisional personas without inventing missing facts"
+      ],
+      "legacyAliases": [
+        "customer-research"
+      ],
+      "inputs": [
+        "product-marketing context when present",
+        "transcripts, surveys, tickets, NPS, reviews, community sources, customer segment, research goal, and desired deliverable"
+      ],
+      "operations": [
+        "choose existing-asset or digital-water-hole mode; extract jobs, pains, triggers, outcomes, vocabulary, objections, and alternatives; cluster by theme; score frequency and intensity; segment; select quotes; check recency and sample bias; qualify personas"
+      ],
+      "outputs": [
+        "research synthesis",
+        "VOC quote bank",
+        "personas",
+        "JTBD map",
+        "competitive intelligence",
+        "research gap plan"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "read product context before asking covered questions; label proxy personas and low-confidence themes; require at least five independent data points per segment for persona or messaging conclusions; preserve contradictions"
+      ],
+      "exclusions": [
+        "does not invent personas or customer quotes",
+        "does not average unlike churn causes",
+        "does not claim online reviewers represent all buyers",
+        "does not write final copy or change product without a separate brief"
+      ],
+      "usefulInvariants": [
+        "verbatim quotes remain marked as verbatim",
+        "confidence reflects source count, prompting, recency, and segment consistency",
+        "sample bias is part of the synthesis"
+      ],
+      "materialRisks": [
+        "online research can expose privacy and platform-policy concerns",
+        "small or biased samples can harden false positioning",
+        "external research mode can create unverified claims if source dates and URLs are weak"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "market-research-customer-insight-and-segmentation",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    }
+  ]
+}

@@ -19,7 +19,7 @@ test("Chorus release receipt reconciles every local certification boundary", asy
     json("skills/eternities-chorus/references/capability-contract.json"),
     json("receipts/agent-native-router-v3.json"),
     json("receipts/agent-native-router-v4.json"),
-    json("artifacts/corpus/coverage-summary.json"),
+    json("artifacts/checkpoints/eternities-chorus-release-v1/coverage-summary.json"),
   ]);
   const reviewWaves = await Promise.all(Array.from({ length: 6 }, (_, index) =>
     json(`reviews/waves/social-media-community/wave-${String(index + 1).padStart(3, "0")}.json`)));
@@ -123,6 +123,6 @@ test("Chorus report and README state measured scope and proof limits", async () 
   ]) assert.match(report.toLowerCase(), new RegExp(phrase));
   assert.match(readme, /Chorus passes 43 of 43/i);
   assert.match(readme, /47 exact sources/i);
-  assert.match(readme, /74 synthesized.*74 evaluated.*74 promoted/is);
+  assert.match(readme, /74 synthesized.*74 evaluated.*74\s+promoted/is);
   assert.match(readme, /router v4.*10 promoted capabilities/is);
 });

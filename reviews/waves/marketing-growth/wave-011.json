@@ -1,0 +1,1302 @@
+{
+  "schemaVersion": 1,
+  "familyId": "marketing-growth",
+  "waveId": "marketing-growth-wave-011",
+  "reviewer": "codex:01a03c38-8589-79d2-a007-bf4c128304af",
+  "reviewMethod": "bounded-source-review-v1",
+  "reviews": [
+    {
+      "sourceId": "skill-c4fce4d816cc4084",
+      "bodySha256": "4d7ca7298de4d43f96bfb8aa5b04b6438c93d98db37950375a6817a23b0df054",
+      "neutralCapabilitySummary": "reconcile campaign or channel measurements into a stakeholder report that separates observed trends, attribution assumptions, hypotheses, and next-period priorities",
+      "neutralIntentExamples": [
+        "explain a quarter's channel results to leadership without confusing attributed revenue with causal impact",
+        "turn weekly campaign metrics into a compact decision brief with wins, misses, and testable follow-ups"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "dated campaign, channel, content, or cross-channel measurements with metric definitions",
+        "comparison window, targets, stakeholder audience, known interventions, and attribution model",
+        "source provenance for spend, conversions, pipeline, revenue, and any benchmark used"
+      ],
+      "operations": [
+        "normalize metric denominators and reporting windows before calculating changes",
+        "compare current values with prior periods and targets, identify inflections, and label causal explanations as hypotheses",
+        "separate first-touch, last-touch, and multi-touch interpretations where the attribution choice changes the conclusion",
+        "rank recommendations by measured problem, expected decision value, effort, and a declared experiment metric"
+      ],
+      "outputs": [
+        "executive performance brief with a metric dashboard and provenance notes",
+        "trend and anomaly register that distinguishes observations from explanations",
+        "prioritized optimization and next-period test ledger"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "withhold trend and return calculations when periods, denominators, or revenue attribution cannot be reconciled",
+        "present missing targets and short histories as explicit report limitations rather than filling them with industry averages"
+      ],
+      "exclusions": [
+        "declaring correlation to be campaign causation",
+        "using undated benchmark ranges as performance verdicts",
+        "changing budgets, pausing campaigns, or publishing the report"
+      ],
+      "usefulInvariants": [
+        "every headline number retains its source, window, and denominator",
+        "a recommendation points back to a measured issue or named uncertainty",
+        "forecast ranges remain distinguishable from actual results"
+      ],
+      "materialRisks": [
+        "incompatible channel definitions can create false comparisons",
+        "single-touch attribution can erase awareness or nurture contributions",
+        "generic benchmark tables may be stale for the market, channel, or audience"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "cross-channel-performance-reporting-and-attribution",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-c7002c95dc9c2bdb",
+      "bodySha256": "2a37b0523e349120d7a5bfe8bfe03725e65b771b78b56d9429104df54005bc01",
+      "neutralCapabilitySummary": "draft a short prospecting email from a completed search audit by selecting concrete site defects and one quantified keyword opportunity",
+      "neutralIntentExamples": [
+        "write a first-touch note that cites two verified crawl problems and offers the underlying audit",
+        "convert an existing ranking audit into a restrained outreach draft with one evidence-backed opportunity"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "completed domain audit containing issue severity, current positions, volume, CPC, and collection dates",
+        "verified sender identity, prospect identity, contact authority, and applicable outreach rules",
+        "manual confirmation that the chosen defects and keyword record still describe the prospect's site"
+      ],
+      "operations": [
+        "select two or three high-impact findings that can be stated with their exact audit evidence",
+        "choose one ranking opportunity and show the assumptions behind any click-value estimate",
+        "compose a concise subject, evidence-led opening, factual bullets, single soft ask, and low-pressure sign-off",
+        "review the draft for unsupported familiarity, misleading revenue language, consent concerns, and excessive follow-up"
+      ],
+      "outputs": [
+        "unpublished prospect email with recipient and signature placeholders",
+        "claim ledger tying each issue and estimate to the audit record",
+        "bounded follow-up suggestion and unresolved contact-compliance notes"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "decline to draft personalized claims when the audit file, sender authority, or prospect match is absent",
+        "remove the dollar estimate when position, volume, CPC, or click-through assumptions are stale or incomplete"
+      ],
+      "exclusions": [
+        "finding or enriching private contact details",
+        "sending the email or scheduling follow-ups",
+        "presenting modeled click value as recoverable revenue",
+        "inventing site defects to make the message more persuasive"
+      ],
+      "usefulInvariants": [
+        "the opening is grounded in the named prospect's verified audit",
+        "the message contains one request rather than a hidden service pitch",
+        "draft production stays separate from contact authorization and delivery"
+      ],
+      "materialRisks": [
+        "cold contact may violate law, platform policy, or the recipient's expectations",
+        "automated audit defects can be false positives",
+        "a rough search-value formula can overstate business impact"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "audit-grounded-seo-prospecting-copy",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-c75a2d8ecfcec831",
+      "bodySha256": "f4c2991c0924032ec60e32c5755a83261abf74dfb0ab4862ca05f3149b0d6da9",
+      "neutralCapabilitySummary": "discover and validate sitemap resources or generate a bounded sitemap set whose URLs, modification dates, subtype rules, and index structure match a real site",
+      "neutralIntentExamples": [
+        "find why declared sitemap files disagree with the site's canonical and indexable pages",
+        "produce split XML maps and architecture notes for a catalog that exceeds one sitemap's limits"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "authorized site origin, robots declarations, crawl results, canonical state, indexability, and HTTP responses",
+        "for generation, the approved URL inventory, content types, significant modification dates, and site architecture",
+        "current official limits and subtype requirements for standard, image, video, or news sitemap files"
+      ],
+      "operations": [
+        "probe declared and common sitemap locations through a host-bounded fetch policy",
+        "parse XML and validate status, canonicality, indexability, redirects, secure schemes, byte size, URL count, and credible modification dates",
+        "compare discovered pages with mapped URLs and preserve declared-but-broken resources as findings",
+        "partition approved URLs by content type and governing limit, then generate an index when multiple files are required"
+      ],
+      "outputs": [
+        "sitemap validation report with line-specific parse defects and URL-level findings",
+        "generated XML sitemap files or sitemap index when generation is authorized",
+        "site-structure record with counts, partitions, omissions, and date provenance"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "report partial coverage and retry guidance when fetching is blocked, rate-limited, or host validation fails",
+        "refuse generation when the URL inventory contains unresolved canonical, noindex, redirect, or modification-date conflicts"
+      ],
+      "exclusions": [
+        "submitting files to a search console",
+        "manufacturing location pages or modification dates",
+        "treating a robots declaration as proof that its target is valid",
+        "publishing generated files to the live site"
+      ],
+      "usefulInvariants": [
+        "only canonical and indexable destination URLs enter generated maps",
+        "the earliest applicable byte or entry limit governs each partition",
+        "specialized media and news maps use their own current validation rules"
+      ],
+      "materialRisks": [
+        "cross-host sitemap discovery can become an SSRF path without origin controls",
+        "uniform or fabricated modification dates can cause search engines to ignore the field",
+        "subtype requirements and deprecated tags can change after the source snapshot"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "xml-sitemap-discovery-validation-and-generation",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-c961d159fb2aa5cc",
+      "bodySha256": "d18357f4292cdf84eba1e550c427ae9ccb5108ce777f5f128f4bd797adc9ac49",
+      "neutralCapabilitySummary": "construct a versionable company knowledge graph through a staged founder interview that materializes one linked markdown concept per approved decision",
+      "neutralIntentExamples": [
+        "document a new venture from foundation through governance as a navigable file-based knowledge system",
+        "resume company design at the financial phase while keeping assumptions and discarded alternatives traceable"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "founder answers for the active business-design phase and explicit approval of proposed concept files",
+        "bundle name, product and digital-infrastructure applicability, language preference, and existing company evidence",
+        "the conformance vocabulary governing concept types, reserved files, links, indexes, and decision history"
+      ],
+      "operations": [
+        "initialize the directory skeleton and visible twelve-phase progress state",
+        "ask a small numbered question block for one phase, expose assumptions, and confirm the planned files before writing",
+        "create one markdown concept per decision with required type metadata and graph links to related concepts",
+        "append consequential decisions and rejected alternatives to the root history, regenerate indexes, and lint links and reserved-file rules"
+      ],
+      "outputs": [
+        "linked company-as-code bundle spanning only completed and approved phases",
+        "root progress index and per-directory concept indexes",
+        "decision log with timestamps, alternatives, reasons, and explicit assumptions",
+        "conformance report for metadata, reserved files, and link resolution"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "leave the active phase incomplete when the founder rejects the file plan or required answers remain unresolved",
+        "mark a proposed default as an assumption and keep it reversible rather than silently treating it as founder intent"
+      ],
+      "exclusions": [
+        "creating the entire company in one unreviewed pass",
+        "placing relationships in metadata arrays instead of resolvable links",
+        "giving reserved index or history files concept types",
+        "substituting generated business judgments for legal, financial, or governance approval"
+      ],
+      "usefulInvariants": [
+        "one phase is confirmed before the next phase begins",
+        "every concept has one path identity and machine-readable type",
+        "the progress index and decision history reflect each accepted write",
+        "assumptions remain visibly distinguishable from founder-supplied facts"
+      ],
+      "materialRisks": [
+        "a long interview sequence can harden early assumptions into architecture",
+        "business-sensitive plans become easy to traverse once linked into one graph",
+        "referenced conformance details are outside the reviewed body and require separate verification"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "staged-company-knowledge-bundle-construction",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-ca179e1bb3ba1bbc",
+      "bodySha256": "06bcc8bfe293b7db7edb9b1702059a5b9a34655b4dbbad2c52a3e934c6a8c805",
+      "neutralCapabilitySummary": "design a member-first community growth system around shared identity, recurring value, participation loops, moderation capacity, and measurable business contribution",
+      "neutralIntentExamples": [
+        "launch a professional peer community with founding members, seeded discussions, norms, and a weekly participation ritual",
+        "diagnose why new members disappear after introduction and redesign their first-week journey"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "product context, member identity, community stage, primary member value, and business objective",
+        "platform constraints, moderation capacity, existing members, participation data, and member feedback",
+        "rules for consent, recognition, incentives, referral tracking, and handling sensitive community content"
+      ],
+      "operations": [
+        "define the identity and reciprocal value that justify the community independently of product promotion",
+        "map joining, first contribution, response, recognition, repeat participation, and discovery as an observable loop",
+        "choose a platform and channel architecture from searchability, velocity, ownership, audience, and moderation needs",
+        "design founding-member recruitment, rituals, onboarding, support deflection, or advocate mechanics appropriate to the current stage",
+        "select health measures and investigate drop-off before proposing growth activity"
+      ],
+      "outputs": [
+        "community strategy with identity, value exchange, platform decision, and core loop",
+        "launch or recovery roadmap with ownership and moderation workload",
+        "new-member journey, ritual calendar, channel architecture, or advocate brief",
+        "health-measurement plan with diagnostic thresholds treated as hypotheses"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "defer launch when no member value, culture owner, moderation capacity, or initial cohort can be identified",
+        "avoid diagnosing health from aggregate membership counts when contribution and response data are unavailable"
+      ],
+      "exclusions": [
+        "mass-direct-messaging prospective members",
+        "deploying manipulative status systems or undisclosed referral incentives",
+        "creating or administering community accounts",
+        "treating platform-specific engagement thresholds as universal health standards"
+      ],
+      "usefulInvariants": [
+        "member benefit is explicit before a business extraction goal",
+        "the participation loop includes a response and recognition mechanism",
+        "growth plans fit the available moderation time",
+        "community-led support preserves an accountable product escalation path"
+      ],
+      "materialRisks": [
+        "community labor can be exploited as unpaid support or promotion",
+        "recognition and ambassador programs can create hidden conflicts of interest",
+        "platform dependency can strand relationships and institutional knowledge",
+        "the source's health percentages are not validated for every community type"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "member-value-community-growth-and-health",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-cadf714f59e7b3b7",
+      "bodySha256": "c938e886e38cd6d6ad89da3ec005053bc1adb37db4ccfd473b242a4f0aad33de",
+      "neutralCapabilitySummary": "test whether self-service growth fits a product, then connect activation, channel economics, sales-assist thresholds, scenarios, and documented experiments into one operating model",
+      "neutralIntentExamples": [
+        "decide whether a complex business product needs sales assistance despite strong developer self-service demand",
+        "trace weak freemium conversion to time-to-value, channel quality, or an incorrectly placed sales handoff"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "product setup complexity, user and buyer roles, procurement needs, deal sizes, and time-to-first-value evidence",
+        "channel-level acquisition cost, conversion, retention, lifetime value, margin, payback, and cohort dates",
+        "usage-depth, team-expansion, buying-signal, onboarding, and churn observations",
+        "current resource constraints and results from self-service and sales-led tests"
+      ],
+      "operations": [
+        "compare self-service, sales-led, and hybrid motions against actual implementation and buyer friction",
+        "map channel activities to measured traffic, conversion, retention, and economic outcomes before scaling inputs",
+        "walk the new-user path to locate time-to-value delays and remove setup that is not needed for the first useful action",
+        "define evidence-based product-qualified signals and the point where human assistance adds value without interrupting low-value users",
+        "maintain baseline, upside, and downside scenarios and convert successful experiments into owner-assigned playbooks"
+      ],
+      "outputs": [
+        "growth-motion decision with disconfirming evidence and reassessment triggers",
+        "activation audit and prioritized time-to-value changes",
+        "channel economics ledger and keep, improve, or stop decisions",
+        "sales-assist handoff policy, scenario forecast, and reusable experiment playbooks"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "retain multiple motion hypotheses when buyer identity, implementation burden, or cohort economics are not measured",
+        "refuse scale or stop recommendations when acquisition and retention windows are mismatched or sample sizes are inadequate"
+      ],
+      "exclusions": [
+        "treating one company's deal-size thresholds as market laws",
+        "automatically changing price, budget, onboarding, or sales routing",
+        "equating low acquisition cost with valuable retained customers",
+        "forecasting one exact growth outcome from unvalidated channel equations"
+      ],
+      "usefulInvariants": [
+        "user, buyer, and economic approver are modeled separately",
+        "channel decisions include retention and margin rather than acquisition volume alone",
+        "sales engagement follows an observable need or buying signal",
+        "forecasts remain scenarios that are refreshed against actuals"
+      ],
+      "materialRisks": [
+        "anecdotal thresholds can prematurely force a product into one sales motion",
+        "short channel tests can miss seasonality and delayed conversion",
+        "removing onboarding steps can weaken consent, security, or required configuration",
+        "usage signals can become invasive lead scoring without a privacy boundary"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "product-led-growth-motion-and-economics",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-cb2885fa0d360e3a",
+      "bodySha256": "6b5c2256522fdba1e3313eafa3d743b960a7b13ec029d3e6586e04b23327c1f8",
+      "neutralCapabilitySummary": "art-direct a multi-section marketing site as separate horizontal image references while maintaining one brand system and varying composition, density, background treatment, and conversion role",
+      "neutralIntentExamples": [
+        "create six implementation-readable section images for a cinematic product landing page without repeating one split layout",
+        "translate a restrained editorial brief into a consistent visual sequence with one decisive action hierarchy"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "site type, section count, audience, product truth, conversion goal, brand assets, palette, and copy constraints",
+        "requested visual temperament, accessibility needs, image rights, responsive expectations, and available generation capability",
+        "section jobs and any real proof, pricing, interface, or product imagery allowed in the compositions"
+      ],
+      "operations": [
+        "choose one page-level art direction, typographic character, hero scale, palette, and narrative motif from the brief",
+        "assign each section a distinct content job, horizontal aspect, composition anchor, background mode, image crop, and action treatment",
+        "generate one frame per section while carrying color, type scale, spacing, material, and component language across the sequence",
+        "reject repeated layout reflexes, unreadable overlays, fabricated interface data, stock filler, decorative clutter, and ambiguous primary actions",
+        "verify exact frame count, scan order, image variety, implementation legibility, brand continuity, and mobile-implied stacking"
+      ],
+      "outputs": [
+        "ordered set of horizontal website-section reference images",
+        "art-direction manifest recording palette, type system, hero scale, recurring components, and section-specific composition choices",
+        "visual acceptance notes for hierarchy, continuity, accessibility, conversion path, and implementation clarity"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "stop image production when required brand assets or usage rights are missing and cannot be replaced by an approved abstract treatment",
+        "regenerate only missing or inconsistent frames when count, palette, hierarchy, or section continuity fails review"
+      ],
+      "exclusions": [
+        "combining an entire page into one tall mockup when separate section references were requested",
+        "inventing logos, endorsements, pricing, metrics, or product interfaces",
+        "treating generated raster references as production frontend code",
+        "forcing atmospheric imagery onto an explicitly typographic or minimal brief"
+      ],
+      "usefulInvariants": [
+        "each requested section maps to exactly one horizontal frame",
+        "all frames preserve one recognizable brand world",
+        "composition varies without breaking the page's reading order",
+        "every major section has a declared funnel or communication job"
+      ],
+      "materialRisks": [
+        "image models may garble text and product interfaces",
+        "prescriptive anti-pattern lists can suppress a brief's legitimate visual language",
+        "separate generations can drift in typography, palette, and object identity",
+        "high visual polish can conceal unsupported marketing claims"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "multi-frame-website-image-art-direction",
+      "confidence": "medium",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-ccbf2fbeccf88ce1",
+      "bodySha256": "e6b5edd38469e27ca286101d05e98a4931ea7dbaf45fb8248876ff7f9809172f",
+      "neutralCapabilitySummary": "segment a web page into answer blocks, score their extractability under an explicit rubric, and propose evidence-preserving structural rewrites",
+      "neutralIntentExamples": [
+        "find which article sections cannot stand alone as direct answers and rewrite their openings",
+        "compare content blocks for factual density and structural legibility without promising citation by an AI system"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "authorized page content with preserved headings, paragraphs, tables, lists, URL, and collection date",
+        "verifiable sources for every statistic, quotation, named entity, and date in the page",
+        "a versioned scoring rubric whose weights and claimed citation relationships have documented provenance"
+      ],
+      "operations": [
+        "extract the main content and partition it at meaningful heading boundaries without counting navigation or boilerplate",
+        "measure each block's direct-answer opening, standalone context, structural readability, supported factual density, and original contribution",
+        "calculate block and page scores from the declared weights while retaining component values",
+        "identify strong and weak blocks and draft answer-first revisions that do not add unsupported facts",
+        "mark research claims, optimal-length assertions, and expected score lifts as unverified unless current primary evidence supports them"
+      ],
+      "outputs": [
+        "page-level citability audit with rubric version and component scores",
+        "per-block evidence table, strongest-block register, and rewrite queue",
+        "specific revised openings plus requests for missing facts or sources"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "omit the composite score when the content cannot be segmented reliably or the rubric provenance is unavailable",
+        "return an evidence request instead of adding statistics to blocks that lack trustworthy sources"
+      ],
+      "exclusions": [
+        "guaranteeing citation, search visibility, or a numeric lift",
+        "copying a source passage into the review artifact",
+        "optimizing prose for extraction at the expense of accuracy or reader comprehension",
+        "treating hard-coded passage lengths as universal model behavior"
+      ],
+      "usefulInvariants": [
+        "component scores remain inspectable beneath any weighted total",
+        "rewrites preserve the page's supported meaning",
+        "original evidence is distinguished from synthesized commentary",
+        "citation likelihood remains a hypothesis rather than an observed outcome"
+      ],
+      "materialRisks": [
+        "the source attributes precise effects to research that is not established inside the reviewed body",
+        "model citation behavior changes across products and time",
+        "a numeric rubric can create false precision around an unobservable selection process",
+        "fact-density incentives may reward citation-shaped but low-quality prose"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "answer-block-extractability-and-citability-audit",
+      "confidence": "low",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-d05aace8e3d525c3",
+      "bodySha256": "905d4d36128cfb9d65d9e877556d4fc57cb978b60efc09541814e6954c2d0d5d",
+      "neutralCapabilitySummary": "design a paid-search account hypothesis by mapping current keyword evidence to intent, tightly related ad groups, exclusions, message variants, landing pages, and budget scenarios",
+      "neutralIntentExamples": [
+        "organize verified purchase-intent queries into search ad groups with distinct negatives and landing-page destinations",
+        "prepare a conservative launch architecture that separates brand, competitor, commercial, and transactional demand"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "business site, geography, products, service boundaries, approved claims, landing pages, and conversion definition",
+        "dated keyword volume, query, cost, competition, search-term, and conversion records from an authorized source",
+        "monthly spend ceiling, bidding authority, trademark policy, tracking readiness, and negative-keyword constraints"
+      ],
+      "operations": [
+        "reconcile business offerings and customer language with live keyword evidence",
+        "classify queries by search job and separate themes that require different promises or destinations",
+        "assign match-type hypotheses, cross-group negatives, copy variants, and landing-page message requirements",
+        "model spend and conversion ranges from labeled assumptions rather than inferred industry averages",
+        "prepare a launch and search-term review checklist without creating or enabling campaigns"
+      ],
+      "outputs": [
+        "paid-search campaign and ad-group architecture",
+        "keyword ledger with intent, match hypothesis, negatives, evidence date, and destination",
+        "ad-message variants constrained to verified claims and platform field limits",
+        "budget scenarios, tracking prerequisites, and post-launch decision schedule"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "withhold cost, volume, and conversion estimates when live geographic keyword data or tracking baselines are missing",
+        "leave trademark, destination, and bidding decisions unresolved when the owner has not supplied policy or spend authority"
+      ],
+      "exclusions": [
+        "launching ads, changing bids, or spending campaign funds",
+        "inventing monthly volume, click cost, competition, or expected conversions from web snippets",
+        "using fixed match-type percentages as a platform-independent rule",
+        "including competitor marks without a reviewed legal and platform basis"
+      ],
+      "usefulInvariants": [
+        "one ad group serves one coherent search job and message",
+        "budget scenarios expose their click and conversion assumptions",
+        "negative terms preserve separation between campaigns and reduce known waste",
+        "conversion tracking is a launch prerequisite rather than an afterthought"
+      ],
+      "materialRisks": [
+        "stale cost estimates can misallocate a material budget",
+        "overbroad exclusions can suppress valuable demand",
+        "platform automation and match behavior can change after the source snapshot",
+        "highly complete-looking plans can imply evidence that was never collected"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "paid-search-keyword-and-ad-group-architecture",
+      "confidence": "medium",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-d05c27b3500075fa",
+      "bodySha256": "1bdb8c3e96c115633d8b0269b48c5805870ad8e37f579f072eba782d813df26c",
+      "neutralCapabilitySummary": "select a small portfolio of growth tactics from a broad idea library by matching product stage, audience, goal, budget, team capacity, timeline, and prior learning",
+      "neutralIntentExamples": [
+        "narrow a solo founder's many promotion options to two channels that fit a six-month horizon",
+        "sequence a ninety-day growth portfolio after removing tactics that conflict with pre-revenue evidence or team capacity"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "product, audience, lifecycle stage, primary growth goal, time horizon, budget, and available operators",
+        "owned audience, current channels, prior experiments, product-market evidence, and competitive observations",
+        "the full tactic library and current feasibility evidence for any option under consideration"
+      ],
+      "operations": [
+        "filter candidate tactics by stage, resource demand, time-to-signal, channel dependency, and strategic goal",
+        "remove options that require unproven demand, unavailable distribution, excessive simultaneous channels, or unaffordable spend",
+        "rank a small set by expected learning value, effort, reversibility, and fit with existing assets",
+        "define first actions, owners, evidence thresholds, sequencing, and a stop or continue decision for each selected tactic"
+      ],
+      "outputs": [
+        "shortlisted growth tactics with fit rationale and disqualifying conditions",
+        "effort-versus-learning portfolio and ninety-day sequence",
+        "resource plan, expected observable outcome, and review date per tactic"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "return a small decision intake when stage, goal, horizon, or resource ceiling cannot be inferred",
+        "decline to rank tactics whose actual mechanics exist only in an unavailable referenced catalog"
+      ],
+      "exclusions": [
+        "dumping the entire idea inventory as a recommendation",
+        "executing paid media, outreach, partnerships, events, or launches",
+        "calling a tactic proven solely because it appears in the library",
+        "forecasting outcomes without a product-specific baseline"
+      ],
+      "usefulInvariants": [
+        "the selected portfolio fits the named people, money, and time constraints",
+        "each tactic has a first observable signal and a decision date",
+        "previous failures and existing assets influence ranking",
+        "channel concentration is preferred when a small team cannot sustain breadth"
+      ],
+      "materialRisks": [
+        "the detailed idea descriptions live outside the reviewed body",
+        "category labels can hide major differences in cost and operational risk",
+        "stage-based heuristics may reject a tactic with unusually strong local evidence",
+        "idea breadth can encourage novelty-seeking instead of disciplined execution"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "context-filtered-growth-tactic-portfolio-selection",
+      "confidence": "medium",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-d0a40704055b6516",
+      "bodySha256": "c8af49f0c29b87c80b9e2d2f266f410d989a21ecee29b584e59e5e89a0d2f65f",
+      "neutralCapabilitySummary": "design or diagnose conversion overlays by binding purpose, visitor state, trigger, targeting, frequency, copy, dismissal, mobile behavior, and experiment evidence",
+      "neutralIntentExamples": [
+        "replace an immediate newsletter interruption with a behavior-triggered offer and a humane dismissal rule",
+        "plan non-conflicting overlays for first-purchase, cart recovery, and returning-customer announcements"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "overlay objective, incentive, page context, traffic source, visitor segment, and primary page action",
+        "current impressions, dismissals, submissions, conversion quality, complaints, device split, and prior tests",
+        "consent, privacy, accessibility, intrusive-interstitial, frequency, and brand requirements"
+      ],
+      "operations": [
+        "diagnose whether an overlay is appropriate before adding another interruption layer",
+        "specify format, behavioral trigger, eligible audience, exclusions, cooldown, dismissal, and conflict resolution",
+        "write a complete headline, supporting line, primary action, decline text, and mobile adaptation",
+        "define one-variable experiments with success, harm, and quality guardrails"
+      ],
+      "outputs": [
+        "overlay inventory and conflict map",
+        "complete copy and interaction specification for each approved placement",
+        "mobile, accessibility, consent, and frequency checklist",
+        "prioritized experiment plan with conversion and annoyance measures"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "recommend repairing the underlying page when an overlay would mask a value, traffic-match, or form problem",
+        "omit behavioral personalization when consent, visitor-state quality, or suppression data is inadequate"
+      ],
+      "exclusions": [
+        "deploying the overlay or changing a live experimentation system",
+        "false urgency, obstructive dismissal, forced consent, or escalating discounts designed to trap return visits",
+        "collecting more visitor data than the declared conversion requires",
+        "assuming an expected lift before a controlled test"
+      ],
+      "usefulInvariants": [
+        "every overlay has a singular purpose and eligible audience",
+        "dismissal remains visible, functional, and persistent for the cooldown period",
+        "multiple overlays cannot compete in the same visitor moment",
+        "conversion gains are evaluated alongside complaints and lead quality"
+      ],
+      "materialRisks": [
+        "interruptions can reduce trust and core-page conversion",
+        "visitor targeting can cross privacy and consent boundaries",
+        "mobile overlays can violate accessibility or search policies",
+        "discount escalation can train customers to abandon purchases"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "behavior-triggered-overlay-conversion-design",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-d0e611096e5d9fff",
+      "bodySha256": "e560277e36ee710e9a1c02cff975b5b27f80ba1e4dc06d12011fc4fc409a3584",
+      "neutralCapabilitySummary": "route a web contact-center integration among in-client engagement APIs, external campaign or video embeds, and iframe messaging while preserving engagement-scoped state",
+      "neutralIntentExamples": [
+        "choose the correct browser integration mode for a support app that follows an active engagement",
+        "diagnose an embedded contact experience that loses state when the agent changes conversations"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "current official vendor documentation and exact SDK versions",
+        "host context, chosen embed mode, authorized account configuration, identity flow, CSP, origin allow-list, and engagement lifecycle requirements",
+        "browser event traces, readiness events, engagement identifiers, iframe messages, and reproduction steps"
+      ],
+      "operations": [
+        "select the in-client, external-site, or iframe contract from the actual host and interaction requirements",
+        "gate campaign calls on the documented ready event and key persisted state by engagement identifier",
+        "handle context changes, background behavior, initialization, and teardown without sharing state across engagements",
+        "validate content-security and allowed-origin configuration before treating application logic as the fault",
+        "verify message schema, sender origin, event ordering, and version-specific API behavior against current references"
+      ],
+      "outputs": [
+        "integration-mode decision and dependency map",
+        "engagement lifecycle and state-machine specification",
+        "embed or event-handling implementation patch with origin and CSP controls",
+        "versioned troubleshooting trace and validation receipt"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "stop at a current-documentation and account-configuration request when the body lacks the referenced API contract",
+        "preserve event logs and isolate the failed lifecycle boundary when readiness, context switching, CSP, or allow-list checks do not pass"
+      ],
+      "exclusions": [
+        "inventing vendor methods or event payloads from the sparse routing body",
+        "implementing identity, OAuth, or cobrowsing beyond an explicit specialist handoff",
+        "changing production allow-lists or contact-center settings without account authority",
+        "accepting unvalidated cross-origin messages"
+      ],
+      "usefulInvariants": [
+        "state is isolated by the active engagement identifier",
+        "SDK calls occur only after the matching readiness contract",
+        "the selected mode matches whether code runs in-client, on an external site, or in an iframe",
+        "current vendor contracts outrank the reviewed snapshot"
+      ],
+      "materialRisks": [
+        "the reviewed body delegates most technical detail to files not included in this review",
+        "stale SDK assumptions can break a live support surface",
+        "cross-origin message errors can expose engagement context",
+        "external configuration changes may interrupt customer contact flows"
+      ],
+      "disposition": "deferred",
+      "proposedCluster": "web-contact-center-embed-and-engagement-lifecycle",
+      "confidence": "low",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-d15c13374d872ac7",
+      "bodySha256": "58983bd3e32e38d711be4ece7630f08b69caf87fc8004bcf70c92d491c9a6a7a",
+      "neutralCapabilitySummary": "classify a commercial decision into pricing, deal exception, partnership, channel economics, policy, procurement response, or bookings forecast and produce a scope-limited specialist handoff",
+      "neutralIntentExamples": [
+        "decide whether a proposed reseller discount needs deal review, channel-economics analysis, or both in sequence",
+        "route a pipeline workbook to forecasting while preserving the conversion assumptions that need challenge"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "commercial question, authorized workspace artifacts, decision owner, and deadline",
+        "pricing, margin, terms, partner, channel, procurement, or pipeline signals needed to identify the lane",
+        "available specialist contracts and the evidence each requires before making a recommendation"
+      ],
+      "operations": [
+        "inspect supplied filenames and content for decisive commercial signals before asking for more information",
+        "select one primary lane only when two independent signals support it",
+        "ask one forcing question with a recommended interpretation when the evidence is ambiguous",
+        "for mixed cases, order specialist analyses by dependency and require confirmation before opening the next lane",
+        "return a compact digest with findings, decision owner, artifact paths, unresolved assumptions, and one material challenge"
+      ],
+      "outputs": [
+        "commercial-lane decision with signal evidence and confidence",
+        "specialist handoff packet containing the original request and relevant source artifacts",
+        "bounded digest linking recommendations to pricing, margin, policy, pipeline, or procurement evidence",
+        "expected artifact contract for the selected lane, such as a scorecard, model, response, or forecast"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "remain at clarification when fewer than two lane signals are present and no workspace artifact resolves the ambiguity",
+        "return the routing decision without simulated specialist analysis when the chosen downstream capability is unavailable"
+      ],
+      "exclusions": [
+        "auto-approving discounts, setting prices, signing partners, submitting procurement responses, or committing a forecast",
+        "running all commercial disciplines for completeness",
+        "using unnamed benchmark authority as a substitute for company economics",
+        "silently chaining a second lane"
+      ],
+      "usefulInvariants": [
+        "one primary commercial decision lane is explicit at a time",
+        "human authority remains attached to price, policy, deal, partner, and forecast decisions",
+        "a digest identifies both its source artifacts and unresolved assumptions",
+        "downstream capability availability is checked before promising its artifacts"
+      ],
+      "materialRisks": [
+        "the body is an orchestrator and does not contain the seven specialist methods",
+        "keyword routing can misclassify a cross-functional commercial decision",
+        "compressed digests can hide contractual or financial details",
+        "unverified benchmark anecdotes can distort high-value approvals"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "commercial-decision-lane-routing-and-handoff",
+      "confidence": "medium",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-d15de0b1691f3780",
+      "bodySha256": "5017f078d779365a6f6b7326804270857475a24535f278eb1b1dc436ef5a343a",
+      "neutralCapabilitySummary": "diagnose a marketing page's conversion path from traffic promise through value clarity, action hierarchy, proof, objections, friction, and downstream flow",
+      "neutralIntentExamples": [
+        "explain why paid visitors abandon a landing page whose headline does not match the ad promise",
+        "prioritize pricing-page repairs and experiments using baseline conversion data and user evidence"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "page content or rendered page, page type, primary action, traffic sources, device mix, and downstream flow",
+        "current conversion rate, target, funnel drop-off, performance data, and prior experiment results",
+        "customer language, objections, heatmaps, recordings, research, accessibility findings, and verified proof assets"
+      ],
+      "operations": [
+        "run a mechanical page scan and retain its result as one input rather than the conversion verdict",
+        "evaluate message match, value comprehension, headline specificity, action hierarchy, visual scan order, proof, objections, and friction",
+        "separate obvious defects from causal hypotheses that require experimentation",
+        "rank immediate repairs and larger changes by evidence, expected decision value, effort, and risk",
+        "draft alternative headlines or actions and define experiments with primary and guardrail measures"
+      ],
+      "outputs": [
+        "conversion-path audit with issue severity and evidence per dimension",
+        "small immediate-repair list and prioritized structural recommendations",
+        "copy alternatives with rationale tied to traffic and audience",
+        "experiment backlog with hypothesis, variant, success metric, guardrails, and priority"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "label the review heuristic-only when traffic context, conversion baseline, or downstream behavior is absent",
+        "defer a claimed cause when the same symptom could arise from acquisition quality, page behavior, or post-click flow"
+      ],
+      "exclusions": [
+        "deploying copy, layout, pricing, navigation, or experiment changes",
+        "fabricating social proof or numerical specificity",
+        "using a mechanical score as proof of conversion impact",
+        "recommending deceptive urgency or removal of necessary consent and accessibility controls"
+      ],
+      "usefulInvariants": [
+        "the page's primary action and acquisition promise remain visible in every recommendation",
+        "proof is placed only where its underlying claim is verified",
+        "clear defects are repaired while uncertain causes become tests",
+        "guardrails capture harm outside the headline conversion metric"
+      ],
+      "materialRisks": [
+        "generic persuasion heuristics can override product-specific user research",
+        "short-term conversion gains can reduce trust, retention, or lead quality",
+        "page changes may shift friction into signup, checkout, or onboarding",
+        "a five-second comprehension rule is directional rather than universal"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "marketing-page-conversion-path-diagnosis",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-d2b8e4bc3d98480d",
+      "bodySha256": "e9429e5b16192b596931f5485ef9d2b3b746370d47d787212e6158d9884c0247",
+      "neutralCapabilitySummary": "audit how a site expresses access and usage preferences to automated AI clients across robots rules, page directives, response headers, rendering, and experimental policy files",
+      "neutralIntentExamples": [
+        "map which current search and training crawlers can fetch a site without conflating their purposes",
+        "review a proposed robots change against the publisher's retrieval, training, and licensing policy"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "authorized domain, robots file, representative page HTML and headers, sitemap, and rendering architecture",
+        "publisher decisions for search retrieval, user-initiated fetches, model training, image use, and regional obligations",
+        "current first-party crawler documentation, exact user-agent tokens, protocol semantics, and collection date"
+      ],
+      "operations": [
+        "parse agent-specific and wildcard robots groups to determine effective directives without treating absence as affirmative consent",
+        "inspect representative pages and non-HTML responses for indexing, following, AI-use, and client-specific directives",
+        "separate live retrieval clients from training collectors and record uncertainty where operators share or change infrastructure",
+        "assess whether critical content is available without unsupported client-side rendering",
+        "report experimental files and content-preference directives with draft status and no assumed enforcement"
+      ],
+      "outputs": [
+        "dated crawler-access matrix with operator, purpose, effective rule, evidence, and confidence",
+        "conflict report spanning robots groups, page metadata, response headers, sitemap access, and rendering",
+        "policy-aligned proposed edits presented for owner review rather than deployment",
+        "uncertainty register for undocumented clients and draft directives"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "report unreachable resources, redirects, bot defenses, and ambiguous precedence as unresolved rather than scoring them as blocked",
+        "omit crawler-purpose and impact claims that cannot be verified from current operator documentation"
+      ],
+      "exclusions": [
+        "publishing a robots or header change",
+        "defaulting every AI client to allowed or blocked",
+        "claiming that access guarantees indexing, citation, referral traffic, or model use",
+        "treating proposed preference syntax as a settled interoperable standard"
+      ],
+      "usefulInvariants": [
+        "search retrieval and model training are separate policy decisions",
+        "each user-agent conclusion includes the exact current evidence used",
+        "site-owner intent determines recommendations rather than a universal visibility objective",
+        "unknown and not-mentioned states remain distinct from allowed"
+      ],
+      "materialRisks": [
+        "the source's crawler purposes, audience counts, and recommendations are highly time-sensitive",
+        "incorrect robots guidance can expose content or suppress desired discovery",
+        "some asserted AI-specific metadata lacks standardized enforcement",
+        "a simple access score can erase publisher rights and policy tradeoffs"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "ai-crawler-access-and-content-preference-audit",
+      "confidence": "low",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-d5951a948fafe7ea",
+      "bodySha256": "7379c20c2cf2beb892ff74af0e7a087e4d4f613aae0b16778f7241913c1349f2",
+      "neutralCapabilitySummary": "retrieve paid keyword evidence for a seed or domain, classify intent, compute transparent opportunity measures, and return a bounded prioritized dataset",
+      "neutralIntentExamples": [
+        "find long-tail topics with verified volume and difficulty for one country and language",
+        "compare the search jobs and opportunity scores of terms for which a domain already ranks"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "seed keyword or domain, location, language, result limits, and collection date",
+        "explicit authority to use a metered keyword provider and an approved cost ceiling",
+        "credentials supplied through an existing secret channel rather than conversation or committed files",
+        "current provider response schema and definitions for volume, cost, competition, difficulty, and suggestions"
+      ],
+      "operations": [
+        "verify provider access without echoing secret material or creating credentials implicitly",
+        "request related terms, suggestions, difficulty, and domain rankings within the approved query and spend limits",
+        "retain raw metric provenance and classify each term as informational, commercial, transactional, or navigational",
+        "calculate the documented opportunity ratio and weighted aggregate score while exposing every component",
+        "sort a bounded result set and flag absent, zero, conflicting, or provider-estimated fields"
+      ],
+      "outputs": [
+        "source-labeled keyword dataset with geography, language, dates, and provider fields",
+        "ranked opportunity list with formula inputs and intent labels",
+        "aggregate keyword score with component breakdown and limitations",
+        "API usage and estimated-cost receipt"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "stop before any billable request when credentials, cost authority, account verification, or geographic scope is missing",
+        "return provider errors and partial records without substituting guessed search metrics"
+      ],
+      "exclusions": [
+        "storing credentials from chat or committing a secret file",
+        "issuing paid calls beyond the approved query and spend bounds",
+        "treating a heuristic score as forecast traffic or revenue",
+        "launching content, advertising, or ranking changes from the result"
+      ],
+      "usefulInvariants": [
+        "every metric remains tied to one provider, geography, language, and collection date",
+        "the aggregate score can be recomputed from retained component values",
+        "credential material never appears in logs or review artifacts",
+        "no billable request occurs without explicit cost authority"
+      ],
+      "materialRisks": [
+        "metered API use incurs external cost",
+        "provider estimates can differ from actual search and conversion behavior",
+        "simple lexical intent rules misclassify ambiguous queries",
+        "the source's fixed score weights encode subjective priorities"
+      ],
+      "disposition": "deferred",
+      "proposedCluster": "metered-keyword-research-and-opportunity-scoring",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-d5b0e40f96104dec",
+      "bodySha256": "990c4bc720d590e217427d0b8b3155f5f1f6b121613a917b15b2b8dc1f7e47d0",
+      "neutralCapabilitySummary": "derive a decision-oriented analytics specification and implementation boundary for events, properties, campaign tags, conversions, consent, and data-quality verification",
+      "neutralIntentExamples": [
+        "design an event taxonomy that answers which onboarding step predicts activation without collecting personal data",
+        "audit duplicate purchase events and inconsistent campaign parameters before repairing a reporting funnel"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "business questions, decisions, conversion definitions, user journeys, and accountable data owners",
+        "current analytics stack, event inventory, data layer, campaign tags, implementation code, and observed defects",
+        "consent regions, retention policy, deletion requirements, prohibited personal data, and technical constraints"
+      ],
+      "operations": [
+        "work backward from each decision to the smallest event and property set needed to answer it",
+        "define consistent object-action names, triggers, property schemas, conversion counting, and campaign-tag conventions",
+        "map collection to browser, server, tag-manager, or product instrumentation with consent prerequisites",
+        "validate trigger timing, property values, duplicates, cross-device behavior, conversion recording, and personal-data leakage",
+        "document monitoring, ownership, schema changes, and downstream report dependencies"
+      ],
+      "outputs": [
+        "tracking plan with event definitions, properties, triggers, owners, and decision uses",
+        "conversion and campaign-tag specification",
+        "implementation map or local instrumentation patch",
+        "validation evidence, defect ledger, privacy controls, and monitoring runbook"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "remove events that have no declared decision consumer or lawful collection basis",
+        "hold account, tag-container, or production changes when consent configuration, access authority, or a test environment is absent"
+      ],
+      "exclusions": [
+        "collecting direct personal identifiers in event properties",
+        "publishing tags or creating analytics resources without authorization",
+        "solving attribution-model disagreements inside a basic tracking plan",
+        "instrumenting every available interaction without a decision need"
+      ],
+      "usefulInvariants": [
+        "each event answers a named question and has an accountable owner",
+        "context belongs in typed properties rather than proliferating event names",
+        "collection waits for the applicable consent state",
+        "a validation receipt precedes reliance on the resulting metrics"
+      ],
+      "materialRisks": [
+        "analytics payloads can leak personal or sensitive product data",
+        "duplicate or mistimed events corrupt conversion decisions",
+        "client-side controls can be bypassed or blocked",
+        "vendor interfaces and regional privacy requirements change over time"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "decision-oriented-analytics-instrumentation",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-d60a6503f78db405",
+      "bodySha256": "a3973b841a3d8e0dfb65e0fc1a45e1331b4cd1c19286906bc9ed8c8bad9c3ef7",
+      "neutralCapabilitySummary": "select task-specific files from a named operator's private marketing doctrine before attempting copy, funnel, advertising, lead-magnet, content, email, or analytics work",
+      "neutralIntentExamples": [
+        "identify which in-folder doctrine files would be needed before revising an opt-in page",
+        "map a funnel request to the minimum referenced playbooks without loading unrelated material"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "specific marketing task and the exact referenced doctrine files available in the same source package",
+        "license and authority to use the named operator's material",
+        "user-approved brand voice, business evidence, audience, offer, and channel constraints"
+      ],
+      "operations": [
+        "classify the request as funnel, copy, long-form sales, email, paid advertising, lead magnet, content, or analytics",
+        "select the common doctrine file and only the matching task file",
+        "verify that the referenced material exists and is permitted before deriving any method from it",
+        "separate reusable marketing principles from personality imitation and source-specific prose"
+      ],
+      "outputs": [
+        "dependency map of required doctrine files for the requested task",
+        "availability, license, and identity-imitation decision",
+        "rejection or specialist handoff when the body alone cannot support the requested marketing artifact"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "reject standalone execution when the referenced doctrine and task playbook were not reviewed",
+        "decline style imitation when authority or transformation boundaries are unclear"
+      ],
+      "exclusions": [
+        "claiming the reviewed body contains the promised marketing methods",
+        "impersonating the named person or reproducing their distinctive prose",
+        "activating one person's doctrine for every marketing request",
+        "creating marketing claims without product and audience evidence"
+      ],
+      "usefulInvariants": [
+        "only task-relevant dependency files are selected",
+        "the named individual's identity is not presented as the agent's identity",
+        "missing referenced content prevents a capability claim",
+        "user brand evidence outranks a third party's voice doctrine"
+      ],
+      "materialRisks": [
+        "the body contains routing instructions but almost no substantive marketing method",
+        "person-bound doctrine encourages unauthorized style imitation",
+        "unreviewed sibling files may contain copied or unsupported claims",
+        "a universal trigger would displace more suitable domain workflows"
+      ],
+      "disposition": "rejected",
+      "proposedCluster": "persona-bound-marketing-playbook-loader",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-d68b5c20b05b58a3",
+      "bodySha256": "eddccd76f45054b529962ca7f2db6076211db431b7185f63ee205736e8a2d914",
+      "neutralCapabilitySummary": "shape enterprise go-to-market for action-taking AI products around accountable failure handling, honest autonomy framing, variable economics, buyer trust, realistic demos, and operational readiness",
+      "neutralIntentExamples": [
+        "reframe an action-taking product for enterprise buyers while preserving its real approval and rollback boundaries",
+        "design a sales demonstration that shows uncertainty, recovery, human override, and incident ownership"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "verified product autonomy, approval points, failure modes, rollback controls, confidence behavior, and incident history",
+        "buyer roles, on-call and escalation practices, deployment constraints, compliance needs, and current alternative workflow",
+        "unit costs, usage distribution, measurable customer outcomes, support burden, margin goals, and willingness-to-pay research",
+        "competitor claims, structural advantages, adoption evidence, and customer interviews"
+      ],
+      "operations": [
+        "map monitoring, technical escalation, business ownership, rollback, and customer communication for realistic failure scenarios",
+        "choose copilot, agent, teammate, or other language that accurately reflects action authority rather than merely reducing buyer anxiety",
+        "compare seat, usage, outcome, and hybrid economics against measured costs and customer value",
+        "sequence transparency, control, performance, and scale evidence for diligence and demonstration",
+        "build a demo with an authentic error path, recovery or escalation, human judgment, and measured outcome",
+        "test positioning against structural advantages and qualify readiness from actual operational practices"
+      ],
+      "outputs": [
+        "enterprise AI positioning brief with truth constraints and rejected framings",
+        "accountability cascade, incident-readiness gap list, and buyer qualification questions",
+        "pricing-model hypotheses with cost, value, margin, and sensitivity assumptions",
+        "trust-evidence package plan and failure-inclusive demonstration script",
+        "competitive position and readiness decision with supporting interviews"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "withhold autonomous or teammate framing when actual action and approval boundaries are undocumented",
+        "decline pricing or readiness conclusions when costs, outcomes, incident ownership, or buyer evidence are missing"
+      ],
+      "exclusions": [
+        "concealing failure modes or claiming perfect accuracy",
+        "using reassuring language that misrepresents autonomous behavior",
+        "setting customer prices or committing contract terms",
+        "targeting named users of competing tools through unauthorized enrichment or outreach",
+        "repeating anecdotal conversion multipliers as forecast evidence"
+      ],
+      "usefulInvariants": [
+        "positioning never grants less apparent autonomy than the product actually exercises",
+        "every consequential failure has a monitored owner and recovery decision",
+        "pricing alternatives expose both supplier cost and customer-value assumptions",
+        "demonstrations include uncertainty and human control where they exist in production"
+      ],
+      "materialRisks": [
+        "anecdotal deal stories and percentage rules may not generalize",
+        "collaborative framing can become manipulative euphemism for labor replacement",
+        "outcome pricing can create gaming and liability disputes",
+        "failure demonstrations can expose sensitive customer or security details",
+        "operational maturity screening can exclude buyers without addressing remediable gaps"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "enterprise-ai-accountability-and-go-to-market",
+      "confidence": "medium",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-d834af277abc8505",
+      "bodySha256": "949186b826c714ae173d8d2e9dd73c705dbd4ee5fe33645e9583a5b451e1dfcc",
+      "neutralCapabilitySummary": "audit, generate, and repair page-matching structured data with current vocabulary and search-feature requirements, then preserve validator evidence without promising display eligibility",
+      "neutralIntentExamples": [
+        "repair product JSON-LD whose offer fields disagree with the visible price and availability",
+        "plan article, author, organization, and breadcrumb entities for a custom publishing system"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "page HTML, visible content, existing structured data, canonical URL, page type, CMS, and deployment constraints",
+        "real organization, author, product, offer, image, date, location, event, or breadcrumb facts used by the selected entities",
+        "current schema vocabulary, search-provider feature documentation, validator results, and search-console errors"
+      ],
+      "operations": [
+        "extract all structured-data blocks, including graph containers, and reconcile duplicate entity identifiers",
+        "select only entity types that describe visible page content and verify required and recommended properties against current sources",
+        "generate or repair JSON-LD with absolute identifiers, typed values, coherent relationships, and accurate dates and offers",
+        "test syntax, vocabulary, provider eligibility, and page-to-markup consistency in local and official validators",
+        "record warnings separately from blocking errors and provide CMS-specific placement guidance"
+      ],
+      "outputs": [
+        "structured-data audit with entities, conflicts, missing fields, and priority",
+        "page-specific JSON-LD blocks or implementation matrix",
+        "change log explaining each correction and its source",
+        "validator receipts and unresolved search-console observations"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "leave a property absent when the corresponding visible fact cannot be verified",
+        "defer provider-eligibility claims when current documentation or live validation is unavailable"
+      ],
+      "exclusions": [
+        "deploying markup to a production site",
+        "adding ratings, prices, availability, authorship, questions, or answers that are not visible and true",
+        "guaranteeing rich results, click-through improvement, or AI citation",
+        "assuming client-side injection will be processed without a rendered test"
+      ],
+      "usefulInvariants": [
+        "structured entities describe the same facts a visitor can inspect on the page",
+        "stable identifiers connect compatible entities without duplicating the organization or page subject",
+        "official current rules outrank embedded examples",
+        "errors, warnings, eligibility, and observed display remain separate states"
+      ],
+      "materialRisks": [
+        "search-feature eligibility and required fields change over time",
+        "invalid or misleading markup can trigger manual actions or loss of enhancements",
+        "the source overstates links between schema and AI citation",
+        "sitewide entity injection can duplicate or conflict with CMS-generated markup"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "page-matched-jsonld-audit-and-repair",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-d98808ea7d37559f",
+      "bodySha256": "c9c09ed6ba7b49d7d0128fa145b7cc429b132f2dbe33b6f9a52b5425e26c4c6b",
+      "neutralCapabilitySummary": "orchestrate a small-business campaign from a verified revenue decline through an approved content brief, creative staging, audience selection, personal-call planning, and separately authorized send",
+      "neutralIntentExamples": [
+        "trace a recent product revenue decline into a thirty-day email and social plan with owner gates",
+        "stage campaign assets and a scored recipient segment while keeping the final send under explicit owner control"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "approved lookback window, channel scope, campaign owner, and business objective",
+        "authorized accounting and payment records with product, period, and revenue definitions",
+        "brand assets, offer facts, content constraints, contact consent, suppression lists, and CRM engagement evidence",
+        "connected finance, design, CRM, and calendar systems with exact read or write scopes"
+      ],
+      "operations": [
+        "reconcile finance sources to identify a dated and product-specific decline without assuming campaign causation",
+        "draft a thirty-day brief naming what to promote, what to hold, the offer, channels, evidence, and measurement",
+        "after owner approval, create a calendar, captions, and brand-constrained creative assets and stage the campaign without sending",
+        "after a second approval, select consented recipients, apply a documented fit and engagement score, and prepare separate bulk-send and personal-call lists",
+        "show the exact staged campaign, segment, calls, and external effects before accepting final send and calendar authority"
+      ],
+      "outputs": [
+        "reconciled revenue-dip analysis and approved campaign brief",
+        "thirty-day posting calendar, creative assets, captions, and staged CRM campaign",
+        "bulk recipient list with eligibility evidence and a five-lead call brief",
+        "approval ledger, calendar block, send receipt, and final campaign recap when authorized"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "stop at the affected stage and name the failed finance, design, CRM, or calendar dependency",
+        "re-present changed artifacts for approval instead of carrying an earlier approval across modified content or recipients"
+      ],
+      "exclusions": [
+        "sending, scheduling, contacting leads, or blocking calendar time before the matching explicit approval",
+        "using unconsented or suppressed contacts",
+        "inferring that a revenue decline was caused by weak marketing without supporting evidence",
+        "substituting unavailable connector data with fabricated products, segments, or performance"
+      ],
+      "usefulInvariants": [
+        "each stage consumes the exact owner-approved artifact from the prior stage",
+        "staging and sending remain separate external effects",
+        "recipient eligibility is rechecked immediately before send",
+        "a changed brief, asset set, or segment invalidates downstream approval"
+      ],
+      "materialRisks": [
+        "finance and CRM records contain sensitive commercial and personal data",
+        "cross-system identity mismatches can contact the wrong people",
+        "creative or segment approval can be misunderstood as send authority",
+        "automated campaign actions can spend money and create reputational harm",
+        "the body depends on three other capabilities and connectors not defined inside it"
+      ],
+      "disposition": "deferred",
+      "proposedCluster": "approval-gated-revenue-response-campaign-orchestration",
+      "confidence": "medium",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-da589a98bb6ebc11",
+      "bodySha256": "2dcc6a85872cf3e7ed8cdc9fa5aefa9f1ed73eb7d84221d8d675d1c35ba55f57",
+      "neutralCapabilitySummary": "combine source-labeled backlink datasets with live verification to assess profile composition, anchor patterns, referring domains, risky links, linked pages, competitor gaps, and change over time",
+      "neutralIntentExamples": [
+        "audit whether suspicious exact-match anchors are current links or stale vendor records before considering remediation",
+        "find verified referring domains that link to a competitor but not the target while exposing coverage limits"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "authorized target and competitor domains, analysis mode, time window, market, and known backlink file",
+        "current records from available backlink providers, site-owner tools, public crawl graphs, and a verification crawler",
+        "credential and query-cost authority, source definitions, confidence policy, and current vendor documentation",
+        "manual evidence for penalties, deindexing, paid placement, or network ownership before any toxic-link conclusion"
+      ],
+      "operations": [
+        "detect available sources and choose a documented fallback without claiming that a domain graph is a full link index",
+        "normalize referring domains, pages, anchors, follow state, geography, first and last seen dates, and provider-specific authority fields",
+        "verify suspicious and known links live while distinguishing absent, blocked, not crawled, and client-rendered states",
+        "analyze concentration, anchor naturalness, source quality, linked-page value, gaps, and new or lost records with per-metric provenance",
+        "compute a confidence-weighted health score only when the declared factor-coverage gate passes"
+      ],
+      "outputs": [
+        "backlink profile report with source and confidence attached to every metric",
+        "verified-link ledger with current status and renderability notes",
+        "anchor, domain-quality, linked-page, competitor-gap, and change analyses",
+        "health score with factor coverage or an explicit insufficient-data verdict",
+        "manual-review queue for risky links and potential reclamation opportunities"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "fall back to lower-coverage sources while lowering confidence and suppressing unsupported sections",
+        "refuse a numeric health score when fewer than the required factors have suitable evidence",
+        "mark client-rendered or blocked pages unverifiable instead of reporting that their links were removed"
+      ],
+      "exclusions": [
+        "submitting a disavow file, requesting links, or contacting site owners",
+        "calling a link toxic solely from top-level domain, country, anchor, or vendor spam score",
+        "presenting public crawl rank as a verified referring-domain count",
+        "issuing paid provider calls beyond approved limits"
+      ],
+      "usefulInvariants": [
+        "each metric carries provider, collection time, and confidence",
+        "missing evidence lowers coverage rather than the target's health score",
+        "live verification distinguishes inaccessible pages from confirmed link absence",
+        "remediation remains a human-reviewed decision after the audit"
+      ],
+      "materialRisks": [
+        "false toxic-link labels can prompt harmful disavow decisions",
+        "provider indexes and authority metrics disagree and change over time",
+        "competitor comparison can be distorted by unequal source coverage",
+        "paid APIs create cost and credential exposure",
+        "crawler verification can burden external sites or trigger defenses"
+      ],
+      "disposition": "deferred",
+      "proposedCluster": "source-reconciled-backlink-profile-and-risk-audit",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    }
+  ]
+}

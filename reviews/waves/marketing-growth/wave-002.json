@@ -1,0 +1,1090 @@
+{
+  "schemaVersion": 1,
+  "waveId": "marketing-growth-wave-002",
+  "familyId": "marketing-growth",
+  "reviewer": "codex:01a03c38-8589-79d2-a007-bf4c128304af",
+  "reviewMethod": "bounded-source-review-v1",
+  "reviews": [
+    {
+      "sourceId": "skill-00f5316cb802aeeb",
+      "bodySha256": "13277db3f7561b3f0244b25ea71f2ce230b1ee702d58e9c99621dcf64bd68608",
+      "neutralCapabilitySummary": "Plans and operates GoPhish employee phishing-awareness campaigns, including SMTP delivery, tracked messages, cloned landing pages, target groups, scheduling, and click or credential-submission reporting.",
+      "neutralIntentExamples": [
+        "design an authorized employee phishing-awareness exercise with a test mailbox and training redirect",
+        "measure simulated email opens, link clicks, and form submissions for an HR-approved recipient group"
+      ],
+      "legacyAliases": [
+        "performing-phishing-simulation-with-gophish",
+        "gophish awareness campaign"
+      ],
+      "inputs": [
+        "written management authorization",
+        "HR-approved recipient CSV with names, email addresses, and positions",
+        "SMTP relay credentials, TLS certificate, GoPhish deployment, scenario copy, and training destination"
+      ],
+      "operations": [
+        "deploy GoPhish by Docker or binary, configure an SMTP sending profile, insert tracker and URL placeholders into a realistic message, clone a login page, enable capture, stagger delivery, and query the API for campaign analytics"
+      ],
+      "outputs": [
+        "configured phishing simulation campaign",
+        "captured open, click, and submission metrics",
+        "awareness-training redirect and campaign report"
+      ],
+      "effects": [
+        "external-write"
+      ],
+      "failureBehavior": [
+        "cannot proceed safely without written authorization, approved targets, SMTP access, and HTTPS landing-page support",
+        "deployment, API, or tracking failures prevent campaign launch or reliable rates"
+      ],
+      "exclusions": [
+        "real credential theft",
+        "unauthorized recipients or live attack infrastructure",
+        "using captured passwords beyond the authorized simulation"
+      ],
+      "usefulInvariants": [
+        "the campaign combines a sending profile, email template, landing page, user group, and schedule",
+        "submission is followed by a training redirect",
+        "metrics must distinguish opens, clicks, and submissions"
+      ],
+      "materialRisks": [
+        "credential capture and page cloning are directly reusable for real phishing",
+        "staggering sends to avoid detection and Evilginx references increase operational abuse potential",
+        "SMTP credentials and personal recipient data are sensitive"
+      ],
+      "disposition": "rejected",
+      "proposedCluster": "unsafe-boundary-phishing-simulation",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-0112a1111a56d609",
+      "bodySha256": "076765e28930ae8117cfeab8e264d2f2e16534715dcc4e17997b54e0f2f729d4",
+      "neutralCapabilitySummary": "Routes an evidence-led SEO workflow through FLOW stages for discovery, backlink leverage, context-selected optimization, conversion-oriented winning, local SEO, prompt browsing, and prompt synchronization.",
+      "neutralIntentExamples": [
+        "choose and apply FLOW prompts for a site's keyword gaps and search intent",
+        "select two or three optimization prompts from industry, prior findings, and URL context"
+      ],
+      "legacyAliases": [
+        "seo-flow",
+        "/seo flow"
+      ],
+      "inputs": [
+        "URL or topic",
+        "prior SEO findings, industry context, and requested stage",
+        "local prompt files and optional GitHub synchronization access"
+      ],
+      "operations": [
+        "load the framework and stage-specific prompt files, apply all prompts for find, leverage, win, or local stages, select exactly two or three optimize prompts, and optionally run the named sync command"
+      ],
+      "outputs": [
+        "stage overview or applied SEO findings",
+        "selected prompt rationale",
+        "cross-references to related SEO capabilities",
+        "sync summary when synchronization is requested"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "missing framework or prompt files produces a sync instruction rather than fabricated findings",
+        "network or authentication errors from synchronization are surfaced with stderr and rate-limit guidance"
+      ],
+      "exclusions": [
+        "loading every optimize prompt indiscriminately",
+        "claiming prompt-derived evidence without applying it to the supplied URL or topic",
+        "silent omission of the required attribution"
+      ],
+      "usefulInvariants": [
+        "optimize returns exactly two or three context-relevant prompts",
+        "stage files are loaded on demand",
+        "every activation emits the stated FLOW attribution"
+      ],
+      "materialRisks": [
+        "the sync operation pulls remote content into the local skill environment",
+        "SEO recommendations can inherit stale prompt files or unsupported assumptions about AI crawler behavior",
+        "the framework is useful for analysis but does not itself fetch site evidence"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "seo-workflow-and-prompt-routing",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-0222c0924874cd20",
+      "bodySha256": "b39152dc4c99157e8baab6d723f634ec77b9a210eaee679c8efc86e9ebd14b08",
+      "neutralCapabilitySummary": "Audits a site's technical search and AI-discovery readiness across crawlability, indexing, security, URLs, mobile behavior, web vitals, rendering, server performance, and agent-facing signals, then assigns a weighted score.",
+      "neutralIntentExamples": [
+        "audit a homepage and key pages for robots, canonical, HTTPS, rendering, performance, and AI crawler access",
+        "produce a scored technical SEO report with immediate issues, monthly warnings, and quarterly recommendations"
+      ],
+      "legacyAliases": [
+        "geo-technical",
+        "GEO technical SEO audit"
+      ],
+      "inputs": [
+        "homepage and two or three inner-page URLs",
+        "raw HTML, HTTP headers, robots.txt, sitemap, sampled status codes, and optional CrUX data"
+      ],
+      "operations": [
+        "fetch pages and supporting endpoints, test nine categories including SSR and agent links, score the prescribed point rubrics, separate critical issues from warnings, and render the mandated audit sections"
+      ],
+      "outputs": [
+        "GEO-TECHNICAL-AUDIT.md",
+        "category scores and overall score",
+        "crawler, indexing, security, performance, SSR, and agent-readiness findings"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "missing fetchable pages or headers leaves categories unevaluable and can invalidate the score",
+        "lack of CrUX data requires proxy measurements rather than pretending field data exists",
+        "invalid robots, sitemap, or rendering evidence should be reported as findings"
+      ],
+      "exclusions": [
+        "treating Google-Extended as equivalent to Googlebot",
+        "counting non-scoring agent-readiness signals in the total",
+        "asserting field performance from lab-only measurements"
+      ],
+      "usefulInvariants": [
+        "the score totals the defined weighted categories",
+        "SSR and AI crawler access receive explicit critical treatment",
+        "findings are grouped by urgency and include detailed evidence"
+      ],
+      "materialRisks": [
+        "the source embeds time-sensitive 2026 thresholds and crawler guidance",
+        "automated fetches may expose private or authenticated pages",
+        "recommendations about allowing AI crawlers involve a site owner's data-licensing choice"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "technical-seo-and-ai-crawlability-audit",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-04494233a0183936",
+      "bodySha256": "c5974af9da8789756c3fe6998868b540b9355a83efe010b8d3b333eb2cc7d491",
+      "neutralCapabilitySummary": "Maintains a domain and keyword watchlist, then checks tracked SEO terms through a DataForSEO-backed command flow and returns a compact JSON status.",
+      "neutralIntentExamples": [
+        "add a domain with priority keywords and check its tracked search positions",
+        "list or remove a domain watchlist entry without changing unrelated tracked terms"
+      ],
+      "legacyAliases": [
+        "seo-watchlist",
+        "/seo watchlist"
+      ],
+      "inputs": [
+        "DataForSEO credentials",
+        "domain and one or more keywords",
+        "watchlist storage and a requested add, list, check, or remove operation"
+      ],
+      "operations": [
+        "run credential preflight, mutate the domain-keyword watchlist for add or remove, enumerate entries for list, and query positions for one domain or all domains for check"
+      ],
+      "outputs": [
+        "watchlist state",
+        "keyword position checks",
+        "JSON status and error details"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "credential preflight blocks checks when credentials are absent",
+        "unknown domains, keywords, or API failures should return an error status rather than fabricated rankings"
+      ],
+      "exclusions": [
+        "checking untracked domains implicitly",
+        "claiming historical change without stored history",
+        "running provider calls before credential preflight"
+      ],
+      "usefulInvariants": [
+        "add and remove target explicit domain-keyword records",
+        "check all iterates the stored watchlist",
+        "the output remains machine-readable JSON"
+      ],
+      "materialRisks": [
+        "provider calls consume credits and can expose tracked domains and terms",
+        "rankings are temporal snapshots, not guaranteed traffic or conversions",
+        "local watchlist persistence can become stale"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "seo-rank-monitoring-and-provider-operation",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-05b69909b774560b",
+      "bodySha256": "83e52fb967eb286faa66799b692912cba63793362bf4ff14c18a4448e92ec299",
+      "neutralCapabilitySummary": "Assesses whether a site has enough structured data and unique value to support programmatic SEO, then designs URL, template, linking, canonical, sitemap, and thin-content safeguards.",
+      "neutralIntentExamples": [
+        "evaluate whether a directory dataset can support useful unique landing pages at scale",
+        "design programmatic URL and internal-link rules with duplicate and thin-page quality gates"
+      ],
+      "legacyAliases": [
+        "seo-programmatic"
+      ],
+      "inputs": [
+        "site and data source, candidate page patterns, target query set, content fields, and indexation goals"
+      ],
+      "operations": [
+        "assess data uniqueness, plan templates and URL rules, automate internal links, calculate uniqueness, enforce quality gates, configure canonicals and sitemaps, and score abuse or index-bloat risk"
+      ],
+      "outputs": [
+        "programmatic SEO score and assessment",
+        "URL/template/linking design",
+        "prioritized risks and recommendations"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "insufficient unique data should block scaled publication",
+        "missing quality gates or canonical rules is reported as a critical issue",
+        "provider or crawl evidence gaps remain unresolved in the report"
+      ],
+      "exclusions": [
+        "mass-producing near-duplicate pages",
+        "using URL count as evidence of value",
+        "assuming sitemap inclusion guarantees ranking"
+      ],
+      "usefulInvariants": [
+        "each generated page has a distinct search purpose and canonical",
+        "thin-content safeguards precede scale",
+        "sitemap and internal links reflect the actual published set"
+      ],
+      "materialRisks": [
+        "scaled low-value content can trigger search-engine enforcement",
+        "template-driven pages can expose data quality defects broadly",
+        "the source includes time-sensitive enforcement context"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "programmatic-seo-quality-and-indexation",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-05cb71092a4acfb4",
+      "bodySha256": "9f9a2c9b538e75e399d5626495d55f869f6494f511bb1db5548758c389603bcf",
+      "neutralCapabilitySummary": "Acts as a thin pointer to an upstream marketing-psychology README and tells the operator to inspect that external source for exact paths and usage.",
+      "neutralIntentExamples": [
+        "locate the upstream marketing-psychology material before deciding whether it fits a messaging task",
+        "retrieve the referenced README path for a request involving persuasion or marketing psychology"
+      ],
+      "legacyAliases": [
+        "marketing-psychology"
+      ],
+      "inputs": [
+        "a marketing-psychology request and access to the upstream repository or README"
+      ],
+      "operations": [
+        "identify the upstream source, direct the operator to inspect its README, and defer actual procedure selection to that external material"
+      ],
+      "outputs": [
+        "a routing pointer, not a substantive psychology workflow"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "the card cannot answer exact paths or behavior if the upstream README is unavailable",
+        "it provides no local fallback or validation of the referenced material"
+      ],
+      "exclusions": [
+        "claiming this body itself contains persuasion methods",
+        "assuming upstream content is safe, current, or licensed without checking",
+        "executing any external instructions"
+      ],
+      "usefulInvariants": [
+        "the card's useful behavior is referral only",
+        "exact paths must come from the upstream README",
+        "no local artifact schema is defined"
+      ],
+      "materialRisks": [
+        "the referral boundary hides unknown downstream tactics and permissions",
+        "external content can change or contain manipulative or unsupported claims",
+        "routing may send sensitive context to an unreviewed source"
+      ],
+      "disposition": "rejected",
+      "proposedCluster": "false-positive-thin-router",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-08a31f8bb63771fa",
+      "bodySha256": "0035de6d16bb11384365276fd88ee84be5fa0bb590aae5f7c0542084ad07933f",
+      "neutralCapabilitySummary": "Defines YouTube API operations for transcripts, video and channel search, uploads, playlists, handles, and monitoring, with credit accounting and fallback paths.",
+      "neutralIntentExamples": [
+        "build a research corpus from a channel's recent uploads and selected video transcripts",
+        "monitor a YouTube channel and search its videos while respecting per-operation API credits"
+      ],
+      "legacyAliases": [
+        "youtube-full"
+      ],
+      "inputs": [
+        "YouTube API credentials",
+        "video, channel, playlist, handle, or query identifiers",
+        "requested operation and credit budget"
+      ],
+      "operations": [
+        "resolve handles, call transcript or search endpoints, paginate channel and playlist extraction, classify free versus credit-consuming calls, and use OSS fallbacks when permitted"
+      ],
+      "outputs": [
+        "transcripts, search results, channel or playlist records, and credit-cost summaries"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "missing transcript, invalid identifier, quota, or API errors stop that operation and should be reported",
+        "pagination must not be represented as complete when a page fails",
+        "fallback availability is not guaranteed"
+      ],
+      "exclusions": [
+        "claiming transcript accuracy without checking availability",
+        "spending credits without user scope",
+        "publishing or altering source videos"
+      ],
+      "usefulInvariants": [
+        "channel latest uploads and handle resolution are free per the source",
+        "paid operations report one credit or one credit per page as specified",
+        "research and monitoring workflows remain read-oriented"
+      ],
+      "materialRisks": [
+        "API keys and private metadata require protection",
+        "credit consumption can scale unexpectedly with pagination",
+        "transcripts may contain copyrighted or sensitive speech"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "video-research-and-provider-operation",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-09166fd2a8b8ae06",
+      "bodySha256": "5830d8c38bf54d71c0c0c8c5245af4faf722902528f0574650472a7d67a10dfa",
+      "neutralCapabilitySummary": "Designs revenue-operations controls for lifecycle stages, lead scoring and routing, SLAs, pipeline hygiene, CRM automation, deal-desk approvals, enrichment, and cross-team metrics.",
+      "neutralIntentExamples": [
+        "define MQL-to-SQL stages, routing rules, response SLAs, and a revenue dashboard from current CRM data",
+        "design a deal-desk approval path for non-standard terms while preserving pipeline and ownership hygiene"
+      ],
+      "legacyAliases": [
+        "revops"
+      ],
+      "inputs": [
+        "CRM schema and current records",
+        "funnel definitions, sales-cycle data, ownership, enrichment sources, approval thresholds, and revenue goals"
+      ],
+      "operations": [
+        "establish a single source of truth, define lifecycle and scoring dimensions, map routing and SLAs, specify automations, enforce required fields and deduplication, and measure handoffs"
+      ],
+      "outputs": [
+        "lifecycle definitions, scoring model, routing rules, automation map, deal-desk tiers, hygiene checklist, and metrics dashboard"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "undefined stages or ownership block automation",
+        "duplicate or incomplete CRM data lowers routing and metric reliability",
+        "non-standard terms are escalated instead of auto-approved"
+      ],
+      "exclusions": [
+        "automating before definitions and approval authority exist",
+        "treating lead score as a buying decision",
+        "silent edits to customer or deal records"
+      ],
+      "usefulInvariants": [
+        "every handoff has an owner, SLA, and measurable transition",
+        "single-source fields remain canonical",
+        "approval tiers govern exceptions"
+      ],
+      "materialRisks": [
+        "incorrect scoring can misroute or deprioritize real prospects",
+        "enrichment and calendar integrations expose personal data",
+        "automation can amplify a flawed lifecycle model"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "revenue-operations-and-lead-routing",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-09cf638965ecaf65",
+      "bodySha256": "751cce78d3763e2dc1f52cb503f9ffb51f6d1740fea488b32b816cf414552509",
+      "neutralCapabilitySummary": "Routes SEO requests toward the Profound platform, requiring its configuration and defining cross-skill delegation and output conventions without implementing the underlying analysis locally.",
+      "neutralIntentExamples": [
+        "route a request for Profound-based SEO measurement after checking the required platform setup",
+        "identify which local SEO capability should receive a request that this thin extension does not implement"
+      ],
+      "legacyAliases": [
+        "seo-profound"
+      ],
+      "inputs": [
+        "Profound availability and credentials",
+        "SEO request type and target site",
+        "related local SEO skills"
+      ],
+      "operations": [
+        "check prerequisites, apply routing rules, delegate to the appropriate capability, and follow the stated output convention"
+      ],
+      "outputs": [
+        "delegation decision or Profound-oriented SEO result when the external system is available"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "missing prerequisites prevent execution",
+        "unsupported requests must be delegated or rejected rather than filled with generic analysis"
+      ],
+      "exclusions": [
+        "claiming local Profound data access",
+        "replacing provider results with invented metrics",
+        "executing external instructions without authorization"
+      ],
+      "usefulInvariants": [
+        "this body is a router, not a full SEO method",
+        "provider setup is a precondition",
+        "cross-skill ownership is explicit"
+      ],
+      "materialRisks": [
+        "provider dependency reduces portability",
+        "credentials and site data cross a third-party boundary",
+        "the thin body leaves exact behavior unresolved until external references are read"
+      ],
+      "disposition": "rejected",
+      "proposedCluster": "false-positive-provider-router",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-0bcd9d76f9ea842c",
+      "bodySha256": "f9569076abc20b6397a2fbaf4fa3dc25f5620849fa3fddcb6b72e745649594fd",
+      "neutralCapabilitySummary": "Maintains a brand-guidelines document, synchronizes its values into design tokens, verifies the generated state, and routes subcommands for brand audits, updates, and asset work.",
+      "neutralIntentExamples": [
+        "update a product's canonical brand guidelines and synchronize approved colors, type, and spacing into design tokens",
+        "audit branded assets against the current guidelines and report mismatches before release"
+      ],
+      "legacyAliases": [
+        "brand",
+        "/brand"
+      ],
+      "inputs": [
+        "brand-guidelines.md or an authorized brand update",
+        "design-token location, assets, and verification commands",
+        "brand voice, visual identity, and consistency requirements"
+      ],
+      "operations": [
+        "read or edit canonical guidelines, synchronize tokens, run verification, route subcommands, and consult references, scripts, or templates as needed"
+      ],
+      "outputs": [
+        "versioned brand guidelines",
+        "synchronized design tokens",
+        "verification result and asset-consistency findings"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "missing guidelines or token targets blocks synchronization",
+        "verification failure leaves the change untrusted",
+        "ambiguous brand conflicts require clarification rather than silent overwrite"
+      ],
+      "exclusions": [
+        "changing production assets without authority",
+        "treating generated tokens as proof of visual correctness",
+        "inventing brand values absent from the canonical document"
+      ],
+      "usefulInvariants": [
+        "guidelines are the source of truth",
+        "token sync follows guideline changes",
+        "verification follows synchronization"
+      ],
+      "materialRisks": [
+        "a bad canonical edit propagates across many interfaces",
+        "token paths and scripts are runtime-specific",
+        "brand enforcement can suppress legitimate accessibility or localization exceptions"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "brand-governance-and-design-token-sync",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-0ccb631e6e611dba",
+      "bodySha256": "084e8d8764779db0447fe8f4524a8b7f0c96034ba25f228941ceb11f8730322c",
+      "neutralCapabilitySummary": "Uses DataForSEO Labs keyword data to cluster a domain's ranked terms, compare topic strength with competitors, calculate a 0-to-100 content score, and rank content opportunities.",
+      "neutralIntentExamples": [
+        "compare a domain's topic clusters with named competitors and identify missing high-value coverage",
+        "calculate a content authority score and select the next topics from weak or absent clusters"
+      ],
+      "legacyAliases": [
+        "seo-content"
+      ],
+      "inputs": [
+        "DataForSEO credentials",
+        "target domain, competitor domains, keyword rankings, search metrics, and business relevance"
+      ],
+      "operations": [
+        "run shared credential preflight, retrieve ranked-keyword data, cluster terms, classify clusters as strong, weak, or missing, score the portfolio, and rank leverage moves"
+      ],
+      "outputs": [
+        "cluster comparison",
+        "content score from 0 to 100",
+        "highest-leverage topic recommendations in the specified JSON shape"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "preflight or provider failure blocks analysis",
+        "sparse ranking data lowers confidence and may leave clusters unresolved",
+        "competitor selection errors distort the gap comparison"
+      ],
+      "exclusions": [
+        "inventing keyword volume or rankings",
+        "equating cluster coverage with content quality",
+        "running provider calls without credential checks"
+      ],
+      "usefulInvariants": [
+        "each cluster has a strength classification",
+        "score components are traceable to supplied data",
+        "recommendations prioritize gaps with business and search relevance"
+      ],
+      "materialRisks": [
+        "provider credits and domain data are sensitive",
+        "algorithmic clustering can merge distinct intents",
+        "score precision may exceed the evidence quality"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "seo-content-authority-and-gap-analysis",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-0d1b163de09fd392",
+      "bodySha256": "80516664f3957d83ed08c7812b192d81cf8776212ad8fb8f7c5ad7e0e7cbad36",
+      "neutralCapabilitySummary": "Builds a competitive landscape deck through scoped research, comparable industry metrics, competitor mapping, deep dives, positioning visuals, strategic context, and synthesis.",
+      "neutralIntentExamples": [
+        "prepare a competitor landscape deck after agreeing scope, industry metrics, source quality, and comparison rules",
+        "map competitors and synthesize strategic implications while preserving differences in data periods and definitions"
+      ],
+      "legacyAliases": [
+        "competitive-analysis",
+        "competitive landscape mapping"
+      ],
+      "inputs": [
+        "approved analysis scope and audience",
+        "company and competitor evidence, industry metrics, economics, source dates, and design requirements"
+      ],
+      "operations": [
+        "check the environment, scope the work, obtain outline approval, collect and reconcile sources, normalize comparable metrics, map competitors, build visuals and deep dives, then synthesize implications"
+      ],
+      "outputs": [
+        "outline, comparative landscape deck, positioning visualization, competitor profiles, and strategic synthesis"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "scope or outline disagreement stops deck construction",
+        "conflicting or incomparable sources are disclosed and not silently averaged",
+        "missing evidence reduces claims or leaves a research task"
+      ],
+      "exclusions": [
+        "fabricating market sizes or competitor facts",
+        "comparing unlike periods or definitions without qualification",
+        "treating a polished slide as validation"
+      ],
+      "usefulInvariants": [
+        "the audience and decision frame precede collection",
+        "source quality and comparability are explicit",
+        "strategic recommendations trace back to comparisons"
+      ],
+      "materialRisks": [
+        "third-party data can be proprietary or stale",
+        "financial-services context may not transfer to other markets",
+        "visual synthesis can overstate weak evidence"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "competitive-landscape-and-strategic-deck",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-0dd115d2de80f895",
+      "bodySha256": "9fecfb3fbe9770408063d419c8a3336940ea5f86df9130495ab461f28745280b",
+      "neutralCapabilitySummary": "Audits and redesigns product onboarding around time-to-value, one-session goals, activation events, progressive guidance, stalled-user recovery, coordinated email and in-app messages, and funnel measurement.",
+      "neutralIntentExamples": [
+        "find the activation event and redesign the first thirty seconds of a SaaS onboarding flow",
+        "diagnose stalled users, coordinate email and in-app re-engagement, and define an experiment backlog"
+      ],
+      "legacyAliases": [
+        "onboarding-cro"
+      ],
+      "inputs": [
+        "product type and current onboarding flow",
+        "activation and retention data, user segments, friction evidence, emails, in-app states, and business goal"
+      ],
+      "operations": [
+        "define the aha event and activation metric, inspect signup-to-value steps, remove excess teaching, design checklist or guided states, detect stalls, coordinate re-engagement, and measure funnel changes"
+      ],
+      "outputs": [
+        "onboarding audit",
+        "flow design, activation definition, funnel metrics, and experiment ideas"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "without behavioral data, activation remains a hypothesis",
+        "multiple competing onboarding goals create an unresolved design conflict",
+        "stalled-user detection must not be claimed without event instrumentation"
+      ],
+      "exclusions": [
+        "dark patterns or forced engagement",
+        "assuming tooltips equal product value",
+        "optimizing completion while ignoring successful adoption"
+      ],
+      "usefulInvariants": [
+        "one session has one primary goal",
+        "users do the valuable action rather than only watch a tour",
+        "activation is tied to retained value"
+      ],
+      "materialRisks": [
+        "behavioral tracking can expose user activity",
+        "aggressive nudges can harm trust or accessibility",
+        "generic patterns may not fit complex products"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "onboarding-conversion-and-activation",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-0e1cf7d4d16ab928",
+      "bodySha256": "7f7eeab685caea32fb1f24f6e028fd8ab8e30ed4c7ce6775a641e0f879d908e7",
+      "neutralCapabilitySummary": "Defines Firecrawl-backed SEO commands for full-site crawling, site mapping, deep single-page scraping, and site-scoped search, with handoffs to audit, technical, sitemap, content, and schema work.",
+      "neutralIntentExamples": [
+        "crawl a permitted site and pass its page data into a technical or content SEO audit",
+        "map a site's structure, then deep-scrape selected pages and search within the site"
+      ],
+      "legacyAliases": [
+        "seo-firecrawl",
+        "Firecrawl Extension for Claude SEO"
+      ],
+      "inputs": [
+        "Firecrawl credentials",
+        "permitted URL, crawl or scrape scope, filters, and downstream SEO task"
+      ],
+      "operations": [
+        "select crawl, map, scrape, or search, invoke the Firecrawl provider, apply scope and error rules, and route returned evidence to the named SEO capability"
+      ],
+      "outputs": [
+        "crawl records, URL map, page scrape, site search results, or downstream audit inputs"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "provider errors, blocked pages, limits, or malformed URLs are surfaced",
+        "partial crawls must be labeled partial",
+        "downstream analysis cannot proceed as complete without required pages"
+      ],
+      "exclusions": [
+        "crawling sites without permission",
+        "treating scraped text as verified claims",
+        "unbounded crawling beyond the requested scope"
+      ],
+      "usefulInvariants": [
+        "command choice matches evidence need",
+        "crawl and map are distinct operations",
+        "cross-skill handoff preserves source URLs"
+      ],
+      "materialRisks": [
+        "crawling can impose load and collect personal data",
+        "provider credentials and extracted content cross an external boundary",
+        "site changes make snapshots stale"
+      ],
+      "disposition": "deferred",
+      "proposedCluster": "seo-crawl-and-site-discovery-provider",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-0fbb9e2c3c7cc907",
+      "bodySha256": "f9569076abc20b6397a2fbaf4fa3dc25f5620849fa3fddcb6b72e745649594fd",
+      "neutralCapabilitySummary": "Provides the same brand-guidelines, design-token synchronization, verification, and subcommand routing workflow as the other packaged copy of the brand skill.",
+      "neutralIntentExamples": [
+        "synchronize approved brand guideline changes into the design-token file used by a product interface",
+        "verify that branded assets still match canonical voice and visual rules after an update"
+      ],
+      "legacyAliases": [
+        "brand",
+        "cli brand skill"
+      ],
+      "inputs": [
+        "canonical brand guidelines, token files, assets, and authorized update request"
+      ],
+      "operations": [
+        "edit or route guideline changes, sync tokens, run verification, and consult the referenced scripts or templates"
+      ],
+      "outputs": [
+        "guideline and token changes plus verification findings"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "missing files or failed verification blocks trusted synchronization",
+        "conflicting updates require an explicit resolution"
+      ],
+      "exclusions": [
+        "silent production-wide changes",
+        "invented brand rules",
+        "assuming duplicate packaging is independent behavior"
+      ],
+      "usefulInvariants": [
+        "guidelines precede token sync",
+        "verification follows sync",
+        "this body is behaviorally identical to the other brand copy"
+      ],
+      "materialRisks": [
+        "duplicate copies can diverge and create routing ambiguity",
+        "propagated token errors affect many screens",
+        "tool paths may not exist in every runtime"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "brand-governance-and-design-token-sync",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-109befa7a917677c",
+      "bodySha256": "4c58ca8574a731375d3439f44a4cc1434fa84535968e85f21fcae5a81755282c",
+      "neutralCapabilitySummary": "Guides production of a product-launch video in HyperFrames by setting up assets and a design system, scripting and recording audio, building visual frames, and finalizing the deliverable.",
+      "neutralIntentExamples": [
+        "turn an approved product launch brief and asset set into a storyboarded HyperFrames video",
+        "prepare launch-video frames, voiceover, and final export while checking brand and timing consistency"
+      ],
+      "inputs": [
+        "launch brief, product claims, logos and media assets, brand system, storyboard, script, voice requirements, and HyperFrames environment"
+      ],
+      "operations": [
+        "set up the project, capture and organize assets, establish design tokens, write storyboard and script, create audio, design and build frames, then finalize and inspect the video"
+      ],
+      "outputs": [
+        "storyboard, script, audio, rendered frames, and final launch video"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "missing assets, unsupported formats, or audio/render failures block finalization",
+        "unverified product claims remain unresolved rather than being polished into the video",
+        "timing mismatch requires storyboard or edit changes"
+      ],
+      "exclusions": [
+        "publishing or distributing the video without approval",
+        "inventing product performance claims",
+        "treating a render as proof of factual or accessibility quality"
+      ],
+      "usefulInvariants": [
+        "visual frames follow the established design system",
+        "script and audio fit the frame sequence",
+        "finalization follows asset, storyboard, and frame checks"
+      ],
+      "materialRisks": [
+        "launch claims can create legal or reputational exposure",
+        "media may contain licensed or personal material",
+        "render tooling and paths are specialist and non-portable"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "specialist-launch-video-production",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "legacyAliases": []
+    },
+    {
+      "sourceId": "skill-1108f9c44db73c51",
+      "bodySha256": "e8ece81ac60bdf17b7fca392b39af7d17af34d74d00ef94af4b2d10504607853",
+      "neutralCapabilitySummary": "Reconstructs a competition malware configuration by locating its boundary, decoding layered values, and connecting recovered configuration fields to malware behavior.",
+      "neutralIntentExamples": [
+        "inspect a malware sample in an isolated competition environment to map encoded configuration to observed behavior",
+        "document a decode chain and relate command, persistence, or network fields to a specimen's actions"
+      ],
+      "inputs": [
+        "authorized malware sample or challenge artifact",
+        "isolated analysis environment, decoding references, and observed behavior evidence"
+      ],
+      "operations": [
+        "find the configuration boundary, reconstruct the decode chain, tie fields to behavior, and preserve the relevant reference context"
+      ],
+      "outputs": [
+        "decoded configuration map",
+        "behavior linkage and preserved analysis notes"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "ambiguous boundaries or incomplete decode chains leave fields unresolved",
+        "behavior claims require evidence from the sample or sandbox",
+        "the source does not define containment or cleanup procedures"
+      ],
+      "exclusions": [
+        "deploying malware",
+        "using recovered credentials or infrastructure",
+        "applying the method to live targets"
+      ],
+      "usefulInvariants": [
+        "configuration interpretation is tied to observed behavior",
+        "decode stages remain ordered and reproducible",
+        "analysis artifacts preserve what was and was not recovered"
+      ],
+      "materialRisks": [
+        "the workflow can facilitate malware reverse engineering outside a competition",
+        "decoded command-and-control or credential data may be dangerous",
+        "lack of explicit isolation requirements is a serious safety gap"
+      ],
+      "disposition": "rejected",
+      "proposedCluster": "unsafe-boundary-malware-analysis",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "legacyAliases": []
+    },
+    {
+      "sourceId": "skill-13be1eaa1938db34",
+      "bodySha256": "f60de349e7a96a9f8be0c41d8aa3120bd0b17e1dba40908f140b9bd729b58edd",
+      "neutralCapabilitySummary": "Chooses and implements JSON-LD schema markup for organization, article, product, FAQ, and breadcrumb pages, then validates syntax, required fields, guidelines, and deployment behavior.",
+      "neutralIntentExamples": [
+        "add accurate Product and BreadcrumbList JSON-LD to a product page and validate the result",
+        "audit existing structured data for required fields, guideline violations, and dynamic rendering issues"
+      ],
+      "inputs": [
+        "page type and factual page content",
+        "site framework or CMS, canonical URLs, offers, authors, organization data, and validation tools"
+      ],
+      "operations": [
+        "assess page facts, select schema types, construct JSON-LD, place it in static or dynamic templates, validate syntax and rich-result requirements, and check common errors"
+      ],
+      "outputs": [
+        "schema implementation, testing checklist, and validation findings"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "missing or conflicting facts block accurate markup",
+        "validation errors require correction before release",
+        "dynamic rendering failures can leave crawlers without the schema"
+      ],
+      "exclusions": [
+        "marking invisible or unsupported claims",
+        "using FAQ schema for content not visible on the page",
+        "treating valid JSON as a ranking guarantee"
+      ],
+      "usefulInvariants": [
+        "markup describes visible accurate content",
+        "JSON-LD types and properties match the page",
+        "validation occurs after implementation"
+      ],
+      "materialRisks": [
+        "incorrect structured data can create search penalties or misleading snippets",
+        "pricing, reviews, and organization details can become stale",
+        "framework-specific placement may break during upgrades"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "structured-data-and-search-eligibility",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "legacyAliases": []
+    },
+    {
+      "sourceId": "skill-14215002d4e76216",
+      "bodySha256": "39dcfb0d50983bbfaf2b25876ce5fe4fb23b2cf5b3d5469191de9c349743af20",
+      "neutralCapabilitySummary": "Scores deals, routes discounts, and flags contractual redlines through a deal-desk workflow that combines qualification evidence, approval tiers, assumptions, and forcing questions.",
+      "neutralIntentExamples": [
+        "score a proposed enterprise deal and route a discount request to the correct approval tier",
+        "identify redlines and unresolved commercial assumptions before a proposal reaches signature"
+      ],
+      "inputs": [
+        "deal record, pricing and discount request, customer context, margin or term constraints, approval matrix, and contract redlines"
+      ],
+      "operations": [
+        "apply the source's score and forcing-question discipline, compare terms to approval thresholds, route exceptions, and separate known facts from assumptions"
+      ],
+      "outputs": [
+        "deal score, discount route, redline flags, questions, and approval decision or escalation"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "missing commercial facts or authority prevents a final route",
+        "non-standard terms escalate rather than bypass approval",
+        "assumptions remain open items"
+      ],
+      "exclusions": [
+        "binding legal advice",
+        "approving discounts without delegated authority",
+        "optimizing for close at the expense of margin or compliance"
+      ],
+      "usefulInvariants": [
+        "approval tier follows the actual exception",
+        "redlines are visible before commitment",
+        "score inputs are auditable"
+      ],
+      "materialRisks": [
+        "commercial errors can create financial or contractual loss",
+        "customer and pricing data are sensitive",
+        "forcing-question scripts can pressure stakeholders if used without judgment"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "offer-pricing-and-deal-desk",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "legacyAliases": []
+    },
+    {
+      "sourceId": "skill-1681f94369769d32",
+      "bodySha256": "88532cacba33106dd4006c5f7dd55a475d278ddbde91e1465146fad1647795a5",
+      "neutralCapabilitySummary": "Generates personalized public responses to restaurant reviews by prioritizing recent negatives, gathering review metadata, applying HEART or THANKS patterns, adapting by platform, and saving owner-reviewable drafts.",
+      "neutralIntentExamples": [
+        "draft platform-specific replies to recent restaurant reviews using the exact complaint, staff, dish, and date details",
+        "triage unanswered negative, neutral, and positive reviews and prepare a personalized response file for owner approval"
+      ],
+      "inputs": [
+        "review platform, reviewer, rating, date, verbatim text, staff or dish details, response history, restaurant facts, and owner contact"
+      ],
+      "operations": [
+        "prioritize reviews by rating and recency, gather context, choose the negative or positive framework, adapt length and CTA by platform, draft with a specific detail, and order the output"
+      ],
+      "outputs": [
+        "RESTAURANT-RESPONSES-[Name].md with categorized drafts, templates, posting order, and disclaimers"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "missing owner contact or restaurant facts blocks a trustworthy offer or signoff",
+        "unknown incidents must not be invented",
+        "platform or review metadata gaps reduce personalization"
+      ],
+      "exclusions": [
+        "arguing publicly, revealing private complaint details, promising public refunds, or posting without owner review",
+        "copying templates verbatim",
+        "fabricating actions taken by staff"
+      ],
+      "usefulInvariants": [
+        "each draft includes a specific review detail",
+        "negative responses acknowledge and move resolution offline",
+        "AI-generated drafts remain clearly marked for personalization"
+      ],
+      "materialRisks": [
+        "public replies can disclose personal or health information",
+        "invented apologies or remedies create legal and reputational harm",
+        "review manipulation or incentivized responses are not addressed"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "reputation-management-and-review-response",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "legacyAliases": []
+    },
+    {
+      "sourceId": "skill-16def69e777b16d4",
+      "bodySha256": "da0d88832df6a10b675596e1def74732613b083eafbf6b6f350f671bab440f5d",
+      "neutralCapabilitySummary": "Combines ICP definition, positioning, competitive intelligence, launch planning, sales enablement, and international expansion into a PMM planning workflow with validation thresholds and reusable artifacts.",
+      "neutralIntentExamples": [
+        "develop an ICP, positioning statement, battlecard, and launch plan from customer, competitor, and product evidence",
+        "plan international market entry with localized messaging, coverage, legal checks, budget, and CAC monitoring"
+      ],
+      "inputs": [
+        "customer LTV, churn, sales-cycle and engagement data",
+        "product alternatives, interviews, competitor evidence, launch tier, budget, markets, legal and localization constraints"
+      ],
+      "operations": [
+        "score ICP fit, map alternatives and unique attributes, validate positioning through interviews, tier competitors, build battlecards, plan launch assets and metrics, structure enablement, and sequence market entry"
+      ],
+      "outputs": [
+        "ICP and personas, positioning and messaging hierarchy, battlecards, launch plan, sales assets, international GTM plan, KPI rhythm, and proactive triggers"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "weak customer evidence leaves ICP and positioning hypotheses unvalidated",
+        "incomparable competitor evidence is not a reliable battlecard basis",
+        "market entry pauses when legal, localization, coverage, or payment prerequisites are missing"
+      ],
+      "exclusions": [
+        "claiming validation from templates alone",
+        "inventing customer language, competitor weaknesses, or market economics",
+        "launching campaigns or contacting prospects without authorization"
+      ],
+      "usefulInvariants": [
+        "best-fit customers are tested against retention and close evidence",
+        "positioning names alternatives and differentiation",
+        "launch metrics distinguish leading from lagging signals"
+      ],
+      "materialRisks": [
+        "default thresholds and market budgets may be stale or context-specific",
+        "battlecards can encode unsupported claims about competitors",
+        "international plans create legal, privacy, and localization obligations"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "product-marketing-positioning-and-gtm",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "legacyAliases": []
+    }
+  ]
+}
