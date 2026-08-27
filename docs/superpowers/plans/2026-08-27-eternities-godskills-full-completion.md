@@ -70,19 +70,19 @@ Commit tests, implementation, generated artifacts, and the exact completion spec
 - Consumes: ownership rows, owner queues, review evidence, cluster evidence, candidate evidence.
 - Produces: a stable ordered wave manifest and one explicit family status receipt per owner.
 
-- [ ] **Step 1: Write red manifest tests**
+- [x] **Step 1: Write red manifest tests**
 
 Require all 17 unfinished owner families in the staged order from the spec, every unreviewed source exactly once, packet references and digests, dependency-free parallel groups, and terminal statuses limited to `pending-review`, `reviewed`, `clustered`, `promoted`, `deferred`, or `certified`.
 
-- [ ] **Step 2: Implement and build the manifest**
+- [x] **Step 2: Implement and build the manifest**
 
 Derive waves from queue packets rather than handwritten counts. Emit source count, packet count, queue digest, packet digests, current evidence counts, stage, and allowed next transition. Emit initial family receipts with `pending-review` and explicit zero promotion claims.
 
-- [ ] **Step 3: Verify interruption recovery**
+- [x] **Step 3: Verify interruption recovery**
 
 Run the builder twice, remove one generated receipt in an isolated fixture, rebuild, and require exact restoration without changing completed-family receipts.
 
-- [ ] **Step 4: Commit the execution manifest**
+- [x] **Step 4: Commit the execution manifest**
 
 Commit code, tests, manifest, and initial family receipts.
 
