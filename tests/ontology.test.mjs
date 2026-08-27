@@ -14,6 +14,81 @@ test("ontology exposes unique first-party family ids", () => {
   assert.ok(ids.includes("architecture-specification"));
   assert.ok(ids.includes("visual-3d-motion"));
   assert.ok(ids.includes("writing-narrative-canon"));
+  assert.ok(ids.includes("agency-client-services"));
+  assert.ok(ids.includes("marketing-growth"));
+  assert.ok(ids.includes("social-media-community"));
+  assert.ok(ids.includes("game-design-development"));
+});
+
+test("ontology separates the first professional refinery families", () => {
+  const fixtures = [
+    [
+      {
+        name: "agency-client",
+        description: "Onboard an agency client and maintain account reporting",
+        sourcePath: "skills\\agency-client\\SKILL.md",
+        tags: [],
+        triggers: [],
+      },
+      "agency-client-services",
+    ],
+    [
+      {
+        name: "campaign-analytics",
+        description: "Measure marketing campaign attribution and conversion",
+        sourcePath: "skills\\campaign-analytics\\SKILL.md",
+        tags: [],
+        triggers: [],
+      },
+      "marketing-growth",
+    ],
+    [
+      {
+        name: "social-media-manager",
+        description: "Plan a social media content calendar and engagement strategy",
+        sourcePath: "skills\\social-media-manager\\SKILL.md",
+        tags: [],
+        triggers: [],
+      },
+      "social-media-community",
+    ],
+    [
+      {
+        name: "game-design",
+        description: "Tune a game loop, difficulty curve, and economy balance",
+        sourcePath: "skills\\game-design\\SKILL.md",
+        tags: [],
+        triggers: [],
+      },
+      "game-design-development",
+    ],
+  ];
+
+  for (const [record, family] of fixtures) {
+    assert.ok(classify(record, ontology).includes(family), `${record.name} -> ${family}`);
+  }
+});
+
+test("generic design and content language does not enter specialist families", () => {
+  const families = classify(
+    {
+      name: "general agent",
+      description: "Design an agent that organizes content for a user",
+      sourcePath: "skills\\general-agent\\SKILL.md",
+      tags: [],
+      triggers: [],
+    },
+    ontology,
+  );
+
+  for (const family of [
+    "agency-client-services",
+    "marketing-growth",
+    "social-media-community",
+    "game-design-development",
+  ]) {
+    assert.ok(!families.includes(family), family);
+  }
 });
 
 test("classifier assigns repository research from deterministic keyword evidence", () => {
