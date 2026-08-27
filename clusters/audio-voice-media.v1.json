@@ -1,0 +1,369 @@
+{
+  "schemaVersion": 1,
+  "clusterSetId": "audio-voice-media-clusters-v1",
+  "familyId": "audio-voice-media",
+  "clusters": [
+    {
+      "id": "audio-media-intent-provenance",
+      "intent": "Resolve declared audio or media intent into a typed, locally ledgered artifact with explicit retrieval, generation, composition, metadata, and review boundaries.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The two audio-jingle records are exact body duplicates, so they form one portable intent-and-provenance contract while retaining both reviewed sources exactly once.",
+      "members": [
+        {
+          "sourceId": "skill-0173518027cd6ae8",
+          "reviewDigest": "02ea7a3ec41a717737449aba88fc06f67e2caf454cbd8aebf74ec7292f66f9fb",
+          "role": "canonical"
+        },
+        {
+          "sourceId": "skill-f50663b3a995f5a4",
+          "reviewDigest": "02ea7a3ec41a717737449aba88fc06f67e2caf454cbd8aebf74ec7292f66f9fb",
+          "role": "variant"
+        }
+      ]
+    },
+    {
+      "id": "speech-recognition-transcript-alignment",
+      "intent": "Convert recorded or streamed speech into reviewable text while preserving language, timing, speaker metadata, uncertainty, and downstream caption or indexing handoff.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The speech-to-text and Whisper reviews share a portable recognition contract, while Azure variants remain equivalent reviewed evidence rather than provider instructions.",
+      "members": [
+        {
+          "sourceId": "skill-5768cc99067deb59",
+          "reviewDigest": "732cbd393fadcd67befdf2f50519d65fd4e45695a8288a03149537eb72ae3f76",
+          "role": "canonical"
+        },
+        {
+          "sourceId": "skill-79ba37722adb3245",
+          "reviewDigest": "e8f86292bcd42e1ec57e477fb72fa47afc1792b7448199dacf621192864a3168",
+          "role": "variant"
+        },
+        {
+          "sourceId": "skill-8b4ce58a51f61c87",
+          "reviewDigest": "732cbd393fadcd67befdf2f50519d65fd4e45695a8288a03149537eb72ae3f76",
+          "role": "variant"
+        },
+        {
+          "sourceId": "skill-8b5cefb94c47edc7",
+          "reviewDigest": "e8f86292bcd42e1ec57e477fb72fa47afc1792b7448199dacf621192864a3168",
+          "role": "variant"
+        },
+        {
+          "sourceId": "skill-b4c654ba7ef5603e",
+          "reviewDigest": "fe9e2ca9dce1b69293dcd295a7dcb49c5a1e55d0a6e8a8b5908b5add69a33098",
+          "role": "variant"
+        }
+      ]
+    },
+    {
+      "id": "speech-synthesis-voice-production",
+      "intent": "Defer text-to-speech and voice-production workflows that require provider, model, voice, language, credential, consent, or output-rights decisions.",
+      "relationship": "canonical-with-variants",
+      "synthesisDecision": "deferred",
+      "rationale": "These sources concern speech synthesis, but their useful behavior is inseparable from provider-bound voice controls and consent or rights review; they remain distinct from transcription and voice conversion.",
+      "members": [
+        {
+          "sourceId": "skill-40c42f60272ca20e",
+          "reviewDigest": "2d787c566779a8f781ccba237c03edd73551d3933b019719100bca92651f9453",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-60a78d13042c9bf1",
+          "reviewDigest": "2d787c566779a8f781ccba237c03edd73551d3933b019719100bca92651f9453",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-7334b7837b6f7817",
+          "reviewDigest": "1301ea7cb53a0a44f5c7d62c34cba7e00b9e69b31bed57dc8d645417cea0da7c",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-b12153405790160a",
+          "reviewDigest": "603d53af794a348ad083d338cd7beee70c07c7424c5e55fb7cd6c67040e862ae",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-bda7d21af1c11e40",
+          "reviewDigest": "c16c8c6e839650298fd498383274aaa05f3faf966356c112a62b4078d4cc155d",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-108f1e2f032d7512",
+          "reviewDigest": "4b815f9b94e0330f63df41683742eec6db8a3a8388aae466fd47ff3988bfc3dd",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-1f7bc452fbdb1ec8",
+          "reviewDigest": "e9a061a762a136327cb623be9077aa1f0b80121d328621837caab9a2a7424e4a",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-3ee1b79f7c1b2c1d",
+          "reviewDigest": "4b815f9b94e0330f63df41683742eec6db8a3a8388aae466fd47ff3988bfc3dd",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-473180c6595d765f",
+          "reviewDigest": "e763c739e8a87f5cf06a06d3e962d9c09c94d30db7c8ba00df98c4ef5c7c997c",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-509e4c9491928a77",
+          "reviewDigest": "fc802e043cc946a50b5074bf97b284d82eb772305ac6f1604fdac17ee9faaa31",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-6665e7ceada0dc15",
+          "reviewDigest": "e763c739e8a87f5cf06a06d3e962d9c09c94d30db7c8ba00df98c4ef5c7c997c",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-6a122465c6e23cb6",
+          "reviewDigest": "114d8cfe298cfc4b5c82ee5347d4b5fb1e2f050936e97584140f45dea7ff039b",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-8b41a37210a5e1ea",
+          "reviewDigest": "9da7f48812a55a6569893e900cb43d4088201e21cf38d7b12eda55e63f1dc12a",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-b077a95e8277a687",
+          "reviewDigest": "e9a061a762a136327cb623be9077aa1f0b80121d328621837caab9a2a7424e4a",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-e3d0a5ada7c1a219",
+          "reviewDigest": "06a64f26bc419d11dfc5e68037e11b8dbddf88e6e8a2080951e071b0fc564383",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-e4b923bfdb9c65d7",
+          "reviewDigest": "06a64f26bc419d11dfc5e68037e11b8dbddf88e6e8a2080951e071b0fc564383",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-fdd9ab83a8f43ecf",
+          "reviewDigest": "9da7f48812a55a6569893e900cb43d4088201e21cf38d7b12eda55e63f1dc12a",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-31b3b633319b36e3",
+          "reviewDigest": "0fb9a7e9b042d18152b5700b05b6a5086fc56b11a81b83f1577f57a126102d05",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-61fc3370d117da99",
+          "reviewDigest": "bb8ca5d2fd93e23332fdd77f2ed2182318a1c7d299624dd88bdf3fcf32dcfbc8",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-71112085c32af41a",
+          "reviewDigest": "b45f918cd394cf7dab50911083877285defc53942a9ac8fad54cb61f3899cd3d",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-a14f58e91a4950eb",
+          "reviewDigest": "087a52452f6a1f9c8c06b0afb2036d43809f02c94337637a5e4d087ffbe0f35d",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-12e05f84bdb145de",
+          "reviewDigest": "c2b490a67fd36984c2f2b862c7269bc61f7e16ec1da999cf136b46da55ea42e3",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-4d2917bd1c409c0e",
+          "reviewDigest": "8ce0f79afd304b347f997fb9e898c97caddb3fce5938789e3ea893a4f7eea30f",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-8f8a186cf21ad44e",
+          "reviewDigest": "2427217105228e80c326fabea4e7e74a91f31536345cc35f1285ef510ba26323",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-d6404adefd3cb508",
+          "reviewDigest": "3a873b2e65c1c90f03f722e3f519cbacb3aa953739f58c11c84451af4a699f9f",
+          "role": "deferred"
+        }
+      ]
+    },
+    {
+      "id": "music-generation-duration-control",
+      "intent": "Defer music and music-to-video generation workflows requiring model-specific controls, source-track or lyric rights, duration guarantees, and production review.",
+      "relationship": "canonical-with-variants",
+      "synthesisDecision": "deferred",
+      "rationale": "The reviews describe music creation and duration handling, not generic audio processing. Provider dependence and rights-sensitive source conditioning require a separate deferred boundary.",
+      "members": [
+        {
+          "sourceId": "skill-663c735d87afd4c5",
+          "reviewDigest": "f3e29a0138de95c99740f890061bccc543efa911374e71fa90b3ec6ca3452479",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-a1cdf3b0cd6e102b",
+          "reviewDigest": "5521f0ef56713c66c2a37d91a763679bb9c41bab5ad441295a7ae97b91281db8",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-fddf424581d7521a",
+          "reviewDigest": "423302cca0ed509b04a535dd28f8f5990e75bc3b0738cec97a437f2c77fad0df",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-497849eb0e8e9765",
+          "reviewDigest": "3b645adb13f4a1c8f6ed6f0410c406ce278ae6a6b02c594b381cb2d20e62c56f",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-6e770cc16c48bd27",
+          "reviewDigest": "50d30474d87bb0a1dacd7977ebcfba971e745cea18108140badae4f76845891a",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-917f92585b24c8dd",
+          "reviewDigest": "3b645adb13f4a1c8f6ed6f0410c406ce278ae6a6b02c594b381cb2d20e62c56f",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-ac9aca4654ae9078",
+          "reviewDigest": "139ac9d653450bab3652ec3b9ae43620fb60ff68237f4fd6953b1a578928e075",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-b547b50cee5c7690",
+          "reviewDigest": "50d30474d87bb0a1dacd7977ebcfba971e745cea18108140badae4f76845891a",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-d6b3ad26dc78d144",
+          "reviewDigest": "6187efb7b0f8ed52e1b3be6d3ca6d5ec7f08d8a816c083b8a81c83adf7c20b36",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-b500d6f0abbe536e",
+          "reviewDigest": "00a0f5c62a234a23cb729c7a692cb97b520badf452cd8c0573067ecb2af6186f",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-4003545b1fe1e445",
+          "reviewDigest": "b8b17571b82357dea768c5aa24437eada4a717a2d7c6fad082f6bb63cde6d884",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-bda7cc94da2e6839",
+          "reviewDigest": "dc10082011d68487ee4583c2f6fa5aeb1ca72579c88b3c1a73b765122f29155a",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-d6b19e112fd07dd7",
+          "reviewDigest": "b63ac5af831a8f10531198d47a6295cf73857266bd2338c3aa550c887f09b952",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-d9e4f83c18c31169",
+          "reviewDigest": "1c7bb60018773c1ed0895f34a36890df17c3ad77025628b466030ec64a0c7a6a",
+          "role": "deferred"
+        }
+      ]
+    },
+    {
+      "id": "audio-driven-media-timeline-rendering",
+      "intent": "Compose approved audio, beats, narration, captions, and visual assets on a checked timeline with explicit render metadata and handoff validation.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The timeline reviews share a portable media-assembly intent, but remain separate from audio processing, speech, music generation, and provider integrations.",
+      "members": [
+        {
+          "sourceId": "skill-a9363ae8ccaca299",
+          "reviewDigest": "b87290893abdafc28f26c18e362c069501ffbffd5027e793d4bd9731f68465f3",
+          "role": "canonical"
+        },
+        {
+          "sourceId": "skill-108bdd9a3af9bd15",
+          "reviewDigest": "d152f90b7e7c71e8f436dd056108581a7a649d6d12acc8b3f001ef7fbbefb9f3",
+          "role": "variant"
+        },
+        {
+          "sourceId": "skill-2274123410e42038",
+          "reviewDigest": "086d0cfff840d3d24c4d136400f39ad3bb4b365f4706676e1eb9bd1673d42e69",
+          "role": "variant"
+        },
+        {
+          "sourceId": "skill-401345bc741689f2",
+          "reviewDigest": "ac5dc3cdaec786c94d6f876c2038d7ea35919ba134d022248c18b629cd8d516f",
+          "role": "variant"
+        },
+        {
+          "sourceId": "skill-0c888067d0c3e2ce",
+          "reviewDigest": "853644fe9b081957991592eb6e33d629da05e9e0608fe2e887400242dff6c60a",
+          "role": "variant"
+        },
+        {
+          "sourceId": "skill-2f2831793dfdba48",
+          "reviewDigest": "a5b968d1069a6f70d61759ad88970a40501464d8953eb71df2d2ceb7fe6b87a9",
+          "role": "variant"
+        }
+      ]
+    },
+    {
+      "id": "audio-processing-orchestration",
+      "intent": "Defer structured audio and media processing pipelines that depend on specialist providers, niche validators, or workflow-specific artifact contracts.",
+      "relationship": "specialized-alternative",
+      "synthesisDecision": "deferred",
+      "rationale": "These reviews cover orchestration, podcast or media processing, and validation, but provider or niche workflow assumptions prevent promotion into a universal portable audio core.",
+      "members": [
+        {
+          "sourceId": "skill-49d259903f3dad36",
+          "reviewDigest": "a65ff737cb17376c8f80692d459367d0e8b707e4152956afe4cb1812223ad830",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-26221d11a4509f9e",
+          "reviewDigest": "bd6929fb8047c81d18b94532b4cb18263cc509e3d3331f1e6b91ddf6e8133981",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-8262115602918a07",
+          "reviewDigest": "72af2643587b07d04aba045f01ae7e0672c2807819620d2116e639a11664e5c4",
+          "role": "deferred"
+        }
+      ]
+    },
+    {
+      "id": "realtime-capture-and-meeting-media",
+      "intent": "Defer authorized realtime meeting capture and stream handoff to recording, transcription, or assistant workflows.",
+      "relationship": "boundary-deferred",
+      "synthesisDecision": "deferred",
+      "rationale": "Realtime capture has consent, live-stream, retention, and external-session authority requirements materially different from offline transcription and media assembly.",
+      "members": [
+        {
+          "sourceId": "skill-44f98cd21943d460",
+          "reviewDigest": "2e86b1b36f7a0f7e41db8e5383b014a1902ad5954bc285ea7a9624eaa94b7510",
+          "role": "deferred"
+        }
+      ]
+    },
+    {
+      "id": "media-authenticity-safety-analysis",
+      "intent": "Defer media authenticity, hidden-payload, identity-signal, and deepfake-analysis workflows behind high-risk safety and provenance review.",
+      "relationship": "boundary-deferred",
+      "synthesisDecision": "deferred",
+      "rationale": "These sources provide safety-analysis patterns, not production media behavior. Scores cannot establish truth and identity-sensitive or adversarial use requires separate high-risk governance.",
+      "members": [
+        {
+          "sourceId": "skill-672d0dd66abf9f6d",
+          "reviewDigest": "34c6ec0ebc773d9404dfe06c7ad018c68f807babd004bc4ecb9cb3e0e21ba192",
+          "role": "deferred"
+        },
+        {
+          "sourceId": "skill-b22cd6ee99ce609a",
+          "reviewDigest": "54fd45fbb68e01beda1d71f1a9e0f23da1cb0d3022ff2992fc4d4ec415cd9530",
+          "role": "deferred"
+        }
+      ]
+    }
+  ]
+}
