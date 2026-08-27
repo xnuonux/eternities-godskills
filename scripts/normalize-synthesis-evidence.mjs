@@ -1,7 +1,7 @@
 import { access, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { sha256 } from "../src/io.mjs";
+import { canonicalText, sha256 } from "../src/io.mjs";
 
 const root = path.resolve(".");
 
@@ -23,8 +23,8 @@ async function writeJson(relativePath, value) {
 }
 
 async function artifact(relativePath) {
-  const bytes = await readFile(path.join(root, ...relativePath.split("/")));
-  return { path: relativePath, sha256: sha256(bytes) };
+  const text = await readFile(path.join(root, ...relativePath.split("/")), "utf8");
+  return { path: relativePath, sha256: sha256(canonicalText(text)) };
 }
 
 const clusterRows = (await readFile(path.join(root, "artifacts/corpus/cluster-evidence.jsonl"), "utf8"))

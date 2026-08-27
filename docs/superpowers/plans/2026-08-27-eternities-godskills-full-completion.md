@@ -230,6 +230,6 @@ Run the full test suite, verify every promotion receipt, rebuild corpus and rout
 
 Review the full completion range against the spec, source evidence, historical checkpoints, authority boundaries, tests, and completion claims.
 
-- [ ] **Step 5: Integrate locally and verify main**
+- [x] **Step 5: Integrate locally and verify main**
 
 Merge the verified completion branch into local `main`, rerun the full suite and receipt verification on the merged tree, remove only clean merged worktrees and branches, and preserve all external-action prohibitions.

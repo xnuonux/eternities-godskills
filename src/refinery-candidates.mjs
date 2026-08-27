@@ -1,7 +1,7 @@
 import { readFile, readdir, realpath } from "node:fs/promises";
 import path from "node:path";
 
-import { sha256 } from "./io.mjs";
+import { canonicalText, sha256 } from "./io.mjs";
 
 const STATUSES = new Set(["synthesized", "evaluated", "promoted"]);
 const REQUIRED_ARTIFACTS = ["skill", "capabilityContract", "routingCard", "evaluation"];
@@ -146,8 +146,8 @@ export async function loadCandidateEvidence(root, repositoryRoot, clusterRows, r
       if (!isInside(canonicalRoot, lexicalTarget)) throw new Error(`artifact escapes repository root: ${key}`);
       const canonicalTarget = await realpath(lexicalTarget);
       if (!isInside(canonicalRoot, canonicalTarget)) throw new Error(`artifact escapes repository root: ${key}`);
-      const bytes = await readFile(canonicalTarget);
-      if (sha256(bytes) !== artifact.sha256) throw new Error(`stale artifact hash: ${key}`);
+      const text = await readFile(canonicalTarget, "utf8");
+      if (sha256(canonicalText(text)) !== artifact.sha256) throw new Error(`stale artifact hash: ${key}`);
     }
     const receiptArtifact = record.artifacts?.promotionReceipt;
     const receipt = receiptArtifact

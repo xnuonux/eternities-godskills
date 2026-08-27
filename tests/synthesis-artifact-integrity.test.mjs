@@ -3,7 +3,7 @@ import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
 
-import { sha256 } from "../src/io.mjs";
+import { canonicalText, sha256 } from "../src/io.mjs";
 import { loadCandidateEvidence } from "../src/refinery-candidates.mjs";
 
 const root = path.resolve(".");
@@ -15,8 +15,8 @@ test("every synthesis binds exact artifact bytes and contains no hash placeholde
     assert.doesNotMatch(synthesisText, /\$[A-Za-z][A-Za-z0-9]*Hash/, `${name} contains a hash placeholder`);
     const synthesis = JSON.parse(synthesisText);
     for (const [key, artifact] of Object.entries(synthesis.artifacts ?? {})) {
-      const bytes = await readFile(path.join(root, ...artifact.path.split("/")));
-      assert.equal(artifact.sha256, sha256(bytes), `${name} has stale ${key} hash`);
+      const text = await readFile(path.join(root, ...artifact.path.split("/")), "utf8");
+      assert.equal(artifact.sha256, sha256(canonicalText(text)), `${name} has stale ${key} hash`);
     }
     const receiptArtifact = synthesis.artifacts?.promotionReceipt;
     if (receiptArtifact) {
