@@ -65,6 +65,12 @@ function body(record, overrides = {}) {
       frontmatterName: record.name,
       frontmatterDescription: record.description,
       headings: ["Workflow", "Verification"],
+      invocationCandidates: [
+        {
+          evidenceType: "inspected-source-data",
+          text: "/marketing:plan",
+        },
+      ],
     },
     ...overrides,
   };
@@ -84,6 +90,12 @@ test("family queue contains exact members and preserves inert structural evidenc
   assert.equal(queue.sourceCount, 1);
   assert.equal(queue.cards[0].sourceId, marketing.id);
   assert.deepEqual(queue.cards[0].structure.headings, ["Workflow", "Verification"]);
+  assert.deepEqual(queue.cards[0].invocationCandidates, [
+    {
+      evidenceType: "inspected-source-data",
+      text: "/marketing:plan",
+    },
+  ]);
   assert.match(queue.cards[0].inspectedDataNotice, /inspected data/i);
 });
 

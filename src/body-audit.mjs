@@ -42,6 +42,27 @@ function frontmatterValue(text, field) {
   return value === "" ? null : value;
 }
 
+function extractInvocationCandidates(text) {
+  const candidates = [];
+  const seen = new Set();
+  for (const sourceLine of text.split(/\r\n|\n|\r/)) {
+    const line = sourceLine.trim();
+    if (line === "") continue;
+    const commandShaped =
+      /(?:^|[`'"(\s])\/[a-z0-9][a-z0-9:._-]*/i.test(line) ||
+      /\bslash command\b/i.test(line) ||
+      /^command\s*:/i.test(line) ||
+      /\binvoke\b/i.test(line);
+    if (!commandShaped) continue;
+    const identity = line.normalize("NFKC").replace(/\s+/g, " ").toLowerCase();
+    if (seen.has(identity)) continue;
+    seen.add(identity);
+    candidates.push({ evidenceType: "inspected-source-data", text: line });
+    if (candidates.length === 8) break;
+  }
+  return candidates;
+}
+
 export function extractBodyStructure(text) {
   const headings = [];
   for (const match of text.matchAll(/^#{1,6}\s+(.+?)\s*#*\s*$/gm)) {
@@ -52,6 +73,7 @@ export function extractBodyStructure(text) {
     frontmatterName: frontmatterValue(text, "name"),
     frontmatterDescription: frontmatterValue(text, "description"),
     headings,
+    invocationCandidates: extractInvocationCandidates(text),
   };
 }
 

@@ -99,7 +99,11 @@ export function buildFamilyQueue(
         frontmatterName: null,
         frontmatterDescription: null,
         headings: [],
+        invocationCandidates: [],
       },
+      invocationCandidates: (body?.structure?.invocationCandidates ?? []).map(
+        (candidate) => ({ ...candidate }),
+      ),
       inspectedDataNotice: INSPECTED_DATA_NOTICE,
     });
   }

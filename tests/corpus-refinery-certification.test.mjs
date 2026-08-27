@@ -5,6 +5,7 @@ import { readFile } from "node:fs/promises";
 import { canonicalText, sha256 } from "../src/io.mjs";
 
 const root = new URL("../", import.meta.url);
+const foundationRoot = "artifacts/checkpoints/corpus-refinery-foundation";
 
 async function text(relative) {
   return readFile(new URL(relative, root), "utf8");
@@ -22,10 +23,10 @@ test("corpus refinery foundation certifies honest all-source coverage", async ()
   const [certification, summary, bodyText, coverageText, reviewText, packageJson, readme] =
     await Promise.all([
       json("receipts/corpus-refinery-foundation.json"),
-      json("artifacts/corpus/coverage-summary.json"),
-      text("artifacts/corpus/body-evidence.jsonl"),
-      text("artifacts/corpus/coverage-ledger.jsonl"),
-      text("artifacts/corpus/review-evidence.jsonl"),
+      json(`${foundationRoot}/coverage-summary.json`),
+      text(`${foundationRoot}/body-evidence.jsonl`),
+      text(`${foundationRoot}/coverage-ledger.jsonl`),
+      text(`${foundationRoot}/review-evidence.jsonl`),
       json("package.json"),
       text("README.md"),
     ]);
@@ -71,7 +72,7 @@ test("corpus refinery foundation certifies honest all-source coverage", async ()
     "game-design-development": 25,
   };
   for (const [familyId, sourceCount] of Object.entries(expectedQueues)) {
-    const queue = await json(`artifacts/corpus/families/${familyId}/queue.json`);
+    const queue = await json(`${foundationRoot}/families/${familyId}/queue.json`);
     assert.equal(queue.sourceCount, sourceCount);
     assert.equal(queue.cards.length, sourceCount);
     assert.ok(queue.cards.every((card) => card.families.includes(familyId)));
@@ -79,7 +80,7 @@ test("corpus refinery foundation certifies honest all-source coverage", async ()
     const packetCards = [];
     for (let sequence = 1; sequence <= packetCount; sequence += 1) {
       const packet = await json(
-        `artifacts/corpus/families/${familyId}/packets/${String(sequence).padStart(3, "0")}.json`,
+        `${foundationRoot}/families/${familyId}/packets/${String(sequence).padStart(3, "0")}.json`,
       );
       assert.ok(packet.cards.length >= 1 && packet.cards.length <= 25);
       packetCards.push(...packet.cards);
@@ -98,7 +99,7 @@ test("corpus refinery foundation certifies honest all-source coverage", async ()
   assert.equal(certification.coverage.cardReviewed, summary.evidenceCounts.cardReviewed);
   assert.equal(
     certification.artifacts.coverageSummarySha256,
-    sha256(canonicalText(await text("artifacts/corpus/coverage-summary.json"))),
+    sha256(canonicalText(await text(`${foundationRoot}/coverage-summary.json`))),
   );
   assert.equal(certification.scope.globalActivationChanged, false);
   assert.equal(certification.scope.thirdPartyCodeExecuted, false);

@@ -82,6 +82,27 @@ test("body audit extracts bounded frontmatter and heading structure", async (con
   assert.deepEqual(result.structure.headings, ["Operating workflow", "Intake", "Delivery"]);
 });
 
+test("body audit extracts at most eight unique command-shaped lines as inert data", async (context) => {
+  const root = await temporary(context);
+  const target = path.join(root, "repo", "skill-a", "SKILL.md");
+  await mkdir(path.dirname(target), { recursive: true });
+  const commands = Array.from({ length: 10 }, (_, index) => `/agency:command-${index}`);
+  await writeFile(
+    target,
+    ["# Agency commands", ...commands, commands[0], "ordinary explanatory prose", ""].join("\n"),
+    "utf8",
+  );
+
+  const result = await auditBody(root, record());
+
+  assert.equal(result.structure.invocationCandidates.length, 8);
+  assert.deepEqual(result.structure.invocationCandidates[0], {
+    evidenceType: "inspected-source-data",
+    text: "/agency:command-0",
+  });
+  assert.equal(result.structure.invocationCandidates.at(-1).text, "/agency:command-7");
+});
+
 test("body audit preserves missing files as explicit evidence", async (context) => {
   const root = await temporary(context);
   const result = await auditBody(root, record());
@@ -147,6 +168,10 @@ test("corpus coverage build is byte-stable and reconciles exact inputs", async (
           sourceId: "skill-a",
           bodySha256: sha256("# Agency Client\n"),
           neutralCapabilitySummary: "Reconcile an authorized client intake into a bounded account contract.",
+          neutralIntentExamples: [
+            "reconcile authorized client evidence into a bounded account contract",
+          ],
+          legacyAliases: [],
           inputs: ["client evidence"],
           operations: ["reconcile evidence"],
           outputs: ["account contract"],

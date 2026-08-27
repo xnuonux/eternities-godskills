@@ -37,6 +37,11 @@ function batch(reviewOverrides = {}, batchOverrides = {}) {
         bodySha256: "b".repeat(64),
         neutralCapabilitySummary:
           "Coordinate a client relationship from intake through verified delivery.",
+        neutralIntentExamples: [
+          "reconcile a client relationship from intake through verified delivery",
+          "show the account evidence, gaps, and next bounded action",
+        ],
+        legacyAliases: ["/agency:client"],
         inputs: ["client objective and current account state"],
         operations: ["reconcile intake, scope, delivery state, and reporting evidence"],
         outputs: ["bounded client-service status and next-action contract"],
@@ -66,6 +71,11 @@ test("exact review evidence advances only card-reviewed state", () => {
   assert.equal(rows[0].evidence.clustered, false);
   assert.equal(rows[0].evidence.synthesized, false);
   assert.equal(rows[0].evidence.promoted, false);
+  assert.deepEqual(reviews[0].neutralIntentExamples, [
+    "reconcile a client relationship from intake through verified delivery",
+    "show the account evidence, gaps, and next bounded action",
+  ]);
+  assert.deepEqual(reviews[0].legacyAliases, ["/agency:client"]);
 });
 
 test("review evidence rejects stale body digests and unknown sources", () => {
@@ -106,5 +116,57 @@ test("review batches reject duplicate source rows", () => {
   assert.throws(
     () => validateReviewBatch(duplicate, [source], [body]),
     /duplicate review source: skill-a/,
+  );
+});
+
+test("review evidence requires unnamed intent and keeps aliases non-authoritative", () => {
+  assert.throws(
+    () => validateReviewBatch(batch({ neutralIntentExamples: [] }), [source], [body]),
+    /neutralIntentExamples must not be empty/,
+  );
+  assert.throws(
+    () =>
+      validateReviewBatch(
+        batch({ neutralIntentExamples: ["/agency:client"] }),
+        [source],
+        [body],
+      ),
+    /neutralIntentExamples must not begin with a slash command/,
+  );
+  assert.throws(
+    () =>
+      validateReviewBatch(
+        batch({
+          neutralIntentExamples: ["Client Status"],
+          legacyAliases: ["client status"],
+        }),
+        [source],
+        [body],
+      ),
+    /legacy alias cannot be a canonical intent example/,
+  );
+  assert.doesNotThrow(() =>
+    validateReviewBatch(batch({ legacyAliases: [] }), [source], [body]),
+  );
+});
+
+test("review evidence rejects normalized duplicate intents and aliases", () => {
+  assert.throws(
+    () =>
+      validateReviewBatch(
+        batch({ neutralIntentExamples: ["Review account", "review   account"] }),
+        [source],
+        [body],
+      ),
+    /neutralIntentExamples must not contain normalized duplicates/,
+  );
+  assert.throws(
+    () =>
+      validateReviewBatch(
+        batch({ legacyAliases: ["/Agency:Client", "/agency:client"] }),
+        [source],
+        [body],
+      ),
+    /legacyAliases must not contain normalized duplicates/,
   );
 });

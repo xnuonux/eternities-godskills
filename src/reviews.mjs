@@ -27,6 +27,19 @@ function nonEmptyStrings(value, field) {
   }
 }
 
+function normalizedStrings(value, field, { nonEmpty = false } = {}) {
+  if (!Array.isArray(value)) throw new Error(`${field} must be an array of strings`);
+  if (nonEmpty && value.length === 0) throw new Error(`${field} must not be empty`);
+  if (value.some((entry) => typeof entry !== "string" || entry.trim() === "")) {
+    throw new Error(`${field} must contain only non-empty strings`);
+  }
+  const identities = value.map(normalizeText);
+  if (new Set(identities).size !== identities.length) {
+    throw new Error(`${field} must not contain normalized duplicates`);
+  }
+  return identities;
+}
+
 function uniqueMap(rows, key, label) {
   const map = new Map();
   for (const row of rows) {
@@ -68,6 +81,21 @@ export function validateReviewBatch(batch, sourceRecords, bodyEvidence) {
     for (const field of ["neutralCapabilitySummary", "proposedCluster"]) {
       nonEmptyString(review[field], `review.${field}`);
     }
+    const neutralIntentIdentities = normalizedStrings(
+      review.neutralIntentExamples,
+      "review.neutralIntentExamples",
+      { nonEmpty: true },
+    );
+    const legacyAliasIdentities = normalizedStrings(
+      review.legacyAliases,
+      "review.legacyAliases",
+    );
+    if (review.neutralIntentExamples.some((example) => example.trim().startsWith("/"))) {
+      throw new Error("review.neutralIntentExamples must not begin with a slash command");
+    }
+    if (legacyAliasIdentities.some((alias) => neutralIntentIdentities.includes(alias))) {
+      throw new Error("review legacy alias cannot be a canonical intent example");
+    }
     for (const field of [
       "inputs",
       "operations",
@@ -108,6 +136,8 @@ export function validateReviewBatch(batch, sourceRecords, bodyEvidence) {
       sourceId: review.sourceId,
       bodySha256: review.bodySha256,
       neutralCapabilitySummary: review.neutralCapabilitySummary.trim(),
+      neutralIntentExamples: [...review.neutralIntentExamples],
+      legacyAliases: [...review.legacyAliases],
       inputs: [...review.inputs],
       operations: [...review.operations],
       outputs: [...review.outputs],
