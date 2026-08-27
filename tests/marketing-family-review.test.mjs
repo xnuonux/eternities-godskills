@@ -73,6 +73,12 @@ test("every exact marketing and growth source has one bounded semantic review", 
     "specialist boundaries can be mistaken for execution authority",
     "stop when required inputs, credentials, or current evidence are absent",
     "provider, platform, privacy, or rights constraints can invalidate",
+    "work pattern that turns supplied business context",
+    "turn a focused growth request into usable deliverables",
+    "apply a repeatable planning sequence",
+    "business goal and audience for",
+    "perform the source-defined",
+    "decision criteria and implementation notes",
   ];
   for (const review of reviews) {
     const semanticText = [
