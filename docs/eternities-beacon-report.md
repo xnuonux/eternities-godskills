@@ -27,7 +27,7 @@ All routes require truthful claims, source dates, uncertainty, customer-data pur
 - unresolved effects: zero;
 - measured entrypoint size: 1,960 estimated tokens, below the 4,000-token ceiling;
 - exact selected-source coverage: 143 reviewed candidate sources, compared with a one-source unbounded baseline;
-- promotion verdict: promoted with measured improvements across every case kind, score, source coverage, and token count.
+- promotion verdict: promoted with deterministic fixture-baseline improvements across every case kind, score, source coverage, and token count. this is not an executed live-agent baseline.
 
 ## review and cluster evidence
 

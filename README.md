@@ -135,7 +135,8 @@ effect authority, uncertainty, and explicit human ownership.
 Beacon passes 72 of 72 all-critical deterministic cases. it reconciles the
 complete 291-source marketing queue through 253 newly reviewed sources and 38
 earlier canonical overlaps, selects 6 candidate clusters and 143 exact sources,
-and uses a 1,960-token entrypoint. scraping, enrichment, outreach, account
+and uses a 1,960-token entrypoint. promotion is measured against a deterministic
+fixture baseline, not an executed live agent. scraping, enrichment, outreach, account
 mutation, publication, spending, pricing mutation, commercial acceptance,
 unsupported current facts, coercive persuasion, and specialist execution remain
 outside its synthesized boundary. read `docs\eternities-beacon-report.md` and

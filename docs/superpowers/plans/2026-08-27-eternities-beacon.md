@@ -31,28 +31,28 @@
 - Consumes: 291 queue cards, exact warehouse bodies, two valid reviews in wave-001, and 38 canonical reviews from previously certified overlapping families.
 - Produces: 291 unique `bounded-source-review-v1` rows accepted by the existing review validator.
 
-- [ ] **Step 1: Write the failing complete-family test**
+- [x] **Step 1: Write the failing complete-family test**
 
 Assert exact queue equality, 291 unique source ids, exact body hashes, at least two commandless intents, complete contract arrays, valid dispositions, `copiedSourceProse: false`, `promotionClaim: false`, and deterministic wave membership.
 
-- [ ] **Step 2: Run the red test**
+- [x] **Step 2: Run the red test**
 
 Run `node --test tests/marketing-family-review.test.mjs tests/reviews.test.mjs`.
 
 Expected: fail because only 40 queue sources have canonical semantic reviews.
 
-- [ ] **Step 3: Freeze wave membership**
+- [x] **Step 3: Freeze wave membership**
 
 Freeze the original 289-row inspection partition, then reconcile its 38
 previously reviewed overlaps to the prior canonical digests. The marketing
 waves retain 251 new rows plus the two wave-001 rows, while the complete-family
 gate resolves all 291 queue ids exactly once across global review evidence.
 
-- [ ] **Step 4: Review all remaining bodies**
+- [x] **Step 4: Review all remaining bodies**
 
 For each exact source, verify the body digest and independently author neutral summary, two unnamed intents, inputs, operations, outputs, effects, failure behavior, exclusions, invariants, risks, disposition, proposed cluster, confidence, and no-copy/no-promotion declarations. Parallel workers may inspect disjoint waves but never share mutable files.
 
-- [ ] **Step 5: Validate and rebuild coverage twice**
+- [x] **Step 5: Validate and rebuild coverage twice**
 
 Run the focused review tests and `npm run build:coverage` twice. Require
 `cardReviewed: 396`, reflecting unique-source state rather than duplicate family
@@ -72,21 +72,21 @@ memberships, and byte-stable outputs. Commit the reviews, test, and rebuilt arti
 - Consumes: all 253 canonical marketing-family reviews plus the 38 overlapping queue sources already frozen in prior-family clusters.
 - Produces: exhaustive candidate, deferred, and rejected clusters for the 253 new members, with all 291 queue sources covered exactly once by the global cluster union.
 
-- [ ] **Step 1: Write the failing cluster test**
+- [x] **Step 1: Write the failing cluster test**
 
 Assert exact 253-row review-to-new-cluster membership equality, global 291-row
 queue coverage, unique source occurrence, exact review digests, valid
 relationships and roles, explicit decisions, and stable normalized digests.
 
-- [ ] **Step 2: Run the red test**
+- [x] **Step 2: Run the red test**
 
 Run `node --test tests/marketing-cluster-wave.test.mjs tests/refinery-clusters.test.mjs`.
 
-- [ ] **Step 3: Author evidence-derived clusters**
+- [x] **Step 3: Author evidence-derived clusters**
 
 Compare inputs, operations, outputs, effects, failure behavior, dependencies, and observable proof. Use canonical variants, ordered composition, specialized alternatives, deferred boundaries, and rejection only where exact evidence supports them. Candidate routes may only come from the approved architecture hypothesis and must contribute distinct behavior.
 
-- [ ] **Step 4: Rebuild and receipt cluster evidence**
+- [x] **Step 4: Rebuild and receipt cluster evidence**
 
 Run `npm run build:coverage` twice. Require `clustered: 396` and unchanged
 synthesized, evaluated, and promoted totals until promotion. Record exact
@@ -107,19 +107,19 @@ decision and source counts and deterministic artifact hashes. Commit.
 - Consumes: exact candidate clusters and review digests.
 - Produces: one compact, non-recursive agent-neutral marketing and growth contract.
 
-- [ ] **Step 1: Write failing structural and boundary tests**
+- [x] **Step 1: Write failing structural and boundary tests**
 
 Assert frontmatter, discriminating description, supported routes, shared laws, no self-delegation, local-only core effects, exact candidate source and cluster equality, and absence of deferred or rejected ids.
 
-- [ ] **Step 2: Run the red test**
+- [x] **Step 2: Run the red test**
 
 Run `node --test tests/beacon-godskill.test.mjs`.
 
-- [ ] **Step 3: Author entrypoint and references**
+- [x] **Step 3: Author entrypoint and references**
 
 Define evidence-supported route selection, laws, effect and authority gates, explicit artifacts, current-evidence boundary, ethical persuasion and personal-data exclusions, measurement contracts, specialist handoffs, and terminal conditions. Use `godskill-eternities-beacon-v1`, category `marketing-growth`, empty aliases, and exact cluster-review evidence.
 
-- [ ] **Step 4: Verify token budget and commit**
+- [x] **Step 4: Verify token budget and commit**
 
 Run focused schema, composition, cluster-evidence, and Beacon tests. Measure normalized UTF-8 bytes divided by four and require at most 4,000 estimated tokens. Commit.
 
@@ -135,11 +135,11 @@ Run focused schema, composition, cluster-evidence, and Beacon tests. Measure nor
 - Consumes: Beacon entrypoint and promoted-behavior hypothesis.
 - Produces: one moderate-risk candidate routing card outside the live promoted index.
 
-- [ ] **Step 1: Write failing routing cases**
+- [x] **Step 1: Write failing routing cases**
 
 Cover direct, paraphrased, and contextual unnamed outcomes for every supported route. Require alias-removal equality and fail closed for generic copy edits, social-community work, specialist media, unsupported current facts, deceptive claims, personal-data enrichment, scraping, outreach, account mutation, spending, pricing mutation, and commercial commitment.
 
-- [ ] **Step 2: Author and verify the card**
+- [x] **Step 2: Author and verify the card**
 
 Use family `marketing-growth`, exact context cost, local-read and local-write effects, empty aliases, and only non-recursive logical compatibility. Run focused router tests and commit.
 
@@ -156,15 +156,15 @@ Use family `marketing-growth`, exact context cost, local-read and local-write ef
 - Consumes: exact candidate clusters, Beacon core, routing card, and promotion policy.
 - Produces: deterministic all-critical evaluation and promotion receipt.
 
-- [ ] **Step 1: Require at least 50 all-critical cases**
+- [x] **Step 1: Require at least 50 all-critical cases**
 
 Cover all routes, paraphrases, exclusions, authority conflicts, effects, current evidence, truth, privacy, accessibility, measurement, causal claims, commercial limits, and human judgment.
 
-- [ ] **Step 2: Author baseline and exact candidate results**
+- [x] **Step 2: Author baseline and exact candidate results**
 
 Use an unbounded generic growth agent baseline with 8,000 tokens, one-source coverage, generic routing, and unresolved effects. Candidate results must match every case and leave no effect unresolved.
 
-- [ ] **Step 3: Generate and verify promotion**
+- [x] **Step 3: Generate and verify promotion**
 
 Run `scripts/evaluate-skill.mjs` and `scripts/verify-skill-receipt.mjs`. Require all critical cases, exact candidate-source coverage, cluster-review evidence, no copied prose, and deterministic verification. Commit.
 
@@ -186,23 +186,23 @@ Run `scripts/evaluate-skill.mjs` and `scripts/verify-skill-receipt.mjs`. Require
 - Consumes: promoted Beacon receipt, candidate clusters, and routing card.
 - Produces: immutable ten-card router v4 evidence, deterministic eleven-card router v5, and exact candidate-source corpus advancement.
 
-- [ ] **Step 1: Freeze exact router v4 bytes and redirect historical v4 tests**
+- [x] **Step 1: Freeze exact router v4 bytes and redirect historical v4 tests**
 
-- [ ] **Step 2: Write failing v5 and corpus tests**
+- [x] **Step 2: Write failing v5 and corpus tests**
 
 Require 33 commandless cases across eleven cards, alias-removal equality, 5,000-card bounded retrieval, selected-entrypoint-only disclosure, authority and risk gates, exact v5 hashes, and exact Beacon cluster and source evidence.
 
-- [ ] **Step 3: Write the exact synthesis declaration**
+- [x] **Step 3: Write the exact synthesis declaration**
 
 Record skill, contract, card, evaluation, receipt paths and hashes, candidate cluster ids and digests, sorted selected source ids, no copied prose, no external mutation, and independent cluster synthesis.
 
-- [ ] **Step 4: Rebuild routing and coverage twice**
+- [x] **Step 4: Rebuild routing and coverage twice**
 
 Require eleven cards and eleven families, `cardReviewed: 396`, `clustered: 396`,
 and synthesized, evaluated, and promoted totals equal to the unique-source union
 of the prior 74 rows and Beacon's selected rows. Require byte-identical repeat builds.
 
-- [ ] **Step 5: Receipt and verify router v5, then commit**
+- [x] **Step 5: Receipt and verify router v5, then commit**
 
 Record exact input, checkpoint, artifact, case, authority, and effect evidence without timestamps. Run the focused certification suite and commit.
 
@@ -220,19 +220,19 @@ Record exact input, checkpoint, artifact, case, authority, and effect evidence w
 - Consumes: all review, cluster, core, routing, evaluation, promotion, corpus, and checkpoint evidence.
 - Produces: deterministic `certified-local-candidate` verdict and local integration decision.
 
-- [ ] **Step 1: Write the failing release-boundary test**
+- [x] **Step 1: Write the failing release-boundary test**
 
 Assert exact 291 review and cluster set equality, selected/deferred/rejected totals, supported routes, all critical cases, token budget, promotion digest, v4 checkpoint, v5 router, corpus totals, no cycles, no copied prose or source execution, and no external or global mutation.
 
-- [ ] **Step 2: Write report, receipt, and README update**
+- [x] **Step 2: Write report, receipt, and README update**
 
 Record exact measured evidence, deferred and rejected boundaries, proof limits, and absence of activation.
 
-- [ ] **Step 3: Run fresh complete verification**
+- [x] **Step 3: Run fresh complete verification**
 
 Run `npm test`, both deterministic builders, promotion receipt verification, `git diff --check`, and status inspection.
 
-- [ ] **Step 4: Obtain independent review**
+- [x] **Step 4: Obtain independent review**
 
 Use `requesting-code-review` against the full spec-to-feature diff. Correct every confirmed critical or important issue through the smallest tested change and rerun complete verification.
 
