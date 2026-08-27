@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFile, readdir } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 
 import { sha256 } from "../src/io.mjs";
 
@@ -20,18 +20,18 @@ test("Agora release receipt reconciles the complete local candidate", async () =
   const promotion = JSON.parse(promotionText);
   const routerV1 = await json("receipts/agent-native-router-v1.json");
   const routerV2 = await json("receipts/agent-native-router-v2.json");
-  const coverage = await json("artifacts/corpus/coverage-summary.json");
-  const promotionNames = (await readdir(new URL("receipts/promotions/", root)))
-    .filter((name) => name.endsWith(".json"));
-  const promotions = await Promise.all(
-    promotionNames.map((name) => json(`receipts/promotions/${name}`)),
-  );
+  const checkpointCoverage = (await text(
+    "artifacts/checkpoints/agency-client-services-clusters-v1/coverage-ledger.jsonl",
+  )).split(/\r?\n/).filter(Boolean).map(JSON.parse);
+  const laterCoverage = (await text(
+    "artifacts/checkpoints/game-design-development-clusters-v1/coverage-ledger.jsonl",
+  )).split(/\r?\n/).filter(Boolean).map(JSON.parse);
 
   assert.equal(receipt.schemaVersion, 1);
   assert.equal(receipt.id, "eternities-agora-release");
   assert.equal(receipt.status, "certified-local-candidate");
   assert.deepEqual(receipt.capabilities, { added: 1, promotedTotal: 8 });
-  assert.equal(promotions.filter(({ decision }) => decision?.status === "promoted").length, 8);
+  assert.equal(receipt.capabilities.promotedTotal, routerV2.counts.cardCount);
   assert.deepEqual(receipt.evidence, {
     selectedClusters: 3,
     selectedSources: 7,
@@ -52,16 +52,18 @@ test("Agora release receipt reconciles the complete local candidate", async () =
     v2CardCount: routerV2.counts.cardCount,
   });
   assert.deepEqual(receipt.corpus, {
-    clustered: coverage.evidenceCounts.clustered,
-    synthesized: coverage.evidenceCounts.synthesized,
-    evaluated: coverage.evidenceCounts.evaluated,
-    promoted: coverage.evidenceCounts.promoted,
-  });
-  assert.deepEqual(receipt.corpus, {
     clustered: 12,
     synthesized: 7,
     evaluated: 7,
     promoted: 7,
+  });
+  const stageCount = (stage) => checkpointCoverage.filter(({ evidence }) => evidence[stage]).length;
+  const laterStageCount = (stage) => laterCoverage.filter(({ evidence }) => evidence[stage]).length;
+  assert.deepEqual(receipt.corpus, {
+    clustered: stageCount("clustered"),
+    synthesized: laterStageCount("synthesized"),
+    evaluated: laterStageCount("evaluated"),
+    promoted: laterStageCount("promoted"),
   });
   assert.equal(receipt.gates.compositionCycles, 0);
   assert.equal(receipt.gates.selfRoute, false);
@@ -95,7 +97,7 @@ test("Agora report and README state the measured scope and proof limits", async 
   ]) {
     assert.match(report.toLowerCase(), new RegExp(phrase));
   }
-  assert.match(readme, /8 promoted/i);
+  assert.match(readme, /Agora passes 29 of 29/i);
   assert.match(readme, /29.*29/);
-  assert.match(readme, /7 synthesized.*7 evaluated.*7 promoted/is);
+  assert.match(readme, /Agora advanced 7 synthesized.*7 evaluated.*7 promoted/is);
 });

@@ -46,7 +46,6 @@ test("the reviewed agency family has exact, complete, non-promotional cluster ev
 
 test("the agency cluster receipt reconciles exact inputs and preserves later-state boundaries", async () => {
   const receipt = await json("receipts/agency-client-services-clusters-v1.json");
-  const summary = await json("artifacts/corpus/coverage-summary.json");
   const checkpointRoot = "artifacts/checkpoints/agency-client-services-clusters-v1/";
   const clusterBatchText = await readFile(
     new URL(`${checkpointRoot}cluster-batch.json`, repositoryRoot),
@@ -60,6 +59,12 @@ test("the agency cluster receipt reconciles exact inputs and preserves later-sta
     new URL(`${checkpointRoot}coverage-ledger.jsonl`, repositoryRoot),
     "utf8",
   );
+  const laterCoverageText = await readFile(
+    new URL("artifacts/checkpoints/game-design-development-clusters-v1/coverage-ledger.jsonl", repositoryRoot),
+    "utf8",
+  );
+  const checkpointCoverage = coverageText.split(/\r?\n/).filter(Boolean).map(JSON.parse);
+  const laterCoverage = laterCoverageText.split(/\r?\n/).filter(Boolean).map(JSON.parse);
 
   assert.equal(receipt.schemaVersion, 1);
   assert.equal(receipt.id, "agency-client-services-clusters-v1");
@@ -79,9 +84,12 @@ test("the agency cluster receipt reconciles exact inputs and preserves later-sta
     clusterEvidenceSha256: sha256(clusterEvidenceText),
     coverageLedgerSha256: sha256(coverageText),
   });
-  assert.equal(summary.evidenceCounts.clustered, 12);
-  assert.equal(summary.evidenceCounts.synthesized, 7);
-  assert.equal(summary.evidenceCounts.evaluated, 7);
-  assert.equal(summary.evidenceCounts.promoted, 7);
+  const stageCount = (stage) => checkpointCoverage.filter(({ evidence }) => evidence[stage]).length;
+  const laterStageCount = (stage) => laterCoverage.filter(({ evidence }) => evidence[stage]).length;
+  assert.equal(stageCount("clustered"), 12);
+  assert.equal(stageCount("synthesized"), 0);
+  assert.equal(laterStageCount("synthesized"), 7);
+  assert.equal(laterStageCount("evaluated"), 7);
+  assert.equal(laterStageCount("promoted"), 7);
   assert.equal(JSON.stringify(receipt).includes("timestamp"), false);
 });
