@@ -5,30 +5,1204 @@
   "reviewer": "codex:01a03c38-8589-79d2-a007-bf4c128304af",
   "reviewMethod": "bounded-source-review-v1",
   "reviews": [
-    {"sourceId":"skill-9ac239a33dfe435e","bodySha256":"0f548f6236783d8cf0dcc3d4f793ea6072e67bfd4eba36f773137fcd810e4a00","neutralCapabilitySummary":"Route a legacy content request to either editorial production or content strategy without handling the work itself.","neutralIntentExamples":["classify whether a content request needs planning or production","redirect an ambiguous legacy content request to the smallest specialist"],"legacyAliases":[],"inputs":["content request and available context"],"operations":["classify planning versus production intent and select a specialist"],"outputs":["specialist routing decision"],"effects":["read"],"failureBehavior":["ask only for the missing distinction when intent cannot be inferred"],"exclusions":["always-on routing","performing specialist work","automatic publication"],"usefulInvariants":["routing remains lightweight","the specialist owns execution"],"materialRisks":["deprecated indirection","unnecessary prompt hops"],"disposition":"rejected","proposedCluster":"deprecated-router-false-positive","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-9e7201988b78e013","bodySha256":"35d23278643e89b4e8436a72230dd53cac4ae6fe3e26845456770d16ebb8a910","neutralCapabilitySummary":"Collect authorized public short-form posts through a paid provider and derive source-linked outlier, hook, structure, and topic patterns.","neutralIntentExamples":["prepare a bounded recent short-form research run","analyze public short-form patterns without copying creator expression"],"legacyAliases":[],"inputs":["authorized account scope, provider token, budget, time window, and analysis criteria"],"operations":["collect posts, compute outliers, analyze media, cluster patterns, and cite sources"],"outputs":["short-form research report with evidence"],"effects":["read","write","external-write"],"failureBehavior":["stop before paid scraping or model analysis when scope, cost, credentials, or evidence is missing"],"exclusions":["automatic scraping","creator imitation","automatic posting","invented engagement"],"usefulInvariants":["outlier logic is declared","patterns retain provenance","provider effects are gated"],"materialRisks":["platform terms","provider cost","selection bias","creator privacy"],"disposition":"deferred","proposedCluster":"platform-data-and-account-integration-boundary","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-a1c28a2378f15028","bodySha256":"a72fbb003a99607ad370ec791fbd42c832348c6e766f6ffc1d45b465e6adab08","neutralCapabilitySummary":"Develop a capacity-aware social strategy across platform choice, editorial pillars, calendar, community stewardship, governance, and measurement.","neutralIntentExamples":["build a sustainable social strategy from verified goals and audience evidence","plan community stewardship and measurement without posting or messaging"],"legacyAliases":[],"inputs":["identity, goals, audience evidence, channels, capacity, policies, and historical performance"],"operations":["audit state, choose channels, derive pillars, calendar work, define stewardship, and measure learning"],"outputs":["unexecuted social strategy, calendar, governance, and metric contract"],"effects":["read","write","external-write"],"failureBehavior":["narrow scope when audience, capacity, current platform evidence, or action authority is missing"],"exclusions":["automatic publication","automatic replies","growth guarantees","generic cadence imposed as law"],"usefulInvariants":["capacity constrains cadence","community care differs from promotion","external action stays separate"],"materialRisks":["platform folklore","unsustainable cadence","authority collapse"],"disposition":"independent-implementation","proposedCluster":"social-communication-operating-core","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-a328fca51f77cd18","bodySha256":"73d6a1d7b0a7dc8b28213adc0149183e9a59fe3283c0bc8c0a2fc336438394df","neutralCapabilitySummary":"Monitor public domains and accounts for brand impersonation indicators under an authorized security program.","neutralIntentExamples":["design an authorized brand-impersonation monitoring program","triage a suspected impersonation account with preserved evidence"],"legacyAliases":[],"inputs":["brand assets, written authority, public indicators, monitoring scope, and escalation policy"],"operations":["collect indicators, compare identity signals, preserve evidence, score risk, and stage escalation"],"outputs":["security finding and evidence package"],"effects":["read","write","external-write"],"failureBehavior":["stop outside scope and avoid takedown or contact without separate authority"],"exclusions":["social strategy","automatic reporting or takedown","stalking","account retaliation"],"usefulInvariants":["evidence precedes attribution","monitoring scope is explicit","external escalation is separate"],"materialRisks":["misattribution","security abuse","privacy","platform action"],"disposition":"rejected","proposedCluster":"security-monitoring-false-positive","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-a4c5da5414b0a2dc","bodySha256":"cdc362b63d110da6ef38ab451ad747c4c156ec450471604bda944ec1febc4029","neutralCapabilitySummary":"Route a banner mission into art direction, asset production, layout, export, and visual verification for a declared placement.","neutralIntentExamples":["prepare brand-grounded banner directions","produce a placement-specific banner after rights and generation approval"],"legacyAliases":[],"inputs":["placement, dimensions, brand system, approved content, assets, and tool authority"],"operations":["select art direction, brief assets, compose, export, and inspect"],"outputs":["banner concepts or verified assets"],"effects":["read","write","external-write"],"failureBehavior":["defer when brand evidence, dimensions, rights, tools, or generation authority is missing"],"exclusions":["automatic publishing","unapproved generation","placeholder claims","unlicensed assets"],"usefulInvariants":["placement controls composition","brand evidence constrains style","visual inspection precedes acceptance"],"materialRisks":["generation cost","rights exposure","specialist dependencies"],"disposition":"deferred","proposedCluster":"specialist-visual-production-boundary","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-a9e047e056926aeb","bodySha256":"02008f95432fd0c9088bccd71a3358b3ead1f06ac6115f3fe3fe5f562fc2da37","neutralCapabilitySummary":"Create, adapt, calendar, and improve channel-native social drafts from approved claims, audience evidence, voice, and capacity.","neutralIntentExamples":["turn approved source material into channel-native drafts","build a bounded editorial calendar and repurposing package"],"legacyAliases":[],"inputs":["approved claims, audience, voice, source material, channels, and capacity"],"operations":["derive pillars, draft variants, repurpose sources, calendar work, and define review metrics"],"outputs":["unpublished social drafts, calendar, and learning notes"],"effects":["read","write","external-write"],"failureBehavior":["preserve missing proof and current platform constraints and stop before external actions"],"exclusions":["automatic scheduling","automatic publication","automatic replies","virality guarantees"],"usefulInvariants":["truth and identity persist across variants","capacity constrains volume","publication is separate"],"materialRisks":["formulaic output","platform folklore","prompt overlap"],"disposition":"independent-implementation","proposedCluster":"cross-channel-editorial-production","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-aad4531d9aff7a67","bodySha256":"9b65bf33ad383cccbe5169e4aee7eb1c06c5154c47685c40d1a9a521b4eb08a7","neutralCapabilitySummary":"Prepare vendor-specific e-commerce video prompts from real product evidence, commercial claims, placement, and production constraints.","neutralIntentExamples":["brief a truthful product-video concept before paid generation","prepare e-commerce video variants from approved product assets"],"legacyAliases":[],"inputs":["real product evidence, approved claims, brand, placement, assets, and generation authority"],"operations":["select concept, map product beats, author generation prompts, preserve claims, and specify review"],"outputs":["unexecuted product-video prompt package"],"effects":["read","write","external-write"],"failureBehavior":["stop on missing product evidence, rights, claims, model access, or cost approval"],"exclusions":["automatic generation","fabricated product behavior","automatic publication","performance guarantees"],"usefulInvariants":["the real product remains central","claims are verified","generation is separately authorized"],"materialRisks":["vendor cost","misleading commerce","rights exposure","model lock-in"],"disposition":"deferred","proposedCluster":"specialist-video-production-boundary","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-ae8c6a760d80255c","bodySha256":"598054b269d2ad4b8d509cc97e0b1a7a14489154a6fc4752916f42a5aff2ef07","neutralCapabilitySummary":"Produce evidence-grounded paid-ad copy variants and creative hypotheses without owning campaign strategy or live execution.","neutralIntentExamples":["draft an unlaunched paid-ad copy batch from approved proof","iterate ad messaging against a declared hypothesis without spending"],"legacyAliases":[],"inputs":["approved offer, proof, audience, placement, voice, and historical creative evidence"],"operations":["select angles, draft variants, validate claims and limits, and define creative tests"],"outputs":["unpublished paid-ad copy set and test hypotheses"],"effects":["read","write","external-write"],"failureBehavior":["stop on missing proof, current limits, or launch authority"],"exclusions":["automatic launch","automatic spend","campaign strategy","fabricated social proof"],"usefulInvariants":["claims retain provenance","variants test distinct mechanisms","launch stays separate"],"materialRisks":["financial loss","unsupported persuasion","stale specifications"],"disposition":"deferred","proposedCluster":"paid-acquisition-creative-boundary","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-b14c8793b9b71422","bodySha256":"db754cfbc3cb1746cc9c87611356a4f45c936f2797ac43be7fd7b89da8f25f31","neutralCapabilitySummary":"Track public content-engagement signals for B2B prospecting and translate them into scored outbound triggers.","neutralIntentExamples":["assess whether public content engagement is a meaningful sales signal","prepare an authorized signal ledger without contacting anyone"],"legacyAliases":[],"inputs":["public engagement evidence, identity matching, sales purpose, provider access, and contact authority"],"operations":["collect signals, qualify source and recency, match identity, score intent, and stage handoff"],"outputs":["prospecting signal ledger and proposed next actions"],"effects":["read","write","external-write"],"failureBehavior":["stop on uncertain identity, personal-data purpose, provider terms, or contact authority"],"exclusions":["automatic tracking","automatic enrichment","automatic outreach","treating engagement as consent"],"usefulInvariants":["public engagement is not contact consent","scores retain source components","outreach is separate"],"materialRisks":["privacy","spam","identity mismatch","vendor bias"],"disposition":"deferred","proposedCluster":"acquisition-intent-and-enrichment-boundary","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-b1a1914700fd7a5e","bodySha256":"e818443f7173fa4255b5d51e3dae582959158007574269f6e24372a80f15beb1","neutralCapabilitySummary":"Plan a cautious manual account warm-up and outreach cadence around current professional-network limits and restriction signals.","neutralIntentExamples":["review a professional-network campaign for restriction risk","prepare a conservative account warm-up plan without automation"],"legacyAliases":[],"inputs":["account state, current platform policy, intended actions, and human capacity"],"operations":["verify live limits, assess risk, stage manual activity, define stopping rules, and monitor restrictions"],"outputs":["unexecuted account safety plan"],"effects":["read","write","external-write"],"failureBehavior":["stop activity on restriction signals and defer when current policy or account authority is unknown"],"exclusions":["automation disguise","automatic activity","evasion","fixed historical limits treated as current"],"usefulInvariants":["current policy precedes cadence","manual action remains explicit","restriction signals stop work"],"materialRisks":["platform-policy evasion","account loss","stale limits"],"disposition":"deferred","proposedCluster":"platform-account-safety-boundary","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-b38511727505f9d3","bodySha256":"f947498b6e5b981055b3c03a0bcd5b68b79b0559ca6ed32ea9eabe765dd233c3","neutralCapabilitySummary":"Hunt for cross-site request forgery vulnerabilities through authorized security testing and exploit-chain analysis.","neutralIntentExamples":["test an authorized application for modern CSRF variants","review a state-changing endpoint for CSRF defenses"],"legacyAliases":[],"inputs":["written authorization, application scope, test account, and security evidence"],"operations":["model state changes, test origin and token controls, analyze chains, and preserve proof"],"outputs":["security finding with reproduction and mitigation"],"effects":["read","write","external-write"],"failureBehavior":["stop outside authorization and avoid destructive state changes"],"exclusions":["social strategy","unauthorized exploitation","account takeover","production harm"],"usefulInvariants":["written scope precedes testing","proof is minimal and reproducible","remediation follows evidence"],"materialRisks":["security abuse","account harm","data exposure"],"disposition":"rejected","proposedCluster":"application-security-false-positive","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-b5c6736314fb838e","bodySha256":"b25c434e869df814896cd06689c30c3c17101febad4674ec56cfed6667956ce4","neutralCapabilitySummary":"Design a sustainable publication cadence and review routine from audience evidence, capacity, content supply, and current channel constraints.","neutralIntentExamples":["prepare a capacity-aware professional posting calendar","choose review and publication windows without scheduling anything"],"legacyAliases":[],"inputs":["audience evidence, content inventory, production capacity, current channel data, and goals"],"operations":["model cadence, batch work, map review windows, and define learning checkpoints"],"outputs":["unexecuted editorial schedule and review routine"],"effects":["read","write","external-write"],"failureBehavior":["label generic timing heuristics and reduce cadence when supply or evidence is weak"],"exclusions":["automatic scheduling","automatic publication","fixed best-time claims","account manipulation"],"usefulInvariants":["capacity constrains cadence","timing remains a hypothesis","publication is separate"],"materialRisks":["stale timing claims","burnout","quantity over quality"],"disposition":"pattern-reference","proposedCluster":"editorial-calendar-and-capacity","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-b99513d5c86d28ad","bodySha256":"695ada2fbc0f2a34d2e691ce80e9e00c6a201238b0fe10b3c7145260f4f7c532","neutralCapabilitySummary":"Instantiate a cinematic multi-platform analytics tracker from a coherent metric contract and design system.","neutralIntentExamples":["adapt a social matrix tracker to verified data","build a multi-platform analytics artifact with consistent units and interactions"],"legacyAliases":[],"inputs":["design system, metric dictionary, aligned datasets, and interaction scope"],"operations":["map design tokens, replace coherent data, preserve interactions, and verify visual and numeric state"],"outputs":["analytics tracker artifact"],"effects":["read","write"],"failureBehavior":["label fixtures or stop on missing units, alignment, or design evidence"],"exclusions":["sample data presented as real","verbatim template use","unverified production claims"],"usefulInvariants":["units and ranges align","one metric contract governs every view","visual verification precedes acceptance"],"materialRisks":["fixture confusion","template lock-in","accessibility defects"],"disposition":"pattern-reference","proposedCluster":"social-measurement-interface","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-bf6528d3a134ba13","bodySha256":"7a7558a59ada2c8f9e881a889091db06d4498323deca8def30440836f496db99","neutralCapabilitySummary":"Draft truthful first-line variants that test distinct attention mechanisms while preserving the post's evidence, voice, and payoff.","neutralIntentExamples":["write several professional post openings from verified source material","test opening mechanisms without invented metrics or promises"],"legacyAliases":[],"inputs":["approved post claim, voice, audience, payoff, and current character constraints"],"operations":["select opening mechanisms, draft variants, verify truth and length, and label hypotheses"],"outputs":["unpublished first-line variants"],"effects":["read","write"],"failureBehavior":["remove fabricated authority, statistics, urgency, and channel claims"],"exclusions":["clickbait without payoff","automatic publication","vendor-first sourcing","guaranteed reach"],"usefulInvariants":["the opening remains truthful","the payoff remains reachable","variants test mechanisms"],"materialRisks":["attention over substance","formulaic voice","stale platform limits"],"disposition":"pattern-reference","proposedCluster":"editorial-opening-and-promise-design","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-c8e6d3a2adb15f49","bodySha256":"7589384efcefa263869f0549404b749790cdea3b8112f50a8faf43f9b17fa89a","neutralCapabilitySummary":"Translate an approved message into channel-specific marketing drafts while preserving voice, evidence, audience fit, accessibility, and review state.","neutralIntentExamples":["adapt one verified message into several owned-channel drafts","draft a source-linked marketing asset without publishing it"],"legacyAliases":[],"inputs":["approved message and proof, audience, channel, voice, and desired action"],"operations":["select channel structure, draft variants, verify claims and readability, and note search considerations"],"outputs":["unpublished channel drafts with provenance and review notes"],"effects":["read","write"],"failureBehavior":["retain evidence gaps and reject fabricated statistics, testimonials, or urgency"],"exclusions":["automatic publication","keyword stuffing","invented case studies","false scarcity"],"usefulInvariants":["proof travels with claims","channel form does not change meaning","drafting and publishing differ"],"materialRisks":["formulaic voice","SEO displacing reader value","stale channel conventions"],"disposition":"independent-implementation","proposedCluster":"cross-channel-editorial-production","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-c920dd66cc590e1c","bodySha256":"f65191f3908732c09ebaa59158f164a4bb3b76c03a56bd3d91a5d3a3fe98a2c5","neutralCapabilitySummary":"Coordinate paid-network engagement signals with authorized sales outreach stages, triggers, handoffs, and suppression rules.","neutralIntentExamples":["design an unexecuted ads-to-sales handoff contract","assess whether paid engagement is strong enough to justify human sales review"],"legacyAliases":[],"inputs":["authorized ad signals, identity matching, CRM stages, consent policy, and sales authority"],"operations":["define signal thresholds, qualify identity, map handoffs, suppress duplicates, and stage contact"],"outputs":["unexecuted ads-to-outbound workflow and governance"],"effects":["read","write","external-write"],"failureBehavior":["stop on uncertain identity, consent, signal quality, provider terms, or contact authority"],"exclusions":["automatic outreach","automatic enrichment","automatic audience mutation","engagement treated as consent"],"usefulInvariants":["signals retain provenance","sales review precedes contact","suppression is explicit"],"materialRisks":["privacy","spam","false intent","vendor lock-in"],"disposition":"deferred","proposedCluster":"direct-outreach-and-consent-boundary","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-cbab0fadc9d2519a","bodySha256":"756e9962ca20e2b6e2626abbc435140ca7f5ad5facd21bb64e1279f8b75ad2c4","neutralCapabilitySummary":"Select a professional content format from the message, audience, assets, capacity, accessibility, and current channel evidence.","neutralIntentExamples":["choose the smallest fitting format for an approved professional message","compare text, document, video, poll, and newsletter formats without publishing"],"legacyAliases":[],"inputs":["approved message, audience, available assets, capacity, accessibility needs, and current evidence"],"operations":["compare format jobs and costs, select a form, specify constraints, and define review criteria"],"outputs":["format decision and production brief"],"effects":["read","write"],"failureBehavior":["label reach multipliers and specifications as uncertain when current evidence is absent"],"exclusions":["automatic publication","format chosen only for folklore","specialist production without approval"],"usefulInvariants":["format serves message and audience","capacity constrains production","current claims are verified"],"materialRisks":["stale multipliers","overproduction","accessibility gaps"],"disposition":"pattern-reference","proposedCluster":"channel-format-selection","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-d3bbf38ba29982bd","bodySha256":"34903804cc10e2e969cb55b1db272961d19dfa2907e8b50d81381ecda300428f","neutralCapabilitySummary":"Design paid-network visual creative strategy across formats, assets, fatigue hypotheses, refresh cadence, and production briefs.","neutralIntentExamples":["prepare an unlaunched paid-network visual strategy","choose ad formats from verified offer, audience, and asset evidence"],"legacyAliases":[],"inputs":["offer and proof, audience, assets, placement, performance history, and production authority"],"operations":["select formats, brief visuals, define variants and refresh hypotheses, and stage production"],"outputs":["paid-ad visual strategy and production briefs"],"effects":["read","write","external-write"],"failureBehavior":["defer current specs, generation, or launch when evidence or authority is missing"],"exclusions":["automatic generation","automatic launch","automatic spend","fabricated performance"],"usefulInvariants":["visual claims remain truthful","fatigue is measured","production and launch are separate"],"materialRisks":["financial loss","stale specifications","asset rights","generation cost"],"disposition":"deferred","proposedCluster":"paid-acquisition-creative-boundary","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-d737bf6cda8c1597","bodySha256":"df7f8d464016b59392f1204a6bedfa9ff30d78faf42d556a8c3dee9cee04433b","neutralCapabilitySummary":"Build an authorized cyber threat-actor dossier from public reports, infrastructure, indicators, social sources, and adversary behavior.","neutralIntentExamples":["profile a threat actor for authorized defensive intelligence","correlate public adversary evidence into a sourced dossier"],"legacyAliases":[],"inputs":["defensive purpose, actor scope, public intelligence, indicators, and handling policy"],"operations":["collect, corroborate, correlate, map behavior and infrastructure, and assess confidence"],"outputs":["defensive threat-actor profile and evidence handoff"],"effects":["read","write","external-write"],"failureBehavior":["stop on unsupported attribution, unlawful sources, or handling constraints"],"exclusions":["social strategy","retaliation","unauthorized access","doxxing"],"usefulInvariants":["attribution remains probabilistic","indicators retain provenance","defensive purpose constrains use"],"materialRisks":["misattribution","security abuse","sensitive data","source deception"],"disposition":"rejected","proposedCluster":"cyber-threat-intelligence-false-positive","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-dc3327eaa0f59975","bodySha256":"dddfe7fd828f7602fa6d5db60e11ef2ceb77bc97e56fba5c49c4053a2fe08a27","neutralCapabilitySummary":"Enrich authorized cyber indicators and campaigns from public sources with corroboration, source preservation, and bounded evidence handoff.","neutralIntentExamples":["enrich a defensive indicator from public threat sources","investigate an authorized scam or impersonation campaign"],"legacyAliases":[],"inputs":["defensive scope, indicators, public sources, and evidence requirements"],"operations":["collect, preserve, corroborate, correlate, and hand off evidence"],"outputs":["threat-intelligence report and evidence package"],"effects":["read","write","external-write"],"failureBehavior":["stop on scope, attribution, source legality, or evidence-integrity failure"],"exclusions":["social strategy","retaliation","automatic reporting","unauthorized access"],"usefulInvariants":["sources are preserved","corroboration precedes attribution","defensive scope governs action"],"materialRisks":["misattribution","security abuse","source manipulation"],"disposition":"rejected","proposedCluster":"cyber-threat-intelligence-false-positive","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-ddac0f1f320eab2c","bodySha256":"63088b1bb9d2d9f0ccb68f62cff0ae74ecd1d12caeb3ab652d68939cccb9124f","neutralCapabilitySummary":"Translate approved source material into a slide-by-slide social carousel brief and vendor-specific image-generation sequence.","neutralIntentExamples":["prepare a source-linked carousel storyboard","turn verified content into an accessible slide sequence before generation"],"legacyAliases":[],"inputs":["approved source, audience, voice, brand, dimensions, and generation authority"],"operations":["extract narrative beats, write slide copy, brief visuals, preserve claims, and define QA"],"outputs":["carousel storyboard and unexecuted generation prompts"],"effects":["read","write","external-write"],"failureBehavior":["defer generation and retain missing brand, source, or rights evidence"],"exclusions":["automatic generation","automatic publication","invented data","vendor lock-in as a requirement"],"usefulInvariants":["slides trace to source","one narrative arc spans the set","generation is separate"],"materialRisks":["generation cost","context compression","rights exposure"],"disposition":"deferred","proposedCluster":"specialist-visual-production-boundary","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-f26cf55ff34f2af5","bodySha256":"4dff3c68f6d6de8054299d411cc7e9e5744985c24575505d4ee69d5d74f75f4f","neutralCapabilitySummary":"Draft paid-network ad copy from verified voice-of-customer, offer, proof, awareness, format, and test context.","neutralIntentExamples":["prepare paid-network copy variants from approved customer evidence","design an unlaunched ad-message test without fabricating proof"],"legacyAliases":[],"inputs":["voice-of-customer evidence, offer and proof, audience awareness, format, and current limits"],"operations":["select message framework, draft variants, align calls to action, validate claims, and define tests"],"outputs":["unpublished paid-ad copy package"],"effects":["read","write","external-write"],"failureBehavior":["stop on missing customer evidence, proof, current constraints, or launch authority"],"exclusions":["automatic launch","automatic spend","fabricated testimonials","visual production"],"usefulInvariants":["customer language retains provenance","claims match proof","launch is separate"],"materialRisks":["financial loss","unsupported persuasion","stale specs"],"disposition":"deferred","proposedCluster":"paid-acquisition-creative-boundary","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-f90d52e334a910f0","bodySha256":"e99727efe7b99465f852536c0642b250064dd286cea97f7db9dc889921347437","neutralCapabilitySummary":"Fetch and normalize user-authorized public or local content into source-labeled text and metadata for downstream analysis.","neutralIntentExamples":["normalize an authorized article or media transcript for analysis","extract source-labeled text from a user-provided public link or local document"],"legacyAliases":[],"inputs":["authorized source, source type, access constraints, and normalization purpose"],"operations":["detect source type, fetch or read, extract text and metadata, preserve provenance, and report gaps"],"outputs":["normalized source text with metadata and retrieval evidence"],"effects":["read","write","external-write"],"failureBehavior":["stop on access, rights, unsupported format, or extraction failure and never fabricate missing text"],"exclusions":["automatic publication","circumventing access controls","invented transcripts","analysis presented as source text"],"usefulInvariants":["normalized text retains source provenance","retrieval and interpretation remain distinct","failures remain visible"],"materialRisks":["copyright overcollection","private-data exposure","transcription errors","provider limits"],"disposition":"pattern-reference","proposedCluster":"source-ingestion-boundary","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-fda04e124301778a","bodySha256":"cc91c38a647d12b19b72e2237a111ad444efdf105802aca72e8a7b43b1be0d3f","neutralCapabilitySummary":"Route and coordinate professional-network organic strategy across hooks, storytelling, formats, calls to action, scheduling, engagement, profile, and measurement.","neutralIntentExamples":["build an evidence-linked professional-network content system","route a professional post mission to the smallest relevant editorial specialist"],"legacyAliases":[],"inputs":["identity, audience, approved claims, source material, capacity, current evidence, and goals"],"operations":["classify the mission, load bounded specialists, reconcile drafts and strategy, and define review and learning"],"outputs":["unpublished channel strategy, drafts, profile proposals, and measurement plan"],"effects":["read","write","external-write"],"failureBehavior":["verify current claims and stop before profile, publication, comment, or message actions without authority"],"exclusions":["automatic posting","automatic messaging","vendor-first data acquisition","growth guarantees"],"usefulInvariants":["identity and truth persist across modules","specialists load on demand","external actions remain separate"],"materialRisks":["oversized routing","stale platform folklore","spam","vendor bias"],"disposition":"pattern-reference","proposedCluster":"channel-specific-public-communication","confidence":"high","copiedSourceProse":false,"promotionClaim":false},
-    {"sourceId":"skill-fe8b5f29c3903286","bodySha256":"44467b9b629ae19302f68e6e1272e9ad28b01b4c71d5e167eb6628b216476027","neutralCapabilitySummary":"Translate approved content and identity evidence into an original social graphic brief and visually verified asset through an authorized production path.","neutralIntentExamples":["prepare a brand-grounded graphic brief for an approved post","produce an accessible social graphic from verified content and owned assets"],"legacyAliases":[],"inputs":["approved content, identity and brand, source assets, placement, rights, and production authority"],"operations":["extract the visual message, choose a concept, brief production, generate or compose, export, and inspect"],"outputs":["graphic brief or verified social visual asset"],"effects":["read","write","external-write"],"failureBehavior":["defer production when brand, rights, dimensions, tools, or generation authority is missing"],"exclusions":["automatic generation","automatic publication","invented data","creator-style impersonation"],"usefulInvariants":["the visual traces to approved content","brand evidence constrains style","visual inspection precedes acceptance"],"materialRisks":["generation cost","rights exposure","misleading visual authority","specialist dependencies"],"disposition":"deferred","proposedCluster":"specialist-visual-production-boundary","confidence":"high","copiedSourceProse":false,"promotionClaim":false}
+    {
+      "sourceId": "skill-9ac239a33dfe435e",
+      "bodySha256": "0f548f6236783d8cf0dcc3d4f793ea6072e67bfd4eba36f773137fcd810e4a00",
+      "neutralCapabilitySummary": "Route a legacy content request to either editorial production or content strategy without handling the work itself.",
+      "neutralIntentExamples": [
+        "classify whether a content request needs planning or production",
+        "redirect an ambiguous legacy content request to the smallest specialist"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "content request and available context"
+      ],
+      "operations": [
+        "classify planning versus production intent and select a specialist"
+      ],
+      "outputs": [
+        "specialist routing decision"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "ask only for the missing distinction when intent cannot be inferred"
+      ],
+      "exclusions": [
+        "always-on routing",
+        "performing specialist work",
+        "automatic publication"
+      ],
+      "usefulInvariants": [
+        "routing remains lightweight",
+        "the specialist owns execution"
+      ],
+      "materialRisks": [
+        "deprecated indirection",
+        "unnecessary prompt hops"
+      ],
+      "disposition": "rejected",
+      "proposedCluster": "deprecated-router-false-positive",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-9e7201988b78e013",
+      "bodySha256": "35d23278643e89b4e8436a72230dd53cac4ae6fe3e26845456770d16ebb8a910",
+      "neutralCapabilitySummary": "Collect authorized public short-form posts through a paid provider and derive source-linked outlier, hook, structure, and topic patterns.",
+      "neutralIntentExamples": [
+        "prepare a bounded recent short-form research run",
+        "analyze public short-form patterns without copying creator expression"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "authorized account scope, provider token, budget, time window, and analysis criteria"
+      ],
+      "operations": [
+        "collect posts, compute outliers, analyze media, cluster patterns, and cite sources"
+      ],
+      "outputs": [
+        "short-form research report with evidence"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "stop before paid scraping or model analysis when scope, cost, credentials, or evidence is missing"
+      ],
+      "exclusions": [
+        "automatic scraping",
+        "creator imitation",
+        "automatic posting",
+        "invented engagement"
+      ],
+      "usefulInvariants": [
+        "outlier logic is declared",
+        "patterns retain provenance",
+        "provider effects are gated"
+      ],
+      "materialRisks": [
+        "platform terms",
+        "provider cost",
+        "selection bias",
+        "creator privacy"
+      ],
+      "disposition": "deferred",
+      "proposedCluster": "platform-data-and-account-integration-boundary",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-a1c28a2378f15028",
+      "bodySha256": "a72fbb003a99607ad370ec791fbd42c832348c6e766f6ffc1d45b465e6adab08",
+      "neutralCapabilitySummary": "Develop a capacity-aware social strategy across platform choice, editorial pillars, calendar, community stewardship, governance, and measurement.",
+      "neutralIntentExamples": [
+        "build a sustainable social strategy from verified goals and audience evidence",
+        "plan community stewardship and measurement without posting or messaging"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "identity, goals, audience evidence, channels, capacity, policies, and historical performance"
+      ],
+      "operations": [
+        "audit state, choose channels, derive pillars, calendar work, define stewardship, and measure learning"
+      ],
+      "outputs": [
+        "unexecuted social strategy, calendar, governance, and metric contract"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "narrow scope when audience, capacity, current platform evidence, or action authority is missing"
+      ],
+      "exclusions": [
+        "automatic publication",
+        "automatic replies",
+        "growth guarantees",
+        "generic cadence imposed as law"
+      ],
+      "usefulInvariants": [
+        "capacity constrains cadence",
+        "community care differs from promotion",
+        "external action stays separate"
+      ],
+      "materialRisks": [
+        "platform folklore",
+        "unsustainable cadence",
+        "authority collapse"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "social-communication-operating-core",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-a328fca51f77cd18",
+      "bodySha256": "73d6a1d7b0a7dc8b28213adc0149183e9a59fe3283c0bc8c0a2fc336438394df",
+      "neutralCapabilitySummary": "Monitor public domains and accounts for brand impersonation indicators under an authorized security program.",
+      "neutralIntentExamples": [
+        "design an authorized brand-impersonation monitoring program",
+        "triage a suspected impersonation account with preserved evidence"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "brand assets, written authority, public indicators, monitoring scope, and escalation policy"
+      ],
+      "operations": [
+        "collect indicators, compare identity signals, preserve evidence, score risk, and stage escalation"
+      ],
+      "outputs": [
+        "security finding and evidence package"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "stop outside scope and avoid takedown or contact without separate authority"
+      ],
+      "exclusions": [
+        "social strategy",
+        "automatic reporting or takedown",
+        "stalking",
+        "account retaliation"
+      ],
+      "usefulInvariants": [
+        "evidence precedes attribution",
+        "monitoring scope is explicit",
+        "external escalation is separate"
+      ],
+      "materialRisks": [
+        "misattribution",
+        "security abuse",
+        "privacy",
+        "platform action"
+      ],
+      "disposition": "rejected",
+      "proposedCluster": "security-monitoring-false-positive",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-a4c5da5414b0a2dc",
+      "bodySha256": "cdc362b63d110da6ef38ab451ad747c4c156ec450471604bda944ec1febc4029",
+      "neutralCapabilitySummary": "Route a banner mission into art direction, asset production, layout, export, and visual verification for a declared placement.",
+      "neutralIntentExamples": [
+        "prepare brand-grounded banner directions",
+        "produce a placement-specific banner after rights and generation approval"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "placement, dimensions, brand system, approved content, assets, and tool authority"
+      ],
+      "operations": [
+        "select art direction, brief assets, compose, export, and inspect"
+      ],
+      "outputs": [
+        "banner concepts or verified assets"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "defer when brand evidence, dimensions, rights, tools, or generation authority is missing"
+      ],
+      "exclusions": [
+        "automatic publishing",
+        "unapproved generation",
+        "placeholder claims",
+        "unlicensed assets"
+      ],
+      "usefulInvariants": [
+        "placement controls composition",
+        "brand evidence constrains style",
+        "visual inspection precedes acceptance"
+      ],
+      "materialRisks": [
+        "generation cost",
+        "rights exposure",
+        "specialist dependencies"
+      ],
+      "disposition": "deferred",
+      "proposedCluster": "specialist-visual-production-boundary",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-a9e047e056926aeb",
+      "bodySha256": "02008f95432fd0c9088bccd71a3358b3ead1f06ac6115f3fe3fe5f562fc2da37",
+      "neutralCapabilitySummary": "Create, adapt, calendar, and improve channel-native social drafts from approved claims, audience evidence, voice, and capacity.",
+      "neutralIntentExamples": [
+        "turn approved source material into channel-native drafts",
+        "build a bounded editorial calendar and repurposing package"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "approved claims, audience, voice, source material, channels, and capacity"
+      ],
+      "operations": [
+        "derive pillars, draft variants, repurpose sources, calendar work, and define review metrics"
+      ],
+      "outputs": [
+        "unpublished social drafts, calendar, and learning notes"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "preserve missing proof and current platform constraints and stop before external actions"
+      ],
+      "exclusions": [
+        "automatic scheduling",
+        "automatic publication",
+        "automatic replies",
+        "virality guarantees"
+      ],
+      "usefulInvariants": [
+        "truth and identity persist across variants",
+        "capacity constrains volume",
+        "publication is separate"
+      ],
+      "materialRisks": [
+        "formulaic output",
+        "platform folklore",
+        "prompt overlap"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "cross-channel-editorial-production",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-aad4531d9aff7a67",
+      "bodySha256": "9b65bf33ad383cccbe5169e4aee7eb1c06c5154c47685c40d1a9a521b4eb08a7",
+      "neutralCapabilitySummary": "Prepare vendor-specific e-commerce video prompts from real product evidence, commercial claims, placement, and production constraints.",
+      "neutralIntentExamples": [
+        "brief a truthful product-video concept before paid generation",
+        "prepare e-commerce video variants from approved product assets"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "real product evidence, approved claims, brand, placement, assets, and generation authority"
+      ],
+      "operations": [
+        "select concept, map product beats, author generation prompts, preserve claims, and specify review"
+      ],
+      "outputs": [
+        "unexecuted product-video prompt package"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "stop on missing product evidence, rights, claims, model access, or cost approval"
+      ],
+      "exclusions": [
+        "automatic generation",
+        "fabricated product behavior",
+        "automatic publication",
+        "performance guarantees"
+      ],
+      "usefulInvariants": [
+        "the real product remains central",
+        "claims are verified",
+        "generation is separately authorized"
+      ],
+      "materialRisks": [
+        "vendor cost",
+        "misleading commerce",
+        "rights exposure",
+        "model lock-in"
+      ],
+      "disposition": "deferred",
+      "proposedCluster": "specialist-video-production-boundary",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-ae8c6a760d80255c",
+      "bodySha256": "598054b269d2ad4b8d509cc97e0b1a7a14489154a6fc4752916f42a5aff2ef07",
+      "neutralCapabilitySummary": "Produce evidence-grounded paid-ad copy variants and creative hypotheses without owning campaign strategy or live execution.",
+      "neutralIntentExamples": [
+        "draft an unlaunched paid-ad copy batch from approved proof",
+        "iterate ad messaging against a declared hypothesis without spending"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "approved offer, proof, audience, placement, voice, and historical creative evidence"
+      ],
+      "operations": [
+        "select angles, draft variants, validate claims and limits, and define creative tests"
+      ],
+      "outputs": [
+        "unpublished paid-ad copy set and test hypotheses"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "stop on missing proof, current limits, or launch authority"
+      ],
+      "exclusions": [
+        "automatic launch",
+        "automatic spend",
+        "campaign strategy",
+        "fabricated social proof"
+      ],
+      "usefulInvariants": [
+        "claims retain provenance",
+        "variants test distinct mechanisms",
+        "launch stays separate"
+      ],
+      "materialRisks": [
+        "financial loss",
+        "unsupported persuasion",
+        "stale specifications"
+      ],
+      "disposition": "deferred",
+      "proposedCluster": "paid-acquisition-creative-boundary",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-b14c8793b9b71422",
+      "bodySha256": "db754cfbc3cb1746cc9c87611356a4f45c936f2797ac43be7fd7b89da8f25f31",
+      "neutralCapabilitySummary": "Track public content-engagement signals for B2B prospecting and translate them into scored outbound triggers.",
+      "neutralIntentExamples": [
+        "assess whether public content engagement is a meaningful sales signal",
+        "prepare an authorized signal ledger without contacting anyone"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "public engagement evidence, identity matching, sales purpose, provider access, and contact authority"
+      ],
+      "operations": [
+        "collect signals, qualify source and recency, match identity, score intent, and stage handoff"
+      ],
+      "outputs": [
+        "prospecting signal ledger and proposed next actions"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "stop on uncertain identity, personal-data purpose, provider terms, or contact authority"
+      ],
+      "exclusions": [
+        "automatic tracking",
+        "automatic enrichment",
+        "automatic outreach",
+        "treating engagement as consent"
+      ],
+      "usefulInvariants": [
+        "public engagement is not contact consent",
+        "scores retain source components",
+        "outreach is separate"
+      ],
+      "materialRisks": [
+        "privacy",
+        "spam",
+        "identity mismatch",
+        "vendor bias"
+      ],
+      "disposition": "deferred",
+      "proposedCluster": "acquisition-intent-and-enrichment-boundary",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-b1a1914700fd7a5e",
+      "bodySha256": "e818443f7173fa4255b5d51e3dae582959158007574269f6e24372a80f15beb1",
+      "neutralCapabilitySummary": "Plan a cautious manual account warm-up and outreach cadence around current professional-network limits and restriction signals.",
+      "neutralIntentExamples": [
+        "review a professional-network campaign for restriction risk",
+        "prepare a conservative account warm-up plan without automation"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "account state, current platform policy, intended actions, and human capacity"
+      ],
+      "operations": [
+        "verify live limits, assess risk, stage manual activity, define stopping rules, and monitor restrictions"
+      ],
+      "outputs": [
+        "unexecuted account safety plan"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "stop activity on restriction signals and defer when current policy or account authority is unknown"
+      ],
+      "exclusions": [
+        "automation disguise",
+        "automatic activity",
+        "evasion",
+        "fixed historical limits treated as current"
+      ],
+      "usefulInvariants": [
+        "current policy precedes cadence",
+        "manual action remains explicit",
+        "restriction signals stop work"
+      ],
+      "materialRisks": [
+        "platform-policy evasion",
+        "account loss",
+        "stale limits"
+      ],
+      "disposition": "deferred",
+      "proposedCluster": "platform-account-safety-boundary",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-b38511727505f9d3",
+      "bodySha256": "f947498b6e5b981055b3c03a0bcd5b68b79b0559ca6ed32ea9eabe765dd233c3",
+      "neutralCapabilitySummary": "Hunt for cross-site request forgery vulnerabilities through authorized security testing and exploit-chain analysis.",
+      "neutralIntentExamples": [
+        "test an authorized application for modern CSRF variants",
+        "review a state-changing endpoint for CSRF defenses"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "written authorization, application scope, test account, and security evidence"
+      ],
+      "operations": [
+        "model state changes, test origin and token controls, analyze chains, and preserve proof"
+      ],
+      "outputs": [
+        "security finding with reproduction and mitigation"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "stop outside authorization and avoid destructive state changes"
+      ],
+      "exclusions": [
+        "social strategy",
+        "unauthorized exploitation",
+        "account takeover",
+        "production harm"
+      ],
+      "usefulInvariants": [
+        "written scope precedes testing",
+        "proof is minimal and reproducible",
+        "remediation follows evidence"
+      ],
+      "materialRisks": [
+        "security abuse",
+        "account harm",
+        "data exposure"
+      ],
+      "disposition": "rejected",
+      "proposedCluster": "application-security-false-positive",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-b5c6736314fb838e",
+      "bodySha256": "b25c434e869df814896cd06689c30c3c17101febad4674ec56cfed6667956ce4",
+      "neutralCapabilitySummary": "Design a sustainable publication cadence and review routine from audience evidence, capacity, content supply, and current channel constraints.",
+      "neutralIntentExamples": [
+        "prepare a capacity-aware professional posting calendar",
+        "choose review and publication windows without scheduling anything"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "audience evidence, content inventory, production capacity, current channel data, and goals"
+      ],
+      "operations": [
+        "model cadence, batch work, map review windows, and define learning checkpoints"
+      ],
+      "outputs": [
+        "unexecuted editorial schedule and review routine"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "label generic timing heuristics and reduce cadence when supply or evidence is weak"
+      ],
+      "exclusions": [
+        "automatic scheduling",
+        "automatic publication",
+        "fixed best-time claims",
+        "account manipulation"
+      ],
+      "usefulInvariants": [
+        "capacity constrains cadence",
+        "timing remains a hypothesis",
+        "publication is separate"
+      ],
+      "materialRisks": [
+        "stale timing claims",
+        "burnout",
+        "quantity over quality"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "editorial-calendar-and-capacity",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-b99513d5c86d28ad",
+      "bodySha256": "695ada2fbc0f2a34d2e691ce80e9e00c6a201238b0fe10b3c7145260f4f7c532",
+      "neutralCapabilitySummary": "Instantiate a cinematic multi-platform analytics tracker from a coherent metric contract and design system.",
+      "neutralIntentExamples": [
+        "adapt a social matrix tracker to verified data",
+        "build a multi-platform analytics artifact with consistent units and interactions"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "design system, metric dictionary, aligned datasets, and interaction scope"
+      ],
+      "operations": [
+        "map design tokens, replace coherent data, preserve interactions, and verify visual and numeric state"
+      ],
+      "outputs": [
+        "analytics tracker artifact"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "label fixtures or stop on missing units, alignment, or design evidence"
+      ],
+      "exclusions": [
+        "sample data presented as real",
+        "verbatim template use",
+        "unverified production claims"
+      ],
+      "usefulInvariants": [
+        "units and ranges align",
+        "one metric contract governs every view",
+        "visual verification precedes acceptance"
+      ],
+      "materialRisks": [
+        "fixture confusion",
+        "template lock-in",
+        "accessibility defects"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "social-measurement-interface",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-bf6528d3a134ba13",
+      "bodySha256": "7a7558a59ada2c8f9e881a889091db06d4498323deca8def30440836f496db99",
+      "neutralCapabilitySummary": "Draft truthful first-line variants that test distinct attention mechanisms while preserving the post's evidence, voice, and payoff.",
+      "neutralIntentExamples": [
+        "write several professional post openings from verified source material",
+        "test opening mechanisms without invented metrics or promises"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "approved post claim, voice, audience, payoff, and current character constraints"
+      ],
+      "operations": [
+        "select opening mechanisms, draft variants, verify truth and length, and label hypotheses"
+      ],
+      "outputs": [
+        "unpublished first-line variants"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "remove fabricated authority, statistics, urgency, and channel claims"
+      ],
+      "exclusions": [
+        "clickbait without payoff",
+        "automatic publication",
+        "vendor-first sourcing",
+        "guaranteed reach"
+      ],
+      "usefulInvariants": [
+        "the opening remains truthful",
+        "the payoff remains reachable",
+        "variants test mechanisms"
+      ],
+      "materialRisks": [
+        "attention over substance",
+        "formulaic voice",
+        "stale platform limits"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "editorial-opening-and-promise-design",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-c8e6d3a2adb15f49",
+      "bodySha256": "7589384efcefa263869f0549404b749790cdea3b8112f50a8faf43f9b17fa89a",
+      "neutralCapabilitySummary": "Translate an approved message into channel-specific marketing drafts while preserving voice, evidence, audience fit, accessibility, and review state.",
+      "neutralIntentExamples": [
+        "adapt one verified message into several owned-channel drafts",
+        "draft a source-linked marketing asset without publishing it"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "approved message and proof, audience, channel, voice, and desired action"
+      ],
+      "operations": [
+        "select channel structure, draft variants, verify claims and readability, and note search considerations"
+      ],
+      "outputs": [
+        "unpublished channel drafts with provenance and review notes"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "retain evidence gaps and reject fabricated statistics, testimonials, or urgency"
+      ],
+      "exclusions": [
+        "automatic publication",
+        "keyword stuffing",
+        "invented case studies",
+        "false scarcity"
+      ],
+      "usefulInvariants": [
+        "proof travels with claims",
+        "channel form does not change meaning",
+        "drafting and publishing differ"
+      ],
+      "materialRisks": [
+        "formulaic voice",
+        "SEO displacing reader value",
+        "stale channel conventions"
+      ],
+      "disposition": "independent-implementation",
+      "proposedCluster": "cross-channel-editorial-production",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-c920dd66cc590e1c",
+      "bodySha256": "f65191f3908732c09ebaa59158f164a4bb3b76c03a56bd3d91a5d3a3fe98a2c5",
+      "neutralCapabilitySummary": "Coordinate paid-network engagement signals with authorized sales outreach stages, triggers, handoffs, and suppression rules.",
+      "neutralIntentExamples": [
+        "design an unexecuted ads-to-sales handoff contract",
+        "assess whether paid engagement is strong enough to justify human sales review"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "authorized ad signals, identity matching, CRM stages, consent policy, and sales authority"
+      ],
+      "operations": [
+        "define signal thresholds, qualify identity, map handoffs, suppress duplicates, and stage contact"
+      ],
+      "outputs": [
+        "unexecuted ads-to-outbound workflow and governance"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "stop on uncertain identity, consent, signal quality, provider terms, or contact authority"
+      ],
+      "exclusions": [
+        "automatic outreach",
+        "automatic enrichment",
+        "automatic audience mutation",
+        "engagement treated as consent"
+      ],
+      "usefulInvariants": [
+        "signals retain provenance",
+        "sales review precedes contact",
+        "suppression is explicit"
+      ],
+      "materialRisks": [
+        "privacy",
+        "spam",
+        "false intent",
+        "vendor lock-in"
+      ],
+      "disposition": "deferred",
+      "proposedCluster": "direct-outreach-and-consent-boundary",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-cbab0fadc9d2519a",
+      "bodySha256": "756e9962ca20e2b6e2626abbc435140ca7f5ad5facd21bb64e1279f8b75ad2c4",
+      "neutralCapabilitySummary": "Select a professional content format from the message, audience, assets, capacity, accessibility, and current channel evidence.",
+      "neutralIntentExamples": [
+        "choose the smallest fitting format for an approved professional message",
+        "compare text, document, video, poll, and newsletter formats without publishing"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "approved message, audience, available assets, capacity, accessibility needs, and current evidence"
+      ],
+      "operations": [
+        "compare format jobs and costs, select a form, specify constraints, and define review criteria"
+      ],
+      "outputs": [
+        "format decision and production brief"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "label reach multipliers and specifications as uncertain when current evidence is absent"
+      ],
+      "exclusions": [
+        "automatic publication",
+        "format chosen only for folklore",
+        "specialist production without approval"
+      ],
+      "usefulInvariants": [
+        "format serves message and audience",
+        "capacity constrains production",
+        "current claims are verified"
+      ],
+      "materialRisks": [
+        "stale multipliers",
+        "overproduction",
+        "accessibility gaps"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "channel-format-selection",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-d3bbf38ba29982bd",
+      "bodySha256": "34903804cc10e2e969cb55b1db272961d19dfa2907e8b50d81381ecda300428f",
+      "neutralCapabilitySummary": "Design paid-network visual creative strategy across formats, assets, fatigue hypotheses, refresh cadence, and production briefs.",
+      "neutralIntentExamples": [
+        "prepare an unlaunched paid-network visual strategy",
+        "choose ad formats from verified offer, audience, and asset evidence"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "offer and proof, audience, assets, placement, performance history, and production authority"
+      ],
+      "operations": [
+        "select formats, brief visuals, define variants and refresh hypotheses, and stage production"
+      ],
+      "outputs": [
+        "paid-ad visual strategy and production briefs"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "defer current specs, generation, or launch when evidence or authority is missing"
+      ],
+      "exclusions": [
+        "automatic generation",
+        "automatic launch",
+        "automatic spend",
+        "fabricated performance"
+      ],
+      "usefulInvariants": [
+        "visual claims remain truthful",
+        "fatigue is measured",
+        "production and launch are separate"
+      ],
+      "materialRisks": [
+        "financial loss",
+        "stale specifications",
+        "asset rights",
+        "generation cost"
+      ],
+      "disposition": "deferred",
+      "proposedCluster": "paid-acquisition-creative-boundary",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-d737bf6cda8c1597",
+      "bodySha256": "df7f8d464016b59392f1204a6bedfa9ff30d78faf42d556a8c3dee9cee04433b",
+      "neutralCapabilitySummary": "Build an authorized cyber threat-actor dossier from public reports, infrastructure, indicators, social sources, and adversary behavior.",
+      "neutralIntentExamples": [
+        "profile a threat actor for authorized defensive intelligence",
+        "correlate public adversary evidence into a sourced dossier"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "defensive purpose, actor scope, public intelligence, indicators, and handling policy"
+      ],
+      "operations": [
+        "collect, corroborate, correlate, map behavior and infrastructure, and assess confidence"
+      ],
+      "outputs": [
+        "defensive threat-actor profile and evidence handoff"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "stop on unsupported attribution, unlawful sources, or handling constraints"
+      ],
+      "exclusions": [
+        "social strategy",
+        "retaliation",
+        "unauthorized access",
+        "doxxing"
+      ],
+      "usefulInvariants": [
+        "attribution remains probabilistic",
+        "indicators retain provenance",
+        "defensive purpose constrains use"
+      ],
+      "materialRisks": [
+        "misattribution",
+        "security abuse",
+        "sensitive data",
+        "source deception"
+      ],
+      "disposition": "rejected",
+      "proposedCluster": "cyber-threat-intelligence-false-positive",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-dc3327eaa0f59975",
+      "bodySha256": "dddfe7fd828f7602fa6d5db60e11ef2ceb77bc97e56fba5c49c4053a2fe08a27",
+      "neutralCapabilitySummary": "Enrich authorized cyber indicators and campaigns from public sources with corroboration, source preservation, and bounded evidence handoff.",
+      "neutralIntentExamples": [
+        "enrich a defensive indicator from public threat sources",
+        "investigate an authorized scam or impersonation campaign"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "defensive scope, indicators, public sources, and evidence requirements"
+      ],
+      "operations": [
+        "collect, preserve, corroborate, correlate, and hand off evidence"
+      ],
+      "outputs": [
+        "threat-intelligence report and evidence package"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "stop on scope, attribution, source legality, or evidence-integrity failure"
+      ],
+      "exclusions": [
+        "social strategy",
+        "retaliation",
+        "automatic reporting",
+        "unauthorized access"
+      ],
+      "usefulInvariants": [
+        "sources are preserved",
+        "corroboration precedes attribution",
+        "defensive scope governs action"
+      ],
+      "materialRisks": [
+        "misattribution",
+        "security abuse",
+        "source manipulation"
+      ],
+      "disposition": "rejected",
+      "proposedCluster": "cyber-threat-intelligence-false-positive",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-ddac0f1f320eab2c",
+      "bodySha256": "63088b1bb9d2d9f0ccb68f62cff0ae74ecd1d12caeb3ab652d68939cccb9124f",
+      "neutralCapabilitySummary": "Translate approved source material into a slide-by-slide social carousel brief and vendor-specific image-generation sequence.",
+      "neutralIntentExamples": [
+        "prepare a source-linked carousel storyboard",
+        "turn verified content into an accessible slide sequence before generation"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "approved source, audience, voice, brand, dimensions, and generation authority"
+      ],
+      "operations": [
+        "extract narrative beats, write slide copy, brief visuals, preserve claims, and define QA"
+      ],
+      "outputs": [
+        "carousel storyboard and unexecuted generation prompts"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "defer generation and retain missing brand, source, or rights evidence"
+      ],
+      "exclusions": [
+        "automatic generation",
+        "automatic publication",
+        "invented data",
+        "vendor lock-in as a requirement"
+      ],
+      "usefulInvariants": [
+        "slides trace to source",
+        "one narrative arc spans the set",
+        "generation is separate"
+      ],
+      "materialRisks": [
+        "generation cost",
+        "context compression",
+        "rights exposure"
+      ],
+      "disposition": "deferred",
+      "proposedCluster": "specialist-visual-production-boundary",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-f26cf55ff34f2af5",
+      "bodySha256": "4dff3c68f6d6de8054299d411cc7e9e5744985c24575505d4ee69d5d74f75f4f",
+      "neutralCapabilitySummary": "Draft paid-network ad copy from verified voice-of-customer, offer, proof, awareness, format, and test context.",
+      "neutralIntentExamples": [
+        "prepare paid-network copy variants from approved customer evidence",
+        "design an unlaunched ad-message test without fabricating proof"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "voice-of-customer evidence, offer and proof, audience awareness, format, and current limits"
+      ],
+      "operations": [
+        "select message framework, draft variants, align calls to action, validate claims, and define tests"
+      ],
+      "outputs": [
+        "unpublished paid-ad copy package"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "stop on missing customer evidence, proof, current constraints, or launch authority"
+      ],
+      "exclusions": [
+        "automatic launch",
+        "automatic spend",
+        "fabricated testimonials",
+        "visual production"
+      ],
+      "usefulInvariants": [
+        "customer language retains provenance",
+        "claims match proof",
+        "launch is separate"
+      ],
+      "materialRisks": [
+        "financial loss",
+        "unsupported persuasion",
+        "stale specs"
+      ],
+      "disposition": "deferred",
+      "proposedCluster": "paid-acquisition-creative-boundary",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-f90d52e334a910f0",
+      "bodySha256": "e99727efe7b99465f852536c0642b250064dd286cea97f7db9dc889921347437",
+      "neutralCapabilitySummary": "Fetch and normalize user-authorized public or local content into source-labeled text and metadata for downstream analysis.",
+      "neutralIntentExamples": [
+        "normalize an authorized article or media transcript for analysis",
+        "extract source-labeled text from a user-provided public link or local document"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "authorized source, source type, access constraints, and normalization purpose"
+      ],
+      "operations": [
+        "detect source type, fetch or read, extract text and metadata, preserve provenance, and report gaps"
+      ],
+      "outputs": [
+        "normalized source text with metadata and retrieval evidence"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "stop on access, rights, unsupported format, or extraction failure and never fabricate missing text"
+      ],
+      "exclusions": [
+        "automatic publication",
+        "circumventing access controls",
+        "invented transcripts",
+        "analysis presented as source text"
+      ],
+      "usefulInvariants": [
+        "normalized text retains source provenance",
+        "retrieval and interpretation remain distinct",
+        "failures remain visible"
+      ],
+      "materialRisks": [
+        "copyright overcollection",
+        "private-data exposure",
+        "transcription errors",
+        "provider limits"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "source-ingestion-boundary",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-fda04e124301778a",
+      "bodySha256": "cc91c38a647d12b19b72e2237a111ad444efdf105802aca72e8a7b43b1be0d3f",
+      "neutralCapabilitySummary": "Route and coordinate professional-network organic strategy across hooks, storytelling, formats, calls to action, scheduling, engagement, profile, and measurement.",
+      "neutralIntentExamples": [
+        "build an evidence-linked professional-network content system",
+        "route a professional post mission to the smallest relevant editorial specialist"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "identity, audience, approved claims, source material, capacity, current evidence, and goals"
+      ],
+      "operations": [
+        "classify the mission, load bounded specialists, reconcile drafts and strategy, and define review and learning"
+      ],
+      "outputs": [
+        "unpublished channel strategy, drafts, profile proposals, and measurement plan"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "verify current claims and stop before profile, publication, comment, or message actions without authority"
+      ],
+      "exclusions": [
+        "automatic posting",
+        "automatic messaging",
+        "vendor-first data acquisition",
+        "growth guarantees"
+      ],
+      "usefulInvariants": [
+        "identity and truth persist across modules",
+        "specialists load on demand",
+        "external actions remain separate"
+      ],
+      "materialRisks": [
+        "oversized routing",
+        "stale platform folklore",
+        "spam",
+        "vendor bias"
+      ],
+      "disposition": "pattern-reference",
+      "proposedCluster": "channel-specific-public-communication",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "sourceId": "skill-fe8b5f29c3903286",
+      "bodySha256": "44467b9b629ae19302f68e6e1272e9ad28b01b4c71d5e167eb6628b216476027",
+      "neutralCapabilitySummary": "Translate approved content and identity evidence into an original social graphic brief and visually verified asset through an authorized production path.",
+      "neutralIntentExamples": [
+        "prepare a brand-grounded graphic brief for an approved post",
+        "produce an accessible social graphic from verified content and owned assets"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "approved content, identity and brand, source assets, placement, rights, and production authority"
+      ],
+      "operations": [
+        "extract the visual message, choose a concept, brief production, generate or compose, export, and inspect"
+      ],
+      "outputs": [
+        "graphic brief or verified social visual asset"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "defer production when brand, rights, dimensions, tools, or generation authority is missing"
+      ],
+      "exclusions": [
+        "automatic generation",
+        "automatic publication",
+        "invented data",
+        "creator-style impersonation"
+      ],
+      "usefulInvariants": [
+        "the visual traces to approved content",
+        "brand evidence constrains style",
+        "visual inspection precedes acceptance"
+      ],
+      "materialRisks": [
+        "generation cost",
+        "rights exposure",
+        "misleading visual authority",
+        "specialist dependencies"
+      ],
+      "disposition": "deferred",
+      "proposedCluster": "specialist-visual-production-boundary",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    }
   ]
 }

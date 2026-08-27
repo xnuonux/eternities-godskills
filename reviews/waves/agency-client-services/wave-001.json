@@ -9,16 +9,45 @@
       "sourceId": "skill-6f9529112807c946",
       "bodySha256": "f9c3daf852208c80f918b07dbd2f01fe648f8f6761e73aa383d3254741b6c6d2",
       "neutralCapabilitySummary": "Coordinate a new prospect assessment by building shared context, running independent evidence lanes, reconciling partial failures, and producing a prioritized service brief.",
-      "neutralIntentExamples": ["assess a new prospect across independent evidence lanes and prioritize service opportunities", "turn a bounded business audit into an evidence-labeled onboarding brief"],
-      "legacyAliases": ["/agency onboard"],
-      "inputs": ["authorized target and business context", "assessment dimensions and scoring policy"],
-      "operations": ["collect target evidence, dispatch independent assessments, validate structured returns, reconcile weighted results, and rank findings"],
-      "outputs": ["evidence-labeled onboarding report with scores, findings, quick wins, service options, and next actions"],
-      "effects": ["read", "write"],
-      "failureBehavior": ["retain unavailable dimensions as explicit gaps and recalculate only with disclosed adjusted weights"],
-      "exclusions": ["legal conclusions without qualified review", "unsolicited outreach", "guaranteed business outcomes"],
-      "usefulInvariants": ["all assessment lanes share the same target context", "partial failure remains visible", "recommendations trace to findings"],
-      "materialRisks": ["subjective scoring can appear objective", "public web evidence can be stale", "price suggestions can be mistaken for validated market data"],
+      "neutralIntentExamples": [
+        "assess a new prospect across independent evidence lanes and prioritize service opportunities",
+        "turn a bounded business audit into an evidence-labeled onboarding brief"
+      ],
+      "legacyAliases": [
+        "/agency onboard"
+      ],
+      "inputs": [
+        "authorized target and business context",
+        "assessment dimensions and scoring policy"
+      ],
+      "operations": [
+        "collect target evidence, dispatch independent assessments, validate structured returns, reconcile weighted results, and rank findings"
+      ],
+      "outputs": [
+        "evidence-labeled onboarding report with scores, findings, quick wins, service options, and next actions"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "retain unavailable dimensions as explicit gaps and recalculate only with disclosed adjusted weights"
+      ],
+      "exclusions": [
+        "legal conclusions without qualified review",
+        "unsolicited outreach",
+        "guaranteed business outcomes"
+      ],
+      "usefulInvariants": [
+        "all assessment lanes share the same target context",
+        "partial failure remains visible",
+        "recommendations trace to findings"
+      ],
+      "materialRisks": [
+        "subjective scoring can appear objective",
+        "public web evidence can be stale",
+        "price suggestions can be mistaken for validated market data"
+      ],
       "disposition": "independent-implementation",
       "proposedCluster": "prospect-onboarding-and-multidimensional-audit",
       "confidence": "high",
@@ -29,16 +58,45 @@
       "sourceId": "skill-8ea282b5eae0cd7a",
       "bodySha256": "d1d91410b4d3538235392eba8302704e68b27d055d02a4a8c4640b79167c96da",
       "neutralCapabilitySummary": "Reconstruct a prospect portfolio from heterogeneous local evidence, consolidate identities, infer bounded workflow stages, and expose pursuit priorities without hiding stale or incomplete records.",
-      "neutralIntentExamples": ["reconstruct a prospect portfolio and rank evidence-backed next actions", "show every prospect stage, uncertainty, and estimated opportunity without dropping partial records"],
-      "legacyAliases": ["/agency pipeline"],
-      "inputs": ["authorized workspace containing prospect and audit artifacts", "stage and valuation policies"],
-      "operations": ["discover records, parse evidence, resolve prospect identity, calculate partial composites, classify stages, rank opportunities, and summarize portfolio health"],
-      "outputs": ["sortable prospect ledger with evidence coverage, stage, uncertainty, estimated value, and next action"],
-      "effects": ["read", "write"],
-      "failureBehavior": ["preserve unmatched, stale, duplicate, and partially scored prospects rather than silently dropping them"],
-      "exclusions": ["automatic CRM mutation", "treating inferred revenue as a financial forecast", "marking a client active without evidence or user confirmation"],
-      "usefulInvariants": ["every prospect remains represented", "partial scores disclose their contributing dimensions", "identity consolidation is reversible"],
-      "materialRisks": ["filename conventions can misbind companies", "need-based value estimates can reward poor fit", "heuristic stage detection can overstate readiness"],
+      "neutralIntentExamples": [
+        "reconstruct a prospect portfolio and rank evidence-backed next actions",
+        "show every prospect stage, uncertainty, and estimated opportunity without dropping partial records"
+      ],
+      "legacyAliases": [
+        "/agency pipeline"
+      ],
+      "inputs": [
+        "authorized workspace containing prospect and audit artifacts",
+        "stage and valuation policies"
+      ],
+      "operations": [
+        "discover records, parse evidence, resolve prospect identity, calculate partial composites, classify stages, rank opportunities, and summarize portfolio health"
+      ],
+      "outputs": [
+        "sortable prospect ledger with evidence coverage, stage, uncertainty, estimated value, and next action"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "preserve unmatched, stale, duplicate, and partially scored prospects rather than silently dropping them"
+      ],
+      "exclusions": [
+        "automatic CRM mutation",
+        "treating inferred revenue as a financial forecast",
+        "marking a client active without evidence or user confirmation"
+      ],
+      "usefulInvariants": [
+        "every prospect remains represented",
+        "partial scores disclose their contributing dimensions",
+        "identity consolidation is reversible"
+      ],
+      "materialRisks": [
+        "filename conventions can misbind companies",
+        "need-based value estimates can reward poor fit",
+        "heuristic stage detection can overstate readiness"
+      ],
       "disposition": "independent-implementation",
       "proposedCluster": "agency-pipeline-reconciliation",
       "confidence": "high",
@@ -49,16 +107,44 @@
       "sourceId": "skill-922f3f027d2021e7",
       "bodySha256": "fd4f4cbc3721ea1c95a3569036850a001714b79986cf76aa2bc44827c46be8d1",
       "neutralCapabilitySummary": "Find and reconcile all authorized records for one client, construct a dated evidence history, show missing assessments, and recommend the next bounded account action.",
-      "neutralIntentExamples": ["reconstruct one client's dated history from authorized local evidence", "show a client's account state, missing assessments, and next bounded action"],
-      "legacyAliases": ["/agency client"],
-      "inputs": ["client identity or partial match", "authorized local record scope"],
-      "operations": ["normalize identity variants, search filenames and contents, verify relevance, extract dated facts, reconcile scores, and derive account state"],
-      "outputs": ["read-only client history with evidence paths, score provenance, gaps, stage, uncertainty, and next actions"],
-      "effects": ["read"],
-      "failureBehavior": ["ask for disambiguation on multiple plausible clients and report no-match or stale-data conditions explicitly"],
-      "exclusions": ["writing or deleting client files", "revealing records outside the authorized scope", "inventing missing scores or pricing"],
-      "usefulInvariants": ["content matches require relevance confirmation", "source paths and dates remain visible", "missing dimensions stay missing"],
-      "materialRisks": ["fuzzy matching can cross-contaminate client histories", "local files may contain sensitive data", "heuristic lifetime value can look authoritative"],
+      "neutralIntentExamples": [
+        "reconstruct one client's dated history from authorized local evidence",
+        "show a client's account state, missing assessments, and next bounded action"
+      ],
+      "legacyAliases": [
+        "/agency client"
+      ],
+      "inputs": [
+        "client identity or partial match",
+        "authorized local record scope"
+      ],
+      "operations": [
+        "normalize identity variants, search filenames and contents, verify relevance, extract dated facts, reconcile scores, and derive account state"
+      ],
+      "outputs": [
+        "read-only client history with evidence paths, score provenance, gaps, stage, uncertainty, and next actions"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "ask for disambiguation on multiple plausible clients and report no-match or stale-data conditions explicitly"
+      ],
+      "exclusions": [
+        "writing or deleting client files",
+        "revealing records outside the authorized scope",
+        "inventing missing scores or pricing"
+      ],
+      "usefulInvariants": [
+        "content matches require relevance confirmation",
+        "source paths and dates remain visible",
+        "missing dimensions stay missing"
+      ],
+      "materialRisks": [
+        "fuzzy matching can cross-contaminate client histories",
+        "local files may contain sensitive data",
+        "heuristic lifetime value can look authoritative"
+      ],
       "disposition": "independent-implementation",
       "proposedCluster": "client-history-and-account-state",
       "confidence": "high",
@@ -69,16 +155,45 @@
       "sourceId": "skill-eb5ed7a3910e2cc4",
       "bodySha256": "25fba3602d40283503860b9d48cfd806f8e6ce7d12fcdc6e8af6009674985a8f",
       "neutralCapabilitySummary": "Transform verified client findings into a scoped service proposal with traceable recommendations, bounded commercial assumptions, delivery phases, and a separately authorized follow-up plan.",
-      "neutralIntentExamples": ["draft a scoped service proposal from verified client findings and approved commercial policy", "map evidenced client needs to service options, phases, and separately authorized follow-up"],
-      "legacyAliases": ["/agency propose"],
-      "inputs": ["verified client profile, findings, constraints, and available audit evidence", "approved pricing and service policies"],
-      "operations": ["reconcile findings, deduplicate needs, map needs to services, model conservative scenarios, construct options, and define delivery checkpoints"],
-      "outputs": ["editable proposal draft with evidence links, assumptions, service options, implementation sequence, and follow-up drafts"],
-      "effects": ["read", "write"],
-      "failureBehavior": ["use explicit placeholders or defer when evidence, authority, price policy, or client facts are unavailable"],
-      "exclusions": ["sending the proposal or follow-ups", "guaranteeing return on investment", "fabricating legal, traffic, revenue, or conversion facts"],
-      "usefulInvariants": ["each proposed service maps to a verified finding", "commercial assumptions are labeled", "external communication remains separately authorized"],
-      "materialRisks": ["industry averages can create false precision", "default tier anchoring can bias recommendations", "template language can conceal weak client evidence"],
+      "neutralIntentExamples": [
+        "draft a scoped service proposal from verified client findings and approved commercial policy",
+        "map evidenced client needs to service options, phases, and separately authorized follow-up"
+      ],
+      "legacyAliases": [
+        "/agency propose"
+      ],
+      "inputs": [
+        "verified client profile, findings, constraints, and available audit evidence",
+        "approved pricing and service policies"
+      ],
+      "operations": [
+        "reconcile findings, deduplicate needs, map needs to services, model conservative scenarios, construct options, and define delivery checkpoints"
+      ],
+      "outputs": [
+        "editable proposal draft with evidence links, assumptions, service options, implementation sequence, and follow-up drafts"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "use explicit placeholders or defer when evidence, authority, price policy, or client facts are unavailable"
+      ],
+      "exclusions": [
+        "sending the proposal or follow-ups",
+        "guaranteeing return on investment",
+        "fabricating legal, traffic, revenue, or conversion facts"
+      ],
+      "usefulInvariants": [
+        "each proposed service maps to a verified finding",
+        "commercial assumptions are labeled",
+        "external communication remains separately authorized"
+      ],
+      "materialRisks": [
+        "industry averages can create false precision",
+        "default tier anchoring can bias recommendations",
+        "template language can conceal weak client evidence"
+      ],
       "disposition": "independent-implementation",
       "proposedCluster": "evidence-to-service-proposal",
       "confidence": "high",

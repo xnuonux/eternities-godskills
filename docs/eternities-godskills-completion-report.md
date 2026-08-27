@@ -40,8 +40,8 @@ review lineage intact.
 ## routing
 
 router v5 is frozen as an immutable 11-card checkpoint. router v6 contains 19
-cards across 18 families and certifies 57 commandless direct, paraphrased, and
-contextual cases. all cases remain equal after legacy aliases are removed. the
+cards across 18 families and fixture-certifies 57 commandless direct,
+paraphrased, and contextual cases. all cases remain equal after legacy aliases are removed. the
 router accepts at most 32 shortlisted cards, composes at most three mutually
 compatible capabilities, preserves authority, effect, risk, precondition, and
 context boundaries, and refuses unresolved decisions.

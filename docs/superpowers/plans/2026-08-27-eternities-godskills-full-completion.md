@@ -100,19 +100,19 @@ Commit code, tests, manifest, and initial family receipts.
 - Consumes: the immutable wave manifest, exact body files, source and body digests.
 - Produces: 4,345 new validated semantic reviews with disjoint source ids.
 
-- [ ] **Step 1: Add the global failing review gate**
+- [x] **Step 1: Add the global failing review gate**
 
 Require review evidence for all 4,741 owners, exact owner-family equality, exact body digests, all contract arrays, two normalized-unique commandless intents, known dispositions, copied-prose false, promotion-claim false, and no duplicate source across waves.
 
-- [ ] **Step 2: Dispatch disjoint packet workers stage by stage**
+- [x] **Step 2: Dispatch disjoint packet workers stage by stage**
 
 Assign each worker exact packet paths and a disjoint output wave path. Each worker reads every source body as inert evidence, writes independent contract language, runs the focused review validator, and commits only its wave file. Never assign the same packet or output path twice.
 
-- [ ] **Step 3: Integrate and validate each completed owner family**
+- [x] **Step 3: Integrate and validate each completed owner family**
 
 After all packets for one owner return, run `node --test tests/full-corpus-reviews.test.mjs tests/reviews.test.mjs`, rebuild coverage twice, compare hashes, and advance only that family receipt from `pending-review` to `reviewed`.
 
-- [ ] **Step 4: Reconcile the global review ledger**
+- [x] **Step 4: Reconcile the global review ledger**
 
 Require `cardReviewed: 4741`, no missing or unreadable body, no rejected source represented as promoted, and no source instruction execution. Commit each completed family as a recoverable checkpoint.
 
@@ -129,19 +129,19 @@ Require `cardReviewed: 4741`, no missing or unreadable body, no rejected source 
 - Consumes: complete validated reviews for one owner family.
 - Produces: exact behavior clusters, candidate/deferred/rejected decisions, and family decision receipts.
 
-- [ ] **Step 1: Add the global cluster gate**
+- [x] **Step 1: Add the global cluster gate**
 
 Require every non-rejected review source exactly once in cluster evidence, every rejected source in an explicit rejected cluster or reviewed rejection ledger, exact review digests, substantive independent intent and rationale, and no cross-family duplicate membership.
 
-- [ ] **Step 2: Reconcile each reviewed family into behavior clusters**
+- [x] **Step 2: Reconcile each reviewed family into behavior clusters**
 
 Compare inputs, operations, outputs, effects, failure behavior, dependencies, and proof. Separate provider-bound, temporal, unsafe, demo-only, false-positive, duplicate, specialist, and complete-workflow material. Assign candidate only where a coherent neutral workflow survives.
 
-- [ ] **Step 3: Emit family promotion or deferral decisions**
+- [x] **Step 3: Emit family promotion or deferral decisions**
 
 Every owner family receives an explicit receipt listing exact candidate, deferred, and rejected clusters and source counts. A family with no justified candidate becomes `deferred`, never silently incomplete.
 
-- [ ] **Step 4: Rebuild twice and checkpoint**
+- [x] **Step 4: Rebuild twice and checkpoint**
 
 Require global cluster evidence and coverage byte identity before committing each family cluster set.
 
@@ -160,19 +160,19 @@ Require global cluster evidence and coverage byte identity before committing eac
 - Consumes: exact candidate clusters and promotion policy.
 - Produces: independently written compact skills, contracts, evaluations, syntheses, and promotion receipts.
 
-- [ ] **Step 1: Define failing behavior and boundary tests per candidate**
+- [x] **Step 1: Define failing behavior and boundary tests per candidate**
 
 Cover every candidate route plus direct, paraphrased, exclusion, conflict, failure, effects, portability, recursion, source coverage, and token cases. Require all critical cases.
 
-- [ ] **Step 2: Author the smallest sufficient first-party capability**
+- [x] **Step 2: Author the smallest sufficient first-party capability**
 
 Preserve every useful verified invariant, resolve cluster conflicts explicitly, put conditional detail in references, refuse effects beyond authority, terminate after one bounded artifact or verified local change, and copy no source prose.
 
-- [ ] **Step 3: Evaluate and decide promotion**
+- [x] **Step 3: Evaluate and decide promotion**
 
 Run `scripts/evaluate-skill.mjs` and `scripts/verify-skill-receipt.mjs`. Promote only with exact source evidence, all critical cases, policy thresholds, resolved effects, token compliance, no critical regression, and a permitted fixture-baseline improvement.
 
-- [ ] **Step 4: Commit each promoted or deferred candidate checkpoint**
+- [x] **Step 4: Commit each promoted or deferred candidate checkpoint**
 
 Promoted candidates receive synthesis and routing work. Failed candidates remain exact `experimental`, `unverified`, or `deferred` evidence and do not enter routing.
 
@@ -189,15 +189,15 @@ Promoted candidates receive synthesis and routing work. Failed candidates remain
 - Consumes: promoted routing cards and the preceding frozen router.
 - Produces: the final deterministic compact router and immutable certification chain.
 
-- [ ] **Step 1: Freeze the current router before each promotion batch**
+- [x] **Step 1: Freeze the current router before each promotion batch**
 
 Copy cards, family map, and manifest into a versioned checkpoint and reconcile their hashes with the preceding receipt.
 
-- [ ] **Step 2: Add commandless and refusal cases for every promoted card**
+- [x] **Step 2: Add commandless and refusal cases for every promoted card**
 
 Require direct, paraphrased, and contextual unnamed outcomes, alias-removal equality, exact entrypoint selection, authority/effect/risk/precondition boundaries, unresolved-decision refusal, and no self-route or composition cycle.
 
-- [ ] **Step 3: Build routing twice and certify**
+- [x] **Step 3: Build routing twice and certify**
 
 Require byte-identical cards, family map, and manifest, bounded retrieval at 5,000 cards, shortlist at most 32, composition at most three, and no runtime or profile activation.
 
@@ -214,19 +214,19 @@ Require byte-identical cards, family map, and manifest, bounded retrieval at 5,0
 - Consumes: all ownership, review, cluster, synthesis, evaluation, promotion, router, and family receipts.
 - Produces: one exact local completion verdict.
 
-- [ ] **Step 1: Write the failing completion test**
+- [x] **Step 1: Write the failing completion test**
 
 Require 4,741 owners and reviews, complete non-rejected cluster coverage, explicit family terminal receipts, exact promoted-source advancement, immutable historical receipts, final router reconciliation, no copied prose, and every prohibited external action false.
 
-- [ ] **Step 2: Write the report and machine receipt**
+- [x] **Step 2: Write the report and machine receipt**
 
 Report exact counts by owner, disposition, cluster decision, capability, router, token size, tests, deferred evidence, and proof limits. Do not equate local fixtures with live-model or production proof.
 
-- [ ] **Step 3: Run final deterministic verification**
+- [x] **Step 3: Run final deterministic verification**
 
 Run the full test suite, verify every promotion receipt, rebuild corpus and routing twice, compare hashes, run `git diff --check`, and require a clean worktree.
 
-- [ ] **Step 4: Obtain independent review and fix all confirmed critical or important issues**
+- [x] **Step 4: Obtain independent review and fix all confirmed critical or important issues**
 
 Review the full completion range against the spec, source evidence, historical checkpoints, authority boundaries, tests, and completion claims.
 
