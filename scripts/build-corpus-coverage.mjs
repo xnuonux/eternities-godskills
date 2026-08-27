@@ -3,12 +3,13 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 
 import { auditBodies } from "../src/body-audit.mjs";
+import { assignCorpusOwners } from "../src/corpus-ownership.mjs";
 import { buildCoverageRows, summarizeCoverage } from "../src/coverage.mjs";
 import { canonicalText, sha256, writeJsonAtomic } from "../src/io.mjs";
 import { classify } from "../src/ontology.mjs";
 import { loadClusterEvidence } from "../src/refinery-clusters.mjs";
 import { loadCandidateEvidence } from "../src/refinery-candidates.mjs";
-import { buildFamilyQueue, buildReviewPackets } from "../src/review-packets.mjs";
+import { buildFamilyQueue, buildOwnedFamilyQueue, buildReviewPackets } from "../src/review-packets.mjs";
 import { loadReviewEvidence } from "../src/reviews.mjs";
 
 const FIRST_WAVE_FAMILIES = Object.freeze([
@@ -90,6 +91,7 @@ export async function buildCorpusCoverage({
   const provenanceRows = parseJsonLines(provenanceText, "provenance ledger");
   const bodyEvidence = await auditBodies(warehouseRoot, records);
   const reviewRows = await loadReviewEvidence(reviewsPath, records, bodyEvidence);
+  const ownershipRows = assignCorpusOwners(records, reviewRows);
   const clusterRows = clustersPath
     ? await loadClusterEvidence(clustersPath, reviewRows)
     : [];
@@ -109,6 +111,7 @@ export async function buildCorpusCoverage({
   const reviewText = jsonLines(reviewRows);
   const clusterText = jsonLines(clusterRows);
   const candidateText = jsonLines(candidateRows);
+  const ownershipText = jsonLines(ownershipRows);
   const familyArtifacts = FIRST_WAVE_FAMILIES.map((familyId) => {
     const queue = buildFamilyQueue(
       familyId,
@@ -119,6 +122,19 @@ export async function buildCorpusCoverage({
     );
     return { familyId, queue, packets: buildReviewPackets(queue) };
   });
+  const ownerArtifacts = [...new Set(ownershipRows.map(({ ownerFamily }) => ownerFamily))]
+    .sort((left, right) => left.localeCompare(right))
+    .map((familyId) => {
+      const queue = buildOwnedFamilyQueue(
+        familyId,
+        ownershipRows,
+        coverageRows,
+        records,
+        bodyEvidence,
+        duplicateGroups,
+      );
+      return { familyId, queue, packets: buildReviewPackets(queue) };
+    });
   const summary = {
     ...summarizeCoverage(coverageRows),
     warehouseRoot: path.resolve(warehouseRoot),
@@ -135,6 +151,7 @@ export async function buildCorpusCoverage({
       reviewEvidenceSha256: sha256(reviewText),
       clusterEvidenceSha256: sha256(clusterText),
       candidateEvidenceSha256: sha256(candidateText),
+      ownershipSha256: sha256(ownershipText),
     },
     bodyStatusCounts: Object.fromEntries(
       ["inspected", "missing", "unreadable"].map((status) => [
@@ -155,6 +172,23 @@ export async function buildCorpusCoverage({
         },
       ]),
     ),
+    ownership: {
+      sourceCount: ownershipRows.length,
+      reviewed: ownershipRows.filter(({ reviewed }) => reviewed).length,
+      unreviewed: ownershipRows.filter(({ reviewed }) => !reviewed).length,
+      familyCounts: Object.fromEntries(ownerArtifacts.map(({ familyId, queue }) => [familyId, queue.sourceCount])),
+    },
+    ownerQueues: Object.fromEntries(
+      ownerArtifacts.map(({ familyId, queue, packets }) => [
+        familyId,
+        {
+          sourceCount: queue.sourceCount,
+          packetCount: packets.length,
+          queueSha256: sha256(`${JSON.stringify(queue, null, 2)}\n`),
+          packetsSha256: sha256(`${packets.map((packet) => JSON.stringify(packet)).join("\n")}\n`),
+        },
+      ]),
+    ),
   };
 
   await mkdir(outputPath, { recursive: true });
@@ -164,9 +198,22 @@ export async function buildCorpusCoverage({
     writeTextAtomic(path.join(outputPath, "review-evidence.jsonl"), reviewText),
     writeTextAtomic(path.join(outputPath, "cluster-evidence.jsonl"), clusterText),
     writeTextAtomic(path.join(outputPath, "candidate-evidence.jsonl"), candidateText),
+    writeTextAtomic(path.join(outputPath, "ownership.jsonl"), ownershipText),
     writeJsonAtomic(path.join(outputPath, "coverage-summary.json"), summary),
     ...familyArtifacts.flatMap(({ familyId, queue, packets }) => {
       const familyPath = path.join(outputPath, "families", familyId);
+      return [
+        writeJsonAtomic(path.join(familyPath, "queue.json"), queue),
+        ...packets.map((packet) =>
+          writeJsonAtomic(
+            path.join(familyPath, "packets", `${String(packet.sequence).padStart(3, "0")}.json`),
+            packet,
+          ),
+        ),
+      ];
+    }),
+    ...ownerArtifacts.flatMap(({ familyId, queue, packets }) => {
+      const familyPath = path.join(outputPath, "owners", familyId);
       return [
         writeJsonAtomic(path.join(familyPath, "queue.json"), queue),
         ...packets.map((packet) =>

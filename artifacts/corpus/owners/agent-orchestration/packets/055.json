@@ -1,0 +1,2012 @@
+{
+  "schemaVersion": 1,
+  "packetId": "agent-orchestration-055",
+  "familyId": "agent-orchestration",
+  "sequence": 55,
+  "sourceCount": 25,
+  "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions.",
+  "cards": [
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c28d94cf730bf969",
+      "name": "exploiting-bgp-hijacking-vulnerabilities",
+      "description": "Analyzes and simulates BGP hijacking scenarios in authorized lab environments",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\exploiting-bgp-hijacking-vulnerabilities\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "c7c2f82b71e84219abbc664799f44cb825e04153f7f063f7e6868b5fc3641127",
+      "bodySha256": "b8509445a3657c182b678bd5040a455c0d90782eda17f823f95e4e02c2597a15",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "exploiting-bgp-hijacking-vulnerabilities",
+        "frontmatterDescription": "'Analyzes and simulates BGP hijacking scenarios in authorized lab environments",
+        "headings": [
+          "Exploiting BGP Hijacking Vulnerabilities",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Build an Isolated BGP Lab Environment",
+          "Install Containerlab for BGP simulation",
+          "Create a BGP lab topology file",
+          "Configure legitimate router (AS65001)",
+          "Configure attacker router (AS65002) -- initially not announcing the prefix",
+          "Deploy the lab",
+          "Step 2: Verify Legitimate BGP Routing",
+          "Connect to victim router and verify route to 10.0.0.0/24"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# The victim should now prefer the /25 routes via the attacker"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# Origin hijack: Attacker announces the exact /24 prefix"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "bgpalerter generate -o /etc/bgpalerter"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "cat > /etc/bgpalerter/prefixes.yml << 'EOF'"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "3. Simulate a more-specific prefix hijack (/25) from a rogue AS and verify that upstream ISPs with RPKI validation drop the invalid routes"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| 203.0.113.0/24 | Yes | /24 | AS12345 | Valid |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| More-specific /25 hijack | Enabled | BLOCKED (Invalid origin) |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| More-specific /25 hijack | Disabled | SUCCESSFUL (traffic diverted) |"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# The victim should now prefer the /25 routes via the attacker"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# Origin hijack: Attacker announces the exact /24 prefix"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "bgpalerter generate -o /etc/bgpalerter"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "cat > /etc/bgpalerter/prefixes.yml << 'EOF'"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "3. Simulate a more-specific prefix hijack (/25) from a rogue AS and verify that upstream ISPs with RPKI validation drop the invalid routes"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| 203.0.113.0/24 | Yes | /24 | AS12345 | Valid |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| More-specific /25 hijack | Enabled | BLOCKED (Invalid origin) |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| More-specific /25 hijack | Disabled | SUCCESSFUL (traffic diverted) |"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c2c616acce430a23",
+      "name": "performing-authenticated-scan-with-openvas",
+      "description": "Configure and execute authenticated (credentialed) vulnerability scans using OpenVAS/Greenbone",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\performing-authenticated-scan-with-openvas\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "11c016758bb0c9390f9f917bde8b76f41ec5679df33820433ec16aa1e1ef3d7f",
+      "bodySha256": "22255d6786ca9563dcbea45deeff1fe6e4528657b43ef697db88b4a2d879f4ae",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "performing-authenticated-scan-with-openvas",
+        "frontmatterDescription": "Configure and execute authenticated (credentialed) vulnerability scans using OpenVAS/Greenbone",
+        "headings": [
+          "Performing Authenticated Scan with OpenVAS",
+          "Overview",
+          "When to Use",
+          "Prerequisites",
+          "Installation",
+          "Install GVM on Kali Linux / Debian",
+          "Install GVM package",
+          "Run initial setup (creates admin account, syncs feeds)",
+          "Check installation status",
+          "Start all GVM services",
+          "Access Greenbone Security Assistant at https://127.0.0.1:9392",
+          "Install via Docker (Recommended for Production)"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "gvm-cli socket --socketpath /run/gvmd/gvmd.sock --gmp-username admin --gmp-password <password> --xml \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "<private><![CDATA['\"$(cat /home/scan_user/.ssh/id_rsa)\"']]></private>"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "connection = UnixSocketConnection(path='/run/gvmd/gvmd.sock')"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "gvm-cli socket --socketpath /run/gvmd/gvmd.sock --gmp-username admin --gmp-password <password> --xml \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "<private><![CDATA['\"$(cat /home/scan_user/.ssh/id_rsa)\"']]></private>"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "connection = UnixSocketConnection(path='/run/gvmd/gvmd.sock')"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c35226423912ef61",
+      "name": "monitoring-scada-modbus-traffic-anomalies",
+      "description": "Monitors Modbus TCP traffic on SCADA and ICS networks to detect anomalous",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\monitoring-scada-modbus-traffic-anomalies\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "54be4d18c01afdd5a17a3d0dffaaf04f00593ab5907987b59425d4ff7d7472d2",
+      "bodySha256": "d29e4b1e41184836551c16b6b0e8cf01ca21d7592ba110f13a19f32bad4d6e51",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "monitoring-scada-modbus-traffic-anomalies",
+        "frontmatterDescription": "'Monitors Modbus TCP traffic on SCADA and ICS networks to detect anomalous",
+        "headings": [
+          "Monitoring SCADA Modbus Traffic Anomalies",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Capture and Parse Modbus TCP Traffic",
+          "Step 2: Baseline Normal Communication Patterns",
+          "Step 3: Detect Function Code Anomalies",
+          "Step 4: Monitor Register Values for Process Manipulation",
+          "Step 5: Detect Network-Level Anomalies",
+          "Key Concepts",
+          "Tools & Systems",
+          "Common Scenarios"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c3f2657f5424fd23",
+      "name": "Audience Persona Builder",
+      "description": "Builds 5-7 detailed audience personas from a URL with demographics, psychographics, pain points, buying triggers, platform-specific targeting parameters, persona scoring, and negative audiences",
+      "sourcePath": "catalog-c\\agent-skills\\ai-ads-claude\\skills\\ads-audience\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\ai-ads-claude",
+      "remote": "https://github.com/zubair-trabzada/ai-ads-claude.git",
+      "gitHead": "d1df3f544249191cbc600c8301e2b9d5ddd121c8",
+      "contentDigest": "c29f02e2885f1308db03e75a5f78f0c139e1ba249f2d792382dec692949a84f1",
+      "bodySha256": "0c7b3683573fed859b13e8e6164b084f5b4aef460ddbbbec5aabd703be021f63",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "Audience Persona Builder",
+        "frontmatterDescription": "Builds 5-7 detailed audience personas from a URL with demographics, psychographics, pain points, buying triggers, platform-specific targeting parameters, persona scoring, and negative audiences",
+        "headings": [
+          "Audience Persona Builder",
+          "Skill Purpose",
+          "When to Use",
+          "Input Requirements",
+          "How to Execute",
+          "Step 1: Business Intelligence Gathering",
+          "Step 2: Industry Audience Intelligence",
+          "Step 3: Build Persona Profiles",
+          "Persona Template",
+          "Persona [Number]: [Persona Name] — \"[Memorable Tagline]\"",
+          "Demographics",
+          "Psychographics"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- User runs `/ads audience <url>`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Called as a subagent from `/ads strategy` (the main orchestrator)"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "3. Run `/ads copy <platform>` to generate ad copy tailored to top personas"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "4. Run `/ads hooks` to generate scroll-stopping hooks for each persona"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- User runs `/ads audience <url>`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Called as a subagent from `/ads strategy` (the main orchestrator)"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "3. Run `/ads copy <platform>` to generate ad copy tailored to top personas"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "4. Run `/ads hooks` to generate scroll-stopping hooks for each persona"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c416d12b20c4e430",
+      "name": "performing-threat-hunting-with-yara-rules",
+      "description": "Use YARA pattern-matching rules to hunt for malware, suspicious files,",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\performing-threat-hunting-with-yara-rules\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "1f8047dc1046dcaffda091074ce9089c216d88fd8c8792732bcde5ae6347fa06",
+      "bodySha256": "44f62439377996efac1480b3cce9df940122288f17d1d65192184735216538f2",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "performing-threat-hunting-with-yara-rules",
+        "frontmatterDescription": "'Use YARA pattern-matching rules to hunt for malware, suspicious files,",
+        "headings": [
+          "Performing Threat Hunting with YARA Rules",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Install YARA and Python Bindings",
+          "Linux",
+          "Python bindings",
+          "Verify installation",
+          "Step 2: Write a Basic YARA Rule",
+          "Step 3: Write Advanced Rules with Modules",
+          "Step 4: Scan Files and Directories with yara-python",
+          "Compile and scan"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "$ps_cradle = /powershell[^\\n]{0,50}-e(nc|ncodedcommand)/i"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "$uri1 = \"/wp-content/uploads/\" ascii"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "$uri2 = \"/wp-admin/css/\" ascii"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "$uri3 = \"/wp-includes/\" ascii"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "matches = scan_directory(rules, \"/mnt/evidence/collected_samples/\")"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "scan_memory_dump(memory_rules, \"/mnt/evidence/lsass_dump.dmp\")"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "-m /mnt/evidence/malware_samples/ \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "-m /mnt/evidence/malware_samples/suspicious.exe \\"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "$ps_cradle = /powershell[^\\n]{0,50}-e(nc|ncodedcommand)/i"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "$uri1 = \"/wp-content/uploads/\" ascii"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "$uri2 = \"/wp-admin/css/\" ascii"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "$uri3 = \"/wp-includes/\" ascii"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "matches = scan_directory(rules, \"/mnt/evidence/collected_samples/\")"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "scan_memory_dump(memory_rules, \"/mnt/evidence/lsass_dump.dmp\")"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "-m /mnt/evidence/malware_samples/ \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "-m /mnt/evidence/malware_samples/suspicious.exe \\"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "governance-security"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c452e3b621b98721",
+      "name": "hunt-business-logic",
+      "description": "Hunting skill for business logic vulnerabilities. Built from 12 public bug bounty reports. Covers coupon-race-stacking (Instacart, Stripe, Reverb), negative-quantity-in-cart price tampering (Upserve, Eternal/Zomato), decimal/fraction price-field overflow (Shipt), client-side checkout amount trust on PayPal redirect (WordPress.org), price-per-unit mass-assignment (Krisp), and archived-price swap / cart-TOCTOU (Stripe). Use when hunting business logic — heavy emphasis on financial-impact-demonstrated cases.",
+      "sourcePath": "catalog-c\\agent-skills\\Claude-BugHunter\\skills\\hunt-business-logic\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Claude-BugHunter",
+      "remote": "https://github.com/elementalsouls/Claude-BugHunter.git",
+      "gitHead": "0ce18ba59deccc26bbf1bbadb0706f3319af2852",
+      "contentDigest": "1451e499664fc3414fa8f9338f85f101e9e0f0e39924e02228df6807e1b300e5",
+      "bodySha256": "c38119a909540cc7484f58cd0379cfaf1f519d0104f43a8e7f52076de50b70f5",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "product-operations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "hunt-business-logic",
+        "frontmatterDescription": "Hunting skill for business logic vulnerabilities. Built from 12 public bug bounty reports. Covers coupon-race-stacking (Instacart, Stripe, Reverb), negative-quantity-in-cart price tampering (Upserve, Eternal/Zomato), decimal/fraction price-field overflow (Shipt), client-side checkout amount trust on PayPal redirect (WordPress.org), price-per-unit mass-assignment (Krisp), and archived-price swap / cart-TOCTOU (Stripe). Use when hunting business logic — heavy emphasis on financial-impact-demonstrated cases.",
+        "headings": [
+          "Crown Jewel Targets",
+          "Attack Surface Signals",
+          "Step-by-Step Hunting Methodology",
+          "Payload & Detection Patterns",
+          "Rotate X-Forwarded-For to bypass IP rate limiting",
+          "Look for unvalidated webhook endpoints",
+          "Check robots.txt and sitemap for internal paths",
+          "Grep JS bundles for internal paths",
+          "Skip the verification step: hit the post-verification API endpoint directly",
+          "with an unverified session. If it succeeds, the gate is UI-only.",
+          "Replay verification token on different account",
+          "Find price calculations in JS"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/checkout`, `/order`, `/subscribe`, `/payment`, `/verify`, `/confirm`, `/callback`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/internal`, `/employee`, `/summit`, `/staff`, `/admin` — internal pages accidentally public"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/api/v*/payment`, `/api/v*/notify`, `/webhook` — payment provider callbacks"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Hardcoded internal URLs in frontend bundles (`/employee/`, `/staff/`, `/internal/`)"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `fetch('/api/subscribe', { method: 'POST', body: ... })` with no anti-CSRF token or rate-limit token"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "-o /dev/null -w \"%{http_code}\\n\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "POST /payment/initiate HTTP/1.1"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Auth on internal pages | Try unauthenticated; try with a low-privilege account; try path traversal variants (`/employee/../employee/`) |"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/checkout`, `/order`, `/subscribe`, `/payment`, `/verify`, `/confirm`, `/callback`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/internal`, `/employee`, `/summit`, `/staff`, `/admin` — internal pages accidentally public"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/api/v*/payment`, `/api/v*/notify`, `/webhook` — payment provider callbacks"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Hardcoded internal URLs in frontend bundles (`/employee/`, `/staff/`, `/internal/`)"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `fetch('/api/subscribe', { method: 'POST', body: ... })` with no anti-CSRF token or rate-limit token"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "-o /dev/null -w \"%{http_code}\\n\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "POST /payment/initiate HTTP/1.1"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Auth on internal pages | Try unauthenticated; try with a low-privilege account; try path traversal variants (`/employee/../employee/`) |"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "product-operations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c481c2d57496c4f3",
+      "name": "configuring-tls-1-3-for-secure-communications",
+      "description": "Configures TLS 1.3 (RFC 8446) on servers, covering cipher suite and",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\configuring-tls-1-3-for-secure-communications\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "d78c66c545a31c21cc8058137107bbdd126e9f1cdd61121b3da4bbedf2311abb",
+      "bodySha256": "18b19858a14ac538207c3c5479db2ce8c6903c2e44c59b58bf3ebe85cd6bcd64",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "configuring-tls-1-3-for-secure-communications",
+        "frontmatterDescription": "Configures TLS 1.3 (RFC 8446) on servers, covering cipher suite and",
+        "headings": [
+          "Configuring TLS 1.3 for Secure Communications",
+          "Overview",
+          "When to Use",
+          "Prerequisites",
+          "Objectives",
+          "Key Concepts",
+          "TLS 1.3 Cipher Suites",
+          "TLS 1.3 vs 1.2 Improvements",
+          "Key Exchange Groups",
+          "Workflow",
+          "Security Considerations",
+          "Validation Criteria"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c49ee104226fde2d",
+      "name": "exploiting-oauth-misconfiguration",
+      "description": "Identifying and exploiting OAuth 2.0 and OpenID Connect misconfigurations",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\exploiting-oauth-misconfiguration\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "0bdc7819c05c06039ac4f4332abdf028b58ade8605cf318be6a94fd6c721088f",
+      "bodySha256": "28b2b13a3242aa5bc6fcb6ef51d79163c8ba53adc012daf5502df9e7424c11d8",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "exploiting-oauth-misconfiguration",
+        "frontmatterDescription": "Identifying and exploiting OAuth 2.0 and OpenID Connect misconfigurations",
+        "headings": [
+          "Exploiting OAuth Misconfiguration",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Map the OAuth Flow and Configuration",
+          "Discover OAuth/OIDC configuration endpoints",
+          "Key endpoints to identify:",
+          "- Authorization endpoint: /oauth/authorize",
+          "- Token endpoint: /oauth/token",
+          "- UserInfo endpoint: /oauth/userinfo",
+          "- JWKS endpoint: /oauth/certs",
+          "Capture the authorization request in Burp"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# - Authorization endpoint: /oauth/authorize"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# - Token endpoint: /oauth/token"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# - UserInfo endpoint: /oauth/userinfo"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# - JWKS endpoint: /oauth/certs"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# GET /oauth/authorize?"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "status=$(curl -s -o /dev/null -w \"%{http_code}\" \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# If /oauth/link endpoint lacks CSRF protection:"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "**Location**: GET /oauth/authorize - redirect_uri parameter"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# - Authorization endpoint: /oauth/authorize"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# - Token endpoint: /oauth/token"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# - UserInfo endpoint: /oauth/userinfo"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# - JWKS endpoint: /oauth/certs"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# GET /oauth/authorize?"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "status=$(curl -s -o /dev/null -w \"%{http_code}\" \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# If /oauth/link endpoint lacks CSRF protection:"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "**Location**: GET /oauth/authorize - redirect_uri parameter"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c4bba5db3b6032e8",
+      "name": "arch-linux-triage",
+      "description": "Triage and resolve Arch Linux issues with pacman, systemd, and rolling-release best practices.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\arch-linux-triage\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "739483ff7940662431730b253ecf9c139a884fb41f56444d3248eb422f7400cc",
+      "bodySha256": "4ee4e77a8b3a1d7463b4e525c491ad1ea7ef52c6f6f01f12f84f7b8504a1cd44",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "release-publishing"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "arch-linux-triage",
+        "frontmatterDescription": "Triage and resolve Arch Linux issues with pacman, systemd, and rolling-release best practices.",
+        "headings": [
+          "Arch Linux Triage",
+          "Inputs",
+          "Instructions",
+          "Output Format"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "release-publishing"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c52fd9e390c7b6ef",
+      "name": "building-adversary-infrastructure-tracking-system",
+      "description": "Build an automated adversary infrastructure tracking system in Python (dnspython, python-whois, shodan, networkx) that pivots across passive DNS, certificate transparency logs, WHOIS records, and IP enrichment to map threat-actor C2 networks and flag newly registered domains matching known patterns. Use when pivoting from known indicators to discover related C2 infrastructure or maintaining a continuously updated map of a threat actor's network.",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\building-adversary-infrastructure-tracking-system\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "4ab5f097e330b4f58ea979aec1dc562c2cb266260fb1d24e070fbc3ebed939f1",
+      "bodySha256": "4bb7e992ede41257d0110769432202b0c0b4bb2e218b3f16bcee3c756f42e3d8",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "building-adversary-infrastructure-tracking-system",
+        "frontmatterDescription": "Build an automated adversary infrastructure tracking system in Python (dnspython, python-whois, shodan, networkx) that pivots across passive DNS, certificate transparency logs, WHOIS records, and IP enrichment to map threat-actor C2 networks and flag newly registered domains matching known patterns. Use when pivoting from known indicators to discover related C2 infrastructure or maintaining a continuously updated map of a threat actor's network.",
+        "headings": [
+          "Building Adversary Infrastructure Tracking System",
+          "Overview",
+          "When to Use",
+          "Prerequisites",
+          "Key Concepts",
+          "Passive DNS",
+          "Infrastructure Pivoting",
+          "Adversary Infrastructure Patterns",
+          "Workflow",
+          "Step 1: Passive DNS Infrastructure Discovery",
+          "Step 2: Build Infrastructure Graph",
+          "Step 3: Monitor for New Infrastructure"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "governance-security"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c5b10d89aa4692c4",
+      "name": "performing-log-source-onboarding-in-siem",
+      "description": "Perform structured log source onboarding into SIEM platforms (Splunk,",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\performing-log-source-onboarding-in-siem\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "e8d7bf31b8013a0d447cd7fa36163d584554ccd964c751bdb541640388848908",
+      "bodySha256": "a575735f1784b8d1c46f49ac0b904f7b35e529db6db090d5f7ce7debf4564c44",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "performing-log-source-onboarding-in-siem",
+        "frontmatterDescription": "Perform structured log source onboarding into SIEM platforms (Splunk,",
+        "headings": [
+          "Performing Log Source Onboarding in SIEM",
+          "Overview",
+          "When to Use",
+          "Prerequisites",
+          "Log Source Priority Framework",
+          "Tier 1 - Critical (Onboard First)",
+          "Tier 2 - High Priority",
+          "Tier 3 - Standard",
+          "Onboarding Process",
+          "Step 1: Discovery and Assessment",
+          "Step 2: Configure Log Collection",
+          "Syslog-Based Collection (Firewalls, Network Devices)"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /etc/rsyslog.d/10-siem-collection.conf"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /etc/rsyslog.d/10-siem-collection.conf"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c60be93df19138bd",
+      "name": "testing-api-for-broken-object-level-authorization",
+      "description": "Tests REST and GraphQL APIs for Broken Object Level Authorization (BOLA/IDOR,",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\testing-api-for-broken-object-level-authorization\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "a3da2aeb2f0610ca877700f0569b2204e93d21e98d717a61366467df9f481401",
+      "bodySha256": "66558991776d9b520f545ab07c865056befb078bacbb2016fa7520481ccac2be",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "testing-api-for-broken-object-level-authorization",
+        "frontmatterDescription": "'Tests REST and GraphQL APIs for Broken Object Level Authorization (BOLA/IDOR,",
+        "headings": [
+          "Testing API for Broken Object Level Authorization",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: API Endpoint Discovery and Object ID Mapping",
+          "Download and parse the OpenAPI spec",
+          "Extract all endpoints with path parameters",
+          "Step 2: Baseline Request Capture with Authenticated User",
+          "User A credentials",
+          "User B credentials",
+          "Step 1: Identify User A's objects",
+          "Step 2: Identify User B's objects"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "2. In Burp, go to Target > Site Map and filter for API paths (e.g., `/api/v1/`, `/graphql`)"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "3. Look for patterns: `/api/v1/users/{id}`, `/api/v1/orders/{order_id}`, `/api/v1/documents/{doc_uuid}`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Sequential Integer | `/orders/1042` | High - increment/decrement | Critical |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| UUID v4 | `/orders/550e8400-e29b-41d4-a716-446655440000` | Low - random | Medium (if leaked) |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Encoded/Hashed | `/orders/base64encodedvalue` | Medium - decode and predict | High |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Composite | `/users/42/orders/1042` | High - multiple IDs to swap | Critical |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Slug | `/profiles/john-doe` | Medium - guess usernames | High |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "\"endpoint\": f\"GET /users/{user_b_id}\","
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "2. In Burp, go to Target > Site Map and filter for API paths (e.g., `/api/v1/`, `/graphql`)"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "3. Look for patterns: `/api/v1/users/{id}`, `/api/v1/orders/{order_id}`, `/api/v1/documents/{doc_uuid}`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Sequential Integer | `/orders/1042` | High - increment/decrement | Critical |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| UUID v4 | `/orders/550e8400-e29b-41d4-a716-446655440000` | Low - random | Medium (if leaked) |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Encoded/Hashed | `/orders/base64encodedvalue` | Medium - decode and predict | High |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Composite | `/users/42/orders/1042` | High - multiple IDs to swap | Critical |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Slug | `/profiles/john-doe` | Medium - guess usernames | High |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "\"endpoint\": f\"GET /users/{user_b_id}\","
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "governance-security"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c68bff44ef3f4514",
+      "name": "aws-cost-optimize",
+      "description": "Analyze AWS resources used in the app (IaC files and/or resources in a target account/region) and optimize costs - creating GitHub issues for identified optimizations.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\aws-cost-optimize\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "56c09db8aeac955f0e7bb3134e615c2e18c348b95991de68ff3bd33ba3ddcb52",
+      "bodySha256": "e289482d227558774a220b79cf00c03340d1d35b3ffc2a4703659dd67a719e4d",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "aws-cost-optimize",
+        "frontmatterDescription": "Analyze AWS resources used in the app (IaC files and/or resources in a target account/region) and optimize costs - creating GitHub issues for identified optimizations.",
+        "headings": [
+          "AWS Cost Optimize",
+          "Prerequisites",
+          "Workflow Steps",
+          "Step 1: Get AWS Cost Optimization Best Practices",
+          "Step 2: Discover AWS Infrastructure",
+          "Step 3: Collect Usage Metrics & Validate Current Costs",
+          "Step 4: Generate Cost Optimization Recommendations",
+          "Step 5: User Confirmation",
+          "Step 6: Create Individual Optimization Issues",
+          "💰 Cost Optimization: [Brief Title]",
+          "📋 Description",
+          "🔧 Implementation"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c6951152bbe57bc0",
+      "name": "restaurant-email",
+      "description": "Email and SMS sequences — loyalty program emails, birthday emails, win-back campaigns, special event invites, abandoned cart for online orders",
+      "sourcePath": "catalog-c\\agent-skills\\ai-restaurant-claude\\skills\\restaurant-email\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\ai-restaurant-claude",
+      "remote": "https://github.com/zubair-trabzada/ai-restaurant-claude.git",
+      "gitHead": "fb42fb709be4fe1d1519d53392d1bad69d8a4965",
+      "contentDigest": "25b04414454a910b020314e4397a94a429ae7db590cbabeb5964c1e3c0bddb95",
+      "bodySha256": "e790252f8cb4b91f22ba43016ed37df4f0865100392832acddc06598e03cbb57",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "restaurant-email",
+        "frontmatterDescription": "Email and SMS sequences — loyalty program emails, birthday emails, win-back campaigns, special event invites, abandoned cart for online orders",
+        "headings": [
+          "Email & SMS Sequence Library",
+          "When to use",
+          "Why Email + SMS Matters",
+          "The 7 Core Sequences",
+          "Subject Line Frameworks",
+          "SMS Best Practices",
+          "Output Template",
+          "Email & SMS Sequence Library: [NAME]",
+          "Sequence 1 — Welcome Series",
+          "Email 1 — Immediately after signup",
+          "Email 2 — 3 days later",
+          "Email 3 — 10 days later (if no visit yet)"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "command: /restaurant email <name>"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/restaurant email <name>` — full sequence library"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "command: /restaurant email <name>"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/restaurant email <name>` — full sequence library"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c6cd95ebdfac7e04",
+      "name": "performing-sqlite-database-forensics",
+      "description": "Performs forensic analysis of SQLite databases by examining B-tree page",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\performing-sqlite-database-forensics\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "c66512ad9950d3e23f5c50f3e25291284819076327cd50fe7df35a96cea4946e",
+      "bodySha256": "58e537c21cf35f6003e8b9761e0e623cbe4b58b30a8449d9a32a881ce76fcae9",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "data-infrastructure"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "performing-sqlite-database-forensics",
+        "frontmatterDescription": "Performs forensic analysis of SQLite databases by examining B-tree page",
+        "headings": [
+          "Performing SQLite Database Forensics",
+          "Overview",
+          "When to Use",
+          "Prerequisites",
+          "SQLite Internal Structure",
+          "Database Header (First 100 Bytes)",
+          "Page Types",
+          "Deleted Record Recovery",
+          "Method 1: Freelist Page Analysis",
+          "Method 2: WAL (Write-Ahead Log) Analysis",
+          "Method 3: Unallocated Space Within Pages",
+          "Common Forensic Databases"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "$ python3 sqlite_forensics.py --db /evidence/chrome/Default/History \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "--wal /evidence/chrome/Default/History-wal \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "--journal /evidence/chrome/Default/History-journal \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "--output /analysis/sqlite_report"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Database:    /evidence/chrome/Default/History"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Report: /analysis/sqlite_report/sqlite_forensics.json"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Recovered DB: /analysis/sqlite_report/History_recovered.db"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "$ python3 sqlite_forensics.py --db /evidence/chrome/Default/History \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "--wal /evidence/chrome/Default/History-wal \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "--journal /evidence/chrome/Default/History-journal \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "--output /analysis/sqlite_report"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Database:    /evidence/chrome/Default/History"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Report: /analysis/sqlite_report/sqlite_forensics.json"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Recovered DB: /analysis/sqlite_report/History_recovered.db"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "data-infrastructure"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c6deafd18ae2294f",
+      "name": "draw-io-diagram-generator",
+      "description": "Use when creating, editing, or generating draw.io diagram files (.drawio, .drawio.svg, .drawio.png). Covers mxGraph XML authoring, shape libraries, style strings, flowcharts, system architecture, sequence diagrams, ER diagrams, UML class diagrams, network topology, layout strategy, the hediet.vscode-drawio VS Code extension, and the full agent workflow from request to a ready-to-open file.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\draw-io-diagram-generator\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "e3e09f6518528ba5742ae82cb0691f08397dd7dd6a4351387c09a6c674037d3a",
+      "bodySha256": "0d5d86c1fe7dc596f9bb7058291469cf5671ab55fcfeabce8451eb513a705868",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "draw-io-diagram-generator",
+        "frontmatterDescription": "Use when creating, editing, or generating draw.io diagram files (.drawio, .drawio.svg, .drawio.png). Covers mxGraph XML authoring, shape libraries, style strings, flowcharts, system architecture, sequence diagrams, ER diagrams, UML class diagrams, network topology, layout strategy, the hediet.vscode-drawio VS Code extension, and the full agent workflow from request to a ready-to-open file.",
+        "headings": [
+          "Draw.io Diagram Generator",
+          "1. When to Use This Skill",
+          "2. Prerequisites",
+          "3. Step-by-Step Agent Workflow",
+          "Step 1 — Understand the Request",
+          "Step 2 — Select a Template or Start Fresh",
+          "Step 3 — Plan the Layout",
+          "Step 4 — Generate the mxGraph XML",
+          "Step 5 — Apply Correct Styles",
+          "Rounded process box (flowchart)",
+          "Decision diamond",
+          "Start/End terminal"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "<mxCell id=\"msg1\" value=\"POST /orders\""
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "<mxCell id=\"msg1\" value=\"POST /orders\""
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "architecture-specification"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c74c101a47a473d8",
+      "name": "dataverse-python-advanced-patterns",
+      "description": "Generate production code for Dataverse SDK using advanced patterns, error handling, and optimization techniques.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\dataverse-python-advanced-patterns\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "296ab0f2299cbf5ea3757efea9311e461181cb17d827b9e6fe5ce1acb4973edf",
+      "bodySha256": "b46a0947c9683dffc0969bfdd80c0b0e2af662583f8909b9c98d8c6a22f458dc",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "dataverse-python-advanced-patterns",
+        "frontmatterDescription": "Generate production code for Dataverse SDK using advanced patterns, error handling, and optimization techniques.",
+        "headings": [],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c7d5924c7c338b82",
+      "name": "arize-link",
+      "description": "Generates deep links to the Arize UI for traces, spans, sessions, datasets, labeling queues, evaluators, and annotation configs. Produces clickable URLs for sharing Arize resources with team members. Use when the user wants to link to or open a trace, span, session, dataset, evaluator, or annotation config in the Arize UI.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\arize-link\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "579bf603fc4644b24de9680612045b2953f060daa0005899995b6e4c6229ab2c",
+      "bodySha256": "e7ca578678df826fbcb6e5498bea3ba8bd4fc5251c0eb3446d63023adef6a073",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "web-interface-accessibility"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "arize-link",
+        "frontmatterDescription": "Generates deep links to the Arize UI for traces, spans, sessions, datasets, labeling queues, evaluators, and annotation configs. Produces clickable URLs for sharing Arize resources with team members. Use when the user wants to link to or open a trace, span, session, dataset, evaluator, or annotation config in the Arize UI.",
+        "headings": [
+          "Arize Link",
+          "When to Use",
+          "Required Inputs",
+          "URL Templates",
+          "Time Range",
+          "Instructions",
+          "Troubleshooting",
+          "Related Skills",
+          "Examples"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "web-interface-accessibility"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c8560b366f5c23d2",
+      "name": "prd",
+      "description": "Generate high-quality Product Requirements Documents (PRDs) for software systems and AI-powered features. Includes executive summaries, user stories, technical specifications, and risk analysis.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\prd\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "2f7a015c0fb8a537eb6cbc5360e5e308f8e050b3014a5e016376b8810babf61a",
+      "bodySha256": "6772e6f0fcc7110d625c7f4595e4990e1910007676c36d217eda4e779041d5e5",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "product-operations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "prd",
+        "frontmatterDescription": "Generate high-quality Product Requirements Documents (PRDs) for software systems and AI-powered features. Includes executive summaries, user stories, technical specifications, and risk analysis.",
+        "headings": [
+          "Product Requirements Document (PRD)",
+          "Overview",
+          "When to Use",
+          "Operational Workflow",
+          "Phase 1: Discovery (The Interview)",
+          "Phase 2: Analysis & Scoping",
+          "Phase 3: Technical Drafting",
+          "PRD Quality Standards",
+          "Requirements Quality",
+          "Vague (BAD)",
+          "Concrete (GOOD)",
+          "Strict PRD Schema"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "product-operations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c96e120f526fdcb0",
+      "name": "performing-dynamic-analysis-of-android-app",
+      "description": "Performs runtime dynamic analysis of Android applications using Frida,",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\performing-dynamic-analysis-of-android-app\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "6c7d9c63516a2600edde8c277e268e6cdb2a306c2ea924c529e3ac592962cfcc",
+      "bodySha256": "4ba9794084135166ce8c1a894cc79dbd1e7102ff96fe7a436e0b14070923b524",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "performing-dynamic-analysis-of-android-app",
+        "frontmatterDescription": "'Performs runtime dynamic analysis of Android applications using Frida,",
+        "headings": [
+          "Performing Dynamic Analysis of Android App",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Setup Frida Server on Android Device",
+          "Check device architecture",
+          "Output: arm64-v8a",
+          "Download matching Frida server from GitHub releases",
+          "https://github.com/frida/frida/releases",
+          "Push to device",
+          "Verify Frida connection",
+          "Step 2: Enumerate Application Attack Surface"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "adb push frida-server-16.x.x-android-arm64 /data/local/tmp/frida-server"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "adb shell chmod 755 /data/local/tmp/frida-server"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "adb shell /data/local/tmp/frida-server &"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "var rootPaths = [\"/system/app/Superuser.apk\", \"/system/xbin/su\","
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "\"/sbin/su\", \"/system/bin/su\", \"/data/local/bin/su\"];"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **Anti-Frida detection**: Some apps detect Frida by checking for the Frida server process, scanning memory for Frida signatures, or monitoring `/proc/self/maps`. Use Frida Gadget injection or custom server builds."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "adb push frida-server-16.x.x-android-arm64 /data/local/tmp/frida-server"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "adb shell chmod 755 /data/local/tmp/frida-server"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "adb shell /data/local/tmp/frida-server &"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "var rootPaths = [\"/system/app/Superuser.apk\", \"/system/xbin/su\","
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "\"/sbin/su\", \"/system/bin/su\", \"/data/local/bin/su\"];"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **Anti-Frida detection**: Some apps detect Frida by checking for the Frida server process, scanning memory for Frida signatures, or monitoring `/proc/self/maps`. Use Frida Gadget injection or custom server builds."
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c983c23b2d1b4b19",
+      "name": "detecting-modbus-protocol-anomalies",
+      "description": "Detect anomalies in Modbus/TCP and Modbus RTU industrial traffic via function code monitoring, register range validation, timing analysis, and deep packet inspection, using Zeek's Modbus analyzer, Suricata IDS with OT rules, and Python Markov chain models of normal transaction sequences. Use for deploying Modbus IDS in OT environments, baselining polling patterns, investigating suspicious Modbus traffic, or building function code allowlists.",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\detecting-modbus-protocol-anomalies\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "fa6812d63b44fb9b005909a0e0147b8d031ef403b844f246cfd95cb52945ab7d",
+      "bodySha256": "995151db23a297396c4205131da639bdc8e83087090345b22dd098b001ae9254",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "detecting-modbus-protocol-anomalies",
+        "frontmatterDescription": "Detect anomalies in Modbus/TCP and Modbus RTU industrial traffic via function code monitoring, register range validation, timing analysis, and deep packet inspection, using Zeek's Modbus analyzer, Suricata IDS with OT rules, and Python Markov chain models of normal transaction sequences. Use for deploying Modbus IDS in OT environments, baselining polling patterns, investigating suspicious Modbus traffic, or building function code allowlists.",
+        "headings": [
+          "Detecting Modbus Protocol Anomalies",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Capture and Parse Modbus Traffic",
+          "Key Concepts",
+          "Tools & Systems",
+          "Output Format"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c9ae6fa3bc1ff395",
+      "name": "officecli-pitch-deck",
+      "description": "Use this skill when the user is building a fundraising / investor pitch deck — seed, Series A / B / C, convertible note, SAFE round, strategic raise. Trigger on: 'pitch deck', 'investor deck', 'Series A deck', 'Series B deck', 'Series C deck', 'fundraising deck', 'seed pitch', 'VC deck', 'raising capital', 'term sheet presentation'. Output is a single .pptx. This skill is a scene layer on top of officecli-pptx — inherits every pptx v2 rule (visual floor, grid, palettes, connector canon, Delivery Gate). DO NOT invoke for a generic board review, sales deck, all-hands, or product launch — route those to officecli-pptx base.",
+      "sourcePath": "catalog-c\\agent-skills\\officecli\\OfficeCLI-main\\skills\\officecli-pitch-deck\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\officecli\\OfficeCLI-main",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "b3382609c60900ec4e4b693ea05cd917f5d66b68994c775e5d452696c3aed234",
+      "bodySha256": "6b59efdc094451945fd059548771326cce4bd2e3544d0659d3d6acf0825ea2b1",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "automation-mcp-integrations",
+        "product-operations",
+        "visual-3d-motion",
+        "writing-narrative-canon"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "officecli-pitch-deck",
+        "frontmatterDescription": "Use this skill when the user is building a fundraising / investor pitch deck — seed, Series A / B / C, convertible note, SAFE round, strategic raise. Trigger on: 'pitch deck', 'investor deck', 'Series A deck', 'Series B deck', 'Series C deck', 'fundraising deck', 'seed pitch', 'VC deck', 'raising capital', 'term sheet presentation'. Output is a single .pptx. This skill is a scene layer on top of officecli-pptx — inherits every pptx v2 rule (visual floor, grid, palettes, connector canon, Delivery Gate). DO NOT invoke for a generic board review, sales deck, all-hands, or product launch — route those to officecli-pptx base.",
+        "headings": [
+          "OfficeCLI Pitch Deck Skill",
+          "Setup",
+          "⚠️ Help-First Rule",
+          "Mental Model & Inheritance",
+          "Shell & Execution Discipline",
+          "What \"pitch deck\" means here (identity)",
+          "Reverse handoff — when to go BACK to pptx base",
+          "Series A / B / C stage diagnosis (decision tool)",
+          "赛道 arc templates (5 families)",
+          "(1) B2B SaaS / Enterprise software",
+          "(2) Consumer (B2C app / consumer hardware / D2C)",
+          "(3) Deep Tech / Frontier tech (AI foundation models, quantum, climate hardware, robotics)"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "description: \"Use this skill when the user is building a fundraising / investor pitch deck — seed, Series A / B / C, convertible note, SAFE round, strategic raise. Trigger on: 'pitch deck', 'investor deck', 'Series A deck', 'Series B deck', 'Series C deck', 'fundraising deck', 'seed pitch', 'VC deck', 'raising capital', 'term sheet presentation'. Output is a single .pptx. This skill is a scene layer on top of officecli-pptx — inherits every pptx v2 rule (visual floor, grid, palettes, connector canon, Delivery Gate). DO NOT invoke for a generic board review, sales deck, all-hands, or product launch — route those to officecli-pptx base.\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "**Speaker notes rule.** Every content slide (non-cover, non-closing) MUST carry speaker notes via `officecli add \"$FILE\" /slide[N] --type notes --prop text='…'`. Missing notes = not shippable — inherits pptx v2 §Hard rules (H7). Run `officecli help pptx notes` to confirm prop names before building."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Sub-labels ≥ 16pt (H4 floor). For 5 stats stacked, drop number size to 44pt; 6+ stats means pick a different pattern. Post-batch for column/bar charts: `officecli set \"$FILE\" \"/slide[N]/chart[1]\" --prop gap=80` to tighten bar spacing."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "> **Chart `series1.color=` on `add` works** (applies to every chart recipe below). Passing `--prop series1.color=` (or `series2.color=`, …) on chart `add` applies the series color and exits 0. Verify with a readback if you like: `officecli get \"$FILE\" \"/slide[N]/chart[1]/series[1]\" --json | jq '.data.results[0].format.color'`."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "officecli add \"$FILE\" \"/slide[1]\" --type shape --prop name=BrandBand \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "officecli add \"$FILE\" \"/slide[1]\" --type shape --prop name=CoverTitle --prop text=\"Acme DevOps\" \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "officecli add \"$FILE\" \"/slide[1]\" --type shape --prop name=Tagline --prop text=\"Kubernetes observability, built for production at scale\" \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "officecli add \"$FILE\" \"/slide[1]\" --type shape --prop name=CoverMeta --prop text='Series B · $35M · April 2026' \\"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "description: \"Use this skill when the user is building a fundraising / investor pitch deck — seed, Series A / B / C, convertible note, SAFE round, strategic raise. Trigger on: 'pitch deck', 'investor deck', 'Series A deck', 'Series B deck', 'Series C deck', 'fundraising deck', 'seed pitch', 'VC deck', 'raising capital', 'term sheet presentation'. Output is a single .pptx. This skill is a scene layer on top of officecli-pptx — inherits every pptx v2 rule (visual floor, grid, palettes, connector canon, Delivery Gate). DO NOT invoke for a generic board review, sales deck, all-hands, or product launch — route those to officecli-pptx base.\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "**Speaker notes rule.** Every content slide (non-cover, non-closing) MUST carry speaker notes via `officecli add \"$FILE\" /slide[N] --type notes --prop text='…'`. Missing notes = not shippable — inherits pptx v2 §Hard rules (H7). Run `officecli help pptx notes` to confirm prop names before building."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Sub-labels ≥ 16pt (H4 floor). For 5 stats stacked, drop number size to 44pt; 6+ stats means pick a different pattern. Post-batch for column/bar charts: `officecli set \"$FILE\" \"/slide[N]/chart[1]\" --prop gap=80` to tighten bar spacing."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "> **Chart `series1.color=` on `add` works** (applies to every chart recipe below). Passing `--prop series1.color=` (or `series2.color=`, …) on chart `add` applies the series color and exits 0. Verify with a readback if you like: `officecli get \"$FILE\" \"/slide[N]/chart[1]/series[1]\" --json | jq '.data.results[0].format.color'`."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "officecli add \"$FILE\" \"/slide[1]\" --type shape --prop name=BrandBand \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "officecli add \"$FILE\" \"/slide[1]\" --type shape --prop name=CoverTitle --prop text=\"Acme DevOps\" \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "officecli add \"$FILE\" \"/slide[1]\" --type shape --prop name=Tagline --prop text=\"Kubernetes observability, built for production at scale\" \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "officecli add \"$FILE\" \"/slide[1]\" --type shape --prop name=CoverMeta --prop text='Series B · $35M · April 2026' \\"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "visual-3d-motion",
+        "writing-narrative-canon",
+        "automation-mcp-integrations",
+        "product-operations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c9fc8baf5b813844",
+      "name": "conventional-commit",
+      "description": "Prompt and workflow for generating conventional commit messages using a structured XML format. Guides users to create standardized, descriptive commit messages in line with the Conventional Commits specification, including instructions, examples, and validation.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\conventional-commit\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "5adacc45cc5906c4e5d1bf760b165cf4e3ed6a90f5214c6612e953a83932d2c1",
+      "bodySha256": "250235f71b8c501a7744ded911281292324bcd1a2d014e34b25041e2d2c8bf73",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "conventional-commit",
+        "frontmatterDescription": "Prompt and workflow for generating conventional commit messages using a structured XML format. Guides users to create standardized, descriptive commit messages in line with the Conventional Commits specification, including instructions, examples, and validation.",
+        "headings": [
+          "Instructions",
+          "Workflow",
+          "Commit Message Structure",
+          "Examples",
+          "Validation",
+          "Final Step"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "architecture-specification"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-ca8d682e20adcf03",
+      "name": "prioritizing-vulnerabilities-with-cvss-scoring",
+      "description": "The Common Vulnerability Scoring System (CVSS) is the industry standard",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\prioritizing-vulnerabilities-with-cvss-scoring\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "78650e546103e15495f537dc2fc877e18ac96f76e4b080a24291f3ac6c5985f8",
+      "bodySha256": "39c9425e347ed6bfbcd8d079be4b039dbe5a2a01aceba885cec96b7d31b34b4e",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "prioritizing-vulnerabilities-with-cvss-scoring",
+        "frontmatterDescription": "The Common Vulnerability Scoring System (CVSS) is the industry standard",
+        "headings": [
+          "Prioritizing Vulnerabilities with CVSS Scoring",
+          "Overview",
+          "When to Use",
+          "Prerequisites",
+          "Core Concepts",
+          "CVSS v4.0 Metric Groups",
+          "1. Base Metrics (Intrinsic Severity)",
+          "2. Threat Metrics (Dynamic Context)",
+          "3. Environmental Metrics (Organization-Specific)",
+          "4. Supplemental Metrics (Advisory Information)",
+          "CVSS v4.0 Severity Ratings",
+          "CVSS v4.0 Vector String Format"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-cae970983bf03b70",
+      "name": "implementing-api-gateway-security-controls",
+      "description": "Configures API gateways such as Kong, AWS API Gateway, Azure APIM,",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\implementing-api-gateway-security-controls\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "4cc1b9981e2f1f489978523bd7eeeaff70780c109cb06d34f206a6c79b2d44af",
+      "bodySha256": "0d87f08f2588b1426ae379d752e3799ef501df2e497433e9efc749f014f09a9c",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "implementing-api-gateway-security-controls",
+        "frontmatterDescription": "'Configures API gateways such as Kong, AWS API Gateway, Azure APIM,",
+        "headings": [
+          "Implementing API Gateway Security Controls",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Kong Gateway Security Configuration",
+          "kong.yml - Declarative Kong configuration with security plugins",
+          "Step 2: AWS API Gateway Security Configuration",
+          "Create API with mutual TLS",
+          "Configure authorizer (JWT with Cognito)",
+          "Create route with authorizer",
+          "Configure throttling",
+          "WAF association"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- /api/v1/users"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "RouteKey='GET /api/v1/users',"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/api/v1/users:"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "-subj \"/CN=API Gateway CA/O=Example Corp\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "-subj \"/CN=api-client/O=Example Corp\""
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- /api/v1/users"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "RouteKey='GET /api/v1/users',"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/api/v1/users:"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "-subj \"/CN=API Gateway CA/O=Example Corp\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "-subj \"/CN=api-client/O=Example Corp\""
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "governance-security"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    }
+  ]
+}

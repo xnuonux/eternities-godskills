@@ -1,0 +1,2005 @@
+{
+  "schemaVersion": 1,
+  "packetId": "agent-orchestration-020",
+  "familyId": "agent-orchestration",
+  "sequence": 20,
+  "sourceCount": 25,
+  "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions.",
+  "cards": [
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-0791e7b8a69dfff2",
+      "name": "skill-security-auditor",
+      "description": ">",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\engineering\\skills\\skill-security-auditor\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\engineering",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "a5c3da433dbd5bfa38a48294e124d8e04811e2187a3dbb533c05978f8569a370",
+      "bodySha256": "8281b2a45e2ab66d21d45910fa47e02158113e319391d51c60215d39090db686",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-6f7361d163b120db"
+      ],
+      "structure": {
+        "frontmatterName": "skill-security-auditor",
+        "frontmatterDescription": ">",
+        "headings": [
+          "Skill Security Auditor",
+          "Quick Start",
+          "Audit a local skill directory",
+          "Audit a skill from a git repo",
+          "Audit with strict mode (any WARN becomes FAIL)",
+          "Output JSON report",
+          "What Gets Scanned",
+          "1. Code Execution Risks (Python/Bash Scripts)",
+          "2. Prompt Injection in SKILL.md",
+          "3. Dependency Supply Chain",
+          "4. File System & Structure",
+          "Audit Workflow"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "python3 scripts/skill_security_auditor.py /path/to/skill-name/"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "python3 scripts/skill_security_auditor.py /path/to/skill-name/ --strict"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "python3 scripts/skill_security_auditor.py /path/to/skill-name/ --json"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| **File system abuse** | writes outside skill dir, `/etc/`, `~/.bashrc`, `~/.profile`, symlink creation | 🟡 HIGH |"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "python3 scripts/skill_security_auditor.py /path/to/skill-name/"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "python3 scripts/skill_security_auditor.py /path/to/skill-name/ --strict"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "python3 scripts/skill_security_auditor.py /path/to/skill-name/ --json"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| **File system abuse** | writes outside skill dir, `/etc/`, `~/.bashrc`, `~/.profile`, symlink creation | 🟡 HIGH |"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "governance-security"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-15b9e936e31abd16",
+      "name": "init",
+      "description": "Create a new AgentHub collaboration session with task, agent count, and evaluation criteria. Use when the user runs /hub:init or asks to start a multi-agent competition on a task.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\engineering\\agenthub\\skills\\init\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\engineering",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "edc8384e98375747c81afd649f6901f2b0fce0d201fec4bd6cfc1cba68b8702e",
+      "bodySha256": "832d2498a2b6188f6edbd81c228f428295babfd1890a2f451c04b9db8edea00a",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-bb54068aea85faa7"
+      ],
+      "structure": {
+        "frontmatterName": "init",
+        "frontmatterDescription": "Create a new AgentHub collaboration session with task, agent count, and evaluation criteria. Use when the user runs /hub:init or asks to start a multi-agent competition on a task.",
+        "headings": [
+          "/hub:init — Create New Session",
+          "Usage",
+          "What It Does",
+          "If arguments provided",
+          "If no arguments (interactive mode)",
+          "Output",
+          "Baseline Capture",
+          "After Init"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "description: \"Create a new AgentHub collaboration session with task, agent count, and evaluation criteria. Use when the user runs /hub:init or asks to start a multi-agent competition on a task.\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "command: /hub:init"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /hub:init — Create New Session"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/hub:init                                                    # Interactive mode"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/hub:init --task \"Optimize API\" --agents 3 --eval \"pytest bench.py\" --metric p50_ms --direction lower"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/hub:init --task \"Refactor auth\" --agents 2                  # No eval (LLM judge mode)"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Next step: Run /hub:spawn to launch 3 agents"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Next step: `/hub:spawn` to launch agents"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "description: \"Create a new AgentHub collaboration session with task, agent count, and evaluation criteria. Use when the user runs /hub:init or asks to start a multi-agent competition on a task.\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "command: /hub:init"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /hub:init — Create New Session"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/hub:init                                                    # Interactive mode"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/hub:init --task \"Optimize API\" --agents 3 --eval \"pytest bench.py\" --metric p50_ms --direction lower"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/hub:init --task \"Refactor auth\" --agents 2                  # No eval (LLM judge mode)"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Next step: Run /hub:spawn to launch 3 agents"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Next step: `/hub:spawn` to launch agents"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1629a32b230a98ca",
+      "name": "high-end-visual-design",
+      "description": "Teaches the AI to design like a high-end agency. Defines the exact fonts, spacing, shadows, card structures, and animations that make a website feel expensive. Blocks all the common defaults that make AI designs look cheap or generic.",
+      "sourcePath": "catalog-c\\agent-skills\\taste-skill\\skills\\soft-skill\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\taste-skill\\skills",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "d43773bac0b9b2b55616e6c03e2817cb5ce6b7b73ee6fb7a0a34b0bdfed3047f",
+      "bodySha256": "e1e32f5e2d420872c6c7332b53d5ff7721946766b78c4822b424c2d512c8fdbc",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "visual-3d-motion",
+        "web-interface-accessibility"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-8eb4c6e37779efd5",
+        "exact-d597a575b9334f13"
+      ],
+      "structure": {
+        "frontmatterName": "high-end-visual-design",
+        "frontmatterDescription": "Teaches the AI to design like a high-end agency. Defines the exact fonts, spacing, shadows, card structures, and animations that make a website feel expensive. Blocks all the common defaults that make AI designs look cheap or generic.",
+        "headings": [
+          "Agent Skill: Principal UI/UX Architect & Motion Choreographer (Awwwards-Tier)",
+          "1. Meta Information & Core Directive",
+          "2. THE \"ABSOLUTE ZERO\" DIRECTIVE (STRICT ANTI-PATTERNS)",
+          "3. THE CREATIVE VARIANCE ENGINE",
+          "A. Vibe & Texture Archetypes (Pick 1)",
+          "B. Layout Archetypes (Pick 1)",
+          "4. HAPTIC MICRO-AESTHETICS (COMPONENT MASTERY)",
+          "A. The \"Double-Bezel\" (Doppelrand / Nested Architecture)",
+          "B. Nested CTA & \"Island\" Button Architecture",
+          "C. Spatial Rhythm & Tension",
+          "5. MOTION CHOREOGRAPHY (FLUID DYNAMICS)",
+          "A. The \"Fluid Island\" Nav & Hamburger Reveal"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "web-interface-accessibility",
+        "visual-3d-motion"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1cbee4270120a6ef",
+      "name": "run",
+      "description": "Run a single experiment iteration. Edit the target file, evaluate, keep or discard. Use when the user runs /ar:run or asks for one manual autoresearch iteration.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\engineering\\autoresearch-agent\\skills\\run\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\engineering",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "97826fc43ad063cd7dadf86f58e5ec0f1e1bce81062341e0c4b102349428aff5",
+      "bodySha256": "c2d57519f2bcbe286566af670d3da9fb92c8e035d8d4d415915325fc909dbe7d",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-acba25512100f80b"
+      ],
+      "structure": {
+        "frontmatterName": "run",
+        "frontmatterDescription": "Run a single experiment iteration. Edit the target file, evaluate, keep or discard. Use when the user runs /ar:run or asks for one manual autoresearch iteration.",
+        "headings": [
+          "/ar:run — Single Experiment Iteration",
+          "Usage",
+          "What It Does",
+          "Step 1: Resolve experiment",
+          "Step 2: Load context",
+          "Read experiment config",
+          "Read strategy and constraints",
+          "Read experiment history",
+          "Checkout the experiment branch",
+          "Step 3: Decide what to try",
+          "Step 4: Make ONE change",
+          "Step 5: Commit and evaluate"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "description: \"Run a single experiment iteration. Edit the target file, evaluate, keep or discard. Use when the user runs /ar:run or asks for one manual autoresearch iteration.\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "command: /ar:run"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /ar:run — Single Experiment Iteration"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/ar:run engineering/api-speed              # Run one iteration"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/ar:run                                     # List experiments, let user pick"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "description: \"Run a single experiment iteration. Edit the target file, evaluate, keep or discard. Use when the user runs /ar:run or asks for one manual autoresearch iteration.\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "command: /ar:run"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /ar:run — Single Experiment Iteration"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/ar:run engineering/api-speed              # Run one iteration"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/ar:run                                     # List experiments, let user pick"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1f0687c272321390",
+      "name": "academy-guide",
+      "description": ">",
+      "sourcePath": "catalog-c\\agent-skills\\skills__anthropics\\skills\\academy-guide\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\skills__anthropics",
+      "remote": "https://github.com/anthropics/skills.git",
+      "gitHead": "3b3fad96af16a10759d930941b4520ba0c40edae",
+      "contentDigest": "a5c3da433dbd5bfa38a48294e124d8e04811e2187a3dbb533c05978f8569a370",
+      "bodySha256": "102ce9bf7624e88cf29b80b18fe5c6e1959dc58b1d66915acf808cca1704f610",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-6f7361d163b120db"
+      ],
+      "structure": {
+        "frontmatterName": "academy-guide",
+        "frontmatterDescription": ">",
+        "headings": [
+          "Claude Academy guide",
+          "Purpose",
+          "Rules",
+          "The catalog"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "`https://academy.claude.com/` plus its path: `/courses/{slug}` for"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "courses, `/tutorials/{slug}` for tutorials, `/use-cases/{slug}` for"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "a tutorial's URL always starts with /tutorials/ even when it reads like"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "`https://academy.claude.com/` plus its path: `/courses/{slug}` for"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "courses, `/tutorials/{slug}` for tutorials, `/use-cases/{slug}` for"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "a tutorial's URL always starts with /tutorials/ even when it reads like"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1fc009ae1bd1fe98",
+      "name": "subagent-driven-development",
+      "description": "Use when executing implementation plans with independent tasks in the current session",
+      "sourcePath": "catalog-c\\agent-skills\\superpowers\\skills\\subagent-driven-development\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\superpowers\\skills",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "2d4fdc043068fba0c481f978e017e0847778917b253fda374520081bdec91bfd",
+      "bodySha256": "349a08ad8b59b19b86c13a7d2f34a1a38719bf88257004a863eefefa8d9f9e40",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-86e47f6ee3650051"
+      ],
+      "structure": {
+        "frontmatterName": "subagent-driven-development",
+        "frontmatterDescription": "Use when executing implementation plans with independent tasks in the current session",
+        "headings": [
+          "Subagent-Driven Development",
+          "When to Use",
+          "The Process",
+          "Setup",
+          "Model Selection",
+          "The Task Loop",
+          "1. Dispatch the implementer",
+          "2. Handle the report",
+          "3. Review the task",
+          "4. The fix loop",
+          "5. Complete the task",
+          "Final Review"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-23adfaa4933738d8",
+      "name": "pdf",
+      "description": "Use this skill whenever the user wants to do anything with PDF files. This includes reading or extracting text/tables from PDFs, combining or merging multiple PDFs into one, splitting PDFs apart, rotating pages, adding watermarks, creating new PDFs, filling PDF forms, encrypting/decrypting PDFs, extracting images, and OCR on scanned PDFs to make them searchable. If the user mentions a .pdf file or asks to produce one, use this skill.",
+      "sourcePath": "catalog-c\\agent-skills\\skills__anthropics\\skills\\pdf\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\skills__anthropics",
+      "remote": "https://github.com/anthropics/skills.git",
+      "gitHead": "3b3fad96af16a10759d930941b4520ba0c40edae",
+      "contentDigest": "5b14e587900283f9ec3751ac7618ae464a91635781f808a44d9ef6ea3abeec45",
+      "bodySha256": "067401220db5745f719ff8c048d545d5edc8545e809668a3a6f9e2892fa51d48",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-c35b21d6ca39aa7c"
+      ],
+      "structure": {
+        "frontmatterName": "pdf",
+        "frontmatterDescription": "Use this skill whenever the user wants to do anything with PDF files. This includes reading or extracting text/tables from PDFs, combining or merging multiple PDFs into one, splitting PDFs apart, rotating pages, adding watermarks, creating new PDFs, filling PDF forms, encrypting/decrypting PDFs, extracting images, and OCR on scanned PDFs to make them searchable. If the user mentions a .pdf file or asks to produce one, use this skill.",
+        "headings": [
+          "PDF Processing Guide",
+          "Overview",
+          "Quick Start",
+          "Read a PDF",
+          "Extract text",
+          "Python Libraries",
+          "pypdf - Basic Operations",
+          "Merge PDFs",
+          "Split PDF",
+          "Extract Metadata",
+          "Rotate Pages",
+          "pdfplumber - Text and Table Extraction"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-24cf93c7678e8c4b",
+      "name": "migrate",
+      "description": ">-",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\engineering-team\\playwright-pro\\skills\\migrate\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\engineering-team",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "1a1ccf89e3dd94bfcce5869459499d3cb6f11eb888ad023fe7675e024664b430",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7"
+      ],
+      "structure": {
+        "frontmatterName": "migrate",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "Migrate to Playwright",
+          "Input",
+          "Steps",
+          "1. Detect Source Framework",
+          "2. Assess Migration Scope",
+          "3. Set Up Playwright (If Not Present)",
+          "4. Convert Files",
+          "Cypress → Playwright",
+          "Selenium → Playwright",
+          "5. Upgrade Locators",
+          "6. Convert Custom Commands / Utilities",
+          "7. Verify Each Converted File"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Large (31+) | Use `/batch` | Parallel conversion with `/batch` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Run `/pw:init` first if Playwright isn't configured."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Large (31+) | Use `/batch` | Parallel conversion with `/batch` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Run `/pw:init` first if Playwright isn't configured."
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-25732a157a3a14be",
+      "name": "fixing-metadata",
+      "description": ">",
+      "sourcePath": "catalog-c\\agent-skills\\ui-skills\\skills\\fixing-metadata\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\ui-skills\\skills",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "a5c3da433dbd5bfa38a48294e124d8e04811e2187a3dbb533c05978f8569a370",
+      "bodySha256": "b8315ff95a92dcfa48c33e2b4838a31d9448bd46252aab45726549ce865d6547",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "web-interface-accessibility"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-6f7361d163b120db"
+      ],
+      "structure": {
+        "frontmatterName": "fixing-metadata",
+        "frontmatterDescription": ">",
+        "headings": [
+          "Workflow",
+          "when to apply",
+          "rule categories by priority",
+          "quick reference",
+          "1. correctness and duplication (critical)",
+          "2. title and description (high)",
+          "3. canonical and indexing (high)",
+          "4. social cards (high)",
+          "5. icons and manifest (medium)",
+          "6. structured data (medium)",
+          "7. locale and alternates (low-medium)",
+          "8. tool boundaries (critical)"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "web-interface-accessibility"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-25ae465930839fbb",
+      "name": "report",
+      "description": ">-",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\engineering-team\\playwright-pro\\skills\\report\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\engineering-team",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "d1ba6caafa62ec1f117cce2ad9abd132c7f54a702acba6fee581d9318a83bc3c",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7"
+      ],
+      "structure": {
+        "frontmatterName": "report",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "Smart Test Reporting",
+          "Steps",
+          "1. Run Tests (If Not Already Run)",
+          "2. Parse Results",
+          "3. Detect Report Destination",
+          "4. Generate Report",
+          "Markdown Report (Always Generated)",
+          "Test Results — {{date}}",
+          "Summary",
+          "Failed Tests",
+          "Flaky Tests",
+          "By Project"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "npx playwright test --reporter=json 2> /dev/null"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| `TESTRAIL_URL` env var | TestRail configured | Push results via `/pw:testrail push` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Invoke `/pw:testrail push` with the JSON results."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "npx playwright test --reporter=json 2> /dev/null"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| `TESTRAIL_URL` env var | TestRail configured | Push results via `/pw:testrail push` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Invoke `/pw:testrail push` with the JSON results."
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-27230bd818979450",
+      "name": "brand-guidelines",
+      "description": "Applies Anthropic's official brand colors and typography to any sort of artifact that may benefit from having Anthropic's look-and-feel. Use it when brand colors or style guidelines, visual formatting, or company design standards apply.",
+      "sourcePath": "catalog-c\\agent-skills\\skills__anthropics\\skills\\brand-guidelines\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\skills__anthropics",
+      "remote": "https://github.com/anthropics/skills.git",
+      "gitHead": "3b3fad96af16a10759d930941b4520ba0c40edae",
+      "contentDigest": "a30d20956eea5ef411a05389a8ec304a8c670bd6943a7353a9df64a08f472b45",
+      "bodySha256": "a0aa0a21ebf9e8511a045cc234bc839adc2b6706db727add14e9855f242e11a7",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "visual-3d-motion"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-6713728616ecad90"
+      ],
+      "structure": {
+        "frontmatterName": "brand-guidelines",
+        "frontmatterDescription": "Applies Anthropic's official brand colors and typography to any sort of artifact that may benefit from having Anthropic's look-and-feel. Use it when brand colors or style guidelines, visual formatting, or company design standards apply.",
+        "headings": [
+          "Anthropic Brand Styling",
+          "Overview",
+          "Brand Guidelines",
+          "Colors",
+          "Typography",
+          "Features",
+          "Smart Font Application",
+          "Text Styling",
+          "Shape and Accent Colors",
+          "Technical Details",
+          "Font Management",
+          "Color Application"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "visual-3d-motion"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-27a09d91dedea59d",
+      "name": "status",
+      "description": "Show DAG state, agent progress, and branch status for an AgentHub session. Use when the user runs /hub:status or asks how the AgentHub agents are doing.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\engineering\\agenthub\\skills\\status\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\engineering",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "2e86a02cfb0481a57b1ebb1bd6795dc66b05b08a103e51ae8f513d9b26c4a471",
+      "bodySha256": "a6317ac1417c1b9cd810b2ff104a149ad0aef5646897e9a67b5571c95db1b3d2",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-073c1634c496cdb6"
+      ],
+      "structure": {
+        "frontmatterName": "status",
+        "frontmatterDescription": "Show DAG state, agent progress, and branch status for an AgentHub session. Use when the user runs /hub:status or asks how the AgentHub agents are doing.",
+        "headings": [
+          "/hub:status — Session Status",
+          "Usage",
+          "What It Does",
+          "Output Format",
+          "After Status"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "description: \"Show DAG state, agent progress, and branch status for an AgentHub session. Use when the user runs /hub:status or asks how the AgentHub agents are doing.\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "command: /hub:status"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /hub:status — Session Status"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/hub:status                        # Status for latest session"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/hub:status 20260317-143022        # Status for specific session"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Suggest `/hub:eval` to rank results"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "description: \"Show DAG state, agent progress, and branch status for an AgentHub session. Use when the user runs /hub:status or asks how the AgentHub agents are doing.\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "command: /hub:status"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /hub:status — Session Status"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/hub:status                        # Status for latest session"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/hub:status 20260317-143022        # Status for specific session"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Suggest `/hub:eval` to rank results"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-2d379358cbf9ee73",
+      "name": "ask-docs",
+      "description": "Query the official CrewAI documentation via its live MCP server. Use when the user has a CrewAI question that isn't fully covered by the getting-started, design-agent, design-task, or optimize-flow skills — e.g., specific API details, configuration options, advanced features, troubleshooting errors, or anything where the latest docs are the best source of truth.",
+      "sourcePath": "catalog-c\\agent-skills\\skills\\.agents\\skills\\ask-docs\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\skills\\.agents",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "36ad63dd02e367a51e837da53c81b890c08a1fe36e6556b6451024bd41bc207f",
+      "bodySha256": "6a569525a9307414a0de6a2259067e1a533d0ebc9a32476507e50664f92b656b",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "automation-mcp-integrations",
+        "writing-narrative-canon"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-777f99fc2688e8b6"
+      ],
+      "structure": {
+        "frontmatterName": "ask-docs",
+        "frontmatterDescription": "Query the official CrewAI documentation via its live MCP server. Use when the user has a CrewAI question that isn't fully covered by the getting-started, design-agent, design-task, or optimize-flow skills — e.g., specific API details, configuration options, advanced features, troubleshooting errors, or anything where the latest docs are the best source of truth.",
+        "headings": [
+          "Ask CrewAI Docs",
+          "When to Use This Skill",
+          "How to Query the Docs",
+          "Option 1: CrewAI Docs MCP Server (Preferred)",
+          "Option 2: WebFetch Fallback",
+          "Setting Up the MCP Server (Recommended)",
+          "Codex",
+          "Cursor / Windsurf / Other Agents",
+          "Workflow",
+          "Examples of Good Use Cases",
+          "Related Skills"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "writing-narrative-canon",
+        "automation-mcp-integrations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3236f378ac7db86e",
+      "name": "open-code-review-delegate",
+      "description": ">",
+      "sourcePath": "catalog-c\\agent-skills\\open-code-review\\plugins\\open-code-review\\skills\\open-code-review-delegate\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\open-code-review\\plugins",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "a5c3da433dbd5bfa38a48294e124d8e04811e2187a3dbb533c05978f8569a370",
+      "bodySha256": "ead2ddb1b8db584051c81a2b5cdd6b6abe361c133b032a6b3a84567a8329d71f",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-6f7361d163b120db",
+        "exact-de46f96a4772b597"
+      ],
+      "structure": {
+        "frontmatterName": "open-code-review-delegate",
+        "frontmatterDescription": ">",
+        "headings": [
+          "Open Code Review — Delegation Mode",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Preview — Determine What to Review",
+          "Step 2: Get Rules for Files",
+          "Step 3: Get Diffs",
+          "Tracked files",
+          "New untracked files — read directly (entire file is new code)",
+          "Step 4: Review Each File",
+          "Step 5: Format Output",
+          "Step 6: Classify and Report",
+          "Step 7: Fix (Optional)"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **Working directory matters** — `ocr delegate` operates on the Git repo at the current directory. Use `--repo /path` to override."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **Working directory matters** — `ocr delegate` operates on the Git repo at the current directory. Use `--repo /path` to override."
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-335de7c92591fa36",
+      "name": "testrail",
+      "description": ">-",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\engineering-team\\playwright-pro\\skills\\testrail\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\engineering-team",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "4f94a5087913ccf3b8ff64c06d09a9774ce97025f9b3a2d414b4013e6490bcbb",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7"
+      ],
+      "structure": {
+        "frontmatterName": "testrail",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "TestRail Integration",
+          "Prerequisites",
+          "Capabilities",
+          "1. Import Test Cases → Generate Playwright Tests",
+          "2. Push Test Results → TestRail",
+          "3. Create Test Run",
+          "4. Sync Status",
+          "5. Update Test Cases in TestRail",
+          "MCP Tools Used",
+          "Test Annotation Format",
+          "Output"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/pw:testrail import --project <id> --suite <id>"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/pw:testrail push --run <id>"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/pw:testrail run --project <id> --name \"Sprint 42 Regression\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/pw:testrail status --project <id>"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/pw:testrail update --case <id>"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/pw:testrail import --project <id> --suite <id>"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/pw:testrail push --run <id>"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/pw:testrail run --project <id> --name \"Sprint 42 Regression\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/pw:testrail status --project <id>"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/pw:testrail update --case <id>"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-33987810f3fbe949",
+      "name": "eu-ai-act-specialist",
+      "description": "EU AI Act (Regulation (EU) 2024/1689) operational compliance for compliance teams. Three Article-level decisions: (1) What's the risk tier of this AI system — prohibited (Art. 5), high-risk (Art. 6 + Annex III), limited-risk (Art. 50), or minimal-risk? (2) For high-risk systems, what's the Article 43 conformity assessment route (Module A internal control vs Module H full QMS + notified body) and what goes in the Annex IV technical documentation? (3) Per organizational role (provider / deployer / importer / distributor / authorized representative), what are the active obligations and deadlines? Use during AI system intake review, when planning conformity assessment, or when scoping deployer obligations. Cites Articles + Annexes for every output. NOT executive AI strategy (see chief-ai-officer-advisor). NOT a legal substitute.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\ra-qm-team\\compliance-team-eu-ai-act\\skills\\eu-ai-act-specialist\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\ra-qm-team",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "35169b8393950fce5d5aaeb439f1708dc85b911ae2d9e69bd9716ed88895d73a",
+      "bodySha256": "fe5d4ea4f5c03bc49302f06b7a09b9ff263fe4a3ae5d9434f3bfa081b6c414fd",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "governance-security",
+        "writing-narrative-canon"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-072b1d32062b6674"
+      ],
+      "structure": {
+        "frontmatterName": "eu-ai-act-specialist",
+        "frontmatterDescription": "EU AI Act (Regulation (EU) 2024/1689) operational compliance for compliance teams. Three Article-level decisions: (1) What's the risk tier of this AI system — prohibited (Art. 5), high-risk (Art. 6 + Annex III), limited-risk (Art. 50), or minimal-risk? (2) For high-risk systems, what's the Article 43 conformity assessment route (Module A internal control vs Module H full QMS + notified body) and what goes in the Annex IV technical documentation? (3) Per organizational role (provider / deployer / importer / distributor / authorized representative), what are the active obligations and deadlines? Use during AI system intake review, when planning conformity assessment, or when scoping deployer obligations. Cites Articles + Annexes for every output. NOT executive AI strategy (see chief-ai-officer-advisor). NOT a legal substitute.",
+        "headings": [
+          "EU AI Act Compliance Specialist",
+          "Keywords",
+          "Quick Start",
+          "Decision A: Classify an AI system per the Act",
+          "Decision B: Conformity assessment plan for a high-risk system",
+          "Decision C: Obligation tracker per organizational role",
+          "Key Questions (ask these first)",
+          "Core Responsibilities",
+          "1. AI System Risk Classification",
+          "2. Conformity Assessment + Annex IV Technical Documentation",
+          "3. Per-Role Obligation Tracker",
+          "Workflows"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "governance-security",
+        "writing-narrative-canon"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-355ac2cac1eef084",
+      "name": "init",
+      "description": ">-",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\engineering-team\\playwright-pro\\skills\\init\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\engineering-team",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "5fdd3d8e0da6ed676cb9e1ac359a00d67f0c1c11c13b83a983f5796820b8a188",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7",
+        "candidate-bb54068aea85faa7"
+      ],
+      "structure": {
+        "frontmatterName": "init",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "Initialize Playwright Project",
+          "Steps",
+          "1. Analyze the Project",
+          "2. Install Playwright",
+          "3. Generate `playwright.config.ts`",
+          "4. Create Folder Structure",
+          "5. Generate Example Test",
+          "6. Generate CI Workflow",
+          "7. Update `.gitignore`",
+          "8. Add npm Scripts",
+          "9. Verify Setup",
+          "Output"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "command: 'npm run dev',"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/test-results/"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/playwright-report/"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/blob-report/"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/playwright/.cache/"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "command: 'npm run dev',"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/test-results/"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/playwright-report/"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/blob-report/"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/playwright/.cache/"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-400de55530404c78",
+      "name": "coverage",
+      "description": ">-",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\engineering-team\\playwright-pro\\skills\\coverage\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\engineering-team",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "a3a5c9728f6df53f0eb13038f73a0ae0ee507d96a088eb396c443ed9251a4221",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7",
+        "candidate-c3a3091b9d32267d"
+      ],
+      "structure": {
+        "frontmatterName": "coverage",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "Analyze Test Coverage Gaps",
+          "Steps",
+          "1. Map Application Surface",
+          "2. Map Existing Tests",
+          "3. Generate Coverage Matrix",
+          "Coverage Matrix",
+          "4. Prioritize Gaps",
+          "5. Suggest Test Plan",
+          "Recommended Test Plan",
+          "Priority 1: Critical",
+          "Priority 2: High",
+          "6. Auto-Generate (Optional)"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Auth | /login | 5 | ✅ Covered |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Auth | /register | 0 | ❌ Missing |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Auth | /forgot-password | 0 | ❌ Missing |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Dashboard | /dashboard | 3 | ⚠️ Partial (no error states) |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Settings | /settings | 0 | ❌ Missing |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Checkout | /checkout | 8 | ✅ Covered |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "1. /register (4 tests) — use auth/registration template — quick"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "2. /forgot-password (3 tests) — use auth/password-reset template — quick"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Auth | /login | 5 | ✅ Covered |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Auth | /register | 0 | ❌ Missing |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Auth | /forgot-password | 0 | ❌ Missing |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Dashboard | /dashboard | 3 | ⚠️ Partial (no error states) |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Settings | /settings | 0 | ❌ Missing |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Checkout | /checkout | 8 | ✅ Covered |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "1. /register (4 tests) — use auth/registration template — quick"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "2. /forgot-password (3 tests) — use auth/password-reset template — quick"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-4c69bd39a374585d",
+      "name": "caveman",
+      "description": ">",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\engineering\\caveman\\skills\\caveman\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\engineering",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "a5c3da433dbd5bfa38a48294e124d8e04811e2187a3dbb533c05978f8569a370",
+      "bodySha256": "410f63421118bf740f66d3c8fff5f7c4c4c945edc5e673c3675239de50795e86",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-6f7361d163b120db"
+      ],
+      "structure": {
+        "frontmatterName": "caveman",
+        "frontmatterDescription": ">",
+        "headings": [
+          "Caveman Mode",
+          "Persistence",
+          "Rules",
+          "Examples",
+          "Auto-Clarity Exception",
+          "Tooling"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "\"less tokens\", \"be brief\", or invokes /caveman."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "See [references/companion_tooling.md](references/companion_tooling.md). Tools: compressor + estimator + lint. Agent: `cs-caveman-mode`. Command: `/cs:caveman`."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "\"less tokens\", \"be brief\", or invokes /caveman."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "See [references/companion_tooling.md](references/companion_tooling.md). Tools: compressor + estimator + lint. Agent: `cs-caveman-mode`. Command: `/cs:caveman`."
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-4c7fdffaf46cb92a",
+      "name": "code-reviewer",
+      "description": "Code review automation for TypeScript, JavaScript, Python, Go, Swift, Kotlin, C#, .NET, Java, C, C++, Rust, Ruby, PHP, and Dart/Flutter. Analyzes PRs for complexity and risk, checks code quality for SOLID violations and code smells, generates review reports. Use when reviewing pull requests, analyzing code quality, identifying issues, generating review checklists.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\engineering-team\\skills\\code-reviewer\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\engineering-team",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "a1f209c06b6c5aa75184bfbe30a28d506992fd227da13022c908d7705266cf42",
+      "bodySha256": "28d80f6710369919e751679e588ba67db3fe5d11461a8f59c53fead2e119978a",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-e08ba693bb6ad36a"
+      ],
+      "structure": {
+        "frontmatterName": "code-reviewer",
+        "frontmatterDescription": "Code review automation for TypeScript, JavaScript, Python, Go, Swift, Kotlin, C#, .NET, Java, C, C++, Rust, Ruby, PHP, and Dart/Flutter. Analyzes PRs for complexity and risk, checks code quality for SOLID violations and code smells, generates review reports. Use when reviewing pull requests, analyzing code quality, identifying issues, generating review checklists.",
+        "headings": [
+          "Code Reviewer",
+          "How This Skill Is Organized",
+          "Loading order for every review",
+          "Tools",
+          "PR Analyzer",
+          "Analyze current branch against main",
+          "Compare specific branches",
+          "JSON output for integration",
+          "Code Quality Checker",
+          "Analyze a directory",
+          "Analyze specific language",
+          "Valid values: python, typescript, javascript, go, swift, kotlin, csharp, java, c, cpp, rust, ruby, php, dart"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "python scripts/pr_analyzer.py /path/to/repo"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "python scripts/pr_analyzer.py /path/to/repo --json"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "python scripts/code_quality_checker.py /path/to/code"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "python scripts/code_quality_checker.py /path/to/code --json"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "python scripts/review_report_generator.py /path/to/repo"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "python scripts/pr_analyzer.py /path/to/repo"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "python scripts/pr_analyzer.py /path/to/repo --json"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "python scripts/code_quality_checker.py /path/to/code"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "python scripts/code_quality_checker.py /path/to/code --json"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "python scripts/review_report_generator.py /path/to/repo"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "automation-mcp-integrations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-67aa24013b1179c8",
+      "name": "industrial-brutalist-ui",
+      "description": "Raw mechanical interfaces fusing Swiss typographic print with military terminal aesthetics. Rigid grids, extreme type scale contrast, utilitarian color, analog degradation effects. For data-heavy dashboards, portfolios, or editorial sites that need to feel like declassified blueprints.",
+      "sourcePath": "catalog-c\\agent-skills\\taste-skill\\skills\\brutalist-skill\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\taste-skill\\skills",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "dd138931fee5a6c06df4fd56db096afdb09e03970813e01dbde15d5c19a32004",
+      "bodySha256": "fffbaac8597f07679e9d87145533567658aedba3b5eca6f16a7075a333048caa",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "web-interface-accessibility"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-e695cf94c21c6aef"
+      ],
+      "structure": {
+        "frontmatterName": "industrial-brutalist-ui",
+        "frontmatterDescription": "Raw mechanical interfaces fusing Swiss typographic print with military terminal aesthetics. Rigid grids, extreme type scale contrast, utilitarian color, analog degradation effects. For data-heavy dashboards, portfolios, or editorial sites that need to feel like declassified blueprints.",
+        "headings": [
+          "SKILL: Industrial Brutalism & Tactical Telemetry UI",
+          "1. Skill Meta",
+          "2. Visual Archetypes",
+          "2.1 Swiss Industrial Print",
+          "2.2 Tactical Telemetry & CRT Terminal",
+          "3. Typographic Architecture",
+          "3.1 Macro-Typography (Structural Headers)",
+          "3.2 Micro-Typography (Data & Telemetry)",
+          "3.3 Textural Contrast (Artistic Disruption)",
+          "4. Color System",
+          "If Swiss Industrial Print (Light):",
+          "If Tactical Telemetry (Dark):"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "web-interface-accessibility"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-6a07a197f992a857",
+      "name": "eu-ai-act-specialist",
+      "description": "EU AI Act (Regulation (EU) 2024/1689) operational compliance for compliance teams. Three Article-level decisions: (1) What's the risk tier of this AI system — prohibited (Art. 5), high-risk (Art. 6 + Annex III), limited-risk (Art. 50), or minimal-risk? (2) For high-risk systems, what's the Article 43 conformity assessment route (Module A internal control vs Module H full QMS + notified body) and what goes in the Annex IV technical documentation? (3) Per organizational role (provider / deployer / importer / distributor / authorized representative), what are the active obligations and deadlines? Use during AI system intake review, when planning conformity assessment, or when scoping deployer obligations. Cites Articles + Annexes for every output. NOT executive AI strategy (see chief-ai-officer-advisor). NOT a legal substitute.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\ra-qm-team\\skills\\eu-ai-act-specialist\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\ra-qm-team",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "35169b8393950fce5d5aaeb439f1708dc85b911ae2d9e69bd9716ed88895d73a",
+      "bodySha256": "fe5d4ea4f5c03bc49302f06b7a09b9ff263fe4a3ae5d9434f3bfa081b6c414fd",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "governance-security",
+        "writing-narrative-canon"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-072b1d32062b6674"
+      ],
+      "structure": {
+        "frontmatterName": "eu-ai-act-specialist",
+        "frontmatterDescription": "EU AI Act (Regulation (EU) 2024/1689) operational compliance for compliance teams. Three Article-level decisions: (1) What's the risk tier of this AI system — prohibited (Art. 5), high-risk (Art. 6 + Annex III), limited-risk (Art. 50), or minimal-risk? (2) For high-risk systems, what's the Article 43 conformity assessment route (Module A internal control vs Module H full QMS + notified body) and what goes in the Annex IV technical documentation? (3) Per organizational role (provider / deployer / importer / distributor / authorized representative), what are the active obligations and deadlines? Use during AI system intake review, when planning conformity assessment, or when scoping deployer obligations. Cites Articles + Annexes for every output. NOT executive AI strategy (see chief-ai-officer-advisor). NOT a legal substitute.",
+        "headings": [
+          "EU AI Act Compliance Specialist",
+          "Keywords",
+          "Quick Start",
+          "Decision A: Classify an AI system per the Act",
+          "Decision B: Conformity assessment plan for a high-risk system",
+          "Decision C: Obligation tracker per organizational role",
+          "Key Questions (ask these first)",
+          "Core Responsibilities",
+          "1. AI System Risk Classification",
+          "2. Conformity Assessment + Annex IV Technical Documentation",
+          "3. Per-Role Obligation Tracker",
+          "Workflows"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "governance-security",
+        "writing-narrative-canon"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-6bc26955c4b3295d",
+      "name": "browser-automation",
+      "description": "Use when the user asks to automate browser tasks, scrape websites, fill forms, capture screenshots, extract structured data from web pages, or build web automation workflows. NOT for testing — use playwright-pro for that.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\engineering\\skills\\browser-automation\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\engineering",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "91da6824e772f7d6bd70f7084b2e1ee6e809d94d072cfde28d57dd8d179b5a5a",
+      "bodySha256": "f4211364d10e3a28eb2051b201889be89b589f4613b822a3c1dd2ce6a30f8b59",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-90d43c801cddfb64"
+      ],
+      "structure": {
+        "frontmatterName": "browser-automation",
+        "frontmatterDescription": "Use when the user asks to automate browser tasks, scrape websites, fill forms, capture screenshots, extract structured data from web pages, or build web automation workflows. NOT for testing — use playwright-pro for that.",
+        "headings": [
+          "Browser Automation - POWERFUL",
+          "Overview",
+          "Core Competencies",
+          "1. Web Scraping Patterns",
+          "2. Form Filling & Multi-Step Workflows",
+          "3. Screenshot & PDF Capture",
+          "4. Structured Data Extraction",
+          "5. Cookie & Session Management",
+          "6. Anti-Detection Patterns",
+          "7. Dynamic Content Handling",
+          "8. Error Handling & Retry Logic",
+          "Workflows"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "automation-mcp-integrations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-72ae50be57669391",
+      "name": "general-counsel-advisor",
+      "description": "General Counsel advisory for startups: contract review (MSA, SaaS, NDA, DPA, employment), IP strategy, term sheet decoding, and regulatory landscape mapping. Use when reviewing any contract or term sheet, deciding when to engage outside counsel, defining IP strategy, evaluating regulatory exposure (HIPAA, GDPR, FDA, fintech), or when user mentions general counsel, GC, legal review, contract risk, term sheet, IP assignment, or regulatory exposure. NOT a substitute for licensed counsel — surfaces questions to bring to qualified attorneys.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\c-level-advisor\\general-counsel-advisor\\skills\\general-counsel-advisor\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\c-level-advisor",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "1c71b821d39ef06d6c9ef2c237b096a48ea9cd18c867848db22df1d36bd51045",
+      "bodySha256": "c91df564423cb53399e44fe5bc81b77319c18e555726e0c3c3f819c833a4ae77",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-23e194267475c77d"
+      ],
+      "structure": {
+        "frontmatterName": "general-counsel-advisor",
+        "frontmatterDescription": "General Counsel advisory for startups: contract review (MSA, SaaS, NDA, DPA, employment), IP strategy, term sheet decoding, and regulatory landscape mapping. Use when reviewing any contract or term sheet, deciding when to engage outside counsel, defining IP strategy, evaluating regulatory exposure (HIPAA, GDPR, FDA, fintech), or when user mentions general counsel, GC, legal review, contract risk, term sheet, IP assignment, or regulatory exposure. NOT a substitute for licensed counsel — surfaces questions to bring to qualified attorneys.",
+        "headings": [
+          "General Counsel Advisor",
+          "Keywords",
+          "Quick Start",
+          "Scan a contract for risky clauses (uses bundled sample if no path given)",
+          "Analyze a term sheet for founder-friendliness",
+          "Key Questions (ask these first)",
+          "Core Responsibilities",
+          "1. Contract Review",
+          "2. IP Strategy",
+          "3. Term Sheet Decoding",
+          "4. Regulatory Landscape",
+          "Workflows"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "5. Log the decision via `/cs:decide`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "6. Log via `/cs:decide` with `/cs:freeze 30` to prevent regret-driven re-opening"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "## Output Standard (when invoked via `/cs:gc-review`)"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `c-level-advisor/c-level-agents/skills/gc-review/SKILL.md` — `/cs:gc-review` slash command"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "5. Log the decision via `/cs:decide`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "6. Log via `/cs:decide` with `/cs:freeze 30` to prevent regret-driven re-opening"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "## Output Standard (when invoked via `/cs:gc-review`)"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `c-level-advisor/c-level-agents/skills/gc-review/SKILL.md` — `/cs:gc-review` slash command"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-7b75d5d53a5df8c3",
+      "name": "setup",
+      "description": "Set up a new autoresearch experiment interactively. Collects domain, target file, eval command, metric, direction, and evaluator. Use when the user runs /ar:setup or asks to start optimizing a file with the autoresearch loop.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\engineering\\autoresearch-agent\\skills\\setup\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\engineering",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "7f2da182ccc06b9cee75c8bbb10c22b0cc192e21392b88b1ae42995805602a79",
+      "bodySha256": "e0d053a89ea12e9d86f963416348c6d0b6bfc72fd7a9e6c1586ee574f741552d",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-8fb6d5f37e8055ce"
+      ],
+      "structure": {
+        "frontmatterName": "setup",
+        "frontmatterDescription": "Set up a new autoresearch experiment interactively. Collects domain, target file, eval command, metric, direction, and evaluator. Use when the user runs /ar:setup or asks to start optimizing a file with the autoresearch loop.",
+        "headings": [
+          "/ar:setup — Create New Experiment",
+          "Usage",
+          "What It Does",
+          "If arguments provided",
+          "If no arguments (interactive mode)",
+          "Listing",
+          "Show existing experiments",
+          "Show available evaluators",
+          "Built-in Evaluators",
+          "After Setup"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "description: \"Set up a new autoresearch experiment interactively. Collects domain, target file, eval command, metric, direction, and evaluator. Use when the user runs /ar:setup or asks to start optimizing a file with the autoresearch loop.\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "command: /ar:setup"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /ar:setup — Create New Experiment"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/ar:setup                                    # Interactive mode"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/ar:setup engineering api-speed src/api.py \"pytest bench.py\" p50_ms lower"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/ar:setup --list                             # Show existing experiments"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/ar:setup --list-evaluators                  # Show available evaluators"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Suggest: \"Run `/ar:run {domain}/{name}` to start iterating, or `/ar:loop {domain}/{name}` for autonomous mode.\""
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "description: \"Set up a new autoresearch experiment interactively. Collects domain, target file, eval command, metric, direction, and evaluator. Use when the user runs /ar:setup or asks to start optimizing a file with the autoresearch loop.\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "command: /ar:setup"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /ar:setup — Create New Experiment"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/ar:setup                                    # Interactive mode"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/ar:setup engineering api-speed src/api.py \"pytest bench.py\" p50_ms lower"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/ar:setup --list                             # Show existing experiments"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/ar:setup --list-evaluators                  # Show available evaluators"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Suggest: \"Run `/ar:run {domain}/{name}` to start iterating, or `/ar:loop {domain}/{name}` for autonomous mode.\""
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    }
+  ]
+}

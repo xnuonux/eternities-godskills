@@ -1,0 +1,4092 @@
+{
+  "schemaVersion": 1,
+  "familyId": "audio-voice-media",
+  "sourceCount": 58,
+  "cards": [
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-0173518027cd6ae8",
+      "name": "audio-jingle",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\plugins\\_official\\examples\\audio-jingle\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "02ea7a3ec41a717737449aba88fc06f67e2caf454cbd8aebf74ec7292f66f9fb",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "exact-b7802e1a8d8e87a1"
+      ],
+      "structure": {
+        "frontmatterName": "audio-jingle",
+        "frontmatterDescription": "|",
+        "headings": [
+          "Audio Jingle Skill",
+          "Resource map",
+          "Workflow",
+          "Step 0 — Read the project metadata",
+          "Step 1 — Plan",
+          "Step 2 — Compose the prompt",
+          "Step 3 — Dispatch via the media contract",
+          "Step 4 — Hand off",
+          "Hard rules"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-40c42f60272ca20e",
+      "name": "hyperframes",
+      "description": "Create video compositions, animations, title cards, overlays, captions, voiceovers, audio-reactive visuals, and scene transitions in HyperFrames HTML. Use when asked to build any HTML-based video content, add captions or subtitles synced to audio, generate text-to-speech narration, create audio-reactive animation (beat sync, glow, pulse driven by music), add animated text highlighting (marker sweeps, hand-drawn circles, burst lines, scribble, sketchout), or add transitions between scenes (crossfades, wipes, reveals, shader transitions). Covers composition authoring, timing, media, and the full video production workflow. For CLI commands (init, lint, preview, render, transcribe, tts) see the hyperframes-cli skill.",
+      "sourcePath": "from-stars\\nexu-io__open-design\\plugins\\_official\\examples\\hyperframes\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "17070fee0921a864b787c0ea7068741ea19913eeedc202d0002cb28d2fdd8d83",
+      "bodySha256": "2d787c566779a8f781ccba237c03edd73551d3933b019719100bca92651f9453",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "audio-voice-media",
+        "visual-3d-motion"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-790bc4bd0bbdad00",
+        "exact-34f54fcf1ec87075"
+      ],
+      "structure": {
+        "frontmatterName": "hyperframes",
+        "frontmatterDescription": "Create video compositions, animations, title cards, overlays, captions, voiceovers, audio-reactive visuals, and scene transitions in HyperFrames HTML. Use when asked to build any HTML-based video content, add captions or subtitles synced to audio, generate text-to-speech narration, create audio-reactive animation (beat sync, glow, pulse driven by music), add animated text highlighting (marker sweeps, hand-drawn circles, burst lines, scribble, sketchout), or add transitions between scenes (crossfades, wipes, reveals, shader transitions). Covers composition authoring, timing, media, and the full video production workflow. For CLI commands (init, lint, preview, render, transcribe, tts) see the hyperframes-cli skill.",
+        "headings": [
+          "HyperFrames",
+          "OpenDesign integration (load-bearing for this surface)",
+          "1. Pick a hidden cache slot. Dotfile prefix → OD's project file",
+          "listing skips it, so the source files never clutter the chat.",
+          "2. Get an immediately-renderable scaffold (hyperframes.json,",
+          "meta.json, index.html with GSAP CDN + window.__timelines.main",
+          "already registered). Open Design writes these files itself; it does",
+          "not run `hyperframes init`, consult an npx cache, or install global skills.",
+          "3. Edit ONLY $COMP/index.html — change `data-duration` on the root",
+          "if you need a non-default length, swap the placeholder palette",
+          "in <style>, add 1–3 clip <div>s for text/imagery, and append the",
+          "matching GSAP tweens inside the existing"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "GSAP patterns and effects are in the `/gsap` skill."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "GSAP patterns and effects are in the `/gsap` skill."
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "visual-3d-motion",
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-49d259903f3dad36",
+      "name": "pixelbin-media",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\skills\\pixelbin-media\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "a65ff737cb17376c8f80692d459367d0e8b707e4152956afe4cb1812223ad830",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea"
+      ],
+      "structure": {
+        "frontmatterName": "pixelbin-media",
+        "frontmatterDescription": "|",
+        "headings": [
+          "pixelbin-media",
+          "What it does",
+          "Source",
+          "How to use",
+          "Inspect the upstream README for exact paths"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Then ask the agent to invoke this skill by name (`pixelbin-media`) or with"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Then ask the agent to invoke this skill by name (`pixelbin-media`) or with"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-60a78d13042c9bf1",
+      "name": "hyperframes",
+      "description": "Create video compositions, animations, title cards, overlays, captions, voiceovers, audio-reactive visuals, and scene transitions in HyperFrames HTML. Use when asked to build any HTML-based video content, add captions or subtitles synced to audio, generate text-to-speech narration, create audio-reactive animation (beat sync, glow, pulse driven by music), add animated text highlighting (marker sweeps, hand-drawn circles, burst lines, scribble, sketchout), or add transitions between scenes (crossfades, wipes, reveals, shader transitions). Covers composition authoring, timing, media, and the full video production workflow. For CLI commands (init, lint, preview, render, transcribe, tts) see the hyperframes-cli skill.",
+      "sourcePath": "from-stars\\nexu-io__open-design\\design-templates\\hyperframes\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "17070fee0921a864b787c0ea7068741ea19913eeedc202d0002cb28d2fdd8d83",
+      "bodySha256": "2d787c566779a8f781ccba237c03edd73551d3933b019719100bca92651f9453",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "audio-voice-media",
+        "visual-3d-motion"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-790bc4bd0bbdad00",
+        "exact-34f54fcf1ec87075"
+      ],
+      "structure": {
+        "frontmatterName": "hyperframes",
+        "frontmatterDescription": "Create video compositions, animations, title cards, overlays, captions, voiceovers, audio-reactive visuals, and scene transitions in HyperFrames HTML. Use when asked to build any HTML-based video content, add captions or subtitles synced to audio, generate text-to-speech narration, create audio-reactive animation (beat sync, glow, pulse driven by music), add animated text highlighting (marker sweeps, hand-drawn circles, burst lines, scribble, sketchout), or add transitions between scenes (crossfades, wipes, reveals, shader transitions). Covers composition authoring, timing, media, and the full video production workflow. For CLI commands (init, lint, preview, render, transcribe, tts) see the hyperframes-cli skill.",
+        "headings": [
+          "HyperFrames",
+          "OpenDesign integration (load-bearing for this surface)",
+          "1. Pick a hidden cache slot. Dotfile prefix → OD's project file",
+          "listing skips it, so the source files never clutter the chat.",
+          "2. Get an immediately-renderable scaffold (hyperframes.json,",
+          "meta.json, index.html with GSAP CDN + window.__timelines.main",
+          "already registered). Open Design writes these files itself; it does",
+          "not run `hyperframes init`, consult an npx cache, or install global skills.",
+          "3. Edit ONLY $COMP/index.html — change `data-duration` on the root",
+          "if you need a non-default length, swap the placeholder palette",
+          "in <style>, add 1–3 clip <div>s for text/imagery, and append the",
+          "matching GSAP tweens inside the existing"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "GSAP patterns and effects are in the `/gsap` skill."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "GSAP patterns and effects are in the `/gsap` skill."
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "visual-3d-motion",
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-663c735d87afd4c5",
+      "name": "music-to-video",
+      "description": "Turn a music track (an audio file, a video to pull audio from, or a track generated from a mood brief) into a beat-synced video — lyric video, slideshow, or kinetic promo. The music drives all pacing; any user-supplied images/videos are cut onto the same beat grid, and a complete video needs zero assets. Narrated pieces → the input-matched workflow (see /hyperframes). Unclear → /hyperframes.",
+      "sourcePath": "from-stars\\heygen-com__hyperframes\\skills\\music-to-video\\SKILL.md",
+      "repositoryRoot": "from-stars\\heygen-com__hyperframes",
+      "remote": "https://github.com/heygen-com/hyperframes.git",
+      "gitHead": "ee64c3b1168a3466269344197ba6774f9eb15e14",
+      "contentDigest": "42abf14df8618fba1cafdc16398babd4b7d82e967b4a2e824523c3b22bcfa443",
+      "bodySha256": "f3e29a0138de95c99740f890061bccc543efa911374e71fa90b3ec6ca3452479",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-1f1395791619595f"
+      ],
+      "structure": {
+        "frontmatterName": "music-to-video",
+        "frontmatterDescription": "Turn a music track (an audio file, a video to pull audio from, or a track generated from a mood brief) into a beat-synced video — lyric video, slideshow, or kinetic promo. The music drives all pacing; any user-supplied images/videos are cut onto the same beat grid, and a complete video needs zero assets. Narrated pieces → the input-matched workflow (see /hyperframes). Unclear → /hyperframes.",
+        "headings": [
+          "music-to-video — one music-grounded, beat-synced video workflow",
+          "Two ideas that shape everything",
+          "Step 0: Setup, BGM, and inputs",
+          "only if the user gave you images/videos:",
+          "Step 1: Analyze the music",
+          "Step 2: Frame skeleton (structure only)",
+          "Step 3: Fill the plan (user-gated)",
+          "Step 4: Build frames from the plan",
+          "Step 5: Assemble",
+          "Step 6: Verify and render",
+          "Resume table",
+          "Quick Reference"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "description: \"Turn a music track (an audio file, a video to pull audio from, or a track generated from a mood brief) into a beat-synced video — lyric video, slideshow, or kinetic promo. The music drives all pacing; any user-supplied images/videos are cut onto the same beat grid, and a complete video needs zero assets. Narrated pieces → the input-matched workflow (see /hyperframes). Unclear → /hyperframes.\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "**The brief starts at the intent layer.** Opening rule, in order: **(1)** `BRIEF.md` exists → read it and ask nothing it answers — its `flow`/`storyboard` derive the mode (brief contract § 1). **(2)** No `BRIEF.md` but the project exists → resume from what's on disk; never re-interrogate. **(3)** A fresh creation request that arrived here directly → read `/hyperframes` and run its intent layer (`references/intent-interview.md`): it confirms this route's must-haves (the music source, destination → aspect — `../hyperframes/references/routes/music-to-video.md`) and announces what stays deferred — brand and genre are chosen at Step 3 by design. Write `BRIEF.md` immediately after init (never before — `init` refuses a non-empty directory) and record the preference-backed answers (`brief-format.md`). Edit requests skip all of this."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "The **music is the spine** — establish one track before anything else. This skill is tuned for **fast, high-energy BGM**: a strong beat grid drives the cuts (calm tracks work, but pace by phrase rather than beat). If the user supplied audio — a music file, or a video to pull audio from — use it. Otherwise choose the mood from the request and generate a track through `/media-use` (`references/bgm.md`). Before the first authenticated provider action, run `npx hyperframes auth status` and relay its output verbatim. If signed out, apply one branch:"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "If no offline provider can satisfy the required music capability, surface the blocker. Never write keys into a per-repo `.env`. Auth ownership and offline fallbacks live in `/media-use` `references/setup-providers.md` § Providers. The resulting track lands at `assets/bgm.mp3`. Stage supplied images or videos so frames can use them on the beat grid; otherwise typography carries the video."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "**Lyric videos:** for lyrics synced to the vocals, get word/line timing by transcribing the track via `/media-use`, or ask the user for the lyrics text and place lines on the beat grid."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "description: \"Turn a music track (an audio file, a video to pull audio from, or a track generated from a mood brief) into a beat-synced video — lyric video, slideshow, or kinetic promo. The music drives all pacing; any user-supplied images/videos are cut onto the same beat grid, and a complete video needs zero assets. Narrated pieces → the input-matched workflow (see /hyperframes). Unclear → /hyperframes.\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "**The brief starts at the intent layer.** Opening rule, in order: **(1)** `BRIEF.md` exists → read it and ask nothing it answers — its `flow`/`storyboard` derive the mode (brief contract § 1). **(2)** No `BRIEF.md` but the project exists → resume from what's on disk; never re-interrogate. **(3)** A fresh creation request that arrived here directly → read `/hyperframes` and run its intent layer (`references/intent-interview.md`): it confirms this route's must-haves (the music source, destination → aspect — `../hyperframes/references/routes/music-to-video.md`) and announces what stays deferred — brand and genre are chosen at Step 3 by design. Write `BRIEF.md` immediately after init (never before — `init` refuses a non-empty directory) and record the preference-backed answers (`brief-format.md`). Edit requests skip all of this."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "The **music is the spine** — establish one track before anything else. This skill is tuned for **fast, high-energy BGM**: a strong beat grid drives the cuts (calm tracks work, but pace by phrase rather than beat). If the user supplied audio — a music file, or a video to pull audio from — use it. Otherwise choose the mood from the request and generate a track through `/media-use` (`references/bgm.md`). Before the first authenticated provider action, run `npx hyperframes auth status` and relay its output verbatim. If signed out, apply one branch:"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "If no offline provider can satisfy the required music capability, surface the blocker. Never write keys into a per-repo `.env`. Auth ownership and offline fallbacks live in `/media-use` `references/setup-providers.md` § Providers. The resulting track lands at `assets/bgm.mp3`. Stage supplied images or videos so frames can use them on the beat grid; otherwise typography carries the video."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "**Lyric videos:** for lyrics synced to the vocals, get word/line timing by transcribing the track via `/media-use`, or ask the user for the lyrics text and place lines on the beat grid."
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-7334b7837b6f7817",
+      "name": "media-use",
+      "description": "Agent Media OS, the single skill for every media need in a HyperFrames project. Resolve BGM, SFX, image, icon, brand logo, voice, color grade, or LUT into a frozen local file or paste-ready block + ledger record (one verb, `resolve`); generate via TTS / music / image models when the catalog misses; produce voiceover, transcription, captions, and background removal through one shared audio engine; operate on media (cut / reframe / transform); and reuse assets across projects. Also use for vague feedback that real footage looks dark, flat, boring, should feel retro/camcorder/print/ASCII, needs privacy, or needs a media reveal.",
+      "sourcePath": "from-stars\\heygen-com__hyperframes\\skills\\media-use\\SKILL.md",
+      "repositoryRoot": "from-stars\\heygen-com__hyperframes",
+      "remote": "https://github.com/heygen-com/hyperframes.git",
+      "gitHead": "ee64c3b1168a3466269344197ba6774f9eb15e14",
+      "contentDigest": "1debbf3befeff1ba5a56c377a2499a8200d5e6e7a745640b2be2dc5a6759d05c",
+      "bodySha256": "1301ea7cb53a0a44f5c7d62c34cba7e00b9e69b31bed57dc8d645417cea0da7c",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-f4278bcb9f332c96"
+      ],
+      "structure": {
+        "frontmatterName": "media-use",
+        "frontmatterDescription": "Agent Media OS, the single skill for every media need in a HyperFrames project. Resolve BGM, SFX, image, icon, brand logo, voice, color grade, or LUT into a frozen local file or paste-ready block + ledger record (one verb, `resolve`); generate via TTS / music / image models when the catalog misses; produce voiceover, transcription, captions, and background removal through one shared audio engine; operate on media (cut / reframe / transform); and reuse assets across projects. Also use for vague feedback that real footage looks dark, flat, boring, should feel retro/camcorder/print/ASCII, needs privacy, or needs a media reveal.",
+        "headings": [
+          "media-use",
+          "Resolve — the one verb",
+          "Treat broad visual feedback as media intent",
+          "Be proactive — run a media opportunity pass",
+          "Where to look — read only the file your task needs"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-a1cdf3b0cd6e102b",
+      "name": "ai-music-album",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\skills\\ai-music-album\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "5521f0ef56713c66c2a37d91a763679bb9c41bab5ad441295a7ae97b91281db8",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea"
+      ],
+      "structure": {
+        "frontmatterName": "ai-music-album",
+        "frontmatterDescription": "|",
+        "headings": [
+          "ai-music-album",
+          "What it does",
+          "Source",
+          "How to use",
+          "Inspect the upstream README for exact paths"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Then ask the agent to invoke this skill by name (`ai-music-album`) or with"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Then ask the agent to invoke this skill by name (`ai-music-album`) or with"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-a9363ae8ccaca299",
+      "name": "hyperframes-audio",
+      "description": ">",
+      "sourcePath": "from-stars\\heygen-com__hyperframes\\skills\\hyperframes-audio\\SKILL.md",
+      "repositoryRoot": "from-stars\\heygen-com__hyperframes",
+      "remote": "https://github.com/heygen-com/hyperframes.git",
+      "gitHead": "ee64c3b1168a3466269344197ba6774f9eb15e14",
+      "contentDigest": "a5c3da433dbd5bfa38a48294e124d8e04811e2187a3dbb533c05978f8569a370",
+      "bodySha256": "b87290893abdafc28f26c18e362c069501ffbffd5027e793d4bd9731f68465f3",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-6f7361d163b120db"
+      ],
+      "structure": {
+        "frontmatterName": "hyperframes-audio",
+        "frontmatterDescription": ">",
+        "headings": [
+          "HyperFrames Audio",
+          "How it fits together",
+          "First, work out what is wrong",
+          "Start from the symptom",
+          "Reach for a family by the problem, not the name",
+          "Voiceover carve",
+          "One bus for many tracks",
+          "Automation",
+          "Verify"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "voiceover is `/media-use`. Don't use for clip timing or track layout, which is"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "`/hyperframes-core`."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Clip timing remains `/hyperframes-core`: audio/video trims and source ranges use"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "ducking/voiceover carve, and the effect chain. `/media-use` owns sourcing,"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "For copyable cut/crossfade/retime recipes, use `/hyperframes-core` → `references/creator-editing-recipes.md`."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "voiceover is `/media-use`. Don't use for clip timing or track layout, which is"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "`/hyperframes-core`."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Clip timing remains `/hyperframes-core`: audio/video trims and source ranges use"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "ducking/voiceover carve, and the effect chain. `/media-use` owns sourcing,"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "For copyable cut/crossfade/retime recipes, use `/hyperframes-core` → `references/creator-editing-recipes.md`."
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-b12153405790160a",
+      "name": "venice-audio-speech",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\skills\\venice-audio-speech\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "603d53af794a348ad083d338cd7beee70c07c7424c5e55fb7cd6c67040e862ae",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea"
+      ],
+      "structure": {
+        "frontmatterName": "venice-audio-speech",
+        "frontmatterDescription": "|",
+        "headings": [
+          "venice-audio-speech",
+          "What it does",
+          "Source",
+          "How to use",
+          "Inspect the upstream README for exact paths"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Then ask the agent to invoke this skill by name (`venice-audio-speech`) or with"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Then ask the agent to invoke this skill by name (`venice-audio-speech`) or with"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-bda7d21af1c11e40",
+      "name": "speech",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\skills\\speech\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "c16c8c6e839650298fd498383274aaa05f3faf966356c112a62b4078d4cc155d",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea"
+      ],
+      "structure": {
+        "frontmatterName": "speech",
+        "frontmatterDescription": "|",
+        "headings": [
+          "speech",
+          "What it does",
+          "Source",
+          "How to use",
+          "Inspect the upstream README for exact paths"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Then ask the agent to invoke this skill by name (`speech`) or with"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Then ask the agent to invoke this skill by name (`speech`) or with"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-f50663b3a995f5a4",
+      "name": "audio-jingle",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\design-templates\\audio-jingle\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "02ea7a3ec41a717737449aba88fc06f67e2caf454cbd8aebf74ec7292f66f9fb",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "exact-b7802e1a8d8e87a1"
+      ],
+      "structure": {
+        "frontmatterName": "audio-jingle",
+        "frontmatterDescription": "|",
+        "headings": [
+          "Audio Jingle Skill",
+          "Resource map",
+          "Workflow",
+          "Step 0 — Read the project metadata",
+          "Step 1 — Plan",
+          "Step 2 — Compose the prompt",
+          "Step 3 — Dispatch via the media contract",
+          "Step 4 — Hand off",
+          "Hard rules"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-fddf424581d7521a",
+      "name": "venice-audio-music",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\skills\\venice-audio-music\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "423302cca0ed509b04a535dd28f8f5990e75bc3b0738cec97a437f2c77fad0df",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea"
+      ],
+      "structure": {
+        "frontmatterName": "venice-audio-music",
+        "frontmatterDescription": "|",
+        "headings": [
+          "venice-audio-music",
+          "What it does",
+          "Source",
+          "How to use",
+          "Inspect the upstream README for exact paths"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Then ask the agent to invoke this skill by name (`venice-audio-music`) or with"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Then ask the agent to invoke this skill by name (`venice-audio-music`) or with"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-108f1e2f032d7512",
+      "name": "video-toolkit",
+      "description": "Create professional videos autonomously using claude-code-video-toolkit — AI voiceovers, image generation, music, talking heads, and Remotion rendering.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.claude\\skills\\video_toolkit\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "94b12e3ebd22fbd83181201df66a8f57ef203494d87a2eddc4e3cff2022ae48f",
+      "bodySha256": "4b815f9b94e0330f63df41683742eec6db8a3a8388aae466fd47ff3988bfc3dd",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-92593a1de895608f"
+      ],
+      "structure": {
+        "frontmatterName": "video-toolkit",
+        "frontmatterDescription": "Create professional videos autonomously using claude-code-video-toolkit — AI voiceovers, image generation, music, talking heads, and Remotion rendering.",
+        "headings": [
+          "Video Toolkit",
+          "CRITICAL: Toolkit Path",
+          "Setup",
+          "Step 1: Check Current State",
+          "Step 2: Install Python Dependencies",
+          "Step 3: Configure Cloud GPU Endpoints",
+          "Deploy each tool — capture the endpoint URL from output",
+          "Step 4: Verify and Quick Test",
+          "Creating a Video",
+          "Step 1: Create Project",
+          "Step 2: Write Config",
+          "Step 3: Write Voiceover Script"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "python3 tools/qwen3_tts.py --text \"Hello, this is a test.\" --speaker Ryan --tone warm --output /tmp/video-toolkit-test.mp3 --cloud modal"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "python3 tools/qwen3_tts.py --text \"Hello, this is a test.\" --speaker Ryan --tone warm --output /tmp/video-toolkit-test.mp3 --cloud modal"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1f7bc452fbdb1ec8",
+      "name": "text-to-speech",
+      "description": "|",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\text-to-speech\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "e9a061a762a136327cb623be9077aa1f0b80121d328621837caab9a2a7424e4a",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "exact-f347c6c57e3ece23"
+      ],
+      "structure": {
+        "frontmatterName": "text-to-speech",
+        "frontmatterDescription": "|",
+        "headings": [
+          "Text-to-Speech (HeyGen Starfish)",
+          "Authentication",
+          "Tool Selection",
+          "Default Workflow",
+          "List TTS Voices",
+          "curl",
+          "TypeScript",
+          "Python",
+          "Response Format",
+          "Generate Speech Audio",
+          "Endpoint",
+          "Request Fields"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Generate speech audio from text using HeyGen's Starfish TTS model. Use when: (1) Generating standalone speech audio files from text, (2) Converting text to speech with voice selection, speed, and pitch control, (3) Creating audio for voiceovers, narration, or podcasts, (4) Working with HeyGen's /v1/audio endpoints, (5) Listing available TTS voices by language or gender."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| List TTS voices | `mcp__heygen__list_audio_voices` | `GET /v1/audio/voices` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Generate speech audio | `mcp__heygen__text_to_speech` | `POST /v1/audio/text_to_speech` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "1. List voices with `mcp__heygen__list_audio_voices` (or `GET /v1/audio/voices`)"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "3. Call `mcp__heygen__text_to_speech` (or `POST /v1/audio/text_to_speech`) with text and voice_id"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "> **Note:** This uses `GET /v1/audio/voices` — a different endpoint from the video voices API (`GET /v2/voices`). Not all video voices support Starfish TTS."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| `voice_id` | string | Y | Voice ID from `GET /v1/audio/voices` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "1. **Use `GET /v1/audio/voices`** to find compatible voices — not all voices from `GET /v2/voices` support Starfish TTS"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Generate speech audio from text using HeyGen's Starfish TTS model. Use when: (1) Generating standalone speech audio files from text, (2) Converting text to speech with voice selection, speed, and pitch control, (3) Creating audio for voiceovers, narration, or podcasts, (4) Working with HeyGen's /v1/audio endpoints, (5) Listing available TTS voices by language or gender."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| List TTS voices | `mcp__heygen__list_audio_voices` | `GET /v1/audio/voices` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Generate speech audio | `mcp__heygen__text_to_speech` | `POST /v1/audio/text_to_speech` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "1. List voices with `mcp__heygen__list_audio_voices` (or `GET /v1/audio/voices`)"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "3. Call `mcp__heygen__text_to_speech` (or `POST /v1/audio/text_to_speech`) with text and voice_id"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "> **Note:** This uses `GET /v1/audio/voices` — a different endpoint from the video voices API (`GET /v2/voices`). Not all video voices support Starfish TTS."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| `voice_id` | string | Y | Voice ID from `GET /v1/audio/voices` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "1. **Use `GET /v1/audio/voices`** to find compatible voices — not all voices from `GET /v2/voices` support Starfish TTS"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3ee1b79f7c1b2c1d",
+      "name": "video-toolkit",
+      "description": "Create professional videos autonomously using claude-code-video-toolkit — AI voiceovers, image generation, music, talking heads, and Remotion rendering.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\video-toolkit\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "94b12e3ebd22fbd83181201df66a8f57ef203494d87a2eddc4e3cff2022ae48f",
+      "bodySha256": "4b815f9b94e0330f63df41683742eec6db8a3a8388aae466fd47ff3988bfc3dd",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-92593a1de895608f"
+      ],
+      "structure": {
+        "frontmatterName": "video-toolkit",
+        "frontmatterDescription": "Create professional videos autonomously using claude-code-video-toolkit — AI voiceovers, image generation, music, talking heads, and Remotion rendering.",
+        "headings": [
+          "Video Toolkit",
+          "CRITICAL: Toolkit Path",
+          "Setup",
+          "Step 1: Check Current State",
+          "Step 2: Install Python Dependencies",
+          "Step 3: Configure Cloud GPU Endpoints",
+          "Deploy each tool — capture the endpoint URL from output",
+          "Step 4: Verify and Quick Test",
+          "Creating a Video",
+          "Step 1: Create Project",
+          "Step 2: Write Config",
+          "Step 3: Write Voiceover Script"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "python3 tools/qwen3_tts.py --text \"Hello, this is a test.\" --speaker Ryan --tone warm --output /tmp/video-toolkit-test.mp3 --cloud modal"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "python3 tools/qwen3_tts.py --text \"Hello, this is a test.\" --speaker Ryan --tone warm --output /tmp/video-toolkit-test.mp3 --cloud modal"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-473180c6595d765f",
+      "name": "agents",
+      "description": "Build voice AI agents with ElevenLabs. Use when creating voice assistants, customer service bots, interactive voice characters, or any real-time voice conversation experience.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\agents\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "f121ed9f8d45c712a1e898f8110e0990ee732fe41fa818b4865a0b3776bbdcc0",
+      "bodySha256": "e763c739e8a87f5cf06a06d3e962d9c09c94d30db7c8ba00df98c4ef5c7c997c",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media",
+        "product-operations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-12a95dc51739df8d"
+      ],
+      "structure": {
+        "frontmatterName": "agents",
+        "frontmatterDescription": "Build voice AI agents with ElevenLabs. Use when creating voice assistants, customer service bots, interactive voice characters, or any real-time voice conversation experience.",
+        "headings": [
+          "ElevenLabs Agents Platform",
+          "Quick Start with CLI",
+          "Install CLI and authenticate",
+          "Initialize project and create an agent",
+          "Push to ElevenLabs platform",
+          "Python",
+          "JavaScript",
+          "cURL",
+          "Starting Conversations",
+          "Configuration",
+          "Tools",
+          "Widget Embedding"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Use `GET /v1/convai/llm/list` to inspect the current model catalog, including deprecation state, token/context limits, and capability flags such as image-input support."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "document.getElementById(\"product\").src = `/products/${productId}`;"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Use `GET /v1/convai/llm/list` to inspect the current model catalog, including deprecation state, token/context limits, and capability flags such as image-input support."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "document.getElementById(\"product\").src = `/products/${productId}`;"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "product-operations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-497849eb0e8e9765",
+      "name": "acestep",
+      "description": "AI music generation with ACE-Step 1.5 — background music, vocal tracks, covers, stem extraction for video production. Use when generating music, soundtracks, jingles, or working with audio stems. Triggers include background music, soundtrack, jingle, music generation, stem extraction, cover, style transfer, or musical composition tasks.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\acestep\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "e90c01fb48a5bffc9ecd1a1db002d4a44dcb6fb425ce23f5bf26e72f426e95c7",
+      "bodySha256": "3b645adb13f4a1c8f6ed6f0410c406ce278ae6a6b02c594b381cb2d20e62c56f",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-2a297a5af93ec2f5"
+      ],
+      "structure": {
+        "frontmatterName": "acestep",
+        "frontmatterDescription": "AI music generation with ACE-Step 1.5 — background music, vocal tracks, covers, stem extraction for video production. Use when generating music, soundtracks, jingles, or working with audio stems. Triggers include background music, soundtrack, jingle, music generation, stem extraction, cover, style transfer, or musical composition tasks.",
+        "headings": [
+          "ACE-Step 1.5 Music Generation",
+          "Quick Reference",
+          "Basic generation",
+          "With musical control",
+          "Scene presets (video production)",
+          "Vocals with lyrics",
+          "Cover / style transfer",
+          "Stem extraction",
+          "List presets",
+          "Creating a Song (Step by Step)",
+          "1. Instrumental background track (simplest)",
+          "2. Song with vocals and lyrics"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "cat > /tmp/lyrics.txt << 'LYRICS'"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "--lyrics \"$(cat /tmp/lyrics.txt)\" \\"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "cat > /tmp/lyrics.txt << 'LYRICS'"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "--lyrics \"$(cat /tmp/lyrics.txt)\" \\"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-509e4c9491928a77",
+      "name": "elevenlabs",
+      "description": "Generate AI voiceovers, sound effects, and music using ElevenLabs APIs. Use when creating audio content for videos, podcasts, or games. Triggers include generating voiceovers, narration, dialogue, sound effects from descriptions, background music, soundtrack generation, voice cloning, or any audio synthesis task.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\elevenlabs\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "9e714be98d23877f2746f14a8533c5c8c0f81df83a48fc4ef3fb3d908c321ac4",
+      "bodySha256": "fc802e043cc946a50b5074bf97b284d82eb772305ac6f1604fdac17ee9faaa31",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-24819b60152726b8"
+      ],
+      "structure": {
+        "frontmatterName": "elevenlabs",
+        "frontmatterDescription": "Generate AI voiceovers, sound effects, and music using ElevenLabs APIs. Use when creating audio content for videos, podcasts, or games. Triggers include generating voiceovers, narration, dialogue, sound effects from descriptions, background music, soundtrack generation, voice cloning, or any audio synthesis task.",
+        "headings": [
+          "ElevenLabs Audio Generation",
+          "OpenMontage provider routing",
+          "Text-to-Speech",
+          "Models",
+          "Voice Settings by Style",
+          "Pauses Between Sections",
+          "Pronunciation Control",
+          "Iterative Workflow",
+          "Voice Cloning",
+          "Instant Voice Clone",
+          "Sound Effects",
+          "Music Generation"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "### Toolkit Command: /generate-voiceover"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "The `/generate-voiceover` command handles the full workflow:"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/generate-voiceover"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "### Toolkit Command: /generate-voiceover"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "The `/generate-voiceover` command handles the full workflow:"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/generate-voiceover"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-5768cc99067deb59",
+      "name": "azure-speech-to-text",
+      "description": "Transcribe audio to text using Azure AI Speech (Fast Transcription REST API). Use when converting audio/video to text, generating subtitles, or processing spoken content in OpenMontage. Optional cloud STT provider — preferred when AZURE_SPEECH_KEY is configured; the local faster-whisper `transcriber` is the default offline path.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\azure-speech-to-text\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "a2fee0ddb45e1156fb76b598397f1997f821a7138d77cfba925d139742fa9437",
+      "bodySha256": "732cbd393fadcd67befdf2f50519d65fd4e45695a8288a03149537eb72ae3f76",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-368e5ed40545be51"
+      ],
+      "structure": {
+        "frontmatterName": "azure-speech-to-text",
+        "frontmatterDescription": "Transcribe audio to text using Azure AI Speech (Fast Transcription REST API). Use when converting audio/video to text, generating subtitles, or processing spoken content in OpenMontage. Optional cloud STT provider — preferred when AZURE_SPEECH_KEY is configured; the local faster-whisper `transcriber` is the default offline path.",
+        "headings": [
+          "Azure AI Speech — Speech-to-Text",
+          "Why Fast Transcription (not Batch)",
+          "Setup",
+          "export AZURE_SPEECH_ENDPOINT=https://...  # optional: overrides region",
+          "Using it in a pipeline",
+          "Parameters that matter",
+          "Response shape (mapped to the transcriber schema)",
+          "Limits & tips"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-6665e7ceada0dc15",
+      "name": "agents",
+      "description": "Build voice AI agents with ElevenLabs. Use when creating voice assistants, customer service bots, interactive voice characters, or any real-time voice conversation experience.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.claude\\skills\\agents\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "f121ed9f8d45c712a1e898f8110e0990ee732fe41fa818b4865a0b3776bbdcc0",
+      "bodySha256": "e763c739e8a87f5cf06a06d3e962d9c09c94d30db7c8ba00df98c4ef5c7c997c",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media",
+        "product-operations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-12a95dc51739df8d"
+      ],
+      "structure": {
+        "frontmatterName": "agents",
+        "frontmatterDescription": "Build voice AI agents with ElevenLabs. Use when creating voice assistants, customer service bots, interactive voice characters, or any real-time voice conversation experience.",
+        "headings": [
+          "ElevenLabs Agents Platform",
+          "Quick Start with CLI",
+          "Install CLI and authenticate",
+          "Initialize project and create an agent",
+          "Push to ElevenLabs platform",
+          "Python",
+          "JavaScript",
+          "cURL",
+          "Starting Conversations",
+          "Configuration",
+          "Tools",
+          "Widget Embedding"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Use `GET /v1/convai/llm/list` to inspect the current model catalog, including deprecation state, token/context limits, and capability flags such as image-input support."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "document.getElementById(\"product\").src = `/products/${productId}`;"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Use `GET /v1/convai/llm/list` to inspect the current model catalog, including deprecation state, token/context limits, and capability flags such as image-input support."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "document.getElementById(\"product\").src = `/products/${productId}`;"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "product-operations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-6a122465c6e23cb6",
+      "name": "elevenlabs",
+      "description": "Generate AI voiceovers, sound effects, and music using ElevenLabs APIs. Use when creating audio content for videos, podcasts, or games. Triggers include generating voiceovers, narration, dialogue, sound effects from descriptions, background music, soundtrack generation, voice cloning, or any audio synthesis task.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.claude\\skills\\elevenlabs\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "9e714be98d23877f2746f14a8533c5c8c0f81df83a48fc4ef3fb3d908c321ac4",
+      "bodySha256": "114d8cfe298cfc4b5c82ee5347d4b5fb1e2f050936e97584140f45dea7ff039b",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-24819b60152726b8"
+      ],
+      "structure": {
+        "frontmatterName": "elevenlabs",
+        "frontmatterDescription": "Generate AI voiceovers, sound effects, and music using ElevenLabs APIs. Use when creating audio content for videos, podcasts, or games. Triggers include generating voiceovers, narration, dialogue, sound effects from descriptions, background music, soundtrack generation, voice cloning, or any audio synthesis task.",
+        "headings": [
+          "ElevenLabs Audio Generation",
+          "Text-to-Speech",
+          "Models",
+          "Voice Settings by Style",
+          "Pauses Between Sections",
+          "Pronunciation Control",
+          "Iterative Workflow",
+          "Voice Cloning",
+          "Instant Voice Clone",
+          "Sound Effects",
+          "Music Generation",
+          "Remotion Integration"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "### Toolkit Command: /generate-voiceover"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "The `/generate-voiceover` command handles the full workflow:"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/generate-voiceover"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "### Toolkit Command: /generate-voiceover"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "The `/generate-voiceover` command handles the full workflow:"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/generate-voiceover"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-6e770cc16c48bd27",
+      "name": "music",
+      "description": "Generate music using ElevenLabs Music API. Use when creating instrumental tracks, songs with lyrics, background music, jingles, or any AI-generated music composition. Supports prompt-based generation, composition plans for granular control, and detailed output with metadata.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\music\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "c715f42e63b5a519a111c55ef4b119aa008b77e430193482c4775a98900fd601",
+      "bodySha256": "50d30474d87bb0a1dacd7977ebcfba971e745cea18108140badae4f76845891a",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-6d25867821e11b1b"
+      ],
+      "structure": {
+        "frontmatterName": "music",
+        "frontmatterDescription": "Generate music using ElevenLabs Music API. Use when creating instrumental tracks, songs with lyrics, background music, jingles, or any AI-generated music composition. Supports prompt-based generation, composition plans for granular control, and detailed output with metadata.",
+        "headings": [
+          "ElevenLabs Music Generation",
+          "Quick Start",
+          "Python",
+          "JavaScript",
+          "cURL",
+          "Methods",
+          "Composition Plans",
+          "Inspect/modify styles and sections",
+          "Content Restrictions",
+          "Error Handling",
+          "References"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-79ba37722adb3245",
+      "name": "speech-to-text",
+      "description": "Transcribe audio to text using ElevenLabs Scribe v2. Use when converting audio/video to text, generating subtitles, transcribing meetings, or processing spoken content.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.claude\\skills\\speech-to-text\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "8490a30eff8e5b4c1775ef37579959df33a3cd31e9cb51b4c2b863e3e54e265a",
+      "bodySha256": "e8f86292bcd42e1ec57e477fb72fa47afc1792b7448199dacf621192864a3168",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-4a0ddccbe9d92225"
+      ],
+      "structure": {
+        "frontmatterName": "speech-to-text",
+        "frontmatterDescription": "Transcribe audio to text using ElevenLabs Scribe v2. Use when converting audio/video to text, generating subtitles, transcribing meetings, or processing spoken content.",
+        "headings": [
+          "ElevenLabs Speech-to-Text",
+          "Quick Start",
+          "Python",
+          "JavaScript",
+          "cURL",
+          "Models",
+          "Transcription with Timestamps",
+          "Speaker Diarization",
+          "Keyterm Prompting",
+          "Language Detection",
+          "Supported Formats",
+          "Response Format"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "const { token } = await fetch(\"/scribe-token\").then((r) => r.json());"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "const { token } = await fetch(\"/scribe-token\").then((r) => r.json());"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-8b41a37210a5e1ea",
+      "name": "sound-effects",
+      "description": "Generate sound effects from text descriptions using ElevenLabs. Use when creating sound effects, generating audio textures, producing ambient sounds, cinematic impacts, UI sounds, or any audio that isn't speech. Supports looping, duration control, and prompt influence tuning.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.claude\\skills\\sound-effects\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "fc3e08ccbb84f3e398ca802ed03e01f7f373f30623f2bebfbae0e0607508abc9",
+      "bodySha256": "9da7f48812a55a6569893e900cb43d4088201e21cf38d7b12eda55e63f1dc12a",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media",
+        "web-interface-accessibility"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-35156ef6f83fd7d7"
+      ],
+      "structure": {
+        "frontmatterName": "sound-effects",
+        "frontmatterDescription": "Generate sound effects from text descriptions using ElevenLabs. Use when creating sound effects, generating audio textures, producing ambient sounds, cinematic impacts, UI sounds, or any audio that isn't speech. Supports looping, duration control, and prompt influence tuning.",
+        "headings": [
+          "ElevenLabs Sound Effects",
+          "Quick Start",
+          "Python",
+          "JavaScript",
+          "cURL",
+          "Parameters",
+          "Examples with Parameters",
+          "Looping ambient sound, 10 seconds",
+          "Short UI sound, high prompt adherence",
+          "Output Formats",
+          "Prompt Tips",
+          "Error Handling"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "web-interface-accessibility"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-8b4ce58a51f61c87",
+      "name": "azure-speech-to-text",
+      "description": "Transcribe audio to text using Azure AI Speech (Fast Transcription REST API). Use when converting audio/video to text, generating subtitles, or processing spoken content in OpenMontage. Optional cloud STT provider — preferred when AZURE_SPEECH_KEY is configured; the local faster-whisper `transcriber` is the default offline path.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.claude\\skills\\azure-speech-to-text\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "a2fee0ddb45e1156fb76b598397f1997f821a7138d77cfba925d139742fa9437",
+      "bodySha256": "732cbd393fadcd67befdf2f50519d65fd4e45695a8288a03149537eb72ae3f76",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-368e5ed40545be51"
+      ],
+      "structure": {
+        "frontmatterName": "azure-speech-to-text",
+        "frontmatterDescription": "Transcribe audio to text using Azure AI Speech (Fast Transcription REST API). Use when converting audio/video to text, generating subtitles, or processing spoken content in OpenMontage. Optional cloud STT provider — preferred when AZURE_SPEECH_KEY is configured; the local faster-whisper `transcriber` is the default offline path.",
+        "headings": [
+          "Azure AI Speech — Speech-to-Text",
+          "Why Fast Transcription (not Batch)",
+          "Setup",
+          "export AZURE_SPEECH_ENDPOINT=https://...  # optional: overrides region",
+          "Using it in a pipeline",
+          "Parameters that matter",
+          "Response shape (mapped to the transcriber schema)",
+          "Limits & tips"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-8b5cefb94c47edc7",
+      "name": "speech-to-text",
+      "description": "Transcribe audio to text using ElevenLabs Scribe v2. Use when converting audio/video to text, generating subtitles, transcribing meetings, or processing spoken content.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\speech-to-text\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "8490a30eff8e5b4c1775ef37579959df33a3cd31e9cb51b4c2b863e3e54e265a",
+      "bodySha256": "e8f86292bcd42e1ec57e477fb72fa47afc1792b7448199dacf621192864a3168",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-4a0ddccbe9d92225"
+      ],
+      "structure": {
+        "frontmatterName": "speech-to-text",
+        "frontmatterDescription": "Transcribe audio to text using ElevenLabs Scribe v2. Use when converting audio/video to text, generating subtitles, transcribing meetings, or processing spoken content.",
+        "headings": [
+          "ElevenLabs Speech-to-Text",
+          "Quick Start",
+          "Python",
+          "JavaScript",
+          "cURL",
+          "Models",
+          "Transcription with Timestamps",
+          "Speaker Diarization",
+          "Keyterm Prompting",
+          "Language Detection",
+          "Supported Formats",
+          "Response Format"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "const { token } = await fetch(\"/scribe-token\").then((r) => r.json());"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "const { token } = await fetch(\"/scribe-token\").then((r) => r.json());"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-917f92585b24c8dd",
+      "name": "acestep",
+      "description": "AI music generation with ACE-Step 1.5 — background music, vocal tracks, covers, stem extraction for video production. Use when generating music, soundtracks, jingles, or working with audio stems. Triggers include background music, soundtrack, jingle, music generation, stem extraction, cover, style transfer, or musical composition tasks.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.claude\\skills\\acestep\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "e90c01fb48a5bffc9ecd1a1db002d4a44dcb6fb425ce23f5bf26e72f426e95c7",
+      "bodySha256": "3b645adb13f4a1c8f6ed6f0410c406ce278ae6a6b02c594b381cb2d20e62c56f",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-2a297a5af93ec2f5"
+      ],
+      "structure": {
+        "frontmatterName": "acestep",
+        "frontmatterDescription": "AI music generation with ACE-Step 1.5 — background music, vocal tracks, covers, stem extraction for video production. Use when generating music, soundtracks, jingles, or working with audio stems. Triggers include background music, soundtrack, jingle, music generation, stem extraction, cover, style transfer, or musical composition tasks.",
+        "headings": [
+          "ACE-Step 1.5 Music Generation",
+          "Quick Reference",
+          "Basic generation",
+          "With musical control",
+          "Scene presets (video production)",
+          "Vocals with lyrics",
+          "Cover / style transfer",
+          "Stem extraction",
+          "List presets",
+          "Creating a Song (Step by Step)",
+          "1. Instrumental background track (simplest)",
+          "2. Song with vocals and lyrics"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "cat > /tmp/lyrics.txt << 'LYRICS'"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "--lyrics \"$(cat /tmp/lyrics.txt)\" \\"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "cat > /tmp/lyrics.txt << 'LYRICS'"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "--lyrics \"$(cat /tmp/lyrics.txt)\" \\"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-ac9aca4654ae9078",
+      "name": "media-use",
+      "description": "Agent Media OS — resolve any media need (BGM, SFX, image, icon) into a frozen local file + ledger record. One verb (`resolve`) handles the full cascade — project cache, global cache, HeyGen catalog search, freeze, register. Keeps search noise on disk, hands the agent a path. Use when a composition needs background music, sound effects, images, or icons.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\media-use\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "f37d84826447bb6ccc4926918d8c3f682676c1b887f7ec4c33314e745ceabf2e",
+      "bodySha256": "139ac9d653450bab3652ec3b9ae43620fb60ff68237f4fd6953b1a578928e075",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-f4278bcb9f332c96"
+      ],
+      "structure": {
+        "frontmatterName": "media-use",
+        "frontmatterDescription": "Agent Media OS — resolve any media need (BGM, SFX, image, icon) into a frozen local file + ledger record. One verb (`resolve`) handles the full cascade — project cache, global cache, HeyGen catalog search, freeze, register. Keeps search noise on disk, hands the agent a path. Use when a composition needs background music, sound effects, images, or icons.",
+        "headings": [
+          "media-use",
+          "When to use",
+          "Resolve",
+          "Types",
+          "Examples",
+          "Background music",
+          "→ resolved bgm_001 → .media/audio/bgm/bgm_001.mp3 (bgm, 25s)",
+          "Sound effect",
+          "→ resolved sfx_001 → .media/audio/sfx/sfx_001.mp3 (sfx, 0.57s)",
+          "Image",
+          "→ resolved image_001 → .media/images/image_001.jpg (image)",
+          "Icon"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-b077a95e8277a687",
+      "name": "text-to-speech",
+      "description": "|",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.claude\\skills\\text-to-speech\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "e9a061a762a136327cb623be9077aa1f0b80121d328621837caab9a2a7424e4a",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "exact-f347c6c57e3ece23"
+      ],
+      "structure": {
+        "frontmatterName": "text-to-speech",
+        "frontmatterDescription": "|",
+        "headings": [
+          "Text-to-Speech (HeyGen Starfish)",
+          "Authentication",
+          "Tool Selection",
+          "Default Workflow",
+          "List TTS Voices",
+          "curl",
+          "TypeScript",
+          "Python",
+          "Response Format",
+          "Generate Speech Audio",
+          "Endpoint",
+          "Request Fields"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Generate speech audio from text using HeyGen's Starfish TTS model. Use when: (1) Generating standalone speech audio files from text, (2) Converting text to speech with voice selection, speed, and pitch control, (3) Creating audio for voiceovers, narration, or podcasts, (4) Working with HeyGen's /v1/audio endpoints, (5) Listing available TTS voices by language or gender."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| List TTS voices | `mcp__heygen__list_audio_voices` | `GET /v1/audio/voices` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Generate speech audio | `mcp__heygen__text_to_speech` | `POST /v1/audio/text_to_speech` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "1. List voices with `mcp__heygen__list_audio_voices` (or `GET /v1/audio/voices`)"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "3. Call `mcp__heygen__text_to_speech` (or `POST /v1/audio/text_to_speech`) with text and voice_id"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "> **Note:** This uses `GET /v1/audio/voices` — a different endpoint from the video voices API (`GET /v2/voices`). Not all video voices support Starfish TTS."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| `voice_id` | string | Y | Voice ID from `GET /v1/audio/voices` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "1. **Use `GET /v1/audio/voices`** to find compatible voices — not all voices from `GET /v2/voices` support Starfish TTS"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Generate speech audio from text using HeyGen's Starfish TTS model. Use when: (1) Generating standalone speech audio files from text, (2) Converting text to speech with voice selection, speed, and pitch control, (3) Creating audio for voiceovers, narration, or podcasts, (4) Working with HeyGen's /v1/audio endpoints, (5) Listing available TTS voices by language or gender."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| List TTS voices | `mcp__heygen__list_audio_voices` | `GET /v1/audio/voices` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Generate speech audio | `mcp__heygen__text_to_speech` | `POST /v1/audio/text_to_speech` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "1. List voices with `mcp__heygen__list_audio_voices` (or `GET /v1/audio/voices`)"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "3. Call `mcp__heygen__text_to_speech` (or `POST /v1/audio/text_to_speech`) with text and voice_id"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "> **Note:** This uses `GET /v1/audio/voices` — a different endpoint from the video voices API (`GET /v2/voices`). Not all video voices support Starfish TTS."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| `voice_id` | string | Y | Voice ID from `GET /v1/audio/voices` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "1. **Use `GET /v1/audio/voices`** to find compatible voices — not all voices from `GET /v2/voices` support Starfish TTS"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-b547b50cee5c7690",
+      "name": "music",
+      "description": "Generate music using ElevenLabs Music API. Use when creating instrumental tracks, songs with lyrics, background music, jingles, or any AI-generated music composition. Supports prompt-based generation, composition plans for granular control, and detailed output with metadata.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.claude\\skills\\music\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "c715f42e63b5a519a111c55ef4b119aa008b77e430193482c4775a98900fd601",
+      "bodySha256": "50d30474d87bb0a1dacd7977ebcfba971e745cea18108140badae4f76845891a",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-6d25867821e11b1b"
+      ],
+      "structure": {
+        "frontmatterName": "music",
+        "frontmatterDescription": "Generate music using ElevenLabs Music API. Use when creating instrumental tracks, songs with lyrics, background music, jingles, or any AI-generated music composition. Supports prompt-based generation, composition plans for granular control, and detailed output with metadata.",
+        "headings": [
+          "ElevenLabs Music Generation",
+          "Quick Start",
+          "Python",
+          "JavaScript",
+          "cURL",
+          "Methods",
+          "Composition Plans",
+          "Inspect/modify styles and sections",
+          "Content Restrictions",
+          "Error Handling",
+          "References"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d6b3ad26dc78d144",
+      "name": "music-to-video",
+      "description": "Use when the user has a music track (an audio file, or a video to pull audio from) and wants a beat-synced HyperFrames video, calm to hard-hitting. The music drives everything: one analyzer reads it once, the orchestrator lays out the frames and fills a per-frame plan, and one sub-agent builds each frame. Typography and templates are the floor — a complete video needs zero assets — but any images or videos the user supplies are cut into the frames on the same beat grid (beat-cut / ken-burns). The genre (lyric video, slideshow, kinetic promo) falls out of the per-frame choices; the pipeline never branches on it.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\music-to-video\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "21ac91b4fe95cd296c892d06cbd8f4f3c698b9a0c8347929be7a292dedc88b2c",
+      "bodySha256": "6187efb7b0f8ed52e1b3be6d3ca6d5ec7f08d8a816c083b8a81c83adf7c20b36",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-1f1395791619595f"
+      ],
+      "structure": {
+        "frontmatterName": "music-to-video",
+        "frontmatterDescription": "Use when the user has a music track (an audio file, or a video to pull audio from) and wants a beat-synced HyperFrames video, calm to hard-hitting. The music drives everything: one analyzer reads it once, the orchestrator lays out the frames and fills a per-frame plan, and one sub-agent builds each frame. Typography and templates are the floor — a complete video needs zero assets — but any images or videos the user supplies are cut into the frames on the same beat grid (beat-cut / ken-burns). The genre (lyric video, slideshow, kinetic promo) falls out of the per-frame choices; the pipeline never branches on it.",
+        "headings": [
+          "music-to-video — one music-grounded, beat-synced video workflow",
+          "Two ideas that shape everything",
+          "Step 0: Setup, BGM, and inputs",
+          "only if the user gave you images/videos:",
+          "Step 1: Analyze the music",
+          "Step 2: Frame skeleton (structure only)",
+          "Step 3: Fill the plan (user-gated)",
+          "Step 4: Build frames from the plan",
+          "Step 5: Assemble",
+          "Step 6: Verify and render",
+          "Resume table",
+          "Quick Reference"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "The **music is the spine** — establish one track before anything else. This skill is tuned for **fast, high-energy BGM**: a strong beat grid drives the cuts (calm tracks work, but pace by phrase rather than beat). If the user gave you audio — a music file, or a video to pull the audio from — use it. If not, generate one: choose the mood from the user's description (e.g. \"driving synthwave\", \"trap beat\", \"upbeat corporate\") and produce a track via `/hyperframes-media` (`references/bgm.md` — HeyGen retrieval when credentialed, else local Lyria / MusicGen; ElevenLabs or another generator also works). Before generating, run `npx hyperframes auth status` and **relay its output verbatim (don't paraphrase or rewrite it)** — it shows whether BGM comes from HeyGen or local MusicGen and, if not signed in, how to sign in. **If not signed in, STOP and wait for the user to choose — sign in, or continue offline with local MusicGen — before generating the track**; don't write keys into a per-repo `.env`. (In autonomous mode, note the status and continue offline.) See `/hyperframes-media` → Preflight for the canonical guidance. Either way the track lands at `assets/bgm.mp3`. Stage any user-supplied images or videos so frames can weave them in on the beat grid; otherwise typography carries the whole video."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "The **music is the spine** — establish one track before anything else. This skill is tuned for **fast, high-energy BGM**: a strong beat grid drives the cuts (calm tracks work, but pace by phrase rather than beat). If the user gave you audio — a music file, or a video to pull the audio from — use it. If not, generate one: choose the mood from the user's description (e.g. \"driving synthwave\", \"trap beat\", \"upbeat corporate\") and produce a track via `/hyperframes-media` (`references/bgm.md` — HeyGen retrieval when credentialed, else local Lyria / MusicGen; ElevenLabs or another generator also works). Before generating, run `npx hyperframes auth status` and **relay its output verbatim (don't paraphrase or rewrite it)** — it shows whether BGM comes from HeyGen or local MusicGen and, if not signed in, how to sign in. **If not signed in, STOP and wait for the user to choose — sign in, or continue offline with local MusicGen — before generating the track**; don't write keys into a per-repo `.env`. (In autonomous mode, note the status and continue offline.) See `/hyperframes-media` → Preflight for the canonical guidance. Either way the track lands at `assets/bgm.mp3`. Stage any user-supplied images or videos so frames can weave them in on the beat grid; otherwise typography carries the whole video."
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-e3d0a5ada7c1a219",
+      "name": "azure-text-to-speech",
+      "description": "Generate neural narration audio using Azure AI Speech (REST text-to-speech). Use when synthesizing voiceovers or narration in OpenMontage. Optional cloud TTS provider — preferred when AZURE_SPEECH_KEY is configured; the local piper_tts remains the default offline path. Shares one Speech resource with azure_stt.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.claude\\skills\\azure-text-to-speech\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "365e0df4e38fa8170db464a2e256a945c8f9bf6c677e1711dfb487f7bb8afb5c",
+      "bodySha256": "06a64f26bc419d11dfc5e68037e11b8dbddf88e6e8a2080951e071b0fc564383",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-81c6a18f08fc881f"
+      ],
+      "structure": {
+        "frontmatterName": "azure-text-to-speech",
+        "frontmatterDescription": "Generate neural narration audio using Azure AI Speech (REST text-to-speech). Use when synthesizing voiceovers or narration in OpenMontage. Optional cloud TTS provider — preferred when AZURE_SPEECH_KEY is configured; the local piper_tts remains the default offline path. Shares one Speech resource with azure_stt.",
+        "headings": [
+          "Azure AI Speech — Text-to-Speech",
+          "Setup",
+          "export AZURE_TTS_ENDPOINT=https://...  # optional: full custom TTS host",
+          "(the TTS host is https://<region>.tts.speech.microsoft.com — a different",
+          "subdomain than the STT endpoint, hence the separate override var)",
+          "Using it in a pipeline",
+          "Voice selection",
+          "Parameters that matter",
+          "Cost",
+          "Limits & tips"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "`/cognitiveservices/v1` endpoint (no token exchange, Blob storage, or job"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "`/cognitiveservices/v1` endpoint (no token exchange, Blob storage, or job"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-e4b923bfdb9c65d7",
+      "name": "azure-text-to-speech",
+      "description": "Generate neural narration audio using Azure AI Speech (REST text-to-speech). Use when synthesizing voiceovers or narration in OpenMontage. Optional cloud TTS provider — preferred when AZURE_SPEECH_KEY is configured; the local piper_tts remains the default offline path. Shares one Speech resource with azure_stt.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\azure-text-to-speech\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "365e0df4e38fa8170db464a2e256a945c8f9bf6c677e1711dfb487f7bb8afb5c",
+      "bodySha256": "06a64f26bc419d11dfc5e68037e11b8dbddf88e6e8a2080951e071b0fc564383",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-81c6a18f08fc881f"
+      ],
+      "structure": {
+        "frontmatterName": "azure-text-to-speech",
+        "frontmatterDescription": "Generate neural narration audio using Azure AI Speech (REST text-to-speech). Use when synthesizing voiceovers or narration in OpenMontage. Optional cloud TTS provider — preferred when AZURE_SPEECH_KEY is configured; the local piper_tts remains the default offline path. Shares one Speech resource with azure_stt.",
+        "headings": [
+          "Azure AI Speech — Text-to-Speech",
+          "Setup",
+          "export AZURE_TTS_ENDPOINT=https://...  # optional: full custom TTS host",
+          "(the TTS host is https://<region>.tts.speech.microsoft.com — a different",
+          "subdomain than the STT endpoint, hence the separate override var)",
+          "Using it in a pipeline",
+          "Voice selection",
+          "Parameters that matter",
+          "Cost",
+          "Limits & tips"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "`/cognitiveservices/v1` endpoint (no token exchange, Blob storage, or job"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "`/cognitiveservices/v1` endpoint (no token exchange, Blob storage, or job"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-fdd9ab83a8f43ecf",
+      "name": "sound-effects",
+      "description": "Generate sound effects from text descriptions using ElevenLabs. Use when creating sound effects, generating audio textures, producing ambient sounds, cinematic impacts, UI sounds, or any audio that isn't speech. Supports looping, duration control, and prompt influence tuning.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\sound-effects\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "fc3e08ccbb84f3e398ca802ed03e01f7f373f30623f2bebfbae0e0607508abc9",
+      "bodySha256": "9da7f48812a55a6569893e900cb43d4088201e21cf38d7b12eda55e63f1dc12a",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media",
+        "web-interface-accessibility"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-35156ef6f83fd7d7"
+      ],
+      "structure": {
+        "frontmatterName": "sound-effects",
+        "frontmatterDescription": "Generate sound effects from text descriptions using ElevenLabs. Use when creating sound effects, generating audio textures, producing ambient sounds, cinematic impacts, UI sounds, or any audio that isn't speech. Supports looping, duration control, and prompt influence tuning.",
+        "headings": [
+          "ElevenLabs Sound Effects",
+          "Quick Start",
+          "Python",
+          "JavaScript",
+          "cURL",
+          "Parameters",
+          "Examples with Parameters",
+          "Looping ambient sound, 10 seconds",
+          "Short UI sound, high prompt adherence",
+          "Output Formats",
+          "Prompt Tips",
+          "Error Handling"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "web-interface-accessibility"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-b500d6f0abbe536e",
+      "name": "seedance-music-video",
+      "description": "为 Seedance 2.0(Higgsfield)生成音乐视频和节拍同步视觉内容提示。在用户想要创建音乐视频、歌词视频、节拍同步视觉、表演视频、音乐会视觉、专辑艺术动画或音乐驱动的视觉内容时使用。触发条件:音乐视频、歌词视频、节拍同步、音乐可视化、表演视频、音乐会视觉、专辑视觉、歌曲视频、音乐剪辑、节拍下降视觉、节奏同步,或任何音乐驱动的视频请求。即使是\"为我的歌曲制作视觉\"或\"这首曲目的视频\"。",
+      "sourcePath": "hunt\\pixel\\Ethosbtc__seedance-skills\\skills\\10-music-video\\zh-CN\\SKILL.md",
+      "repositoryRoot": "hunt\\pixel\\Ethosbtc__seedance-skills",
+      "remote": "https://github.com/Ethosbtc/seedance-skills.git",
+      "gitHead": "6f4e75ece533dc14968bb0a2ef3b36b6c5ab3450",
+      "contentDigest": "68aef298c8fb1af778d03f5394a040e4c0f56f1856db0f99630952a37f5c25b0",
+      "bodySha256": "00a0f5c62a234a23cb729c7a692cb97b520badf452cd8c0573067ecb2af6186f",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-598f1837859092d7"
+      ],
+      "structure": {
+        "frontmatterName": "seedance-music-video",
+        "frontmatterDescription": "为 Seedance 2.0（Higgsfield）生成音乐视频和节拍同步视觉内容提示。在用户想要创建音乐视频、歌词视频、节拍同步视觉、表演视频、音乐会视觉、专辑艺术动画或音乐驱动的视觉内容时使用。触发条件：音乐视频、歌词视频、节拍同步、音乐可视化、表演视频、音乐会视觉、专辑视觉、歌曲视频、音乐剪辑、节拍下降视觉、节奏同步，或任何音乐驱动的视频请求。即使是\"为我的歌曲制作视觉\"或\"这首曲目的视频\"。",
+        "headings": [
+          "Seedance 2.0（Higgsfield）音乐视频导演指南",
+          "概述",
+          "Seedance 2.0（Higgsfield）：核心功能",
+          "音频输入和节拍同步",
+          "视觉理解",
+          "2秒钩子框架",
+          "10多个基本的节拍同步钩子",
+          "音乐视频哲学",
+          "节拍视觉同步",
+          "流派视觉映射",
+          "表演与叙述与抽象",
+          "能量弧匹配歌曲结构"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-108bdd9a3af9bd15",
+      "name": "video-assembly",
+      "description": "Assemble final video from generated clips, audio, and assets using FFmpeg or Remotion. Handles concatenation, audio mixing, transitions, titles, and export. Use when combining multiple production outputs into a final deliverable.",
+      "sourcePath": "hunt\\pixel\\MCKRUZ__ComfyUI-Expert\\skills\\video-assembly\\SKILL.md",
+      "repositoryRoot": "hunt\\pixel\\MCKRUZ__ComfyUI-Expert",
+      "remote": "https://github.com/MCKRUZ/ComfyUI-Expert.git",
+      "gitHead": "dee27dc3d69b609c0006a8a12e71aadfc475ae95",
+      "contentDigest": "4d5fcfc39ab2e7fcb030e37986f92b237f1e27d9db04314e87b39365dd952a0e",
+      "bodySha256": "d152f90b7e7c71e8f436dd056108581a7a649d6d12acc8b3f001ef7fbbefb9f3",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "video-assembly",
+        "frontmatterDescription": "Assemble final video from generated clips, audio, and assets using FFmpeg or Remotion. Handles concatenation, audio mixing, transitions, titles, and export. Use when combining multiple production outputs into a final deliverable.",
+        "headings": [
+          "Video Assembly",
+          "Two Assembly Modes",
+          "Mode 1: FFmpeg (Simple, Fast)",
+          "Mode 2: Remotion (Complex Compositions)",
+          "FFmpeg Operations",
+          "Concatenate Video Clips",
+          "Create file list",
+          "Concatenate (same codec/resolution)",
+          "Concatenate (different codecs/resolutions - re-encode)",
+          "Add Audio to Video",
+          "Replace audio",
+          "Mix audio (keep original + add music)"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-2274123410e42038",
+      "name": "od-media-generation",
+      "description": "Default reference pipeline for image, video, and audio projects — routes through media-image / media-video / media-audio atoms based on the project kind, wraps the output in a live artifact, and devloops on critique-theater until the score converges.",
+      "sourcePath": "from-stars\\nexu-io__open-design\\plugins\\_official\\scenarios\\od-media-generation\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "2b76fce9f0078a990d63a8a9b2327bc6f1341e0caed2b5e81a4e9affbe0491ef",
+      "bodySha256": "086d0cfff840d3d24c4d136400f39ad3bb4b365f4706676e1eb9bd1673d42e69",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "od-media-generation",
+        "frontmatterDescription": "Default reference pipeline for image, video, and audio projects — routes through media-image / media-video / media-audio atoms based on the project kind, wraps the output in a live artifact, and devloops on critique-theater until the score converges.",
+        "headings": [
+          "od-media-generation (scenario)",
+          "Default pipeline",
+          "Atom call shape",
+          "Critique loop",
+          "Replace, do not extend"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-26221d11a4509f9e",
+      "name": "podcast-generation",
+      "description": "Use this skill when the user requests to generate, create, or produce podcasts from text content. Converts written content into a two-host conversational podcast audio format with natural dialogue.",
+      "sourcePath": "from-stars\\bytedance__deer-flow\\skills\\public\\podcast-generation\\SKILL.md",
+      "repositoryRoot": "from-stars\\bytedance__deer-flow",
+      "remote": "https://github.com/bytedance/deer-flow.git",
+      "gitHead": "917fe595fcfc2d5a30e7e55deed1bdb950785fc2",
+      "contentDigest": "96f03cee9c374d4bd2d66cceec9249bc7cf2369cb864e0a1ef4a4d1ee4bb0223",
+      "bodySha256": "bd6929fb8047c81d18b94532b4cb18263cc509e3d3331f1e6b91ddf6e8133981",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "podcast-generation",
+        "frontmatterDescription": "Use this skill when the user requests to generate, create, or produce podcasts from text content. Converts written content into a two-host conversational podcast audio format with natural dialogue.",
+        "headings": [
+          "Podcast Generation Skill",
+          "Overview",
+          "Core Capabilities",
+          "Workflow",
+          "Step 1: Understand Requirements",
+          "Step 2: Create Structured Script JSON",
+          "Step 3: Execute Generation",
+          "Script JSON Format",
+          "Script Writing Guidelines",
+          "Format Requirements",
+          "Tone & Style",
+          "Content Guidelines"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- You don't need to check the folder under `/mnt/user-data`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Generate a structured JSON script file in `/mnt/user-data/workspace/` with naming pattern: `{descriptive-name}-script.json`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "python /mnt/skills/public/podcast-generation/scripts/generate.py \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "--script-file /mnt/user-data/workspace/script-file.json \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "--output-file /mnt/user-data/outputs/generated-podcast.mp3 \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "--transcript-file /mnt/user-data/outputs/generated-podcast-transcript.md"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Step 1: Create script file `/mnt/user-data/workspace/ai-history-script.json`:"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "--script-file /mnt/user-data/workspace/ai-history-script.json \\"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- You don't need to check the folder under `/mnt/user-data`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Generate a structured JSON script file in `/mnt/user-data/workspace/` with naming pattern: `{descriptive-name}-script.json`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "python /mnt/skills/public/podcast-generation/scripts/generate.py \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "--script-file /mnt/user-data/workspace/script-file.json \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "--output-file /mnt/user-data/outputs/generated-podcast.mp3 \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "--transcript-file /mnt/user-data/outputs/generated-podcast-transcript.md"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Step 1: Create script file `/mnt/user-data/workspace/ai-history-script.json`:"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "--script-file /mnt/user-data/workspace/ai-history-script.json \\"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-31b3b633319b36e3",
+      "name": "comfyui-voice-pipeline",
+      "description": "Generate character voices using TTS, voice cloning, and lip-sync tools. Supports Chatterbox, F5-TTS, TTS Audio Suite, RVC, and ElevenLabs. Use when creating speech audio for characters or syncing audio to video.",
+      "sourcePath": "hunt\\pixel\\MCKRUZ__ComfyUI-Expert\\skills\\comfyui-voice-pipeline\\SKILL.md",
+      "repositoryRoot": "hunt\\pixel\\MCKRUZ__ComfyUI-Expert",
+      "remote": "https://github.com/MCKRUZ/ComfyUI-Expert.git",
+      "gitHead": "dee27dc3d69b609c0006a8a12e71aadfc475ae95",
+      "contentDigest": "22c57f50b8e9fa85cdc2a4a63046b07c0417611823591b9c69353e855b65dc3a",
+      "bodySha256": "0fb9a7e9b042d18152b5700b05b6a5086fc56b11a81b83f1577f57a126102d05",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "comfyui-voice-pipeline",
+        "frontmatterDescription": "Generate character voices using TTS, voice cloning, and lip-sync tools. Supports Chatterbox, F5-TTS, TTS Audio Suite, RVC, and ElevenLabs. Use when creating speech audio for characters or syncing audio to video.",
+        "headings": [
+          "ComfyUI Voice Pipeline",
+          "Voice Generation Decision Tree",
+          "Tool Reference",
+          "Chatterbox (Recommended Open-Source)",
+          "F5-TTS",
+          "TTS Audio Suite",
+          "IndexTTS-2",
+          "RVC (Voice Conversion)",
+          "ElevenLabs (Commercial)",
+          "Voice Profile Setup",
+          "Script Preparation",
+          "Text Formatting for TTS"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-4003545b1fe1e445",
+      "name": "music-generation",
+      "description": "Use this skill when the user requests to generate, create, compose, or produce music or songs — background music, theme songs, jingles, or instrumental tracks. Generates a song from a style/mood prompt and optional lyrics via the MiniMax music API.",
+      "sourcePath": "from-stars\\bytedance__deer-flow\\skills\\public\\music-generation\\SKILL.md",
+      "repositoryRoot": "from-stars\\bytedance__deer-flow",
+      "remote": "https://github.com/bytedance/deer-flow.git",
+      "gitHead": "917fe595fcfc2d5a30e7e55deed1bdb950785fc2",
+      "contentDigest": "7c990069e505bc4cbb63949350ac1ea1d8ba9a40e702b694735c7c47a1aae7f2",
+      "bodySha256": "b8b17571b82357dea768c5aa24437eada4a717a2d7c6fad082f6bb63cde6d884",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "music-generation",
+        "frontmatterDescription": "Use this skill when the user requests to generate, create, compose, or produce music or songs — background music, theme songs, jingles, or instrumental tracks. Generates a song from a style/mood prompt and optional lyrics via the MiniMax music API.",
+        "headings": [
+          "Music Generation Skill",
+          "Overview",
+          "Workflow",
+          "Step 1: Understand Requirements",
+          "Step 2: Create the Spec JSON",
+          "Step 3: Execute Generation",
+          "Environment",
+          "Output Handling",
+          "Notes"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "MiniMax music generation API (`/v1/music_generation`). You describe the style/mood/scene in"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Write a JSON file in `/mnt/user-data/workspace/` named `{descriptive-name}.json`:"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "python /mnt/skills/public/music-generation/scripts/generate.py \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "--prompt-file /mnt/user-data/workspace/rainy-night-cafe.json \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "--output-file /mnt/user-data/outputs/rainy-night-cafe.mp3"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Music is saved as MP3 (typically in `/mnt/user-data/outputs/`)."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "MiniMax music generation API (`/v1/music_generation`). You describe the style/mood/scene in"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Write a JSON file in `/mnt/user-data/workspace/` named `{descriptive-name}.json`:"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "python /mnt/skills/public/music-generation/scripts/generate.py \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "--prompt-file /mnt/user-data/workspace/rainy-night-cafe.json \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "--output-file /mnt/user-data/outputs/rainy-night-cafe.mp3"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Music is saved as MP3 (typically in `/mnt/user-data/outputs/`)."
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-401345bc741689f2",
+      "name": "transloadit-media-processing",
+      "description": "Process media files (video, audio, images, documents) using Transloadit. Use when asked to encode video to HLS/MP4, generate thumbnails, resize or watermark images, extract audio, concatenate clips, add subtitles, OCR documents, or run any media processing pipeline. Covers 86+ processing robots for file transformation at scale.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\transloadit-media-processing\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "ec4c9aa822eb1aa7727c35a563dc98ae82208bfbb42e7962a5aecbf0ea60ed5f",
+      "bodySha256": "ac5dc3cdaec786c94d6f876c2038d7ea35919ba134d022248c18b629cd8d516f",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "transloadit-media-processing",
+        "frontmatterDescription": "Process media files (video, audio, images, documents) using Transloadit. Use when asked to encode video to HLS/MP4, generate thumbnails, resize or watermark images, extract audio, concatenate clips, add subtitles, OCR documents, or run any media processing pipeline. Covers 86+ processing robots for file transformation at scale.",
+        "headings": [
+          "Transloadit Media Processing",
+          "When to Use This Skill",
+          "Setup",
+          "Option A: MCP Server (recommended for Copilot)",
+          "Option B: CLI",
+          "Core Workflows",
+          "Encode Video to HLS (Adaptive Streaming)",
+          "Generate Thumbnails from Video",
+          "Resize and Watermark Images",
+          "OCR a Document",
+          "Concatenate Audio Clips",
+          "Multi-Step Pipelines"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "--steps '{\"encoded\": {\"robot\": \"/video/encode\", \"use\": \":original\", \"preset\": \"hls-1080p\"}}' \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "\"robot\": \"/video/encode\","
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "\"robot\": \"/video/thumbs\","
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "\"robot\": \"/image/resize\","
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "\"robot\": \"/document/ocr\","
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "\"robot\": \"/http/import\","
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "\"robot\": \"/audio/concat\","
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "\"robot\": \"/image/optimize\","
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "--steps '{\"encoded\": {\"robot\": \"/video/encode\", \"use\": \":original\", \"preset\": \"hls-1080p\"}}' \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "\"robot\": \"/video/encode\","
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "\"robot\": \"/video/thumbs\","
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "\"robot\": \"/image/resize\","
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "\"robot\": \"/document/ocr\","
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "\"robot\": \"/http/import\","
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "\"robot\": \"/audio/concat\","
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "\"robot\": \"/image/optimize\","
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-44f98cd21943d460",
+      "name": "meeting-sdk/linux",
+      "description": "Zoom Meeting SDK for Linux - C++ headless meeting bots with raw audio/video access, transcription, recording, and AI integration for server-side automation",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\partner-built\\zoom-plugin\\skills\\meeting-sdk\\linux\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "d70a7752cce28f70f7cd53bd1705b1c0dba6e40feb469c83b729e76670ded091",
+      "bodySha256": "2e86b1b36f7a0f7e41db8e5383b014a1902ad5954bc285ea7a9624eaa94b7510",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "audio-voice-media",
+        "automation-mcp-integrations",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "meeting-sdk/linux",
+        "frontmatterDescription": "Zoom Meeting SDK for Linux - C++ headless meeting bots with raw audio/video access, transcription, recording, and AI integration for server-side automation",
+        "headings": [
+          "Zoom Meeting SDK - Linux Development",
+          "How to Build a Meeting Bot That Automatically Joins and Records",
+          "Quick Links",
+          "Routing Rule for Bots",
+          "SDK Overview",
+          "Key Differences from Video SDK",
+          "Prerequisites",
+          "System Requirements",
+          "Development Dependencies",
+          "Ubuntu",
+          "CentOS",
+          "Required Credentials"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "automation-mcp-integrations",
+        "knowledge-memory-context",
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-61fc3370d117da99",
+      "name": "omni-inference",
+      "description": "The core OpenAI-compatible inference endpoints: chat completions, embeddings, images, audio (TTS/STT), moderations, rerank, and the Responses API. The primary integration surface for AI agents.",
+      "sourcePath": "from-stars\\diegosouzapw__OmniRoute\\skills\\omni-inference\\SKILL.md",
+      "repositoryRoot": "from-stars\\diegosouzapw__OmniRoute",
+      "remote": "https://github.com/diegosouzapw/OmniRoute.git",
+      "gitHead": "0b41259f3952f9f27a704425f97bac64ed455194",
+      "contentDigest": "18f02f830feeedcb35701a79edf895c9da4b08b707a80d4a9b4306c54eaf5ca0",
+      "bodySha256": "bb8ca5d2fd93e23332fdd77f2ed2182318a1c7d299624dd88bdf3fcf32dcfbc8",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media",
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "omni-inference",
+        "frontmatterDescription": "The core OpenAI-compatible inference endpoints: chat completions, embeddings, images, audio (TTS/STT), moderations, rerank, and the Responses API. The primary integration surface for AI agents.",
+        "headings": [
+          "Overview",
+          "Authentication",
+          "Endpoints",
+          "POST /api/v1/session-leases",
+          "POST /api/v1/chat/completions",
+          "GET /api/v1/ws",
+          "POST /api/v1/providers/{provider}/chat/completions",
+          "POST /api/v1/api/chat",
+          "POST /api/v1/messages",
+          "POST /api/v1/messages/count_tokens",
+          "POST /api/v1/responses",
+          "POST /api/v1/embeddings"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "All requests require a valid Bearer token or session cookie. Obtain a token via `POST /api/auth/login` or configure `REQUIRE_API_KEY=false` for local development."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "### POST /api/v1/session-leases"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "### POST /api/v1/chat/completions"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "### GET /api/v1/ws"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "OpenAI-compatible chat over a WebSocket connection. `GET` with `?handshake=1` returns the connection descriptor (auth path, message protocol and live-event channels) as JSON; a plain `GET` without an Upgrade returns `426 Upgrade Required`. After upgrading, the client exchanges JSON frames — `{type:\"request\", id, payload:{model, messages}}` to start a completion and `{type:\"cancel\", id}` to abort it. A separate live channel (default port `LIVE_WS_PORT=20129`, path `/live`) streams dashboard events on the `requests`, `combo` and `credentials` topics with a 15s heartbeat. Requires an API key."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "### POST /api/v1/providers/{provider}/chat/completions"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "### POST /api/v1/api/chat"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Provides compatibility with Ollama's /api/chat format."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "All requests require a valid Bearer token or session cookie. Obtain a token via `POST /api/auth/login` or configure `REQUIRE_API_KEY=false` for local development."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "### POST /api/v1/session-leases"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "### POST /api/v1/chat/completions"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "### GET /api/v1/ws"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "OpenAI-compatible chat over a WebSocket connection. `GET` with `?handshake=1` returns the connection descriptor (auth path, message protocol and live-event channels) as JSON; a plain `GET` without an Upgrade returns `426 Upgrade Required`. After upgrading, the client exchanges JSON frames — `{type:\"request\", id, payload:{model, messages}}` to start a completion and `{type:\"cancel\", id}` to abort it. A separate live channel (default port `LIVE_WS_PORT=20129`, path `/live`) streams dashboard events on the `requests`, `combo` and `credentials` topics with a 15s heartbeat. Requires an API key."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "### POST /api/v1/providers/{provider}/chat/completions"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "### POST /api/v1/api/chat"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Provides compatibility with Ollama's /api/chat format."
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "automation-mcp-integrations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-672d0dd66abf9f6d",
+      "name": "competition-stego-media",
+      "description": "Internal downstream skill for ctf-sandbox-orchestrator. CTF-sandbox workflow for image, audio, video, document, and container steganography. Use when the user asks to inspect metadata, alpha or palette channels, LSBs, thumbnails, appended trailers, QR fragments, transcoding artifacts, or recover a hidden payload from media without blind brute force. Use only after `$ctf-sandbox-orchestrator` has already established sandbox assumptions and routed here.",
+      "sourcePath": "from-stars\\zhaoxuya520__reverse-skill\\CTF-Sandbox-Orchestrator\\competition-stego-media\\SKILL.md",
+      "repositoryRoot": "from-stars\\zhaoxuya520__reverse-skill",
+      "remote": "https://github.com/zhaoxuya520/reverse-skill.git",
+      "gitHead": "41bd788c34f82d26ad9e51bcba838b0d1220928e",
+      "contentDigest": "c9f3612e987b5f5457494b8b52fa3b6cf972478625eb2bdbd21e6a8659d26936",
+      "bodySha256": "34c6ec0ebc773d9404dfe06c7ad018c68f807babd004bc4ecb9cb3e0e21ba192",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "competition-stego-media",
+        "frontmatterDescription": "Internal downstream skill for ctf-sandbox-orchestrator. CTF-sandbox workflow for image, audio, video, document, and container steganography. Use when the user asks to inspect metadata, alpha or palette channels, LSBs, thumbnails, appended trailers, QR fragments, transcoding artifacts, or recover a hidden payload from media without blind brute force. Use only after `$ctf-sandbox-orchestrator` has already established sandbox assumptions and routed here.",
+        "headings": [
+          "Competition Stego Media",
+          "Quick Start",
+          "Workflow",
+          "1. Establish Container Truth",
+          "2. Inspect Candidate Channels",
+          "3. Reconstruct The Hidden Payload Path",
+          "Read This Reference",
+          "What To Preserve"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-71112085c32af41a",
+      "name": "zoom-rtms",
+      "description": "Reference skill for Zoom RTMS. Use after routing to a live-media workflow when processing real-time audio, video, chat, transcripts, screen share, or contact-center voice streams.",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\partner-built\\zoom-plugin\\skills\\rtms\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "6b4710c00578bf65cd186f8fe74b4b63bc3488783693482c044a455705852eda",
+      "bodySha256": "b45f918cd394cf7dab50911083877285defc53942a9ac8fad54cb61f3899cd3d",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "audio-voice-media",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "zoom-rtms",
+        "frontmatterDescription": "Reference skill for Zoom RTMS. Use after routing to a live-media workflow when processing real-time audio, video, chat, transcripts, screen share, or contact-center voice streams.",
+        "headings": [
+          "Zoom Realtime Media Streams (RTMS)",
+          "Zoom Realtime Media Streams (RTMS)",
+          "Read This First (Critical)",
+          "Quick Links",
+          "Supported Products",
+          "RTMS Overview",
+          "What RTMS Provides",
+          "March 2026 Protocol Changes",
+          "Two Approaches",
+          "Prerequisites",
+          "Quick Start (SDK - Recommended)",
+          "Quick Start (Manual WebSocket)"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "app.post('/webhook', (req, res) => {"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "app.post('/webhook', (req, res) => {"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "knowledge-memory-context"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-8262115602918a07",
+      "name": "ap-framework-validator",
+      "description": "L4 terminal leaf - FRAMEWORK VALIDATE (HRN-5). A fresh, default-FAIL juror that proves a GENERATED framework is SOUND before any gate runs. Checks the HRN-5 default-FAIL checklist - every gate mapped, exactly one terminal DONE with negatives looping UP, the BLOCKED invariant verbatim, a non-empty acceptance set. PASS lets the leaf be driven; FAIL with numbered reasons returns it to the generator.",
+      "sourcePath": "from-stars\\Spielewoy__autoprompt-skill\\agents\\reasonix\\skills\\ap-framework-validator\\SKILL.md",
+      "repositoryRoot": "from-stars\\Spielewoy__autoprompt-skill",
+      "remote": "https://github.com/Spielewoy/autoprompt-skill.git",
+      "gitHead": "91dc6edf336abea96ceb10eaf7efab77ca4c7007",
+      "contentDigest": "3155c1070e42f7f3aa6596b9f4924c8e88181ca382c9945a2cd7f439febdc0f9",
+      "bodySha256": "72af2643587b07d04aba045f01ae7e0672c2807819620d2116e639a11664e5c4",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "ap-framework-validator",
+        "frontmatterDescription": "L4 terminal leaf - FRAMEWORK VALIDATE (HRN-5). A fresh, default-FAIL juror that proves a GENERATED framework is SOUND before any gate runs. Checks the HRN-5 default-FAIL checklist - every gate mapped, exactly one terminal DONE with negatives looping UP, the BLOCKED invariant verbatim, a non-empty acceptance set. PASS lets the leaf be driven; FAIL with numbered reasons returns it to the generator.",
+        "headings": [
+          "Execution contract",
+          "Mission source of truth",
+          "Your level: L4 - Terminal leaf",
+          "Your gate/function",
+          "Report shape",
+          "Brief contract"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "You are an internal Autoprompt worker, not a general-purpose assistant. Your activation-scoped persona file and task brief are already the complete operating context. Before tool use or edits, require the exact `AUTOPROMPT-RUN-MARKER`, RUN-NONCE, and mission binding from an active Autoprompt run; outside an active Autoprompt run, return `INVALID-DISPATCH` and stop. Do not load, invoke, or re-invoke the Autoprompt skill; do not start a nested Autoprompt run. Execute only this established persona and the assigned brief. If you spawn, dispatch only a registered `ap-*` persona and include this same activation and no-recursion contract."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "You are an internal Autoprompt worker, not a general-purpose assistant. Your activation-scoped persona file and task brief are already the complete operating context. Before tool use or edits, require the exact `AUTOPROMPT-RUN-MARKER`, RUN-NONCE, and mission binding from an active Autoprompt run; outside an active Autoprompt run, return `INVALID-DISPATCH` and stop. Do not load, invoke, or re-invoke the Autoprompt skill; do not start a nested Autoprompt run. Execute only this established persona and the assigned brief. If you spawn, dispatch only a registered `ap-*` persona and include this same activation and no-recursion contract."
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-a14f58e91a4950eb",
+      "name": "detecting-deepfake-audio-in-vishing-attacks",
+      "description": "Detect AI-generated deepfake audio used in voice phishing (vishing) by extracting spectral features (MFCC, spectral centroid, spectral contrast, zero-crossing rate) and classifying samples with machine learning models, supporting batch audio analysis, confidence scoring, and forensic reporting. Use for deepfake voice detection, vishing investigations, AI-generated speech analysis, voice cloning detection, or audio authenticity verification.",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\detecting-deepfake-audio-in-vishing-attacks\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "7eca94c626a45944608a14461c5b2f553dfef4975c2089aeffe953d328421714",
+      "bodySha256": "087a52452f6a1f9c8c06b0afb2036d43809f02c94337637a5e4d087ffbe0f35d",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "audio-voice-media",
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "detecting-deepfake-audio-in-vishing-attacks",
+        "frontmatterDescription": "Detect AI-generated deepfake audio used in voice phishing (vishing) by extracting spectral features (MFCC, spectral centroid, spectral contrast, zero-crossing rate) and classifying samples with machine learning models, supporting batch audio analysis, confidence scoring, and forensic reporting. Use for deepfake voice detection, vishing investigations, AI-generated speech analysis, voice cloning detection, or audio authenticity verification.",
+        "headings": [
+          "Detecting Deepfake Audio in Vishing Attacks",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Audio Preprocessing",
+          "Load audio, resample to 16kHz mono",
+          "Trim silence from beginning and end",
+          "Normalize amplitude to [-1, 1]",
+          "Step 2: Extract Spectral Features",
+          "Extract 20 MFCCs + delta and delta-delta",
+          "Step 3: Build Feature Vector and Classify",
+          "Step 4: Temporal Artifact Analysis"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "verification-evidence",
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-b22cd6ee99ce609a",
+      "name": "resemble-detect",
+      "description": "Deepfake detection and media safety — detect AI-generated audio, images, video, and text, trace synthesis sources, apply watermarks, verify speaker identity, and analyze media intelligence using Resemble AI",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\resemble-detect\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "7f5f995b62e4de2c16d106150d0084fdab8df7cfc1fef39cff3f17b693fd944b",
+      "bodySha256": "54fd45fbb68e01beda1d71f1a9e0f23da1cb0d3022ff2992fc4d4ec415cd9530",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "audio-voice-media",
+        "governance-security",
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "resemble-detect",
+        "frontmatterDescription": "Deepfake detection and media safety — detect AI-generated audio, images, video, and text, trace synthesis sources, apply watermarks, verify speaker identity, and analyze media intelligence using Resemble AI",
+        "headings": [
+          "Resemble Detect — Deepfake Detection & Media Safety",
+          "Core Principle — THE IRON LAW",
+          "When to Use",
+          "Capability Decision Tree",
+          "Required Setup",
+          "MCP Tools Available",
+          "Full API Reference",
+          "Phase 1: Deepfake Detection",
+          "Reading Results",
+          "Interpreting Scores",
+          "Phase 2: Intelligence — Media Analysis",
+          "Detect Intelligence — Ask Questions About Results"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Check if media is AI-generated / deepfake             | **Deepfake Detection**    | `POST /detect`                        |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Know *which AI platform* made fake audio              | **Audio Source Tracing**  | `POST /detect` with flag              |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Get speaker info, emotion, transcription from media   | **Intelligence**          | `POST /intelligence`                  |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Ask questions about a completed detection             | **Detect Intelligence**   | `POST /detects/{uuid}/intelligence`   |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Apply an invisible watermark to media                 | **Watermark Apply**       | `POST /watermark/apply`               |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Check if media contains a watermark                   | **Watermark Detect**      | `POST /watermark/detect`              |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Verify a speaker's identity against known profiles    | **Identity Search**       | `POST /identity/search`               |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Check if text is AI-generated                         | **Text Detection**        | `POST /text_detect`                   |"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Check if media is AI-generated / deepfake             | **Deepfake Detection**    | `POST /detect`                        |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Know *which AI platform* made fake audio              | **Audio Source Tracing**  | `POST /detect` with flag              |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Get speaker info, emotion, transcription from media   | **Intelligence**          | `POST /intelligence`                  |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Ask questions about a completed detection             | **Detect Intelligence**   | `POST /detects/{uuid}/intelligence`   |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Apply an invisible watermark to media                 | **Watermark Apply**       | `POST /watermark/apply`               |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Check if media contains a watermark                   | **Watermark Detect**      | `POST /watermark/detect`              |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Verify a speaker's identity against known profiles    | **Identity Search**       | `POST /identity/search`               |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Check if text is AI-generated                         | **Text Detection**        | `POST /text_detect`                   |"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "verification-evidence",
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-b4c654ba7ef5603e",
+      "name": "whisper",
+      "description": "OpenAI's general-purpose speech recognition model. Supports 99 languages, transcription, translation to English, and language identification. Six model sizes from tiny (39M params) to large (1550M params). Use for speech-to-text, podcast transcription, or multilingual audio processing. Best for robust, multilingual ASR.",
+      "sourcePath": "from-stars\\Orchestra-Research__AI-Research-SKILLs\\18-multimodal\\whisper\\SKILL.md",
+      "repositoryRoot": "from-stars\\Orchestra-Research__AI-Research-SKILLs",
+      "remote": "https://github.com/Orchestra-Research/AI-Research-SKILLs.git",
+      "gitHead": "773a52944ba4747a18bd4ae9ade53fff041adcbc",
+      "contentDigest": "1cc1bbdbb347fb0f826ac319156de26716e821c686860a716c2437e541f2f39c",
+      "bodySha256": "fe9e2ca9dce1b69293dcd295a7dcb49c5a1e55d0a6e8a8b5908b5add69a33098",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media",
+        "repository-source-research"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "whisper",
+        "frontmatterDescription": "OpenAI's general-purpose speech recognition model. Supports 99 languages, transcription, translation to English, and language identification. Six model sizes from tiny (39M params) to large (1550M params). Use for speech-to-text, podcast transcription, or multilingual audio processing. Best for robust, multilingual ASR.",
+        "headings": [
+          "Whisper - Robust Speech Recognition",
+          "When to use Whisper",
+          "Quick start",
+          "Installation",
+          "Requires Python 3.8-3.11",
+          "Requires ffmpeg",
+          "macOS: brew install ffmpeg",
+          "Ubuntu: sudo apt install ffmpeg",
+          "Windows: choco install ffmpeg",
+          "Basic transcription",
+          "Load model",
+          "Transcribe"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "repository-source-research"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-bda7cc94da2e6839",
+      "name": "soundhermes",
+      "description": "Control Spotify playback, search music, and return shareable music links.",
+      "sourcePath": "from-stars\\iamlukethedev__Hermes3D\\assets\\skills\\soundhermes\\SKILL.md",
+      "repositoryRoot": "from-stars\\iamlukethedev__Hermes3D",
+      "remote": "https://github.com/iamlukethedev/Hermes3D.git",
+      "gitHead": "35763d95c9ba27a6496a27211b03ed2a0b311182",
+      "contentDigest": "51364a25ef253319b053af602f3e6671e08b37c0babf308c564da4797c809098",
+      "bodySha256": "dc10082011d68487ee4583c2f6fa5aeb1ca72579c88b3c1a73b765122f29155a",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "soundhermes",
+        "frontmatterDescription": "Control Spotify playback, search music, and return shareable music links.",
+        "headings": [
+          "SOUNDHERMES",
+          "Trigger",
+          "Channel behavior",
+          "Gateway Skill Contract",
+          "Authentication model",
+          "RPC methods the gateway skill should expose",
+          "Agent workflow"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d6b19e112fd07dd7",
+      "name": "audiocraft-audio-generation",
+      "description": "PyTorch library for audio generation including text-to-music (MusicGen) and text-to-sound (AudioGen). Use when you need to generate music from text descriptions, create sound effects, or perform melody-conditioned music generation.",
+      "sourcePath": "from-stars\\Orchestra-Research__AI-Research-SKILLs\\18-multimodal\\audiocraft\\SKILL.md",
+      "repositoryRoot": "from-stars\\Orchestra-Research__AI-Research-SKILLs",
+      "remote": "https://github.com/Orchestra-Research/AI-Research-SKILLs.git",
+      "gitHead": "773a52944ba4747a18bd4ae9ade53fff041adcbc",
+      "contentDigest": "731adc69605742988f48114839037f40e728720879d4f2e896b2cd0e4f1b667b",
+      "bodySha256": "b63ac5af831a8f10531198d47a6295cf73857266bd2338c3aa550c887f09b952",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media",
+        "repository-source-research"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "audiocraft-audio-generation",
+        "frontmatterDescription": "PyTorch library for audio generation including text-to-music (MusicGen) and text-to-sound (AudioGen). Use when you need to generate music from text descriptions, create sound effects, or perform melody-conditioned music generation.",
+        "headings": [
+          "AudioCraft: Audio Generation",
+          "When to use AudioCraft",
+          "Quick start",
+          "Installation",
+          "From PyPI",
+          "From GitHub (latest)",
+          "Or use HuggingFace Transformers",
+          "Basic text-to-music (AudioCraft)",
+          "Load model",
+          "Set generation parameters",
+          "Generate from text",
+          "Save audio"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "repository-source-research"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-0c888067d0c3e2ce",
+      "name": "atlas-cloud",
+      "description": "Generate or edit images and videos through the Atlas Cloud gateway. Use for Atlas-hosted Seedance 2.5/2.0, Gemini Omni Flash, MiniMax H3, Seedream 5.0, GPT Image 2, Nano Banana 2, or when one ATLASCLOUD_API_KEY should access multiple media model families.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\atlas-cloud\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "48da463dc2fd01eeda93ed9feb5490751c6dba50d1683340bd60c8d7f1f9fab1",
+      "bodySha256": "853644fe9b081957991592eb6e33d629da05e9e0608fe2e887400242dff6c60a",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "atlas-cloud",
+        "frontmatterDescription": "Generate or edit images and videos through the Atlas Cloud gateway. Use for Atlas-hosted Seedance 2.5/2.0, Gemini Omni Flash, MiniMax H3, Seedream 5.0, GPT Image 2, Nano Banana 2, or when one ATLASCLOUD_API_KEY should access multiple media model families.",
+        "headings": [
+          "Atlas Cloud",
+          "Preflight every paid call",
+          "Video routes",
+          "Image routes",
+          "Result and failure contract"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Seedream 5.0 Pro | generate, edit, decompose | `bytedance/seedream-v5.0-pro/text-to-image`, `/edit`, `/layer-decomposition`; edit accepts up to 10 images; sizes use `WIDTH*HEIGHT` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| GPT Image 2 | generate, edit | `openai/gpt-image-2/text-to-image`, `/edit`; sizes use `WIDTHxHEIGHT`; edit accepts up to 10 images |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Nano Banana 2 | generate, edit | `google/nano-banana-2/text-to-image`, `/edit`; uses aspect ratio plus 1k/2k/4k resolution; edit accepts up to 14 images |"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Seedream 5.0 Pro | generate, edit, decompose | `bytedance/seedream-v5.0-pro/text-to-image`, `/edit`, `/layer-decomposition`; edit accepts up to 10 images; sizes use `WIDTH*HEIGHT` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| GPT Image 2 | generate, edit | `openai/gpt-image-2/text-to-image`, `/edit`; sizes use `WIDTHxHEIGHT`; edit accepts up to 10 images |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Nano Banana 2 | generate, edit | `google/nano-banana-2/text-to-image`, `/edit`; uses aspect ratio plus 1k/2k/4k resolution; edit accepts up to 14 images |"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-12e05f84bdb145de",
+      "name": "doubao-tts",
+      "description": "Generate Mandarin and multilingual narration with Volcengine Doubao Speech 2.0. Use when creating Chinese voiceovers, when the user prefers Doubao/Volcengine/火山引擎/豆包 TTS, or when narration needs character-level timestamp metadata for subtitles.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\doubao-tts\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "b19c10f9e8fcc2b4f3305e4261ee0bd1f528c3a8a60e7122891c8ec77be11a8c",
+      "bodySha256": "c2b490a67fd36984c2f2b862c7269bc61f7e16ec1da999cf136b46da55ea42e3",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "doubao-tts",
+        "frontmatterDescription": "Generate Mandarin and multilingual narration with Volcengine Doubao Speech 2.0. Use when creating Chinese voiceovers, when the user prefers Doubao/Volcengine/火山引擎/豆包 TTS, or when narration needs character-level timestamp metadata for subtitles.",
+        "headings": [
+          "Doubao TTS",
+          "Current API",
+          "OpenMontage Usage",
+          "Recommended Workflow",
+          "Parameters",
+          "Troubleshooting",
+          "Safety"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-2f2831793dfdba48",
+      "name": "grok-media",
+      "description": "xAI Grok image and video generation guide covering authentication, endpoints, prompt structure, image editing, reference-image video, and async polling.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\grok-media\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "8770f816a5a692dbf0febd8a6a2093ab01681dbd47b3936f6d533a1b608aab1c",
+      "bodySha256": "a5b968d1069a6f70d61759ad88970a40501464d8953eb71df2d2ceb7fe6b87a9",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "grok-media",
+        "frontmatterDescription": "xAI Grok image and video generation guide covering authentication, endpoints, prompt structure, image editing, reference-image video, and async polling.",
+        "headings": [
+          "Grok Media",
+          "Models",
+          "Authentication",
+          "Image API",
+          "Text-to-image",
+          "Image edit",
+          "Image prompting",
+          "Video API",
+          "Generation",
+          "Modes",
+          "Video constraints",
+          "Pricing"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Endpoint: `POST /images/generations`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Endpoint: `POST /images/edits`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Endpoint: `POST /videos/generations`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Polling endpoint: `GET /videos/{request_id}`"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Endpoint: `POST /images/generations`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Endpoint: `POST /images/edits`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Endpoint: `POST /videos/generations`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Polling endpoint: `GET /videos/{request_id}`"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-4d2917bd1c409c0e",
+      "name": "dashscope",
+      "description": "DashScope (Alibaba Cloud Bailian / 阿里云百炼) integration — image generation (qwen-image-2.0-pro), text-to-speech (qwen3-tts-flash), and ASR with word-level timestamps (qwen3-asr-flash-filetrans). Use when generating images via Qwen-Image, narrating via Qwen-TTS, or transcribing with word-level timestamps via Qwen-ASR.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\dashscope\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "0eb81cec18adce9684ce7e6f99938d95c27c0359148cee94452fd80dd9d504ac",
+      "bodySha256": "8ce0f79afd304b347f997fb9e898c97caddb3fce5938789e3ea893a4f7eea30f",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media",
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "dashscope",
+        "frontmatterDescription": "DashScope (Alibaba Cloud Bailian / 阿里云百炼) integration — image generation (qwen-image-2.0-pro), text-to-speech (qwen3-tts-flash), and ASR with word-level timestamps (qwen3-asr-flash-filetrans). Use when generating images via Qwen-Image, narrating via Qwen-TTS, or transcribing with word-level timestamps via Qwen-ASR.",
+        "headings": [
+          "DashScope",
+          "Current API",
+          "Image Generation",
+          "Text-to-Speech",
+          "ASR with Word-Level Timestamps",
+          "OpenMontage Usage",
+          "Image via selector",
+          "TTS via selector",
+          "ASR directly (word timestamps for subtitles)",
+          "result.data[\"words\"] is a flat list of {text, begin_time_seconds, end_time_seconds}",
+          "Recommended Workflow",
+          "Parameters"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "**CRITICAL:** DashScope's `/compatible-mode/v1/` only supports `/chat/completions` and `/embeddings`. Image generation, TTS, and ASR all use **DashScope-native endpoints** — not OpenAI-compatible paths."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Returns `task_id` → poll `GET /api/v1/tasks/{task_id}` until `SUCCEEDED` → download `output.result.transcription_url` → JSON with `transcripts[].sentences[].words[]`"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "**CRITICAL:** DashScope's `/compatible-mode/v1/` only supports `/chat/completions` and `/embeddings`. Image generation, TTS, and ASR all use **DashScope-native endpoints** — not OpenAI-compatible paths."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Returns `task_id` → poll `GET /api/v1/tasks/{task_id}` until `SUCCEEDED` → download `output.result.transcription_url` → JSON with `transcripts[].sentences[].words[]`"
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "automation-mcp-integrations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-8f8a186cf21ad44e",
+      "name": "hyperframes-media",
+      "description": "Audio and media assets for HyperFrames compositions, produced by one shared audio engine (`scripts/audio.mjs`) — multi-provider TTS (HeyGen / ElevenLabs / Kokoro local), background music + sound effects (HeyGen audio-library retrieval by default, with local Lyria / MusicGen BGM generation and a bundled SFX library as the no-credential fallback), Whisper transcription, background removal, and caption authoring. Use for voiceover / TTS, BGM, SFX / sound effects, transcription, captions / subtitles / lyrics / karaoke / per-word styling, voice + provider selection, and music-mood prompting.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\hyperframes-media\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "f5b74f0f08529ca8af9d9ff0e5038987437f64dbd1d1ac9c98e4c1d0e80b802b",
+      "bodySha256": "2427217105228e80c326fabea4e7e74a91f31536345cc35f1285ef510ba26323",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "hyperframes-media",
+        "frontmatterDescription": "Audio and media assets for HyperFrames compositions, produced by one shared audio engine (`scripts/audio.mjs`) — multi-provider TTS (HeyGen / ElevenLabs / Kokoro local), background music + sound effects (HeyGen audio-library retrieval by default, with local Lyria / MusicGen BGM generation and a bundled SFX library as the no-credential fallback), Whisper transcription, background removal, and caption authoring. Use for voiceover / TTS, BGM, SFX / sound effects, transcription, captions / subtitles / lyrics / karaoke / per-word styling, voice + provider selection, and music-mood prompting.",
+        "headings": [
+          "HyperFrames Media",
+          "The audio engine — one source for TTS · BGM · SFX",
+          "<MEDIA_DIR> = this skill's directory",
+          "Preflight — show sign-in status before any audio",
+          "Provider chains (the detail behind the engine)",
+          "Routing",
+          "Non-negotiable rules"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "**BGM & SFX** — by default **retrieved** from the HeyGen audio library (`/v3/audio/sounds`), same credential as HeyGen TTS, with the no-credential fallback from the switch above:"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **BGM/SFX default to HeyGen retrieval; the no-credential fallback is generation (BGM) or the bundled library (SFX).** `/audio/sounds` ranks by a text query — name effects concretely (`glass shatter`, not `dramatic sound`); a no-match **skips**, never blocks the render. SFX sit at volume ~0.35 under voice + BGM. See `references/sfx.md` / `references/bgm.md`."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "**BGM & SFX** — by default **retrieved** from the HeyGen audio library (`/v3/audio/sounds`), same credential as HeyGen TTS, with the no-credential fallback from the switch above:"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **BGM/SFX default to HeyGen retrieval; the no-credential fallback is generation (BGM) or the bundled library (SFX).** `/audio/sounds` ranks by a text query — name effects concretely (`glass shatter`, not `dramatic sound`); a no-match **skips**, never blocks the render. SFX sit at volume ~0.35 under voice + BGM. See `references/sfx.md` / `references/bgm.md`."
+        }
+      ],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [
+        "knowledge-memory-context"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d6404adefd3cb508",
+      "name": "fish-audio-tts",
+      "description": "Generate expressive, multilingual narration with fish.audio (S1 / S2-generation models) and reuse cloned voices via reference_id. Use when the user prefers fish.audio/Fish Audio TTS, wants a specific playground voice model, or needs high-emotion voice-clone narration.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\fish-audio-tts\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "7fcdbf095dc6aa57d6f18b899e67425fb6e142f92f3f0d34e7e66deb7ffbf2d9",
+      "bodySha256": "3a873b2e65c1c90f03f722e3f519cbacb3aa953739f58c11c84451af4a699f9f",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "fish-audio-tts",
+        "frontmatterDescription": "Generate expressive, multilingual narration with fish.audio (S1 / S2-generation models) and reuse cloned voices via reference_id. Use when the user prefers fish.audio/Fish Audio TTS, wants a specific playground voice model, or needs high-emotion voice-clone narration.",
+        "headings": [
+          "fish.audio TTS",
+          "Current API",
+          "Backend models",
+          "Inline emotion tags (S2 models only)",
+          "Voice selection (reference_id)",
+          "OpenMontage Usage",
+          "Quality & latency tuning",
+          "Recommended Workflow",
+          "Troubleshooting",
+          "Safety"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d9e4f83c18c31169",
+      "name": "lyria",
+      "description": "Generate and validate music with Google Lyria 3 through the Gemini Interactions API. Use before calling OpenMontage `google_music`, designing Lyria 3 Clip or Pro prompts, using image-to-music or custom lyrics, choosing between Lyria 3 and Lyria RealTime, diagnosing Google music-generation failures, or preparing exact-duration music for a video.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\lyria\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "084c57d53f9a0fc3f7b90d2e1822b088e40a0f451dda718389c5d78a88922785",
+      "bodySha256": "1c7bb60018773c1ed0895f34a36890df17c3ad77025628b466030ec64a0c7a6a",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "audio-voice-media"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "lyria",
+        "frontmatterDescription": "Generate and validate music with Google Lyria 3 through the Gemini Interactions API. Use before calling OpenMontage `google_music`, designing Lyria 3 Clip or Pro prompts, using image-to-music or custom lyrics, choosing between Lyria 3 and Lyria RealTime, diagnosing Google music-generation failures, or preparing exact-duration music for a video.",
+        "headings": [
+          "Google Lyria 3",
+          "Required Workflow",
+          "Choose The Model Deliberately",
+          "Build The Prompt",
+          "Direct Vocals Deliberately",
+          "Treat Duration As Untrusted Until Probed",
+          "Authenticate And Diagnose Safely",
+          "Parse And Record The Result",
+          "Quality Checklist"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "audio-voice-media",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    }
+  ]
+}

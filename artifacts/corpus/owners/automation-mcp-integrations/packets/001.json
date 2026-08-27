@@ -1,0 +1,1904 @@
+{
+  "schemaVersion": 1,
+  "packetId": "automation-mcp-integrations-001",
+  "familyId": "automation-mcp-integrations",
+  "sequence": 1,
+  "sourceCount": 25,
+  "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions.",
+  "cards": [
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-200797ea0e9e47d0",
+      "name": "desktop-commander-overview",
+      "description": "Use for Desktop Commander MCP capabilities — persistent shells and REPLs, long-running processes, filesystem beyond the workspace, structured files (.xlsx, .docx, .pdf, images) and large local data files such as CSVs, ripgrep search at scale, SSH, or cross-turn state.",
+      "sourcePath": "from-stars\\wonderwhy-er__DesktopCommanderMCP\\plugins\\claude\\skills\\desktop-commander-overview\\SKILL.md",
+      "repositoryRoot": "from-stars\\wonderwhy-er__DesktopCommanderMCP",
+      "remote": "https://github.com/wonderwhy-er/DesktopCommanderMCP.git",
+      "gitHead": "9bd8422dd676d5ab93d977bcdcafb3ec58788bd3",
+      "contentDigest": "b058bec07a78219c842c3d391774f28352991858705104f3b4a01321e3ed9d13",
+      "bodySha256": "97d026b25f5c7448d101766f8c44a7b6b3fc24b1a1ccdeb348049eff50e8b802",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-4e263acecc5a99df"
+      ],
+      "structure": {
+        "frontmatterName": "desktop-commander-overview",
+        "frontmatterDescription": "Use for Desktop Commander MCP capabilities — persistent shells and REPLs, long-running processes, filesystem beyond the workspace, structured files (.xlsx, .docx, .pdf, images) and large local data files such as CSVs, ripgrep search at scale, SSH, or cross-turn state.",
+        "headings": [
+          "Desktop Commander MCP",
+          "What this MCP gives the agent",
+          "Example workflows",
+          "\"Debug this production issue\"",
+          "\"Deploy this to staging\"",
+          "\"Run the dev server and iterate on the API\"",
+          "\"Refactor across this monorepo\"",
+          "\"Update the Q3 numbers in this spreadsheet and tweak the summary in the report\"",
+          "\"Generate the Q3 report as a PDF\"",
+          "\"Insert a cover page into this PDF\"",
+          "\"Analyze this 200MB CSV\"",
+          "\"Run a quick Node script\""
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "`start_process(\"ssh user@prod.example.com\", timeout_ms=...)` opens a long-lived SSH session and returns a PID. `interact_with_process(pid, \"tail -f /var/log/app.log\\n\")` starts streaming logs. Subsequent turns: `read_process_output(pid, offset=-50)` to see the last 50 lines as they arrive, `interact_with_process(pid, \"...\")` to run diagnostic commands in the same session. `force_terminate(pid)` to close the session when done — for sessions opened by `start_process`, `force_terminate` is the correct cleanup tool; `kill_process` is for arbitrary OS PIDs found via `list_processes`."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "`start_process(\"python3 -i\", timeout_ms=...)` opens a Python REPL and returns a PID. `interact_with_process(pid, \"import pandas as pd; df = pd.read_csv('/abs/path.csv')\")` loads it once. Every subsequent question — `df.describe()`, `df.groupby('col').size()`, plot a chart — runs in the same already-loaded REPL. Libraries don't re-import, the dataframe doesn't re-load. The MCP itself recommends this workflow for any local data-file analysis."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Resolve the path to absolute first (e.g., `/Users/<user>/Downloads`, not `~/Downloads`). Then `list_directory(path=\"/Users/<user>/Downloads\", depth=1)` to see what's there. `start_search(pattern=\"*.pdf\", path=\"/Users/<user>/Downloads\", searchType=\"files\")` and similar for other types. `create_directory` for new folders. `move_file` per item. Preview the move plan before executing destructive ops."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "`start_process(\"ssh user@prod.example.com\", timeout_ms=...)` opens a long-lived SSH session and returns a PID. `interact_with_process(pid, \"tail -f /var/log/app.log\\n\")` starts streaming logs. Subsequent turns: `read_process_output(pid, offset=-50)` to see the last 50 lines as they arrive, `interact_with_process(pid, \"...\")` to run diagnostic commands in the same session. `force_terminate(pid)` to close the session when done — for sessions opened by `start_process`, `force_terminate` is the correct cleanup tool; `kill_process` is for arbitrary OS PIDs found via `list_processes`."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "`start_process(\"python3 -i\", timeout_ms=...)` opens a Python REPL and returns a PID. `interact_with_process(pid, \"import pandas as pd; df = pd.read_csv('/abs/path.csv')\")` loads it once. Every subsequent question — `df.describe()`, `df.groupby('col').size()`, plot a chart — runs in the same already-loaded REPL. Libraries don't re-import, the dataframe doesn't re-load. The MCP itself recommends this workflow for any local data-file analysis."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Resolve the path to absolute first (e.g., `/Users/<user>/Downloads`, not `~/Downloads`). Then `list_directory(path=\"/Users/<user>/Downloads\", depth=1)` to see what's there. `start_search(pattern=\"*.pdf\", path=\"/Users/<user>/Downloads\", searchType=\"files\")` and similar for other types. `create_directory` for new folders. `move_file` per item. Preview the move plan before executing destructive ops."
+        }
+      ],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-4639240d3e301ce1",
+      "name": "desktop-commander-overview",
+      "description": "Use for Desktop Commander MCP capabilities — persistent shells and REPLs, long-running processes, filesystem beyond the workspace, structured files (.xlsx, .docx, .pdf, images) and large local data files such as CSVs, ripgrep search at scale, SSH, or cross-turn state.",
+      "sourcePath": "from-stars\\wonderwhy-er__DesktopCommanderMCP\\skills\\desktop-commander-overview\\SKILL.md",
+      "repositoryRoot": "from-stars\\wonderwhy-er__DesktopCommanderMCP",
+      "remote": "https://github.com/wonderwhy-er/DesktopCommanderMCP.git",
+      "gitHead": "9bd8422dd676d5ab93d977bcdcafb3ec58788bd3",
+      "contentDigest": "b058bec07a78219c842c3d391774f28352991858705104f3b4a01321e3ed9d13",
+      "bodySha256": "97d026b25f5c7448d101766f8c44a7b6b3fc24b1a1ccdeb348049eff50e8b802",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-4e263acecc5a99df"
+      ],
+      "structure": {
+        "frontmatterName": "desktop-commander-overview",
+        "frontmatterDescription": "Use for Desktop Commander MCP capabilities — persistent shells and REPLs, long-running processes, filesystem beyond the workspace, structured files (.xlsx, .docx, .pdf, images) and large local data files such as CSVs, ripgrep search at scale, SSH, or cross-turn state.",
+        "headings": [
+          "Desktop Commander MCP",
+          "What this MCP gives the agent",
+          "Example workflows",
+          "\"Debug this production issue\"",
+          "\"Deploy this to staging\"",
+          "\"Run the dev server and iterate on the API\"",
+          "\"Refactor across this monorepo\"",
+          "\"Update the Q3 numbers in this spreadsheet and tweak the summary in the report\"",
+          "\"Generate the Q3 report as a PDF\"",
+          "\"Insert a cover page into this PDF\"",
+          "\"Analyze this 200MB CSV\"",
+          "\"Run a quick Node script\""
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "`start_process(\"ssh user@prod.example.com\", timeout_ms=...)` opens a long-lived SSH session and returns a PID. `interact_with_process(pid, \"tail -f /var/log/app.log\\n\")` starts streaming logs. Subsequent turns: `read_process_output(pid, offset=-50)` to see the last 50 lines as they arrive, `interact_with_process(pid, \"...\")` to run diagnostic commands in the same session. `force_terminate(pid)` to close the session when done — for sessions opened by `start_process`, `force_terminate` is the correct cleanup tool; `kill_process` is for arbitrary OS PIDs found via `list_processes`."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "`start_process(\"python3 -i\", timeout_ms=...)` opens a Python REPL and returns a PID. `interact_with_process(pid, \"import pandas as pd; df = pd.read_csv('/abs/path.csv')\")` loads it once. Every subsequent question — `df.describe()`, `df.groupby('col').size()`, plot a chart — runs in the same already-loaded REPL. Libraries don't re-import, the dataframe doesn't re-load. The MCP itself recommends this workflow for any local data-file analysis."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Resolve the path to absolute first (e.g., `/Users/<user>/Downloads`, not `~/Downloads`). Then `list_directory(path=\"/Users/<user>/Downloads\", depth=1)` to see what's there. `start_search(pattern=\"*.pdf\", path=\"/Users/<user>/Downloads\", searchType=\"files\")` and similar for other types. `create_directory` for new folders. `move_file` per item. Preview the move plan before executing destructive ops."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "`start_process(\"ssh user@prod.example.com\", timeout_ms=...)` opens a long-lived SSH session and returns a PID. `interact_with_process(pid, \"tail -f /var/log/app.log\\n\")` starts streaming logs. Subsequent turns: `read_process_output(pid, offset=-50)` to see the last 50 lines as they arrive, `interact_with_process(pid, \"...\")` to run diagnostic commands in the same session. `force_terminate(pid)` to close the session when done — for sessions opened by `start_process`, `force_terminate` is the correct cleanup tool; `kill_process` is for arbitrary OS PIDs found via `list_processes`."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "`start_process(\"python3 -i\", timeout_ms=...)` opens a Python REPL and returns a PID. `interact_with_process(pid, \"import pandas as pd; df = pd.read_csv('/abs/path.csv')\")` loads it once. Every subsequent question — `df.describe()`, `df.groupby('col').size()`, plot a chart — runs in the same already-loaded REPL. Libraries don't re-import, the dataframe doesn't re-load. The MCP itself recommends this workflow for any local data-file analysis."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Resolve the path to absolute first (e.g., `/Users/<user>/Downloads`, not `~/Downloads`). Then `list_directory(path=\"/Users/<user>/Downloads\", depth=1)` to see what's there. `start_search(pattern=\"*.pdf\", path=\"/Users/<user>/Downloads\", searchType=\"files\")` and similar for other types. `create_directory` for new folders. `move_file` per item. Preview the move plan before executing destructive ops."
+        }
+      ],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-5e842dd9196a9b31",
+      "name": "desktop-commander-overview",
+      "description": "Use for Desktop Commander MCP capabilities — persistent shells and REPLs, long-running processes, filesystem beyond the workspace, structured files (.xlsx, .docx, .pdf, images) and large local data files such as CSVs, ripgrep search at scale, SSH, or cross-turn state.",
+      "sourcePath": "from-stars\\wonderwhy-er__DesktopCommanderMCP\\plugins\\cursor\\skills\\desktop-commander-overview\\SKILL.md",
+      "repositoryRoot": "from-stars\\wonderwhy-er__DesktopCommanderMCP",
+      "remote": "https://github.com/wonderwhy-er/DesktopCommanderMCP.git",
+      "gitHead": "9bd8422dd676d5ab93d977bcdcafb3ec58788bd3",
+      "contentDigest": "b058bec07a78219c842c3d391774f28352991858705104f3b4a01321e3ed9d13",
+      "bodySha256": "97d026b25f5c7448d101766f8c44a7b6b3fc24b1a1ccdeb348049eff50e8b802",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-4e263acecc5a99df"
+      ],
+      "structure": {
+        "frontmatterName": "desktop-commander-overview",
+        "frontmatterDescription": "Use for Desktop Commander MCP capabilities — persistent shells and REPLs, long-running processes, filesystem beyond the workspace, structured files (.xlsx, .docx, .pdf, images) and large local data files such as CSVs, ripgrep search at scale, SSH, or cross-turn state.",
+        "headings": [
+          "Desktop Commander MCP",
+          "What this MCP gives the agent",
+          "Example workflows",
+          "\"Debug this production issue\"",
+          "\"Deploy this to staging\"",
+          "\"Run the dev server and iterate on the API\"",
+          "\"Refactor across this monorepo\"",
+          "\"Update the Q3 numbers in this spreadsheet and tweak the summary in the report\"",
+          "\"Generate the Q3 report as a PDF\"",
+          "\"Insert a cover page into this PDF\"",
+          "\"Analyze this 200MB CSV\"",
+          "\"Run a quick Node script\""
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "`start_process(\"ssh user@prod.example.com\", timeout_ms=...)` opens a long-lived SSH session and returns a PID. `interact_with_process(pid, \"tail -f /var/log/app.log\\n\")` starts streaming logs. Subsequent turns: `read_process_output(pid, offset=-50)` to see the last 50 lines as they arrive, `interact_with_process(pid, \"...\")` to run diagnostic commands in the same session. `force_terminate(pid)` to close the session when done — for sessions opened by `start_process`, `force_terminate` is the correct cleanup tool; `kill_process` is for arbitrary OS PIDs found via `list_processes`."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "`start_process(\"python3 -i\", timeout_ms=...)` opens a Python REPL and returns a PID. `interact_with_process(pid, \"import pandas as pd; df = pd.read_csv('/abs/path.csv')\")` loads it once. Every subsequent question — `df.describe()`, `df.groupby('col').size()`, plot a chart — runs in the same already-loaded REPL. Libraries don't re-import, the dataframe doesn't re-load. The MCP itself recommends this workflow for any local data-file analysis."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Resolve the path to absolute first (e.g., `/Users/<user>/Downloads`, not `~/Downloads`). Then `list_directory(path=\"/Users/<user>/Downloads\", depth=1)` to see what's there. `start_search(pattern=\"*.pdf\", path=\"/Users/<user>/Downloads\", searchType=\"files\")` and similar for other types. `create_directory` for new folders. `move_file` per item. Preview the move plan before executing destructive ops."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "`start_process(\"ssh user@prod.example.com\", timeout_ms=...)` opens a long-lived SSH session and returns a PID. `interact_with_process(pid, \"tail -f /var/log/app.log\\n\")` starts streaming logs. Subsequent turns: `read_process_output(pid, offset=-50)` to see the last 50 lines as they arrive, `interact_with_process(pid, \"...\")` to run diagnostic commands in the same session. `force_terminate(pid)` to close the session when done — for sessions opened by `start_process`, `force_terminate` is the correct cleanup tool; `kill_process` is for arbitrary OS PIDs found via `list_processes`."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "`start_process(\"python3 -i\", timeout_ms=...)` opens a Python REPL and returns a PID. `interact_with_process(pid, \"import pandas as pd; df = pd.read_csv('/abs/path.csv')\")` loads it once. Every subsequent question — `df.describe()`, `df.groupby('col').size()`, plot a chart — runs in the same already-loaded REPL. Libraries don't re-import, the dataframe doesn't re-load. The MCP itself recommends this workflow for any local data-file analysis."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Resolve the path to absolute first (e.g., `/Users/<user>/Downloads`, not `~/Downloads`). Then `list_directory(path=\"/Users/<user>/Downloads\", depth=1)` to see what's there. `start_search(pattern=\"*.pdf\", path=\"/Users/<user>/Downloads\", searchType=\"files\")` and similar for other types. `create_directory` for new folders. `move_file` per item. Preview the move plan before executing destructive ops."
+        }
+      ],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-715938cad5bdbc1a",
+      "name": "browser-use",
+      "description": "Direct browser control via CDP for web interaction: automation, scraping, testing, screenshots, and site/app work.",
+      "sourcePath": "hunt\\atlas\\browser-use__browser-use\\browser_use\\skills\\browser-use\\SKILL.md",
+      "repositoryRoot": "hunt\\atlas\\browser-use__browser-use",
+      "remote": "https://github.com/browser-use/browser-use.git",
+      "gitHead": "85ddbfedf609166b2d2c76c3d80506649fee82a9",
+      "contentDigest": "7f889ee72cdd498d7b5cb580d435711f3dca492390841386fcfd3d5eb03ce7f4",
+      "bodySha256": "036b84184a25fa3248f0b4d118ca47499c078dafcd40dae2be58bc6b8fa33a04",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-a94300da83af4b5a"
+      ],
+      "structure": {
+        "frontmatterName": "browser-use",
+        "frontmatterDescription": "Direct browser control via CDP for web interaction: automation, scraping, testing, screenshots, and site/app work.",
+        "headings": [
+          "Browser Use",
+          "When Not to Use",
+          "Usage",
+          "Local Chrome",
+          "Remote Browsers",
+          "Page Workflow",
+          "Recordings and Videos",
+          "Interaction Skills",
+          "Design Constraints",
+          "Gotchas",
+          "Domain Skills"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Invoke as `browser-use`. Use heredocs for multi-line commands."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Ask before leaving cloud browsers running; stop them with `stop_remote_daemon(name)` or `PATCH /browsers/{id} {\"action\":\"stop\"}`."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Invoke as `browser-use`. Use heredocs for multi-line commands."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Ask before leaving cloud browsers running; stop them with `stop_remote_daemon(name)` or `PATCH /browsers/{id} {\"action\":\"stop\"}`."
+        }
+      ],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-803c6eec61e0ef90",
+      "name": "browser-use",
+      "description": "Direct browser control via CDP for web interaction: automation, scraping, testing, screenshots, and site/app work.",
+      "sourcePath": "hunt\\atlas\\browser-use__browser-use\\skills\\browser-use\\SKILL.md",
+      "repositoryRoot": "hunt\\atlas\\browser-use__browser-use",
+      "remote": "https://github.com/browser-use/browser-use.git",
+      "gitHead": "85ddbfedf609166b2d2c76c3d80506649fee82a9",
+      "contentDigest": "7f889ee72cdd498d7b5cb580d435711f3dca492390841386fcfd3d5eb03ce7f4",
+      "bodySha256": "036b84184a25fa3248f0b4d118ca47499c078dafcd40dae2be58bc6b8fa33a04",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-a94300da83af4b5a"
+      ],
+      "structure": {
+        "frontmatterName": "browser-use",
+        "frontmatterDescription": "Direct browser control via CDP for web interaction: automation, scraping, testing, screenshots, and site/app work.",
+        "headings": [
+          "Browser Use",
+          "When Not to Use",
+          "Usage",
+          "Local Chrome",
+          "Remote Browsers",
+          "Page Workflow",
+          "Recordings and Videos",
+          "Interaction Skills",
+          "Design Constraints",
+          "Gotchas",
+          "Domain Skills"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Invoke as `browser-use`. Use heredocs for multi-line commands."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Ask before leaving cloud browsers running; stop them with `stop_remote_daemon(name)` or `PATCH /browsers/{id} {\"action\":\"stop\"}`."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Invoke as `browser-use`. Use heredocs for multi-line commands."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Ask before leaving cloud browsers running; stop them with `stop_remote_daemon(name)` or `PATCH /browsers/{id} {\"action\":\"stop\"}`."
+        }
+      ],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-e443631abd7b8895",
+      "name": "browser-automation",
+      "description": "|",
+      "sourcePath": "from-stars\\zhaoxuya520__reverse-skill\\skills\\browser-automation\\SKILL.md",
+      "repositoryRoot": "from-stars\\zhaoxuya520__reverse-skill",
+      "remote": "https://github.com/zhaoxuya520/reverse-skill.git",
+      "gitHead": "41bd788c34f82d26ad9e51bcba838b0d1220928e",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "c19a9293ea15be66cab95ef2f3e622d5becda2bb752b8101610f5feee260fba3",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "candidate-90d43c801cddfb64"
+      ],
+      "structure": {
+        "frontmatterName": "browser-automation",
+        "frontmatterDescription": "|",
+        "headings": [
+          "自动化操作 (Desktop & Browser Automation)",
+          "ACTION REQUIRED（读完后立刻执行）",
+          "适用范围",
+          "浏览器场景（Playwright / agent-browser）",
+          "桌面应用场景（OpenReverse）",
+          "与其他工具的分工",
+          "Part 1: 浏览器自动化（Playwright / agent-browser）",
+          "核心工作流",
+          "1. 打开页面",
+          "2. 获取可交互元素（返回 @e1, @e2... 引用）",
+          "3. 用引用操作元素",
+          "4. 完成后关闭"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "npm run init:agents -- --target=all /path/to/project"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "npm run init:agents -- --target=all /path/to/project"
+        }
+      ],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-106643f5375d9dfd",
+      "name": "setup-api-key",
+      "description": "Guides users through setting up an ElevenLabs API key for ElevenLabs MCP tools. Use when the user needs to configure an ElevenLabs API key, when ElevenLabs tools fail due to missing API key, or when the user mentions needing access to ElevenLabs. First checks whether ELEVENLABS_API_KEY is already configured and valid, and only runs full setup when needed.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\setup-api-key\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "f68e1dc148af4eb6665e160f7bf898a4ec4bdc352d2a7b3b2047e2dee24ac532",
+      "bodySha256": "92f00a9f71f2812bdbb20308f2795e73134f36cae3fdd05a84fdf8954a2be3c3",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-ca8715f6a04d724f"
+      ],
+      "structure": {
+        "frontmatterName": "setup-api-key",
+        "frontmatterDescription": "Guides users through setting up an ElevenLabs API key for ElevenLabs MCP tools. Use when the user needs to configure an ElevenLabs API key, when ElevenLabs tools fail due to missing API key, or when the user mentions needing access to ElevenLabs. First checks whether ELEVENLABS_API_KEY is already configured and valid, and only runs full setup when needed.",
+        "headings": [
+          "ElevenLabs API Key Setup",
+          "Workflow",
+          "Step 0: Check for an existing API key first",
+          "Step 1: Request the API key",
+          "Step 2: Validate and configure"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-242f0247151802f1",
+      "name": "setup-api-key",
+      "description": "Guides users through setting up an ElevenLabs API key for ElevenLabs MCP tools. Use when the user needs to configure an ElevenLabs API key, when ElevenLabs tools fail due to missing API key, or when the user mentions needing access to ElevenLabs. First checks whether ELEVENLABS_API_KEY is already configured and valid, and only runs full setup when needed.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.claude\\skills\\setup-api-key\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "f68e1dc148af4eb6665e160f7bf898a4ec4bdc352d2a7b3b2047e2dee24ac532",
+      "bodySha256": "92f00a9f71f2812bdbb20308f2795e73134f36cae3fdd05a84fdf8954a2be3c3",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-ca8715f6a04d724f"
+      ],
+      "structure": {
+        "frontmatterName": "setup-api-key",
+        "frontmatterDescription": "Guides users through setting up an ElevenLabs API key for ElevenLabs MCP tools. Use when the user needs to configure an ElevenLabs API key, when ElevenLabs tools fail due to missing API key, or when the user mentions needing access to ElevenLabs. First checks whether ELEVENLABS_API_KEY is already configured and valid, and only runs full setup when needed.",
+        "headings": [
+          "ElevenLabs API Key Setup",
+          "Workflow",
+          "Step 0: Check for an existing API key first",
+          "Step 1: Request the API key",
+          "Step 2: Validate and configure"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-72c90b6879a191f0",
+      "name": "bfl-api",
+      "description": "BFL FLUX API integration guide covering endpoints, async polling patterns, rate limiting, error handling, webhooks, and regional endpoints with Python and TypeScript code examples.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.claude\\skills\\bfl-api\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "4ae05edfc5a6f43ba41a6e4973e383a510d48aebc06a0d5b856d020dd90e00ef",
+      "bodySha256": "ed1bcfa0a2c8c2649f7e8dab8303ff837d605471b647b50216e5e9b1a68e9e9d",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-a6c4c5dab66e0f61"
+      ],
+      "structure": {
+        "frontmatterName": "bfl-api",
+        "frontmatterDescription": "BFL FLUX API integration guide covering endpoints, async polling patterns, rate limiting, error handling, webhooks, and regional endpoints with Python and TypeScript code examples.",
+        "headings": [
+          "BFL API Integration Guide",
+          "First: Check API Key",
+          "Important: Image URLs Expire in 10 Minutes",
+          "When to Use",
+          "Quick Reference",
+          "Base Endpoints",
+          "Model Endpoints & Pricing",
+          "FLUX.2 Models",
+          "FLUX.1 Models",
+          "Image Input for Editing",
+          "Multi-Reference I2I",
+          "Rate Limits"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| FLUX.2 [klein] 4B | `/v1/flux-2-klein-4b` | 1.4c   | 0.1c | $0.014  | $0.015  | Real-time, high volume             |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| FLUX.2 [klein] 9B | `/v1/flux-2-klein-9b` | 1.5c   | 0.2c | $0.015  | $0.017  | Balanced quality/speed             |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| FLUX.2 [pro]      | `/v1/flux-2-pro`      | 3c     | 1.5c | $0.03   | $0.045  | Production, fast turnaround        |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| FLUX.2 [max]      | `/v1/flux-2-max`      | 7c     | 3c   | $0.07   | $0.10   | Maximum quality                    |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| FLUX.2 [flex]     | `/v1/flux-2-flex`     | 5c     | 5c   | $0.05   | $0.10   | Typography, adjustable controls    |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| FLUX.1 Kontext [pro] | `/v1/flux-kontext`       | $0.04       | Image editing with context    |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| FLUX.1 Kontext [max] | `/v1/flux-kontext-max`   | $0.08       | Max quality editing           |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| FLUX1.1 [pro]        | `/v1/flux-pro-1.1`       | $0.04       | Standard T2I, fast & reliable |"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| FLUX.2 [klein] 4B | `/v1/flux-2-klein-4b` | 1.4c   | 0.1c | $0.014  | $0.015  | Real-time, high volume             |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| FLUX.2 [klein] 9B | `/v1/flux-2-klein-9b` | 1.5c   | 0.2c | $0.015  | $0.017  | Balanced quality/speed             |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| FLUX.2 [pro]      | `/v1/flux-2-pro`      | 3c     | 1.5c | $0.03   | $0.045  | Production, fast turnaround        |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| FLUX.2 [max]      | `/v1/flux-2-max`      | 7c     | 3c   | $0.07   | $0.10   | Maximum quality                    |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| FLUX.2 [flex]     | `/v1/flux-2-flex`     | 5c     | 5c   | $0.05   | $0.10   | Typography, adjustable controls    |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| FLUX.1 Kontext [pro] | `/v1/flux-kontext`       | $0.04       | Image editing with context    |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| FLUX.1 Kontext [max] | `/v1/flux-kontext-max`   | $0.08       | Max quality editing           |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| FLUX1.1 [pro]        | `/v1/flux-pro-1.1`       | $0.04       | Standard T2I, fast & reliable |"
+        }
+      ],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-bf3bf7d1e06c6137",
+      "name": "bfl-api",
+      "description": "BFL FLUX API integration guide covering endpoints, async polling patterns, rate limiting, error handling, webhooks, and regional endpoints with Python and TypeScript code examples.",
+      "sourcePath": "from-stars\\calesthio__OpenMontage\\.agents\\skills\\bfl-api\\SKILL.md",
+      "repositoryRoot": "from-stars\\calesthio__OpenMontage",
+      "remote": "https://github.com/calesthio/OpenMontage.git",
+      "gitHead": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "contentDigest": "4ae05edfc5a6f43ba41a6e4973e383a510d48aebc06a0d5b856d020dd90e00ef",
+      "bodySha256": "ed1bcfa0a2c8c2649f7e8dab8303ff837d605471b647b50216e5e9b1a68e9e9d",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-a6c4c5dab66e0f61"
+      ],
+      "structure": {
+        "frontmatterName": "bfl-api",
+        "frontmatterDescription": "BFL FLUX API integration guide covering endpoints, async polling patterns, rate limiting, error handling, webhooks, and regional endpoints with Python and TypeScript code examples.",
+        "headings": [
+          "BFL API Integration Guide",
+          "First: Check API Key",
+          "Important: Image URLs Expire in 10 Minutes",
+          "When to Use",
+          "Quick Reference",
+          "Base Endpoints",
+          "Model Endpoints & Pricing",
+          "FLUX.2 Models",
+          "FLUX.1 Models",
+          "Image Input for Editing",
+          "Multi-Reference I2I",
+          "Rate Limits"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| FLUX.2 [klein] 4B | `/v1/flux-2-klein-4b` | 1.4c   | 0.1c | $0.014  | $0.015  | Real-time, high volume             |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| FLUX.2 [klein] 9B | `/v1/flux-2-klein-9b` | 1.5c   | 0.2c | $0.015  | $0.017  | Balanced quality/speed             |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| FLUX.2 [pro]      | `/v1/flux-2-pro`      | 3c     | 1.5c | $0.03   | $0.045  | Production, fast turnaround        |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| FLUX.2 [max]      | `/v1/flux-2-max`      | 7c     | 3c   | $0.07   | $0.10   | Maximum quality                    |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| FLUX.2 [flex]     | `/v1/flux-2-flex`     | 5c     | 5c   | $0.05   | $0.10   | Typography, adjustable controls    |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| FLUX.1 Kontext [pro] | `/v1/flux-kontext`       | $0.04       | Image editing with context    |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| FLUX.1 Kontext [max] | `/v1/flux-kontext-max`   | $0.08       | Max quality editing           |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| FLUX1.1 [pro]        | `/v1/flux-pro-1.1`       | $0.04       | Standard T2I, fast & reliable |"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| FLUX.2 [klein] 4B | `/v1/flux-2-klein-4b` | 1.4c   | 0.1c | $0.014  | $0.015  | Real-time, high volume             |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| FLUX.2 [klein] 9B | `/v1/flux-2-klein-9b` | 1.5c   | 0.2c | $0.015  | $0.017  | Balanced quality/speed             |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| FLUX.2 [pro]      | `/v1/flux-2-pro`      | 3c     | 1.5c | $0.03   | $0.045  | Production, fast turnaround        |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| FLUX.2 [max]      | `/v1/flux-2-max`      | 7c     | 3c   | $0.07   | $0.10   | Maximum quality                    |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| FLUX.2 [flex]     | `/v1/flux-2-flex`     | 5c     | 5c   | $0.05   | $0.10   | Typography, adjustable controls    |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| FLUX.1 Kontext [pro] | `/v1/flux-kontext`       | $0.04       | Image editing with context    |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| FLUX.1 Kontext [max] | `/v1/flux-kontext-max`   | $0.08       | Max quality editing           |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| FLUX1.1 [pro]        | `/v1/flux-pro-1.1`       | $0.04       | Standard T2I, fast & reliable |"
+        }
+      ],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d3b82a88f40eb9dd",
+      "name": "release-notes",
+      "description": "Generate release notes for a Plane release PR in either `makeplane/plane-cloud` (date-based versioning, e.g. `release: vYY.MM.DD-N`) or `makeplane/plane-ee` (semver, e.g. `release: vX.Y.Z`). Reads PR commits, filters out noise, categorizes by conventional-commit type, optionally enriches via Plane MCP, and writes the result as the PR description in the GitHub Releases format.",
+      "sourcePath": "from-stars\\makeplane__plane\\.claude\\skills\\release-notes\\SKILL.md",
+      "repositoryRoot": "from-stars\\makeplane__plane",
+      "remote": "https://github.com/makeplane/plane.git",
+      "gitHead": "e056bbf9eb6b511cdc0a5823b1bd6922e561a485",
+      "contentDigest": "7b66ed96e564ca3f7d31863cf442102e7169b67c03eb471c96f8cee50c9d8b08",
+      "bodySha256": "2d2ef6c6587f04cb8cfe1011b244fe7d67efcb74a41bb105b2d4fa9ecf8dea0e",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "automation-mcp-integrations",
+        "release-publishing"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-4ae1eb667fb53609"
+      ],
+      "structure": {
+        "frontmatterName": "release-notes",
+        "frontmatterDescription": "Generate release notes for a Plane release PR in either `makeplane/plane-cloud` (date-based versioning, e.g. `release: vYY.MM.DD-N`) or `makeplane/plane-ee` (semver, e.g. `release: vX.Y.Z`). Reads PR commits, filters out noise, categorizes by conventional-commit type, optionally enriches via Plane MCP, and writes the result as the PR description in the GitHub Releases format.",
+        "headings": [
+          "Release Notes Generator",
+          "Repo-specific versioning",
+          "When to Use",
+          "Steps",
+          "1. Fetch commits",
+          "2. Filter out noise",
+          "3. Identify work item IDs (for research only)",
+          "4. (Optional) Enrich via Plane MCP",
+          "5. Categorize commits",
+          "6. Format",
+          "✨ Features",
+          "**Short Feature Name in Title Case**"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "gh pr view $PR --json commits --jq '.commits[] | .messageHeadline + \"\\n---\\n\" + .messageBody + \"\\n===\"' > /tmp/commits.txt"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# read /tmp/commits.txt, filter, categorize into the four sections, draft notes"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "gh pr view $PR --json commits --jq '.commits[] | .messageHeadline + \"\\n---\\n\" + .messageBody + \"\\n===\"' > /tmp/commits.txt"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# read /tmp/commits.txt, filter, categorize into the four sections, draft notes"
+        }
+      ],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [
+        "release-publishing"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-14f7d42a17866808",
+      "name": "clone-ad",
+      "description": ">",
+      "sourcePath": "hunt\\pixel\\maddoherty23__higgsfield-claude-code\\skills\\higgsfield-mcp\\prompting\\clone-ad\\SKILL.md",
+      "repositoryRoot": "hunt\\pixel\\maddoherty23__higgsfield-claude-code",
+      "remote": "https://github.com/maddoherty23/higgsfield-claude-code.git",
+      "gitHead": "81cb853ee4e9c759e1cf1058fcc54ad0bb9f7d33",
+      "contentDigest": "a5c3da433dbd5bfa38a48294e124d8e04811e2187a3dbb533c05978f8569a370",
+      "bodySha256": "a8590500cec43abb019cc3a360455615b06a68c43f090cd5c113e6b1137ea861",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-6f7361d163b120db",
+        "exact-ead3c45e6c9cc588"
+      ],
+      "structure": {
+        "frontmatterName": "clone-ad",
+        "frontmatterDescription": ">",
+        "headings": [
+          "Clone ad, Seedance 2.0",
+          "Prerequisites",
+          "Workflow",
+          "Step 0: Gather inputs",
+          "Step 1: Extract frames and audio",
+          "Step 2: Transcribe audio",
+          "Step 3: Compressed analysis",
+          "Step 4: Present analysis summary",
+          "Step 5: Decide generation mode",
+          "Chained multi-clip pipeline (confirmed 2026-04-10)",
+          "Step 6: Adapt for user's product",
+          "Step 7: Dialogue confirmation gate"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "\"<source_video_path>\" \"/tmp/clone-ad-analysis\" <num_frames>"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "result = model.transcribe(\"/tmp/clone-ad-analysis/audio.wav\")"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "1. `GET /v1/products` → resolve workspace (default from MASTER_CONTEXT.md)"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "1. **Assign all assets to session project** via `POST /v1/assets/add-to-project`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "printf \"file '%s'\\n\" \"$(pwd)/clip1.mp4\" \"$(pwd)/clip2.mp4\" \"$(pwd)/clip3.mp4\" > /tmp/stitch-list.txt"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "ffmpeg -y -f concat -safe 0 -i /tmp/stitch-list.txt -c copy stitched-output.mp4"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "\"<source_video_path>\" \"/tmp/clone-ad-analysis\" <num_frames>"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "result = model.transcribe(\"/tmp/clone-ad-analysis/audio.wav\")"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "1. `GET /v1/products` → resolve workspace (default from MASTER_CONTEXT.md)"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "1. **Assign all assets to session project** via `POST /v1/assets/add-to-project`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "printf \"file '%s'\\n\" \"$(pwd)/clip1.mp4\" \"$(pwd)/clip2.mp4\" \"$(pwd)/clip3.mp4\" > /tmp/stitch-list.txt"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "ffmpeg -y -f concat -safe 0 -i /tmp/stitch-list.txt -c copy stitched-output.mp4"
+        }
+      ],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-154f4d8f63f366e6",
+      "name": "X MCP guide",
+      "description": ">-",
+      "sourcePath": "from-stars\\cursor__plugins\\third_party\\x\\skills\\x-api-mcp-guide\\SKILL.md",
+      "repositoryRoot": "from-stars\\cursor__plugins",
+      "remote": "https://github.com/cursor/plugins.git",
+      "gitHead": "46125561306434d8a1d7745d540d8932ab0cd2a2",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "8b2272470a9b20b0849e3025f137929097ef9bc9aa5e5397af7d05a549b7d357",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7"
+      ],
+      "structure": {
+        "frontmatterName": "X MCP guide",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "X MCP guide",
+          "On connect",
+          "The three errors",
+          "1. Sign-in failed",
+          "2. Not onboarded (403)",
+          "3. Out of credits",
+          "Other errors",
+          "Session start",
+          "Cost awareness",
+          "Fields, pagination",
+          "Search operators",
+          "Workflows"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| A post                        | Parse `/status/{id}`               | Paste the post link.  |"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| A post                        | Parse `/status/{id}`               | Paste the post link.  |"
+        }
+      ],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-28c0c1602d234b1c",
+      "name": "higgsfield-mcp",
+      "description": ">-",
+      "sourcePath": "hunt\\pixel\\maddoherty23__higgsfield-claude-code\\skills\\higgsfield-mcp\\SKILL.md",
+      "repositoryRoot": "hunt\\pixel\\maddoherty23__higgsfield-claude-code",
+      "remote": "https://github.com/maddoherty23/higgsfield-claude-code.git",
+      "gitHead": "81cb853ee4e9c759e1cf1058fcc54ad0bb9f7d33",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "a8607d4c12c673a03ef10cc9b0ae820f594342b99a2d804a5462866ac4301cf6",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7"
+      ],
+      "structure": {
+        "frontmatterName": "higgsfield-mcp",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "Higgsfield MCP",
+          "Configuration",
+          "If the MCP server is not reachable",
+          "Read order",
+          "Decision tree: which flow?",
+          "Sora 2 is not available",
+          "Creative layer",
+          "Session setup: pick the right workspace",
+          "Credit cost estimation (MANDATORY, show before generating)",
+          "Higgsfield gives you live cost data, use it",
+          "Cost data sources (in priority order)",
+          "Example output to user"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-6bd41cdf68684837",
+      "name": "analyze-video",
+      "description": ">",
+      "sourcePath": "hunt\\pixel\\maddoherty23__higgsfield-claude-code\\skills\\higgsfield-mcp\\prompting\\analyze-video\\SKILL.md",
+      "repositoryRoot": "hunt\\pixel\\maddoherty23__higgsfield-claude-code",
+      "remote": "https://github.com/maddoherty23/higgsfield-claude-code.git",
+      "gitHead": "81cb853ee4e9c759e1cf1058fcc54ad0bb9f7d33",
+      "contentDigest": "a5c3da433dbd5bfa38a48294e124d8e04811e2187a3dbb533c05978f8569a370",
+      "bodySha256": "8e580d1fe29f580eefdd879568c65f398ee7a49ecd8054736de84f668f48d0c8",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-6f7361d163b120db",
+        "exact-e8f65b5552314c40"
+      ],
+      "structure": {
+        "frontmatterName": "analyze-video",
+        "frontmatterDescription": ">",
+        "headings": [
+          "Analyze Video → Reusable Prompting Template",
+          "Dependencies",
+          "Inputs",
+          "Step 1: Extract frames and audio",
+          "Step 2: Transcribe audio",
+          "Step 3: Study the reference templates",
+          "Step 4: Analyze the frames, identify what defines this style",
+          "Structure & pacing",
+          "Camera & framing",
+          "Edit style",
+          "Dialogue & script structure",
+          "Tone & energy"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "bash \"skills/higgsfield-mcp/prompting/analyze-video/scripts/extract-frames.sh\" \"<video_path>\" \"/tmp/video-analysis\" <num_frames>"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "1. `whisper` CLI: `whisper /tmp/video-analysis/audio.wav --model base --output_format txt --output_dir /tmp/video-analysis`"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "bash \"skills/higgsfield-mcp/prompting/analyze-video/scripts/extract-frames.sh\" \"<video_path>\" \"/tmp/video-analysis\" <num_frames>"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "1. `whisper` CLI: `whisper /tmp/video-analysis/audio.wav --model base --output_format txt --output_dir /tmp/video-analysis`"
+        }
+      ],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c4cd7973c05784dd",
+      "name": "notebooklm",
+      "description": "Browser automation skill for controlling Google's NotebookLM. Use when the user wants anything done in NotebookLM (e.g., 'open NotebookLM', 'check my [name] notebook', 'ask my notebook about X', 'add [source] to NotebookLM', 'generate a Video Overview from my notebook', 'use NotebookLM Studio'). Handles reading and querying notebooks, adding sources (URLs, text, files, YouTube links, synthesized content), generating Studio outputs (Audio/Video Overviews, Mind Maps, Reports incl. Briefing Doc/Study Guide/FAQ, Flashcards, Quiz, slide decks, infographics — discover the exact set from the live Studio panel; the UI evolves fast), and creating new notebooks. Requires browser automation environment — fails gracefully when unavailable.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\research\\notebooklm\\skills\\notebooklm\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\research",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "3b4415bbdd306bfea598e397d443b5a9411a2cb3cbcef3b0c85fffe27a5767ac",
+      "bodySha256": "5fea964386ae6e0f8d0819dc2e633218b77b05bbe31155460c2fb560c7773f1c",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "audio-voice-media",
+        "automation-mcp-integrations",
+        "repository-source-research",
+        "web-interface-accessibility"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-3a74eb58101dbfe3"
+      ],
+      "structure": {
+        "frontmatterName": "notebooklm",
+        "frontmatterDescription": "Browser automation skill for controlling Google's NotebookLM. Use when the user wants anything done in NotebookLM (e.g., 'open NotebookLM', 'check my [name] notebook', 'ask my notebook about X', 'add [source] to NotebookLM', 'generate a Video Overview from my notebook', 'use NotebookLM Studio'). Handles reading and querying notebooks, adding sources (URLs, text, files, YouTube links, synthesized content), generating Studio outputs (Audio/Video Overviews, Mind Maps, Reports incl. Briefing Doc/Study Guide/FAQ, Flashcards, Quiz, slide decks, infographics — discover the exact set from the live Studio panel; the UI evolves fast), and creating new notebooks. Requires browser automation environment — fails gracefully when unavailable.",
+        "headings": [
+          "NotebookLM — Browser Automation",
+          "Step 0: Browser Context Setup (Mandatory)",
+          "Phase 0: Grill-Me Intake (Action-Routing)",
+          "Q1 (root) — Action",
+          "Q2 (depends on Q1) — Notebook identity",
+          "Q3 (depends on Q1) — Action-specific parameter",
+          "Q4 (depends on Q1 = action 3) — Studio custom prompt detail",
+          "Notebook Discovery",
+          "Action 1: Read / Extract",
+          "Action 2: Add Sources",
+          "Action 3: Studio Outputs",
+          "Custom prompt examples (4 output types)"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "4. **Detect login wall via screenshot.** If login screen detected: halt with \"Please log in to NotebookLM in the browser, then re-invoke this skill.\" **Never attempt to handle login automatically.**"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "2. Find the specific output button for the requested type (if it isn't visible, check \"Discover more\"/overflow before declaring it unavailable)"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "4. **Detect login wall via screenshot.** If login screen detected: halt with \"Please log in to NotebookLM in the browser, then re-invoke this skill.\" **Never attempt to handle login automatically.**"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "2. Find the specific output button for the requested type (if it isn't visible, check \"Discover more\"/overflow before declaring it unavailable)"
+        }
+      ],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [
+        "repository-source-research",
+        "agent-orchestration",
+        "web-interface-accessibility",
+        "audio-voice-media"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-094260cec453cbb1",
+      "name": "chrome-devtools",
+      "description": "Expert-level browser automation, debugging, and performance analysis using Chrome DevTools MCP. Use for interacting with web pages, capturing screenshots, analyzing network traffic, and profiling performance.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\chrome-devtools\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "7d5adf48b583b0ec2a028ed0f8ed37c056e155555c53bde08eabe83022d3d9ab",
+      "bodySha256": "e85ec55f68317923033375f00b431e9d5822283ea4bfad967f5fa7cbc61e6265",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "chrome-devtools",
+        "frontmatterDescription": "Expert-level browser automation, debugging, and performance analysis using Chrome DevTools MCP. Use for interacting with web pages, capturing screenshots, analyzing network traffic, and profiling performance.",
+        "headings": [
+          "Chrome DevTools Agent",
+          "Overview",
+          "When to Use",
+          "Tool Categories",
+          "1. Navigation & Page Management",
+          "2. Input & Interaction",
+          "3. Debugging & Inspection",
+          "4. Emulation & Performance",
+          "Workflow Patterns",
+          "Pattern A: Identifying Elements (Snapshot-First)",
+          "Pattern B: Troubleshooting Errors",
+          "Pattern C: Performance Profiling"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-11320e9eef19885f",
+      "name": "integrate-context-matic",
+      "description": "Discovers and integrates third-party APIs using the context-matic MCP server. Uses `fetch_api` to find available API SDKs, `ask` for integration guidance, `model_search` and `endpoint_search` for SDK details. Use when the user asks to integrate a third-party API, add an API client, implement features with an external API, or work with any third-party API or SDK.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\integrate-context-matic\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "9f19f8b3b56e089b961fd437100e6c9a5ee75db5c7fcbf6d4171bdc97347aa90",
+      "bodySha256": "1251b1a1afebe0c881241dd7b87ed7688b01696866fada8f3071e0336f39ba43",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "automation-mcp-integrations",
+        "implementation-engineering",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "integrate-context-matic",
+        "frontmatterDescription": "Discovers and integrates third-party APIs using the context-matic MCP server. Uses `fetch_api` to find available API SDKs, `ask` for integration guidance, `model_search` and `endpoint_search` for SDK details. Use when the user asks to integrate a third-party API, add an API client, implement features with an external API, or work with any third-party API or SDK.",
+        "headings": [
+          "API Integration",
+          "When to Apply",
+          "Workflow",
+          "1. Ensure Guidelines and Skills Exist",
+          "1a. Detect the Project's Primary Language",
+          "1b. Check for Existing Guidelines and Skills",
+          "2. Discover Available APIs",
+          "3. Get Integration Guidance",
+          "4. Look Up SDK Models and Endpoints (as needed)",
+          "5. Record Milestones",
+          "Checklist",
+          "Notes"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [
+        "implementation-engineering",
+        "knowledge-memory-context",
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-203a64a818c895f6",
+      "name": "reverse-skill-router",
+      "description": "Routes reverse engineering, exploitation, penetration testing, malware, mobile, firmware, browser automation, documentation, and security tasks to the appropriate specialist skill. Use when a task spans modules or the correct reverse-skill entrypoint is unclear.",
+      "sourcePath": "from-stars\\zhaoxuya520__reverse-skill\\skills\\SKILL.md",
+      "repositoryRoot": "from-stars\\zhaoxuya520__reverse-skill",
+      "remote": "https://github.com/zhaoxuya520/reverse-skill.git",
+      "gitHead": "41bd788c34f82d26ad9e51bcba838b0d1220928e",
+      "contentDigest": "a5582137ead7fe16be2edaf4109366fd4c9fd6f43bd7edd21da2a7218d981693",
+      "bodySha256": "385056b1d1465a19eb8ec6c9cd97d8f06ead87511b7ed4df73cabeb8f351c4fc",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "automation-mcp-integrations",
+        "governance-security",
+        "writing-narrative-canon"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "reverse-skill-router",
+        "frontmatterDescription": "Routes reverse engineering, exploitation, penetration testing, malware, mobile, firmware, browser automation, documentation, and security tasks to the appropriate specialist skill. Use when a task spans modules or the correct reverse-skill entrypoint is unclear.",
+        "headings": [
+          "Reverse Engineering Skills Master Control",
+          "CRITICAL: 路由执行契约（必须立即执行）",
+          "指令语义级别（RFC 2119）",
+          "当前模块",
+          "统一入口",
+          "工作思路",
+          "下一步菜单模式（Next-Step Menu Pattern）",
+          "建议下一步（选一个编号）",
+          "目录是动态扩充的",
+          "关联资源",
+          "按需自举",
+          "操作先例库（Precedent Files）"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [
+        "governance-security",
+        "writing-narrative-canon"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-21fcb331f133d605",
+      "name": "salesforce-flow-design",
+      "description": "Salesforce Flow architecture decisions, flow type selection, bulk safety validation, and fault handling standards. Use this skill when designing or reviewing Record-Triggered, Screen, Autolaunched, Scheduled, or Platform Event flows to ensure correct type selection, no DML/Get Records in loops, proper fault connectors on all data-changing elements, and appropriate automation density checks before deployment.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\salesforce-flow-design\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "f517bb20911c216c4e155ca351bf5d7807eb1144148960871338da26e23420ee",
+      "bodySha256": "588eccf48f0ec2c826ea7aea2e75c49a57e93cbfd2395b4181c0e4672b977300",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification",
+        "automation-mcp-integrations",
+        "release-publishing"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "salesforce-flow-design",
+        "frontmatterDescription": "Salesforce Flow architecture decisions, flow type selection, bulk safety validation, and fault handling standards. Use this skill when designing or reviewing Record-Triggered, Screen, Autolaunched, Scheduled, or Platform Event flows to ensure correct type selection, no DML/Get Records in loops, proper fault connectors on all data-changing elements, and appropriate automation density checks before deployment.",
+        "headings": [
+          "Salesforce Flow Design and Validation",
+          "Step 1 — Confirm Flow Is the Right Tool",
+          "Step 2 — Select the Correct Flow Type",
+          "Step 3 — Bulk Safety Checklist",
+          "DML in Loops — Automatic Fail",
+          "Get Records in Loops — Automatic Fail",
+          "Correct Bulk Pattern",
+          "Transform vs Loop",
+          "Step 4 — Fault Path Requirements",
+          "Elements That Require Fault Connectors",
+          "Fault Handler Pattern",
+          "Step 5 — Automation Density Check"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [
+        "architecture-specification",
+        "agent-orchestration",
+        "release-publishing"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-262ed5f536eedaad",
+      "name": "batch-files",
+      "description": "Expert-level Windows batch file (.bat/.cmd) skill for writing, debugging, and maintaining CMD scripts. Use when asked to \"create a batch file\", \"write a .bat script\", \"automate a Windows task\", \"CMD scripting\", \"batch automation\", \"scheduled task script\", \"Windows shell script\", or when working with .bat/.cmd files in the workspace. Covers cmd.exe syntax, environment variables, control flow, string processing, error handling, and integration with system tools.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\batch-files\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "2d562013e548a788557d21c9dda4be17a231059d5d7be8369aa85db4688cac7d",
+      "bodySha256": "64915b51fab7af2111809a3c787fcf572d3944dcc1310d2478e97e3f9df5ee3c",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "automation-mcp-integrations",
+        "writing-narrative-canon"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "batch-files",
+        "frontmatterDescription": "Expert-level Windows batch file (.bat/.cmd) skill for writing, debugging, and maintaining CMD scripts. Use when asked to \"create a batch file\", \"write a .bat script\", \"automate a Windows task\", \"CMD scripting\", \"batch automation\", \"scheduled task script\", \"Windows shell script\", or when working with .bat/.cmd files in the workspace. Covers cmd.exe syntax, environment variables, control flow, string processing, error handling, and integration with system tools.",
+        "headings": [
+          "Batch Files",
+          "When to Use This Skill",
+          "Prerequisites",
+          "Command Interpretation",
+          "Variables",
+          "Environment Variables",
+          "Special Variables",
+          "Scoping with SETLOCAL / ENDLOCAL",
+          "Delayed Expansion",
+          "Control Flow",
+          "Conditional Execution",
+          "Compound Commands"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "for /l %%i in (1,1,5) do ("
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "set /a _COUNT+=1"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Comparison operators: `equ`, `neq`, `lss`, `leq`, `gtr`, `geq`. Use `/i` for case-insensitive string comparison."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "for /l %%i in (1,1,10) do echo %%i"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "for /r %%f in (*.log) do echo %%f"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "for /d %%d in (*) do echo %%d"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "for /f \"tokens=1,2 delims=:\" %%a in ('ipconfig ^| findstr \"IPv4\"') do echo %%b"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "for /f \"usebackq tokens=*\" %%a in (\"data.txt\") do echo %%a"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "for /l %%i in (1,1,5) do ("
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "set /a _COUNT+=1"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Comparison operators: `equ`, `neq`, `lss`, `leq`, `gtr`, `geq`. Use `/i` for case-insensitive string comparison."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "for /l %%i in (1,1,10) do echo %%i"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "for /r %%f in (*.log) do echo %%f"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "for /d %%d in (*) do echo %%d"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "for /f \"tokens=1,2 delims=:\" %%a in ('ipconfig ^| findstr \"IPv4\"') do echo %%b"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "for /f \"usebackq tokens=*\" %%a in (\"data.txt\") do echo %%a"
+        }
+      ],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "writing-narrative-canon"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-27211016dcb43bf0",
+      "name": "debug-zoom",
+      "description": "Debug a broken Zoom integration by isolating the failure point and routing into the right Zoom references. Use when auth, API, webhook, SDK, or MCP behavior is failing and you need a ranked hypothesis list plus verification steps.",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\partner-built\\zoom-plugin\\skills\\debug-zoom\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "5b1347606fb0454a49a4f4d269b4325a1fcc371e87cedb003a25443aea23ffdf",
+      "bodySha256": "fb2c879eb355a94b78c7defec5a510414da1295bfc50fc2a5be53eb83610a841",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "automation-mcp-integrations",
+        "debugging-recovery",
+        "knowledge-memory-context",
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "debug-zoom",
+        "frontmatterDescription": "Debug a broken Zoom integration by isolating the failure point and routing into the right Zoom references. Use when auth, API, webhook, SDK, or MCP behavior is failing and you need a ranked hypothesis list plus verification steps.",
+        "headings": [
+          "/debug-zoom",
+          "Usage",
+          "Workflow",
+          "Output",
+          "Related Skills"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /debug-zoom"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/debug-zoom $ARGUMENTS"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /debug-zoom"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/debug-zoom $ARGUMENTS"
+        }
+      ],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [
+        "debugging-recovery",
+        "verification-evidence",
+        "knowledge-memory-context",
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-2a64f07bf0247a8d",
+      "name": "power-platform-mcp-connector-suite",
+      "description": "Generate complete Power Platform custom connector with MCP integration for Copilot Studio - includes schema generation, troubleshooting, and validation",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\power-platform-mcp-connector-suite\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "953795e16fc55375f5ad1be2adf1969538e79dee9e1df5a24a3f63d53b8a3bae",
+      "bodySha256": "0b7764050e18c8257335da89594192c462aa33e2fcd2cef8c1f066ba1fe496d3",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "automation-mcp-integrations",
+        "data-infrastructure"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "power-platform-mcp-connector-suite",
+        "frontmatterDescription": "Generate complete Power Platform custom connector with MCP integration for Copilot Studio - includes schema generation, troubleshooting, and validation",
+        "headings": [
+          "Power Platform MCP Connector Suite",
+          "MCP Capabilities in Copilot Studio",
+          "Connector Generation",
+          "Schema Validation & Troubleshooting",
+          "Context Variables",
+          "Generation Modes",
+          "Mode 1: Complete New Connector",
+          "Mode 2: Schema Validation",
+          "Mode 3: Integration Troubleshooting",
+          "Mode 4: Hybrid Connector",
+          "Mode 5: Certification Preparation",
+          "Mode 6: OAuth Security Hardening"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- POST `/mcp` endpoint for JSON-RPC 2.0 communication"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- MCP endpoint: `POST /mcp` with proper protocol header"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- POST `/mcp` endpoint for JSON-RPC 2.0 communication"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- MCP endpoint: `POST /mcp` with proper protocol header"
+        }
+      ],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "data-infrastructure"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-33d2b3250808a795",
+      "name": "playwright-automation-fill-in-form",
+      "description": "Automate filling in a form using Playwright MCP",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\playwright-automation-fill-in-form\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "e593e624acef18909840f113b5f288ae922ec191c0efde543e3027ba20d1e7db",
+      "bodySha256": "ed10ea649ed942b29707738ceb78de7f1a5bfddafe348d23b2ef81e8e3a4b80b",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "playwright-automation-fill-in-form",
+        "frontmatterDescription": "Automate filling in a form using Playwright MCP",
+        "headings": [
+          "Automating Filling in a Form with Playwright MCP",
+          "Specific Instructions",
+          "Fill in the form with the following details:"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "5. Upload image: /Users/myuserName/Downloads/my-image.png"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "5. Upload image: /Users/myuserName/Downloads/my-image.png"
+        }
+      ],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3c1a64df3e2fa28a",
+      "name": "power-apps-code-app-scaffold",
+      "description": "Scaffold a complete Power Apps Code App project with PAC CLI setup, SDK integration, and connector configuration",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\power-apps-code-app-scaffold\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "69ec754c8b6339bd27de4b637ad1f612774a04ab33e2b0b49201f2eb4b00cb4a",
+      "bodySha256": "2418cc29dd18c22377792ce9662e5b5281609b1f3ed0091e54f416af6ef37720",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "power-apps-code-app-scaffold",
+        "frontmatterDescription": "Scaffold a complete Power Apps Code App project with PAC CLI setup, SDK integration, and connector configuration",
+        "headings": [
+          "Power Apps Code Apps Project Scaffolding",
+          "Context",
+          "Task",
+          "1. Project Initialization",
+          "2. Essential Configuration Files",
+          "3. Project Structure",
+          "4. Development Scripts Setup",
+          "5. Sample Implementation",
+          "Advanced Patterns to Consider (Optional)",
+          "6. Documentation",
+          "Implementation Guidelines",
+          "Prerequisites to Mention"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "automation-mcp-integrations",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    }
+  ]
+}

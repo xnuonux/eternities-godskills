@@ -1,0 +1,1701 @@
+{
+  "schemaVersion": 1,
+  "packetId": "agent-orchestration-002",
+  "familyId": "agent-orchestration",
+  "sequence": 2,
+  "sourceCount": 25,
+  "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions.",
+  "cards": [
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-0888a7f22e3f5f65",
+      "name": "accrual-schedule",
+      "description": "Build the period-end accrual schedule — for each accrual, compute the entry, cite the support, and draft the JE. Use during month-end close; the JE is a draft for controller approval, not a posting.",
+      "sourcePath": "catalog-c\\agent-skills\\financial-services\\plugins\\agent-plugins\\month-end-closer\\skills\\accrual-schedule\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\financial-services",
+      "remote": "https://github.com/anthropics/financial-services.git",
+      "gitHead": "33a3d8a9d6e5c3d4861731933a8857cc5e03315d",
+      "contentDigest": "75c2dcd82c089d35b49dc97dd2cbbe2bd4b736ca25d4c066c1c0a8944d0c1128",
+      "bodySha256": "810e2a42819c36a1c911ee55481e488fa3420a129b61390519ffbb2f054051fc",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-47fab1729f322db7"
+      ],
+      "structure": {
+        "frontmatterName": "accrual-schedule",
+        "frontmatterDescription": "Build the period-end accrual schedule — for each accrual, compute the entry, cite the support, and draft the JE. Use during month-end close; the JE is a draft for controller approval, not a posting.",
+        "headings": [
+          "Accrual schedule",
+          "For each accrual on the policy list",
+          "Draft JE",
+          "Output"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-08bbf105b5774c2c",
+      "name": "nda-review",
+      "description": ">",
+      "sourcePath": "catalog-c\\agent-skills\\claude-for-legal\\commercial-legal\\skills\\nda-review\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-for-legal",
+      "remote": "https://github.com/anthropics/claude-for-legal.git",
+      "gitHead": "4a6c651889c97cc9140580363c73e0eb17379c2b",
+      "contentDigest": "a5c3da433dbd5bfa38a48294e124d8e04811e2187a3dbb533c05978f8569a370",
+      "bodySha256": "8a29e3eac8fcbc312f888d07043e12e5a117c295711cb774f8bf2575ec47b588",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-6f7361d163b120db"
+      ],
+      "structure": {
+        "frontmatterName": "nda-review",
+        "frontmatterDescription": ">",
+        "headings": [
+          "NDA Review",
+          "Matter context",
+          "Destination check",
+          "Purpose",
+          "Load the playbook first",
+          "Scope check",
+          "The triage",
+          "GREEN — route to signature",
+          "NDA Triage: [Counterparty]",
+          "Executive Summary",
+          "YELLOW — needs a lawyer's eyes on specific items",
+          "NDA Triage: [Counterparty]"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "before pinging legal. Loaded by /commercial-legal:review when an NDA is detected."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: \"Which matter is this for? Run `/commercial-legal:matter-workspace switch <slug>` or say `practice-level`.\" Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "**Which side?** Before applying the playbook, determine which side the company is on for this NDA. Usually obvious from the context: if the counterparty is a vendor or partner evaluating your product, you're sales-side; if you're evaluating theirs, you're purchasing-side. Mutual NDAs still have a side — whose paper is it, and which direction is the evaluation running. If it's not obvious, ask. Read the matching playbook section (`### Sales-side playbook` or `### Purchasing-side playbook`) from the config. Note which side in the output so the reviewer knows which playbook was applied. If the matching side is `[Not configured]`, stop and tell the user to run `/commercial-legal:cold-start-interview --side <side>` before this triage can proceed."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "> I can't issue GREEN without attorney-reviewed NDA positions in your practice profile. Run `/commercial-legal:cold-start-interview --full` with your commercial counsel to set them, or route this NDA for attorney review. Issuing GREEN against defaults means a non-lawyer set the positions the next non-lawyer relies on."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "before pinging legal. Loaded by /commercial-legal:review when an NDA is detected."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: \"Which matter is this for? Run `/commercial-legal:matter-workspace switch <slug>` or say `practice-level`.\" Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "**Which side?** Before applying the playbook, determine which side the company is on for this NDA. Usually obvious from the context: if the counterparty is a vendor or partner evaluating your product, you're sales-side; if you're evaluating theirs, you're purchasing-side. Mutual NDAs still have a side — whose paper is it, and which direction is the evaluation running. If it's not obvious, ask. Read the matching playbook section (`### Sales-side playbook` or `### Purchasing-side playbook`) from the config. Note which side in the output so the reviewer knows which playbook was applied. If the matching side is `[Not configured]`, stop and tell the user to run `/commercial-legal:cold-start-interview --side <side>` before this triage can proceed."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "> I can't issue GREEN without attorney-reviewed NDA positions in your practice profile. Run `/commercial-legal:cold-start-interview --full` with your commercial counsel to set them, or route this NDA for attorney review. Issuing GREEN against defaults means a non-lawyer set the positions the next non-lawyer relies on."
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-095edfe4f4ffb840",
+      "name": "xlsx-author",
+      "description": "Produce a .xlsx file on disk (headless) instead of driving a live Excel workbook — for managed-agent sessions with no open Office app.",
+      "sourcePath": "catalog-c\\agent-skills\\financial-services\\plugins\\agent-plugins\\model-builder\\skills\\xlsx-author\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\financial-services",
+      "remote": "https://github.com/anthropics/financial-services.git",
+      "gitHead": "33a3d8a9d6e5c3d4861731933a8857cc5e03315d",
+      "contentDigest": "2a5adfa0effcb7a7d9fdedded5dc0657c46202e7849d97f1e92f7e05dc150986",
+      "bodySha256": "9d2c064a60a76e5da7ee2869e0ab4b6135e8d41f79515329fa622e1a13446c93",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-20ae1c39d9ac2cd4"
+      ],
+      "structure": {
+        "frontmatterName": "xlsx-author",
+        "frontmatterDescription": "Produce a .xlsx file on disk (headless) instead of driving a live Excel workbook — for managed-agent sessions with no open Office app.",
+        "headings": [
+          "xlsx-author",
+          "Output contract",
+          "How to build the workbook",
+          "Conventions (mirror `audit-xls`)",
+          "When NOT to use"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-09c622365d3418f8",
+      "name": "returns-analysis",
+      "description": "Build quick IRR/MOIC sensitivity tables for PE deal evaluation. Models returns across entry multiple, leverage, exit multiple, growth, and hold period scenarios. Use when sizing up a deal, stress-testing assumptions, or preparing IC returns exhibits. Triggers on \"returns analysis\", \"IRR sensitivity\", \"MOIC table\", \"what's the return at\", \"model the returns\", or \"back of the envelope\".",
+      "sourcePath": "catalog-c\\agent-skills\\financial-services\\plugins\\vertical-plugins\\private-equity\\skills\\returns-analysis\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\financial-services",
+      "remote": "https://github.com/anthropics/financial-services.git",
+      "gitHead": "33a3d8a9d6e5c3d4861731933a8857cc5e03315d",
+      "contentDigest": "99cea3dfab028dd16d99f67ed4a1cfbe9229d2f8a17f737451fbe66d0cc9c6e5",
+      "bodySha256": "480d4631dab666bda988d1c8902e21ea525701a0d50706a945192a23a426d527",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-333c7afd0abd5244"
+      ],
+      "structure": {
+        "frontmatterName": "returns-analysis",
+        "frontmatterDescription": "Build quick IRR/MOIC sensitivity tables for PE deal evaluation. Models returns across entry multiple, leverage, exit multiple, growth, and hold period scenarios. Use when sizing up a deal, stress-testing assumptions, or preparing IC returns exhibits. Triggers on \"returns analysis\", \"IRR sensitivity\", \"MOIC table\", \"what's the return at\", \"model the returns\", or \"back of the envelope\".",
+        "headings": [
+          "Returns Analysis",
+          "Workflow",
+          "Step 1: Gather Deal Inputs",
+          "Step 2: Base Case Returns",
+          "Step 3: Sensitivity Tables",
+          "Step 4: Scenario Analysis",
+          "Step 5: Output",
+          "Key Formulas",
+          "Important Notes"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-0b4307dda2a8f775",
+      "name": "gke-basics",
+      "description": ">-",
+      "sourcePath": "catalog-c\\agent-skills\\skills__google\\skills\\cloud\\gke-basics\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\skills__google",
+      "remote": "https://github.com/google/skills.git",
+      "gitHead": "1af77752950126ae12dec176a0a3b27a16b7f5f7",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "85dffdada86f7e6d3af299cd4f15840a90783ff2de3e27ec9952e9f8f4e11680",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7",
+        "exact-d2aea7359c06b19d"
+      ],
+      "structure": {
+        "frontmatterName": "gke-basics",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "GKE Basics & Critical Gotchas",
+          "Key Selection Rules: Autopilot vs. Standard",
+          "Critical Gotchas & Best Practices",
+          "Reference Directory"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-0b7984106526a825",
+      "name": "cold-call-prep",
+      "description": ">",
+      "sourcePath": "catalog-c\\agent-skills\\claude-for-legal\\law-student\\skills\\cold-call-prep\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-for-legal",
+      "remote": "https://github.com/anthropics/claude-for-legal.git",
+      "gitHead": "4a6c651889c97cc9140580363c73e0eb17379c2b",
+      "contentDigest": "a5c3da433dbd5bfa38a48294e124d8e04811e2187a3dbb533c05978f8569a370",
+      "bodySha256": "bd51a79e1273a25dbaf659e364e1b6eb02e51dd3da818711ee0f510a13bef741",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-6f7361d163b120db"
+      ],
+      "structure": {
+        "frontmatterName": "cold-call-prep",
+        "frontmatterDescription": ">",
+        "headings": [
+          "/cold-call-prep",
+          "Real-matter check",
+          "Purpose",
+          "Confidence discipline",
+          "Load context",
+          "Workflow",
+          "Step 1: Identify the reading + professor",
+          "Step 2: Predict the questions",
+          "Step 3: Drill",
+          "Step 4: Post-drill summary",
+          "Cold-Call Prep — [case] — [date]",
+          "Before class tomorrow:"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /cold-call-prep"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **case-brief:** if the student hasn't briefed the case yet, offer to run `/law-student:case-brief` before cold-call prep. A brief is a cold-call prep tool too."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **socratic-drill:** if prep surfaces a weak spot in the subject (not just this case), follow with `/law-student:socratic-drill [subject]`."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /cold-call-prep"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **case-brief:** if the student hasn't briefed the case yet, offer to run `/law-student:case-brief` before cold-call prep. A brief is a cold-call prep tool too."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **socratic-drill:** if prep surfaces a weak spot in the subject (not just this case), follow with `/law-student:socratic-drill [subject]`."
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-0b9a79e9bd143e8e",
+      "name": "pptx-author",
+      "description": "Produce a .pptx file on disk (headless) instead of driving a live PowerPoint document — for managed-agent sessions with no open Office app.",
+      "sourcePath": "catalog-c\\agent-skills\\financial-services\\plugins\\agent-plugins\\market-researcher\\skills\\pptx-author\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\financial-services",
+      "remote": "https://github.com/anthropics/financial-services.git",
+      "gitHead": "33a3d8a9d6e5c3d4861731933a8857cc5e03315d",
+      "contentDigest": "82b2da6b8fd3a8111226a71d97ee745d2d260def6c14ee1ca2c1d4eed4d90808",
+      "bodySha256": "3739c6a2a6835a72d2243c407706a51311eee36bfd796ca51421de9e75da83c3",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-9d2cecc74c89297c"
+      ],
+      "structure": {
+        "frontmatterName": "pptx-author",
+        "frontmatterDescription": "Produce a .pptx file on disk (headless) instead of driving a live PowerPoint document — for managed-agent sessions with no open Office app.",
+        "headings": [
+          "pptx-author",
+          "Output contract",
+          "How to build the deck",
+          "or: prs = Presentation()",
+          "... add tables / charts / text boxes ...",
+          "Conventions (mirror the live-Office `pitch-deck` skill)",
+          "When NOT to use"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-0c317c4e419f7828",
+      "name": "spanner-basics",
+      "description": ">-",
+      "sourcePath": "catalog-c\\agent-skills\\skills__google\\skills\\cloud\\spanner-basics\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\skills__google",
+      "remote": "https://github.com/google/skills.git",
+      "gitHead": "1af77752950126ae12dec176a0a3b27a16b7f5f7",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "b3e2c29a075b8e32f6bf2e8005edd9803981d9507b863184ca46ac101efdfed0",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7"
+      ],
+      "structure": {
+        "frontmatterName": "spanner-basics",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "Spanner Basics",
+          "Core Principles",
+          "Safety",
+          "Common Workflows",
+          "Schema Evolution & DDL",
+          "Diagnosing Performance Issues",
+          "Reference Directory"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-0cfe3765b30c1d57",
+      "name": "pptx-author",
+      "description": "Produce a .pptx file on disk (headless) instead of driving a live PowerPoint document — for managed-agent sessions with no open Office app.",
+      "sourcePath": "catalog-c\\agent-skills\\financial-services\\plugins\\agent-plugins\\meeting-prep-agent\\skills\\pptx-author\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\financial-services",
+      "remote": "https://github.com/anthropics/financial-services.git",
+      "gitHead": "33a3d8a9d6e5c3d4861731933a8857cc5e03315d",
+      "contentDigest": "82b2da6b8fd3a8111226a71d97ee745d2d260def6c14ee1ca2c1d4eed4d90808",
+      "bodySha256": "3739c6a2a6835a72d2243c407706a51311eee36bfd796ca51421de9e75da83c3",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-9d2cecc74c89297c"
+      ],
+      "structure": {
+        "frontmatterName": "pptx-author",
+        "frontmatterDescription": "Produce a .pptx file on disk (headless) instead of driving a live PowerPoint document — for managed-agent sessions with no open Office app.",
+        "headings": [
+          "pptx-author",
+          "Output contract",
+          "How to build the deck",
+          "or: prs = Presentation()",
+          "... add tables / charts / text boxes ...",
+          "Conventions (mirror the live-Office `pitch-deck` skill)",
+          "When NOT to use"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-0d149a9980232051",
+      "name": "customize",
+      "description": ">",
+      "sourcePath": "catalog-c\\agent-skills\\claude-for-legal\\employment-legal\\skills\\customize\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-for-legal",
+      "remote": "https://github.com/anthropics/claude-for-legal.git",
+      "gitHead": "4a6c651889c97cc9140580363c73e0eb17379c2b",
+      "contentDigest": "a5c3da433dbd5bfa38a48294e124d8e04811e2187a3dbb533c05978f8569a370",
+      "bodySha256": "8a0541ea33976e0c0c244b19e18abe630f47c9758d52c34ccdc20a8f1ba46a5b",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-6f7361d163b120db",
+        "exact-8922d4ab326738f7"
+      ],
+      "structure": {
+        "frontmatterName": "customize",
+        "frontmatterDescription": ">",
+        "headings": [
+          "/customize",
+          "When this runs",
+          "What to do",
+          "Guardrails"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /customize"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "The user typed `/employment-legal:customize`. They want to change something"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "> You haven't run setup yet. Run `/employment-legal:cold-start-interview`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- *Adding Washington to the jurisdictional footprint:* \"`/wage-hour-qa`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "and `/termination-review` will start applying WA rules. `/handbook-"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "updates` will prompt for a WA supplement. `/hiring-review` will now"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- *Severance framework 2 weeks/year → 4 weeks/year:* \"`/termination-"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "> run `/employment-legal:customize` anytime."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /customize"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "The user typed `/employment-legal:customize`. They want to change something"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "> You haven't run setup yet. Run `/employment-legal:cold-start-interview`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- *Adding Washington to the jurisdictional footprint:* \"`/wage-hour-qa`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "and `/termination-review` will start applying WA rules. `/handbook-"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "updates` will prompt for a WA supplement. `/hiring-review` will now"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- *Severance framework 2 weeks/year → 4 weeks/year:* \"`/termination-"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "> run `/employment-legal:customize` anytime."
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-0db08bc4f75928e7",
+      "name": "kyc-rules",
+      "description": "Apply the firm's KYC/AML rules grid to a parsed onboarding record — assign a risk rating, list every rule outcome with the rule cited, and flag what's missing or escalation-worthy. Use after kyc-doc-parse; this skill decides nothing, it scores and routes.",
+      "sourcePath": "catalog-c\\agent-skills\\financial-services\\plugins\\agent-plugins\\kyc-screener\\skills\\kyc-rules\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\financial-services",
+      "remote": "https://github.com/anthropics/financial-services.git",
+      "gitHead": "33a3d8a9d6e5c3d4861731933a8857cc5e03315d",
+      "contentDigest": "d6c398ee86441035f316ea20eab156bae7c2c344eee550688892013a20cdb15a",
+      "bodySha256": "df3ad8a781a79d74807edc553baa42f51f672cf3a9800c70fe528f7a76006478",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-0b3a3ecb0782fc6d"
+      ],
+      "structure": {
+        "frontmatterName": "kyc-rules",
+        "frontmatterDescription": "Apply the firm's KYC/AML rules grid to a parsed onboarding record — assign a risk rating, list every rule outcome with the rule cited, and flag what's missing or escalation-worthy. Use after kyc-doc-parse; this skill decides nothing, it scores and routes.",
+        "headings": [
+          "Apply the rules grid",
+          "Step 1: Risk-rate",
+          "Step 2: Required-document check",
+          "Step 3: Rule outcomes",
+          "Step 4: Disposition"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-0de7f9fb612d43cd",
+      "name": "gke-ai-troubleshooting-tpu-metrics-monitoring",
+      "description": ">-",
+      "sourcePath": "catalog-c\\agent-skills\\skills__google\\skills\\cloud\\gke-ai-troubleshooting-tpu-metrics-monitoring\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\skills__google",
+      "remote": "https://github.com/google/skills.git",
+      "gitHead": "1af77752950126ae12dec176a0a3b27a16b7f5f7",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "aae9778daff8c83bb34428557d743229652a8b407f6669b9d93890770a29b741",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7",
+        "exact-de0e06061246b843"
+      ],
+      "structure": {
+        "frontmatterName": "gke-ai-troubleshooting-tpu-metrics-monitoring",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "GKE TPU Metrics Monitoring Guide",
+          "Step 0: Mandatory Context",
+          "Diagnostic Steps",
+          "Step 1: Verify TPU Runtime Metrics Configuration [Low Risk] [Auto]",
+          "Step 2: Monitor TPU Runtime Metrics [Low Risk] [Auto]",
+          "Step 3: Check Node Status Condition [Low Risk] [Auto]",
+          "Step 4: Check Node Pool Status [Low Risk] [Auto]",
+          "Step 5: Check Node Pool Availability [Low Risk] [Auto]",
+          "Step 6: Analyze Node Interruptions [Low Risk] [Auto]",
+          "Step 7: Calculate Recovery and Interruption Metrics [Low Risk] [Auto]",
+          "Step 8: Monitor TPU Host Metrics [Low Risk] [Auto]"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-0df2166dbb3b4432",
+      "name": "performing-ssrf-vulnerability-exploitation",
+      "description": ">-",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\performing-ssrf-vulnerability-exploitation\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "14a281d19750273582ff730e844e0c27d9ce2855d3c91e6a10bfc0c09d1748e7",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7"
+      ],
+      "structure": {
+        "frontmatterName": "performing-ssrf-vulnerability-exploitation",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "When to Use",
+          "Prerequisites",
+          "Instructions",
+          "For authorized penetration testing and lab environments only",
+          "Examples",
+          "AWS Metadata SSRF"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "GET /fetch?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "GET /fetch?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-0ed3a29aceb12814",
+      "name": "gke-workload-security",
+      "description": ">-",
+      "sourcePath": "catalog-c\\agent-skills\\skills__google\\plugins\\cloud\\google-cloud-gke\\skills\\gke-workload-security\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\skills__google",
+      "remote": "https://github.com/google/skills.git",
+      "gitHead": "1af77752950126ae12dec176a0a3b27a16b7f5f7",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "3511a50645e069a9d334cb5e19d887f6b62ec753295650d645b3b3ba3455107f",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7",
+        "exact-ce8140e061797d98"
+      ],
+      "structure": {
+        "frontmatterName": "gke-workload-security",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "GKE Workload Security",
+          "Workflows",
+          "1. Security Audit",
+          "2. Configure Workload Identity",
+          "3. Implement Network Policies",
+          "4. GKE Sandbox (gVisor) Pod Isolation",
+          "5. Pod Security Standards",
+          "6. Secret Manager Integration (CSI Driver)",
+          "7. Enable Network Policy Logging",
+          "Best Practices",
+          "Resources"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "mountPath: \"/mnt/secrets\""
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "mountPath: \"/mnt/secrets\""
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "governance-security"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-0f0123e2f8686b81",
+      "name": "google-cloud-solution-guided-gke-ai-migration",
+      "description": ">-",
+      "sourcePath": "catalog-c\\agent-skills\\skills__google\\skills\\cloud\\google-cloud-solution-guided-gke-ai-migration\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\skills__google",
+      "remote": "https://github.com/google/skills.git",
+      "gitHead": "1af77752950126ae12dec176a0a3b27a16b7f5f7",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "d3217d5195e58af60e20875d6e9694f655ccc610a7db0bae9e91da8ca0d1856c",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7"
+      ],
+      "structure": {
+        "frontmatterName": "google-cloud-solution-guided-gke-ai-migration",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "Migrate AI Workloads to GKE Inference",
+          "Gemini Cloud Assist MCP off-ramp",
+          "Scope Check: New Deployments vs. Migrations",
+          "Core Architectural Principles (The \"Golden Path\")",
+          "Workflow",
+          "Phase Routing Rules",
+          "Phase 1: Discovery",
+          "Discovery Checklist (Attributes to Identify)",
+          "Discovery Execution (Automated & Interactive)",
+          "Phase 2: Solution Design",
+          "Deterministic VRAM Sizing Formula",
+          "Phase 3: Implementation"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Expose the service through the GKE Gateway API. Default to a regional internal Application Load Balancer (`gatewayClassName: gke-l7-rilb`) with an HTTPRoute that sends `/v1` requests to the vLLM ClusterIP service (`{workload_name}-vllm-svc`) on port 8000, based on `assets/gke-inference-gateway.yaml.tmpl`."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "7. **Draft solution architecture and manifests:** Read the manifest templates in `assets/` (`assets/vllm-deployment.yaml.tmpl`, `assets/ccc-profile.yaml.tmpl`, `assets/gke-inference-gateway.yaml.tmpl`, `assets/storage-config.yaml.tmpl`, and `assets/model-staging-job.yaml.tmpl`), substitute the parameters discovered in Phase 1, and save the resulting YAML manifests (`vllm-deployment.yaml`, `ccc-profile.yaml`, `gke-inference-gateway.yaml`, `storage-config.yaml`, `model-staging-job.yaml`) to disk in the current directory. When creating `vllm-deployment.yaml`, explicitly inject any required model-specific architecture flags discovered in Phase 1 (e.g., `--trust-remote-code`) into the container `args` array. When creating `gke-inference-gateway.yaml`, base it on `assets/gke-inference-gateway.yaml.tmpl`: use `gatewayClassName: gke-l7-rilb` for the Gateway resource unless the user has explicitly chosen external exposure or the InferencePool-based GKE Inference Gateway, and route `/v1` traffic to the vLLM ClusterIP service (`{workload_name}-vllm-svc` on port 8000) in the HTTPRoute resource. If using a storage class other than `gcsfuse-csi` (e.g., `lustre-csi`), remove the `gcsfuse.cloud.google.com` annotations from `storage-config.yaml`."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "5. **Workload Deployment:** Provide explicit `kubectl apply` commands to deploy the storage config (`kubectl apply -f storage-config.yaml`), ComputeClass (`kubectl apply -f ccc-profile.yaml`), vLLM deployment (`kubectl apply -f vllm-deployment.yaml`), and Inference Gateway (`kubectl apply -f gke-inference-gateway.yaml`). Ensure the vLLM deployment spec mounts the staged model weights from the PVC into `/models`. Ensure that if a Secret was created for a gated model, it is referenced correctly in the Deployment manifest. Set vLLM's `--model` flag to the staged local path (`/models/{model_name}`), never to the Hugging Face repo ID; a repo ID makes vLLM re-download the full weights on every pod start and silently defeats the staging step. Preserve the model's public name for API clients with `--served-model-name={model_id}`."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "2. **Testing Inference:** Verify the service is serving the model. Provide a `kubectl port-forward` command (`kubectl port-forward svc/{workload_name}-vllm-svc 8000:8000`) and a sample `curl` request to `/v1/chat/completions` to test endpoint inference. Compare responses with the previous infrastructure if applicable."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Expose the service through the GKE Gateway API. Default to a regional internal Application Load Balancer (`gatewayClassName: gke-l7-rilb`) with an HTTPRoute that sends `/v1` requests to the vLLM ClusterIP service (`{workload_name}-vllm-svc`) on port 8000, based on `assets/gke-inference-gateway.yaml.tmpl`."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "7. **Draft solution architecture and manifests:** Read the manifest templates in `assets/` (`assets/vllm-deployment.yaml.tmpl`, `assets/ccc-profile.yaml.tmpl`, `assets/gke-inference-gateway.yaml.tmpl`, `assets/storage-config.yaml.tmpl`, and `assets/model-staging-job.yaml.tmpl`), substitute the parameters discovered in Phase 1, and save the resulting YAML manifests (`vllm-deployment.yaml`, `ccc-profile.yaml`, `gke-inference-gateway.yaml`, `storage-config.yaml`, `model-staging-job.yaml`) to disk in the current directory. When creating `vllm-deployment.yaml`, explicitly inject any required model-specific architecture flags discovered in Phase 1 (e.g., `--trust-remote-code`) into the container `args` array. When creating `gke-inference-gateway.yaml`, base it on `assets/gke-inference-gateway.yaml.tmpl`: use `gatewayClassName: gke-l7-rilb` for the Gateway resource unless the user has explicitly chosen external exposure or the InferencePool-based GKE Inference Gateway, and route `/v1` traffic to the vLLM ClusterIP service (`{workload_name}-vllm-svc` on port 8000) in the HTTPRoute resource. If using a storage class other than `gcsfuse-csi` (e.g., `lustre-csi`), remove the `gcsfuse.cloud.google.com` annotations from `storage-config.yaml`."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "5. **Workload Deployment:** Provide explicit `kubectl apply` commands to deploy the storage config (`kubectl apply -f storage-config.yaml`), ComputeClass (`kubectl apply -f ccc-profile.yaml`), vLLM deployment (`kubectl apply -f vllm-deployment.yaml`), and Inference Gateway (`kubectl apply -f gke-inference-gateway.yaml`). Ensure the vLLM deployment spec mounts the staged model weights from the PVC into `/models`. Ensure that if a Secret was created for a gated model, it is referenced correctly in the Deployment manifest. Set vLLM's `--model` flag to the staged local path (`/models/{model_name}`), never to the Hugging Face repo ID; a repo ID makes vLLM re-download the full weights on every pod start and silently defeats the staging step. Preserve the model's public name for API clients with `--served-model-name={model_id}`."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "2. **Testing Inference:** Verify the service is serving the model. Provide a `kubectl port-forward` command (`kubectl port-forward svc/{workload_name}-vllm-svc 8000:8000`) and a sample `curl` request to `/v1/chat/completions` to test endpoint inference. Compare responses with the previous infrastructure if applicable."
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-0fdd73eccca6bc7a",
+      "name": "pitch-deck",
+      "description": "Populates investment banking pitch deck templates with data from source files. Use when: user provides a PowerPoint template to fill in, user has source data (Excel/CSV) to populate into slides, user mentions populating or filling a pitch deck template, or user needs to transfer data into existing slide layouts. Not for creating presentations from scratch.",
+      "sourcePath": "catalog-c\\agent-skills\\financial-services\\plugins\\vertical-plugins\\investment-banking\\skills\\pitch-deck\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\financial-services",
+      "remote": "https://github.com/anthropics/financial-services.git",
+      "gitHead": "33a3d8a9d6e5c3d4861731933a8857cc5e03315d",
+      "contentDigest": "cf8a7203744026e9a2a9760c37ebee639d9b637ff587cfe97259a29d2eb15f9e",
+      "bodySha256": "4a2ddbb37a745a4720c5a2ef5965f6c191134327659c122f648bf5a491a15e67",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-21ada3a42785fac6"
+      ],
+      "structure": {
+        "frontmatterName": "pitch-deck",
+        "frontmatterDescription": "Populates investment banking pitch deck templates with data from source files. Use when: user provides a PowerPoint template to fill in, user has source data (Excel/CSV) to populate into slides, user mentions populating or filling a pitch deck template, or user needs to transfer data into existing slide layouts. Not for creating presentations from scratch.",
+        "headings": [
+          "Populating Investment Banking Pitch Deck Templates",
+          "Reference Files",
+          "Workflow Decision Tree",
+          "⚠️ Critical Rendering Limitation",
+          "Template Population Workflow",
+          "Phase 1: Data Extraction",
+          "Phase 2: Content Mapping",
+          "Phase 3: Template Population",
+          "Phase 4: Validate → Fix → Repeat",
+          "Convert to images for visual validation",
+          "Phase 5: Final Verification",
+          "Quick Reference Tables"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-0fe7b1f650f8566b",
+      "name": "gke-platform-security",
+      "description": ">-",
+      "sourcePath": "catalog-c\\agent-skills\\skills__google\\skills\\cloud\\gke-platform-security\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\skills__google",
+      "remote": "https://github.com/google/skills.git",
+      "gitHead": "1af77752950126ae12dec176a0a3b27a16b7f5f7",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "7a60f1f986909ce1818d80872a246ce5bb5bfd85317e485e8709f87c68f44885",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7",
+        "exact-79ae19ed6e70f6df"
+      ],
+      "structure": {
+        "frontmatterName": "gke-platform-security",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "GKE Platform Security",
+          "Golden Path Security Defaults",
+          "Secret Manager Add-on Enablement",
+          "Verify Secret Manager is enabled on cluster",
+          "Enable if not already (Day-1 change)",
+          "RBAC Hardening",
+          "Verify insecure bindings are disabled",
+          "Binary Authorization",
+          "Enable Binary Authorization",
+          "Shielded Nodes & GKE Sandbox Enablement",
+          "Enable Shielded Nodes on an existing cluster",
+          "Enable GKE Sandbox (gVisor) runtime on an existing cluster"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "governance-security"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-10a1804d1fc7120e",
+      "name": "analyzing-ios-app-security-with-objection",
+      "description": ">-",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\analyzing-ios-app-security-with-objection\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "28453e580cafc8516d7a6f478a53ab86c53576de93840708c3995680852d68e7",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7"
+      ],
+      "structure": {
+        "frontmatterName": "analyzing-ios-app-security-with-objection",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "Analyzing iOS App Security with Objection",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Prepare the Testing Environment",
+          "Install Frida server on device via Cydia/Sileo",
+          "SSH to device and start Frida server",
+          "Verify Frida connectivity",
+          "Patch IPA with Frida gadget",
+          "Install patched IPA",
+          "Step 2: Attach Objection to Target App",
+          "Attach to running app by bundle ID"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "ssh root@<device_ip> \"/usr/sbin/frida-server -D\""
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "ssh root@<device_ip> \"/usr/sbin/frida-server -D\""
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "governance-security"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-10ab6514326e9806",
+      "name": "implementing-kubernetes-network-policy-with-calico",
+      "description": ">-",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\implementing-kubernetes-network-policy-with-calico\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "5f39eaf0dbd4b16acd45207d6e216be67ecb15fdce96bfee32908a6a7cc45cbe",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7"
+      ],
+      "structure": {
+        "frontmatterName": "implementing-kubernetes-network-policy-with-calico",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "Implementing Kubernetes Network Policy with Calico",
+          "Overview",
+          "When to Use",
+          "Prerequisites",
+          "Installing Calico",
+          "Operator-based Installation (Recommended)",
+          "Install the Tigera operator",
+          "Install Calico custom resources",
+          "Verify installation",
+          "Install calicoctl",
+          "Verify Calico is Running",
+          "Check Calico pods"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "governance-security"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-11b460152cae7e75",
+      "name": "ic-memo",
+      "description": "Draft a structured investment committee memo for PE deal approval. Synthesizes due diligence findings, financial analysis, and deal terms into a professional IC-ready document. Use when preparing for investment committee, writing up a deal, or creating a formal recommendation. Triggers on \"write IC memo\", \"investment committee memo\", \"deal write-up\", \"prepare IC materials\", or \"recommendation memo\".",
+      "sourcePath": "catalog-c\\agent-skills\\financial-services\\plugins\\agent-plugins\\valuation-reviewer\\skills\\ic-memo\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\financial-services",
+      "remote": "https://github.com/anthropics/financial-services.git",
+      "gitHead": "33a3d8a9d6e5c3d4861731933a8857cc5e03315d",
+      "contentDigest": "cc40afa4c2b0fecb945e6ab65a45c7cea24525008fcb526fc3b571d0339d289f",
+      "bodySha256": "df550252321137cc75d30e55394babdfba7ed82eb49226ea2d5f9632cbc0f9bf",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "writing-narrative-canon"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-caae1dc17492fe91"
+      ],
+      "structure": {
+        "frontmatterName": "ic-memo",
+        "frontmatterDescription": "Draft a structured investment committee memo for PE deal approval. Synthesizes due diligence findings, financial analysis, and deal terms into a professional IC-ready document. Use when preparing for investment committee, writing up a deal, or creating a formal recommendation. Triggers on \"write IC memo\", \"investment committee memo\", \"deal write-up\", \"prepare IC materials\", or \"recommendation memo\".",
+        "headings": [
+          "Investment Committee Memo",
+          "Workflow",
+          "Step 1: Gather Inputs",
+          "Step 2: Draft Memo Structure",
+          "Step 3: Output Format",
+          "Important Notes"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "writing-narrative-canon"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-122d946aa7ec4800",
+      "name": "gke-upgrades",
+      "description": ">-",
+      "sourcePath": "catalog-c\\agent-skills\\skills__google\\skills\\cloud\\gke-upgrades\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\skills__google",
+      "remote": "https://github.com/google/skills.git",
+      "gitHead": "1af77752950126ae12dec176a0a3b27a16b7f5f7",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "fe3982dccfd4592c3578783f809c5e800550c20caeac57469857f4e6bd9acc72",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7",
+        "exact-c98cd35ade9e4e96"
+      ],
+      "structure": {
+        "frontmatterName": "gke-upgrades",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "GKE Upgrades & Maintenance",
+          "Context Gathering",
+          "Core Principles",
+          "Release Channels",
+          "Support Lifecycle",
+          "Current Capabilities",
+          "Maintenance Windows & Exclusions",
+          "Mandatory Upgrade Overrides",
+          "Upgrade Planning",
+          "Node Pool Strategy (Standard Only)",
+          "Large-Scale AI/ML Clusters (GPU/TPU)",
+          "Checklists"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- You MUST include specific `kubectl` commands for API deprecation checks, specifically: `kubectl get --raw /metrics | grep apiserver_request_total | grep deprecated` to check if any active workloads are using deprecated APIs."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- You MUST include specific `kubectl` commands for API deprecation checks, specifically: `kubectl get --raw /metrics | grep apiserver_request_total | grep deprecated` to check if any active workloads are using deprecated APIs."
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-127b893f95061e20",
+      "name": "vendor-agreement-review",
+      "description": ">",
+      "sourcePath": "catalog-c\\agent-skills\\claude-for-legal\\commercial-legal\\skills\\vendor-agreement-review\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-for-legal",
+      "remote": "https://github.com/anthropics/claude-for-legal.git",
+      "gitHead": "4a6c651889c97cc9140580363c73e0eb17379c2b",
+      "contentDigest": "a5c3da433dbd5bfa38a48294e124d8e04811e2187a3dbb533c05978f8569a370",
+      "bodySha256": "e7b1e407918289eecebbe413ae353819fcada1508e08f46069d8db204495a854",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-6f7361d163b120db"
+      ],
+      "structure": {
+        "frontmatterName": "vendor-agreement-review",
+        "frontmatterDescription": ">",
+        "headings": [
+          "Vendor Agreement Review",
+          "Matter context",
+          "Destination check",
+          "Purpose",
+          "Precondition: load the playbook",
+          "Provisional mode",
+          "Workflow",
+          "Step 1: Orient",
+          "Step 2: Deal-breaker check",
+          "⛔ DEAL-BREAKER PRESENT",
+          "Step 3: Term-by-term comparison",
+          "[Section X.X]: [Issue name]"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/commercial-legal:review when a vendor MSA, services agreement, or similar is detected."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: \"Which matter is this for? Run `/commercial-legal:matter-workspace switch <slug>` or say `practice-level`.\" Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "> - Run `/commercial-legal:cold-start-interview` (2 minutes) to configure your profile, then I'll review tailored to YOUR playbook."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "> \"That was a generic run against default assumptions. Run `/commercial-legal:cold-start-interview` to get output calibrated to YOUR practice — your playbook, your jurisdiction, your risk appetite. 2 minutes.\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "**Which side?** Before applying the playbook, determine which side the company is on for this contract. Usually obvious: if the counterparty is a vendor/supplier providing goods or services, you're purchasing-side. If the counterparty is a customer buying your product/service, you're sales-side. If it's not obvious (a reseller agreement, a partnership, a revenue share), ask: \"Which side is [company] on for this agreement — vendor or customer?\" Read the matching playbook section (`### Sales-side playbook` or `### Purchasing-side playbook`) from the config. Note which side in the output so the reviewer knows which playbook was applied. If the matching side is `[Not configured]`, stop and tell the user to run `/commercial-legal:cold-start-interview --side <side>` before this review can proceed."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "> This agreement incorporates a DPA by URL reference at `[URL]`. The DPA carries the real data terms — subprocessor rights, breach-notification timing, data-return mechanics, standard contractual clauses, audit rights. Without reading it, the data-protection analysis below is partial. Offer to route the DPA to `/privacy-legal:dpa-review` (if installed) for a separate review, or fetch and read it inline before completing Step 3's data-protection analysis."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "> Want me to hand the DPA URL to `/privacy-legal:dpa-review` once you're ready? That skill is built for the DPA work and will catch subprocessor / SCC / breach-notification issues that this skill only flags at the gate."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/commercial-legal:review when a vendor MSA, services agreement, or similar is detected."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: \"Which matter is this for? Run `/commercial-legal:matter-workspace switch <slug>` or say `practice-level`.\" Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "> - Run `/commercial-legal:cold-start-interview` (2 minutes) to configure your profile, then I'll review tailored to YOUR playbook."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "> \"That was a generic run against default assumptions. Run `/commercial-legal:cold-start-interview` to get output calibrated to YOUR practice — your playbook, your jurisdiction, your risk appetite. 2 minutes.\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "**Which side?** Before applying the playbook, determine which side the company is on for this contract. Usually obvious: if the counterparty is a vendor/supplier providing goods or services, you're purchasing-side. If the counterparty is a customer buying your product/service, you're sales-side. If it's not obvious (a reseller agreement, a partnership, a revenue share), ask: \"Which side is [company] on for this agreement — vendor or customer?\" Read the matching playbook section (`### Sales-side playbook` or `### Purchasing-side playbook`) from the config. Note which side in the output so the reviewer knows which playbook was applied. If the matching side is `[Not configured]`, stop and tell the user to run `/commercial-legal:cold-start-interview --side <side>` before this review can proceed."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "> This agreement incorporates a DPA by URL reference at `[URL]`. The DPA carries the real data terms — subprocessor rights, breach-notification timing, data-return mechanics, standard contractual clauses, audit rights. Without reading it, the data-protection analysis below is partial. Offer to route the DPA to `/privacy-legal:dpa-review` (if installed) for a separate review, or fetch and read it inline before completing Step 3's data-protection analysis."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "> Want me to hand the DPA URL to `/privacy-legal:dpa-review` once you're ready? That skill is built for the DPA work and will catch subprocessor / SCC / breach-notification issues that this skill only flags at the gate."
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-13bd6e35a19418eb",
+      "name": "nano-banana-image-ad",
+      "description": ">-",
+      "sourcePath": "catalog-c\\agent-skills\\arcads-claude-code\\skills\\nano-banana-image-ad\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\arcads-claude-code",
+      "remote": "https://github.com/krusemediallc/arcads-claude-code.git",
+      "gitHead": "0bfafb256cfce3ff4447d7ea1611a37f0af536be",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "8959de7a1cdb6e3a8a47dd04a6a3d9b0c5dacffb6d72dafcb65640515f99dca8",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7"
+      ],
+      "structure": {
+        "frontmatterName": "nano-banana-image-ad",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "nano-banana-image-ad (Arcads)",
+          "Read order",
+          "Hard rules — never relax",
+          "Prerequisites",
+          "Configuration",
+          "Generation modes",
+          "Supported aspect ratios",
+          "Model variants (`--model`)",
+          "Workflow",
+          "Phase 1: Preflight",
+          "Phase 2: Gather inputs",
+          "Phase 3: Prompt rewrite"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Generate one or more **standalone Meta ad image creatives** via Arcads' `POST /v2/images/generate` with the Nano Banana model family (default `nano-banana-2`). Hands the image paths off to your Meta-ad-builder skill — this skill does not upload to Meta itself."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **Endpoint:** `POST /v2/images/generate`; poll `GET /v1/assets/{id}` until `status: generated`."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **Reference uploads:** `POST /v1/file-upload/get-presigned-url` returns `{presignedUrl, filePath}`; `PUT` bytes to `presignedUrl`; pass the `filePath` in `referenceImages`. Single-use — re-uploaded fresh per variant by the script."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "`1:1`, `16:9`, `9:16`. **Only these three are accepted by Arcads' `/v2/images/generate` endpoint** (the same endpoint serves gpt-image-2 and Nano Banana — same ratio constraints). Templates in the shared library that use `2:3`, `4:5`, `3:2`, etc. won't render at their native ratio on this backend — fall back to `1:1` and post-crop, or use the KIE nano-banana-image-ad sibling which supports the full Meta ratio set natively via the `/jobs/createTask` endpoint."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Generate one or more **standalone Meta ad image creatives** via Arcads' `POST /v2/images/generate` with the Nano Banana model family (default `nano-banana-2`). Hands the image paths off to your Meta-ad-builder skill — this skill does not upload to Meta itself."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **Endpoint:** `POST /v2/images/generate`; poll `GET /v1/assets/{id}` until `status: generated`."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **Reference uploads:** `POST /v1/file-upload/get-presigned-url` returns `{presignedUrl, filePath}`; `PUT` bytes to `presignedUrl`; pass the `filePath` in `referenceImages`. Single-use — re-uploaded fresh per variant by the script."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "`1:1`, `16:9`, `9:16`. **Only these three are accepted by Arcads' `/v2/images/generate` endpoint** (the same endpoint serves gpt-image-2 and Nano Banana — same ratio constraints). Templates in the shared library that use `2:3`, `4:5`, `3:2`, etc. won't render at their native ratio on this backend — fall back to `1:1` and post-crop, or use the KIE nano-banana-image-ad sibling which supports the full Meta ratio set natively via the `/jobs/createTask` endpoint."
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-14d2604e38bded51",
+      "name": "incident-response",
+      "description": "Run an incident response workflow — triage, communicate, and write postmortem. Trigger with \"we have an incident\", \"production is down\", an alert that needs severity assessment, a status update mid-incident, or when writing a blameless postmortem after resolution.",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\engineering\\skills\\incident-response\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "7711007a9c9e55830bee40a8320f3355a74ac59c7748b63050245aea3c3701ca",
+      "bodySha256": "1885c8a3d767e3ad488b48678ef68571bbb5008e04178e9d4015a50f52b77cde",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "debugging-recovery",
+        "knowledge-memory-context",
+        "writing-narrative-canon"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-ea07419970edbeb8"
+      ],
+      "structure": {
+        "frontmatterName": "incident-response",
+        "frontmatterDescription": "Run an incident response workflow — triage, communicate, and write postmortem. Trigger with \"we have an incident\", \"production is down\", an alert that needs severity assessment, a status update mid-incident, or when writing a blameless postmortem after resolution.",
+        "headings": [
+          "/incident-response",
+          "Usage",
+          "Modes",
+          "How It Works",
+          "Severity Classification",
+          "Communication Guidance",
+          "Output — Status Update",
+          "Incident Update: [Title]",
+          "Current Status",
+          "Actions Taken",
+          "Next Steps",
+          "Timeline"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /incident-response"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/incident-response $ARGUMENTS"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/incident-response new [description]     # Start a new incident"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/incident-response update [status]       # Post a status update"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/incident-response postmortem            # Generate postmortem from incident data"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /incident-response"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/incident-response $ARGUMENTS"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/incident-response new [description]     # Start a new incident"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/incident-response update [status]       # Post a status update"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/incident-response postmortem            # Generate postmortem from incident data"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "debugging-recovery",
+        "knowledge-memory-context",
+        "writing-narrative-canon"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-153efe9196f11e26",
+      "name": "agent-platform-skill-registry",
+      "description": ">",
+      "sourcePath": "catalog-c\\agent-skills\\skills__google\\skills\\cloud\\agent-platform-skill-registry\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\skills__google",
+      "remote": "https://github.com/google/skills.git",
+      "gitHead": "1af77752950126ae12dec176a0a3b27a16b7f5f7",
+      "contentDigest": "a5c3da433dbd5bfa38a48294e124d8e04811e2187a3dbb533c05978f8569a370",
+      "bodySha256": "683046c77845c94ad6e7648416561bc32d3582d5d696a3e964c343b9448d39fb",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-6f7361d163b120db",
+        "exact-9a81cd10b6109235"
+      ],
+      "structure": {
+        "frontmatterName": "agent-platform-skill-registry",
+        "frontmatterDescription": ">",
+        "headings": [
+          "Skill Registry",
+          "Core Capabilities",
+          "Core Directives",
+          "Prerequisites & Authentication",
+          "Library & Authentication",
+          "Install required libraries",
+          "Authenticate with Google Cloud",
+          "Environment Variables",
+          "Quickstart",
+          "Operations"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    }
+  ]
+}

@@ -1,0 +1,1647 @@
+{
+  "schemaVersion": 1,
+  "packetId": "general-023",
+  "familyId": "general",
+  "sequence": 23,
+  "sourceCount": 25,
+  "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions.",
+  "cards": [
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-cd0b88b8f1164974",
+      "name": "minimax-docx",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\skills\\minimax-docx\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "03b7615eb2a63c5d9759e8370c9d43e956dfab8d2dd3d4ff5b587971a62ac477",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea"
+      ],
+      "structure": {
+        "frontmatterName": "minimax-docx",
+        "frontmatterDescription": "|",
+        "headings": [
+          "minimax-docx",
+          "What it does",
+          "Source",
+          "How to use",
+          "Inspect the upstream README for exact paths"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Then ask the agent to invoke this skill by name (`minimax-docx`) or with"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Then ask the agent to invoke this skill by name (`minimax-docx`) or with"
+        }
+      ],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-cd5d0ac05327044c",
+      "name": "azure-openai-to-responses",
+      "description": "[description unavailable in certified index: azure-openai-to-responses]",
+      "sourcePath": "from-stars\\microsoft__ai-agents-for-beginners\\translations\\vi\\.agents\\skills\\azure-openai-to-responses\\SKILL.md",
+      "repositoryRoot": "from-stars\\microsoft__ai-agents-for-beginners",
+      "remote": "https://github.com/microsoft/ai-agents-for-beginners.git",
+      "gitHead": "01777b05e8afeba6bf5a6dbe74cc2293372d3693",
+      "contentDigest": "c3c741902ac691a5787ad302dcfea1a61a434ee8e0bdc939049fedff52acd06d",
+      "bodySha256": "7e2b897f168b5d0e61e65b0d5f34aa0f80b306c48e4f7ea5d8d12825ce6e58cd",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-547116f2bb654703"
+      ],
+      "structure": {
+        "frontmatterName": "azure-openai-to-responses",
+        "frontmatterDescription": null,
+        "headings": [
+          "Di cư Ứng dụng Python từ Azure OpenAI Chat Completions sang Responses API",
+          "Các kích hoạt",
+          "⚠️ Tương thích Model — KIỂM TRA TRƯỚC",
+          "1. Kiểm tra nhanh triển khai (nhanh nhất)",
+          "2. Kiểm tra model có sẵn theo vùng (khuyến nghị)",
+          "3. Tham chiếu hỗ trợ model đầy đủ",
+          "⚠️ Giới hạn model cũ",
+          "Model reasoning dòng O-series (o1, o3-mini, o3, o4-mini)",
+          "GitHub Models KHÔNG hỗ trợ Responses API",
+          "Di cư Framework",
+          "Microsoft Agent Framework (MAF)",
+          "MAF 1.0.0+ (agent-framework-openai >= 1.0.0)"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "2. Xoá khởi tạo `AIChatProtocolClient` (`new ChatProtocol.AIChatProtocolClient(\"/chat\")`)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Endpoint mới `/openai/v1` dùng client chuẩn `OpenAI()` thay vì `AzureOpenAI()`, không cần tham số `api_version`, và hoạt động giống nhau cả trên OpenAI và Azure OpenAI. Code client giống nhau và không cần quản lý phiên bản."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "rg \"/openai/deployments/.*/chat/completions\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **Gọi HTTP thô**: nếu app gọi REST API Azure OpenAI trực tiếp (qua `requests`, `httpx`, v.v.) với `/openai/deployments/{name}/chat/completions?api-version=...`, viết lại thành `/openai/v1/responses`. Thân yêu cầu thay đổi: `messages` → `input`, thêm `max_output_tokens` và `store: false`, bỏ tham số truy vấn `api-version`. Thân phản hồi thay đổi: `choices[0].message.content` → `output[0].content[0].text` (lưu ý: `output_text` là thuộc tính tiện dụng SDK không có trong JSON REST thô)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **HTTP**: điểm cuối Azure chuyển từ `/openai/deployments/{name}/chat/completions` sang `/openai/v1/responses`."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "2. Xoá khởi tạo `AIChatProtocolClient` (`new ChatProtocol.AIChatProtocolClient(\"/chat\")`)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Endpoint mới `/openai/v1` dùng client chuẩn `OpenAI()` thay vì `AzureOpenAI()`, không cần tham số `api_version`, và hoạt động giống nhau cả trên OpenAI và Azure OpenAI. Code client giống nhau và không cần quản lý phiên bản."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "rg \"/openai/deployments/.*/chat/completions\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **Gọi HTTP thô**: nếu app gọi REST API Azure OpenAI trực tiếp (qua `requests`, `httpx`, v.v.) với `/openai/deployments/{name}/chat/completions?api-version=...`, viết lại thành `/openai/v1/responses`. Thân yêu cầu thay đổi: `messages` → `input`, thêm `max_output_tokens` và `store: false`, bỏ tham số truy vấn `api-version`. Thân phản hồi thay đổi: `choices[0].message.content` → `output[0].content[0].text` (lưu ý: `output_text` là thuộc tính tiện dụng SDK không có trong JSON REST thô)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **HTTP**: điểm cuối Azure chuyển từ `/openai/deployments/{name}/chat/completions` sang `/openai/v1/responses`."
+        }
+      ],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-cd6069cb2da3a5fe",
+      "name": "deck-open-slide-canvas",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\plugins\\_official\\examples\\deck-open-slide-canvas\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "1a775f589b577012505c24fabdca130882082bd4d716f02ea605e47c4fc76b44",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "candidate-588f1d853853277c"
+      ],
+      "structure": {
+        "frontmatterName": "deck-open-slide-canvas",
+        "frontmatterDescription": "|",
+        "headings": [],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-cdc28b2cf747b821",
+      "name": "blog-post",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\plugins\\_official\\examples\\blog-post\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "cda80175acef4888603cc749edaf92a05068543579b63618d673255c4a81a5db",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "exact-af055739eb7f0584"
+      ],
+      "structure": {
+        "frontmatterName": "blog-post",
+        "frontmatterDescription": "|",
+        "headings": [
+          "Blog Post Skill",
+          "Workflow",
+          "Output contract"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-cec94064f8f95ca7",
+      "name": "terminal",
+      "description": ">-",
+      "sourcePath": "from-stars\\wonderwhy-er__DesktopCommanderMCP\\skills\\terminal\\SKILL.md",
+      "repositoryRoot": "from-stars\\wonderwhy-er__DesktopCommanderMCP",
+      "remote": "https://github.com/wonderwhy-er/DesktopCommanderMCP.git",
+      "gitHead": "9bd8422dd676d5ab93d977bcdcafb3ec58788bd3",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "363655af7a87a23d1e6cf6fb63c2ee8b5aa6c8252d4b2f12a814a44a8bf5c4cd",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7",
+        "exact-c2713d9709db1f79"
+      ],
+      "structure": {
+        "frontmatterName": "terminal",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "Terminal Command Assistant",
+          "1. Detect the environment first (do this before suggesting commands)",
+          "2. Choosing the right command for the shell",
+          "3. Running commands with Desktop Commander",
+          "Interactive REPL pattern (the workhorse)",
+          "4. Running specific CLIs",
+          "5. Inspecting processes and ports",
+          "6. Explaining errors in plain English",
+          "7. Safety: destructive commands and chaining",
+          "8. Turning repeated workflows into scripts",
+          "Operating etiquette"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Find file | `find . -name \"*.log\"` | `Get-ChildItem -Recurse -Filter *.log` | `dir /s *.log` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Search text | `grep -r \"TODO\" .` | `Get-ChildItem -Recurse \\| Select-String TODO` | `findstr /s TODO *` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "same command (`cd /abs/path && some-command`)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "interact_with_process(pid, \"df = pd.read_csv('/abs/path/data.csv')\")"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "for a quick one-off use `python3 /abs/script.py`. Check `pythonInfo.command`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **Node**: `node -i` for an interactive session, `node /abs/script.js` for a"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Recursive/forced deletes: `rm -rf`, `Remove-Item -Recurse -Force`, `del /s`,"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "`rd /s`."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Find file | `find . -name \"*.log\"` | `Get-ChildItem -Recurse -Filter *.log` | `dir /s *.log` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Search text | `grep -r \"TODO\" .` | `Get-ChildItem -Recurse \\| Select-String TODO` | `findstr /s TODO *` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "same command (`cd /abs/path && some-command`)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "interact_with_process(pid, \"df = pd.read_csv('/abs/path/data.csv')\")"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "for a quick one-off use `python3 /abs/script.py`. Check `pythonInfo.command`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **Node**: `node -i` for an interactive session, `node /abs/script.js` for a"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Recursive/forced deletes: `rm -rf`, `Remove-Item -Recurse -Force`, `del /s`,"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "`rd /s`."
+        }
+      ],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-cefe0929e5743126",
+      "name": "deploying-scalable-agents",
+      "description": "[description unavailable in certified index: deploying-scalable-agents]",
+      "sourcePath": "from-stars\\microsoft__ai-agents-for-beginners\\translations\\zh-CN\\.agents\\skills\\deploying-scalable-agents\\SKILL.md",
+      "repositoryRoot": "from-stars\\microsoft__ai-agents-for-beginners",
+      "remote": "https://github.com/microsoft/ai-agents-for-beginners.git",
+      "gitHead": "01777b05e8afeba6bf5a6dbe74cc2293372d3693",
+      "contentDigest": "84934c420a10db294093afbe189a3719653ae1bcabc930f570c8b2bbf4ca84c9",
+      "bodySha256": "b7a0561035b44e1346ae230a2d056e490cc51474e23e03c392fc4a5ade5d5032",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-81af227fa862e02d"
+      ],
+      "structure": {
+        "frontmatterName": "deploying-scalable-agents",
+        "frontmatterDescription": null,
+        "headings": [
+          "使用 Microsoft Foundry 部署可扩展代理",
+          "触发条件",
+          "核心思维模型",
+          "部署模式（选择一种，或组合使用）",
+          "生命周期（代理交付的循环）",
+          "扩展与成本控制手段（优先顺序）",
+          "关键模式复现",
+          "已部署代理的冒烟测试",
+          "企业级控制",
+          "助手的安全护栏"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-cfb664070c1c2292",
+      "name": "azure-openai-to-responses",
+      "description": "[description unavailable in certified index: azure-openai-to-responses]",
+      "sourcePath": "from-stars\\microsoft__ai-agents-for-beginners\\translations\\sv\\.agents\\skills\\azure-openai-to-responses\\SKILL.md",
+      "repositoryRoot": "from-stars\\microsoft__ai-agents-for-beginners",
+      "remote": "https://github.com/microsoft/ai-agents-for-beginners.git",
+      "gitHead": "01777b05e8afeba6bf5a6dbe74cc2293372d3693",
+      "contentDigest": "7e706566a6f31dc794cdc52cf02d1658ddac9240b454b8f60829ced9f61e26d2",
+      "bodySha256": "dd45028ed2d5db030ac3357e058604832f2aa33c338e04bd5194b152a596792c",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-547116f2bb654703"
+      ],
+      "structure": {
+        "frontmatterName": "azure-openai-to-responses",
+        "frontmatterDescription": null,
+        "headings": [
+          "Migrera Python-appar från Azure OpenAI Chat Completions till Responses API",
+          "Utlösare",
+          "⚠️ Modellkompatibilitet — KOLLA FÖRST",
+          "1. Snabbtest av distributionen (snabbast)",
+          "2. Kolla tillgängliga modeller i din region (rekommenderas)",
+          "3. Full modellstödsreferens",
+          "⚠️ Begränsningar för äldre modeller",
+          "O-seriens resonemangsmodeller (o1, o3-mini, o3, o4-mini)",
+          "GitHub Models stöder INTE Responses API",
+          "Ramverksmigrering",
+          "Microsoft Agent Framework (MAF)",
+          "MAF 1.0.0+ (agent-framework-openai >= 1.0.0)"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "2. Ta bort `AIChatProtocolClient`-instansieringen (`new ChatProtocol.AIChatProtocolClient(\"/chat\")`)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Den nya `/openai/v1`-endpointen använder standardklienten `OpenAI()` istället för `AzureOpenAI()`, kräver ingen `api_version`-parameter och fungerar identiskt för OpenAI och Azure OpenAI. Samma klientkod är framtidssäker – ingen versionshantering behövs."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "rg \"/openai/deployments/.*/chat/completions\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **Råa HTTP-anrop**: om appen anropar Azure OpenAI REST API direkt (via `requests`, `httpx`, etc.) med `/openai/deployments/{name}/chat/completions?api-version=...`, skriv om till `/openai/v1/responses`. Förfrågningskroppen ändras: `messages` → `input`, lägg till `max_output_tokens` och `store: false`, ta bort `api-version` från query-param. Svarskroppen ändras: `choices[0].message.content` → `output[0].content[0].text` (notera: `output_text` är en SDK-bekvämlighetsfunktion som inte finns i rå REST JSON)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **HTTP**: Azure-endpoint ändras från `/openai/deployments/{name}/chat/completions` till `/openai/v1/responses`."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "2. Ta bort `AIChatProtocolClient`-instansieringen (`new ChatProtocol.AIChatProtocolClient(\"/chat\")`)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Den nya `/openai/v1`-endpointen använder standardklienten `OpenAI()` istället för `AzureOpenAI()`, kräver ingen `api_version`-parameter och fungerar identiskt för OpenAI och Azure OpenAI. Samma klientkod är framtidssäker – ingen versionshantering behövs."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "rg \"/openai/deployments/.*/chat/completions\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **Råa HTTP-anrop**: om appen anropar Azure OpenAI REST API direkt (via `requests`, `httpx`, etc.) med `/openai/deployments/{name}/chat/completions?api-version=...`, skriv om till `/openai/v1/responses`. Förfrågningskroppen ändras: `messages` → `input`, lägg till `max_output_tokens` och `store: false`, ta bort `api-version` från query-param. Svarskroppen ändras: `choices[0].message.content` → `output[0].content[0].text` (notera: `output_text` är en SDK-bekvämlighetsfunktion som inte finns i rå REST JSON)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **HTTP**: Azure-endpoint ändras från `/openai/deployments/{name}/chat/completions` till `/openai/v1/responses`."
+        }
+      ],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d00f096714aa7a55",
+      "name": "local-ai-agents",
+      "description": "[description unavailable in certified index: local-ai-agents]",
+      "sourcePath": "from-stars\\microsoft__ai-agents-for-beginners\\translations\\pl\\.agents\\skills\\local-ai-agents\\SKILL.md",
+      "repositoryRoot": "from-stars\\microsoft__ai-agents-for-beginners",
+      "remote": "https://github.com/microsoft/ai-agents-for-beginners.git",
+      "gitHead": "01777b05e8afeba6bf5a6dbe74cc2293372d3693",
+      "contentDigest": "e4f40782eab4b7ddd1cae8719af666870695ccf6deeb22b6d2a871de0a5f4d99",
+      "bodySha256": "6799c206ae8ffb9209fc311dd2760e27b0b93c9f30bd26d9739ca1ea0464516d",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-5c239af83e1762d0"
+      ],
+      "structure": {
+        "frontmatterName": "local-ai-agents",
+        "frontmatterDescription": null,
+        "headings": [
+          "Tworzenie lokalnych agentów AI za pomocą Foundry Local i Qwen",
+          "Wyzwalacze",
+          "Podstawowy model mentalny",
+          "Dlaczego te konkretne elementy",
+          "Podstawy konfiguracji",
+          "Kluczowe wzorce do odtworzenia",
+          "Hybrydowe trasowanie (lokalne jako jeden z modeli)",
+          "Ograniczenia dla asystenta"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d0170165d7add394",
+      "name": "saas-landing",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\plugins\\_official\\examples\\saas-landing\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "25fda403cba6b06a54572c69dafcae91f29329dc080670a648cb311ab9efa4b7",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "exact-0094e1c105f64c63"
+      ],
+      "structure": {
+        "frontmatterName": "saas-landing",
+        "frontmatterDescription": "|",
+        "headings": [
+          "SaaS Landing Skill",
+          "1. Read context",
+          "2. Plan sections",
+          "3. Apply design system",
+          "4. Write the file",
+          "5. Self-check",
+          "6. Done",
+          "For skill authors reading this as a reference"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d1094ee82c387e73",
+      "name": "ai-tools-setup",
+      "description": ">-",
+      "sourcePath": "from-stars\\wonderwhy-er__DesktopCommanderMCP\\skills\\ai-tools-setup\\SKILL.md",
+      "repositoryRoot": "from-stars\\wonderwhy-er__DesktopCommanderMCP",
+      "remote": "https://github.com/wonderwhy-er/DesktopCommanderMCP.git",
+      "gitHead": "9bd8422dd676d5ab93d977bcdcafb3ec58788bd3",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "e97508e23dda42b457cfbf9d1b61cb3a57ad9ce53a1ff06ad84e708f2d21436f",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7",
+        "exact-982bfea68316b28a"
+      ],
+      "structure": {
+        "frontmatterName": "ai-tools-setup",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "AI Tools Setup Assistant",
+          "Golden rules (read before doing anything)",
+          "What this skill covers",
+          "General workflow",
+          "A generic \"my agent isn't responding\" diagnostic"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d2459c81ecbb00dd",
+      "name": "hr-onboarding",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\plugins\\_official\\examples\\hr-onboarding\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "09099ed7abdfd1be9123037e744fb4ddd9dd21c11dc3c9a7a06d9927a847e760",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "exact-edef1b3b86ae58f3"
+      ],
+      "structure": {
+        "frontmatterName": "hr-onboarding",
+        "frontmatterDescription": "|",
+        "headings": [
+          "HR Onboarding Skill",
+          "Workflow",
+          "Output contract"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d25af2a5aa9d5ec4",
+      "name": "html-ppt-zhangzara-stencil-tablet",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\design-templates\\html-ppt-zhangzara-stencil-tablet\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "93e44be99e7e1f22cc39a2dc4c78265ad62bdba16de102161d92c012e067c5f1",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "exact-f2ac53dd20bc511c"
+      ],
+      "structure": {
+        "frontmatterName": "html-ppt-zhangzara-stencil-tablet",
+        "frontmatterDescription": "|",
+        "headings": [
+          "Stencil & Tablet",
+          "At a glance",
+          "Best for",
+          "Avoid for",
+          "Workflow",
+          "Output contract",
+          "Source & license"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d2863ca4a89ce2cd",
+      "name": "deploying-scalable-agents",
+      "description": "[description unavailable in certified index: deploying-scalable-agents]",
+      "sourcePath": "from-stars\\microsoft__ai-agents-for-beginners\\translations\\tr\\.agents\\skills\\deploying-scalable-agents\\SKILL.md",
+      "repositoryRoot": "from-stars\\microsoft__ai-agents-for-beginners",
+      "remote": "https://github.com/microsoft/ai-agents-for-beginners.git",
+      "gitHead": "01777b05e8afeba6bf5a6dbe74cc2293372d3693",
+      "contentDigest": "d4a9449bdb3387e5040bf92387c7c101dcf0c9574e478de7dd60a50c95f268ef",
+      "bodySha256": "81b2f9cfdfc1176f86a9ba55253cd0cc96ad3472b11c18be87f79c32935702c9",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-81af227fa862e02d"
+      ],
+      "structure": {
+        "frontmatterName": "deploying-scalable-agents",
+        "frontmatterDescription": null,
+        "headings": [
+          "Microsoft Foundry ile Ölçeklenebilir Ajanlar Dağıtmak",
+          "Tetikleyiciler",
+          "Temel zihinsel model",
+          "Dağıtım desenleri (birini seçin veya birleştirin)",
+          "Yaşam döngüsü (ajanın sevk edildiği döngü)",
+          "Ölçeklendirme ve maliyet kaldıracı (öncelik sırasına göre)",
+          "Yeniden üretilmesi gereken önemli desenler",
+          "Dağıtılmış ajanı duman testi yapmak",
+          "Kurumsal kontroller",
+          "Asistan için güvenlik önlemleri"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d2b75227400b501e",
+      "name": "pricing-page",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\plugins\\_official\\examples\\pricing-page\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "e563727e47a1a59b38098e89109e746ce8fb8db438bbb39b0cd03292ea0775a7",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "exact-1d9e936d4dfbdc54"
+      ],
+      "structure": {
+        "frontmatterName": "pricing-page",
+        "frontmatterDescription": "|",
+        "headings": [
+          "Pricing Page Skill",
+          "Workflow",
+          "Output contract"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "currency and \"/mo\" — sizes per DESIGN.md scale."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "currency and \"/mo\" — sizes per DESIGN.md scale."
+        }
+      ],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d2c76c54b3818d9b",
+      "name": "azure-openai-to-responses",
+      "description": "[description unavailable in certified index: azure-openai-to-responses]",
+      "sourcePath": "from-stars\\microsoft__ai-agents-for-beginners\\translations\\ne\\.agents\\skills\\azure-openai-to-responses\\SKILL.md",
+      "repositoryRoot": "from-stars\\microsoft__ai-agents-for-beginners",
+      "remote": "https://github.com/microsoft/ai-agents-for-beginners.git",
+      "gitHead": "01777b05e8afeba6bf5a6dbe74cc2293372d3693",
+      "contentDigest": "bd1fb93096b3cc77073e13a9e382fd5a44bc0fe59b50e2b17e246c0b3022333e",
+      "bodySha256": "c5e640cf826900fc4c5db57dcec9fda763fbacfef7c86c0eb6e01ee0bae58767",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-547116f2bb654703"
+      ],
+      "structure": {
+        "frontmatterName": "azure-openai-to-responses",
+        "frontmatterDescription": null,
+        "headings": [
+          "Azure OpenAI Chat Completions बाट Responses API मा Python अनुप्रयोगहरू माइग्रेसन गर्नुहोस्",
+          "ट्रिगरहरू",
+          "⚠️ मोडेल अनुकूलता — पहिले जाँच्नुहोस्",
+          "1. तपाइँको डिप्लोयमेन्टको स्मोक टेस्ट (सबैभन्दा छिटो)",
+          "2. तपाइँको क्षेत्रका उपलब्ध मोडेलहरू जाँच्नुहोस् (सिफारिस गरिएको)",
+          "3. पूर्ण मोडेल समर्थन सन्दर्भ",
+          "⚠️ पुराना मोडेल सीमाहरू",
+          "O-श्रृंखला reasoning मोडेलहरू (o1, o3-mini, o3, o4-mini)",
+          "GitHub मोडेलहरूले Responses API समर्थन गर्दैनन्",
+          "फ्रेमवर्क माइग्रेसन",
+          "Microsoft एजेन्ट फ्रेमवर्क (MAF)",
+          "MAF 1.0.0+ (agent-framework-openai >= 1.0.0)"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "2. `AIChatProtocolClient` को उत्पत्तिलाई हटाउनुहोस् (`new ChatProtocol.AIChatProtocolClient(\"/chat\")`)।"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "नयाँ `/openai/v1` अन्तबिन्दुले मानक `OpenAI()` क्लाइन्ट प्रयोग गर्छ, `AzureOpenAI()` होइन, कुनै `api_version` प्यारामिटर आवश्यक छैन, र OpenAI तथा Azure OpenAI मा समान रूपमा काम गर्छ। एउटै क्लाइन्ट कोड भविष्य-अनुकूल छ — संस्करण व्यवस्थापन आवश्यक छैन।"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "rg \"/openai/deployments/.*/chat/completions\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **Raw HTTP कलहरू**: यदि एपले Azure OpenAI REST API लाई सिधै (requests, httpx आदि मार्फत) `/openai/deployments/{name}/chat/completions?api-version=...` endpoint मार्फत कल गर्दछ भने, यसलाई `/openai/v1/responses` मा पुनर्लेखन गर्नुहोस्। अनुरोध बडी परिवर्तन हुन्छ: `messages` → `input`, `max_output_tokens` थप्नुहोस् र `store: false` राख्नुहोस्, `api-version` क्वेरी प्याराम हटाउनुहोस्। प्रतिक्रिया बडी परिवर्तन हुन्छ: `choices[0].message.content` → `output[0].content[0].text` ( नोट: `output_text` SDK सुविधा हो जुन कच्चा REST JSON मा हुँदैन)।"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **HTTP**: Azure endpoint `/openai/deployments/{name}/chat/completions` बाट `/openai/v1/responses` मा सर्नुहोस्।"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "2. `AIChatProtocolClient` को उत्पत्तिलाई हटाउनुहोस् (`new ChatProtocol.AIChatProtocolClient(\"/chat\")`)।"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "नयाँ `/openai/v1` अन्तबिन्दुले मानक `OpenAI()` क्लाइन्ट प्रयोग गर्छ, `AzureOpenAI()` होइन, कुनै `api_version` प्यारामिटर आवश्यक छैन, र OpenAI तथा Azure OpenAI मा समान रूपमा काम गर्छ। एउटै क्लाइन्ट कोड भविष्य-अनुकूल छ — संस्करण व्यवस्थापन आवश्यक छैन।"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "rg \"/openai/deployments/.*/chat/completions\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **Raw HTTP कलहरू**: यदि एपले Azure OpenAI REST API लाई सिधै (requests, httpx आदि मार्फत) `/openai/deployments/{name}/chat/completions?api-version=...` endpoint मार्फत कल गर्दछ भने, यसलाई `/openai/v1/responses` मा पुनर्लेखन गर्नुहोस्। अनुरोध बडी परिवर्तन हुन्छ: `messages` → `input`, `max_output_tokens` थप्नुहोस् र `store: false` राख्नुहोस्, `api-version` क्वेरी प्याराम हटाउनुहोस्। प्रतिक्रिया बडी परिवर्तन हुन्छ: `choices[0].message.content` → `output[0].content[0].text` ( नोट: `output_text` SDK सुविधा हो जुन कच्चा REST JSON मा हुँदैन)।"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **HTTP**: Azure endpoint `/openai/deployments/{name}/chat/completions` बाट `/openai/v1/responses` मा सर्नुहोस्।"
+        }
+      ],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d2c7f5a5234aef41",
+      "name": "jupyter-notebook",
+      "description": "Käytetään, kun käyttäjä pyytää luomaan, alustamaan tai muokkaamaan Jupyter-muistikirjoja",
+      "sourcePath": "from-stars\\microsoft__ai-agents-for-beginners\\translations\\fi\\.agents\\skills\\jupyter-notebook\\SKILL.md",
+      "repositoryRoot": "from-stars\\microsoft__ai-agents-for-beginners",
+      "remote": "https://github.com/microsoft/ai-agents-for-beginners.git",
+      "gitHead": "01777b05e8afeba6bf5a6dbe74cc2293372d3693",
+      "contentDigest": "c547be5cc35d1476e7ded38916c6fcae6bbe1bf2603bafba4dd23f8825eab2e2",
+      "bodySha256": "754118801c2bc803aff5bb05446d5900b51c751b4797176b8f935d69666aefbf",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-07158558b7501077"
+      ],
+      "structure": {
+        "frontmatterName": "jupyter-notebook",
+        "frontmatterDescription": "Käytetään, kun käyttäjä pyytää luomaan, alustamaan tai muokkaamaan Jupyter-muistikirjoja",
+        "headings": [
+          "Jupyter Notebook -taito",
+          "Milloin käyttää",
+          "Päätöspuu",
+          "Taitopolku (määritä kerran)",
+          "Työnkulku",
+          "Mallit ja apuskripti",
+          "Väliaikaistiedostot ja tulostuskäytännöt",
+          "Riippuvuudet (asenna vain tarvittaessa)",
+          "Ympäristö",
+          "Viitemappi"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d40d470d268835a0",
+      "name": "microsoft-docs",
+      "description": "Poizvedujte v uradni Microsoftovi dokumentaciji, da poiščete koncepte,",
+      "sourcePath": "from-stars\\microsoft__ai-agents-for-beginners\\translations\\sl\\.agents\\skills\\microsoft-docs\\SKILL.md",
+      "repositoryRoot": "from-stars\\microsoft__ai-agents-for-beginners",
+      "remote": "https://github.com/microsoft/ai-agents-for-beginners.git",
+      "gitHead": "01777b05e8afeba6bf5a6dbe74cc2293372d3693",
+      "contentDigest": "250154290962a4dff01bcbe67a2c6173913d43d8c44e4d8d681bfda877f586d1",
+      "bodySha256": "59b9ee4057301df2d6a98603e84e759f8ba31042279f190b1df415c6a4d2c4db",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-ebb84dd7bdbacacb"
+      ],
+      "structure": {
+        "frontmatterName": "microsoft-docs",
+        "frontmatterDescription": "Poizvedujte v uradni Microsoftovi dokumentaciji, da poiščete koncepte,",
+        "headings": [
+          "Microsoft Docs",
+          "Privzeto: Microsoft Learn MCP",
+          "Izjeme: Kdaj uporabiti druga orodja",
+          ".NET Aspire — Uporabite Aspire MCP Server (priporočeno) ali Context7",
+          "VS Code — Uporabite Context7",
+          "GitHub — Uporabite Context7",
+          "Agent Framework — Uporabite Learn MCP + Context7",
+          "Context7 Setup",
+          "Pisanje učinkovitih poizvedb",
+          "❌ Too broad",
+          "✅ Specific"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| `/microsoft/aspire.dev` | Primarno — vodiči, integracije, referenca CLI, uvajanje |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| `/dotnet/aspire` | Izvor za izvajanje — API-ja notranjosti, podrobnosti implementacije |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| `/communitytoolkit/aspire` | Skupnostne integracije — Go, Java, Node.js, Ollama |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| `/websites/code_visualstudio` | Uporabniška dokumentacija — nastavitve, funkcije, razhroščevanje, oddaljeni razvoj |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| `/websites/code_visualstudio_api` | API za razširitve — webviews, TreeViews, ukazi, prispevne točke |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| `/websites/github_en` | Actions, API, repozitoriji, varnost, administracija, Copilot |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| `/websites/cli_github` | Ukazi in zastavice GitHub CLI (`gh`) |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| `/websites/learn_microsoft_en-us_agent-framework` | Vodiči — DevUI vodiči, sledenje, orkestracija delovnih tokov |"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| `/microsoft/aspire.dev` | Primarno — vodiči, integracije, referenca CLI, uvajanje |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| `/dotnet/aspire` | Izvor za izvajanje — API-ja notranjosti, podrobnosti implementacije |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| `/communitytoolkit/aspire` | Skupnostne integracije — Go, Java, Node.js, Ollama |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| `/websites/code_visualstudio` | Uporabniška dokumentacija — nastavitve, funkcije, razhroščevanje, oddaljeni razvoj |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| `/websites/code_visualstudio_api` | API za razširitve — webviews, TreeViews, ukazi, prispevne točke |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| `/websites/github_en` | Actions, API, repozitoriji, varnost, administracija, Copilot |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| `/websites/cli_github` | Ukazi in zastavice GitHub CLI (`gh`) |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| `/websites/learn_microsoft_en-us_agent-framework` | Vodiči — DevUI vodiči, sledenje, orkestracija delovnih tokov |"
+        }
+      ],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d4d18b54733563fa",
+      "name": "html-ppt-xhs-white-editorial",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\plugins\\_official\\examples\\html-ppt-xhs-white-editorial\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "1628180c52b35776c57d0843a22c183c9635524e596942d206f132b93ba68a98",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "exact-d071e515d6612e7b"
+      ],
+      "structure": {
+        "frontmatterName": "html-ppt-xhs-white-editorial",
+        "frontmatterDescription": "|",
+        "headings": [
+          "HTML PPT · 白底杂志风",
+          "When this card is picked",
+          "How to author the deck",
+          "Attribution"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d54cb9d2bab8f10d",
+      "name": "eng-runbook",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\design-templates\\eng-runbook\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "2aba5327cd0671bada77bb6967f6a6b2e93b8ea70e2428edde02d939591d29e1",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "exact-3040920b861d186c"
+      ],
+      "structure": {
+        "frontmatterName": "eng-runbook",
+        "frontmatterDescription": "|",
+        "headings": [
+          "Engineering Runbook Skill",
+          "Workflow",
+          "Output contract"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d5619de78168d0f6",
+      "name": "testing-course-samples",
+      "description": "Tumia wakati unapoombwa kuthibitisha, kujaribu, kufanya mtihani wa haraka,",
+      "sourcePath": "from-stars\\microsoft__ai-agents-for-beginners\\translations\\sw\\.agents\\skills\\testing-course-samples\\SKILL.md",
+      "repositoryRoot": "from-stars\\microsoft__ai-agents-for-beginners",
+      "remote": "https://github.com/microsoft/ai-agents-for-beginners.git",
+      "gitHead": "01777b05e8afeba6bf5a6dbe74cc2293372d3693",
+      "contentDigest": "d0046a47f8faf04ac88539db61e86fac7b8fd1d457b03de46dcfdafb441a9636",
+      "bodySha256": "edc26401f766838d72413f3d02a90063bad37971dd08945e063ae252b3893dc0",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-8e30466535c60158"
+      ],
+      "structure": {
+        "frontmatterName": "testing-course-samples",
+        "frontmatterDescription": "Tumia wakati unapoombwa kuthibitisha, kujaribu, kufanya mtihani wa haraka,",
+        "headings": [
+          "Kupima Sampuli za Kozi",
+          "Wakati wa kutumia",
+          "Masharti ya awali (angalia kwanza)",
+          "Kuendesha uthibitisho",
+          "Vitabu vyote vya Python (huacha .NET, .venv, site-packages, tafsiri, mali za ujuzi)",
+          "Somo moja tu, na muda mrefu wa kusubiri kwa kila seli",
+          "Orodhesha tu kile kitakachotekelezwa (bila kuendesha)",
+          "Mfasiri waziwazi (ikiwa `python` haipo PATH, mfano lahaja ya Duka la Windows)",
+          "Kufasiri matokeo",
+          "Masomo yanayohitaji rasilimali za ziada (inayotarajiwa kushindwa bila hizo)",
+          "Kuripoti nyuma"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d5bb13fefab029fd",
+      "name": "deploying-scalable-agents",
+      "description": "[description unavailable in certified index: deploying-scalable-agents]",
+      "sourcePath": "from-stars\\microsoft__ai-agents-for-beginners\\translations\\bn\\.agents\\skills\\deploying-scalable-agents\\SKILL.md",
+      "repositoryRoot": "from-stars\\microsoft__ai-agents-for-beginners",
+      "remote": "https://github.com/microsoft/ai-agents-for-beginners.git",
+      "gitHead": "01777b05e8afeba6bf5a6dbe74cc2293372d3693",
+      "contentDigest": "4ae42cbca461ce7eb3e1ba94d2496143ee5a5c31326fd99387358bae4adaf531",
+      "bodySha256": "2e91cf99985d278ae2d5d6e47cb130b9c977b4b01817d223701f5654f18df316",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-81af227fa862e02d"
+      ],
+      "structure": {
+        "frontmatterName": "deploying-scalable-agents",
+        "frontmatterDescription": null,
+        "headings": [
+          "মাইক্রোসফট ফাউন্ড্রির সাথে স্কেলযোগ্য এজেন্ট মোতায়েন",
+          "ট্রিগারসমূহ",
+          "মূল মানসিক মডেল",
+          "মোতায়েন প্যাটার্ন (একটি বেছে নিন, বা মিলিয়ে নিন)",
+          "জীবনচক্র (যে লুপ একটি এজেন্ট প্রেরণ করে)",
+          "স্কেলিং এবং খরচ নিয়ন্ত্রণ (অগ্রাধিকার ক্রমে)",
+          "পুনরুত্পাদনের জন্য মূল প্যাটার্ন",
+          "মোতায়েনকৃত এজেন্টের স্মোক-টেস্টিং",
+          "এন্টারপ্রাইজ নিয়ন্ত্রণ",
+          "সহায়ককের জন্য গার্ডরেল"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d5eea37390df9661",
+      "name": "brand-extract",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\skills\\brand-extract\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "43bedf1470d8a9a57c459e90c827e7fbfed33d625e6783212a0ce85df76d38a6",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea"
+      ],
+      "structure": {
+        "frontmatterName": "brand-extract",
+        "frontmatterDescription": "|",
+        "headings": [
+          "brand-extract",
+          "The live kit page (`brand.html`)",
+          "The three-step chain",
+          "1. Measure (drive the open Browser tab)",
+          "Anti-bot wall → ask the user (do NOT bypass)",
+          "2. Synthesize (write the kit) — incrementally, preview early",
+          "3. Build & register",
+          "Safety"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d5ffcf5e05dfcccd",
+      "name": "azure-openai-to-responses",
+      "description": "Ilipat ang mga Python app mula sa Azure OpenAI Chat Completions papuntang",
+      "sourcePath": "from-stars\\microsoft__ai-agents-for-beginners\\translations\\tl\\.agents\\skills\\azure-openai-to-responses\\SKILL.md",
+      "repositoryRoot": "from-stars\\microsoft__ai-agents-for-beginners",
+      "remote": "https://github.com/microsoft/ai-agents-for-beginners.git",
+      "gitHead": "01777b05e8afeba6bf5a6dbe74cc2293372d3693",
+      "contentDigest": "5aea3a0ba04d719de731178f49951dc7c167a2bdd03a8effa6be7b41a0698a18",
+      "bodySha256": "c5ea9c8274578f96b2be82274da182bce33a9a2c5cbd62127fab8fe3276352c5",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-547116f2bb654703"
+      ],
+      "structure": {
+        "frontmatterName": "azure-openai-to-responses",
+        "frontmatterDescription": "'Ilipat ang mga Python app mula sa Azure OpenAI Chat Completions papuntang",
+        "headings": [
+          "Ilipat ang mga Python App mula sa Azure OpenAI Chat Completions patungo sa Responses API",
+          "Mga Trigger",
+          "⚠️ Compatibility ng Modelo — SURIIN MUNA",
+          "1. Subukan ang iyong deployment (pinakamabilis)",
+          "2. Suriin ang mga available na modelo sa iyong rehiyon (inirerekomenda)",
+          "3. Buong reference sa suporta ng modelo",
+          "⚠️ Mga limitasyon ng mas lumang modelo",
+          "Mga O-series reasoning models (o1, o3-mini, o3, o4-mini)",
+          "Hindi sinusuportahan ng GitHub Models ang Responses API",
+          "Paglilipat ng Framework",
+          "Microsoft Agent Framework (MAF)",
+          "MAF 1.0.0+ (agent-framework-openai >= 1.0.0)"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "2. Alisin ang `AIChatProtocolClient` instantiation (`new ChatProtocol.AIChatProtocolClient(\"/chat\")`)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Ang bagong `/openai/v1` endpoint ay gumagamit ng standard na `OpenAI()` client sa halip na `AzureOpenAI()`, hindi na nangangailangan ng `api_version` parameter, at pareho ang pagkilos sa OpenAI at Azure OpenAI. Ang parehong client code ay pangmatagalan — walang kailangan na version management."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "rg \"/openai/deployments/.*/chat/completions\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **Raw HTTP calls**: kung ang app ay tumatawag nang direkta sa Azure OpenAI REST API (sa pamamagitan ng `requests`, `httpx`, etc.) gamit ang `/openai/deployments/{name}/chat/completions?api-version=...`, palitan ng `/openai/v1/responses`. Nagbabago ang request body: `messages` → `input`, magdagdag ng `max_output_tokens` at `store: false`, alisin ang `api-version` query param. Nagbabago ang response body: `choices[0].message.content` → `output[0].content[0].text` (tandaan: ang `output_text` ay isang SDK convenience property na wala sa raw REST JSON)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **HTTP**: Ang Azure endpoint ay lumilipat mula sa `/openai/deployments/{name}/chat/completions` papuntang `/openai/v1/responses`."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "2. Alisin ang `AIChatProtocolClient` instantiation (`new ChatProtocol.AIChatProtocolClient(\"/chat\")`)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Ang bagong `/openai/v1` endpoint ay gumagamit ng standard na `OpenAI()` client sa halip na `AzureOpenAI()`, hindi na nangangailangan ng `api_version` parameter, at pareho ang pagkilos sa OpenAI at Azure OpenAI. Ang parehong client code ay pangmatagalan — walang kailangan na version management."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "rg \"/openai/deployments/.*/chat/completions\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **Raw HTTP calls**: kung ang app ay tumatawag nang direkta sa Azure OpenAI REST API (sa pamamagitan ng `requests`, `httpx`, etc.) gamit ang `/openai/deployments/{name}/chat/completions?api-version=...`, palitan ng `/openai/v1/responses`. Nagbabago ang request body: `messages` → `input`, magdagdag ng `max_output_tokens` at `store: false`, alisin ang `api-version` query param. Nagbabago ang response body: `choices[0].message.content` → `output[0].content[0].text` (tandaan: ang `output_text` ay isang SDK convenience property na wala sa raw REST JSON)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **HTTP**: Ang Azure endpoint ay lumilipat mula sa `/openai/deployments/{name}/chat/completions` papuntang `/openai/v1/responses`."
+        }
+      ],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d6072002bb072467",
+      "name": "fal-restore",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\skills\\fal-restore\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "d09543c365357ee9e4b7676b7526241f91b298f8d057a0a17cbe777c9ae28d18",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea"
+      ],
+      "structure": {
+        "frontmatterName": "fal-restore",
+        "frontmatterDescription": "|",
+        "headings": [
+          "fal-restore",
+          "What it does",
+          "Source",
+          "How to use",
+          "Inspect the upstream README for exact paths"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Then ask the agent to invoke this skill by name (`fal-restore`) or with"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Then ask the agent to invoke this skill by name (`fal-restore`) or with"
+        }
+      ],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d6879deeac8d9172",
+      "name": "threejs",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\skills\\threejs\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "87eac862600e5a3eae58a6ca07b13b2068f3f46ffdbee53bfc5bdc6dbdcf774d",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea"
+      ],
+      "structure": {
+        "frontmatterName": "threejs",
+        "frontmatterDescription": "|",
+        "headings": [
+          "threejs",
+          "What it does",
+          "Source",
+          "How to use",
+          "Inspect the upstream README for exact paths"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Then ask the agent to invoke this skill by name (`threejs`) or with"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Then ask the agent to invoke this skill by name (`threejs`) or with"
+        }
+      ],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    }
+  ]
+}

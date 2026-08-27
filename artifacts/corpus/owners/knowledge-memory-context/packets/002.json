@@ -1,0 +1,2063 @@
+{
+  "schemaVersion": 1,
+  "packetId": "knowledge-memory-context-002",
+  "familyId": "knowledge-memory-context",
+  "sequence": 2,
+  "sourceCount": 25,
+  "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions.",
+  "cards": [
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-5e96ed504aa90bf1",
+      "name": "prospect",
+      "description": "Build targeted account or contact lists using Common Room's Prospector. Triggers on 'find companies that match [criteria]', 'build a prospect list', 'find contacts at [type of company]', 'show me companies hiring [role]', or any list-building request.",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\partner-built\\common-room\\skills\\prospect\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "aec541f41e1ad1abd164d8dbb45cb58cb7498fa9673ae48595b704d7fff3d7c1",
+      "bodySha256": "bbfefbfc72e8b5f33b0756bff1cca5124cea50a4ccddd1ee4a2f647cee17dc64",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-40542f7e6b9ec165"
+      ],
+      "structure": {
+        "frontmatterName": "prospect",
+        "frontmatterDescription": "Build targeted account or contact lists using Common Room's Prospector. Triggers on 'find companies that match [criteria]', 'build a prospect list', 'find contacts at [type of company]', 'show me companies hiring [role]', or any list-building request.",
+        "headings": [
+          "Prospecting",
+          "Critical Distinction: Two Object Types",
+          "Step 0: Load User Context (Me)",
+          "Step 1: Gather Targeting Criteria",
+          "Step 2: Support Iterative Refinement",
+          "Step 3: Run the Query and Present Results",
+          "Step 3.5: Enrich Net-New Results with Web Search",
+          "Step 4: Offer Next Steps",
+          "Quality Standards",
+          "Reference Files"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-6040157b97f4e81a",
+      "name": "smb-router",
+      "description": ">",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\small-business\\skills\\smb-router\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "a5c3da433dbd5bfa38a48294e124d8e04811e2187a3dbb533c05978f8569a370",
+      "bodySha256": "488b3108b5286728bd111362d860730bda1134c7a44f1a375d1579775ba8e11a",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context",
+        "product-operations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-6f7361d163b120db"
+      ],
+      "structure": {
+        "frontmatterName": "smb-router",
+        "frontmatterDescription": ">",
+        "headings": [
+          "SMB Router",
+          "Quick start",
+          "How to route",
+          "Step 1 — Read business context",
+          "Step 2 — Match intent to a command",
+          "Step 3 — Present the recommendation",
+          "Step 4 — Handle \"what can you do?\"",
+          "Step 5 — Handle zero-connector bootstrap",
+          "Step 6 — Connector-aware routing",
+          "Step 7 — Handle tiebreakers",
+          "Step 8 — Handle no match",
+          "Guardrails"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "→ Match: cash concern + upcoming payroll = /plan-payroll"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "I'll run /plan-payroll — it'll show your 30-day cash picture and"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "→ On confirmation, trigger /plan-payroll"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| \"Can I make payroll?\" / \"cash is tight\" / \"who owes me money?\" | `/plan-payroll` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| \"What does next month look like?\" / \"cash forecast\" / \"runway\" | `/month-heads-up` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| \"Close the books\" / \"month-end\" / \"reconcile\" | `/close-month` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| \"What are my margins?\" / \"should I raise prices?\" / \"cost per unit\" | `/price-check` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| \"Tax stuff\" / \"estimated taxes\" / \"1099s\" / \"accountant needs...\" | `/tax-prep` |"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "→ Match: cash concern + upcoming payroll = /plan-payroll"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "I'll run /plan-payroll — it'll show your 30-day cash picture and"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "→ On confirmation, trigger /plan-payroll"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| \"Can I make payroll?\" / \"cash is tight\" / \"who owes me money?\" | `/plan-payroll` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| \"What does next month look like?\" / \"cash forecast\" / \"runway\" | `/month-heads-up` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| \"Close the books\" / \"month-end\" / \"reconcile\" | `/close-month` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| \"What are my margins?\" / \"should I raise prices?\" / \"cost per unit\" | `/price-check` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| \"Tax stuff\" / \"estimated taxes\" / \"1099s\" / \"accountant needs...\" | `/tax-prep` |"
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "product-operations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-622c9f846993a7c6",
+      "name": "smb-onboard",
+      "description": ">",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\small-business\\skills\\smb-onboard\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "a5c3da433dbd5bfa38a48294e124d8e04811e2187a3dbb533c05978f8569a370",
+      "bodySha256": "4f70273b05f5f5ce9eb8a9e02f71c968ce38696a6993378fde8899f2cf641394",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context",
+        "product-operations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-6f7361d163b120db"
+      ],
+      "structure": {
+        "frontmatterName": "smb-onboard",
+        "frontmatterDescription": ">",
+        "headings": [
+          "SMB Onboard",
+          "Quick start",
+          "Tone for connectors",
+          "Workflow",
+          "Approval gates",
+          "Reference"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "product-operations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-65f7311da922e124",
+      "name": "matter-workspace",
+      "description": "Manage matter workspaces for multi-client practices — create, list, switch, close, or detach the active matter. Use when the user wants to create a new matter workspace, switch the active matter, list matters, archive a matter, or work at practice-level only without an active matter.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-for-legal\\litigation-legal\\skills\\matter-workspace\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-for-legal",
+      "remote": "https://github.com/anthropics/claude-for-legal.git",
+      "gitHead": "4a6c651889c97cc9140580363c73e0eb17379c2b",
+      "contentDigest": "8ca6e667152a83db95845b06594d906031e41a3253dd7b48cd6c39e0ded9a2fd",
+      "bodySha256": "4b300a0ac8f9a184ce1b41e67f53f564674046b4fb05ad20061298bb4fd24c97",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-47282de524dd8b9e"
+      ],
+      "structure": {
+        "frontmatterName": "matter-workspace",
+        "frontmatterDescription": "Manage matter workspaces for multi-client practices — create, list, switch, close, or detach the active matter. Use when the user wants to create a new matter workspace, switch the active matter, list matters, archive a matter, or work at practice-level only without an active matter.",
+        "headings": [
+          "/matter-workspace",
+          "Subcommands",
+          "Instructions",
+          "Notes",
+          "Matter Workspace",
+          "Storage layout",
+          "Active matter is in the practice CLAUDE.md",
+          "Subcommand logic",
+          "`new <slug>`",
+          "`list`",
+          "`switch <slug>`",
+          "`close <slug>`"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /matter-workspace"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/litigation-legal:matter-workspace new <slug>` — create a new matter workspace, run a short intake, write `matter.md`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/litigation-legal:matter-workspace list` — list matters with status and active flag"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/litigation-legal:matter-workspace switch <slug>` — set the active matter"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/litigation-legal:matter-workspace close <slug>` — archive a matter (move to `~/.claude/plugins/config/claude-for-legal/litigation-legal/matters/_archived/`, never delete)"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/litigation-legal:matter-workspace none` — detach from any active matter, work at practice-level only"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Note: `/litigation-legal:matter-briefing [slug]` (no subcommand) is a separate command that produces a briefing on a specific matter — useful for in-house portfolio review. Matter workspace management lives here."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "1. Read `~/.claude/plugins/config/claude-for-legal/litigation-legal/CLAUDE.md` — confirm the `## Matter workspaces` section is populated. If `Enabled` is `✗`, tell the user: \"Matter workspaces are off — you're configured as an in-house practice with one client, so the plugin works from practice-level context automatically. If you actually work across multiple clients, re-run `/litigation-legal:cold-start-interview --redo` and select a private-practice setting. Otherwise, you don't need `/matter-workspace` at all.\" Don't error — the disabled state is the expected one for in-house users."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /matter-workspace"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/litigation-legal:matter-workspace new <slug>` — create a new matter workspace, run a short intake, write `matter.md`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/litigation-legal:matter-workspace list` — list matters with status and active flag"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/litigation-legal:matter-workspace switch <slug>` — set the active matter"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/litigation-legal:matter-workspace close <slug>` — archive a matter (move to `~/.claude/plugins/config/claude-for-legal/litigation-legal/matters/_archived/`, never delete)"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/litigation-legal:matter-workspace none` — detach from any active matter, work at practice-level only"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Note: `/litigation-legal:matter-briefing [slug]` (no subcommand) is a separate command that produces a briefing on a specific matter — useful for in-house portfolio review. Matter workspace management lives here."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "1. Read `~/.claude/plugins/config/claude-for-legal/litigation-legal/CLAUDE.md` — confirm the `## Matter workspaces` section is populated. If `Enabled` is `✗`, tell the user: \"Matter workspaces are off — you're configured as an in-house practice with one client, so the plugin works from practice-level context automatically. If you actually work across multiple clients, re-run `/litigation-legal:cold-start-interview --redo` and select a private-practice setting. Otherwise, you don't need `/matter-workspace` at all.\" Don't error — the disabled state is the expected one for in-house users."
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-671f89dce7e4de61",
+      "name": "mcp-cli",
+      "description": "Interface for MCP (Model Context Protocol) servers via CLI. Use when you need to interact with external tools, APIs, or data sources through MCP servers, list available MCP servers/tools, or call MCP tools from command line.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\mcp-cli\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "4144eb9a26c59fcc60a253497b2c9ae99c1ae6ab81b1dafed2be560f3f96edd4",
+      "bodySha256": "54081db970e9333dad51f8458bc623912fab2087ecacccb6298f2c53833d6070",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "automation-mcp-integrations",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-57cf687bbb34b55a"
+      ],
+      "structure": {
+        "frontmatterName": "mcp-cli",
+        "frontmatterDescription": "Interface for MCP (Model Context Protocol) servers via CLI. Use when you need to interact with external tools, APIs, or data sources through MCP servers, list available MCP servers/tools, or call MCP tools from command line.",
+        "headings": [
+          "MCP-CLI",
+          "Commands",
+          "Workflow",
+          "Examples",
+          "List all servers and tool names",
+          "See all tools with parameters",
+          "With descriptions (more verbose)",
+          "Get JSON schema for specific tool",
+          "Call the tool",
+          "Search for tools",
+          "JSON output for parsing",
+          "Complex JSON with quotes (use heredoc or stdin)"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "automation-mcp-integrations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-6a06374ed5447b23",
+      "name": "guideline-generation",
+      "description": ">",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\partner-built\\brand-voice\\skills\\guideline-generation\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "a5c3da433dbd5bfa38a48294e124d8e04811e2187a3dbb533c05978f8569a370",
+      "bodySha256": "86c3880a125f0b5c4b6a5c37c6b0779a096f26453d7da06dea93424153bde536",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "audio-voice-media",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-6f7361d163b120db"
+      ],
+      "structure": {
+        "frontmatterName": "guideline-generation",
+        "frontmatterDescription": ">",
+        "headings": [
+          "Guideline Generation",
+          "Inputs",
+          "Generation Workflow",
+          "1. Identify and Classify Sources",
+          "2. Process Sources",
+          "3. Synthesize Into Guidelines",
+          "4. Assign Confidence Scores",
+          "5. Surface Open Questions",
+          "Open Questions for Team Discussion",
+          "High Priority (blocks guideline completion)",
+          "6. Quality Check",
+          "7. Present and Offer Next Steps"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Check if a discovery report exists from a previous `/brand-voice:discover-brand` run"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Suggest running discovery first: `/brand-voice:discover-brand`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "5. **Confirm to the user** with the full absolute path: \"Guidelines saved to `<full-path>`. `/brand-voice:enforce-voice` will find them automatically in future sessions.\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "The guidelines are also present in this conversation, so `/brand-voice:enforce-voice` can use them immediately without loading from file."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "2. Start creating content with `/brand-voice:enforce-voice`"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Check if a discovery report exists from a previous `/brand-voice:discover-brand` run"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Suggest running discovery first: `/brand-voice:discover-brand`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "5. **Confirm to the user** with the full absolute path: \"Guidelines saved to `<full-path>`. `/brand-voice:enforce-voice` will find them automatically in future sessions.\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "The guidelines are also present in this conversation, so `/brand-voice:enforce-voice` can use them immediately without loading from file."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "2. Start creating content with `/brand-voice:enforce-voice`"
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "audio-voice-media"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-7ea8121616c5d9c2",
+      "name": "mcp-cli",
+      "description": "Use MCP servers on-demand via the mcp CLI tool - discover tools, resources, and prompts without polluting context with pre-loaded MCP integrations",
+      "sourcePath": "catalog-c\\agent-skills\\superpowers-lab\\skills\\mcp-cli\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\superpowers-lab",
+      "remote": "https://github.com/obra/superpowers-lab.git",
+      "gitHead": "51111f74f24058117752d9aa917cb19859f8ec86",
+      "contentDigest": "a0a8685e5bd6da7dc496590da4e4b8b71c84425440a43dc602c954cab640f505",
+      "bodySha256": "7c0d241ff2d0048f4becd73c0a9670e35df7715ef2eedb14a05e6885b99263d6",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "automation-mcp-integrations",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-57cf687bbb34b55a"
+      ],
+      "structure": {
+        "frontmatterName": "mcp-cli",
+        "frontmatterDescription": "Use MCP servers on-demand via the mcp CLI tool - discover tools, resources, and prompts without polluting context with pre-loaded MCP integrations",
+        "headings": [
+          "MCP CLI: On-Demand MCP Server Usage",
+          "When to Use This Skill",
+          "Prerequisites",
+          "Clone and build",
+          "Discovery Workflow",
+          "Step 1: Discover Available Tools",
+          "Filesystem server",
+          "Memory/knowledge graph server",
+          "GitHub server (requires token)",
+          "HTTP-based server",
+          "Step 2: Discover Resources (if supported)",
+          "Step 3: Discover Prompts (if supported)"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Use the `mcp` CLI tool to dynamically discover and invoke MCP server capabilities without pre-configuring them as permanent integrations."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "cd /tmp && git clone --depth 1 https://github.com/f/mcptools.git"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "mcp tools npx -y @modelcontextprotocol/server-filesystem /path/to/allow"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "mcp call read_file --params '{\"path\": \"/tmp/example.txt\"}' \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "npx -y @modelcontextprotocol/server-filesystem /tmp"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "mcp call write_file --params '{\"path\": \"/tmp/test.txt\", \"content\": \"Hello world\"}' \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "mcp call list_directory --params '{\"path\": \"/tmp\"}' \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "\"path\": \"/tmp/file.txt\","
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Use the `mcp` CLI tool to dynamically discover and invoke MCP server capabilities without pre-configuring them as permanent integrations."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "cd /tmp && git clone --depth 1 https://github.com/f/mcptools.git"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "mcp tools npx -y @modelcontextprotocol/server-filesystem /path/to/allow"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "mcp call read_file --params '{\"path\": \"/tmp/example.txt\"}' \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "npx -y @modelcontextprotocol/server-filesystem /tmp"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "mcp call write_file --params '{\"path\": \"/tmp/test.txt\", \"content\": \"Hello world\"}' \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "mcp call list_directory --params '{\"path\": \"/tmp\"}' \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "\"path\": \"/tmp/file.txt\","
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "automation-mcp-integrations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-7edd9690833ca0a0",
+      "name": "canva-creator",
+      "description": ">",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\small-business\\skills\\canva-creator\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "a5c3da433dbd5bfa38a48294e124d8e04811e2187a3dbb533c05978f8569a370",
+      "bodySha256": "ca13a80480f1cbe624b09a37eb877f71df57b510e1664ed5b2c0f1184afe5fd9",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context",
+        "product-operations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-6f7361d163b120db"
+      ],
+      "structure": {
+        "frontmatterName": "canva-creator",
+        "frontmatterDescription": ">",
+        "headings": [
+          "Canva Creator",
+          "Scope",
+          "Pre-flight",
+          "Workflow",
+          "Stage 1 — Posting calendar",
+          "Stage 2 — Asset inventory (Canva rows only)",
+          "Stage 3 — Canva design generation",
+          "Row loop",
+          "Stage 4 — Copy drafting",
+          "Stage 5 — HubSpot staging + email handoff",
+          "Approval gates",
+          "Reference"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "template (`GET /v1/brand-templates/{id}`)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "to Canva (`GET /v1/assets`) or on the owner's disk, brand kit colors"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "`POST /v1/asset-uploads`, then poll `GET /v1/asset-uploads/{job_id}`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Enterprise: `GET /v1/brand-templates` filtered by asset type."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Pro/Teams: `GET /v1/designs?ownership=any&query={template name}`,"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Enterprise: `POST /v1/autofills` per candidate with the template ID"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Pro/Teams: `POST /v1/designs` to create copies. Describe the text and"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "`GET /autofills/{job_id}` returned `status == \"success\"` and"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "template (`GET /v1/brand-templates/{id}`)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "to Canva (`GET /v1/assets`) or on the owner's disk, brand kit colors"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "`POST /v1/asset-uploads`, then poll `GET /v1/asset-uploads/{job_id}`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Enterprise: `GET /v1/brand-templates` filtered by asset type."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Pro/Teams: `GET /v1/designs?ownership=any&query={template name}`,"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Enterprise: `POST /v1/autofills` per candidate with the template ID"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Pro/Teams: `POST /v1/designs` to create copies. Describe the text and"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "`GET /autofills/{job_id}` returned `status == \"success\"` and"
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "product-operations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-7f3051550f8168b7",
+      "name": "zoom-meeting-sdk-android",
+      "description": "|",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\partner-built\\zoom-plugin\\skills\\meeting-sdk\\android\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "e8698dc18ed715855ef373c05be3e52f724393d2a3959a410d19d8779b68ec2c",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea"
+      ],
+      "structure": {
+        "frontmatterName": "zoom-meeting-sdk-android",
+        "frontmatterDescription": "|",
+        "headings": [
+          "Zoom Meeting SDK (Android)",
+          "Start Here",
+          "Routing Notes",
+          "Key Sources",
+          "Operations"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-829d8d807935551d",
+      "name": "onboarding",
+      "description": "Generate an onboarding checklist and first-week plan for a new hire. Use when someone has a start date coming up, building the pre-start task list (accounts, equipment, buddy), scheduling Day 1 and Week 1, or setting 30/60/90-day goals for a new team member.",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\human-resources\\skills\\onboarding\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "f8571c726fcefdb07be6ca95187e3d119e61285d6ef9b02c12ba2808e1a8d28a",
+      "bodySha256": "e3cf375458f71ca5e99570987b28e75f6fbf531718ff02c1f3ed91dddbaf5f3f",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-a4963c49961afb23"
+      ],
+      "structure": {
+        "frontmatterName": "onboarding",
+        "frontmatterDescription": "Generate an onboarding checklist and first-week plan for a new hire. Use when someone has a start date coming up, building the pre-start task list (accounts, equipment, buddy), scheduling Day 1 and Week 1, or setting 30/60/90-day goals for a new team member.",
+        "headings": [
+          "/onboarding",
+          "Usage",
+          "What I Need From You",
+          "Output",
+          "Onboarding Plan: [Name] — [Role]",
+          "Pre-Start (Before Day 1)",
+          "Day 1",
+          "Week 1",
+          "30-Day Goals",
+          "60-Day Goals",
+          "90-Day Goals",
+          "Key Contacts"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /onboarding"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/onboarding $ARGUMENTS"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /onboarding"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/onboarding $ARGUMENTS"
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-8755f15dba2e7165",
+      "name": "prospect",
+      "description": "Full ICP-to-leads pipeline. Describe your ideal customer in plain English and get a ranked table of enriched decision-maker leads with emails and phone numbers.",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\partner-built\\apollo\\skills\\prospect\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "b90161489227c9e1d41684181bf105df80ed8875d5dc7405e234d3e8bc025548",
+      "bodySha256": "30d0770574348a0274659cf961278e067f7b7bf7493cfe8e1e6979a612c5ea01",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context",
+        "product-operations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-40542f7e6b9ec165"
+      ],
+      "structure": {
+        "frontmatterName": "prospect",
+        "frontmatterDescription": "Full ICP-to-leads pipeline. Describe your ideal customer in plain English and get a ranked table of enriched decision-maker leads with emails and phone numbers.",
+        "headings": [
+          "Prospect",
+          "Examples",
+          "Step 1 — Parse the ICP",
+          "Step 2 — Search for Companies",
+          "Step 3 — Enrich Top Companies",
+          "Step 4 — Find Decision Makers",
+          "Step 5 — Enrich Top Leads",
+          "Step 6 — Present the Lead Table",
+          "Leads matching: [ICP Summary]",
+          "Step 7 — Offer Next Actions"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/apollo:prospect VP of Engineering at Series B+ SaaS companies in the US, 200-1000 employees`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/apollo:prospect heads of marketing at e-commerce companies in Europe`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/apollo:prospect CTOs at fintech startups, 50-500 employees, New York`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/apollo:prospect procurement managers at manufacturing companies with 1000+ employees`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/apollo:prospect SDR leaders at companies using Salesforce and Outreach`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "3. **Deep-dive a company** — Run `/apollo:company-intel` on any company from the list"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/apollo:prospect VP of Engineering at Series B+ SaaS companies in the US, 200-1000 employees`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/apollo:prospect heads of marketing at e-commerce companies in Europe`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/apollo:prospect CTOs at fintech startups, 50-500 employees, New York`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/apollo:prospect procurement managers at manufacturing companies with 1000+ employees`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/apollo:prospect SDR leaders at companies using Salesforce and Outreach`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "3. **Deep-dive a company** — Run `/apollo:company-intel` on any company from the list"
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "product-operations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-88d5ec016334581d",
+      "name": "skill-creator",
+      "description": "Guide for creating effective skills. Use when creating a new skill or updating an existing skill that extends agent capabilities with specialized knowledge, workflows, or tool integrations.",
+      "sourcePath": "hunt\\raven\\camel-ai__camel\\.camel\\skills\\skill-creator\\SKILL.md",
+      "repositoryRoot": "hunt\\raven\\camel-ai__camel",
+      "remote": "https://github.com/camel-ai/camel.git",
+      "gitHead": "13dc7a7dda66d943949e5448d55e70d5a9481cfe",
+      "contentDigest": "b92c85a1107b15f87b611a278df4c49933263bab406dd964b4e25ab982bb70c1",
+      "bodySha256": "cbee4dc9db47f118ac6c5cca35b3bb1b1eec6d1389ac08ebee37a04e1aedf505",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-39f2ccd563ab3c6a"
+      ],
+      "structure": {
+        "frontmatterName": "skill-creator",
+        "frontmatterDescription": "Guide for creating effective skills. Use when creating a new skill or updating an existing skill that extends agent capabilities with specialized knowledge, workflows, or tool integrations.",
+        "headings": [
+          "Skill Creator",
+          "About Skills",
+          "What Skills Provide",
+          "Core Principles",
+          "Concise is Key",
+          "Set Appropriate Degrees of Freedom",
+          "Anatomy of a Skill",
+          "SKILL.md (required)",
+          "Bundled Resources (optional)",
+          "Scripts (`scripts/`)",
+          "References (`references/`)",
+          "Assets (`assets/`)"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-8b767405ee033077",
+      "name": "mini-context-graph",
+      "description": "|",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\mini-context-graph\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "53faa986896b13ef99f03681e7b3a7a5a8ac7b93120387922459527450022aaa",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": true,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea"
+      ],
+      "structure": {
+        "frontmatterName": "mini-context-graph",
+        "frontmatterDescription": "|",
+        "headings": [
+          "Mini Context Graph Skill",
+          "The Core Idea",
+          "Three Layers",
+          "⚡ Quick Start for Agents",
+          "===== INGEST WITH FULL RAG + WIKI =====",
+          "1. Read references/ingestion.md and references/ontology.md first",
+          "2. Extract entities and relations (LLM reasoning step)",
+          "result = {\"doc_id\": \"doc_001\", \"chunk_count\": 1, \"nodes_added\": 2, \"edges_added\": 1}",
+          "3. Write a wiki summary page for this document",
+          "System Crash Analysis",
+          "Key Claims",
+          "Entities"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "source=\"/docs/incident_report.pdf\","
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "source=\"/docs/incident_report.pdf\","
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-95307642877db88e",
+      "name": "zoom-mcp/whiteboard",
+      "description": "|",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\partner-built\\zoom-plugin\\skills\\zoom-mcp\\whiteboard\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "c63cbda9f21627cb6331ae26e1f636546df8cc9e7f4ba0b9471ee6c644d8a92b",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "automation-mcp-integrations",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea"
+      ],
+      "structure": {
+        "frontmatterName": "zoom-mcp/whiteboard",
+        "frontmatterDescription": "|",
+        "headings": [
+          "Zoom MCP Whiteboard",
+          "Endpoints",
+          "Authentication",
+          "Required Scopes",
+          "Whiteboard ID Mapping",
+          "Available Tools",
+          "Read Workflow",
+          "Chaining",
+          "References"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "For Whiteboard MCP, use the identifier from the URL segment after `/wb/db/`, not the numeric"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "segment after `/p/`."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "For Whiteboard MCP, use the identifier from the URL segment after `/wb/db/`, not the numeric"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "segment after `/p/`."
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "automation-mcp-integrations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-9c214015cb1eea74",
+      "name": "matter-workspace",
+      "description": "Manage matter workspaces — create, list, switch, close, or detach the active matter (practice-level). Use when working across multiple clients or matters and you need to keep one engagement's context separate from another, or when a substantive skill needs to know which matter it's working in.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-for-legal\\regulatory-legal\\skills\\matter-workspace\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-for-legal",
+      "remote": "https://github.com/anthropics/claude-for-legal.git",
+      "gitHead": "4a6c651889c97cc9140580363c73e0eb17379c2b",
+      "contentDigest": "00bb9a8f4555a2932721ca0fe9a94a705477bd10d05a0b92ee3efd345aeb650b",
+      "bodySha256": "7976409303af04c3a4ccd95be8db59de53b6bd3ec1442be5d61bfe76562b2b42",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-47282de524dd8b9e"
+      ],
+      "structure": {
+        "frontmatterName": "matter-workspace",
+        "frontmatterDescription": "Manage matter workspaces — create, list, switch, close, or detach the active matter (practice-level). Use when working across multiple clients or matters and you need to keep one engagement's context separate from another, or when a substantive skill needs to know which matter it's working in.",
+        "headings": [
+          "/matter-workspace",
+          "Subcommands",
+          "Instructions",
+          "Notes",
+          "Storage layout",
+          "Active matter is in the practice CLAUDE.md",
+          "Subcommand logic",
+          "`new <slug>`",
+          "`list`",
+          "`switch <slug>`",
+          "`close <slug>`",
+          "`none`"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /matter-workspace"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/regulatory-legal:matter-workspace new <slug>` — create a new matter workspace, run a short intake, write `matter.md`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/regulatory-legal:matter-workspace list` — list matters with status and active flag"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/regulatory-legal:matter-workspace switch <slug>` — set the active matter"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/regulatory-legal:matter-workspace close <slug>` — archive a matter (move to `~/.claude/plugins/config/claude-for-legal/regulatory-legal/matters/_archived/`, never delete)"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/regulatory-legal:matter-workspace none` — detach from any active matter, work at practice-level only"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "1. Read `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` — confirm the `## Matter workspaces` section is populated. If `Enabled` is `✗`, tell the user: \"Matter workspaces are off — you're configured as an in-house practice with one client, so the plugin works from practice-level context automatically. If you actually work across multiple clients, re-run `/regulatory-legal:cold-start-interview --redo` and select a private-practice setting. Otherwise, you don't need `/matter-workspace` at all.\" Don't error — the disabled state is the expected one for in-house users."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "**Default state is off.** In-house users never see this — they run at practice-level only. Matter workspaces turn on at cold-start for private-practice users, or by editing `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗`, this skill does not run; it explains the disabled state and suggests `/regulatory-legal:cold-start-interview --redo` for users who actually need matter isolation."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /matter-workspace"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/regulatory-legal:matter-workspace new <slug>` — create a new matter workspace, run a short intake, write `matter.md`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/regulatory-legal:matter-workspace list` — list matters with status and active flag"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/regulatory-legal:matter-workspace switch <slug>` — set the active matter"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/regulatory-legal:matter-workspace close <slug>` — archive a matter (move to `~/.claude/plugins/config/claude-for-legal/regulatory-legal/matters/_archived/`, never delete)"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/regulatory-legal:matter-workspace none` — detach from any active matter, work at practice-level only"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "1. Read `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` — confirm the `## Matter workspaces` section is populated. If `Enabled` is `✗`, tell the user: \"Matter workspaces are off — you're configured as an in-house practice with one client, so the plugin works from practice-level context automatically. If you actually work across multiple clients, re-run `/regulatory-legal:cold-start-interview --redo` and select a private-practice setting. Otherwise, you don't need `/matter-workspace` at all.\" Don't error — the disabled state is the expected one for in-house users."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "**Default state is off.** In-house users never see this — they run at practice-level only. Matter workspaces turn on at cold-start for private-practice users, or by editing `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗`, this skill does not run; it explains the disabled state and suggests `/regulatory-legal:cold-start-interview --redo` for users who actually need matter isolation."
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-9ef5d19cd56d0f22",
+      "name": "skill-creator",
+      "description": "Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Claude's capabilities with specialized knowledge, workflows, or tool integrations.",
+      "sourcePath": "catalog-c\\agent-skills\\financial-services\\plugins\\vertical-plugins\\financial-analysis\\skills\\skill-creator\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\financial-services",
+      "remote": "https://github.com/anthropics/financial-services.git",
+      "gitHead": "33a3d8a9d6e5c3d4861731933a8857cc5e03315d",
+      "contentDigest": "4d309abef53af9d5475df4ac01f3e3b09ca3895447d5ac8348979b5c207bd3d3",
+      "bodySha256": "e9d94256164cc464d57f9e3725c64066911c3c850ca17e0521aa28808b8c5886",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-39f2ccd563ab3c6a"
+      ],
+      "structure": {
+        "frontmatterName": "skill-creator",
+        "frontmatterDescription": "Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Claude's capabilities with specialized knowledge, workflows, or tool integrations.",
+        "headings": [
+          "Skill Creator",
+          "About Skills",
+          "What Skills Provide",
+          "Core Principles",
+          "Concise is Key",
+          "Set Appropriate Degrees of Freedom",
+          "Anatomy of a Skill",
+          "SKILL.md (required)",
+          "Bundled Resources (optional)",
+          "Scripts (`scripts/`)",
+          "References (`references/`)",
+          "Assets (`assets/`)"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-a66d16f57ecc44c7",
+      "name": "zoom-meeting-sdk-ios",
+      "description": "|",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\partner-built\\zoom-plugin\\skills\\meeting-sdk\\ios\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "11c6d96a27f9da88c7ece197e1f40b18b60ea0efa331d68b28c53d77e385be0b",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea"
+      ],
+      "structure": {
+        "frontmatterName": "zoom-meeting-sdk-ios",
+        "frontmatterDescription": "|",
+        "headings": [
+          "Zoom Meeting SDK (iOS)",
+          "Start Here",
+          "Key Sources",
+          "Operations"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-a91bd8d3a2d1a972",
+      "name": "knowledge-base",
+      "description": ">-",
+      "sourcePath": "from-stars\\wonderwhy-er__DesktopCommanderMCP\\plugins\\claude\\skills\\knowledge-base\\SKILL.md",
+      "repositoryRoot": "from-stars\\wonderwhy-er__DesktopCommanderMCP",
+      "remote": "https://github.com/wonderwhy-er/DesktopCommanderMCP.git",
+      "gitHead": "9bd8422dd676d5ab93d977bcdcafb3ec58788bd3",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "c73610875a0c7102770331945863856d9e9ef0724fb58544f67cdb33825ff95c",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7",
+        "exact-3b99b31f0c5249c8"
+      ],
+      "structure": {
+        "frontmatterName": "knowledge-base",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "Knowledge Base (Markdown, agent-readable)",
+          "Core principles (the \"why\")",
+          "Folder structure (nested by topic)",
+          "Naming rules",
+          "Required frontmatter (every note)",
+          "Note body shape",
+          "Session tokens",
+          "Context",
+          "Details",
+          "Related",
+          "INDEX.md (the single source of truth)",
+          "Knowledge Base — Index"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-ac259312e2b6a8b1",
+      "name": "google-cloud-solution-rag-enterprise-search-gke-sqldb",
+      "description": ">-",
+      "sourcePath": "catalog-c\\agent-skills\\skills__google\\skills\\cloud\\google-cloud-solution-rag-enterprise-search-gke-sqldb\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\skills__google",
+      "remote": "https://github.com/google/skills.git",
+      "gitHead": "1af77752950126ae12dec176a0a3b27a16b7f5f7",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "deac97f25c3bde650d61c8aaed0c08b6e8b46dadf5a2ddfb335aa2ea9f361d94",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7"
+      ],
+      "structure": {
+        "frontmatterName": "google-cloud-solution-rag-enterprise-search-gke-sqldb",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "RAG for enterprise search using GKE and AlloyDB",
+          "Overview of the workflow",
+          "Phase 1: Requirements discovery",
+          "Phase 2: Solution architecture",
+          "Ground all generated content",
+          "Task 2.1: Identify Google Cloud products and features required for the workload.",
+          "Task 2.2: Generate an architecture diagram.",
+          "Task 2.3: Generate an architecture description.",
+          "Task 2.4: Generate design recommendations.",
+          "Task 2.5: Generate deployment guidance.",
+          "Phase 3: Solution validation",
+          "Phase 4: Solution packaging and presentation"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-add02bd3f6c01c80",
+      "name": "contract-review",
+      "description": ">",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\small-business\\skills\\contract-review\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "a5c3da433dbd5bfa38a48294e124d8e04811e2187a3dbb533c05978f8569a370",
+      "bodySha256": "e35fb04a867a50c5cd5e60f9660a8236a88bb659d2cfdbd483ce7d6e5ed47b9f",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context",
+        "product-operations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-6f7361d163b120db"
+      ],
+      "structure": {
+        "frontmatterName": "contract-review",
+        "frontmatterDescription": ">",
+        "headings": [
+          "Contract Review",
+          "Quick start",
+          "Workflow",
+          "Approval gates",
+          "Reference"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "product-operations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-b1887e7060f55cbf",
+      "name": "google-cloud-solution-agentic-analytics-spark-knowledge-catalog",
+      "description": ">-",
+      "sourcePath": "catalog-c\\agent-skills\\skills__google\\skills\\cloud\\google-cloud-solution-agentic-analytics-spark-knowledge-catalog\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\skills__google",
+      "remote": "https://github.com/google/skills.git",
+      "gitHead": "1af77752950126ae12dec176a0a3b27a16b7f5f7",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "502b4b156bac688654399401d028f27e6457d74d7eab43018d36260fa046fb24",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "data-infrastructure",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7"
+      ],
+      "structure": {
+        "frontmatterName": "google-cloud-solution-agentic-analytics-spark-knowledge-catalog",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "Agentic analytics across cloud providers and data types",
+          "Overview of the workflow",
+          "Phase 1: Requirements discovery and analysis",
+          "Phase 2: Solution architecture",
+          "Ground all generated content",
+          "Task 2.1: Identify Google Cloud products and features required for the workload.",
+          "Task 2.2: Generate an architecture diagram.",
+          "Task 2.3: Generate an architecture description.",
+          "Task 2.4: Generate design recommendations.",
+          "Task 2.5: Generate deployment guidance.",
+          "Phase 3: Solution validation",
+          "Phase 4: Solution packaging and presentation"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "data-infrastructure"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-b5a50f101ec6a3c9",
+      "name": "cowork-plugin-customizer",
+      "description": ">",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\cowork-plugin-management\\skills\\cowork-plugin-customizer\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "a5c3da433dbd5bfa38a48294e124d8e04811e2187a3dbb533c05978f8569a370",
+      "bodySha256": "f50cb24b8093ac1eb23552e8b1abff1ff57411ed70ab54623892f2b76cb3de8a",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-6f7361d163b120db"
+      ],
+      "structure": {
+        "frontmatterName": "cowork-plugin-customizer",
+        "frontmatterDescription": ">",
+        "headings": [
+          "Cowork Plugin Customization",
+          "Determining the Customization Mode",
+          "Customization Workflow",
+          "Phase 0: Gather User Intent (scoped and general customization only)",
+          "Phase 1: Gather Context from Knowledge MCPs",
+          "Phase 2: Create Todo List",
+          "Phase 3: Complete Todo Items",
+          "Phase 4: Search for Useful MCPs",
+          "Packaging the Plugin",
+          "Summary Output",
+          "From searching Slack",
+          "From searching documents"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "After locating the plugin, check for `~~`-prefixed placeholders: `grep -rn '~~\\w' /path/to/plugin --include='*.md' --include='*.json'`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **For generic plugin setup**: Run `grep -rn '~~\\w' /path/to/plugin --include='*.md' --include='*.json'` to find all placeholder customization points. Group them by theme."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "cd /path/to/plugin && zip -r /tmp/plugin-name.plugin . -x \"setup/*\" && cp /tmp/plugin-name.plugin /path/to/outputs/plugin-name.plugin"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "> **Important**: Always create the zip in `/tmp/` first, then copy to the outputs folder. Writing directly to the outputs folder may fail due to permissions and leave behind temporary files."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "After locating the plugin, check for `~~`-prefixed placeholders: `grep -rn '~~\\w' /path/to/plugin --include='*.md' --include='*.json'`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **For generic plugin setup**: Run `grep -rn '~~\\w' /path/to/plugin --include='*.md' --include='*.json'` to find all placeholder customization points. Group them by theme."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "cd /path/to/plugin && zip -r /tmp/plugin-name.plugin . -x \"setup/*\" && cp /tmp/plugin-name.plugin /path/to/outputs/plugin-name.plugin"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "> **Important**: Always create the zip in `/tmp/` first, then copy to the outputs folder. Writing directly to the outputs folder may fail due to permissions and leave behind temporary files."
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-ba2a362deb204bc2",
+      "name": "remember",
+      "description": "Transforms lessons learned into domain-organized memory instructions (global or workspace). Syntax: `/remember [>domain [scope]] lesson clue` where scope is `global` (default), `user`, `workspace`, or `ws`.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\remember\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "b897734130733ed07483a39607955042f634d0cd732ea2b8f6e3a31a809d1915",
+      "bodySha256": "5048a392120b00f8ef0db0645d5031fd97b68efda98a2159882c8809aed21180",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-35379d9c009e290d"
+      ],
+      "structure": {
+        "frontmatterName": "remember",
+        "frontmatterDescription": "Transforms lessons learned into domain-organized memory instructions (global or workspace). Syntax: `/remember [>domain [scope]] lesson clue` where scope is `global` (default), `user`, `workspace`, or `ws`.",
+        "headings": [
+          "Memory Keeper",
+          "Scopes",
+          "Your Mission",
+          "Syntax",
+          "Memory File Structure",
+          "Description Frontmatter",
+          "ApplyTo Frontmatter",
+          "Main Headline",
+          "Tag Line",
+          "Learnings",
+          "Process",
+          "Quality Guidelines"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "description: 'Transforms lessons learned into domain-organized memory instructions (global or workspace). Syntax: `/remember [>domain [scope]] lesson clue` where scope is `global` (default), `user`, `workspace`, or `ws`.'"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/remember [>domain-name [scope]] lesson content"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/remember >shell-scripting now we've forgotten about using fish syntax too many times`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/remember >clojure prefer passing maps over parameter lists`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/remember avoid over-escaping`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/remember >clojure workspace prefer threading macros for readability`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/remember >testing ws use setup/teardown functions`"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "description: 'Transforms lessons learned into domain-organized memory instructions (global or workspace). Syntax: `/remember [>domain [scope]] lesson clue` where scope is `global` (default), `user`, `workspace`, or `ws`.'"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/remember [>domain-name [scope]] lesson content"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/remember >shell-scripting now we've forgotten about using fish syntax too many times`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/remember >clojure prefer passing maps over parameter lists`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/remember avoid over-escaping`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/remember >clojure workspace prefer threading macros for readability`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/remember >testing ws use setup/teardown functions`"
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-bad2dc8866c6865c",
+      "name": "crm-maintenance",
+      "description": ">",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\small-business\\skills\\crm-maintenance\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "a5c3da433dbd5bfa38a48294e124d8e04811e2187a3dbb533c05978f8569a370",
+      "bodySha256": "e8453269f69a1858d7aff75db0647abab230efa3b9a9afa8f150d5caecd2d58e",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context",
+        "product-operations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-6f7361d163b120db"
+      ],
+      "structure": {
+        "frontmatterName": "crm-maintenance",
+        "frontmatterDescription": ">",
+        "headings": [
+          "CRM Maintenance",
+          "Quick start",
+          "Workflow",
+          "Approval gates",
+          "Reference"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "product-operations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-bb24f6788d19c629",
+      "name": "brief",
+      "description": "Generate contextual briefings for legal work — daily summary, topic research, or incident response. Use when starting your day and need a scan of legal-relevant items across email, calendar, and contracts, when researching a specific legal question across internal sources, or when a developing situation (data breach, litigation threat, regulatory inquiry) needs rapid context.",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\legal\\skills\\brief\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "edd251d63ba75b88240987e5e6d97ad737f9556d93492921e74356e83ada76f0",
+      "bodySha256": "464b2c2997d2b657e5a654256f034a50f8b5fea1b1224b1b6dbbc9011207456e",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "debugging-recovery",
+        "governance-security",
+        "knowledge-memory-context",
+        "repository-source-research"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-29a8825bd242f143"
+      ],
+      "structure": {
+        "frontmatterName": "brief",
+        "frontmatterDescription": "Generate contextual briefings for legal work — daily summary, topic research, or incident response. Use when starting your day and need a scan of legal-relevant items across email, calendar, and contracts, when researching a specific legal question across internal sources, or when a developing situation (data breach, litigation threat, regulatory inquiry) needs rapid context.",
+        "headings": [
+          "/brief -- Legal Team Briefing",
+          "Invocation",
+          "Modes",
+          "Daily Brief",
+          "Sources to Scan",
+          "Output Format",
+          "Daily Legal Brief -- [Date]",
+          "Urgent / Action Required",
+          "Contract Pipeline",
+          "New Requests",
+          "Calendar Today",
+          "Team Activity"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /brief -- Legal Team Briefing"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/brief daily              # Morning brief of legal-relevant items"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/brief topic [query]      # Research brief on a specific legal question"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/brief incident [topic]   # Rapid brief on a developing situation"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /brief -- Legal Team Briefing"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/brief daily              # Morning brief of legal-relevant items"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/brief topic [query]      # Research brief on a specific legal question"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/brief incident [topic]   # Rapid brief on a developing situation"
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "repository-source-research",
+        "debugging-recovery",
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    }
+  ]
+}

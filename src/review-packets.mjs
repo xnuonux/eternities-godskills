@@ -57,12 +57,14 @@ function comparePriority(left, right) {
   return 0;
 }
 
-export function buildFamilyQueue(
+function buildQueue(
   familyId,
   coverageRows,
   sourceRecords,
   bodyEvidence,
   duplicateGroups,
+  select,
+  ownership = null,
 ) {
   if (typeof familyId !== "string" || familyId === "") {
     throw new Error("familyId must be a non-empty string");
@@ -74,10 +76,11 @@ export function buildFamilyQueue(
   const cards = [];
 
   for (const row of coverage.values()) {
-    if (!(row.families ?? []).includes(familyId)) continue;
+    if (!select(row)) continue;
     const source = sources.get(row.sourceId);
     if (!source) throw new Error(`coverage source is missing catalog record: ${row.sourceId}`);
     const body = bodies.get(row.sourceId);
+    const owner = ownership?.get(row.sourceId);
     cards.push({
       schemaVersion: 1,
       sourceId: row.sourceId,
@@ -104,6 +107,11 @@ export function buildFamilyQueue(
       invocationCandidates: (body?.structure?.invocationCandidates ?? []).map(
         (candidate) => ({ ...candidate }),
       ),
+      ...(owner ? {
+        ownerFamily: owner.ownerFamily,
+        secondaryFamilies: [...owner.secondaryFamilies],
+        ownershipBasis: owner.ownershipBasis,
+      } : {}),
       inspectedDataNotice: INSPECTED_DATA_NOTICE,
     });
   }
@@ -115,6 +123,48 @@ export function buildFamilyQueue(
     sourceCount: cards.length,
     cards,
   };
+}
+
+export function buildFamilyQueue(
+  familyId,
+  coverageRows,
+  sourceRecords,
+  bodyEvidence,
+  duplicateGroups,
+) {
+  return buildQueue(
+    familyId,
+    coverageRows,
+    sourceRecords,
+    bodyEvidence,
+    duplicateGroups,
+    (row) => (row.families ?? []).includes(familyId),
+  );
+}
+
+export function buildOwnedFamilyQueue(
+  familyId,
+  ownershipRows,
+  coverageRows,
+  sourceRecords,
+  bodyEvidence,
+  duplicateGroups,
+) {
+  const ownership = uniqueMap(ownershipRows, (row) => row.sourceId, "ownership source id");
+  for (const row of coverageRows) {
+    if (!ownership.has(row.sourceId)) {
+      throw new Error(`coverage source is missing ownership: ${row.sourceId}`);
+    }
+  }
+  return buildQueue(
+    familyId,
+    coverageRows,
+    sourceRecords,
+    bodyEvidence,
+    duplicateGroups,
+    (row) => ownership.get(row.sourceId)?.ownerFamily === familyId,
+    ownership,
+  );
 }
 
 export function buildReviewPackets(queue, { maxCards = 25 } = {}) {

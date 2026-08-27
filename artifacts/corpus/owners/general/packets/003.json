@@ -1,0 +1,1505 @@
+{
+  "schemaVersion": 1,
+  "packetId": "general-003",
+  "familyId": "general",
+  "sequence": 3,
+  "sourceCount": 25,
+  "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions.",
+  "cards": [
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-15d64b30ae61b4ef",
+      "name": "html-ppt-zhangzara-block-frame",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\design-templates\\html-ppt-zhangzara-block-frame\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "3d08150378d518940ed97fa9cce424bf8f6766cb630c6971bfc11eb0d7c0dc0c",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "exact-d3d1cbac3f457a6b"
+      ],
+      "structure": {
+        "frontmatterName": "html-ppt-zhangzara-block-frame",
+        "frontmatterDescription": "|",
+        "headings": [
+          "BlockFrame",
+          "At a glance",
+          "Best for",
+          "Avoid for",
+          "Workflow",
+          "Output contract",
+          "Source & license"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-16291fa5a42c6efb",
+      "name": "azure-openai-to-responses",
+      "description": "[description unavailable in certified index: azure-openai-to-responses]",
+      "sourcePath": "from-stars\\microsoft__ai-agents-for-beginners\\translations\\no\\.agents\\skills\\azure-openai-to-responses\\SKILL.md",
+      "repositoryRoot": "from-stars\\microsoft__ai-agents-for-beginners",
+      "remote": "https://github.com/microsoft/ai-agents-for-beginners.git",
+      "gitHead": "01777b05e8afeba6bf5a6dbe74cc2293372d3693",
+      "contentDigest": "67b094b99d068029cacf90fedbedd58d23e8611bfc5141ab7ffaf83503634dd0",
+      "bodySha256": "bf71e8242dc570b84ea0667bdcb52234afb6e2204c604fb54eb4f6367ccfb0ef",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-547116f2bb654703"
+      ],
+      "structure": {
+        "frontmatterName": "azure-openai-to-responses",
+        "frontmatterDescription": null,
+        "headings": [
+          "Migrer Python-apper fra Azure OpenAI Chat Completions til Responses API",
+          "Utløsere",
+          "⚠️ Modellkompatibilitet — SJEKK FØRST",
+          "1. Rask sjekk av distribusjonen (raskest)",
+          "2. Sjekk tilgjengelige modeller i din region (anbefalt)",
+          "3. Full modellstøtte referanse",
+          "⚠️ Begrensninger med eldre modeller",
+          "O-serie resonnementmodeller (o1, o3-mini, o3, o4-mini)",
+          "GitHub Models støtter IKKE Responses API",
+          "Rammeverksmigrering",
+          "Microsoft Agent Framework (MAF)",
+          "MAF 1.0.0+ (agent-framework-openai >= 1.0.0)"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "2. Fjern `AIChatProtocolClient`-instansiering (`new ChatProtocol.AIChatProtocolClient(\"/chat\")`)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Det nye `/openai/v1` endepunktet bruker standard `OpenAI()` klient i stedet for `AzureOpenAI()`, krever ingen `api_version`-parameter, og fungerer identisk på OpenAI og Azure OpenAI. Samme klientkode er fremtidsikker — ingen versjonshåndtering nødvendig."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "rg \"/openai/deployments/.*/chat/completions\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **Rene HTTP-kall**: hvis appen kaller Azure OpenAI REST API direkte (via `requests`, `httpx` osv.) med `/openai/deployments/{name}/chat/completions?api-version=...`, skriv om til `/openai/v1/responses`. Forespørselskroppen endres: `messages` → `input`, legg til `max_output_tokens` og `store: false`, fjern `api-version` query-param. Responskroppen endres: `choices[0].message.content` → `output[0].content[0].text` (merk: `output_text` er en SDK-konvensjonsegenskap som ikke finnes i rå REST JSON)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **HTTP**: Azure-endepunktet bytter fra `/openai/deployments/{name}/chat/completions` til `/openai/v1/responses`."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "2. Fjern `AIChatProtocolClient`-instansiering (`new ChatProtocol.AIChatProtocolClient(\"/chat\")`)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Det nye `/openai/v1` endepunktet bruker standard `OpenAI()` klient i stedet for `AzureOpenAI()`, krever ingen `api_version`-parameter, og fungerer identisk på OpenAI og Azure OpenAI. Samme klientkode er fremtidsikker — ingen versjonshåndtering nødvendig."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "rg \"/openai/deployments/.*/chat/completions\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **Rene HTTP-kall**: hvis appen kaller Azure OpenAI REST API direkte (via `requests`, `httpx` osv.) med `/openai/deployments/{name}/chat/completions?api-version=...`, skriv om til `/openai/v1/responses`. Forespørselskroppen endres: `messages` → `input`, legg til `max_output_tokens` og `store: false`, fjern `api-version` query-param. Responskroppen endres: `choices[0].message.content` → `output[0].content[0].text` (merk: `output_text` er en SDK-konvensjonsegenskap som ikke finnes i rå REST JSON)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **HTTP**: Azure-endepunktet bytter fra `/openai/deployments/{name}/chat/completions` til `/openai/v1/responses`."
+        }
+      ],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-16654f43406828f1",
+      "name": "deploying-scalable-agents",
+      "description": "[description unavailable in certified index: deploying-scalable-agents]",
+      "sourcePath": "from-stars\\microsoft__ai-agents-for-beginners\\translations\\te\\.agents\\skills\\deploying-scalable-agents\\SKILL.md",
+      "repositoryRoot": "from-stars\\microsoft__ai-agents-for-beginners",
+      "remote": "https://github.com/microsoft/ai-agents-for-beginners.git",
+      "gitHead": "01777b05e8afeba6bf5a6dbe74cc2293372d3693",
+      "contentDigest": "fc8342cb01c46d34537d6511f99f1f5d589de2478f8d941e2a3d4f3efd562550",
+      "bodySha256": "af020467785cfe423ae3449f46ab69f78326dfe1e40b4323842b60dc0372910f",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-81af227fa862e02d"
+      ],
+      "structure": {
+        "frontmatterName": "deploying-scalable-agents",
+        "frontmatterDescription": null,
+        "headings": [
+          "Microsoft Foundryతో స్కేలబుల్ ఏయ్జెంట్స్‌ను పంపిణీ చేయడం",
+          "ట్రిగ్గర్స్",
+          "ప్రాథమిక మెంటల్ మోడల్",
+          "పంపిణీ నమూనాలు (ఏదైనా ఎంపిక చేయండి, లేక కలపండి)",
+          "జీవన చక్రం (ఏజెంట్‌ను పంపిణీ చేసే లూప్)",
+          "స్కేలింగ్ మరియు ఖర్చు నియంత్రణలు (ప్రాధాన్యత క్రమంలో)",
+          "పునరుద్ధరించాల్సిన ముఖ్య నమూనాలు",
+          "అమలైన ఏజెంట్‌ను స్మోక్-టెస్ట్ చేయడం",
+          "ఎంటర్‌ప్రైజ్ నియంత్రణలు",
+          "అసిస్టెంట్ కోసం గార్డ్‌రెయిల్స్"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-167c38fdeb2aa4cb",
+      "name": "azure-openai-to-responses",
+      "description": "[description unavailable in certified index: azure-openai-to-responses]",
+      "sourcePath": "from-stars\\microsoft__ai-agents-for-beginners\\translations\\ru\\.agents\\skills\\azure-openai-to-responses\\SKILL.md",
+      "repositoryRoot": "from-stars\\microsoft__ai-agents-for-beginners",
+      "remote": "https://github.com/microsoft/ai-agents-for-beginners.git",
+      "gitHead": "01777b05e8afeba6bf5a6dbe74cc2293372d3693",
+      "contentDigest": "eb7a4351d847f553edabc94e2b0938314137fb5a1680a920b3b115c1b523d64b",
+      "bodySha256": "8eb514d15a0cbb6d615a44c3b0ae1a90d5901c8028a55f2f2c8990ddcf423494",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-547116f2bb654703"
+      ],
+      "structure": {
+        "frontmatterName": "azure-openai-to-responses",
+        "frontmatterDescription": null,
+        "headings": [
+          "Миграция Python-приложений с Azure OpenAI Chat Completions на Responses API",
+          "Триггеры",
+          "⚠️ Совместимость моделей — ПРОВЕРЬТЕ СНАЧАЛА",
+          "1. Быстрая проверка развертывания (самый быстрый способ)",
+          "2. Проверьте доступные модели в вашем регионе (рекомендуется)",
+          "3. Полная справочная информация по поддержке моделей",
+          "⚠️ Ограничения старых моделей",
+          "Модели серии O (o1, o3-mini, o3, o4-mini)",
+          "GitHub Models НЕ поддерживает Responses API",
+          "Миграция фреймворков",
+          "Microsoft Agent Framework (MAF)",
+          "MAF 1.0.0+ (agent-framework-openai >= 1.0.0)"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "2. Удалите создание экземпляра `AIChatProtocolClient` (`new ChatProtocol.AIChatProtocolClient(\"/chat\")`)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Новый эндпоинт `/openai/v1` использует стандартный клиент `OpenAI()`, а не `AzureOpenAI()`, не требует параметра `api_version` и одинаково работает как с OpenAI, так и с Azure OpenAI. Тот же клиентный код защищён от изменений — управление версиями не нужно."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "rg \"/openai/deployments/.*/chat/completions\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **Прямые HTTP вызовы**: если приложение вызывает Azure OpenAI REST API напрямую (через `requests`, `httpx` и т.д.) используя `/openai/deployments/{name}/chat/completions?api-version=...`, перепишите на `/openai/v1/responses`. Тело запроса меняется: `messages` → `input`, добавляются `max_output_tokens` и `store: false`, удаляется параметр запроса `api-version`. Тело ответа меняется: `choices[0].message.content` → `output[0].content[0].text` (примечание: `output_text` — удобное свойство SDK, отсутствует в сыром JSON REST)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **HTTP**: конечная точка Azure меняется с `/openai/deployments/{name}/chat/completions` на `/openai/v1/responses`."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "2. Удалите создание экземпляра `AIChatProtocolClient` (`new ChatProtocol.AIChatProtocolClient(\"/chat\")`)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Новый эндпоинт `/openai/v1` использует стандартный клиент `OpenAI()`, а не `AzureOpenAI()`, не требует параметра `api_version` и одинаково работает как с OpenAI, так и с Azure OpenAI. Тот же клиентный код защищён от изменений — управление версиями не нужно."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "rg \"/openai/deployments/.*/chat/completions\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **Прямые HTTP вызовы**: если приложение вызывает Azure OpenAI REST API напрямую (через `requests`, `httpx` и т.д.) используя `/openai/deployments/{name}/chat/completions?api-version=...`, перепишите на `/openai/v1/responses`. Тело запроса меняется: `messages` → `input`, добавляются `max_output_tokens` и `store: false`, удаляется параметр запроса `api-version`. Тело ответа меняется: `choices[0].message.content` → `output[0].content[0].text` (примечание: `output_text` — удобное свойство SDK, отсутствует в сыром JSON REST)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **HTTP**: конечная точка Azure меняется с `/openai/deployments/{name}/chat/completions` на `/openai/v1/responses`."
+        }
+      ],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-16cca8ddeb5d72e7",
+      "name": "kanban-board",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\design-templates\\kanban-board\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "79f5ac0147eb9189b5e5d7de4e46976a84f0f1dc5af082c80174c1ad448b0a27",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "exact-116c3c7799a660e5"
+      ],
+      "structure": {
+        "frontmatterName": "kanban-board",
+        "frontmatterDescription": "|",
+        "headings": [
+          "Kanban Board Skill",
+          "Workflow",
+          "Output contract"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-17e747af959a30a9",
+      "name": "jupyter-notebook",
+      "description": "Naudokite, kai vartotojas prašo sukurti, paruošti arba redaguoti Jupyter",
+      "sourcePath": "from-stars\\microsoft__ai-agents-for-beginners\\translations\\lt\\.agents\\skills\\jupyter-notebook\\SKILL.md",
+      "repositoryRoot": "from-stars\\microsoft__ai-agents-for-beginners",
+      "remote": "https://github.com/microsoft/ai-agents-for-beginners.git",
+      "gitHead": "01777b05e8afeba6bf5a6dbe74cc2293372d3693",
+      "contentDigest": "ca637417d50a1d9730c3ce16bba77c6fd792d03d15f94e12b3b44d37639adf40",
+      "bodySha256": "2369c6f78f351338691a55c150b7c67d37270791b80195ea78eb1defb5f44178",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-07158558b7501077"
+      ],
+      "structure": {
+        "frontmatterName": "jupyter-notebook",
+        "frontmatterDescription": "Naudokite, kai vartotojas prašo sukurti, paruošti arba redaguoti Jupyter",
+        "headings": [
+          "Jupyter Notebook įgūdis",
+          "Kada naudoti",
+          "Sprendimų medis",
+          "Įgūdžio kelias (nustatyti vieną kartą)",
+          "Darbo eiga",
+          "Šablonai ir pagalbinis skriptas",
+          "Laikinos ir išvesties konvencijos",
+          "Priklausomybės (įdiekite tik kai reikia)",
+          "Aplinka",
+          "Nuorodų žemėlapis"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-180f33f4a2ea90ba",
+      "name": "html-ppt-zhangzara-creative-mode",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\plugins\\_official\\examples\\html-ppt-zhangzara-creative-mode\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "9fe2a2e7877efe80dac89e4474b907e57d440935bf9db5a3e48454964c0a33e5",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "exact-35f4101f23377c04"
+      ],
+      "structure": {
+        "frontmatterName": "html-ppt-zhangzara-creative-mode",
+        "frontmatterDescription": "|",
+        "headings": [
+          "Creative Mode",
+          "At a glance",
+          "Best for",
+          "Avoid for",
+          "Workflow",
+          "Output contract",
+          "Source & license"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-187e11a28af875eb",
+      "name": "deck-guizang-editorial",
+      "description": "Editorial magazine meets e-ink: 10 layouts and 5 palettes (Ink, Indigo Porcelain, Forest Ink, Kraft Paper, Dune).",
+      "sourcePath": "from-stars\\nexu-io__open-design\\skills\\deck-guizang-editorial\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "c07a564540ed61ab1c4e3da9dc04b9199544b478268101156e431c895df986cb",
+      "bodySha256": "464c0afdc979deb0d8649836a939d4e573779728b72f8222145e9c7da76c4d90",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-895aec49e87336ac"
+      ],
+      "structure": {
+        "frontmatterName": "deck-guizang-editorial",
+        "frontmatterDescription": "Editorial magazine meets e-ink: 10 layouts and 5 palettes (Ink, Indigo Porcelain, Forest Ink, Kraft Paper, Dune).",
+        "headings": [],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1918a6591394be6b",
+      "name": "local-ai-agents",
+      "description": "[description unavailable in certified index: local-ai-agents]",
+      "sourcePath": "from-stars\\microsoft__ai-agents-for-beginners\\translations\\sk\\.agents\\skills\\local-ai-agents\\SKILL.md",
+      "repositoryRoot": "from-stars\\microsoft__ai-agents-for-beginners",
+      "remote": "https://github.com/microsoft/ai-agents-for-beginners.git",
+      "gitHead": "01777b05e8afeba6bf5a6dbe74cc2293372d3693",
+      "contentDigest": "2b71367c22a7f68bf426269e1aee44bff78d38f89a2a71ab2b8ab83ecf4c326e",
+      "bodySha256": "b50e05b95834335bd16f29fce38009935dcb8c7eaca57ba82edf4663b79c6bcc",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-5c239af83e1762d0"
+      ],
+      "structure": {
+        "frontmatterName": "local-ai-agents",
+        "frontmatterDescription": null,
+        "headings": [
+          "Vytváranie lokálnych AI agentov s Foundry Local a Qwen",
+          "Spúšťače",
+          "Základný mentálny model",
+          "Prečo práve tieto časti",
+          "Základné nastavenie",
+          "Kľúčové vzory na reprodukciu",
+          "Hybridné smerovanie (lokálne ako jeden z modelov)",
+          "Ochranné opatrenia pre asistenta"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-193f06bf29b01f74",
+      "name": "azure-openai-to-responses",
+      "description": "Shift Python apps dem from Azure OpenAI Chat Completions go Responses",
+      "sourcePath": "from-stars\\microsoft__ai-agents-for-beginners\\translations\\pcm\\.agents\\skills\\azure-openai-to-responses\\SKILL.md",
+      "repositoryRoot": "from-stars\\microsoft__ai-agents-for-beginners",
+      "remote": "https://github.com/microsoft/ai-agents-for-beginners.git",
+      "gitHead": "01777b05e8afeba6bf5a6dbe74cc2293372d3693",
+      "contentDigest": "4983c9980ce422012866c8139bdcec26e7bb4b853cbb031b56ff2ac41d70c65b",
+      "bodySha256": "d3ef1bd9dd881207a63becf3bf43c593cb01fff2fb8a7291862da9719d7d4139",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-547116f2bb654703"
+      ],
+      "structure": {
+        "frontmatterName": "azure-openai-to-responses",
+        "frontmatterDescription": "'Shift Python apps dem from Azure OpenAI Chat Completions go Responses",
+        "headings": [
+          "Migrate Python Apps from Azure OpenAI Chat Completions to Responses API",
+          "Triggers",
+          "⚠️ Model Compatibility — CHECK FIRST",
+          "1. Smoke-test your deployment (fastest)",
+          "2. Check models wey dey your region (recommended)",
+          "3. Full model support reference",
+          "⚠️ Older model limitations",
+          "O-series reasoning models (o1, o3-mini, o3, o4-mini)",
+          "GitHub Models no support Responses API",
+          "Framework Migration",
+          "Microsoft Agent Framework (MAF)",
+          "MAF 1.0.0+ (agent-framework-openai >= 1.0.0)"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "2. Remove `AIChatProtocolClient` instantiation (`new ChatProtocol.AIChatProtocolClient(\"/chat\")`)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "The new `/openai/v1` endpoint dey use standard `OpenAI()` client instead of `AzureOpenAI()`, no need `api_version` parameter, and e dey work the same for OpenAI and Azure OpenAI. Di same client code dey future-proof — no version management needed."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "rg \"/openai/deployments/.*/chat/completions\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **Raw HTTP calls**: if app dey call Azure OpenAI REST API directly (like `requests`, `httpx`, etc.) wen dem dey use `/openai/deployments/{name}/chat/completions?api-version=...`, change dem to `/openai/v1/responses`. Request body change: `messages` → `input`, add `max_output_tokens` and `store: false`, remove `api-version` param. Response body change: `choices[0].message.content` → `output[0].content[0].text` (note: `output_text` na SDK convenience property wey no dey raw REST JSON)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **HTTP**: Azure endpoint change from `/openai/deployments/{name}/chat/completions` to `/openai/v1/responses`."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "2. Remove `AIChatProtocolClient` instantiation (`new ChatProtocol.AIChatProtocolClient(\"/chat\")`)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "The new `/openai/v1` endpoint dey use standard `OpenAI()` client instead of `AzureOpenAI()`, no need `api_version` parameter, and e dey work the same for OpenAI and Azure OpenAI. Di same client code dey future-proof — no version management needed."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "rg \"/openai/deployments/.*/chat/completions\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **Raw HTTP calls**: if app dey call Azure OpenAI REST API directly (like `requests`, `httpx`, etc.) wen dem dey use `/openai/deployments/{name}/chat/completions?api-version=...`, change dem to `/openai/v1/responses`. Request body change: `messages` → `input`, add `max_output_tokens` and `store: false`, remove `api-version` param. Response body change: `choices[0].message.content` → `output[0].content[0].text` (note: `output_text` na SDK convenience property wey no dey raw REST JSON)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **HTTP**: Azure endpoint change from `/openai/deployments/{name}/chat/completions` to `/openai/v1/responses`."
+        }
+      ],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-19d5ec980e6c5a89",
+      "name": "html-ppt-zhangzara-broadside",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\design-templates\\html-ppt-zhangzara-broadside\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "79545ddf64867cbf513f7f9cd2cc5cf6f744a195dc48113da7554694d00ccc9a",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "exact-b4254b8cff124cfe"
+      ],
+      "structure": {
+        "frontmatterName": "html-ppt-zhangzara-broadside",
+        "frontmatterDescription": "|",
+        "headings": [
+          "Broadside",
+          "At a glance",
+          "Best for",
+          "Avoid for",
+          "Workflow",
+          "Output contract",
+          "Source & license"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1a186ee4d0566d5f",
+      "name": "firmware-pentest",
+      "description": "|",
+      "sourcePath": "from-stars\\zhaoxuya520__reverse-skill\\skills\\firmware-pentest\\SKILL.md",
+      "repositoryRoot": "from-stars\\zhaoxuya520__reverse-skill",
+      "remote": "https://github.com/zhaoxuya520/reverse-skill.git",
+      "gitHead": "41bd788c34f82d26ad9e51bcba838b0d1220928e",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "803512f2a83e1bc5731bab71dcce1f7d27a237a7b298e125c397e5d226feecd3",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea"
+      ],
+      "structure": {
+        "frontmatterName": "firmware-pentest",
+        "frontmatterDescription": "|",
+        "headings": [
+          "固件 / IoT 渗透链 (Firmware Pentest)",
+          "ACTION REQUIRED（读完后立刻执行）",
+          "适用范围",
+          "与其他 skill 分工",
+          "核心原理",
+          "OWASP FSTM 九阶段工作流",
+          "Stage 1 — 信息收集（Information Gathering）",
+          "FCC ID 查询（美区设备）",
+          "芯片识别参考点",
+          "Stage 2 — 获取固件（Obtaining Firmware）",
+          "OTA 抓包后批量下载",
+          "UART 接入（USB-TTL，常用波特率 57600 / 115200）"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- 仿真起不来时优先怀疑 NVRAM 缺失、网卡名错配、`/dev/` 节点缺失"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "picocom -b 115200 /dev/ttyUSB0"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Burp 抓 /cgi-bin/luci 系列接口"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- 仿真起不来时优先怀疑 NVRAM 缺失、网卡名错配、`/dev/` 节点缺失"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "picocom -b 115200 /dev/ttyUSB0"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Burp 抓 /cgi-bin/luci 系列接口"
+        }
+      ],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1a4631152d1ec5b6",
+      "name": "image-enhancer",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\skills\\image-enhancer\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "38b5637ce960143fa9fcc57e18476911d56ba6e35bdf8731eca2eb1c79e183f9",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea"
+      ],
+      "structure": {
+        "frontmatterName": "image-enhancer",
+        "frontmatterDescription": "|",
+        "headings": [
+          "image-enhancer",
+          "What it does",
+          "Source",
+          "How to use",
+          "Inspect the upstream README for exact paths"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Then ask the agent to invoke this skill by name (`image-enhancer`) or with"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Then ask the agent to invoke this skill by name (`image-enhancer`) or with"
+        }
+      ],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1a9531550265b6a9",
+      "name": "gsap-scrolltrigger",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\skills\\gsap-scrolltrigger\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "efa895ea89f21d8a855f6716676c2b722477aca1545944987051640080538643",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "candidate-90141d38a6532238"
+      ],
+      "structure": {
+        "frontmatterName": "gsap-scrolltrigger",
+        "frontmatterDescription": "|",
+        "headings": [
+          "GSAP ScrollTrigger",
+          "When to Use This Skill",
+          "Registering the Plugin",
+          "Basic Trigger",
+          "Key config options",
+          "ScrollTrigger.batch()",
+          "ScrollTrigger.scrollerProxy()",
+          "Scrub",
+          "Pinning",
+          "Markers (Development)",
+          "Timeline + ScrollTrigger",
+          "Horizontal scroll (containerAnimation)"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1b41361f431fdd18",
+      "name": "huashu-slides",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\plugins\\_official\\examples\\huashu-slides\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "cca2ebba542dc5f17d56dad0642749435f45047a1bb82609fa09b3013007e0c4",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea"
+      ],
+      "structure": {
+        "frontmatterName": "huashu-slides",
+        "frontmatterDescription": "|",
+        "headings": [
+          "Huashu Slides · 花叔幻灯片",
+          "Hard spec (locked — violating any line is a regression)",
+          "Canvas & scaling",
+          "Slides",
+          "Navigation runtime (do not rewrite the script)",
+          "Design tokens (in `:root`, keep the names)",
+          "Layout enumeration (use 4–5 per deck, never one layout everywhere)",
+          "Editorial grammar (every page)",
+          "Scale (slides are read from 10 meters away)",
+          "Rhythm",
+          "Workflow",
+          "Anti-AI-slop checklist (from the upstream skill — non-negotiable)"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "a row; body type ≥ 24px; grep for leftover `TODO`/placeholder text."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "a row; body type ≥ 24px; grep for leftover `TODO`/placeholder text."
+        }
+      ],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1b45a74ffac2a221",
+      "name": "jupyter-notebook",
+      "description": "Gunakan apabila pengguna meminta untuk membuat, membina kerangka, atau",
+      "sourcePath": "from-stars\\microsoft__ai-agents-for-beginners\\translations\\ms\\.agents\\skills\\jupyter-notebook\\SKILL.md",
+      "repositoryRoot": "from-stars\\microsoft__ai-agents-for-beginners",
+      "remote": "https://github.com/microsoft/ai-agents-for-beginners.git",
+      "gitHead": "01777b05e8afeba6bf5a6dbe74cc2293372d3693",
+      "contentDigest": "d9a3685bad45d5ff6cbc39927a6e8ac2877bf560bc21a9747f7a8400e2ea90fd",
+      "bodySha256": "17c93180db582833b06df59242f1d3e546b2d1834b124858e399a5842286eff9",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-07158558b7501077"
+      ],
+      "structure": {
+        "frontmatterName": "jupyter-notebook",
+        "frontmatterDescription": "Gunakan apabila pengguna meminta untuk membuat, membina kerangka, atau",
+        "headings": [
+          "Kemahiran Jupyter Notebook",
+          "Bila untuk digunakan",
+          "Pokok keputusan",
+          "Laluan kemahiran (tetapkan sekali)",
+          "Aliran kerja",
+          "Templat dan skrip pembantu",
+          "Konvensyen sementara dan output",
+          "Pergantungan (pasang hanya bila diperlukan)",
+          "Persekitaran",
+          "Peta rujukan"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1badf921435e0a6d",
+      "name": "jupyter-notebook",
+      "description": "Použite, keď používateľ požiada o vytvorenie, vygenerovanie kostry alebo",
+      "sourcePath": "from-stars\\microsoft__ai-agents-for-beginners\\translations\\sk\\.agents\\skills\\jupyter-notebook\\SKILL.md",
+      "repositoryRoot": "from-stars\\microsoft__ai-agents-for-beginners",
+      "remote": "https://github.com/microsoft/ai-agents-for-beginners.git",
+      "gitHead": "01777b05e8afeba6bf5a6dbe74cc2293372d3693",
+      "contentDigest": "916003a82c92a52500eccc9d4946a4b07902d987eb1adb2c685acab810f8603b",
+      "bodySha256": "0c4f466205ef3da38f732d4153285a2a1711c511f48dcb46959a5eb6e8d45fee",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "candidate-07158558b7501077"
+      ],
+      "structure": {
+        "frontmatterName": "jupyter-notebook",
+        "frontmatterDescription": "Použite, keď používateľ požiada o vytvorenie, vygenerovanie kostry alebo",
+        "headings": [
+          "Zručnosť Jupyter Notebook",
+          "Kedy použiť",
+          "Rozhodovací strom",
+          "Cesta zručnosti (nastaviť raz)",
+          "Pracovný postup",
+          "Šablóny a pomocný skript",
+          "Konvencie dočasných súborov a výstupov",
+          "Závislosti (inštalujte len keď je to potrebné)",
+          "Prostredie",
+          "Mapa referencií"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1be9157d9902f730",
+      "name": "last30days",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\plugins\\_official\\examples\\last30days\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "06c3dea51a55183ea86b0a513e5045c1266379b70c8248e09fecd49aced693cc",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "candidate-cd3d89d800ee2b34",
+        "exact-7873f6c55f213991"
+      ],
+      "structure": {
+        "frontmatterName": "last30days",
+        "frontmatterDescription": "|",
+        "headings": [
+          "Last30Days Research Skill",
+          "Runtime",
+          "Source Coverage Rules",
+          "Workflow",
+          "Markdown Report Contract",
+          "Last 30 Days: <Topic>",
+          "Topic",
+          "Short Summary",
+          "Source Coverage",
+          "Key Findings",
+          "Community Signals",
+          "Limitations"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1c7f36781e1d4e81",
+      "name": "obsidian-vault",
+      "description": ">-",
+      "sourcePath": "from-stars\\wonderwhy-er__DesktopCommanderMCP\\skills\\obsidian-vault\\SKILL.md",
+      "repositoryRoot": "from-stars\\wonderwhy-er__DesktopCommanderMCP",
+      "remote": "https://github.com/wonderwhy-er/DesktopCommanderMCP.git",
+      "gitHead": "9bd8422dd676d5ab93d977bcdcafb3ec58788bd3",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "9689786b51c7619a1736b635e2b678921dde5cfdcd61cb809ceceff62fff2a0f",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7",
+        "exact-3ee5b7da74c27ee6"
+      ],
+      "structure": {
+        "frontmatterName": "obsidian-vault",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "Obsidian Vault Assistant",
+          "Wikilinks",
+          "Maps of Content (MOCs)",
+          "Auth — Map of Content",
+          "Core",
+          "Related MOCs",
+          "Frontmatter / Properties",
+          "Dashboards",
+          "Orphan notes & link hygiene",
+          "Folder organization",
+          "Deduplicate & rename",
+          "Prepare the vault for AI use"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1c980bceee8d3618",
+      "name": "html-ppt-zhangzara-blue-professional",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\plugins\\_official\\examples\\html-ppt-zhangzara-blue-professional\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "807c44d68eeb04edaa66335bf8c3e698255f0c18f6f6111bc256e74be4a17c87",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "exact-c23b8e29dc1d1dc1"
+      ],
+      "structure": {
+        "frontmatterName": "html-ppt-zhangzara-blue-professional",
+        "frontmatterDescription": "|",
+        "headings": [
+          "Blue Professional",
+          "At a glance",
+          "Best for",
+          "Avoid for",
+          "Workflow",
+          "Output contract",
+          "Source & license"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1ce72e7d768fe864",
+      "name": "fs-electric-studio",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\plugins\\_official\\examples\\fs-electric-studio\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "f1da2bceebf229393217f5e21070c0ec3aab7cbb3e08e181fa218a68f33cfea4",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea"
+      ],
+      "structure": {
+        "frontmatterName": "fs-electric-studio",
+        "frontmatterDescription": "|",
+        "headings": [
+          "Electric Studio · 钴蓝工作室",
+          "Locked design tokens (`:root` — complete list, no additions)",
+          "Typography (all Manrope, Google Fonts weights 400/500/800)",
+          "Locked layout system — vertical split panels",
+          "Master pages (compose decks from these; all present in the seed)",
+          "Fixed 16:9 stage — NON-NEGOTIABLE scaling system",
+          "Motion",
+          "Output contract",
+          "Attribution"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1d1c94e0b6d16668",
+      "name": "article-magazine",
+      "description": "Huashu / huashu-md-html-inspired magazine article layout for turning Markdown or notes into a polished long-form HTML essay.",
+      "sourcePath": "from-stars\\nexu-io__open-design\\skills\\article-magazine\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "a418827e63eb70c476109aa9dd93ad19d6c944bcee3573d801bb1e6e65c8307c",
+      "bodySha256": "a03482338fe14078269f9bb5ceb157f3433053d20afd9b1cc0c091db2347c4de",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-72853c896fbd6102"
+      ],
+      "structure": {
+        "frontmatterName": "article-magazine",
+        "frontmatterDescription": "Huashu / huashu-md-html-inspired magazine article layout for turning Markdown or notes into a polished long-form HTML essay.",
+        "headings": [],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1d4edff0a323c364",
+      "name": "computer-health-check",
+      "description": ">-",
+      "sourcePath": "from-stars\\wonderwhy-er__DesktopCommanderMCP\\skills\\computer-health-check\\SKILL.md",
+      "repositoryRoot": "from-stars\\wonderwhy-er__DesktopCommanderMCP",
+      "remote": "https://github.com/wonderwhy-er/DesktopCommanderMCP.git",
+      "gitHead": "9bd8422dd676d5ab93d977bcdcafb3ec58788bd3",
+      "contentDigest": "45e28fd4c3888c4e49e2a9b3b4da0e8bbbfa5a7da99c7a6acacdeb635336d206",
+      "bodySha256": "d026b33a7cc3a8c042587dcecb3edfefca5977c1b5564bc4548eedb665b166f5",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-27ca0cbd378a50f7",
+        "exact-28fc0e66e64ebfd7"
+      ],
+      "structure": {
+        "frontmatterName": "computer-health-check",
+        "frontmatterDescription": ">-",
+        "headings": [
+          "Computer Health Check",
+          "What this skill does",
+          "The safety contract (read this first)",
+          "Workflow",
+          "Step 1 — Detect the OS",
+          "Step 2 — Collect (read-only)",
+          "Step 3 — Score each area",
+          "Step 4 — Report in the chat",
+          "Step 5 — Suggest cleanups, execute only on approval",
+          "Recommendation rules (findings → advice)",
+          "Notes & pitfalls"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1e1e0f2aea158264",
+      "name": "remotion",
+      "description": "|",
+      "sourcePath": "from-stars\\nexu-io__open-design\\skills\\remotion\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "31629cd8f39a6c0c9dfcdbfb739195517282aac277746e8ba044caf4f45890a6",
+      "bodySha256": "9721e254da5338ada8400e00341f7a8ba52126d3395e08e76f6bb529d250e8ca",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "alias-0dd74a7a710172ea",
+        "candidate-d1bd7a5bd6e1467f"
+      ],
+      "structure": {
+        "frontmatterName": "remotion",
+        "frontmatterDescription": "|",
+        "headings": [
+          "remotion",
+          "What it does",
+          "Source",
+          "How to use",
+          "Inspect the upstream README for exact paths"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Then ask the agent to invoke this skill by name (`remotion`) or with"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Then ask the agent to invoke this skill by name (`remotion`) or with"
+        }
+      ],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1e2d0d70cbb90953",
+      "name": "frame-logo-outro",
+      "description": "Segmented logo assembly, glow bloom, and tagline reveal for video outros or brand closing frames.",
+      "sourcePath": "from-stars\\nexu-io__open-design\\skills\\frame-logo-outro\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "8537bee8985db1f85df4d47f97fff00319366552fb39b81e55d0773bc00c11fc",
+      "bodySha256": "d85595ab4333d8650519636a5b98d7e6c0797e7bc4a6841940c578c943d6f04f",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "general"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": false,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [
+        "exact-57905692b0108c84"
+      ],
+      "structure": {
+        "frontmatterName": "frame-logo-outro",
+        "frontmatterDescription": "Segmented logo assembly, glow bloom, and tagline reveal for video outros or brand closing frames.",
+        "headings": [],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "general",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    }
+  ]
+}

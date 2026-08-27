@@ -1,0 +1,1782 @@
+{
+  "schemaVersion": 1,
+  "packetId": "agent-orchestration-032",
+  "familyId": "agent-orchestration",
+  "sequence": 32,
+  "sourceCount": 25,
+  "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions.",
+  "cards": [
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-38e74b32235b076b",
+      "name": "profiling-threat-actor-groups",
+      "description": "Develops comprehensive threat actor profiles for APT groups, criminal",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\profiling-threat-actor-groups\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "b668b79cae4e2fe7074f5ce08936e7c3e4fca3f2ec68ae707546cc0bff4f9f16",
+      "bodySha256": "1f430081239afc1eab8c4059950247c0f75dd3a3b119023e17d5b6f6191d0683",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "profiling-threat-actor-groups",
+        "frontmatterDescription": "'Develops comprehensive threat actor profiles for APT groups, criminal",
+        "headings": [
+          "Profiling Threat Actor Groups",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Identify Relevant Threat Actors",
+          "Step 2: Collect Profile Data",
+          "Step 3: Map TTPs to ATT&CK",
+          "Step 4: Assess Detection Coverage Against Profile",
+          "Step 5: Package Profile for Distribution",
+          "Key Concepts",
+          "Tools & Systems",
+          "Common Pitfalls"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "governance-security"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-38fdd2f2d35149f9",
+      "name": "analyzing-email-headers-for-phishing-investigation",
+      "description": "Parse and analyze email headers (Received chain, Return-Path, Message-ID)",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\analyzing-email-headers-for-phishing-investigation\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "ec9e6683c4a198b58870b557e79bcff34eb100b9edf4cf82ba8cd3778cb418ae",
+      "bodySha256": "e838ab16c516ba6a0afd3acc85813b4ea81aef9ba1d27c6bca8f53d9395d1105",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "analyzing-email-headers-for-phishing-investigation",
+        "frontmatterDescription": "Parse and analyze email headers (Received chain, Return-Path, Message-ID)",
+        "headings": [
+          "Analyzing Email Headers for Phishing Investigation",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Extract Raw Email Headers",
+          "Export from Outlook: Open email > File > Properties > Internet Headers",
+          "Export from Gmail: Open email > Three dots > Show original",
+          "Export from Thunderbird: View > Message Source",
+          "If working with EML file from forensic image",
+          "If working with PST file, extract individual messages",
+          "Step 2: Parse the Email Header Chain",
+          "Parse headers using Python email library"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "cp /mnt/evidence/Users/suspect/AppData/Local/Microsoft/Outlook/phishing_email.eml \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/cases/case-2024-001/email/"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "pst.open(\"/cases/case-2024-001/email/outlook.pst\")"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "filename = f\"/cases/case-2024-001/email/msg_{i}_{subject[:30]}.txt\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "with open('/cases/case-2024-001/email/phishing_email.eml', 'r') as f:"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "with open('/cases/case-2024-001/email/phishing_email.eml') as f:"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "with open(f'/cases/case-2024-001/email/attachments/{filename}', 'wb') as af:"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "cp /mnt/evidence/Users/suspect/AppData/Local/Microsoft/Outlook/phishing_email.eml \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/cases/case-2024-001/email/"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "pst.open(\"/cases/case-2024-001/email/outlook.pst\")"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "filename = f\"/cases/case-2024-001/email/msg_{i}_{subject[:30]}.txt\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "with open('/cases/case-2024-001/email/phishing_email.eml', 'r') as f:"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "with open('/cases/case-2024-001/email/phishing_email.eml') as f:"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "with open(f'/cases/case-2024-001/email/attachments/{filename}', 'wb') as af:"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-39119566c236dea6",
+      "name": "performing-blind-ssrf-exploitation",
+      "description": "Detect and exploit blind Server-Side Request Forgery (SSRF) using out-of-band",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\performing-blind-ssrf-exploitation\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "d6b0bef4fc9836d00e0e6ad3a1b9afc254aad67a06ea502a6b5192da19c14b78",
+      "bodySha256": "76c9a4cbbe45771fd7822eb4b097b417eeb21841e41de5e972dad211098c220b",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "performing-blind-ssrf-exploitation",
+        "frontmatterDescription": "Detect and exploit blind Server-Side Request Forgery (SSRF) using out-of-band",
+        "headings": [
+          "Performing Blind SSRF Exploitation",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1 — Identify Blind SSRF Input Points",
+          "Common SSRF-susceptible parameters:",
+          "url=, uri=, path=, dest=, redirect=, src=, source=",
+          "link=, imageURL=, callback=, webhook=, feed=, import=",
+          "Test URL fetch functionality",
+          "Test webhook configuration",
+          "Test image/avatar URL",
+          "Test document import"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "curl -X POST http://target.com/api/fetch -d \"{\\\"url\\\": \\\"http://$ip/\\\"}\" -s -o /dev/null --max-time 5"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "-d \"{\\\"url\\\": \\\"http://127.0.0.1:$port/\\\"}\" -s -o /dev/null -w \"%{time_total}\\n\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# With User-Agent: () { :; }; /bin/bash -c \"ping -c1 COLLABORATOR.oastify.com\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| 1 | POST /api/fetch url parameter | http://collaborator | HTTP callback | Confirmed SSRF |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| 2 | POST /api/avatar avatar_url | http://169.254.169.254 | Timing (2.3s vs 0.1s) | Cloud metadata |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| 3 | POST /api/webhook callback | gopher://127.0.0.1:6379 | Redis write confirmed | RCE potential |"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "curl -X POST http://target.com/api/fetch -d \"{\\\"url\\\": \\\"http://$ip/\\\"}\" -s -o /dev/null --max-time 5"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "-d \"{\\\"url\\\": \\\"http://127.0.0.1:$port/\\\"}\" -s -o /dev/null -w \"%{time_total}\\n\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# With User-Agent: () { :; }; /bin/bash -c \"ping -c1 COLLABORATOR.oastify.com\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| 1 | POST /api/fetch url parameter | http://collaborator | HTTP callback | Confirmed SSRF |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| 2 | POST /api/avatar avatar_url | http://169.254.169.254 | Timing (2.3s vs 0.1s) | Cloud metadata |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| 3 | POST /api/webhook callback | gopher://127.0.0.1:6379 | Redis write confirmed | RCE potential |"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-39319b4be83d46af",
+      "name": "hunting-for-ntlm-relay-attacks",
+      "description": "Detects NTLM relay attacks (MITRE T1557.001) by analyzing Windows Event",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\hunting-for-ntlm-relay-attacks\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "a71d7802f41959a04609ee062d1ed02fff65f790b69a73bd563ebb3fbc8dfe31",
+      "bodySha256": "7b1e5ad34b588d7eecdc8987d8a2b4b530583025c4fe4eed007c2ddce3323bc4",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "hunting-for-ntlm-relay-attacks",
+        "frontmatterDescription": "Detects NTLM relay attacks (MITRE T1557.001) by analyzing Windows Event",
+        "headings": [
+          "Hunting for NTLM Relay Attacks",
+          "Overview",
+          "When to Use",
+          "Prerequisites",
+          "Key Detection Areas",
+          "Output"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-395ae2fd48435082",
+      "name": "analyzing-malware-family-relationships-with-malpedia",
+      "description": "Query the Malpedia API to look up malware family aliases and naming",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\analyzing-malware-family-relationships-with-malpedia\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "77b9be1eded48b0379318782fdecc968c2ec6fdaff1ec03082d912f929bf0d1b",
+      "bodySha256": "d733f4b70fa641d5438220ff9924f6fdc8e8d18814345f3436fefe3692f9630b",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "analyzing-malware-family-relationships-with-malpedia",
+        "frontmatterDescription": "Query the Malpedia API to look up malware family aliases and naming",
+        "headings": [
+          "Analyzing Malware Family Relationships with Malpedia",
+          "Overview",
+          "When to Use",
+          "Prerequisites",
+          "Key Concepts",
+          "Malpedia Data Model",
+          "Malware Family Naming",
+          "Family Relationships",
+          "Workflow",
+          "Step 1: Query Malpedia API for Malware Families",
+          "Step 2: Map Malware Family Relationships",
+          "Step 3: Extract and Compile YARA Rules"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3963ef465a2ba287",
+      "name": "implementing-device-posture-assessment-in-zero-trust",
+      "description": "Implements device posture assessment as a zero trust access control",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\implementing-device-posture-assessment-in-zero-trust\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "9482f778ff325e7d7f3e37ff2310e51dffa4c74a947b48c9cc60838b586e5057",
+      "bodySha256": "55591ca54bf9ae27fb75b92d01f871b1a7ae97bd6da33ef5c1ccc211440b454f",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "implementing-device-posture-assessment-in-zero-trust",
+        "frontmatterDescription": "'Implements device posture assessment as a zero trust access control",
+        "headings": [
+          "Implementing Device Posture Assessment in Zero Trust",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Define Device Compliance Baselines",
+          "Microsoft Intune: Create device compliance policy via Graph API",
+          "Windows 10/11 Compliance Policy",
+          "macOS Compliance Policy via Jamf Pro API",
+          "Step 2: Configure CrowdStrike Zero Trust Assessment",
+          "CrowdStrike Falcon API: Query ZTA scores for all endpoints",
+          "Response includes:",
+          "{"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-399c9e6362f176a1",
+      "name": "building-ioc-defanging-and-sharing-pipeline",
+      "description": "Build an automated pipeline that ingests raw IOCs (URLs, IPs, domains,",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\building-ioc-defanging-and-sharing-pipeline\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "67129c67fb49614ceffe9cbe56ab5310be761ba7e6d29ffdb988ee53d7c21942",
+      "bodySha256": "b0868d81802e254dd6950bf6d91ec61e9311e9edf2750a32c88e33d6b47b93c0",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "building-ioc-defanging-and-sharing-pipeline",
+        "frontmatterDescription": "Build an automated pipeline that ingests raw IOCs (URLs, IPs, domains,",
+        "headings": [
+          "Building IOC Defanging and Sharing Pipeline",
+          "Overview",
+          "When to Use",
+          "Prerequisites",
+          "Key Concepts",
+          "IOC Defanging Standards",
+          "IOC Normalization",
+          "STIX 2.1 Indicator Patterns",
+          "Workflow",
+          "Step 1: Build IOC Extraction and Normalization",
+          "Step 2: Defanging Engine",
+          "Step 3: Convert to STIX 2.1 Format"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-39d85a08a882e92d",
+      "name": "testing-for-sensitive-data-exposure",
+      "description": "Identifying sensitive data exposure vulnerabilities including API key",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\testing-for-sensitive-data-exposure\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "98f8226dba7408f7f2df1b57642902f1ff59a38d6da42864b94cc3dcfce45112",
+      "bodySha256": "a73e9f9f7299b1f6483b83526a3d393c36f57fc72a130f068360dac6dd5ca5e6",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "testing-for-sensitive-data-exposure",
+        "frontmatterDescription": "Identifying sensitive data exposure vulnerabilities including API key",
+        "headings": [
+          "Testing for Sensitive Data Exposure",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Scan for Secrets in Client-Side Code",
+          "Download and search JavaScript files for secrets",
+          "Search for common secret patterns",
+          "Check source maps for exposed source code",
+          "Source maps may contain original source code with embedded secrets",
+          "Search HTML source for exposed data",
+          "Check for exposed .env or configuration files",
+          "Step 2: Analyze API Responses for Data Over-Exposure"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "status=$(curl -s -o /dev/null -w \"%{http_code}\" \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# Look for: /login?username=admin&password=secret"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /api/data?ssn=123-45-6789"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /search?credit_card=4111111111111111"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "for page in /account/profile /api/users/me /transactions /billing; do"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "git-dumper https://target.example.com/.git /tmp/target-repo"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "trufflehog filesystem /tmp/target-repo"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "gitleaks detect --source /tmp/target-repo -v"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "status=$(curl -s -o /dev/null -w \"%{http_code}\" \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# Look for: /login?username=admin&password=secret"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /api/data?ssn=123-45-6789"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /search?credit_card=4111111111111111"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "for page in /account/profile /api/users/me /transactions /billing; do"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "git-dumper https://target.example.com/.git /tmp/target-repo"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "trufflehog filesystem /tmp/target-repo"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "gitleaks detect --source /tmp/target-repo -v"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-39f1f166bf5e0d0a",
+      "name": "managing-intelligence-lifecycle",
+      "description": "Manages the end-to-end cyber threat intelligence lifecycle from planning",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\managing-intelligence-lifecycle\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "73acc3d0c5b6dcf5152995b38b0d0942f73f7659689e7b2135e5ff70201f22bb",
+      "bodySha256": "c8c11b4cbe2344b7bb835ad0f192e2647331e55cb09a1fbb3a3ddc7203268f77",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "managing-intelligence-lifecycle",
+        "frontmatterDescription": "'Manages the end-to-end cyber threat intelligence lifecycle from planning",
+        "headings": [
+          "Managing Intelligence Lifecycle",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Planning and Direction",
+          "Step 2: Collection Planning",
+          "Step 3: Processing and Normalization",
+          "Step 4: Analysis and Production",
+          "Step 5: Dissemination",
+          "Step 6: Feedback and Evaluation",
+          "Key Concepts",
+          "Tools & Systems"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "governance-security"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3a0ef994c77fea19",
+      "name": "detecting-process-injection-techniques",
+      "description": "Detects and analyzes process injection techniques used by malware including",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\detecting-process-injection-techniques\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "9acfbc5ecd8c028eba117076a1f3b8992d897b3cf6d11a091ef5e7cc6bef8632",
+      "bodySha256": "b7d4b9d807975f4b515591b5ba211372d50e33b91fd3aeb31adf9e7ddb7be0c6",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "detecting-process-injection-techniques",
+        "frontmatterDescription": "'Detects and analyzes process injection techniques used by malware including",
+        "headings": [
+          "Detecting Process Injection Techniques",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Identify Injection via Memory Forensics",
+          "malfind: Primary injection detection plugin",
+          "malfind detects:",
+          "- Memory regions with PAGE_EXECUTE_READWRITE (RWX) protection",
+          "- PE headers (MZ signature) in non-image VAD entries",
+          "- Executable memory not backed by a file on disk",
+          "Filter by specific process",
+          "Dump injected memory regions for analysis"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/q:\"*[System[EventID=8]]\" /f:text /c:20"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/q:\"*[System[EventID=10]]\" /f:text /c:20"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/q:\"*[System[EventID=1]]\" /f:text /c:20"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "\"/q:*[System[EventID=8]]\", \"/f:xml\", \"/c:100\"],"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "T1055.009  Proc Memory (/proc/pid/mem - Linux)"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/q:\"*[System[EventID=8]]\" /f:text /c:20"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/q:\"*[System[EventID=10]]\" /f:text /c:20"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/q:\"*[System[EventID=1]]\" /f:text /c:20"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "\"/q:*[System[EventID=8]]\", \"/f:xml\", \"/c:100\"],"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "T1055.009  Proc Memory (/proc/pid/mem - Linux)"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3aaa48c1ea5e0ac1",
+      "name": "trade-quick",
+      "description": "60-Second Stock Snapshot — fast assessment with signal, key factors, and levels without launching subagents",
+      "sourcePath": "catalog-c\\agent-skills\\ai-trading-claude\\skills\\trade-quick\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\ai-trading-claude",
+      "remote": "https://github.com/zubair-trabzada/ai-trading-claude.git",
+      "gitHead": "c6d7252211a72405cefaff3e62d27a032c58348c",
+      "contentDigest": "b27e3ef6391cfa2e0235138666a6860bdaaabd8fdf3df59f4ace44459ced231f",
+      "bodySha256": "fdcd19a5ae637f539dcbb6df099eb32b3508f04c713055dea0f15cdebc5b34c6",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "trade-quick",
+        "frontmatterDescription": "60-Second Stock Snapshot — fast assessment with signal, key factors, and levels without launching subagents",
+        "headings": [
+          "60-Second Stock Snapshot",
+          "Execution Flow",
+          "Step 1 — Rapid Data Gathering",
+          "Step 2 — Quick Assessment",
+          "Step 3 — Generate Signal",
+          "Step 4 — Identify Key Factors",
+          "Step 5 — Output Scorecard",
+          "Output Template",
+          "Formatting Rules",
+          "Signal Calibration Guidelines",
+          "BUY Signal Conditions (need 3+ of these)",
+          "HOLD Signal Conditions"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "You are a rapid stock assessment tool for the AI Trading Analyst system. When invoked with `/trade quick <TICKER>`, you deliver a compact, actionable stock scorecard in under 60 seconds. You do NOT launch any subagents. You do NOT write a file. You output directly to the terminal."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "This skill is designed for speed. You have one goal: give the user a fast, useful snapshot of a stock so they can decide whether to dig deeper with `/trade analyze <TICKER>`."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Run /trade analyze <TICKER> for the full multi-agent analysis."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "The purpose of `/trade quick` is triage. Help the user quickly decide: \"Is this worth a deeper look?\" If yes, they will run `/trade analyze <TICKER>`."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "If the user provides multiple tickers (e.g., `/trade quick AAPL MSFT GOOG`), run each ticker sequentially and output a combined comparison at the end:"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Run /trade compare <T1> <T2> for detailed head-to-head."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- This is NOT a substitute for `/trade analyze`. It is a quick screen, not a comprehensive analysis."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "You are a rapid stock assessment tool for the AI Trading Analyst system. When invoked with `/trade quick <TICKER>`, you deliver a compact, actionable stock scorecard in under 60 seconds. You do NOT launch any subagents. You do NOT write a file. You output directly to the terminal."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "This skill is designed for speed. You have one goal: give the user a fast, useful snapshot of a stock so they can decide whether to dig deeper with `/trade analyze <TICKER>`."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Run /trade analyze <TICKER> for the full multi-agent analysis."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "The purpose of `/trade quick` is triage. Help the user quickly decide: \"Is this worth a deeper look?\" If yes, they will run `/trade analyze <TICKER>`."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "If the user provides multiple tickers (e.g., `/trade quick AAPL MSFT GOOG`), run each ticker sequentially and output a combined comparison at the end:"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Run /trade compare <T1> <T2> for detailed head-to-head."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- This is NOT a substitute for `/trade analyze`. It is a quick screen, not a comprehensive analysis."
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3aae869691d25d2c",
+      "name": "extracting-browser-history-artifacts",
+      "description": "Extracts and analyzes browser history, cookies, cache, downloads, and",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\extracting-browser-history-artifacts\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "a78f629dc9d22e747a2f014ee93b53b4cbdc66ac7c2764fcd44b918a8e4b057a",
+      "bodySha256": "1bf4f541181c507204be918452d419ce797be2467b1d50ad89ff5d88cacdf714",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "extracting-browser-history-artifacts",
+        "frontmatterDescription": "Extracts and analyzes browser history, cookies, cache, downloads, and",
+        "headings": [
+          "Extracting Browser History Artifacts",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Locate Browser Artifact Files",
+          "Mount forensic image",
+          "Chrome artifact locations (Windows)",
+          "Key files: History, Cookies, Login Data, Web Data, Bookmarks, Preferences,",
+          "Cache/, GPUCache/, Local Storage/, Session Storage/, IndexedDB/",
+          "Firefox artifact locations (Windows)",
+          "Key files: places.sqlite, cookies.sqlite, formhistory.sqlite, logins.json,",
+          "key4.db, sessionstore.jsonlz4, webappsstore.sqlite"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "mount -o ro,loop,offset=$((2048*512)) /cases/case-2024-001/images/evidence.dd /mnt/evidence"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "CHROME_WIN=\"/mnt/evidence/Users/suspect/AppData/Local/Google/Chrome/User Data/Default\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "FIREFOX_WIN=\"/mnt/evidence/Users/suspect/AppData/Roaming/Mozilla/Firefox/Profiles/*.default-release\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "EDGE_WIN=\"/mnt/evidence/Users/suspect/AppData/Local/Microsoft/Edge/User Data/Default\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "mkdir -p /cases/case-2024-001/browser/{chrome,firefox,edge}"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/cases/case-2024-001/browser/chrome/ 2>/dev/null"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/cases/case-2024-001/browser/firefox/ 2>/dev/null"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/cases/case-2024-001/browser/edge/ 2>/dev/null"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "mount -o ro,loop,offset=$((2048*512)) /cases/case-2024-001/images/evidence.dd /mnt/evidence"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "CHROME_WIN=\"/mnt/evidence/Users/suspect/AppData/Local/Google/Chrome/User Data/Default\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "FIREFOX_WIN=\"/mnt/evidence/Users/suspect/AppData/Roaming/Mozilla/Firefox/Profiles/*.default-release\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "EDGE_WIN=\"/mnt/evidence/Users/suspect/AppData/Local/Microsoft/Edge/User Data/Default\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "mkdir -p /cases/case-2024-001/browser/{chrome,firefox,edge}"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/cases/case-2024-001/browser/chrome/ 2>/dev/null"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/cases/case-2024-001/browser/firefox/ 2>/dev/null"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/cases/case-2024-001/browser/edge/ 2>/dev/null"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3ab39ce331505574",
+      "name": "performing-arp-spoofing-attack-simulation",
+      "description": "Simulates ARP spoofing/cache-poisoning attacks in authorized lab or",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\performing-arp-spoofing-attack-simulation\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "296156759480acd8aca971a8dd6a19becaf466741a21f6242cb8906f6f073253",
+      "bodySha256": "9e68d9769059551e678a0ebe755dde93e137ecdb265d23e4edf15e678f285459",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "performing-arp-spoofing-attack-simulation",
+        "frontmatterDescription": "'Simulates ARP spoofing/cache-poisoning attacks in authorized lab or",
+        "headings": [
+          "Performing ARP Spoofing Attack Simulation",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Enumerate the Target Network Segment",
+          "Discover hosts on the local subnet",
+          "Identify the default gateway",
+          "Output: default via 192.168.1.1 dev eth0",
+          "Identify target hosts and their MAC addresses",
+          "Verify the current ARP table",
+          "Note the gateway IP (192.168.1.1) and target host IP (192.168.1.50)",
+          "Record their legitimate MAC addresses for verification and cleanup"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "cat /proc/sys/net/ipv4/ip_forward"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "sudo ettercap -T -q -i eth0 -M arp:remote /192.168.1.50// /192.168.1.1//"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "sudo ettercap -T -q -i eth0 -M arp:remote /192.168.1.50// /192.168.1.1// \\"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "cat /proc/sys/net/ipv4/ip_forward"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "sudo ettercap -T -q -i eth0 -M arp:remote /192.168.1.50// /192.168.1.1//"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "sudo ettercap -T -q -i eth0 -M arp:remote /192.168.1.50// /192.168.1.1// \\"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3b0fc5cf8371ff58",
+      "name": "testing-for-json-web-token-vulnerabilities",
+      "description": "Tests JWT implementations for algorithm confusion, \"none\" algorithm bypass,",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\testing-for-json-web-token-vulnerabilities\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "4bd3b1b217e4f304144e922b56d33a582fd55a1e0c63bf719d35de6d5a433022",
+      "bodySha256": "18a30f9cac89c801f5eb3e653b81cdf01256abb1de1a2bae548d305ee45aa30b",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "testing-for-json-web-token-vulnerabilities",
+        "frontmatterDescription": "Tests JWT implementations for algorithm confusion, \"none\" algorithm bypass,",
+        "headings": [
+          "Testing for JSON Web Token Vulnerabilities",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1 — Decode and Analyze JWT Structure",
+          "Install jwt_tool",
+          "Decode JWT without verification",
+          "Decode manually with base64",
+          "Examine JWT in jwt.io",
+          "Check: algorithm (alg), key ID (kid), issuer (iss), audience (aud)",
+          "Check: expiration (exp), not-before (nbf), claims (role, admin, etc.)",
+          "Example JWT header inspection"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "python3 jwt_tool.py <JWT_TOKEN> -I -hc kid -hv \"/dev/null\" -S hs256 -p \"\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "hashcat -a 0 -m 16500 <JWT_TOKEN> /usr/share/wordlists/rockyou.txt"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "python3 jwt_tool.py <JWT_TOKEN> -C -d /usr/share/wordlists/rockyou.txt"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "python3 jwt_tool.py <JWT_TOKEN> -I -hc kid -hv \"/dev/null\" -S hs256 -p \"\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "hashcat -a 0 -m 16500 <JWT_TOKEN> /usr/share/wordlists/rockyou.txt"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "python3 jwt_tool.py <JWT_TOKEN> -C -d /usr/share/wordlists/rockyou.txt"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3bc5605f05128dd0",
+      "name": "csharp-mstest",
+      "description": "Get best practices for MSTest 3.x/4.x unit testing, including modern assertion APIs and data-driven tests",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\csharp-mstest\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "92fb4ef40b18b59c5ca213c21fbe2d587b8dcb9a1f2b3e656eb4708007e5af08",
+      "bodySha256": "325e70e82f3edecb7312a7e504a89e87c8fb684c8f2aa55df6f29905ef1bf859",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "csharp-mstest",
+        "frontmatterDescription": "Get best practices for MSTest 3.x/4.x unit testing, including modern assertion APIs and data-driven tests",
+        "headings": [
+          "MSTest Best Practices (MSTest 3.x/4.x)",
+          "Project Setup",
+          "Test Class Structure",
+          "Test Lifecycle",
+          "Execution Order",
+          "Modern Assertion APIs",
+          "Assert Class - Core Assertions",
+          "Exception Testing (Prefer over `[ExpectedException]`)",
+          "Collection Assertions (Assert class)",
+          "String Assertions (Assert class)",
+          "Comparison Assertions",
+          "Type Assertions"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3bc620665ad77b8a",
+      "name": "zoom-mcp",
+      "description": "Guidance for the bundled Zoom MCP connectors. Use after routing to an MCP workflow when planning or troubleshooting tool-based access to meetings, recordings, meeting assets, or transcripts. Route Zoom Docs requests to the dedicated Docs MCP server and Whiteboard-specific requests to `zoom-mcp/whiteboard`.",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\partner-built\\zoom-plugin\\skills\\zoom-mcp\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "7b0962347b347ec16b88101ff0dd3117892c2682d58faa79504bcdab26bab981",
+      "bodySha256": "3c2555f0bc8ec9d0dc60aebc980c42bd4f51cfac8a4bedf68ebe3101f503d1c2",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "automation-mcp-integrations",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "zoom-mcp",
+        "frontmatterDescription": "Guidance for the bundled Zoom MCP connectors. Use after routing to an MCP workflow when planning or troubleshooting tool-based access to meetings, recordings, meeting assets, or transcripts. Route Zoom Docs requests to the dedicated Docs MCP server and Whiteboard-specific requests to `zoom-mcp/whiteboard`.",
+        "headings": [
+          "Zoom MCP",
+          "Zoom MCP Server",
+          "Quick Start",
+          "Critical Notes",
+          "Server Endpoints",
+          "Search and Retrieval Model",
+          "Tool Catalog",
+          "Key Workflows",
+          "Error Reference",
+          "Documentation",
+          "Concepts",
+          "Examples"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "knowledge-memory-context",
+        "automation-mcp-integrations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3bd1fac1a58d47ff",
+      "name": "image-annotations",
+      "description": "Annotate screenshots, diagrams, and images with callout rectangles, arrows, labels, and color-coded highlights using PIL. Includes rules for animated GIF annotations with timing and pacing.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\image-annotations\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "f47919b5ce14bbba6adcd1034443656912bd0410d10e477c8a6b3d9b67861ec3",
+      "bodySha256": "741579d05e56a3730a441be9eeaf9f5c84f01c05684f111c42ead3b82db087fe",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "image-annotations",
+        "frontmatterDescription": "Annotate screenshots, diagrams, and images with callout rectangles, arrows, labels, and color-coded highlights using PIL. Includes rules for animated GIF annotations with timing and pacing.",
+        "headings": [
+          "Image Annotations",
+          "When to Use This Skill",
+          "Prerequisites",
+          "Color Rules",
+          "Font",
+          "Shapes",
+          "Reference Snippet",
+          "Setup",
+          "Rounded rect with padding",
+          "Leader line (same thickness as rect)",
+          "Label — same-color stroke for body, NO white stroke",
+          "Algorithmic Annotation — `annotate.py`"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3bd855b4d891a384",
+      "name": "auditing-azure-active-directory-configuration",
+      "description": "Auditing Microsoft Entra ID (Azure Active Directory) configuration to",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\auditing-azure-active-directory-configuration\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "a5e8cf540109cb4c86c046afd2aeeb36d6f295c0e11ecd12fa934bb3b8c0cd8a",
+      "bodySha256": "909b539a03edfe1141a0d5abdc31f08f9cdf24539b12598bd138f2f71d88ef70",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "auditing-azure-active-directory-configuration",
+        "frontmatterDescription": "'Auditing Microsoft Entra ID (Azure Active Directory) configuration to",
+        "headings": [
+          "Auditing Azure Active Directory Configuration",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Enumerate Tenant Configuration and Security Defaults",
+          "Connect to Microsoft Graph",
+          "Get tenant details",
+          "Check if Security Defaults are enabled",
+          "List authentication methods policies",
+          "Check legacy authentication status via Conditional Access",
+          "Step 2: Audit Privileged Role Assignments",
+          "List all Global Administrator assignments"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3be45e75f37b04d9",
+      "name": "detecting-credential-dumping-techniques",
+      "description": "Detect LSASS credential dumping, SAM database extraction, and NTDS.dit theft (e.g. via Mimikatz) using Sysmon Event ID 10 process-access logging, Windows Security logs, and SIEM correlation rules. Use when hunting for credential-theft activity on Windows/Active Directory hosts or triaging EDR alerts on LSASS access.",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\detecting-credential-dumping-techniques\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "a802fe632785515dc5f70cfe858d7954b0f85056962228301de96d306e485df6",
+      "bodySha256": "ce37e8e6e7ffd227d3ba3cef9bfdd5256cfc7e3eb75d42eca1f7f65a5db76d44",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "data-infrastructure",
+        "governance-security"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "detecting-credential-dumping-techniques",
+        "frontmatterDescription": "Detect LSASS credential dumping, SAM database extraction, and NTDS.dit theft (e.g. via Mimikatz) using Sysmon Event ID 10 process-access logging, Windows Security logs, and SIEM correlation rules. Use when hunting for credential-theft activity on Windows/Active Directory hosts or triaging EDR alerts on LSASS access.",
+        "headings": [
+          "Detecting Credential Dumping Techniques",
+          "Overview",
+          "When to Use",
+          "Prerequisites",
+          "Steps",
+          "Expected Output"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "governance-security",
+        "data-infrastructure"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3bffa8fefd34e0be",
+      "name": "competition-linux-credential-pivot",
+      "description": "Internal downstream skill for ctf-sandbox-orchestrator. CTF-sandbox workflow for Linux credential artifacts, service tokens, SSH material, cloud and container secrets, socket-level trust, and host-to-host pivot chains. Use when the user asks to trace Linux auth artifacts, accepted token or key replay, socket or service-account trust edges, sudo or capability abuse, or explain lateral movement across Linux challenge nodes. Use only after `$ctf-sandbox-orchestrator` has already established sandbox assumptions and routed here.",
+      "sourcePath": "from-stars\\zhaoxuya520__reverse-skill\\CTF-Sandbox-Orchestrator\\competition-linux-credential-pivot\\SKILL.md",
+      "repositoryRoot": "from-stars\\zhaoxuya520__reverse-skill",
+      "remote": "https://github.com/zhaoxuya520/reverse-skill.git",
+      "gitHead": "41bd788c34f82d26ad9e51bcba838b0d1220928e",
+      "contentDigest": "6c38906ada7d25828a9ab1295b0f7291d471c422720a79ce9910cfc6b726dcd5",
+      "bodySha256": "f00c32a3361cf34ce93a095cab5b416ddbcc7bf97d4a868c5bc57cd4db8eb125",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "competition-linux-credential-pivot",
+        "frontmatterDescription": "Internal downstream skill for ctf-sandbox-orchestrator. CTF-sandbox workflow for Linux credential artifacts, service tokens, SSH material, cloud and container secrets, socket-level trust, and host-to-host pivot chains. Use when the user asks to trace Linux auth artifacts, accepted token or key replay, socket or service-account trust edges, sudo or capability abuse, or explain lateral movement across Linux challenge nodes. Use only after `$ctf-sandbox-orchestrator` has already established sandbox assumptions and routed here.",
+        "headings": [
+          "Competition Linux Credential Pivot",
+          "Quick Start",
+          "Workflow",
+          "1. Map Credential And Trust Artifacts",
+          "2. Prove Replay And Pivot",
+          "3. Reduce To Decisive Linux Pivot Chain",
+          "Read This Reference",
+          "What To Preserve"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3c176f8409cb5dbf",
+      "name": "performing-cloud-asset-inventory-with-cartography",
+      "description": "Run Cartography to sync AWS, GCP, or Azure resources into a Neo4j graph database,",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\performing-cloud-asset-inventory-with-cartography\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "e305f28c5c2f0c4df58e5ef3f6de698e544eb9ce6e18f3dc1aebe2559287d0ad",
+      "bodySha256": "8fdb6d0b85f9d42a052471b635740b87949f8c4ee3962a42de59e85afb3445af",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "data-infrastructure"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "performing-cloud-asset-inventory-with-cartography",
+        "frontmatterDescription": "Run Cartography to sync AWS, GCP, or Azure resources into a Neo4j graph database,",
+        "headings": [
+          "Performing Cloud Asset Inventory with Cartography",
+          "Overview",
+          "When to Use",
+          "Prerequisites",
+          "Installation",
+          "Install Cartography",
+          "Verify installation",
+          "Deploy Neo4j with Docker",
+          "Running Cartography",
+          "Basic AWS Sync",
+          "Sync AWS account data to Neo4j",
+          "Sync specific AWS modules"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "0 */6 * * * /usr/local/bin/cartography \\"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": ">> /var/log/cartography/sync.log 2>&1"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "command: >"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "0 */6 * * * /usr/local/bin/cartography \\"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": ">> /var/log/cartography/sync.log 2>&1"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "command: >"
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "data-infrastructure"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3c320c62b71e10aa",
+      "name": "cli-mastery",
+      "description": "Interactive training for the GitHub Copilot CLI. Guided lessons, quizzes, scenario challenges, and a full reference covering slash commands, shortcuts, modes, agents, skills, MCP, and configuration. Say \"cliexpert\" to start.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\cli-mastery\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "c5aa91992a810c61b92412f45c1a41bf64a9ff464838279d004f9835a318e0f7",
+      "bodySha256": "d3e4194d69f973aa5bf8993c8e68b09fea9f0f2c0427e740a18fd4175d956879",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "automation-mcp-integrations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "cli-mastery",
+        "frontmatterDescription": "Interactive training for the GitHub Copilot CLI. Guided lessons, quizzes, scenario challenges, and a full reference covering slash commands, shortcuts, modes, agents, skills, MCP, and configuration. Say \"cliexpert\" to start.",
+        "headings": [
+          "Copilot CLI Mastery",
+          "Routing and Content",
+          "Behavior"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "automation-mcp-integrations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3ccc4c9c1c2a17d3",
+      "name": "exploiting-adcs-with-certipy",
+      "description": "Use Certipy to enumerate AD CS certificate authorities and templates over LDAP/RPC, then exploit ESC1-ESC16 misconfigurations - SAN abuse, NTLM relay to web enrollment (ESC8), Shadow Credentials, golden certificate forgery, and PKINIT/Schannel auth. Use during authorized penetration tests to escalate a domain foothold to Domain Admin, or to validate that certificate template ACLs and CA hardening detect these attacks.",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\exploiting-adcs-with-certipy\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "31f622c7f29efdb02ae8e10328b297f38a45823ed33153d9b706dde09da4a730",
+      "bodySha256": "7f023a849f59f95bb136ac10580c9a31cb28736b753393a40a9876f4ecef0d74",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "exploiting-adcs-with-certipy",
+        "frontmatterDescription": "Use Certipy to enumerate AD CS certificate authorities and templates over LDAP/RPC, then exploit ESC1-ESC16 misconfigurations - SAN abuse, NTLM relay to web enrollment (ESC8), Shadow Credentials, golden certificate forgery, and PKINIT/Schannel auth. Use during authorized penetration tests to escalate a domain foothold to Domain Admin, or to validate that certificate template ACLs and CA hardening detect these attacks.",
+        "headings": [
+          "Exploiting AD CS with Certipy",
+          "Overview",
+          "When to Use",
+          "Prerequisites",
+          "Objectives",
+          "MITRE ATT&CK Mapping",
+          "Workflow",
+          "Step 1: Enumerate AD CS with `certipy find`",
+          "Full enumeration, only enabled templates, hide built-in admin ACEs",
+          "Output only templates Certipy considers vulnerable",
+          "Authenticate with an NT hash instead of a password",
+          "Step 2: Exploit ESC1 — Enrollee-Supplied Subject (SAN abuse)"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "ESC8 abuses the AD CS web enrollment interface (`/certsrv/`) that accepts NTLM auth. Stand up Certipy's relay server targeting the CA's HTTP endpoint, then coerce a Domain Controller to authenticate to your relay (coercion covered in the Coercer skill)."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "ESC8 abuses the AD CS web enrollment interface (`/certsrv/`) that accepts NTLM auth. Stand up Certipy's relay server targeting the CA's HTTP endpoint, then coerce a Domain Controller to authenticate to your relay (coercion covered in the Coercer skill)."
+        }
+      ],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3ce276a13a315178",
+      "name": "analyzing-network-flow-data-with-netflow",
+      "description": "Parse NetFlow v9 and IPFIX records to detect volumetric anomalies, port",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\analyzing-network-flow-data-with-netflow\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "67b84a17a18aca34aeb84e5ae5d6b25c7d720ff359375374670ecd5e264d8dec",
+      "bodySha256": "4d5558a1d5e25676e2993e4b31380bd52145afaca5a9a28b790fb2483d29821a",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "analyzing-network-flow-data-with-netflow",
+        "frontmatterDescription": "Parse NetFlow v9 and IPFIX records to detect volumetric anomalies, port",
+        "headings": [
+          "Analyzing Network Flow Data with Netflow",
+          "When to Use",
+          "Prerequisites",
+          "Instructions",
+          "Examples",
+          "Parse NetFlow v9 Packet"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3d4fc60f69ea54d0",
+      "name": "analyzing-ransomware-leak-site-intelligence",
+      "description": "Safely monitor ransomware group Tor-hosted data leak sites (DLS) to collect and extract structured victim posting data, track group activity trends over time, and produce sector- and geography-specific ransomware risk assessments. Use when performing threat intelligence gathering on active ransomware groups or building proactive defense reporting from double-extortion leak-site activity.",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\analyzing-ransomware-leak-site-intelligence\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "b378d49aba761d1c7cc5491ce8ee67fd01ceee91c0ec73da88155bfaf5cadae7",
+      "bodySha256": "54e2d4d915997be0b44659a1315ef649bcebc83d1e1669b4c4054cc01ce68111",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "analyzing-ransomware-leak-site-intelligence",
+        "frontmatterDescription": "Safely monitor ransomware group Tor-hosted data leak sites (DLS) to collect and extract structured victim posting data, track group activity trends over time, and produce sector- and geography-specific ransomware risk assessments. Use when performing threat intelligence gathering on active ransomware groups or building proactive defense reporting from double-extortion leak-site activity.",
+        "headings": [
+          "Analyzing Ransomware Leak Site Intelligence",
+          "Overview",
+          "When to Use",
+          "Prerequisites",
+          "Key Concepts",
+          "Double Extortion Model",
+          "DLS Intelligence Value",
+          "Safe Collection Practices",
+          "Workflow",
+          "Step 1: Ingest Ransomware Leak Site Data from Public Feeds",
+          "Step 2: Analyze Group Activity and Trends",
+          "Step 3: Sector and Geographic Risk Assessment"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "agent-orchestration",
+      "secondaryFamilies": [
+        "governance-security"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "packetId": "governance-security-004",
+  "familyId": "governance-security",
+  "sequence": 4,
+  "sourceCount": 1,
+  "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions.",
+  "cards": [
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-fa4737f2e763fa41",
+      "name": "atlassian-admin",
+      "description": "Atlassian Administrator for managing and organizing Atlassian products (Jira, Confluence, Bitbucket, Trello), users, permissions, security, integrations, system configuration, and org-wide governance. Use when asked to add users to Jira, change Confluence permissions, configure access control, update admin settings, manage Atlassian groups, set up SSO, install marketplace apps, review security policies, or handle any org-wide Atlassian administration task.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\project-management\\skills\\atlassian-admin\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\project-management",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "efe18d6807e209467ed42fde899393965df7764ed541e4915b5fd74e51f7af73",
+      "bodySha256": "44933862df5559357f9220abf560788f75c515cd22ed0bfe349b166fa28018de",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "atlassian-admin",
+        "frontmatterDescription": "Atlassian Administrator for managing and organizing Atlassian products (Jira, Confluence, Bitbucket, Trello), users, permissions, security, integrations, system configuration, and org-wide governance. Use when asked to add users to Jira, change Confluence permissions, configure access control, update admin settings, manage Atlassian groups, set up SSO, install marketplace apps, review security policies, or handle any org-wide Atlassian administration task.",
+        "headings": [
+          "Atlassian Administrator Expert",
+          "Workflows",
+          "User Provisioning",
+          "User Deprovisioning",
+          "Group Management",
+          "Permission Scheme Design",
+          "SSO Configuration",
+          "Marketplace App Management",
+          "System Performance Optimization",
+          "Integration Setup",
+          "Global Configuration",
+          "Jira Global Settings (`Jira Settings > Issues`)"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- REST API: `POST /rest/api/3/user` with `{\"emailAddress\": \"...\", \"displayName\": \"...\",\"products\": [...]}`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Jira: `GET /rest/api/3/search?jql=assignee={accountId}` to find open issues"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Confluence: `GET /wiki/rest/api/user/{accountId}/property` to find owned spaces/pages"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- REST API: `DELETE /rest/api/3/user?accountId={accountId}`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "6. **VERIFY**: Confirm `GET /rest/api/3/user?accountId={accountId}` returns `\"active\": false`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- REST API: `POST /rest/api/3/group` with `{\"name\": \"...\"}`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "5. **VERIFY**: Confirm group members via `GET /rest/api/3/group/member?groupName={name}`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "8. **VERIFY**: Confirm app appears in `GET /rest/plugins/1.0/` and health check passes"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- REST API: `POST /rest/api/3/user` with `{\"emailAddress\": \"...\", \"displayName\": \"...\",\"products\": [...]}`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Jira: `GET /rest/api/3/search?jql=assignee={accountId}` to find open issues"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Confluence: `GET /wiki/rest/api/user/{accountId}/property` to find owned spaces/pages"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- REST API: `DELETE /rest/api/3/user?accountId={accountId}`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "6. **VERIFY**: Confirm `GET /rest/api/3/user?accountId={accountId}` returns `\"active\": false`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- REST API: `POST /rest/api/3/group` with `{\"name\": \"...\"}`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "5. **VERIFY**: Confirm group members via `GET /rest/api/3/group/member?groupName={name}`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "8. **VERIFY**: Confirm app appears in `GET /rest/plugins/1.0/` and health check passes"
+        }
+      ],
+      "ownerFamily": "governance-security",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    }
+  ]
+}

@@ -1,0 +1,1687 @@
+{
+  "schemaVersion": 1,
+  "packetId": "verification-evidence-010",
+  "familyId": "verification-evidence",
+  "sequence": 10,
+  "sourceCount": 25,
+  "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions.",
+  "cards": [
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-feef9a3317043941",
+      "name": "react-audit-grep-patterns",
+      "description": "Provides the complete, verified grep scan command library for auditing React codebases before a React 18.3.1 or React 19 upgrade. Use this skill whenever running a migration audit - for both the react18-auditor and react19-auditor agents. Contains every grep pattern needed to find deprecated APIs, removed APIs, unsafe lifecycle methods, batching vulnerabilities, test file issues, dependency conflicts, and React 19 specific removals. Always use this skill when writing audit scan commands - do not rely on memory for grep syntax, especially for the multi-line async setState patterns which require context flags.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\react-audit-grep-patterns\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "b2259d10d74fb651ca638d9e1377e741e22ccd8c56b6f7ea18cb9e8628951f73",
+      "bodySha256": "786b14c055e6182ed04e606bae7c7489cf9a4dc83f866f3f2c317d032cdaf023",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context",
+        "verification-evidence",
+        "web-interface-accessibility",
+        "writing-narrative-canon"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "react-audit-grep-patterns",
+        "frontmatterDescription": "Provides the complete, verified grep scan command library for auditing React codebases before a React 18.3.1 or React 19 upgrade. Use this skill whenever running a migration audit - for both the react18-auditor and react19-auditor agents. Contains every grep pattern needed to find deprecated APIs, removed APIs, unsafe lifecycle methods, batching vulnerabilities, test file issues, dependency conflicts, and React 19 specific removals. Always use this skill when writing audit scan commands - do not rely on memory for grep syntax, especially for the multi-line async setState patterns which require context flags.",
+        "headings": [
+          "React Audit Grep Patterns",
+          "Usage",
+          "Base Patterns Used Across All Scans",
+          "Standard flags used throughout:",
+          "-r = recursive",
+          "-n = show line numbers",
+          "-l = show filenames only (for counting affected files)",
+          "--include=\"*.js\" --include=\"*.jsx\" = JS/JSX files only",
+          "| grep -v \"\\.test\\.\\|\\.spec\\.\\|__tests__\" = exclude test files",
+          "| grep -v \"node_modules\" = safety (usually handled by not scanning node_modules)",
+          "2>/dev/null = suppress \"no files found\" errors",
+          "Source files only (exclude tests):"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [
+        "knowledge-memory-context",
+        "agent-orchestration",
+        "web-interface-accessibility",
+        "writing-narrative-canon"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-ff6a2f9d0f7d5c91",
+      "name": "implementing-sigstore-for-software-signing",
+      "description": "Implements Sigstore-based software signing and verification using Cosign",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\implementing-sigstore-for-software-signing\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "d02f37afdcac9e73ebb927dfd57151a8da8b287e1de533f1c5fabc3e119151e3",
+      "bodySha256": "c1b800b83aeaa4cde6fecb8f24ca7a50b88250de0103649a0c5bbed2f45895b2",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "implementing-sigstore-for-software-signing",
+        "frontmatterDescription": "'Implements Sigstore-based software signing and verification using Cosign",
+        "headings": [
+          "Implementing Sigstore for Software Signing",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Install and Configure Cosign",
+          "Step 2: Keyless Signing with Cosign and Fulcio",
+          "Step 3: Verify Signed Artifacts",
+          "Step 4: Query the Rekor Transparency Log",
+          "Step 5: Integrate into CI/CD Pipelines",
+          "Key Concepts",
+          "Tools & Systems",
+          "Common Scenarios"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **Install from binary release**: Download the appropriate binary from the Cosign GitHub releases page and verify its checksum. On Linux: `curl -LO https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64 && chmod +x cosign-linux-amd64 && sudo mv cosign-linux-amd64 /usr/local/bin/cosign`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **REST API queries**: Query `https://rekor.sigstore.dev/api/v1/index/retrieve` with POST body `{\"hash\": \"sha256:<hash>\"}` to retrieve entry UUIDs, then fetch full entries from `/api/v1/log/entries/<uuid>`"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **Install from binary release**: Download the appropriate binary from the Cosign GitHub releases page and verify its checksum. On Linux: `curl -LO https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64 && chmod +x cosign-linux-amd64 && sudo mv cosign-linux-amd64 /usr/local/bin/cosign`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **REST API queries**: Query `https://rekor.sigstore.dev/api/v1/index/retrieve` with POST body `{\"hash\": \"sha256:<hash>\"}` to retrieve entry UUIDs, then fetch full entries from `/api/v1/log/entries/<uuid>`"
+        }
+      ],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-14a6c719e7752105",
+      "name": "drive",
+      "description": "Prove a vean UI change in the real loopback editor without taking over the desktop. Use the packaged H04 Playwright/Chromium runner for completion evidence; use the optional agent-browser path only for ad-hoc headless inspection. Native shell UI is outside this unattended local harness.",
+      "sourcePath": "from-stars\\Tshah-95__vean\\.agents\\skills\\drive\\SKILL.md",
+      "repositoryRoot": "from-stars\\Tshah-95__vean",
+      "remote": "https://github.com/Tshah-95/vean.git",
+      "gitHead": "7efc6011377b9ed9f5eb74159f973b4fe89c3630",
+      "contentDigest": "080529aa4b12927a2e6babb3a437cd0837fd645d0de9209200a84838619ef1f7",
+      "bodySha256": "17e259436f0c7defc089c7ec822410c6bd45b6f069d7234287db5dc52a6c7b29",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "verification-evidence",
+        "web-interface-accessibility",
+        "writing-narrative-canon"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "drive",
+        "frontmatterDescription": "Prove a vean UI change in the real loopback editor without taking over the desktop. Use the packaged H04 Playwright/Chromium runner for completion evidence; use the optional agent-browser path only for ad-hoc headless inspection. Native shell UI is outside this unattended local harness.",
+        "headings": [
+          "Drive the vean app (prove your UI changes)",
+          "Canonical completion oracle",
+          "The one fact that makes this work",
+          "⛔ HEADLESS IS NON-NEGOTIABLE — never open a visible window",
+          "Optional ad-hoc harness (three commands)",
+          "1. Bring up a driveable instance against a project (free port, health-gated).",
+          "Idempotent: a second `up` reuses a healthy session. Project defaults to a",
+          "recorded pointer (worktree-init) if present, else cwd. DEV by default: a live",
+          "Vite/HMR viewer is auto-started (first-ever boot pre-bundles deps, so the",
+          "health wait is generous). Add `--prod` to serve the viewer/dist snapshot.",
+          "2. Drive the REAL UI headless. Note: plain http:// (NOT https — vean's preview",
+          "is loopback http; this contradicts the generic agent-browser skill's warning)."
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "(DOM + `/api/diagnostics`)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "the real `viewer/` app **and** the whole API (`/api/action`, `/api/apply-op`,"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "`/api/undo`, `/api/still`, `/api/render`, …). The viewer talks to the backend over"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "**same-origin HTTP** (`viewer/src/api.ts`) — **not** `window.__TAURI__.invoke`."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "is HTTP-not-`invoke`, there is **zero Tauri-IPC mocking** to do (unusual; most"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "URL=$(bun run drive up --project /path/to/project)      # or: --timeline timeline:main ; or: --prod"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "`/api/action`. Same code path, no native dialog needed."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "is outside this unattended local harness. `/view` may open it only after an"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "(DOM + `/api/diagnostics`)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "the real `viewer/` app **and** the whole API (`/api/action`, `/api/apply-op`,"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "`/api/undo`, `/api/still`, `/api/render`, …). The viewer talks to the backend over"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "**same-origin HTTP** (`viewer/src/api.ts`) — **not** `window.__TAURI__.invoke`."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "is HTTP-not-`invoke`, there is **zero Tauri-IPC mocking** to do (unusual; most"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "URL=$(bun run drive up --project /path/to/project)      # or: --timeline timeline:main ; or: --prod"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "`/api/action`. Same code path, no native dialog needed."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "is outside this unattended local harness. `/view` may open it only after an"
+        }
+      ],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "web-interface-accessibility",
+        "writing-narrative-canon"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3f6a38c36d105f42",
+      "name": "qa-engineer",
+      "description": "Analyze code changes and generate Playwright E2E tests in anytype-desktop-suite. Run after implementing features or modifying editor/component behavior to ensure new functionality has test coverage.",
+      "sourcePath": "from-stars\\anyproto__anytype-ts\\.claude\\skills\\qa-engineer\\SKILL.md",
+      "repositoryRoot": "from-stars\\anyproto__anytype-ts",
+      "remote": "https://github.com/anyproto/anytype-ts.git",
+      "gitHead": "5ae9ee6d9c751d1f38b9e405bcbdd63150d5a02d",
+      "contentDigest": "8b2ac1643731382f39c25efb28741e8af6c77d3e0dacbc61d0e98c4ac1d0b326",
+      "bodySha256": "83f5acc8451ed770a2b0440e0f06b570a97b4f562761d16a6d5f0661eedc0852",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "verification-evidence",
+        "writing-narrative-canon"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "qa-engineer",
+        "frontmatterDescription": "Analyze code changes and generate Playwright E2E tests in anytype-desktop-suite. Run after implementing features or modifying editor/component behavior to ensure new functionality has test coverage.",
+        "headings": [
+          "QA Engineer Skill",
+          "When to Use",
+          "Principles",
+          "Process",
+          "Phase 1: Analyze Changes",
+          "Phase 2: Research Existing Coverage",
+          "Phase 3: Create Test Plan",
+          "Feature Area — Test Plan",
+          "Prerequisites",
+          "1. Test Group Name",
+          "1.1 Scenario Name",
+          "1.2 Another Scenario"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [
+        "writing-narrative-canon"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-6ed485e90b764a6c",
+      "name": "grilling",
+      "description": "Grill the user relentlessly about a plan, decision, or idea. Use when the user wants to stress-test their thinking, or uses any 'grill' trigger phrases.",
+      "sourcePath": "hunt\\gen\\windmill-labs__windmill\\.agents\\skills\\grilling\\SKILL.md",
+      "repositoryRoot": "hunt\\gen\\windmill-labs__windmill",
+      "remote": "https://github.com/windmill-labs/windmill.git",
+      "gitHead": "74af4ed939fb8d78aff8ecd4af812860595c6c5a",
+      "contentDigest": "8699be138cfe3ebac8964ab8cc5d2702c39b567909fe3a901853bbe542a91be8",
+      "bodySha256": "00d2ccb00b7c02e448330f6405077a9cee664b92e5734228323b164abb9b8dbb",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "grilling",
+        "frontmatterDescription": "Grill the user relentlessly about a plan, decision, or idea. Use when the user wants to stress-test their thinking, or uses any 'grill' trigger phrases.",
+        "headings": [],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d03486c402229e74",
+      "name": "preview",
+      "description": "MUST use when opening the Windmill dev page / visual preview of a flow, script, or app. Triggers on words like preview, open, navigate to, visualize, see the flow/app/script, and after writing a flow/script/app for visual verification.",
+      "sourcePath": "hunt\\gen\\windmill-labs__windmill\\system_prompts\\auto-generated\\skills\\preview\\SKILL.md",
+      "repositoryRoot": "hunt\\gen\\windmill-labs__windmill",
+      "remote": "https://github.com/windmill-labs/windmill.git",
+      "gitHead": "74af4ed939fb8d78aff8ecd4af812860595c6c5a",
+      "contentDigest": "4a4f201448276db2a03746bb32b8a2808b3f337b2a380b11fe660a00dd858948",
+      "bodySha256": "d12c75739fdf6d21adcad34bc1b2303da72e5dfed2da4161bc3998bd552babdf",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "verification-evidence",
+        "visual-3d-motion",
+        "writing-narrative-canon"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "preview",
+        "frontmatterDescription": "MUST use when opening the Windmill dev page / visual preview of a flow, script, or app. Triggers on words like preview, open, navigate to, visualize, see the flow/app/script, and after writing a flow/script/app for visual verification.",
+        "headings": [
+          "Windmill Preview Workflow",
+          "Two independent decisions",
+          "1. Mode: proxy or direct?",
+          "2. Who starts the server?",
+          "Starting the server yourself",
+          "Direct mode — gives you the remote dev-page URL",
+          "Proxy mode — gives you a localhost URL that 302s to the remote dev page",
+          "Letting `launch.json` start the server (Claude Desktop / Code MCP only)",
+          "Step 1 — Reuse or add a per-target entry in `.claude/launch.json`",
+          "Step 2 — Invoke the MCP preview tool",
+          "Non-visual alternative",
+          "Anti-patterns to avoid"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **The runtime starts it from `.claude/launch.json`.** Some runtimes (currently the Claude Desktop / Claude Code MCP preview integration — tools prefixed with `mcp__Claude_Preview__`) can read a `launch.json` configuration and launch the dev server on demand when you invoke their preview tool. **Only take this path if you actually have such a tool** — otherwise nothing reads the file and `wmill dev` never starts."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Claude Desktop / Code MCP preview | Yes | Yes | Proxy mode, write a `launch.json` entry, invoke the MCP tool |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "### Step 2 — Invoke the MCP preview tool"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Point it at the entry you just added/found. Use `http://localhost:<port>/` as the URL — the proxy's redirect at `/` is what appends the workspace ID, the auth token, and the path. Do **NOT** construct a `/dev?...` URL yourself."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **The runtime starts it from `.claude/launch.json`.** Some runtimes (currently the Claude Desktop / Claude Code MCP preview integration — tools prefixed with `mcp__Claude_Preview__`) can read a `launch.json` configuration and launch the dev server on demand when you invoke their preview tool. **Only take this path if you actually have such a tool** — otherwise nothing reads the file and `wmill dev` never starts."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Claude Desktop / Code MCP preview | Yes | Yes | Proxy mode, write a `launch.json` entry, invoke the MCP tool |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "### Step 2 — Invoke the MCP preview tool"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Point it at the entry you just added/found. Use `http://localhost:<port>/` as the URL — the proxy's redirect at `/` is what appends the workspace ID, the auth token, and the path. Do **NOT** construct a `/dev?...` URL yourself."
+        }
+      ],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [
+        "visual-3d-motion",
+        "writing-narrative-canon"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d8cac0f8c37dbd72",
+      "name": "dark-mode-check",
+      "description": "Audit SCSS and TSX files for dark mode issues — missing variable usage, hardcoded colors, icon gaps, selector misuse, and inline dark overrides outside the theme folder",
+      "sourcePath": "from-stars\\anyproto__anytype-ts\\.claude\\skills\\dark-mode-check\\SKILL.md",
+      "repositoryRoot": "from-stars\\anyproto__anytype-ts",
+      "remote": "https://github.com/anyproto/anytype-ts.git",
+      "gitHead": "5ae9ee6d9c751d1f38b9e405bcbdd63150d5a02d",
+      "contentDigest": "5cea74f72c66d8f4730b6828189c5837220d11bbefb9695e6c9882a14796c948",
+      "bodySha256": "0bb8c8e863dc26ddee06afdf65f702b3dd32aaccd3f145de75fc5e3f294b4397",
+      "bodyStatus": "inspected",
+      "licenseClass": "restricted",
+      "confidence": "low",
+      "families": [
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "dark-mode-check",
+        "frontmatterDescription": "Audit SCSS and TSX files for dark mode issues — missing variable usage, hardcoded colors, icon gaps, selector misuse, and inline dark overrides outside the theme folder",
+        "headings": [
+          "Dark Mode Check Skill",
+          "When to Use",
+          "Architecture Reference",
+          "Theme Selector",
+          "CSS Variable System",
+          "Dark Mode File Organization",
+          "Icon Theming",
+          "Dark Shadow Mixin",
+          "Review Checklist",
+          "1. Hardcoded Colors",
+          "2. Inline Dark Overrides Outside Theme Folder",
+          "3. Missing Icon Dark Variants"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-0750b1b6819503d5",
+      "name": "idea-refine",
+      "description": "Refines raw ideas into sharp, actionable concepts through structured divergent and convergent thinking. Use when an idea is still vague, when you need to stress-test assumptions before committing to a plan, or when you want to expand options before converging on one. Triggers on \"ideate\", \"refine this idea\", or \"stress-test my plan\".",
+      "sourcePath": "catalog-c\\agent-skills\\agent-skills\\skills\\idea-refine\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\agent-skills\\skills",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "848394e93271ffc081275dfb3700407a1e544ae595fee09c0047adf8ea9ec110",
+      "bodySha256": "79e773058963adc7646b0115b4f8a4afc974c5ff95843e4ef1cafff3cb51899e",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "idea-refine",
+        "frontmatterDescription": "Refines raw ideas into sharp, actionable concepts through structured divergent and convergent thinking. Use when an idea is still vague, when you need to stress-test assumptions before committing to a plan, or when you want to expand options before converging on one. Triggers on \"ideate\", \"refine this idea\", or \"stress-test my plan\".",
+        "headings": [
+          "Idea Refine",
+          "How It Works",
+          "Usage",
+          "Optional: Initialize the ideas directory",
+          "Output",
+          "Detailed Instructions",
+          "Philosophy",
+          "Process",
+          "Phase 1: Understand & Expand (Divergent)",
+          "Phase 2: Evaluate & Converge",
+          "Phase 3: Sharpen & Ship",
+          "[Idea Name]"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "This skill is primarily an interactive dialogue. Invoke it with an idea, and the agent will guide you through the process."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "This skill is primarily an interactive dialogue. Invoke it with an idea, and the agent will guide you through the process."
+        }
+      ],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-0dd14f8211d39a2d",
+      "name": "clean-validate",
+      "description": "Verify and validate emails and phone numbers, manage bounce rates, and maintain list hygiene schedules. Use when user asks about \"email verification\", \"validate emails\", \"bounce rate\", \"ZeroBounce\", \"NeverBounce\", \"list hygiene\", \"data decay\", \"deliverability\", \"catch-all emails\", \"spam traps\", \"re-verify\", \"phone validation\". Do NOT use for deduplication (use deduplicate) or finding new contacts (use find-contacts).",
+      "sourcePath": "catalog-c\\agent-skills\\ColdIQ-s-GTM-Skills\\master-skills\\list-building\\.claude\\skills\\clean-validate\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\ColdIQ-s-GTM-Skills",
+      "remote": "https://github.com/Cold-IQ/ColdIQ-s-GTM-Skills.git",
+      "gitHead": "1e2cb8886c66c9b9d1496867cdb615d1f696b4e1",
+      "contentDigest": "e143063368fdf189a6f885eb39b6c972e28f5f773faff06f64d445ce09c46537",
+      "bodySha256": "2acab21e19fb0bf1feb7355507be79168e76d03115c3fba6d93f21c4df53375c",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "clean-validate",
+        "frontmatterDescription": "Verify and validate emails and phone numbers, manage bounce rates, and maintain list hygiene schedules. Use when user asks about \"email verification\", \"validate emails\", \"bounce rate\", \"ZeroBounce\", \"NeverBounce\", \"list hygiene\", \"data decay\", \"deliverability\", \"catch-all emails\", \"spam traps\", \"re-verify\", \"phone validation\". Do NOT use for deduplication (use deduplicate) or finding new contacts (use find-contacts).",
+        "headings": [
+          "Clean & Validate — Sub-Skill",
+          "⚡ Verify with ColdIQ first",
+          "Reference",
+          "Email Verification Tools",
+          "Verification Result Categories",
+          "Critical Metrics",
+          "Data Decay Rates",
+          "List Hygiene Schedule",
+          "Bounce Handling Workflow",
+          "Examples"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-16dec1dbce3095fb",
+      "name": "qms-audit-expert",
+      "description": "ISO 13485 internal audit expertise for medical device QMS. Covers audit planning, execution, nonconformity classification, and CAPA verification. Use when planning internal audits, executing audits, classifying findings, preparing for external audits, or managing an audit program.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\ra-qm-team\\skills\\qms-audit-expert\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\ra-qm-team",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "7d111de049fbb99e074dbf31bc63902ef6573bd89d11e60227030d73093bb547",
+      "bodySha256": "118f50d21ef29b6945fd3b6a5e1edbe5b3c7966fa6c995b94b2a3b97e00bbd92",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "qms-audit-expert",
+        "frontmatterDescription": "ISO 13485 internal audit expertise for medical device QMS. Covers audit planning, execution, nonconformity classification, and CAPA verification. Use when planning internal audits, executing audits, classifying findings, preparing for external audits, or managing an audit program.",
+        "headings": [
+          "QMS Audit Expert",
+          "Table of Contents",
+          "Audit Planning Workflow",
+          "Risk-Based Audit Frequency",
+          "Audit Scope by Clause",
+          "Auditor Independence",
+          "Audit Execution",
+          "Evidence Collection",
+          "Audit Questions by Clause",
+          "Finding Documentation",
+          "Nonconformity Management",
+          "Classification Criteria"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-180ff6c73d9be41a",
+      "name": "mdr-745-specialist",
+      "description": "EU MDR 2017/745 compliance specialist for medical device classification, technical documentation, clinical evidence, and post-market surveillance. Covers Annex VIII classification rules, Annex II/III technical files, Annex XIV clinical evaluation, Art. 86 PSUR schedules, and EUDAMED integration. Use when classifying a medical device under MDR, building or gap-checking a technical file, planning clinical evaluation or PMS/PSUR cadence, or preparing for notified body review (e.g., 'what class is my device under MDR', 'review my PSUR schedule').",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\ra-qm-team\\skills\\mdr-745-specialist\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\ra-qm-team",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "0f3ebc8fb68f5fc55e398b70b7d457e289718b9779ee3e705089c67e4d7ee455",
+      "bodySha256": "054682d1d6cd2eeb0f783845589ba498c3fc8770d4edd23792e2b2cf616aad1d",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "automation-mcp-integrations",
+        "governance-security",
+        "verification-evidence",
+        "writing-narrative-canon"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "mdr-745-specialist",
+        "frontmatterDescription": "EU MDR 2017/745 compliance specialist for medical device classification, technical documentation, clinical evidence, and post-market surveillance. Covers Annex VIII classification rules, Annex II/III technical files, Annex XIV clinical evaluation, Art. 86 PSUR schedules, and EUDAMED integration. Use when classifying a medical device under MDR, building or gap-checking a technical file, planning clinical evaluation or PMS/PSUR cadence, or preparing for notified body review (e.g., 'what class is my device under MDR', 'review my PSUR schedule').",
+        "headings": [
+          "MDR 2017/745 Specialist",
+          "Table of Contents",
+          "Device Classification Workflow",
+          "Classification Matrix",
+          "Software Classification (MDCG 2019-11)",
+          "Classification Examples",
+          "Technical Documentation",
+          "Technical File Structure",
+          "GSPR Compliance Checklist",
+          "Conformity Assessment Routes",
+          "Clinical Evidence",
+          "Evidence Requirements by Class"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "governance-security",
+        "writing-narrative-canon",
+        "automation-mcp-integrations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-1b8ad0f12d3e34ac",
+      "name": "apple-hig-expert",
+      "description": "Audits and designs iOS/macOS/watchOS/visionOS interfaces against the Apple Human Interface Guidelines, including the Liquid Glass design language (announced WWDC25, shipped with iOS 26/macOS Tahoe, Sept 2025). Use when reviewing an Apple-platform mockup or app for HIG compliance, checking contrast or tap-target sizes, or designing native-feeling Apple UI (e.g., 'audit my iOS app against the HIG', 'is this text readable on Liquid Glass?').",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\product-team\\apple-hig-expert\\skills\\apple-hig-expert\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\product-team",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "314b3537b8d4d2f612dcf221cd4d63d2a91acdafd65c25df64782db04fbc2281",
+      "bodySha256": "85c5aaa9653aeb9671b7047a9ea64063bdaee81955a918bc627aa38b307eb68c",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "governance-security",
+        "product-operations",
+        "verification-evidence",
+        "web-interface-accessibility"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "apple-hig-expert",
+        "frontmatterDescription": "Audits and designs iOS/macOS/watchOS/visionOS interfaces against the Apple Human Interface Guidelines, including the Liquid Glass design language (announced WWDC25, shipped with iOS 26/macOS Tahoe, Sept 2025). Use when reviewing an Apple-platform mockup or app for HIG compliance, checking contrast or tap-target sizes, or designing native-feeling Apple UI (e.g., 'audit my iOS app against the HIG', 'is this text readable on Liquid Glass?').",
+        "headings": [
+          "Apple HIG Expert",
+          "Before Starting",
+          "Modes",
+          "The Compliance Tool",
+          "1. Contrast ratio (WCAG formula; pass >= 4.5:1 for normal text)",
+          "-> Contrast Ratio: 3.26 [FAILED]",
+          "2. Tap-target size (pass >= 44x44 pt per HIG)",
+          "-> Tap Target: 32x32 [FAILED]",
+          "3. Batch audit from JSON -> scorecard (starts at 100, -10 per violation)",
+          "Worked example: iOS settings-screen audit",
+          "Core Design Principles",
+          "Proactive Triggers"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "governance-security",
+        "web-interface-accessibility",
+        "product-operations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-21fe87aa7c021df8",
+      "name": "filter-benchmark",
+      "description": "Benchmark and performance-test Django ORM filters on large datasets. Use this skill whenever the user wants to test filter performance, check query plans with EXPLAIN ANALYZE, generate bulk test data for filters, verify index usage, or benchmark any queryset filter in the Saleor codebase. Trigger this even when the user says things like \"test the filter on a big dataset\", \"check if the index is used\", \"generate data for performance testing\", \"run explain analyze on this filter\", or \"benchmark this query\".",
+      "sourcePath": "hunt\\gen\\saleor__saleor\\.claude\\skills\\filter-benchmark\\SKILL.md",
+      "repositoryRoot": "hunt\\gen\\saleor__saleor",
+      "remote": "https://github.com/saleor/saleor.git",
+      "gitHead": "723cd4eba87dfc72822ade45dc08a3caa548428d",
+      "contentDigest": "79bca288913fdd29eec7d07f1cc0f178958edaad320ae40f72889ebce70bfee8",
+      "bodySha256": "0c5530217b8477074dfe138d8a9137c3f32e9d7976f23049bd6052b9f27b4df8",
+      "bodyStatus": "inspected",
+      "licenseClass": "other-or-custom",
+      "confidence": "low",
+      "families": [
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "filter-benchmark",
+        "frontmatterDescription": "Benchmark and performance-test Django ORM filters on large datasets. Use this skill whenever the user wants to test filter performance, check query plans with EXPLAIN ANALYZE, generate bulk test data for filters, verify index usage, or benchmark any queryset filter in the Saleor codebase. Trigger this even when the user says things like \"test the filter on a big dataset\", \"check if the index is used\", \"generate data for performance testing\", \"run explain analyze on this filter\", or \"benchmark this query\".",
+        "headings": [
+          "Filter Benchmark",
+          "Overview",
+          "Step 1: Identify what to benchmark",
+          "Step 2: Generate bulk data script",
+          "Step 3: Populate the database",
+          "Step 4: Extract the SQL query",
+          "Approach A: From the filter function directly",
+          "Approach B: From a test with breakpoint",
+          "Approach C: Using `.explain()` directly",
+          "Step 5: Analyze queries and generate report",
+          "Analyze each queryset — prints quick summary + warnings inline",
+          "Print a full markdown report with Dalibo links"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Saves JSON plans to `/tmp`"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Saves JSON plans to `/tmp`"
+        }
+      ],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-30c11af7a6e61d17",
+      "name": "pytest-runner",
+      "description": "Run pytest tests with automatic virtual environment activation. Use this skill whenever running tests, executing pytest, or when asked to \"run tests\", \"test this\", or any test execution task. Ensures venv is always activated before pytest runs.",
+      "sourcePath": "hunt\\gen\\saleor__saleor\\.claude\\skills\\pytest-runner\\SKILL.md",
+      "repositoryRoot": "hunt\\gen\\saleor__saleor",
+      "remote": "https://github.com/saleor/saleor.git",
+      "gitHead": "723cd4eba87dfc72822ade45dc08a3caa548428d",
+      "contentDigest": "188a26b54749d67cbddb8ba31a5df67f0fbb872d800c7ead92d908f655d4a0ed",
+      "bodySha256": "f1f37d43c3de80b27bf5afec81349a58289356522e87f4b90cefb3fd02df48e4",
+      "bodyStatus": "inspected",
+      "licenseClass": "other-or-custom",
+      "confidence": "low",
+      "families": [
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "pytest-runner",
+        "frontmatterDescription": "Run pytest tests with automatic virtual environment activation. Use this skill whenever running tests, executing pytest, or when asked to \"run tests\", \"test this\", or any test execution task. Ensures venv is always activated before pytest runs.",
+        "headings": [
+          "Pytest Runner",
+          "Test Selection",
+          "`--reuse-db`",
+          "Concurrency (`-n` flag)"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-34c7e83b9afe45ce",
+      "name": "improve-judge",
+      "description": "Improve a canonical common-owned judge from reviewed rollout evidence, human labels, and leakage-safe calibration without bypassing the frozen router workflow.",
+      "sourcePath": "from-stars\\experientiallabs__experiential\\.claude\\skills\\improve-judge\\SKILL.md",
+      "repositoryRoot": "from-stars\\experientiallabs__experiential",
+      "remote": "https://github.com/experientiallabs/experiential.git",
+      "gitHead": "9082a402b67f2535cc83727200dbe5790d203bc9",
+      "contentDigest": "72b2a6bc3050eac59071151365318fe2ffacc08e8a4680a92a2bb8cf8a71a005",
+      "bodySha256": "a1b361f011c32169d07a025d0531206b7960452fc479450b3482c71ee805d6a9",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "improve-judge",
+        "frontmatterDescription": "Improve a canonical common-owned judge from reviewed rollout evidence, human labels, and leakage-safe calibration without bypassing the frozen router workflow.",
+        "headings": [
+          "Improve the Judge",
+          "1. Resolve the canonical evidence",
+          "2. Classify disagreements",
+          "3. Locate the owning layer",
+          "4. Encode the expectation first",
+          "5. Prove and re-anchor"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Keep raw review and run output under the local project root or `/tmp`. Do not commit customer"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Keep raw review and run output under the local project root or `/tmp`. Do not commit customer"
+        }
+      ],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-37e94f2eb7ebdc3e",
+      "name": "skill-tester",
+      "description": "Validate, test, and score the quality of skills within the claude-skills ecosystem. Comprehensive meta-skill: structure validation, Python script testing (syntax + imports + runtime + output format), multi-dimensional quality scoring with letter grades and tier classification (BASIC/STANDARD/POWERFUL). Use when authoring a new skill, auditing existing skills for tier promotion, setting up pre-commit hooks for skill quality, or integrating skill QA into CI.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\engineering\\skills\\skill-tester\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\engineering",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "7670894f9c571dce2df51031e95c901a3fbf2109dfb0a71ae62f6c1736665c93",
+      "bodySha256": "a62efa4e6d596e442083543f86a6bfc5724b0d06a4921d9a31bbc1c5d12e23e0",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": true,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "skill-tester",
+        "frontmatterDescription": "Validate, test, and score the quality of skills within the claude-skills ecosystem. Comprehensive meta-skill: structure validation, Python script testing (syntax + imports + runtime + output format), multi-dimensional quality scoring with letter grades and tier classification (BASIC/STANDARD/POWERFUL). Use when authoring a new skill, auditing existing skills for tier promotion, setting up pre-commit hooks for skill quality, or integrating skill QA into CI.",
+        "headings": [
+          "Skill Tester",
+          "Quick Start (exact, runnable from repo root)",
+          "1. Validate structure (exit non-zero on failure — usable as a gate)",
+          "2. Test the skill's Python scripts (30s default timeout per script)",
+          "3. Score quality (fail CI below threshold with --minimum-score)",
+          "What Each Tool Checks",
+          "skill_validator.py",
+          "script_tester.py",
+          "quality_scorer.py",
+          "Tier Classification",
+          "CI Integration",
+          "GitHub Actions: gate changed skills"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3b2d8a98f373dd25",
+      "name": "soc2-compliance",
+      "description": "Use when the user asks to prepare for SOC 2 audits, map Trust Service Criteria, build control matrices, collect audit evidence, perform gap analysis, or assess SOC 2 Type I vs Type II readiness.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\ra-qm-team\\skills\\soc2-compliance\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\ra-qm-team",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "94d2bf6d7b19f018c799ba93ae1d011fa78fda625a8e1b044a26a572cfac23fe",
+      "bodySha256": "10f4ff429805eef06e53a4f72c94001481c2c0ac2c4bd98c463d46e5351af6c9",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "governance-security",
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "soc2-compliance",
+        "frontmatterDescription": "Use when the user asks to prepare for SOC 2 audits, map Trust Service Criteria, build control matrices, collect audit evidence, perform gap analysis, or assess SOC 2 Type I vs Type II readiness.",
+        "headings": [
+          "SOC 2 Compliance",
+          "Table of Contents",
+          "Overview",
+          "What Is SOC 2?",
+          "Type I vs Type II",
+          "Who Needs SOC 2?",
+          "Typical Journey",
+          "Trust Service Criteria",
+          "Security (Common Criteria CC1-CC9) — Required",
+          "Availability (A1) — Optional",
+          "Confidentiality (C1) — Optional",
+          "Processing Integrity (PI1) — Optional"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3d8ad0fd3989f85e",
+      "name": "ra-qm-skills",
+      "description": "Router/index for the 15 regulatory & quality-management skills bundled in this plugin (ISO 13485 QMS, EU MDR 2017/745, FDA submissions under QMSR, ISO 14971 risk, CAPA, document control, ISO 27001/ISMS, ISO 42001 AIMS, EU AI Act, GDPR/DSGVO, SOC 2, auditing). Use when a compliance request doesn't obviously match one skill and you need to pick the right one (e.g., 'prepare us for an ISO 13485 audit', 'is my AI system high-risk under the AI Act').",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\ra-qm-team\\skills\\ra-qm-skills\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\ra-qm-team",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "2525f843a763f1065e4ed54c36cfbadaa572f7476f5b0d474432c690efa27653",
+      "bodySha256": "0567bc2c021733109eb87b227069bdf1070c4311470ab92fbf7c4375edebb308",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "governance-security",
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "ra-qm-skills",
+        "frontmatterDescription": "Router/index for the 15 regulatory & quality-management skills bundled in this plugin (ISO 13485 QMS, EU MDR 2017/745, FDA submissions under QMSR, ISO 14971 risk, CAPA, document control, ISO 27001/ISMS, ISO 42001 AIMS, EU AI Act, GDPR/DSGVO, SOC 2, auditing). Use when a compliance request doesn't obviously match one skill and you need to pick the right one (e.g., 'prepare us for an ISO 13485 audit', 'is my AI system high-risk under the AI Act').",
+        "headings": [
+          "Regulatory Affairs & Quality Management Skills — Router",
+          "Routing table",
+          "Quick start",
+          "Example: route a risk-analysis request",
+          "Rules"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-451650bc2d8e61ab",
+      "name": "gdpr-audit-prep",
+      "description": "/cs:gdpr-audit-prep <scope> — GDPR audit 6-question Article-cited forcing interrogation. Use before annual internal GDPR review, post-breach internal audit, DPA investigation readiness, or acquisition due diligence.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\compliance-os\\skills\\gdpr-audit-prep\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\compliance-os",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "7ded7fa9a2516a3c9d5fec8ac3ffea5654088723374a7827ba53e1ce6a795f19",
+      "bodySha256": "a3352e908b283bb5ddd548342ead0f5de8862af6030c14b59023db84f1b0f0cb",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "governance-security",
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "gdpr-audit-prep",
+        "frontmatterDescription": "/cs:gdpr-audit-prep <scope> — GDPR audit 6-question Article-cited forcing interrogation. Use before annual internal GDPR review, post-breach internal audit, DPA investigation readiness, or acquisition due diligence.",
+        "headings": [
+          "/cs:gdpr-audit-prep — GDPR DPO Forcing Questions",
+          "When to Run",
+          "The Six DPO Questions",
+          "1. Show me the Article 30 RoPA — with last-updated date.",
+          "2. For this processing activity, what's the lawful basis under Article 6?",
+          "3. For high-risk processing, where's the DPIA per Article 35?",
+          "4. Show me a DSAR from the last 30 days — and the response timing.",
+          "5. Show me Transfer Impact Assessments for the largest non-EU transfers.",
+          "6. Show me the breach log per Article 33(5) — all breaches, not just notifiable ones.",
+          "Workflow",
+          "1. Compliance posture",
+          "2. DPIA for high-risk activities"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "description: \"/cs:gdpr-audit-prep <scope> — GDPR audit 6-question Article-cited forcing interrogation. Use before annual internal GDPR review, post-breach internal audit, DPA investigation readiness, or acquisition due diligence.\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /cs:gdpr-audit-prep — GDPR DPO Forcing Questions"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "**Command:** `/cs:gdpr-audit-prep <scope>`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/cs:compliance-readiness` — for multi-framework view"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/cs:iso27001-audit-prep` — for Article 32 organizational measures"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/cs:ai-act-readiness` — for EU AI Act Article 27 FRIA integration"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/cs:soc2-audit-prep` — for SOC 2 Privacy TSC overlap"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/cs:gc-review` — for novel-case legal review"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "description: \"/cs:gdpr-audit-prep <scope> — GDPR audit 6-question Article-cited forcing interrogation. Use before annual internal GDPR review, post-breach internal audit, DPA investigation readiness, or acquisition due diligence.\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /cs:gdpr-audit-prep — GDPR DPO Forcing Questions"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "**Command:** `/cs:gdpr-audit-prep <scope>`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/cs:compliance-readiness` — for multi-framework view"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/cs:iso27001-audit-prep` — for Article 32 organizational measures"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/cs:ai-act-readiness` — for EU AI Act Article 27 FRIA integration"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/cs:soc2-audit-prep` — for SOC 2 Privacy TSC overlap"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/cs:gc-review` — for novel-case legal review"
+        }
+      ],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-4c797660f403195e",
+      "name": "subject-lines",
+      "description": "Writes and optimizes subject lines for cold emails. Use when the user asks to \"write a subject line\", \"improve my subject line\", \"subject line ideas\", \"A/B test subject lines\", \"open rate optimization\", \"my open rates are low\", or needs help with email subject lines specifically. Also triggers on \"subject line best practices\", \"what subject line should I use\". Do NOT use for writing full email body copy (use first-touch or follow-up), deliverability issues causing low opens, or newsletter subject lines.",
+      "sourcePath": "catalog-c\\agent-skills\\ColdIQ-s-GTM-Skills\\master-skills\\cold-email\\.claude\\skills\\subject-lines\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\ColdIQ-s-GTM-Skills",
+      "remote": "https://github.com/Cold-IQ/ColdIQ-s-GTM-Skills.git",
+      "gitHead": "1e2cb8886c66c9b9d1496867cdb615d1f696b4e1",
+      "contentDigest": "7394460022830937fae00495007181b063a0ad525ec27fb790b84fa3af2267c5",
+      "bodySha256": "f4582adebfb3b041477652bf7ebf0ad9d3d826db48e41f95a033f1df8d3c4942",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "verification-evidence",
+        "writing-narrative-canon"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "subject-lines",
+        "frontmatterDescription": "Writes and optimizes subject lines for cold emails. Use when the user asks to \"write a subject line\", \"improve my subject line\", \"subject line ideas\", \"A/B test subject lines\", \"open rate optimization\", \"my open rates are low\", or needs help with email subject lines specifically. Also triggers on \"subject line best practices\", \"what subject line should I use\". Do NOT use for writing full email body copy (use first-touch or follow-up), deliverability issues causing low opens, or newsletter subject lines.",
+        "headings": [
+          "Subject Line Writing",
+          "⚡ Pull the personalization hook from ColdIQ first",
+          "Process",
+          "Reference",
+          "Rules",
+          "Subject Line Formulas",
+          "1. Personalized (highest open rate)",
+          "2. Curiosity Gap",
+          "3. Direct Value",
+          "4. Two-Word Formula (AI-generated)",
+          "A/B Testing Guidelines",
+          "Examples"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "writing-narrative-canon"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-4d0e8c312674e7a0",
+      "name": "fda-qsr-audit-prep",
+      "description": "/cs:fda-qsr-audit-prep <scope> — FDA 21 CFR 820 (QSR / QMSR) audit 6-question forcing interrogation. Post-Feb 2026 substantially harmonized with ISO 13485. Use before annual internal QSR audit, pre-FDA-inspection readiness, or Form 483 response.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\compliance-os\\skills\\fda-qsr-audit-prep\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\compliance-os",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "b421b6ac3d09e19b14a9913efdc91de42260956eaecb47366f0dd6830efc1ffa",
+      "bodySha256": "a119c8414430c08344fe380e35569ee74b5af3a06d72fd7081577f53527c072b",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "governance-security",
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "fda-qsr-audit-prep",
+        "frontmatterDescription": "/cs:fda-qsr-audit-prep <scope> — FDA 21 CFR 820 (QSR / QMSR) audit 6-question forcing interrogation. Post-Feb 2026 substantially harmonized with ISO 13485. Use before annual internal QSR audit, pre-FDA-inspection readiness, or Form 483 response.",
+        "headings": [
+          "/cs:fda-qsr-audit-prep — FDA QSR Forcing Questions",
+          "When to Run",
+          "The Six QSR Questions",
+          "1. Show me the complaint files from the last quarter — and the corresponding MDR reports.",
+          "2. When was process validation (IQ/OQ/PQ) last revalidated per 21 CFR 820.75?",
+          "3. Show me the DHRs for products commercially distributed in last 2 years.",
+          "4. Show me CAPAs from the last 6 months with effectiveness verification.",
+          "5. Show me labeling (21 CFR 801) review for the most recent product launch.",
+          "6. If a Form 483 was issued in the last 3 years, show me the closure status.",
+          "Workflow",
+          "1. QSR compliance posture",
+          "2. FDA submission tracking (510(k) / PMA / IDE)"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "description: \"/cs:fda-qsr-audit-prep <scope> — FDA 21 CFR 820 (QSR / QMSR) audit 6-question forcing interrogation. Post-Feb 2026 substantially harmonized with ISO 13485. Use before annual internal QSR audit, pre-FDA-inspection readiness, or Form 483 response.\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /cs:fda-qsr-audit-prep — FDA QSR Forcing Questions"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "**Command:** `/cs:fda-qsr-audit-prep <scope>`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/cs:compliance-readiness` — for multi-framework view"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/cs:iso13485-audit-prep` — for ISO 13485 cross-walk pair (substantially harmonized)"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/cs:gdpr-audit-prep` — if connected device handles personal data"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/cs:gc-review` — for Warning Letter response coordination"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "description: \"/cs:fda-qsr-audit-prep <scope> — FDA 21 CFR 820 (QSR / QMSR) audit 6-question forcing interrogation. Post-Feb 2026 substantially harmonized with ISO 13485. Use before annual internal QSR audit, pre-FDA-inspection readiness, or Form 483 response.\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /cs:fda-qsr-audit-prep — FDA QSR Forcing Questions"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "**Command:** `/cs:fda-qsr-audit-prep <scope>`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/cs:compliance-readiness` — for multi-framework view"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/cs:iso13485-audit-prep` — for ISO 13485 cross-walk pair (substantially harmonized)"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/cs:gdpr-audit-prep` — if connected device handles personal data"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/cs:gc-review` — for Warning Letter response coordination"
+        }
+      ],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-526cbfdea1fc71c2",
+      "name": "api-test-suite-builder",
+      "description": "Use when the user asks to generate API tests, create integration test suites, test REST endpoints, or build contract tests.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\engineering\\skills\\api-test-suite-builder\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\engineering",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "2317e84015911570922f6ea2c5cc48bd50a9e491790411171e571d0f4cc52687",
+      "bodySha256": "a0db3fd9004317097c1c9c7ef7da6276a98d205a1c2af79fbbddd72fab976d42",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "automation-mcp-integrations",
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "api-test-suite-builder",
+        "frontmatterDescription": "Use when the user asks to generate API tests, create integration test suites, test REST endpoints, or build contract tests.",
+        "headings": [
+          "API Test Suite Builder",
+          "Overview",
+          "Core Capabilities",
+          "When to Use",
+          "Route Detection",
+          "Next.js App Router",
+          "Find all route handlers",
+          "Extract HTTP methods from each route file",
+          "Full route map",
+          "Express",
+          "Find all router files",
+          "Extract routes with line numbers"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "automation-mcp-integrations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-536e43b143ad92c1",
+      "name": "why",
+      "description": "Use for 'why does X work this way', 'why we picked Y', design rationale, regressions, postmortems, or data-backed thresholds. Discovers available MCPs and queries each evidence category (source control, issue tracker, long-form docs, real-time chat, infrastructure observability, error tracking, product analytics warehouse) in parallel, then returns a cited read on decisions and tradeoffs. Use how for runtime behavior.",
+      "sourcePath": "from-stars\\cursor__plugins\\pstack\\skills\\why\\SKILL.md",
+      "repositoryRoot": "from-stars\\cursor__plugins",
+      "remote": "https://github.com/cursor/plugins.git",
+      "gitHead": "46125561306434d8a1d7745d540d8932ab0cd2a2",
+      "contentDigest": "ca8d9562395b324e6acb20ebf8fef5f9e90f806ef1916b65b7a32dedf0342ef2",
+      "bodySha256": "13244bc9dcfbb84852af55b1e021cb4a9f548e2ddfd7b374788f330181db63d8",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "data-infrastructure",
+        "product-operations",
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "why",
+        "frontmatterDescription": "Use for 'why does X work this way', 'why we picked Y', design rationale, regressions, postmortems, or data-backed thresholds. Discovers available MCPs and queries each evidence category (source control, issue tracker, long-form docs, real-time chat, infrastructure observability, error tracking, product analytics warehouse) in parallel, then returns a cited read on decisions and tradeoffs. Use how for runtime behavior.",
+        "headings": [
+          "Why",
+          "How this skill works",
+          "Operating Posture",
+          "Core Epistemics",
+          "Step 1. Understand the Target and the Question",
+          "Step 2. Establish the Code Anchor",
+          "Blame target lines for last-touch commits",
+          "Full file history, with patches, through renames",
+          "Last N commits touching the file, PR numbers visible",
+          "Extract PR numbers from a commit message",
+          "Step 3. Spawn Parallel Investigators (default posture)",
+          "Discovery"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [
+        "data-infrastructure",
+        "product-operations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-56a2e08d11c136a5",
+      "name": "triage-issue-reports",
+      "description": "Triage Slack issue reports with one thread-only verdict, evidence review, cause-aware routing, tracker dedupe, and fail-closed ticket creation. Use only from the configured Benny triage automation.",
+      "sourcePath": "from-stars\\cursor__plugins\\pstack\\automations\\benny\\skills\\triage-issue-reports\\SKILL.md",
+      "repositoryRoot": "from-stars\\cursor__plugins",
+      "remote": "https://github.com/cursor/plugins.git",
+      "gitHead": "46125561306434d8a1d7745d540d8932ab0cd2a2",
+      "contentDigest": "03994dcbea36603d4459338d9f8eb9623a97caf76f624557e21a5beb3f3bc228",
+      "bodySha256": "8122f1c1e65062bf0f1103a587c08ed7d14779c64625643a9f488f262fd21ad8",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "automation-mcp-integrations",
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "triage-issue-reports",
+        "frontmatterDescription": "Triage Slack issue reports with one thread-only verdict, evidence review, cause-aware routing, tracker dedupe, and fail-closed ticket creation. Use only from the configured Benny triage automation.",
+        "headings": [
+          "Triage issue reports",
+          "Hard safety rules",
+          "1. Freeze source coordinates",
+          "2. Read the whole report",
+          "3. Trace cause before routing",
+          "4. Classify",
+          "Bug",
+          "Performance",
+          "Feature request",
+          "Question or feedback",
+          "Reroute",
+          "5. Apply configured routing"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [
+        "automation-mcp-integrations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-5d443ad3b84ff088",
+      "name": "review-plugin-submission",
+      "description": "Audit a Cursor plugin for marketplace readiness. Use when validating manifests, component metadata, discovery paths, and submission quality before publishing.",
+      "sourcePath": "from-stars\\cursor__plugins\\create-plugin\\skills\\review-plugin-submission\\SKILL.md",
+      "repositoryRoot": "from-stars\\cursor__plugins",
+      "remote": "https://github.com/cursor/plugins.git",
+      "gitHead": "46125561306434d8a1d7745d540d8932ab0cd2a2",
+      "contentDigest": "e754d8a074636620acac27a50d407eb2d3bbca4900834db12113110783d84273",
+      "bodySha256": "217e07a4d9eceff91aa1f541ce53346fbccf540e04a209b229c897740e11bc85",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "review-plugin-submission",
+        "frontmatterDescription": "Audit a Cursor plugin for marketplace readiness. Use when validating manifests, component metadata, discovery paths, and submission quality before publishing.",
+        "headings": [
+          "Review plugin submission",
+          "Trigger",
+          "Workflow",
+          "Checklist",
+          "Output"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "verification-evidence",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    }
+  ]
+}

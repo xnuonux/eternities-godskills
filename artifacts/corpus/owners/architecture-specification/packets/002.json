@@ -1,0 +1,1792 @@
+{
+  "schemaVersion": 1,
+  "packetId": "architecture-specification-002",
+  "familyId": "architecture-specification",
+  "sequence": 2,
+  "sourceCount": 25,
+  "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions.",
+  "cards": [
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-330342e7e8edc510",
+      "name": "system-design",
+      "description": "Design systems, services, and architectures. Trigger with \"design a system for\", \"how should we architect\", \"system design for\", \"what's the right architecture for\", or when the user needs help with API design, data modeling, or service boundaries.",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\engineering\\skills\\system-design\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "b495263ae15155ea5c18ec10a614b62181f9aaae34d0ca624557520bf9215376",
+      "bodySha256": "02a240379acf03cba4a6ef7a829f492299c85087741793f1e067db2c37a7ad62",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": true,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "system-design",
+        "frontmatterDescription": "Design systems, services, and architectures. Trigger with \"design a system for\", \"how should we architect\", \"system design for\", \"what's the right architecture for\", or when the user needs help with API design, data modeling, or service boundaries.",
+        "headings": [
+          "System Design",
+          "Framework",
+          "1. Requirements Gathering",
+          "2. High-Level Design",
+          "3. Deep Dive",
+          "4. Scale and Reliability",
+          "5. Trade-off Analysis",
+          "Output"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "knowledge-memory-context",
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-342d6b9f1d9492dd",
+      "name": "hunt-grpc",
+      "description": "Hunt gRPC vulnerabilities — server reflection enabled (enumerate all services/methods), missing authentication / metadata-stripping on internal endpoints, plaintext gRPC over HTTP/2, internal endpoint disclosure, proto file leakage, gRPC-Web/grpc-gateway transcoding injection, and HTTP/2 Rapid Reset DoS (CVE-2023-44487). Use when target exposes port 50051 / 443 / 8443 / 9090 with HTTP/2, when grpcurl/grpcui detects reflection, when an Envoy or grpc-gateway proxy is fronting a microservice, or when recon reveals a microservice architecture.",
+      "sourcePath": "catalog-c\\agent-skills\\Claude-BugHunter\\skills\\hunt-grpc\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Claude-BugHunter",
+      "remote": "https://github.com/elementalsouls/Claude-BugHunter.git",
+      "gitHead": "0ce18ba59deccc26bbf1bbadb0706f3319af2852",
+      "contentDigest": "441ee4d683f57b3509fc2c3a46cbc8bba5b9e06ec869a2a14d14f711a71bac53",
+      "bodySha256": "e14cb7a2824064bf8292a271c5fb0a2e7866d3b4caa2562a0a4da30135bf032c",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "hunt-grpc",
+        "frontmatterDescription": "Hunt gRPC vulnerabilities — server reflection enabled (enumerate all services/methods), missing authentication / metadata-stripping on internal endpoints, plaintext gRPC over HTTP/2, internal endpoint disclosure, proto file leakage, gRPC-Web/grpc-gateway transcoding injection, and HTTP/2 Rapid Reset DoS (CVE-2023-44487). Use when target exposes port 50051 / 443 / 8443 / 9090 with HTTP/2, when grpcurl/grpcui detects reflection, when an Envoy or grpc-gateway proxy is fronting a microservice, or when recon reveals a microservice architecture.",
+        "headings": [
+          "HUNT-GRPC — gRPC Security",
+          "Crown Jewel Targets",
+          "Phase 1 — Fingerprint & Port Discovery",
+          "Common gRPC ports (50051 native; 443/8443 via TLS+ALPN h2; 9090/8080 h2c)",
+          "ALPN must negotiate h2 — gRPC cannot run on HTTP/1.1",
+          "Native-gRPC fingerprint: an HTTP/2 POST to a bogus method returns a grpc-status",
+          "trailer (12 = UNIMPLEMENTED) even when the path is wrong — strong signal it's gRPC.",
+          "TLS-fronted h2 (port 443): look for grpc-status trailer / grpc content-type",
+          "Phase 2 — Service Enumeration via Reflection",
+          "List services — -plaintext for h2c, -insecure for self-signed TLS, plain for valid TLS",
+          "Typical output when reflection is on:",
+          "grpc.reflection.v1.ServerReflection"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "-H \"content-type: application/grpc\" -o /dev/null -D - | grep -i grpc-status"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "-H \"content-type: application/grpc-web+proto\" -o /dev/null -D - | grep -i \"grpc-status\\|content-type\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "S=$(curl -s -o /dev/null -w '%{http_code}' \"https://$TARGET/$P\")"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "-H \"content-type: application/grpc\" -o /dev/null -D - | grep -i grpc-status"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "-H \"content-type: application/grpc-web+proto\" -o /dev/null -D - | grep -i \"grpc-status\\|content-type\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "S=$(curl -s -o /dev/null -w '%{http_code}' \"https://$TARGET/$P\")"
+        }
+      ],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-383fc7fe2756920a",
+      "name": "create-github-issues-for-unmet-specification-requirements",
+      "description": "Create GitHub Issues for unimplemented requirements from specification files using feature_request.yml template.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\create-github-issues-for-unmet-specification-requirements\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "fb0dc62b19ee7a2e316dca74fcc56c9d21348ab6a02c37e48ebccd2a7539c9b2",
+      "bodySha256": "403939f1a02b5d08c571dc9f973bdb98a87b4f84b5e4fbe5b93284f78472b299",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "create-github-issues-for-unmet-specification-requirements",
+        "frontmatterDescription": "Create GitHub Issues for unimplemented requirements from specification files using feature_request.yml template.",
+        "headings": [
+          "Create GitHub Issues for Unmet Specification Requirements",
+          "Process",
+          "Requirements",
+          "Issue Content",
+          "Implementation Check"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Check related specification files in `/spec/` directory"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Check related specification files in `/spec/` directory"
+        }
+      ],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-3e7899717fc153ff",
+      "name": "update-implementation-plan",
+      "description": "Update an existing implementation plan file with new or update requirements to provide new features, refactoring existing code or upgrading packages, design, architecture or infrastructure.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\update-implementation-plan\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "16cc9b9d66b3aeb73a605d81316d72ad85fcc588887ace550581494ac6f5326c",
+      "bodySha256": "08f62222ba518b54dd0f369c539f6f75dabb32893768e0cb2ff49ecb1e8cb7a9",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "update-implementation-plan",
+        "frontmatterDescription": "Update an existing implementation plan file with new or update requirements to provide new features, refactoring existing code or upgrading packages, design, architecture or infrastructure.",
+        "headings": [
+          "Update Implementation Plan",
+          "Primary Directive",
+          "Execution Context",
+          "Core Requirements",
+          "Plan Structure Requirements",
+          "Phase Architecture",
+          "AI-Optimized Implementation Standards",
+          "Output File Specifications",
+          "Mandatory Template Structure",
+          "Template Validation Rules",
+          "Status",
+          "Introduction"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Save implementation plan files in `/plan/` directory"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Save implementation plan files in `/plan/` directory"
+        }
+      ],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-4e3c47c6b22ca7ff",
+      "name": "excalidraw-diagram-generator",
+      "description": "Generate Excalidraw diagrams from natural language descriptions. Use when asked to \"create a diagram\", \"make a flowchart\", \"visualize a process\", \"draw a system architecture\", \"create a mind map\", or \"generate an Excalidraw file\". Supports flowcharts, relationship diagrams, mind maps, and system architecture diagrams. Outputs .excalidraw JSON files that can be opened directly in Excalidraw.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\excalidraw-diagram-generator\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "ae5f04b7f1940dfb2ffafdc6b5724f80b8c9b0a261a56586337b997f499b8f77",
+      "bodySha256": "60df556e63d85ad51350fa448c097a1473d2e6e0adf4aad6e1a6c22eb536cfe9",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "excalidraw-diagram-generator",
+        "frontmatterDescription": "Generate Excalidraw diagrams from natural language descriptions. Use when asked to \"create a diagram\", \"make a flowchart\", \"visualize a process\", \"draw a system architecture\", \"create a mind map\", or \"generate an Excalidraw file\". Supports flowcharts, relationship diagrams, mind maps, and system architecture diagrams. Outputs .excalidraw JSON files that can be opened directly in Excalidraw.",
+        "headings": [
+          "Excalidraw Diagram Generator",
+          "When to Use This Skill",
+          "Prerequisites",
+          "Step-by-Step Workflow",
+          "Step 1: Understand the Request",
+          "Step 2: Choose the Appropriate Diagram Type",
+          "Step 3: Extract Structured Information",
+          "Step 4: Generate the Excalidraw JSON",
+          "Step 5: Format the Output",
+          "Step 6: Save and Provide Instructions",
+          "Best Practices",
+          "Element Count Guidelines"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-4f775c90a3179590",
+      "name": "pathfinder",
+      "description": "Map a codebase into feature-grouped flowcharts, identify duplicated concerns across features, and propose a unified architecture. Use when asked to \"find the ideal path,\" unify duplicated systems, or audit architecture before a refactor. Emits a proposed unified flowchart plus per-system /make-plan prompts.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-mem\\plugin\\skills\\pathfinder\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-mem",
+      "remote": "https://github.com/thedotmack/claude-mem.git",
+      "gitHead": "e2d1df569a8f04075d40e92461128ece7cf04c82",
+      "contentDigest": "0cc060697ec11be9a10cc004132e27d7a1bdc6e510bcb3dccd61ee1ce113e4f6",
+      "bodySha256": "a3e17bf66e7c2eb198f4b04c06adaff29bf62b7cbd09005c7c234cdcf4ad796b",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification",
+        "implementation-engineering",
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "pathfinder",
+        "frontmatterDescription": "Map a codebase into feature-grouped flowcharts, identify duplicated concerns across features, and propose a unified architecture. Use when asked to \"find the ideal path,\" unify duplicated systems, or audit architecture before a refactor. Emits a proposed unified flowchart plus per-system /make-plan prompts.",
+        "headings": [
+          "Pathfinder",
+          "Delegation Model",
+          "Subagent Reporting Contract (MANDATORY)",
+          "Output Artifacts",
+          "Phases",
+          "Phase 0: Feature Discovery (ALWAYS FIRST)",
+          "Phase 1: Per-Feature Flowcharts (FAN OUT)",
+          "Phase 2: Duplication Hunt",
+          "Phase 3: Unified Proposal (ORCHESTRATOR)",
+          "Phase 4: Per-System Handoff Prompts",
+          "Key Principles",
+          "Failure Modes to Prevent"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "description: Map a codebase into feature-grouped flowcharts, identify duplicated concerns across features, and propose a unified architecture. Use when asked to \"find the ideal path,\" unify duplicated systems, or audit architecture before a refactor. Emits a proposed unified flowchart plus per-system /make-plan prompts."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "You are an ORCHESTRATOR. Map the codebase into feature-grouped flowcharts, identify duplicated concerns, propose the simplest unified architecture, and hand off per-system plans to `/make-plan`."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `04-handoff-prompts.md` — copy-pasteable `/make-plan` prompts per unified system"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "For each unified system in the proposal, write a ready-to-run `/make-plan` prompt to `04-handoff-prompts.md`. Each prompt must:"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Format each as a fenced code block the user can copy directly into `/make-plan`."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- **Handoff, don't implement** — Pathfinder ends at plan prompts; `/make-plan` and `/do` take it from there"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "description: Map a codebase into feature-grouped flowcharts, identify duplicated concerns across features, and propose a unified architecture. Use when asked to \"find the ideal path,\" unify duplicated systems, or audit architecture before a refactor. Emits a proposed unified flowchart plus per-system /make-plan prompts."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "You are an ORCHESTRATOR. Map the codebase into feature-grouped flowcharts, identify duplicated concerns, propose the simplest unified architecture, and hand off per-system plans to `/make-plan`."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `04-handoff-prompts.md` — copy-pasteable `/make-plan` prompts per unified system"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "For each unified system in the proposal, write a ready-to-run `/make-plan` prompt to `04-handoff-prompts.md`. Each prompt must:"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Format each as a fenced code block the user can copy directly into `/make-plan`."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- **Handoff, don't implement** — Pathfinder ends at plan prompts; `/make-plan` and `/do` take it from there"
+        }
+      ],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "implementation-engineering",
+        "verification-evidence",
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-51e8b5cf71420881",
+      "name": "ads-strategy",
+      "description": "Full Ad Strategy Orchestrator. Launches 5 parallel subagents to build a complete advertising strategy from a single URL — audience personas, creative concepts, funnel architecture, competitive intelligence, and budget allocation. Produces a composite Ad Readiness Score (0-100) with a unified, client-ready strategy report.",
+      "sourcePath": "catalog-c\\agent-skills\\ai-ads-claude\\skills\\ads-strategy\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\ai-ads-claude",
+      "remote": "https://github.com/zubair-trabzada/ai-ads-claude.git",
+      "gitHead": "d1df3f544249191cbc600c8301e2b9d5ddd121c8",
+      "contentDigest": "a3e6f9f501a94a6a55c5ea1941f37345a04b8b66eeb168f8ca44881f1d009274",
+      "bodySha256": "97c1062905a4f2e68ab7269f4942cbeb3808395ebe62b6f04769b1035c4331de",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "ads-strategy",
+        "frontmatterDescription": "Full Ad Strategy Orchestrator. Launches 5 parallel subagents to build a complete advertising strategy from a single URL — audience personas, creative concepts, funnel architecture, competitive intelligence, and budget allocation. Produces a composite Ad Readiness Score (0-100) with a unified, client-ready strategy report.",
+        "headings": [
+          "Full Ad Strategy Orchestrator",
+          "Skill Purpose",
+          "When to Use",
+          "Input Requirements",
+          "How to Execute",
+          "Phase 1: Discovery & Business Intelligence",
+          "Step 1: Fetch and Analyze the Homepage",
+          "Step 2: Detect Business Type",
+          "Step 3: Identify Industry and Competitive Context",
+          "Step 4: Detect Recommended Platforms",
+          "Step 5: Build the Context Package",
+          "Phase 2: Parallel Agent Launch"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- User runs `/ads strategy <url>`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Deep-dive audience research | Audience Persona Builder | `/ads audience [url]` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Generate full ad copy sets | Ad Copy Generator | `/ads copy [platform]` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Get 20+ scroll-stopping hooks | Hook Generator | `/ads hooks` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Build complete funnel blueprint | Funnel Architect | `/ads funnel [url]` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Full competitor ad analysis | Competitive Intelligence | `/ads competitors [url]` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Detailed budget projections | Budget Allocator | `/ads budget [amount]` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| Video ad scripts | Video Script Generator | `/ads video [product]` |"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- User runs `/ads strategy <url>`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Deep-dive audience research | Audience Persona Builder | `/ads audience [url]` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Generate full ad copy sets | Ad Copy Generator | `/ads copy [platform]` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Get 20+ scroll-stopping hooks | Hook Generator | `/ads hooks` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Build complete funnel blueprint | Funnel Architect | `/ads funnel [url]` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Full competitor ad analysis | Competitive Intelligence | `/ads competitors [url]` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Detailed budget projections | Budget Allocator | `/ads budget [amount]` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| Video ad scripts | Video Script Generator | `/ads video [product]` |"
+        }
+      ],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-5b223fbde4f44563",
+      "name": "create-implementation-plan",
+      "description": "Create a new implementation plan file for new features, refactoring existing code or upgrading packages, design, architecture or infrastructure.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\create-implementation-plan\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "533ed17f7ddbcc7f5ed1cfea3af5d857b62751800eaccee6f990136bb0bc675a",
+      "bodySha256": "11caba1048cbdbfca6f7ce13a0e0580d6e9d943f7b775ee24978ece1d3334066",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "create-implementation-plan",
+        "frontmatterDescription": "Create a new implementation plan file for new features, refactoring existing code or upgrading packages, design, architecture or infrastructure.",
+        "headings": [
+          "Create Implementation Plan",
+          "Primary Directive",
+          "Execution Context",
+          "Core Requirements",
+          "Plan Structure Requirements",
+          "Phase Architecture",
+          "AI-Optimized Implementation Standards",
+          "Output File Specifications",
+          "Mandatory Template Structure",
+          "Template Validation Rules",
+          "Identifier Uniqueness Check",
+          "Set PLAN_FILE to the plan being validated."
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Save implementation plan files in `/plan/` directory"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "PLAN_FILE=\"/plan/<purpose>-<component>-<version>.md\""
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Save implementation plan files in `/plan/` directory"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "PLAN_FILE=\"/plan/<purpose>-<component>-<version>.md\""
+        }
+      ],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-5b750c77efcf38e9",
+      "name": "system-commandline-cli",
+      "description": "Use this skill when adding, modifying, or reviewing CLI commands in a .NET project built with System.CommandLine. Triggers include: creating a new CLI command, adding options or arguments, wiring command handlers, registering subcommands, building command groups, or any architecture decision about CLI command structure. Also use when the user mentions 'System.CommandLine', 'CommandBase', 'SetAction', 'ParseResult', 'RootCommand', 'subcommand', or asks to add a verb to the CLI. Do NOT use for general C# coding, web APIs, UI work, or non-CLI projects.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\system-commandline-cli\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "e71f34b58aae6366c184ae53f84698f80a339642b89c5731c01686ba1002b510",
+      "bodySha256": "579c731ea7a7c948bea8d4ad9eef8d65a94e9f260401d7028ffdd4193372e250",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification",
+        "implementation-engineering",
+        "web-interface-accessibility"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "system-commandline-cli",
+        "frontmatterDescription": "Use this skill when adding, modifying, or reviewing CLI commands in a .NET project built with System.CommandLine. Triggers include: creating a new CLI command, adding options or arguments, wiring command handlers, registering subcommands, building command groups, or any architecture decision about CLI command structure. Also use when the user mentions 'System.CommandLine', 'CommandBase', 'SetAction', 'ParseResult', 'RootCommand', 'subcommand', or asks to add a verb to the CLI. Do NOT use for general C# coding, web APIs, UI work, or non-CLI projects.",
+        "headings": [
+          "System.CommandLine CLI Developer Skill",
+          "Architecture Overview",
+          "RULE 1 — Prefer a Project-Specific Command Base Class",
+          "RULE 2 — Options and Arguments",
+          "Defining Options",
+          "Defining Arguments (positional)",
+          "Reading Values in Handlers",
+          "RULE 3 — Command Handler Pattern",
+          "RULE 4 — Command Group (Parent with Subcommands)",
+          "RULE 5 — Registration",
+          "RULE 6 — User Confirmation for Destructive Operations",
+          "RULE 7 — Command Logic"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "implementation-engineering",
+        "agent-orchestration",
+        "web-interface-accessibility"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-5e79bf1c3d03abb3",
+      "name": "power-platform-architect",
+      "description": "Use this skill when the user needs to transform business requirements, use case descriptions, or meeting transcripts into a technical Power Platform solution architecture, including component selection and Mermaid.js diagrams.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\power-platform-architect\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "d104e04775f8ab96df50e92bac9d7189c55a7e04ecd256378a4e9b3cdebdec67",
+      "bodySha256": "6297fd58c421beed40cd39d7acf771f964460178311cf12f3ac106e8ec94e111",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification",
+        "product-operations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "power-platform-architect",
+        "frontmatterDescription": "Use this skill when the user needs to transform business requirements, use case descriptions, or meeting transcripts into a technical Power Platform solution architecture, including component selection and Mermaid.js diagrams.",
+        "headings": [
+          "Power Platform Architect Skill",
+          "Context",
+          "Example Trigger Phrases",
+          "Power Platform Component Catalog",
+          "\"Cheat Sheet\" Decision Logic for Architecting",
+          "Instructions",
+          "PHASE 1: Requirements Analysis",
+          "PHASE 2: Requirements Follow Up",
+          "PHASE 3: Component Recommendation",
+          "PHASE 4: Architecture Recommendation",
+          "PHASE 5: Architecture Visualization (OPTIONAL)",
+          "Other Things to Note"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "product-operations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-5f4581f331e749ce",
+      "name": "impediment-prioritization",
+      "description": "Ranks any list of impediments and their countermeasures using a value-stream scoring model (ROI, Cost to Implement, Ease of Deployment, Risk Factor) and a fixed prioritization formula. Use when someone asks to prioritize, rank, sequence, or triage impediments, countermeasures, remediation items, risks, findings, gaps, action items, or backlog entries; or mentions value-stream prioritization, A3 / lean countermeasure ranking, ROI vs. effort scoring, or building a remediation / improvement backlog. Works with GHQR findings, audit results, retrospective action items, risk registers, architecture review gaps, or any free-form `{impediment, countermeasure}` list.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\impediment-prioritization\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "f45429e3905151195f340758fb01fad282f3e6a66d8d001096147b41813d6037",
+      "bodySha256": "dd6c9adda40b97375f9a72537d536ef9c9e98a1f43827d9f84bea4e699bece43",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification",
+        "implementation-engineering",
+        "release-publishing",
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "impediment-prioritization",
+        "frontmatterDescription": "Ranks any list of impediments and their countermeasures using a value-stream scoring model (ROI, Cost to Implement, Ease of Deployment, Risk Factor) and a fixed prioritization formula. Use when someone asks to prioritize, rank, sequence, or triage impediments, countermeasures, remediation items, risks, findings, gaps, action items, or backlog entries; or mentions value-stream prioritization, A3 / lean countermeasure ranking, ROI vs. effort scoring, or building a remediation / improvement backlog. Works with GHQR findings, audit results, retrospective action items, risk registers, architecture review gaps, or any free-form `{impediment, countermeasure}` list.",
+        "headings": [
+          "Impediment Prioritization Skill",
+          "When to Activate",
+          "Inputs",
+          "Scoring Rubric (1–10 scales)",
+          "Formula",
+          "Method (agent procedure)",
+          "Output Template",
+          "Prioritized Impediments",
+          "Top 3 — Act First",
+          "Assumptions & Guardrails",
+          "Downstream Integration (optional)"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "implementation-engineering",
+        "verification-evidence",
+        "agent-orchestration",
+        "release-publishing"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-627d46a10b9f08bc",
+      "name": "code-documentation",
+      "description": "Use this skill when the user requests to generate, create, or improve documentation for code, APIs, libraries, repositories, or software projects. Supports README generation, API reference documentation, inline code comments, architecture documentation, changelog generation, and developer guides. Trigger on requests like \"document this code\", \"create a README\", \"generate API docs\", \"write developer guide\", or when analyzing codebases for documentation purposes.",
+      "sourcePath": "from-stars\\bytedance__deer-flow\\skills\\public\\code-documentation\\SKILL.md",
+      "repositoryRoot": "from-stars\\bytedance__deer-flow",
+      "remote": "https://github.com/bytedance/deer-flow.git",
+      "gitHead": "917fe595fcfc2d5a30e7e55deed1bdb950785fc2",
+      "contentDigest": "9ca7ca2367058cf2b3a2b53ed326fb406b2932d3415ac39b0406d81419507f75",
+      "bodySha256": "75721d7bc1b294592dc31a1e1d92ff9c390115af4b08ed42e7e0a2b094060676",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "architecture-specification",
+        "writing-narrative-canon"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "code-documentation",
+        "frontmatterDescription": "Use this skill when the user requests to generate, create, or improve documentation for code, APIs, libraries, repositories, or software projects. Supports README generation, API reference documentation, inline code comments, architecture documentation, changelog generation, and developer guides. Trigger on requests like \"document this code\", \"create a README\", \"generate API docs\", \"write developer guide\", or when analyzing codebases for documentation purposes.",
+        "headings": [
+          "Code Documentation Skill",
+          "Overview",
+          "Core Capabilities",
+          "When to Use This Skill",
+          "Documentation Workflow",
+          "Phase 1: Codebase Analysis",
+          "Step 1.1: Project Discovery",
+          "Step 1.2: Code Structure Analysis",
+          "Get directory structure",
+          "Read key files",
+          "Search for public API surfaces",
+          "Step 1.3: Identify Documentation Scope"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "ls /mnt/user-data/uploads/project-dir/"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "read_file /mnt/user-data/uploads/project-dir/package.json"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "read_file /mnt/user-data/uploads/project-dir/pyproject.toml"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "grep -r \"export \" /mnt/user-data/uploads/project-dir/src/"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "grep -r \"def \" /mnt/user-data/uploads/project-dir/src/ --include=\"*.py\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "grep -r \"func \" /mnt/user-data/uploads/project-dir/ --include=\"*.go\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": ">>> result = process_data(\"/data/input.csv\", {\"validate\": True})"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Save documentation files to `/mnt/user-data/outputs/`"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "ls /mnt/user-data/uploads/project-dir/"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "read_file /mnt/user-data/uploads/project-dir/package.json"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "read_file /mnt/user-data/uploads/project-dir/pyproject.toml"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "grep -r \"export \" /mnt/user-data/uploads/project-dir/src/"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "grep -r \"def \" /mnt/user-data/uploads/project-dir/src/ --include=\"*.py\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "grep -r \"func \" /mnt/user-data/uploads/project-dir/ --include=\"*.go\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": ">>> result = process_data(\"/data/input.csv\", {\"validate\": True})"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Save documentation files to `/mnt/user-data/outputs/`"
+        }
+      ],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "writing-narrative-canon"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-7030d919fe03611f",
+      "name": "create-specification",
+      "description": "Create a new specification file for the solution, optimized for Generative AI consumption.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\create-specification\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "41f043df9d5a8bd698feeff5cf1d638bfad160d44c95dcf00afd8f2a98bbd804",
+      "bodySha256": "0de8583934fbcb7afa0aa4c2569c75d74cad1a711664bb57b6aa5e0fcf6d92ae",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": true,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "create-specification",
+        "frontmatterDescription": "Create a new specification file for the solution, optimized for Generative AI consumption.",
+        "headings": [
+          "Create Specification",
+          "Best Practices for AI-Ready Specifications",
+          "Introduction",
+          "1. Purpose & Scope",
+          "2. Definitions",
+          "3. Requirements, Constraints & Guidelines",
+          "4. Interfaces & Data Contracts",
+          "5. Acceptance Criteria",
+          "6. Test Automation Strategy",
+          "7. Rationale & Context",
+          "8. Dependencies & External Integrations",
+          "External Systems"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "The specification should be saved in the `/spec/` directory and named according to the following convention: `spec-[a-z0-9-]+.md`, where the name should be descriptive of the specification's content and starting with the highlevel purpose, which is one of [schema, tool, data, infrastructure, process, architecture, or design]."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "The specification should be saved in the `/spec/` directory and named according to the following convention: `spec-[a-z0-9-]+.md`, where the name should be descriptive of the specification's content and starting with the highlevel purpose, which is one of [schema, tool, data, infrastructure, process, architecture, or design]."
+        }
+      ],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-709aee2658bab8cc",
+      "name": "dataverse-python-usecase-builder",
+      "description": "Generate complete solutions for specific Dataverse SDK use cases with architecture recommendations",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\dataverse-python-usecase-builder\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "851b96395f92faf43f365333239b3cb30825a5285e8701d0474119970129cfca",
+      "bodySha256": "ce508ea0fc88dd380fe8b0865c2555d5cca7b4edc4ed215a63547a73b512c5c2",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "dataverse-python-usecase-builder",
+        "frontmatterDescription": "Generate complete solutions for specific Dataverse SDK use cases with architecture recommendations",
+        "headings": [
+          "System Instructions",
+          "Solution Architecture Framework",
+          "Phase 1: Requirement Analysis",
+          "Phase 2: Data Model Design",
+          "Example structure for Customer Document Management",
+          "Phase 3: Pattern Selection",
+          "Pattern 1: Transactional (CRUD Operations)",
+          "Pattern 2: Batch Processing",
+          "Pattern 3: Query & Analytics",
+          "Pattern 4: File Management",
+          "Pattern 5: Scheduled Jobs",
+          "Pattern 6: Real-time Integration"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-8252d4c6a008c97c",
+      "name": "create-github-issue-feature-from-specification",
+      "description": "Create GitHub Issue for feature request from specification file using feature_request.yml template.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\create-github-issue-feature-from-specification\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "e154b5ee4e2459fb09ce53da595edfaf0803b85e422872aa96bbac1f9cda548e",
+      "bodySha256": "8398e075cb4a89daccef2bb003779eeeb199b24b8e319e11571e488fa0da8132",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "create-github-issue-feature-from-specification",
+        "frontmatterDescription": "Create GitHub Issue for feature request from specification file using feature_request.yml template.",
+        "headings": [
+          "Create GitHub Issue from Specification",
+          "Process",
+          "Requirements",
+          "Issue Content"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-8517dc684050dd16",
+      "name": "cloud-design-patterns",
+      "description": "Cloud design patterns for distributed systems architecture covering 42 industry-standard patterns across reliability, performance, messaging, security, and deployment categories. Use when designing, reviewing, or implementing distributed system architectures.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\cloud-design-patterns\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "81f94cf91265fcdf4b1ae252f97e7549375d763aef9ee9dec77c1ffb5005a3fb",
+      "bodySha256": "69b0e14a0011137f7253f90b85745eba1710d8849710e3b5b677e3bf9dfe6320",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification",
+        "governance-security",
+        "release-publishing"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "cloud-design-patterns",
+        "frontmatterDescription": "Cloud design patterns for distributed systems architecture covering 42 industry-standard patterns across reliability, performance, messaging, security, and deployment categories. Use when designing, reviewing, or implementing distributed system architectures.",
+        "headings": [
+          "Cloud Design Patterns",
+          "How Cloud Design Patterns Enhance the Design Process",
+          "References",
+          "Pattern Categories at a Glance",
+          "External Links"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "governance-security",
+        "release-publishing"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-8c2967a48e4c9a8f",
+      "name": "propose-security-hardening",
+      "description": "Develop evidence-backed structural and architectural security hardening proposals from vulnerability disclosures, supplied findings, incident or assessment documents, source code, or a completed Codex Security scan. Use when a user asks for systemic improvements, alternatives beyond per-finding patches, before-and-after security architecture views, engineering tradeoff analysis, or an implementation-ready plan for a selected hardening option. Also use automatically after a Codex Security scan with reportable findings when the top-level scan workflow requests final-report hardening guidance.",
+      "sourcePath": "from-stars\\openai__codex-security\\sdk\\typescript\\_bundled_plugin\\skills\\propose-security-hardening\\SKILL.md",
+      "repositoryRoot": "from-stars\\openai__codex-security",
+      "remote": "https://github.com/openai/codex-security.git",
+      "gitHead": "47b48c973f9c1f85b8643cb22135b802fe27353f",
+      "contentDigest": "649d41a8c3171801f7610c5366d1b47d14e36e3b6fc25761fb3414a4a4be44ff",
+      "bodySha256": "b9d2c81ecb99e6eb4ad6424dbd297a935feb66c2658692d48caf4d9840eaf306",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification",
+        "debugging-recovery",
+        "governance-security",
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "propose-security-hardening",
+        "frontmatterDescription": "Develop evidence-backed structural and architectural security hardening proposals from vulnerability disclosures, supplied findings, incident or assessment documents, source code, or a completed Codex Security scan. Use when a user asks for systemic improvements, alternatives beyond per-finding patches, before-and-after security architecture views, engineering tradeoff analysis, or an implementation-ready plan for a selected hardening option. Also use automatically after a Codex Security scan with reportable findings when the top-level scan workflow requests final-report hardening guidance.",
+        "headings": [
+          "Propose Security Hardening",
+          "Objective",
+          "Accepted Inputs",
+          "Workflow",
+          "1. Verify And Prepare The Evidence",
+          "2. Build An Opportunity Inventory",
+          "3. Map The Current Design",
+          "4. Define The Desired Invariants And Constraints",
+          "5. Develop Meaningfully Different Options",
+          "6. Evaluate Security And Engineering Tradeoffs",
+          "7. Draw Comparable Before-And-After Views",
+          "8. Write The Portfolio"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "debugging-recovery",
+        "verification-evidence",
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-994b3f163c86b661",
+      "name": "architecture-blueprint-generator",
+      "description": "Comprehensive project architecture blueprint generator that analyzes codebases to create detailed architectural documentation. Automatically detects technology stacks and architectural patterns, generates visual diagrams, documents implementation patterns, and provides extensible blueprints for maintaining architectural consistency and guiding new development.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\architecture-blueprint-generator\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "c80e0cc98a9595b338803b202aec2941fc205b8659667c9b75322ab887d8c3e0",
+      "bodySha256": "a6a6f7a3b7a8210a9a391f2da3f3945bf86505341fd677eb2eb62e599520f512",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification",
+        "visual-3d-motion",
+        "writing-narrative-canon"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "architecture-blueprint-generator",
+        "frontmatterDescription": "Comprehensive project architecture blueprint generator that analyzes codebases to create detailed architectural documentation. Automatically detects technology stacks and architectural patterns, generates visual diagrams, documents implementation patterns, and provides extensible blueprints for maintaining architectural consistency and guiding new development.",
+        "headings": [
+          "Comprehensive Project Architecture Blueprint Generator",
+          "Configuration Variables",
+          "Generated Prompt",
+          "1. Architecture Detection and Analysis",
+          "2. Architectural Overview",
+          "3. Architecture Visualization",
+          "4. Core Architectural Components",
+          "5. Architectural Layers and Dependencies",
+          "6. Data Architecture",
+          "7. Cross-Cutting Concerns Implementation",
+          "8. Service Communication Patterns",
+          "9. Technology-Specific Architectural Patterns"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "visual-3d-motion",
+        "writing-narrative-canon"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c18fec5a44d5014c",
+      "name": "velar-luxury-real-estate",
+      "description": "Use this plugin when the user wants a high-end luxury real-estate / architecture landing page with cinematic scroll choreography: a typewriter preloader that lifts away, a scroll-driven house image that rises from below and scales up while pinning to a dark statement section, a sticky dark stats band with count-up numbers, and a hover-expand video gallery that slides up over the dark section. Invoke for 'luxury real estate landing page', 'architecture brand site', 'scroll-driven hero with rising building', or when the user references the Velar template.",
+      "sourcePath": "from-stars\\nexu-io__open-design\\plugins\\_official\\examples\\velar-luxury-real-estate\\SKILL.md",
+      "repositoryRoot": "from-stars\\nexu-io__open-design",
+      "remote": "https://github.com/nexu-io/open-design.git",
+      "gitHead": "114e73de162cef277e6e6d0d0f9a644ed27ba4b4",
+      "contentDigest": "75d988c437b88e158f72236efee445e4e77a92bf7ad2b0dbfe1d7843e75b1d2f",
+      "bodySha256": "2783e337f3866bca99740197c3d2e3be0363595bffa0ddea87eae5d8061769c2",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "architecture-specification"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "velar-luxury-real-estate",
+        "frontmatterDescription": "Use this plugin when the user wants a high-end luxury real-estate / architecture landing page with cinematic scroll choreography: a typewriter preloader that lifts away, a scroll-driven house image that rises from below and scales up while pinning to a dark statement section, a sticky dark stats band with count-up numbers, and a hover-expand video gallery that slides up over the dark section. Invoke for 'luxury real estate landing page', 'architecture brand site', 'scroll-driven hero with rising building', or when the user references the Velar template.",
+        "headings": [
+          "Velar. — Luxury Real Estate Landing Page",
+          "Stack",
+          "Global setup — locked",
+          "Section 1 — Preloader / intro overlay",
+          "Section 2 — Fixed nav",
+          "Section 3 — Hero",
+          "Section 4 — Scroll-driven house animation (centerpiece)",
+          "Section 5 — Dark statement + stats (sticky)",
+          "Section 6 — Hover-expand gallery (slides over Section 5)",
+          "Tech notes",
+          "Color Rules — hard"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "description: \"Use this plugin when the user wants a high-end luxury real-estate / architecture landing page with cinematic scroll choreography: a typewriter preloader that lifts away, a scroll-driven house image that rises from below and scales up while pinning to a dark statement section, a sticky dark stats band with count-up numbers, and a hover-expand video gallery that slides up over the dark section. Invoke for 'luxury real estate landing page', 'architecture brand site', 'scroll-driven hero with rising building', or when the user references the Velar template.\""
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "description: \"Use this plugin when the user wants a high-end luxury real-estate / architecture landing page with cinematic scroll choreography: a typewriter preloader that lifts away, a scroll-driven house image that rises from below and scales up while pinning to a dark statement section, a sticky dark stats band with count-up numbers, and a hover-expand video gallery that slides up over the dark section. Invoke for 'luxury real estate landing page', 'architecture brand site', 'scroll-driven hero with rising building', or when the user references the Velar template.\""
+        }
+      ],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c450a852d41db7b5",
+      "name": "product-brainstorming",
+      "description": "Brainstorm product ideas, explore problem spaces, and challenge assumptions as a thinking partner. Use when exploring a new opportunity, generating solutions to a product problem, stress-testing an idea, or when a PM needs to think out loud with a sharp sparring partner before converging on a direction.",
+      "sourcePath": "catalog-c\\agent-skills\\knowledge-work-plugins\\product-management\\skills\\product-brainstorming\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\knowledge-work-plugins",
+      "remote": "https://github.com/anthropics/knowledge-work-plugins.git",
+      "gitHead": "5267cf7bff3031921d4474b8e8f86ad02d2b8f6d",
+      "contentDigest": "a1c1ea5dc2737a166aa37e7dce4e51ae613303ce10240b94b32aa3fcc952bf38",
+      "bodySha256": "61c960653e3669b57d985b710bef3fac4370e2b40faef2a3454a329ce7828589",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification",
+        "knowledge-memory-context",
+        "product-operations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "product-brainstorming",
+        "frontmatterDescription": "Brainstorm product ideas, explore problem spaces, and challenge assumptions as a thinking partner. Use when exploring a new opportunity, generating solutions to a product problem, stress-testing an idea, or when a PM needs to think out loud with a sharp sparring partner before converging on a direction.",
+        "headings": [
+          "Product Brainstorming Skill",
+          "Brainstorming Modes",
+          "Problem Exploration",
+          "Solution Ideation",
+          "Assumption Testing",
+          "Strategy Exploration",
+          "Brainstorming Frameworks",
+          "How Might We (HMW)",
+          "Jobs-to-be-Done (JTBD)",
+          "Opportunity Solution Trees",
+          "First Principles Decomposition",
+          "SCAMPER"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "knowledge-memory-context",
+        "agent-orchestration",
+        "product-operations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c86531f4496e7bd0",
+      "name": "breakdown-epic-arch",
+      "description": "Prompt for creating the high-level technical architecture for an Epic, based on a Product Requirements Document.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\breakdown-epic-arch\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "f373d57789937d23f47e6443f44e119473346c1e668b5dd5e7a03780e5598cf3",
+      "bodySha256": "27d126ec1ab88dd60dadb41d7434036aa7480df8757e9a076cf5d0a8bbb711c9",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification",
+        "product-operations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "breakdown-epic-arch",
+        "frontmatterDescription": "Prompt for creating the high-level technical architecture for an Epic, based on a Product Requirements Document.",
+        "headings": [
+          "Epic Architecture Specification Prompt",
+          "Goal",
+          "Context Considerations",
+          "Output Format",
+          "Specification Structure",
+          "1. Epic Architecture Overview",
+          "2. System Architecture Diagram",
+          "3. High-Level Features & Technical Enablers",
+          "4. Technology Stack",
+          "5. Technical Value",
+          "6. T-Shirt Size Estimate",
+          "Context Template"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "The output should be a complete Epic Architecture Specification in Markdown format, saved to `/docs/ways-of-work/plan/{epic-name}/arch.md`."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "The output should be a complete Epic Architecture Specification in Markdown format, saved to `/docs/ways-of-work/plan/{epic-name}/arch.md`."
+        }
+      ],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "product-operations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-cce850b022fa180c",
+      "name": "update-llms",
+      "description": "Update the llms.txt file in the root folder to reflect changes in documentation or specifications following the llms.txt specification at https://llmstxt.org/",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\update-llms\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "6fb36e934b97517d44793bf223d4eea7a321f0f3a62d43bdccda5ec164f1ed06",
+      "bodySha256": "7377a6b500b054bf41a50b744faba999a44d64dce0201e0a0108ce06e6726fcf",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification",
+        "writing-narrative-canon"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "update-llms",
+        "frontmatterDescription": "Update the llms.txt file in the root folder to reflect changes in documentation or specifications following the llms.txt specification at https://llmstxt.org/",
+        "headings": [
+          "Update LLMs.txt File",
+          "Primary Directive",
+          "Analysis and Planning Phase",
+          "Step 1: Review Current File and Specification",
+          "Step 2: Repository Structure Analysis",
+          "Step 3: Content Discovery and Change Detection",
+          "Step 4: Create Update Plan",
+          "Implementation Requirements",
+          "Format Compliance",
+          "Content Requirements",
+          "Required Elements",
+          "File Link Format"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Find new documentation files (`.md` files in `/docs/`, `/spec/`, etc.)"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- ✅ File located at repository root (`/llms.txt`)"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Find new documentation files (`.md` files in `/docs/`, `/spec/`, etc.)"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- ✅ File located at repository root (`/llms.txt`)"
+        }
+      ],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "writing-narrative-canon"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-cece4543f5581514",
+      "name": "understand",
+      "description": "Analyze a codebase to produce an interactive knowledge graph for understanding architecture, components, and relationships",
+      "sourcePath": "from-stars\\Egonex-AI__Understand-Anything\\understand-anything-plugin\\skills\\understand\\SKILL.md",
+      "repositoryRoot": "from-stars\\Egonex-AI__Understand-Anything",
+      "remote": "https://github.com/Egonex-AI/Understand-Anything.git",
+      "gitHead": "32944829e7a63a9fa9c55d811d7f98a9530c6a6a",
+      "contentDigest": "c09c32ff74ba0bbdb64fe6164261f32b1a1096f3e37cf2e8ebb7ab343e2e4b1e",
+      "bodySha256": "f5aefe356de4b98d07d1eb622fe72eee218994aa297029427f417d7278d248cc",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "architecture-specification",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "understand",
+        "frontmatterDescription": "Analyze a codebase to produce an interactive knowledge graph for understanding architecture, components, and relationships",
+        "headings": [
+          "/understand",
+          "Options",
+          "Progress Reporting",
+          "Phase 0 — Pre-flight",
+          "Phase 0.5 — Ignore Configuration",
+          "Phase 1 — SCAN (Full analysis only)",
+          "Phase 1.5 — BATCH",
+          "Phase 2 — ANALYZE",
+          "Full analysis path",
+          "Incremental update path",
+          "Phase 3 — ASSEMBLE REVIEW",
+          "Phase 4 — ARCHITECTURE"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /understand"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- A directory path (e.g. `/path/to/repo` or `../other-project`) — Analyze the given directory instead of the current working directory"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "1.5. **Ensure the plugin is built.** Later phases invoke Node scripts that import `@understand-anything/core`. On a fresh install `packages/core/dist/` does not exist yet — build once."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "If `pnpm` is missing, report to the user: \"Install Node.js ≥ 22 and pnpm ≥ 10, then re-run `/understand`.\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Then invoke the bundled script (located next to this SKILL.md):"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "6. Only automatically launch the dashboard by invoking the `/understand-dashboard` skill if final graph validation passed after normalization/review fixes."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /understand"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- A directory path (e.g. `/path/to/repo` or `../other-project`) — Analyze the given directory instead of the current working directory"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "1.5. **Ensure the plugin is built.** Later phases invoke Node scripts that import `@understand-anything/core`. On a fresh install `packages/core/dist/` does not exist yet — build once."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "If `pnpm` is missing, report to the user: \"Install Node.js ≥ 22 and pnpm ≥ 10, then re-run `/understand`.\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Then invoke the bundled script (located next to this SKILL.md):"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "6. Only automatically launch the dashboard by invoking the `/understand-dashboard` skill if final graph validation passed after normalization/review fixes."
+        }
+      ],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "knowledge-memory-context"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d8ac25bb18714170",
+      "name": "implementing-conduit-security-for-ot-remote-access",
+      "description": "Implements secure conduit architecture for OT remote access under the",
+      "sourcePath": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills\\skills\\implementing-conduit-security-for-ot-remote-access\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\Anthropic-Cybersecurity-Skills",
+      "remote": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "gitHead": "f76261573a539ec40c3d434ecbb9e657d26aa921",
+      "contentDigest": "e67577d40ab956a5c0adce6111e1085638d8447a676203e91281790bc00dd22e",
+      "bodySha256": "97939ddfc3165fe6a6b8ed52fc0b75f91ab77878a9a6e24da85cb49cc65e2963",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification",
+        "governance-security"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "implementing-conduit-security-for-ot-remote-access",
+        "frontmatterDescription": "'Implements secure conduit architecture for OT remote access under the",
+        "headings": [
+          "Implementing Conduit Security for OT Remote Access",
+          "When to Use",
+          "Prerequisites",
+          "Workflow",
+          "Step 1: Design Conduit Architecture for Remote Access",
+          "IEC 62443 Conduit Security Architecture for OT Remote Access",
+          "All remote access terminates in DMZ - never passes through to OT directly",
+          "Step 2: Implement Access Control and Monitoring",
+          "Key Concepts",
+          "Output Format"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "governance-security"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-de9ddee9521b860f",
+      "name": "azure-smart-city-iot-solution-builder",
+      "description": "Design and plan end-to-end Azure IoT and Smart City solutions: requirements, architecture, security, operations, cost, and a phased delivery plan with concrete implementation artifacts.",
+      "sourcePath": "catalog-c\\agent-skills\\awesome-copilot\\skills\\azure-smart-city-iot-solution-builder\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\awesome-copilot",
+      "remote": "https://github.com/github/awesome-copilot.git",
+      "gitHead": "83561bd7d8a46fcda0581aedabdf8eac7cb196b6",
+      "contentDigest": "4dd09542ebfebff60b77f81d8edfc40283452fe1380e7f3087b64bdce9e3e6ee",
+      "bodySha256": "eeb05e3e2288af37b2612c421f6e88d797de66b79c14d40ff0416882e77990d1",
+      "bodyStatus": "inspected",
+      "licenseClass": "permissive",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification",
+        "governance-security",
+        "product-operations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "azure-smart-city-iot-solution-builder",
+        "frontmatterDescription": "Design and plan end-to-end Azure IoT and Smart City solutions: requirements, architecture, security, operations, cost, and a phased delivery plan with concrete implementation artifacts.",
+        "headings": [
+          "Azure Smart City IoT Solution Builder",
+          "When to use it",
+          "Objectives",
+          "Workflow",
+          "0) Mandatory documentation review (before any architecture)",
+          "1) Scope and constraints",
+          "2) Capability map",
+          "3) Azure service selection (reference)",
+          "4) Non-functional design",
+          "5) Delivery plan",
+          "Reuse other skills first",
+          "Runtime-provided Azure skills (optional)"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "architecture-specification",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "governance-security",
+        "product-operations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    }
+  ]
+}

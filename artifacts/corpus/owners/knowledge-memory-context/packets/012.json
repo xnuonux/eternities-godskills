@@ -1,0 +1,948 @@
+{
+  "schemaVersion": 1,
+  "packetId": "knowledge-memory-context-012",
+  "familyId": "knowledge-memory-context",
+  "sequence": 12,
+  "sourceCount": 11,
+  "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions.",
+  "cards": [
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-bb0fb050376b2153",
+      "name": "self-improving-agent",
+      "description": "Curate Claude Code's auto-memory into durable project knowledge. Analyze MEMORY.md for patterns, promote proven learnings to CLAUDE.md and .claude/rules/, extract recurring solutions into reusable skills. Use when: (1) reviewing what Claude has learned about your project, (2) graduating a pattern from notes to enforced rules, (3) turning a debugging solution into a skill, (4) checking memory health and capacity.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\engineering-team\\self-improving-agent\\skills\\self-improving-agent\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\engineering-team",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "7d783c1f5d73c055e4767e924d60750687b418df9441ab81144a3c55995b8c9a",
+      "bodySha256": "31fb9ef2af18ffb3683c846eef2f20b0c8abc8acf28b7fc34efa7b048c3b2464",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "self-improving-agent",
+        "frontmatterDescription": "Curate Claude Code's auto-memory into durable project knowledge. Analyze MEMORY.md for patterns, promote proven learnings to CLAUDE.md and .claude/rules/, extract recurring solutions into reusable skills. Use when: (1) reviewing what Claude has learned about your project, (2) graduating a pattern from notes to enforced rules, (3) turning a debugging solution into a skill, (4) checking memory health and capacity.",
+        "headings": [
+          "Self-Improving Agent",
+          "Quick Reference",
+          "How It Fits Together",
+          "Installation",
+          "Claude Code (Plugin)",
+          "OpenClaw",
+          "Codex CLI",
+          "Memory Architecture",
+          "Where things live",
+          "The promotion lifecycle",
+          "Core Concepts",
+          "Auto-memory is capture, not curation"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| `/si:review` | Analyze MEMORY.md — find promotion candidates, stale entries, consolidation opportunities |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| `/si:promote` | Graduate a pattern from MEMORY.md → CLAUDE.md or `.claude/rules/` |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| `/si:extract` | Turn a proven pattern into a standalone skill |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| `/si:status` | Memory health dashboard — line counts, topic files, recommendations |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "| `/si:remember` | Explicitly save important knowledge to auto-memory |"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "│              ↑ /si:promote        ↑ /si:review          │"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "│              ↓ /si:extract    ↓ /si:remember            │"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/plugin marketplace add alirezarezvani/claude-skills"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| `/si:review` | Analyze MEMORY.md — find promotion candidates, stale entries, consolidation opportunities |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| `/si:promote` | Graduate a pattern from MEMORY.md → CLAUDE.md or `.claude/rules/` |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| `/si:extract` | Turn a proven pattern into a standalone skill |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| `/si:status` | Memory health dashboard — line counts, topic files, recommendations |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "| `/si:remember` | Explicitly save important knowledge to auto-memory |"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "│              ↑ /si:promote        ↑ /si:review          │"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "│              ↓ /si:extract    ↓ /si:remember            │"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/plugin marketplace add alirezarezvani/claude-skills"
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-bbb8432df5b22d74",
+      "name": "inbox-setup",
+      "description": "One-time setup skill that builds a personalized inbox triage knowledge base via interactive interview. Interviews the user about their email patterns, business context, reply style, and priorities using grill-me discipline (one question at a time, forcing format where possible, dependency-ordered, each question explains why I'm asking), then generates the knowledge base files that power the companion 'inbox-triage' skill. Run this once before using inbox-triage for the first time. Re-run when business, pricing, or priorities change significantly. Triggers: 'set up my inbox', 'configure inbox triage', 'set up my email system', 'configure email triage', 'build my email knowledge base', 'initialize email management', 'set up inbox triage', 'onboard email triage', or any variation where someone wants to get the email triage system running for the first time.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\productivity\\email\\skills\\inbox-setup\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\productivity",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "f745389242a1d6f4cff3867679f97ae769228ed7255fa9dd51a38a3dbe63339a",
+      "bodySha256": "554986a87189951b7d388cced80edad9f4abaf32d383bb582ba474d33268de60",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context",
+        "product-operations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "inbox-setup",
+        "frontmatterDescription": "One-time setup skill that builds a personalized inbox triage knowledge base via interactive interview. Interviews the user about their email patterns, business context, reply style, and priorities using grill-me discipline (one question at a time, forcing format where possible, dependency-ordered, each question explains why I'm asking), then generates the knowledge base files that power the companion 'inbox-triage' skill. Run this once before using inbox-triage for the first time. Re-run when business, pricing, or priorities change significantly. Triggers: 'set up my inbox', 'configure inbox triage', 'set up my email system', 'configure email triage', 'build my email knowledge base', 'initialize email management', 'set up inbox triage', 'onboard email triage', or any variation where someone wants to get the email triage system running for the first time.",
+        "headings": [
+          "Inbox-Setup — Email Triage Onboarding",
+          "Invocation Triggers",
+          "Conduct Discipline",
+          "Knowledge Base Contract — Files To Produce",
+          "Stop Condition (Full Interview)",
+          "Section 1: The Big Picture",
+          "Section 2: Email Categories",
+          "Section 3: Reply Style & Voice",
+          "S3.SAMPLES (the critical highest-quality input)",
+          "Section 4: Evaluation Framework (Conditional)",
+          "Section 5: Blocklist & Patterns",
+          "Section 6: Current State"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "product-operations"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c2701b8071c05aaf",
+      "name": "design-agent",
+      "description": "CrewAI agent design and configuration. Use when creating, configuring, or debugging crewAI agents — choosing role/goal/backstory, selecting LLMs, assigning tools, tuning max_iter/max_rpm/max_execution_time, enabling planning/code execution/delegation, setting up knowledge sources, using guardrails, or configuring agents in YAML vs code.",
+      "sourcePath": "catalog-c\\agent-skills\\skills\\skills\\design-agent\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\skills\\skills",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "ce1b1fa1f95cdd33421fa53d6a6e6e577e2498e75c029cd41d38dacd2784a80b",
+      "bodySha256": "b47a4f06bbedd2f34d76bdb96a69a89627b308f898fa8a1fa72e6e53a178ca39",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "design-agent",
+        "frontmatterDescription": "CrewAI agent design and configuration. Use when creating, configuring, or debugging crewAI agents — choosing role/goal/backstory, selecting LLMs, assigning tools, tuning max_iter/max_rpm/max_execution_time, enabling planning/code execution/delegation, setting up knowledge sources, using guardrails, or configuring agents in YAML vs code.",
+        "headings": [
+          "CrewAI Agent Design Guide",
+          "The 80/20 Rule",
+          "0. How Many Agents Do You Actually Need?",
+          "Anti-pattern: Sequential mechanical steps as separate agents",
+          "Anti-pattern: \"Summarize then send\" as two agents",
+          "Task: \"Read the report below. Write a 2-3 sentence executive summary at the top.",
+          "Post a DM to {recipient_email} with the summary followed by the full body.\"",
+          "Heuristic",
+          "Once you've decided \"one agent is enough\"",
+          "1. The Role-Goal-Backstory Framework",
+          "Role — Who the Agent Is",
+          "Goal — What the Agent Wants"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Do not make a \"chat agent\" with every tool. Route first, then invoke a focused agent for the selected route."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Do not make a \"chat agent\" with every tool. Route first, then invoke a focused agent for the selected route."
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c2a75e405fbd8971",
+      "name": "performance-profiler",
+      "description": "Systematic performance profiling for Node.js, Python, and Go applications. Identifies CPU, memory, and I/O bottlenecks, generates flamegraphs, analyzes bundle sizes, optimizes database queries, runs load tests with k6 and Artillery. Always measures before and after. Use when investigating a slow endpoint, planning a performance budget, or hunting a memory leak in production.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\engineering\\skills\\performance-profiler\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\engineering",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "d0bc0256299029d80e396873974221b8a0faec62fdfc67ee8c2d4f914f3bea9d",
+      "bodySha256": "953948b591db0afc4dac8ff4e84d65a2c34fa62b7b579e3ba6cf3398e79ec18b",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "data-infrastructure",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "performance-profiler",
+        "frontmatterDescription": "Systematic performance profiling for Node.js, Python, and Go applications. Identifies CPU, memory, and I/O bottlenecks, generates flamegraphs, analyzes bundle sizes, optimizes database queries, runs load tests with k6 and Artillery. Always measures before and after. Use when investigating a slow endpoint, planning a performance budget, or hunting a memory leak in production.",
+        "headings": [
+          "Performance Profiler",
+          "Overview",
+          "Core Capabilities",
+          "When to Use",
+          "Quick Start",
+          "Analyze a project for performance risk indicators",
+          "JSON output for CI integration",
+          "Custom large-file threshold",
+          "Golden Rule: Measure First",
+          "Establish baseline BEFORE any optimization",
+          "Record: P50, P95, P99 latency | RPS | error rate | memory usage",
+          "Wrong: \"I think the N+1 query is slow, let me fix it\""
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "python3 scripts/performance_profiler.py /path/to/project"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "python3 scripts/performance_profiler.py /path/to/project --json"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "python3 scripts/performance_profiler.py /path/to/project --large-file-threshold-kb 256"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "python3 scripts/performance_profiler.py /path/to/project"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "python3 scripts/performance_profiler.py /path/to/project --json"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "python3 scripts/performance_profiler.py /path/to/project --large-file-threshold-kb 256"
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "data-infrastructure"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c5a364dcedd792f7",
+      "name": "principle-guard-the-context-window",
+      "description": "Apply when context is filling up: large outputs, long files, repeated reads, fan-out planning. Route bulk to subagents; keep summaries in the main thread, not raw payloads.",
+      "sourcePath": "from-stars\\cursor__plugins\\pstack\\skills\\principle-guard-the-context-window\\SKILL.md",
+      "repositoryRoot": "from-stars\\cursor__plugins",
+      "remote": "https://github.com/cursor/plugins.git",
+      "gitHead": "46125561306434d8a1d7745d540d8932ab0cd2a2",
+      "contentDigest": "2c0ebea0988682f93d29cb51c53680668f4569939d20a3799a844ec76260f0e6",
+      "bodySha256": "a514e3ab1b76dd3243303bdc0b71899cbd5dc241c9dce4d36dfcaccb244008ad",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "principle-guard-the-context-window",
+        "frontmatterDescription": "Apply when context is filling up: large outputs, long files, repeated reads, fan-out planning. Route bulk to subagents; keep summaries in the main thread, not raw payloads.",
+        "headings": [
+          "Guard the Context Window"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-c8f21a5cf8484d4c",
+      "name": "extract",
+      "description": "Turn a proven pattern or debugging solution into a standalone reusable skill with SKILL.md, reference docs, and examples. Use when the user runs /si:extract or asks to package a recurring solution from memory into a skill.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\engineering-team\\self-improving-agent\\skills\\extract\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\engineering-team",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "3d8bebe0b1a91b8dc347a4750604b7f8aa1391a164d860f83f4f0ea32bdcbb2d",
+      "bodySha256": "eabdb4c6ffd2624a51108649623b29ccdc02d2b390305e65e2b7a981dc4d72dd",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context",
+        "release-publishing"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "extract",
+        "frontmatterDescription": "Turn a proven pattern or debugging solution into a standalone reusable skill with SKILL.md, reference docs, and examples. Use when the user runs /si:extract or asks to package a recurring solution from memory into a skill.",
+        "headings": [
+          "/si:extract — Create Skills from Patterns",
+          "Usage",
+          "When to Extract",
+          "Workflow",
+          "Step 1: Identify the pattern",
+          "Step 2: Determine skill scope",
+          "Step 3: Generate skill name",
+          "Step 4: Create the skill files",
+          "Step 5: SKILL.md structure",
+          "<Skill Title>",
+          "Quick Reference",
+          "The Problem"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "description: \"Turn a proven pattern or debugging solution into a standalone reusable skill with SKILL.md, reference docs, and examples. Use when the user runs /si:extract or asks to package a recurring solution from memory into a skill.\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /si:extract — Create Skills from Patterns"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/si:extract <pattern description>                  # Interactive extraction"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/si:extract <pattern> --name docker-m1-fixes       # Specify skill name"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/si:extract <pattern> --output ./skills/            # Custom output directory"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/si:extract <pattern> --dry-run                     # Preview without creating files"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "Install: /plugin install (copy to your skills directory)"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/si:extract \"Fix for Docker builds failing on Apple Silicon with platform mismatch\""
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "description: \"Turn a proven pattern or debugging solution into a standalone reusable skill with SKILL.md, reference docs, and examples. Use when the user runs /si:extract or asks to package a recurring solution from memory into a skill.\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /si:extract — Create Skills from Patterns"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/si:extract <pattern description>                  # Interactive extraction"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/si:extract <pattern> --name docker-m1-fixes       # Specify skill name"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/si:extract <pattern> --output ./skills/            # Custom output directory"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/si:extract <pattern> --dry-run                     # Preview without creating files"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "Install: /plugin install (copy to your skills directory)"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/si:extract \"Fix for Docker builds failing on Apple Silicon with platform mismatch\""
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "release-publishing"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-d988e2d0f6a9e965",
+      "name": "design-task",
+      "description": "CrewAI task design and configuration. Use when creating, configuring, or debugging crewAI tasks — writing descriptions and expected_output, setting up task dependencies with context, configuring output formats (output_pydantic, output_json, output_file), using guardrails for validation, enabling human_input, async execution, markdown formatting, or debugging task execution issues.",
+      "sourcePath": "catalog-c\\agent-skills\\skills\\skills\\design-task\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\skills\\skills",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "8a8430bf865b4ca99808ae0098dd645bbe0b8638ae36761f04ff11777d2e4b7a",
+      "bodySha256": "0e045e97250946034e593b0d96aa935b7aeac30383e3b3c03cec72573048e8ab",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context",
+        "writing-narrative-canon"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "design-task",
+        "frontmatterDescription": "CrewAI task design and configuration. Use when creating, configuring, or debugging crewAI tasks — writing descriptions and expected_output, setting up task dependencies with context, configuring output formats (output_pydantic, output_json, output_file), using guardrails for validation, enabling human_input, async execution, markdown formatting, or debugging task execution issues.",
+        "headings": [
+          "CrewAI Task Design Guide",
+          "The 80/20 Rule",
+          "1. Anatomy of an Effective Task",
+          "Description — The Instructions",
+          "Expected Output — The Success Criteria",
+          "2. The Single Purpose Principle",
+          "Bad: \"God Task\"",
+          "DON'T do this — too many objectives in one task",
+          "Good: Focused Tasks",
+          "3. Task Configuration Reference",
+          "Essential Parameters",
+          "Task Dependencies with `context`"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "writing-narrative-canon"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-de8399ba804ad106",
+      "name": "decide",
+      "description": "/cs:decide <memo> — Log a decision to two-layer memory via decision-logger. Approved memo becomes durable; raw transcripts kept for reference. Use when the founder has approved a boardroom memo and the decision must become durable company memory — e.g. right after /cs:boardroom concludes.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\c-level-advisor\\c-level-agents\\skills\\decide\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\c-level-advisor",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "22836c765be6a58a5db3f274f6158c33c76bdbab9d8ae2e77f722f959539a673",
+      "bodySha256": "75b9ebad65f6304d2087547324c0ab745f1d028a5f98dffb930361908a412aca",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "decide",
+        "frontmatterDescription": "/cs:decide <memo> — Log a decision to two-layer memory via decision-logger. Approved memo becomes durable; raw transcripts kept for reference. Use when the founder has approved a boardroom memo and the decision must become durable company memory — e.g. right after /cs:boardroom concludes.",
+        "headings": [
+          "/cs:decide — Log the Decision",
+          "Pipeline Position",
+          "Two-Layer Memory Model",
+          "Input",
+          "Workflow",
+          "Output Record Format",
+          "Decision: <title>",
+          "Decision",
+          "Success Criteria (binding)",
+          "Kill Criteria (binding)",
+          "Preserved Dissent",
+          "Next Action"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "description: \"/cs:decide <memo> — Log a decision to two-layer memory via decision-logger. Approved memo becomes durable; raw transcripts kept for reference. Use when the founder has approved a boardroom memo and the decision must become durable company memory — e.g. right after /cs:boardroom concludes.\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /cs:decide — Log the Decision"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "**Command:** `/cs:decide <memo-path>`"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/cs:office-hours  →  /cs:brief  →  /cs:boardroom  →  /cs:decide  →  /cs:execute  →  /cs:post-mortem"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "2. **Approved decisions** — only the founder-signed memos. Stored under `~/.claude/decisions/approved/`. Feeds into future `/cs:office-hours` and `/cs:founder-mode` calls."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "A board memo file (output of `/cs:boardroom`)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/cs:execute` → 90-day plan due <date>"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `/cs:execute <decision>` — build the 90-day plan"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "description: \"/cs:decide <memo> — Log a decision to two-layer memory via decision-logger. Approved memo becomes durable; raw transcripts kept for reference. Use when the founder has approved a boardroom memo and the decision must become durable company memory — e.g. right after /cs:boardroom concludes.\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /cs:decide — Log the Decision"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "**Command:** `/cs:decide <memo-path>`"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/cs:office-hours  →  /cs:brief  →  /cs:boardroom  →  /cs:decide  →  /cs:execute  →  /cs:post-mortem"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "2. **Approved decisions** — only the founder-signed memos. Stored under `~/.claude/decisions/approved/`. Feeds into future `/cs:office-hours` and `/cs:founder-mode` calls."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "A board memo file (output of `/cs:boardroom`)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/cs:execute` → 90-day plan due <date>"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `/cs:execute <decision>` — build the 90-day plan"
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-e137d4a7e4ee6a2f",
+      "name": "rag-architect",
+      "description": "Use when the user asks to design a RAG pipeline, choose a chunking strategy or embedding model, pick a vector database, or evaluate retrieval quality (precision@k, recall@k, NDCG). Examples: 'design a RAG system for our docs', 'what chunk size should I use for this corpus', 'evaluate my retriever against ground truth'. NOT for general LLM cost tuning (use llm-cost-optimizer) or agent loops over retrieval (use agenthub).",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\engineering\\skills\\rag-architect\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\engineering",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "47490d9b75c8241c96350424b1acc1c5696d1fb5705589649eaa4a625b77f219",
+      "bodySha256": "5cdf05a3ea5645f04a9e9eb08a5a1d1dd332c280b3ddd2eb5624e348f7a0bb27",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "architecture-specification",
+        "data-infrastructure",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "rag-architect",
+        "frontmatterDescription": "Use when the user asks to design a RAG pipeline, choose a chunking strategy or embedding model, pick a vector database, or evaluate retrieval quality (precision@k, recall@k, NDCG). Examples: 'design a RAG system for our docs', 'what chunk size should I use for this corpus', 'evaluate my retriever against ground truth'. NOT for general LLM cost tuning (use llm-cost-optimizer) or agent loops over retrieval (use agenthub).",
+        "headings": [
+          "RAG Architect",
+          "Hard rules",
+          "Embedding model tiers (pattern, not price list)",
+          "Workflow",
+          "1. Analyze the corpus and pick chunking",
+          "2. Design the pipeline from requirements",
+          "3. Evaluate retrieval quality",
+          "4. Verification loop",
+          "References"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "python3 chunking_optimizer.py /path/to/docs --extensions .md .txt -o chunking.json"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "python3 retrieval_evaluator.py queries.json /path/to/docs ground_truth.json --k-values 3 5 10 -o eval.json"
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "python3 chunking_optimizer.py /path/to/docs --extensions .md .txt -o chunking.json"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "python3 retrieval_evaluator.py queries.json /path/to/docs ground_truth.json --k-values 3 5 10 -o eval.json"
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "data-infrastructure",
+        "architecture-specification",
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-e7eb60094edb0de4",
+      "name": "merge",
+      "description": "Merge the winning agent's branch into base, archive losers, and clean up worktrees. Use when the user runs /hub:merge or asks to land the winning AgentHub result and tidy the session.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\engineering\\agenthub\\skills\\merge\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\engineering",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "ff86a3e74e3c58b23f378c42f6a57852a76a34a6cad94289b26a2a7cd68b5de0",
+      "bodySha256": "3d002340c3ac079ee3f235165c7e9d44d9524c21e06515abba9e26e330166b66",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "knowledge-memory-context"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "merge",
+        "frontmatterDescription": "Merge the winning agent's branch into base, archive losers, and clean up worktrees. Use when the user runs /hub:merge or asks to land the winning AgentHub result and tidy the session.",
+        "headings": [
+          "/hub:merge — Merge Winner",
+          "Usage",
+          "What It Does",
+          "1. Identify Winner",
+          "2. Merge Winner",
+          "3. Archive Losers",
+          "Create archive tag (preserves commits forever)",
+          "Delete branch ref (commits preserved via tag)",
+          "4. Clean Up Worktrees",
+          "5. Post Merge Summary",
+          "Merge Summary",
+          "6. Update State"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "description: \"Merge the winning agent's branch into base, archive losers, and clean up worktrees. Use when the user runs /hub:merge or asks to land the winning AgentHub result and tidy the session.\""
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "command: /hub:merge"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "# /hub:merge — Merge Winner"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/hub:merge                                       # Merge winner of latest session"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/hub:merge 20260317-143022                       # Merge winner of specific session"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "/hub:merge 20260317-143022 --agent agent-2       # Explicitly choose winner"
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "If `--agent` specified, use that. Otherwise, use the #1 ranked agent from the most recent `/hub:eval`."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "description: \"Merge the winning agent's branch into base, archive losers, and clean up worktrees. Use when the user runs /hub:merge or asks to land the winning AgentHub result and tidy the session.\""
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "command: /hub:merge"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "# /hub:merge — Merge Winner"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/hub:merge                                       # Merge winner of latest session"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/hub:merge 20260317-143022                       # Merge winner of specific session"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "/hub:merge 20260317-143022 --agent agent-2       # Explicitly choose winner"
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "If `--agent` specified, use that. Otherwise, use the #1 ranked agent from the most recent `/hub:eval`."
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "agent-orchestration"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-ee214feb84221fe3",
+      "name": "control-cli",
+      "description": "Build or adapt a local harness to drive, inspect, and profile an interactive CLI or TUI without external services. Use for CLI UX checks, startup regressions, memory leaks, hangs, prompt flows, or terminal demos.",
+      "sourcePath": "from-stars\\cursor__plugins\\cursor-team-kit\\skills\\control-cli\\SKILL.md",
+      "repositoryRoot": "from-stars\\cursor__plugins",
+      "remote": "https://github.com/cursor/plugins.git",
+      "gitHead": "46125561306434d8a1d7745d540d8932ab0cd2a2",
+      "contentDigest": "4cdd91dfe0e168f835b1775aa2a7529f2d434a6505b2e69b2e20d83b1bf1d7f0",
+      "bodySha256": "e3aac9ccc7311fb3320538bcf85490da5930d7d0a62a85775ef076bf07577c7a",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "knowledge-memory-context",
+        "web-interface-accessibility"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": false,
+        "provenanceCertified": false,
+        "clustered": false,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "control-cli",
+        "frontmatterDescription": "Build or adapt a local harness to drive, inspect, and profile an interactive CLI or TUI without external services. Use for CLI UX checks, startup regressions, memory leaks, hangs, prompt flows, or terminal demos.",
+        "headings": [
+          "Control CLI",
+          "What It Is Used For",
+          "Harness Loop",
+          "Harness Options",
+          "Minimal tmux Harness",
+          "Minimal PTY Harness",
+          "Profiling Recipes",
+          "Guardrails"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- Keep the harness in `/tmp` unless the repo already has a testing/demo harness."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- Keep the harness in `/tmp` unless the repo already has a testing/demo harness."
+        }
+      ],
+      "ownerFamily": "knowledge-memory-context",
+      "secondaryFamilies": [
+        "web-interface-accessibility"
+      ],
+      "ownershipBasis": "classifier-primary",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    }
+  ]
+}

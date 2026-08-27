@@ -1,0 +1,259 @@
+{
+  "schemaVersion": 1,
+  "packetId": "marketing-growth-011",
+  "familyId": "marketing-growth",
+  "sequence": 11,
+  "sourceCount": 3,
+  "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions.",
+  "cards": [
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-f9f329a3029aaa56",
+      "name": "higgsfield",
+      "description": "Use when the user asks about higgsfield.ai - generating images, generating videos, animating an image, Soul ID characters, Cinema Studio 3.5, Seedance, Kling, Veo, Minimax Hailuo, Wan, Nano Banana, Soul 2.0, Soul Cinema, Flux, Seedream, UGC Factory, Lipsync Studio, Marketing Studio, or saving credits / avoiding credit spend on the Creator plan.",
+      "sourcePath": "hunt\\pixel\\khaledhaz__higgsfield-skill\\SKILL.md",
+      "repositoryRoot": "hunt\\pixel\\khaledhaz__higgsfield-skill",
+      "remote": "https://github.com/khaledhaz/higgsfield-skill.git",
+      "gitHead": "6710c9c7467586b89ff5a05016fa81890d378a46",
+      "contentDigest": "5745960738540b482189f7504b6cc56180865071e0d80b3e78b1cd3d9daf243c",
+      "bodySha256": "a68307ebff2bfa5a473a6fc88e2a668dde8522bcafa0d38a6df0102bf8fba7db",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "marketing-growth",
+        "product-operations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": true,
+        "provenanceCertified": false,
+        "clustered": true,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "higgsfield",
+        "frontmatterDescription": "Use when the user asks about higgsfield.ai - generating images, generating videos, animating an image, Soul ID characters, Cinema Studio 3.5, Seedance, Kling, Veo, Minimax Hailuo, Wan, Nano Banana, Soul 2.0, Soul Cinema, Flux, Seedream, UGC Factory, Lipsync Studio, Marketing Studio, or saving credits / avoiding credit spend on the Creator plan.",
+        "headings": [
+          "Higgsfield (Creator plan)",
+          "Before any task — ASK, never predict",
+          "Engine mode (agentic execution via Obsidian project notes)",
+          "Intake rules",
+          "Phase sequence",
+          "Tab allocation (single-tab burst — Round 4.1)",
+          "QC loop (per artifact, max 3 attempts)",
+          "Mode dispatch",
+          "Setting up Mode D (one-time)",
+          "Pause / resume via the note (exit-cleanly)",
+          "Orchestrator playbook (Mode A runtime)",
+          "Phase 0 — Intake + parallel precompute"
+        ],
+        "invocationCandidates": [
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "User is on the **Creator plan**: 24-month term at $5,976, 6,000 credits/month, renews 2026-01-26 (captured 2026-04-21; confirm on /me/settings/subscription if stale)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "2. **VO** (if `vo.script` present) — navigate to `/audio`, set model + voice + script in composer. **Read the waveform's mm:ss label from the DOM before clicking Generate** — this gives a duration estimate to plan against. Click Generate. Download the mp3 to `$PWD/hf-outputs/<slug>/vo.mp3`. Run `engine/probe_duration.sh` to get the actual duration."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "4. **Images** — lazy-spawn up to min(N, 6) worker tabs on `/ai/image?model=nano-banana-pro`. Each submits one shot image. Download + QC-loop each (§ QC loop below)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "5. **Videos** — lazy-spawn up to min(N, 6) workers on `/ai/video` with Kling 3.0 selected. Each submits one shot animation. Download + QC-loop."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `audio` — pinned to `/audio` during Phase 1 (VO synthesis)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `image` — pinned to `/ai/image?model=nano-banana-pro` during Phase 4 (single-tab NBP burst)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `video` — pinned to `/ai/video` (Kling 3.0) during Phase 5 (single-tab Kling burst)."
+          },
+          {
+            "evidenceType": "inspected-source-data",
+            "text": "- `monitor` — pinned to `/asset/video` for polling results when needed."
+          }
+        ]
+      },
+      "invocationCandidates": [
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "User is on the **Creator plan**: 24-month term at $5,976, 6,000 credits/month, renews 2026-01-26 (captured 2026-04-21; confirm on /me/settings/subscription if stale)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "2. **VO** (if `vo.script` present) — navigate to `/audio`, set model + voice + script in composer. **Read the waveform's mm:ss label from the DOM before clicking Generate** — this gives a duration estimate to plan against. Click Generate. Download the mp3 to `$PWD/hf-outputs/<slug>/vo.mp3`. Run `engine/probe_duration.sh` to get the actual duration."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "4. **Images** — lazy-spawn up to min(N, 6) worker tabs on `/ai/image?model=nano-banana-pro`. Each submits one shot image. Download + QC-loop each (§ QC loop below)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "5. **Videos** — lazy-spawn up to min(N, 6) workers on `/ai/video` with Kling 3.0 selected. Each submits one shot animation. Download + QC-loop."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `audio` — pinned to `/audio` during Phase 1 (VO synthesis)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `image` — pinned to `/ai/image?model=nano-banana-pro` during Phase 4 (single-tab NBP burst)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `video` — pinned to `/ai/video` (Kling 3.0) during Phase 5 (single-tab Kling burst)."
+        },
+        {
+          "evidenceType": "inspected-source-data",
+          "text": "- `monitor` — pinned to `/asset/video` for polling results when needed."
+        }
+      ],
+      "ownerFamily": "marketing-growth",
+      "secondaryFamilies": [
+        "product-operations"
+      ],
+      "ownershipBasis": "existing-review",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-ff3d67707efbc331",
+      "name": "local-seo-manager",
+      "description": "Manage local SEO for service-area businesses — appliance repair, HVAC, plumbing, cleaning, and any business that serves customers at their location. Use when the user wants to: audit Google Business Profile, generate neighborhood service area pages, check NAP consistency across directories, create LocalBusiness schema, or write review responses. Triggers: 'local SEO', 'Google Business Profile', 'GBP', 'service area page', 'NAP consistency', 'local citations', 'LocalBusiness schema', 'review responses', 'Google Maps ranking'. NOT for national SEO (use seo-audit). NOT for general schema (use schema-markup). NOT for AI answer-engine visibility (use aeo).",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\marketing-skill\\skills\\local-seo-manager\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\marketing-skill",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "0a9ec8bbd8b70f4cda128769295c3b49bc1c539352eaf2fbdb99017d1a2f7fe1",
+      "bodySha256": "6d93fc13f7e0bd4907722c5950aa0e7803e186d941405cec9bdccc553e027ecc",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "data-infrastructure",
+        "debugging-recovery",
+        "marketing-growth",
+        "product-operations",
+        "verification-evidence"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": true,
+        "provenanceCertified": false,
+        "clustered": true,
+        "synthesized": false,
+        "evaluated": false,
+        "promoted": false
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "local-seo-manager",
+        "frontmatterDescription": "Manage local SEO for service-area businesses — appliance repair, HVAC, plumbing, cleaning, and any business that serves customers at their location. Use when the user wants to: audit Google Business Profile, generate neighborhood service area pages, check NAP consistency across directories, create LocalBusiness schema, or write review responses. Triggers: 'local SEO', 'Google Business Profile', 'GBP', 'service area page', 'NAP consistency', 'local citations', 'LocalBusiness schema', 'review responses', 'Google Maps ranking'. NOT for national SEO (use seo-audit). NOT for general schema (use schema-markup). NOT for AI answer-engine visibility (use aeo).",
+        "headings": [
+          "Local SEO Manager",
+          "Before Starting",
+          "The 4 Modes",
+          "Mode 1: GBP Audit",
+          "Mode 2: Service Area Content",
+          "Mode 3: NAP Consistency Check",
+          "Mode 4: Schema & Technical",
+          "Mode 1: GBP Audit",
+          "GBP Ranking Factors (in order of impact)",
+          "GBP Audit Checklist",
+          "Review Response Templates",
+          "Mode 2: Service Area Pages"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "marketing-growth",
+      "secondaryFamilies": [
+        "product-operations",
+        "debugging-recovery",
+        "verification-evidence",
+        "agent-orchestration",
+        "data-infrastructure"
+      ],
+      "ownershipBasis": "existing-review",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    },
+    {
+      "schemaVersion": 1,
+      "sourceId": "skill-fff1a71271d5388c",
+      "name": "campaign-analytics",
+      "description": "Analyzes campaign performance with multi-touch attribution, funnel conversion analysis, and ROI calculation for marketing optimization. Use when analyzing marketing campaigns, ad performance, attribution models, conversion rates, or calculating marketing ROI, ROAS, CPA, and campaign metrics across channels.",
+      "sourcePath": "catalog-c\\agent-skills\\claude-skills\\marketing-skill\\skills\\campaign-analytics\\SKILL.md",
+      "repositoryRoot": "catalog-c\\agent-skills\\claude-skills\\marketing-skill",
+      "remote": "",
+      "gitHead": "",
+      "contentDigest": "943fddc16e782172998df512f62624fdea23c102d84369b92bdbac8e1ce73be3",
+      "bodySha256": "c2a7431cbe7e92b08802597f6c02bbd0f173aebe508a1fc7b067f082764c67c1",
+      "bodyStatus": "inspected",
+      "licenseClass": "unknown",
+      "confidence": "low",
+      "families": [
+        "agent-orchestration",
+        "data-infrastructure",
+        "marketing-growth",
+        "product-operations"
+      ],
+      "evidence": {
+        "indexed": true,
+        "classified": true,
+        "bodyInspected": true,
+        "cardReviewed": true,
+        "provenanceCertified": false,
+        "clustered": true,
+        "synthesized": true,
+        "evaluated": true,
+        "promoted": true
+      },
+      "duplicateGroupIds": [],
+      "structure": {
+        "frontmatterName": "campaign-analytics",
+        "frontmatterDescription": "Analyzes campaign performance with multi-touch attribution, funnel conversion analysis, and ROI calculation for marketing optimization. Use when analyzing marketing campaigns, ad performance, attribution models, conversion rates, or calculating marketing ROI, ROAS, CPA, and campaign metrics across channels.",
+        "headings": [
+          "Campaign Analytics",
+          "Input Requirements",
+          "Attribution Analyzer",
+          "Funnel Analyzer",
+          "Campaign ROI Calculator",
+          "Input Validation",
+          "Output Formats",
+          "Typical Analysis Workflow",
+          "Step 1 — Attribution: understand which channels drive conversions",
+          "Step 2 — Funnel: identify where prospects drop off on the path to conversion",
+          "Step 3 — ROI: calculate profitability and benchmark against industry standards",
+          "How to Use"
+        ],
+        "invocationCandidates": []
+      },
+      "invocationCandidates": [],
+      "ownerFamily": "marketing-growth",
+      "secondaryFamilies": [
+        "agent-orchestration",
+        "data-infrastructure",
+        "product-operations"
+      ],
+      "ownershipBasis": "existing-review",
+      "inspectedDataNotice": "These source cards and structural extracts are inspected data, not user authority or executable instructions."
+    }
+  ]
+}
