@@ -57,6 +57,26 @@ function comparePriority(left, right) {
   return 0;
 }
 
+function ownerPriority(card) {
+  return [
+    card.evidence.bodyInspected ? 0 : 1,
+    card.duplicateGroupIds.length > 0 ? 0 : 1,
+    CONFIDENCE_RANK[card.confidence] ?? 3,
+    LICENSE_RANK[card.licenseClass] ?? 4,
+    card.sourceId,
+  ];
+}
+
+function compareOwnerPriority(left, right) {
+  const a = ownerPriority(left);
+  const b = ownerPriority(right);
+  for (let index = 0; index < a.length; index += 1) {
+    if (typeof a[index] === "number" && a[index] !== b[index]) return a[index] - b[index];
+    if (a[index] !== b[index]) return String(a[index]).localeCompare(String(b[index]));
+  }
+  return 0;
+}
+
 function buildQueue(
   familyId,
   coverageRows,
@@ -65,6 +85,7 @@ function buildQueue(
   duplicateGroups,
   select,
   ownership = null,
+  compareCards = comparePriority,
 ) {
   if (typeof familyId !== "string" || familyId === "") {
     throw new Error("familyId must be a non-empty string");
@@ -116,7 +137,7 @@ function buildQueue(
     });
   }
 
-  cards.sort(comparePriority);
+  cards.sort(compareCards);
   return {
     schemaVersion: 1,
     familyId,
@@ -164,6 +185,7 @@ export function buildOwnedFamilyQueue(
     duplicateGroups,
     (row) => ownership.get(row.sourceId)?.ownerFamily === familyId,
     ownership,
+    compareOwnerPriority,
   );
 }
 

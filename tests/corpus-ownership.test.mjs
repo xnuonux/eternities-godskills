@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 
 import { assignCorpusOwners } from "../src/corpus-ownership.mjs";
 import { classify } from "../src/ontology.mjs";
+import { buildOwnedFamilyQueue } from "../src/review-packets.mjs";
 
 const root = new URL("../", import.meta.url);
 async function lines(relative) {
@@ -70,8 +71,8 @@ test("repository ownership partitions all certified sources exactly once", async
   const rows = assignCorpusOwners(records, reviews);
   assert.equal(rows.length, 4741);
   assert.equal(new Set(rows.map(({ sourceId }) => sourceId)).size, 4741);
-  assert.equal(rows.filter(({ reviewed }) => reviewed).length, 396);
-  assert.equal(rows.filter(({ reviewed }) => !reviewed).length, 4345);
+  assert.equal(rows.filter(({ reviewed }) => reviewed).length, reviews.length);
+  assert.equal(rows.filter(({ reviewed }) => !reviewed).length, 4741 - reviews.length);
   assert.deepEqual(
     Object.fromEntries(Object.entries(Object.groupBy(rows, ({ ownerFamily }) => ownerFamily))
       .map(([family, members]) => [family, members.length]).sort()),
@@ -121,4 +122,44 @@ test("generated owner queues are disjoint and cover the ownership manifest", asy
     queued.sort((left, right) => left.sourceId.localeCompare(right.sourceId)),
     ownership.map(({ sourceId, ownerFamily }) => ({ sourceId, ownerFamily })),
   );
+});
+
+test("owner queue packet membership is invariant as review evidence advances", () => {
+  const ownership = ["skill-a", "skill-b"].map((sourceId) => ({
+    sourceId,
+    ownerFamily: "agent-orchestration",
+    secondaryFamilies: [],
+    ownershipBasis: "classifier-primary",
+  }));
+  const records = ["skill-a", "skill-b"].map((id) => ({
+    id,
+    name: id,
+    description: `${id} description`,
+    sourcePath: `${id}/SKILL.md`,
+    repositoryRoot: id,
+    contentDigest: id.padEnd(64, "0"),
+  }));
+  const bodies = ["skill-a", "skill-b"].map((sourceId) => ({ sourceId, structure: {} }));
+  const coverage = (reviewedA) => ["skill-a", "skill-b"].map((sourceId) => ({
+    sourceId,
+    bodySha256: sourceId.padEnd(64, "1"),
+    bodyStatus: "inspected",
+    licenseClass: "unknown",
+    confidence: "low",
+    families: ["agent-orchestration"],
+    evidence: {
+      indexed: true,
+      classified: true,
+      bodyInspected: true,
+      cardReviewed: sourceId === "skill-a" && reviewedA,
+      clustered: false,
+      synthesized: false,
+      evaluated: false,
+      promoted: false,
+    },
+  }));
+  const before = buildOwnedFamilyQueue("agent-orchestration", ownership, coverage(false), records, bodies, {});
+  const after = buildOwnedFamilyQueue("agent-orchestration", ownership, coverage(true), records, bodies, {});
+  assert.deepEqual(before.cards.map(({ sourceId }) => sourceId), ["skill-a", "skill-b"]);
+  assert.deepEqual(after.cards.map(({ sourceId }) => sourceId), ["skill-a", "skill-b"]);
 });
