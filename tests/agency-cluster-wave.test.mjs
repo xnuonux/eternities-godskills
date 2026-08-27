@@ -47,22 +47,24 @@ test("the reviewed agency family has exact, complete, non-promotional cluster ev
 test("the agency cluster receipt reconciles exact inputs and preserves later-state boundaries", async () => {
   const receipt = await json("receipts/agency-client-services-clusters-v1.json");
   const summary = await json("artifacts/corpus/coverage-summary.json");
+  const checkpointRoot = "artifacts/checkpoints/agency-client-services-clusters-v1/";
   const clusterBatchText = await readFile(
-    new URL("clusters/agency-client-services.v1.json", repositoryRoot),
+    new URL(`${checkpointRoot}cluster-batch.json`, repositoryRoot),
     "utf8",
   );
   const clusterEvidenceText = await readFile(
-    new URL("artifacts/corpus/cluster-evidence.jsonl", repositoryRoot),
+    new URL(`${checkpointRoot}cluster-evidence.jsonl`, repositoryRoot),
     "utf8",
   );
   const coverageText = await readFile(
-    new URL("artifacts/corpus/coverage-ledger.jsonl", repositoryRoot),
+    new URL(`${checkpointRoot}coverage-ledger.jsonl`, repositoryRoot),
     "utf8",
   );
 
   assert.equal(receipt.schemaVersion, 1);
   assert.equal(receipt.id, "agency-client-services-clusters-v1");
   assert.equal(receipt.status, "clustered");
+  assert.equal(receipt.checkpointRoot, "artifacts/checkpoints/agency-client-services-clusters-v1");
   assert.equal(receipt.immutableGitBase, "777270e2f515441d45a1d58f85e7ef39381fe9f6");
   assert.deepEqual(receipt.counts, {
     candidateClusters: 3,
@@ -77,11 +79,9 @@ test("the agency cluster receipt reconciles exact inputs and preserves later-sta
     clusterEvidenceSha256: sha256(clusterEvidenceText),
     coverageLedgerSha256: sha256(coverageText),
   });
-  assert.equal(receipt.artifacts.clusterEvidenceSha256, summary.artifactDigests.clusterEvidenceSha256);
-  assert.equal(receipt.artifacts.coverageLedgerSha256, summary.artifactDigests.coverageLedgerSha256);
   assert.equal(summary.evidenceCounts.clustered, 12);
-  assert.equal(summary.evidenceCounts.synthesized, 0);
-  assert.equal(summary.evidenceCounts.evaluated, 0);
-  assert.equal(summary.evidenceCounts.promoted, 0);
+  assert.equal(summary.evidenceCounts.synthesized, 7);
+  assert.equal(summary.evidenceCounts.evaluated, 7);
+  assert.equal(summary.evidenceCounts.promoted, 7);
   assert.equal(JSON.stringify(receipt).includes("timestamp"), false);
 });

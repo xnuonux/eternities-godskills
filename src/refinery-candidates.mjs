@@ -1,4 +1,4 @@
-import { readFile, readdir } from "node:fs/promises";
+import { readFile, readdir, realpath } from "node:fs/promises";
 import path from "node:path";
 
 import { sha256 } from "./io.mjs";
@@ -129,18 +129,29 @@ async function jsonFiles(root) {
   }
 }
 
+function isInside(parent, child) {
+  const relative = path.relative(parent, child);
+  return relative !== "" && relative !== ".." &&
+    !relative.startsWith(`..${path.sep}`) && !path.isAbsolute(relative);
+}
+
 export async function loadCandidateEvidence(root, repositoryRoot, clusterRows, reviewRows) {
   const rows = [];
+  const canonicalRoot = await realpath(repositoryRoot);
   for (const filePath of await jsonFiles(root)) {
     const record = JSON.parse(await readFile(filePath, "utf8"));
     for (const [key, artifact] of Object.entries(record.artifacts ?? {})) {
       const relative = relativeFile(artifact.path, key);
-      const bytes = await readFile(path.join(repositoryRoot, ...relative.split("/")));
+      const lexicalTarget = path.resolve(canonicalRoot, ...relative.split("/"));
+      if (!isInside(canonicalRoot, lexicalTarget)) throw new Error(`artifact escapes repository root: ${key}`);
+      const canonicalTarget = await realpath(lexicalTarget);
+      if (!isInside(canonicalRoot, canonicalTarget)) throw new Error(`artifact escapes repository root: ${key}`);
+      const bytes = await readFile(canonicalTarget);
       if (sha256(bytes) !== artifact.sha256) throw new Error(`stale artifact hash: ${key}`);
     }
     const receiptArtifact = record.artifacts?.promotionReceipt;
     const receipt = receiptArtifact
-      ? JSON.parse(await readFile(path.join(repositoryRoot, ...receiptArtifact.path.split("/")), "utf8"))
+      ? JSON.parse(await readFile(await realpath(path.resolve(canonicalRoot, ...receiptArtifact.path.split("/"))), "utf8"))
       : null;
     rows.push(validateCandidateEvidence(record, clusterRows, reviewRows, receipt));
   }

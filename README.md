@@ -19,8 +19,9 @@ pretending structural indexing is semantic refinement:
 - 3,880 cards assigned at least one explicit ontology family;
 - 30 sources represented by the existing provenance ledger;
 - 18 exact bodies semantically reviewed in the first bounded waves;
-- 0 corpus rows automatically marked clustered, synthesized, evaluated, or
-  promoted.
+- 12 reviewed sources assigned to certified clusters;
+- 7 synthesized, 7 evaluated, and 7 promoted exact Agora source rows from one
+  deterministic candidate receipt.
 
 the first explicit professional queues contain 12 agency and client-service
 cards, 291 marketing and growth cards, 106 social-media and community cards,
@@ -28,10 +29,10 @@ and 25 game-design and development cards. queues are split into deterministic
 packets of at most 25 cards. the remaining work is visible rather than rounded
 up to completion.
 
-the seven previously promoted first-party Eternities capabilities remain
-separate, tested artifacts. the new corpus ledger does not retroactively invent
-their review history or use their existence to claim the 4,741-source refinery
-is complete.
+the repository now contains 8 promoted first-party capabilities. only Agora's
+7 exact reviewed source rows advance through the new corpus synthesis evidence;
+the ledger does not retroactively invent review history for earlier releases or
+claim the 4,741-source refinery is complete.
 
 source slash commands and named invocation forms are retained only as inert,
 non-authoritative review evidence. canonical review intent is written as
@@ -40,14 +41,15 @@ to clustering, synthesis, evaluation, or promotion.
 
 ## agent-native routing
 
-agent-native routing v1 is certified for the seven currently promoted
-capabilities. an adapter translates an ordinary desired outcome into a neutral
-request envelope, retrieves at most 32 compact cards from the cold index, and
+agent-native routing v1 remains frozen and certified for its original seven
+capabilities. routing v2 is certified for all 8 promoted capabilities. an
+adapter translates an ordinary desired outcome into a neutral request envelope,
+retrieves at most 32 compact cards from the cold index, and
 loads only the selected entrypoint. the portable core then selects one smallest
 sufficient capability or an explicitly compatible composition of at most three.
 
-the certification covers 21 direct, paraphrased, and contextual commandless
-envelopes, exact equality after all compatibility aliases are removed, a
+the current certification covers 24 direct, paraphrased, and contextual
+commandless envelopes, exact equality after all compatibility aliases are removed, a
 5,000-card bounded-disclosure fixture, authority and effect refusal, risk
 limits, and unresolved-decision refusal. skill selection never expands user
 authority. deterministic envelope routing is certified; live-model conversion
@@ -55,9 +57,25 @@ from free-form language into an envelope remains an adapter-level evaluation,
 not an inflated proof claim.
 
 the portable contract is documented in `runtime\agent-router.md`, its adapter
-manifest is `runtime\portable-adapter.v1.json`, and the exact milestone receipt
-is `receipts\agent-native-router-v1.json`. no global runtime adapter was enabled
-by this release.
+manifest is `runtime\portable-adapter.v1.json`. exact receipts are
+`receipts\agent-native-router-v1.json` and
+`receipts\agent-native-router-v2.json`. no global runtime adapter was enabled
+by this work.
+
+## eternities agora
+
+`eternities-agora` is the promoted agency and client-service godskill. it keeps
+prospect assessment, account operations, and client deliverables separately
+routable across 7 scopes or modes while sharing evidence, identity, scoring,
+authority, handoff, and termination laws.
+
+Agora passes 29 of 29 all-critical deterministic cases, reconciles 3 selected
+clusters and 7 exact sources, and uses a 1,158-token entrypoint. legal,
+financial, regulated identity, runtime administration, and unauthorized
+external action remain outside its boundary. read
+`docs\eternities-agora-report.md` and
+`receipts\eternities-agora-release.json` for the measured local-candidate
+verdict. it is not globally activated by this release.
 
 ## release-one commands
 

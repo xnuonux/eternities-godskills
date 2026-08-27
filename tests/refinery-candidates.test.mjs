@@ -1,9 +1,15 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { mkdir, mkdtemp, rm, symlink, writeFile } from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
 
 import { buildCoverageRows } from "../src/coverage.mjs";
 import { sha256 } from "../src/io.mjs";
-import { validateCandidateEvidence } from "../src/refinery-candidates.mjs";
+import {
+  loadCandidateEvidence,
+  validateCandidateEvidence,
+} from "../src/refinery-candidates.mjs";
 
 const reviewA = "a".repeat(64);
 const reviewB = "b".repeat(64);
@@ -155,4 +161,51 @@ test("an exact synthesized candidate does not invent evaluation or promotion", (
   const candidate = validateCandidateEvidence(declaration, [cluster()], reviews(), null);
   assert.equal(candidate.evaluated, false);
   assert.equal(candidate.promoted, false);
+});
+
+test("candidate artifact loading rejects a repository path whose real target escapes", async (context) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "eternities-candidate-root-"));
+  const outside = await mkdtemp(path.join(os.tmpdir(), "eternities-candidate-outside-"));
+  context.after(() => Promise.all([
+    rm(root, { recursive: true, force: true }),
+    rm(outside, { recursive: true, force: true }),
+  ]));
+  const syntheses = path.join(root, "syntheses");
+  const linkedParent = path.join(root, "skills");
+  const outsideCandidate = path.join(outside, "candidate-a");
+  await Promise.all([
+    mkdir(syntheses, { recursive: true }),
+    mkdir(linkedParent, { recursive: true }),
+    mkdir(outsideCandidate, { recursive: true }),
+  ]);
+  const outsideSkill = path.join(outsideCandidate, "SKILL.md");
+  await writeFile(outsideSkill, "outside repository evidence\n", "utf8");
+  await symlink(outsideCandidate, path.join(linkedParent, "candidate-a"), "junction");
+
+  const declaration = record({ status: "synthesized" });
+  declaration.artifacts = {
+    skill: {
+      path: "skills/candidate-a/SKILL.md",
+      sha256: sha256("outside repository evidence\n"),
+    },
+    capabilityContract: declaration.artifacts.capabilityContract,
+    routingCard: declaration.artifacts.routingCard,
+    evaluation: declaration.artifacts.evaluation,
+  };
+  for (const artifact of Object.values(declaration.artifacts).slice(1)) {
+    const target = path.join(root, ...artifact.path.split("/"));
+    await mkdir(path.dirname(target), { recursive: true });
+    await writeFile(target, artifact.sha256, "utf8");
+    artifact.sha256 = sha256(artifact.sha256);
+  }
+  await writeFile(
+    path.join(syntheses, "candidate-a.json"),
+    `${JSON.stringify(declaration, null, 2)}\n`,
+    "utf8",
+  );
+
+  await assert.rejects(
+    loadCandidateEvidence(syntheses, root, [cluster()], reviews()),
+    /artifact escapes repository root/,
+  );
 });
