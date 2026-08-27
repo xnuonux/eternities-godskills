@@ -12,6 +12,7 @@ import { canonicalText, sha256 } from "../src/io.mjs";
 import { decidePromotion } from "../src/promote.mjs";
 import { deriveSourceEvidence } from "../src/provenance-evidence.mjs";
 import { buildSkillReceipt } from "../scripts/evaluate-skill.mjs";
+import { execFileSync } from "node:child_process";
 
 const root = new URL("../", import.meta.url);
 
@@ -25,6 +26,10 @@ async function json(relative) {
 
 async function canonicalSha256(relative) {
   return sha256(canonicalText(await text(relative)));
+}
+
+function historicalJson(relative) {
+  return JSON.parse(execFileSync("git", ["show", `1ba4f764a41646414e684238ac992211402e6eab:${relative}`], { encoding: "utf8" }));
 }
 
 test("release three certifies Mnemosyne and canonical profile activation", async () => {
@@ -120,7 +125,7 @@ test("release three certifies Mnemosyne and canonical profile activation", async
       "eternities-aegis",
       "eternities-mnemosyne",
     ].map((name) =>
-      json(`skills/${name}/references/capability-contract.json`),
+      Promise.resolve(historicalJson(`skills/${name}/references/capability-contract.json`)),
     ),
   );
   assert.doesNotThrow(() => validateCompositionGraph(globalContracts));

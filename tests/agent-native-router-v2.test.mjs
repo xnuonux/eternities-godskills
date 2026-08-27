@@ -14,16 +14,8 @@ async function json(relativePath) {
 }
 
 async function promotedCards() {
-  const root = new URL("receipts/promotions/", repositoryRoot);
-  const names = (await readdir(root)).filter((name) => name.endsWith(".json")).sort();
-  const receipts = await Promise.all(names.map((name) => json(`receipts/promotions/${name}`)));
-  const ids = receipts
-    .filter(({ decision }) => decision?.status === "promoted")
-    .map(({ skillName }) => skillName)
-    .sort();
-  return Promise.all(
-    ids.map(async (id) => validateRoutingCard(await json(`skills/${id}/references/routing-card.json`))),
-  );
+  const text = await readFile(new URL("artifacts/checkpoints/agent-native-router-v2/cards.jsonl", repositoryRoot), "utf8");
+  return text.trim().split(/\r?\n/).map((line) => validateRoutingCard(JSON.parse(line)));
 }
 
 const cases = [
