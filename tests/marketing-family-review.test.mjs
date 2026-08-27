@@ -73,6 +73,10 @@ test("every exact marketing and growth source has one bounded semantic review", 
 
   assert.equal(reviews.length, 291);
   assert.equal(new Set(reviews.map(({ sourceId }) => sourceId)).size, 291);
+  assert.ok(
+    new Set(reviews.map(({ proposedCluster }) => proposedCluster)).size >= 40,
+    "marketing reviews require granular behavioral clusters rather than coarse family labels",
+  );
   assert.deepEqual(reviews.map(({ sourceId }) => sourceId).sort(), queueIds);
   assert.ok(reviews.every(({ sourceId, bodySha256 }) =>
     bodySha256 === queue.cards.find((card) => card.sourceId === sourceId)?.bodySha256,
