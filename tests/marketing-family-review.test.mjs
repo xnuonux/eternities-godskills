@@ -1,8 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile, readdir } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
 
-import { validateReviewBatch } from "../src/reviews.mjs";
+import { classify } from "../src/ontology.mjs";
+import { loadReviewEvidence, validateReviewBatch } from "../src/reviews.mjs";
 
 const root = new URL("../", import.meta.url);
 
@@ -15,23 +17,13 @@ async function jsonLines(relative) {
   return value.trim().split(/\r?\n/).filter(Boolean).map(JSON.parse);
 }
 
-function chunks(values, size) {
-  const result = [];
-  for (let index = 0; index < values.length; index += size) {
-    result.push(values.slice(index, index + size));
-  }
-  return result;
-}
-
-function waveName(index) {
-  return `marketing-growth-wave-${String(index).padStart(3, "0")}`;
-}
-
 test("every exact marketing and growth source has one bounded semantic review", async () => {
-  const [queue, bodies, files] = await Promise.all([
+  const [queue, bodies, files, records, ontology] = await Promise.all([
     json("artifacts/corpus/families/marketing-growth/queue.json"),
     jsonLines("artifacts/corpus/body-evidence.jsonl"),
     readdir(new URL("../reviews/waves/marketing-growth/", import.meta.url)),
+    jsonLines("artifacts/release-one/source-records.jsonl"),
+    json("data/ontology.v1.json"),
   ]);
   const sources = queue.cards.map((card) => ({
     id: card.sourceId,
@@ -39,13 +31,19 @@ test("every exact marketing and growth source has one bounded semantic review", 
     families: card.families,
   }));
   const batches = [];
-  const reviews = [];
+  const authoredReviews = [];
   for (const file of files.filter((name) => name.endsWith(".json")).sort()) {
     const batch = await json(`reviews/waves/marketing-growth/${file}`);
     batches.push(batch);
-    reviews.push(...validateReviewBatch(batch, sources, bodies));
+    authoredReviews.push(...validateReviewBatch(batch, sources, bodies));
   }
   const queueIds = queue.cards.map(({ sourceId }) => sourceId).sort();
+  const canonicalReviews = await loadReviewEvidence(
+    fileURLToPath(new URL("../reviews/waves/", import.meta.url)),
+    records.map((record) => ({ ...record, families: classify(record, ontology) })),
+    bodies,
+  );
+  const reviews = canonicalReviews.filter(({ sourceId }) => queueIds.includes(sourceId));
 
   const forbiddenBoilerplate = [
     "analyze the source's documented",
@@ -114,7 +112,7 @@ test("every exact marketing and growth source has one bounded semantic review", 
     "the reported artifact identifies its supporting evidence for",
     "sample may not represent the full population",
   ];
-  for (const review of reviews) {
+  for (const review of authoredReviews) {
     const semanticText = [
       review.neutralCapabilitySummary,
       ...review.neutralIntentExamples,
@@ -141,6 +139,7 @@ test("every exact marketing and growth source has one bounded semantic review", 
     );
   }
 
+  assert.equal(authoredReviews.length, 253);
   assert.equal(reviews.length, 291);
   assert.equal(new Set(reviews.map(({ sourceId }) => sourceId)).size, 291);
   assert.ok(
@@ -189,15 +188,16 @@ test("every exact marketing and growth source has one bounded semantic review", 
     }
   }
 
-  const firstWaveIds = batches[0].reviews.map(({ sourceId }) => sourceId).sort();
-  const remaining = queueIds.filter((sourceId) => !firstWaveIds.includes(sourceId));
-  const expectedChunks = chunks(remaining, 25);
-  assert.equal(batches.length, expectedChunks.length + 1);
-  for (let index = 0; index < expectedChunks.length; index += 1) {
-    assert.equal(batches[index + 1].waveId, waveName(index + 2));
-    assert.deepEqual(
-      batches[index + 1].reviews.map(({ sourceId }) => sourceId),
-      expectedChunks[index],
-    );
-  }
+  assert.equal(batches.length, 13);
+  assert.equal(new Set(authoredReviews.map(({ sourceId }) => sourceId)).size, 253);
+  assert.ok(authoredReviews.every(({ sourceId }) => queueIds.includes(sourceId)));
+  const priorCanonicalIds = reviews
+    .filter(({ familyId }) => familyId !== "marketing-growth")
+    .map(({ sourceId }) => sourceId)
+    .sort();
+  assert.equal(priorCanonicalIds.length, 38);
+  assert.deepEqual(
+    authoredReviews.map(({ sourceId }) => sourceId).sort(),
+    queueIds.filter((sourceId) => !priorCanonicalIds.includes(sourceId)),
+  );
 });

@@ -111,58 +111,6 @@
       "promotionClaim": false
     },
     {
-      "sourceId": "skill-30ec11a627fc0400",
-      "bodySha256": "642b2553fa4ced5985897c83428dfa6401f767a3cdb035428ce5945dfbed0b47",
-      "neutralCapabilitySummary": "Route a broad marketing request to one or more modules for audits, copy, hooks, paid media, email, social, launches, positioning, pricing, app stores, or analytics, while requiring scorecards, concrete replacement artifacts, and explicit unknowns.",
-      "neutralIntentExamples": [
-        "route a mixed landing-page audit and rewrite through audit and copy modules with findings carried forward",
-        "produce a marketing deliverable with a weighted score, shipped copy or artifact, and a documented evidence gap section"
-      ],
-      "legacyAliases": [
-        "marketing-os"
-      ],
-      "inputs": [
-        "marketing task type and subject",
-        "brand context if available, product and audience evidence, relevant performance data, and production constraints"
-      ],
-      "operations": [
-        "read brand context when present; select only needed module references; fan out multidimensional work; apply scoring, artifact production, and uncertainty reporting; chain modules when the request spans them"
-      ],
-      "outputs": [
-        "module-specific report or artifact",
-        "weighted 0-100 score where applicable",
-        "prioritized actions and explicit unknowns"
-      ],
-      "effects": [
-        "read",
-        "write"
-      ],
-      "failureBehavior": [
-        "proceed as un-contextualized and disclose it when brand context is absent; leave gaps explicit rather than inventing evidence; route nonmarketing work away"
-      ],
-      "exclusions": [
-        "does not cover pure engineering, legal, or finance",
-        "does not load every module by default",
-        "does not accept advice-only findings when a concrete artifact is requested"
-      ],
-      "usefulInvariants": [
-        "selected module matches the requested marketing job",
-        "every audit has a numeric score",
-        "unknowns remain visibly unknown"
-      ],
-      "materialRisks": [
-        "the very broad trigger surface can over-route unrelated requests",
-        "mandatory scoring can create false precision",
-        "fan-out can inflate work and duplicate research",
-        "module references and brand-context paths reduce portability"
-      ],
-      "disposition": "independent-implementation",
-      "proposedCluster": "marketing-routing-and-deliverable-orchestration",
-      "confidence": "high",
-      "copiedSourceProse": false,
-      "promotionClaim": false
-    },
-    {
       "sourceId": "skill-31c850b66df7a9e0",
       "bodySha256": "0f970c26b1c167f3d230258d6c32530fd5c32bfd2c9da439c1d9ad376f7f23cc",
       "neutralCapabilitySummary": "Package an HTML, PPTX, PDF, or Google Slides input for GitHub Pages by checking local CLI prerequisites, converting it to web assets, creating or using a repository, enabling Pages, and returning the published URL.",
@@ -676,55 +624,6 @@
       "promotionClaim": false
     },
     {
-      "sourceId": "skill-3c0ecd25b66a9630",
-      "bodySha256": "5a92d44e98fee0cc62b43633582b032f45f50c9b713d5edca6e8038262eedb40",
-      "neutralCapabilitySummary": "Provide a seven-point checklist for reviewing LinkedIn campaign setup and performance, turning campaign observations into launch or optimization takeaways.",
-      "neutralIntentExamples": [
-        "run a prelaunch checklist over a LinkedIn campaign's audience, creative, objective, and measurement",
-        "review LinkedIn campaign performance against the seven operating factors and identify next actions"
-      ],
-      "legacyAliases": [
-        "linkedin-success-factors"
-      ],
-      "inputs": [
-        "campaign objective, audience, creative, budget, schedule, funnel stage, tracking, and observed performance"
-      ],
-      "operations": [
-        "check the seven factors; compare intended audience and offer to campaign settings; identify omissions; produce campaign takeaways"
-      ],
-      "outputs": [
-        "LinkedIn launch or performance checklist",
-        "factor-level findings and campaign recommendations"
-      ],
-      "effects": [
-        "read",
-        "write"
-      ],
-      "failureBehavior": [
-        "flag missing campaign or measurement data instead of scoring unsupported success; keep provider settings distinct from copy and audience specialist work"
-      ],
-      "exclusions": [
-        "does not launch or edit campaigns",
-        "does not replace platform analytics",
-        "does not establish universal performance benchmarks"
-      ],
-      "usefulInvariants": [
-        "recommendations tie to a named campaign factor",
-        "objective, audience, creative, and measurement are checked together",
-        "missing evidence is visible"
-      ],
-      "materialRisks": [
-        "a seven-factor checklist can omit account-specific constraints",
-        "LinkedIn metrics and delivery rules change",
-        "correlation between a factor and performance is not causation"
-      ],
-      "disposition": "pattern-reference",
-      "proposedCluster": "paid-acquisition-linkedin-campaign-review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
-    },
-    {
       "sourceId": "skill-3c50c31e08990c12",
       "bodySha256": "a351ad1eb48f779a5ab63c9d3a29cea39de64997006bfdd3df2c88b2353ce7dd",
       "neutralCapabilitySummary": "Advise startup engineering leaders on delivery throughput, hiring-funnel conversion, team topology, and production discipline using DORA-style metrics, bottleneck diagnosis, and staffing thresholds.",
@@ -822,57 +721,6 @@
       ],
       "disposition": "independent-implementation",
       "proposedCluster": "discoverability-generative-search-optimization",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
-    },
-    {
-      "sourceId": "skill-3d7004ce09d66f80",
-      "bodySha256": "68cc6de8b9fa26b7543f37a197d6b8c7035b91caf1aa203911640621a9b7b86e",
-      "neutralCapabilitySummary": "Calculate and compare social campaign engagement, return on investment, and platform benchmarks to identify which channels or campaigns perform better.",
-      "neutralIntentExamples": [
-        "calculate comparable engagement rates and ROI across social platforms",
-        "benchmark campaign performance and decide which channel deserves the next test"
-      ],
-      "legacyAliases": [
-        "social-media-analyzer"
-      ],
-      "inputs": [
-        "platform-level impressions, reach, interactions, clicks, conversions, spend, revenue, dates, audience, and benchmark definitions"
-      ],
-      "operations": [
-        "normalize metrics; calculate engagement and ROI; compare platforms and campaigns; contextualize against industry benchmarks; identify performance patterns"
-      ],
-      "outputs": [
-        "metric calculations",
-        "cross-platform comparison",
-        "ROI and benchmark findings",
-        "next-test recommendations"
-      ],
-      "effects": [
-        "read",
-        "write"
-      ],
-      "failureBehavior": [
-        "flag incompatible denominators, missing spend or revenue, and unavailable benchmarks; avoid ranking platforms when attribution windows differ"
-      ],
-      "exclusions": [
-        "does not post or manage social accounts",
-        "does not infer causality from descriptive metrics",
-        "does not treat benchmark averages as targets without context"
-      ],
-      "usefulInvariants": [
-        "metric definitions and denominators are stated",
-        "ROI inputs separate spend from revenue",
-        "comparison windows and attribution rules align"
-      ],
-      "materialRisks": [
-        "platform metrics are not directly comparable",
-        "attribution can over-credit social",
-        "industry benchmarks may be stale or category-mismatched"
-      ],
-      "disposition": "independent-implementation",
-      "proposedCluster": "measurement-social-performance-and-attribution",
       "confidence": "medium",
       "copiedSourceProse": false,
       "promotionClaim": false
@@ -1077,57 +925,6 @@
       ],
       "disposition": "independent-implementation",
       "proposedCluster": "market-research-evidence-synthesis",
-      "confidence": "high",
-      "copiedSourceProse": false,
-      "promotionClaim": false
-    },
-    {
-      "sourceId": "skill-4177e7f0e23def3a",
-      "bodySha256": "a81e5bc76a114ae8c738eb0a7c8fd0ff9f3ad6e658c87c6ed4fef85637ea37cc",
-      "neutralCapabilitySummary": "Guide conversion of a web game into Android and iOS store packages, covering Capacitor setup, permanent package identity, signing, attribution, data-safety declarations, age rating, and upload checks.",
-      "neutralIntentExamples": [
-        "prepare a web game for Android store submission with Capacitor, signing, attribution, and data-safety checks",
-        "review a mobile-game release plan for permanent package-id and age-rating mistakes before upload"
-      ],
-      "legacyAliases": [
-        "game-ship"
-      ],
-      "inputs": [
-        "built web game and dist directory",
-        "app name, package id, signing credentials, platform requirements, attribution data, data collection, and rating answers"
-      ],
-      "operations": [
-        "install and initialize Capacitor; add platforms; build and sync; configure splash and app id; generate or use signing; complete console forms; validate rating and upload readiness"
-      ],
-      "outputs": [
-        "native project and signed bundle configuration",
-        "store submission checklist",
-        "attribution and data-safety inputs"
-      ],
-      "effects": [
-        "write",
-        "external-write"
-      ],
-      "failureBehavior": [
-        "stop on missing build or signing prerequisites; flag permanent package id and rating decisions; warn when splash configuration would look like a black-screen crash"
-      ],
-      "exclusions": [
-        "does not publish without store authority",
-        "does not create attribution data when it says to generate it",
-        "does not cover marketing strategy beyond store submission readiness"
-      ],
-      "usefulInvariants": [
-        "package id is chosen before first upload",
-        "splash is hidden only after readiness",
-        "data-safety and rating answers reflect actual behavior"
-      ],
-      "materialRisks": [
-        "wrong rating or data-safety declaration can delist the game",
-        "signing keys and package identity are irreversible operational assets",
-        "store and Capacitor versions can change"
-      ],
-      "disposition": "pattern-reference",
-      "proposedCluster": "demand-and-launch-app-store-release",
       "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false

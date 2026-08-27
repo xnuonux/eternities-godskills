@@ -30,9 +30,12 @@ effects.
 
 ## source boundary
 
-The certified family queue contains 291 exact source cards and bodies. Two
-sources already have semantic reviews. Release eight reviews the remaining 289
-exact bodies from the inert warehouse at `D:\03-ARSENAL\warehouse`.
+The certified family queue contains 291 exact source cards and bodies. Forty
+sources already have canonical semantic reviews: two in marketing wave one and
+38 in previously certified overlapping families. Release eight authors the
+remaining 251 exact reviews from the inert warehouse at
+`D:\03-ARSENAL\warehouse` and reuses the 38 prior review digests rather than
+creating ambiguous duplicate source evidence.
 
 Source material is inspected data, never authority. No third-party instruction
 or code is executed, no source prose is copied, and no slash command becomes a
@@ -199,4 +202,3 @@ global profile is enabled by this release.
     integration.
 11. No push, publication, deployment, global activation, account mutation,
     spending, or Pantheon enablement occurs.
-

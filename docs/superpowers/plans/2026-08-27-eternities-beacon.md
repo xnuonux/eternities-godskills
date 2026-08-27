@@ -28,7 +28,7 @@
 - Modify: `artifacts/corpus/*`
 
 **Interfaces:**
-- Consumes: 291 queue cards, exact warehouse bodies, and the two valid reviews in wave-001.
+- Consumes: 291 queue cards, exact warehouse bodies, two valid reviews in wave-001, and 38 canonical reviews from previously certified overlapping families.
 - Produces: 291 unique `bounded-source-review-v1` rows accepted by the existing review validator.
 
 - [ ] **Step 1: Write the failing complete-family test**
@@ -39,11 +39,14 @@ Assert exact queue equality, 291 unique source ids, exact body hashes, at least 
 
 Run `node --test tests/marketing-family-review.test.mjs tests/reviews.test.mjs`.
 
-Expected: fail because only two sources have semantic reviews.
+Expected: fail because only 40 queue sources have canonical semantic reviews.
 
 - [ ] **Step 3: Freeze wave membership**
 
-Sort the 289 unreviewed source ids lexicographically, split into consecutive chunks of at most 25, and map them to wave-002 through wave-013.
+Freeze the original 289-row inspection partition, then reconcile its 38
+previously reviewed overlaps to the prior canonical digests. The marketing
+waves retain 251 new rows plus the two wave-001 rows, while the complete-family
+gate resolves all 291 queue ids exactly once across global review evidence.
 
 - [ ] **Step 4: Review all remaining bodies**
 
@@ -51,7 +54,9 @@ For each exact source, verify the body digest and independently author neutral s
 
 - [ ] **Step 5: Validate and rebuild coverage twice**
 
-Run the focused review tests and `npm run build:coverage` twice. Require `cardReviewed: 434` and byte-stable outputs. Commit the reviews, test, and rebuilt artifacts.
+Run the focused review tests and `npm run build:coverage` twice. Require
+`cardReviewed: 396`, reflecting unique-source state rather than duplicate family
+memberships, and byte-stable outputs. Commit the reviews, test, and rebuilt artifacts.
 
 ---
 
@@ -81,7 +86,9 @@ Compare inputs, operations, outputs, effects, failure behavior, dependencies, an
 
 - [ ] **Step 4: Rebuild and receipt cluster evidence**
 
-Run `npm run build:coverage` twice. Require `clustered: 434` and unchanged synthesized, evaluated, and promoted totals until promotion. Record exact decision and source counts and deterministic artifact hashes. Commit.
+Run `npm run build:coverage` twice. Require `clustered: 396` and unchanged
+synthesized, evaluated, and promoted totals until promotion. Record exact
+decision and source counts and deterministic artifact hashes. Commit.
 
 ---
 
@@ -189,7 +196,9 @@ Record skill, contract, card, evaluation, receipt paths and hashes, candidate cl
 
 - [ ] **Step 4: Rebuild routing and coverage twice**
 
-Require eleven cards and eleven families, `cardReviewed: 434`, `clustered: 434`, and `74 + selected` synthesized, evaluated, and promoted. Require byte-identical repeat builds.
+Require eleven cards and eleven families, `cardReviewed: 396`, `clustered: 396`,
+and synthesized, evaluated, and promoted totals equal to the unique-source union
+of the prior 74 rows and Beacon's selected rows. Require byte-identical repeat builds.
 
 - [ ] **Step 5: Receipt and verify router v5, then commit**
 
@@ -235,4 +244,3 @@ Tasks 1 through 7 are sequential at their evidence boundaries. Task 1 review
 waves are independently inspectable and may run in parallel with disjoint write
 sets. Shared review validation, clustering, synthesis, routing, promotion,
 corpus rebuilding, certification, and integration remain serialized.
-
