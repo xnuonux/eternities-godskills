@@ -29,6 +29,16 @@ async function routingCard(id) {
 
 const cases = [
   {
+    expected: "eternities-beacon",
+    outcome: "turn verified market truth into positioning offers demand lifecycle and accountable growth",
+    family: "marketing-growth",
+    required: ["conversion-and-lifecycle-systems", "discoverability-and-search-systems", "go-to-market-and-demand-systems", "growth-measurement-and-stewardship", "market-truth-and-positioning", "offer-and-commercial-architecture"],
+    effects: ["local-read", "local-write"],
+    authority: ["local-read", "local-write"],
+    preconditions: [],
+    maximumRisk: "moderate",
+  },
+  {
     expected: "eternities-chorus",
     outcome: "connect identity editorial production community stewardship and measured learning",
     family: "social-media-community",
@@ -156,6 +166,7 @@ test("every promoted Eternities capability exposes one exact compact routing car
     "eternities-agora",
     "eternities-arcadia",
     "eternities-architect",
+    "eternities-beacon",
     "eternities-chorus",
     "eternities-forge",
     "eternities-mnemosyne",
