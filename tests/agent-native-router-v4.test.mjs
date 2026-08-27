@@ -124,6 +124,7 @@ test("router v4 receipt reconciles exact live artifacts", async () => {
   ]);
   const manifest = JSON.parse(manifestText);
   assert.equal(receipt.id, "agent-native-router-v4");
+  assert.equal(receipt.basePurpose, "router-v4-construction-base");
   assert.deepEqual(receipt.inputs, manifest.inputs);
   assert.deepEqual(receipt.artifacts, {
     cardsSha256: sha256(cardsText),

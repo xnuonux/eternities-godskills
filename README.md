@@ -18,9 +18,9 @@ pretending structural indexing is semantic refinement:
 - 4,741 exact source bodies present and SHA-256 inspected as inert text;
 - 3,880 cards assigned at least one explicit ontology family;
 - 30 sources represented by the existing provenance ledger;
-- 41 exact bodies semantically reviewed in bounded waves;
-- 37 reviewed sources assigned to certified clusters;
-- 27 synthesized, 27 evaluated, and 27 promoted exact source rows from two
+- 145 exact bodies semantically reviewed in bounded waves;
+- 143 reviewed sources assigned to certified clusters;
+- 74 synthesized, 74 evaluated, and 74 promoted exact source rows from three
   deterministic candidate receipts.
 
 the first explicit professional queues contain 12 agency and client-service
@@ -29,8 +29,8 @@ and 25 game-design and development cards. queues are split into deterministic
 packets of at most 25 cards. the remaining work is visible rather than rounded
 up to completion.
 
-the repository now contains 9 promoted first-party capabilities. only Agora's
-7 and Arcadia's 20 exact reviewed source rows advance through corpus synthesis evidence;
+the repository now contains 10 promoted first-party capabilities. only Agora's
+7, Arcadia's 20, and Chorus's 47 exact reviewed source rows advance through corpus synthesis evidence;
 the ledger does not retroactively invent review history for earlier releases or
 claim the 4,741-source refinery is complete.
 
@@ -42,14 +42,14 @@ to clustering, synthesis, evaluation, or promotion.
 ## agent-native routing
 
 agent-native routing v1 remains frozen and certified for its original seven
-capabilities. routing v2 is frozen for eight capabilities, and routing v3 is
-certified for all 9 promoted capabilities. an
+capabilities. routing v2 is frozen for eight capabilities, routing v3 is frozen
+for nine capabilities, and router v4 is certified for all 10 promoted capabilities. an
 adapter translates an ordinary desired outcome into a neutral request envelope,
 retrieves at most 32 compact cards from the cold index, and
 loads only the selected entrypoint. the portable core then selects one smallest
 sufficient capability or an explicitly compatible composition of at most three.
 
-the current certification covers 27 direct, paraphrased, and contextual
+the current certification covers 30 direct, paraphrased, and contextual
 commandless envelopes, exact equality after all compatibility aliases are removed, a
 5,000-card bounded-disclosure fixture, authority and effect refusal, risk
 limits, and unresolved-decision refusal. skill selection never expands user
@@ -61,7 +61,8 @@ the portable contract is documented in `runtime\agent-router.md`, its adapter
 manifest is `runtime\portable-adapter.v1.json`. exact receipts are
 `receipts\agent-native-router-v1.json` and
 `receipts\agent-native-router-v2.json` and
-`receipts\agent-native-router-v3.json`. no global runtime adapter was enabled
+`receipts\agent-native-router-v3.json` and
+`receipts\agent-native-router-v4.json`. no global runtime adapter was enabled
 by this work.
 
 ## eternities agora
@@ -98,6 +99,27 @@ external action remain outside its synthesized boundary. read
 `docs\eternities-arcadia-report.md` and
 `receipts\eternities-arcadia-release.json` for the measured local-candidate
 verdict. it is not globally activated by this release.
+
+## eternities chorus
+
+`eternities-chorus` is the promoted social communication and community
+stewardship godskill. it keeps identity and channel strategy, editorial
+production, community operations, and measurement and stewardship separately
+routable while preserving truth, provenance, accessibility, participant
+dignity, authority, uncertainty, and explicit human ownership.
+
+Chorus passes 43 of 43 all-critical deterministic cases, reconciles all 106
+reviewed social and community sources into 13 exact clusters, selects 4
+candidate clusters and 47 exact sources, and uses a 1,502-token entrypoint.
+paid acquisition, enrichment, scraping, publishing, outreach, account mutation,
+fabricated identity, sensitive moderation, crisis communication, and specialist
+media production remain outside its synthesized boundary. read
+`docs\eternities-chorus-report.md` and
+`receipts\eternities-chorus-release.json` for the measured local-candidate
+verdict. it is not globally activated by this release.
+
+Chorus advances the corpus to exactly 74 synthesized, 74 evaluated, and 74
+promoted source rows while preserving the frozen evidence of earlier releases.
 
 ## release-one commands
 

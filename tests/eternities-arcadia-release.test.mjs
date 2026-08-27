@@ -66,7 +66,8 @@ test("Arcadia report and README state measured scope and proof limits", async ()
     "live-model interpretation", "game quality", "commercial performance", "external evidence freshness",
     "representative-device reliability", "production operation", "no global activation",
   ]) assert.match(report.toLowerCase(), new RegExp(phrase));
-  assert.match(readme, /9 promoted/i);
-  assert.match(readme, /41.*41/);
-  assert.match(readme, /27 synthesized.*27 evaluated.*27 promoted/is);
+  assert.match(readme, /routing v3 is frozen\s+for nine capabilities/i);
+  assert.match(readme, /Arcadia passes 41 of 41/i);
+  assert.match(readme, /Arcadia[\s\S]*20 exact sources/i);
+  assert.match(readme, /Agora's[\s\S]*7[\s\S]*Arcadia's 20[\s\S]*Chorus's 47/i);
 });
