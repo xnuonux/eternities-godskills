@@ -68,6 +68,11 @@ test("every exact marketing and growth source has one bounded semantic review", 
     "fits the stated need",
     "expected result:",
     "findings and implementation handoff",
+    "unknowns stay visible and do not become invented baselines",
+    "external effects require a separate approval gate",
+    "specialist boundaries can be mistaken for execution authority",
+    "stop when required inputs, credentials, or current evidence are absent",
+    "provider, platform, privacy, or rights constraints can invalidate",
   ];
   for (const review of reviews) {
     const semanticText = [
