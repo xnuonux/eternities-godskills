@@ -106,6 +106,13 @@ test("every exact marketing and growth source has one bounded semantic review", 
     "choose priorities using the stated outcome",
     "source coverage may omit the segment or condition",
     "a calculated score or route can appear more certain",
+    "values needed for",
+    "as the check before selecting the reported result",
+    "rather than filling it from inference",
+    "no direct alteration of",
+    "the selected result follows the source procedure for",
+    "the reported artifact identifies its supporting evidence for",
+    "sample may not represent the full population",
   ];
   for (const review of reviews) {
     const semanticText = [
@@ -126,6 +133,11 @@ test("every exact marketing and growth source has one bounded semantic review", 
       /\[[^\]]+\sconstraint\s+\d+\]/i.test(semanticText),
       false,
       `${review.sourceId} contains bracketed template-uniqueness suffixes`,
+    );
+    assert.equal(
+      semanticText.includes(review.sourceId.toLowerCase()),
+      false,
+      `${review.sourceId} leaks its source id into semantic review prose`,
     );
   }
 
