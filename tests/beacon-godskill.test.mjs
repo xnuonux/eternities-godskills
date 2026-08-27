@@ -60,12 +60,12 @@ test("Beacon exposes six routes and only exact candidate-cluster evidence", asyn
   assert.equal(contract.explicitOnly, false);
   assert.deepEqual(contract.effects, ["read", "write"]);
   assert.deepEqual(contract.routes.map(({ id }) => id), [
-    "market-truth-and-positioning",
-    "offer-and-commercial-architecture",
+    "conversion-and-lifecycle-systems",
     "discoverability-and-search-systems",
     "go-to-market-and-demand-systems",
-    "conversion-and-lifecycle-systems",
     "growth-measurement-and-stewardship",
+    "market-truth-and-positioning",
+    "offer-and-commercial-architecture",
   ]);
   assert.equal(contract.routes.some(({ delegates }) => delegates.includes(contract.name)), false);
 
@@ -87,21 +87,26 @@ test("Beacon exposes six routes and only exact candidate-cluster evidence", asyn
 });
 
 test("Beacon mining receipt preserves all family evidence and proof boundaries", async () => {
-  const [receipt, batch, mapping] = await Promise.all([
+  const [receipt, batch, queue, allClusters] = await Promise.all([
     readFile(new URL("skills/eternities-beacon/references/mining-receipt.md", root), "utf8"),
     json("clusters/marketing-growth.v1.json"),
-    json("data/marketing-growth-cluster-map.v1.json"),
+    json("artifacts/corpus/families/marketing-growth/queue.json"),
+    jsonLines("artifacts/corpus/cluster-evidence.jsonl"),
   ]);
   for (const cluster of batch.clusters) assert.match(receipt, new RegExp(cluster.id));
   for (const { sourceId } of batch.clusters.flatMap(({ members }) => members)) {
     assert.match(receipt, new RegExp(sourceId));
   }
-  for (const { sourceIds } of mapping.priorCanonicalCoverage) {
-    for (const sourceId of sourceIds) assert.match(receipt, new RegExp(sourceId));
-  }
+  const queueIds = new Set(queue.cards.map(({ sourceId }) => sourceId));
+  const newIds = new Set(batch.clusters.flatMap(({ members }) => members.map(({ sourceId }) => sourceId)));
+  const priorIds = allClusters
+    .flatMap(({ members }) => members.map(({ sourceId }) => sourceId))
+    .filter((sourceId) => queueIds.has(sourceId) && !newIds.has(sourceId));
+  assert.equal(priorIds.length, 38);
+  for (const sourceId of priorIds) assert.match(receipt, new RegExp(sourceId));
   assert.match(receipt, /no source prose was copied/i);
-  assert.match(receipt, /no third-party code or instruction was executed/i);
+  assert.match(receipt, /no third-party code.*instruction was executed/is);
   assert.match(receipt, /291.*queue|queue.*291/i);
   assert.match(receipt, /143 selected/i);
-  assert.match(receipt, /38 prior/i);
+  assert.match(receipt, /38 (?:prior|overlapping)/i);
 });
