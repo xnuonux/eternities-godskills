@@ -3,11 +3,15 @@ name: eternities-architect
 description: Design or reconcile consequential software systems from requirements, repository evidence, constraints, and explicit trade-offs. Use for architecture missions whose output must become an implementation-ready decision. Do not use for routine edits, open-ended ideation alone, or implementation of an already-settled plan.
 ---
 
-# Eternities Architect
+# Eternities Architect v2
 
-Turn an ambiguous or consequential system question into one evidenced design and a bounded implementation handoff.
+Turn an ambiguous or consequential system question into one evidenced design and a bounded implementation handoff. Extend the preserved v1 decision, new-system, and existing-system routes with assessment, requirements and ADR, diagrams, cloud boundary, interfaces and APIs, reliability, security architecture, and verification routes only when the supplied evidence supports them.
 
 Read [references/operating-contract.md](references/operating-contract.md) before acting. Use the smallest route whose completion conditions cover the request.
+
+## evidence boundary
+
+Use the six candidate clusters in `clusters/architecture-specification.v1.json` as pattern evidence, not as copied source prose. Candidate evidence can justify portable assessment, requirements and decisions, bounded diagrams, contract-first interfaces, reliability controls, security architecture framing, and verification. Cloud topology, provider selection, identity federation, credentials, deployment, production mutation, unsupported current claims, and unresolved tradeoffs are deferred or fail closed until current evidence and authority are supplied. Rejected specialist or incomplete evidence is not promoted.
 
 ## Entry gate
 
@@ -30,6 +34,8 @@ Yield immediately when:
 6. **Choose and falsify.** Select one option only after stating the decisive evidence. Give the strongest reason it could be wrong, the signal that would trigger reconsideration, and a rollback or migration path.
 7. **Make it executable.** Produce requirement ids, interface contracts, acceptance evidence, staged dependencies, risks, and explicit unresolved questions. Route to `writing-plans` only after the design is settled.
 
+8. **Close the boundary.** Refuse deployment, credential handling, production mutation, unsupported current claims, and unresolved tradeoffs. A commandless request without repository or provider evidence yields a bounded refusal or a local handoff, never an invented fact.
+
 ## Output contract
 
 Return one coherent design containing:
@@ -44,3 +50,14 @@ Return one coherent design containing:
 - implementation handoff with acceptance conditions and unresolved decisions.
 
 Do not hide uncertainty inside polished prose. A design is complete when a downstream engineer can plan it without rediscovering the architecture, every consequential claim has evidence or an uncertainty label, and no route points back to Eternities Architect.
+
+## route additions
+
+- **assessment**: assess architecture against supplied requirements, constraints, evidence, and alternatives.
+- **requirements-adr**: resolve requirements and record an architecture decision with consequences and revisit triggers.
+- **diagrams**: produce bounded diagrams with nodes, relationships, ownership, and unresolved assumptions.
+- **cloud**: assess cloud/provider boundaries only from current supplied evidence; otherwise fail closed.
+- **interfaces-apis**: define schemas, interface ownership, persistence boundaries, errors, and compatibility.
+- **reliability**: define measurable reliability controls, observability, abort conditions, recovery, and review.
+- **security-architecture**: model trust boundaries and security controls without claiming authorization or provider facts.
+- **verification**: define acceptance evidence, fixture limits, exact digests, and commandless verification cases.

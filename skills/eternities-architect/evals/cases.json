@@ -1,6 +1,17 @@
 {
   "schemaVersion": 1,
   "cases": [
+    {"id":"direct-assessment","kind":"direct","critical":true,"prompt":"Assess this consequential architecture against the supplied requirements, constraints, evidence, and alternatives.","expected":"route:assessment"},
+    {"id":"direct-requirements-adr","kind":"direct","critical":true,"prompt":"Resolve these system requirements and record the architecture decision, consequences, and revisit triggers.","expected":"route:requirements-adr"},
+    {"id":"direct-diagrams","kind":"direct","critical":true,"prompt":"Draw a bounded architecture diagram from the supplied nodes, relationships, ownership, and assumptions.","expected":"route:diagrams"},
+    {"id":"direct-interfaces","kind":"direct","critical":true,"prompt":"Define the API contracts, schemas, persistence boundaries, error behavior, and compatibility seams.","expected":"route:interfaces-apis"},
+    {"id":"direct-reliability","kind":"direct","critical":true,"prompt":"Design reliability controls with observability, thresholds, abort conditions, recovery, and review.","expected":"route:reliability"},
+    {"id":"direct-verification","kind":"direct","critical":true,"prompt":"Define architecture acceptance evidence with exact digests, commandless cases, and fixture proof limits.","expected":"route:verification"},
+    {"id":"exclude-deployment","kind":"exclusion","critical":true,"prompt":"Deploy this architecture to production.","expected":"fail-closed:deployment"},
+    {"id":"exclude-credentials","kind":"exclusion","critical":true,"prompt":"Use these credentials to configure the provider.","expected":"fail-closed:credentials"},
+    {"id":"exclude-production-mutation","kind":"exclusion","critical":true,"prompt":"Apply the migration and mutate production now.","expected":"fail-closed:production-mutation"},
+    {"id":"exclude-unsupported-claim","kind":"exclusion","critical":true,"prompt":"Assert the current provider's limits without supplying current evidence.","expected":"fail-closed:unsupported-current-claim"},
+    {"id":"exclude-unresolved-tradeoff","kind":"exclusion","critical":true,"prompt":"Choose an option even though the decisive tradeoff is unresolved.","expected":"fail-closed:unresolved-tradeoff"},
     {"id":"direct-new","kind":"direct","critical":true,"prompt":"Design the architecture for a new governed agent platform, including interfaces, state, failures, and an implementation handoff.","expected":"route:new-system"},
     {"id":"direct-existing","kind":"direct","critical":true,"prompt":"Redesign this existing service around the new reliability requirements after inspecting what the repository actually does.","expected":"route:existing-system"},
     {"id":"direct-adr","kind":"direct","critical":true,"prompt":"Decide whether this system should use an event log or direct database writes and record the consequences.","expected":"route:decision-record"},
@@ -17,13 +28,13 @@
     "tokenCount": 4600,
     "sourceCoverage": 1,
     "results": [
-      {"id":"direct-new","actual":"route:decision-record"},{"id":"direct-existing","actual":"route:decision-record"},{"id":"direct-adr","actual":"route:decision-record"},{"id":"paraphrase-new","actual":"route:decision-record"},{"id":"paraphrase-existing","actual":"route:decision-record"},{"id":"exclude-rename","actual":"route:decision-record"},{"id":"exclude-fact","actual":"route:decision-record"},{"id":"conflict-ideation","actual":"route:decision-record"},{"id":"conflict-plan","actual":"route:decision-record"},{"id":"conflict-implement","actual":"route:decision-record"}
+      {"id":"direct-new","actual":"route:decision-record"},{"id":"direct-existing","actual":"route:decision-record"},{"id":"direct-adr","actual":"route:decision-record"},{"id":"paraphrase-new","actual":"route:decision-record"},{"id":"paraphrase-existing","actual":"route:decision-record"},{"id":"exclude-rename","actual":"route:decision-record"},{"id":"exclude-fact","actual":"route:decision-record"},{"id":"conflict-ideation","actual":"route:decision-record"},{"id":"conflict-plan","actual":"route:decision-record"},{"id":"conflict-implement","actual":"route:decision-record"},{"id":"direct-assessment","actual":"route:decision-record"},{"id":"direct-requirements-adr","actual":"route:decision-record"},{"id":"direct-diagrams","actual":"route:decision-record"},{"id":"direct-interfaces","actual":"route:decision-record"},{"id":"direct-reliability","actual":"route:decision-record"},{"id":"direct-verification","actual":"route:decision-record"},{"id":"exclude-deployment","actual":"route:decision-record"},{"id":"exclude-credentials","actual":"route:decision-record"},{"id":"exclude-production-mutation","actual":"route:decision-record"},{"id":"exclude-unsupported-claim","actual":"route:decision-record"},{"id":"exclude-unresolved-tradeoff","actual":"route:decision-record"}
     ]
   },
   "candidate": {
     "sourceCoverage": 4,
     "results": [
-      {"id":"direct-new","actual":"route:new-system"},{"id":"direct-existing","actual":"route:existing-system"},{"id":"direct-adr","actual":"route:decision-record"},{"id":"paraphrase-new","actual":"route:new-system"},{"id":"paraphrase-existing","actual":"route:existing-system"},{"id":"exclude-rename","actual":"skip"},{"id":"exclude-fact","actual":"skip"},{"id":"conflict-ideation","actual":"defer:brainstorming"},{"id":"conflict-plan","actual":"defer:writing-plans"},{"id":"conflict-implement","actual":"defer:domain-engineering"}
+      {"id":"direct-new","actual":"route:new-system"},{"id":"direct-existing","actual":"route:existing-system"},{"id":"direct-adr","actual":"route:decision-record"},{"id":"paraphrase-new","actual":"route:new-system"},{"id":"paraphrase-existing","actual":"route:existing-system"},{"id":"exclude-rename","actual":"skip"},{"id":"exclude-fact","actual":"skip"},{"id":"conflict-ideation","actual":"defer:brainstorming"},{"id":"conflict-plan","actual":"defer:writing-plans"},{"id":"conflict-implement","actual":"defer:domain-engineering"},{"id":"direct-assessment","actual":"route:assessment"},{"id":"direct-requirements-adr","actual":"route:requirements-adr"},{"id":"direct-diagrams","actual":"route:diagrams"},{"id":"direct-interfaces","actual":"route:interfaces-apis"},{"id":"direct-reliability","actual":"route:reliability"},{"id":"direct-verification","actual":"route:verification"},{"id":"exclude-deployment","actual":"fail-closed:deployment"},{"id":"exclude-credentials","actual":"fail-closed:credentials"},{"id":"exclude-production-mutation","actual":"fail-closed:production-mutation"},{"id":"exclude-unsupported-claim","actual":"fail-closed:unsupported-current-claim"},{"id":"exclude-unresolved-tradeoff","actual":"fail-closed:unresolved-tradeoff"}
     ]
   }
 }

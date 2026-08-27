@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "godskill-eternities-architect-v1",
+  "id": "godskill-eternities-architect-v2",
   "name": "eternities-architect",
   "category": "architecture-specification",
   "intent": "Convert a consequential system question into an evidenced architecture decision and implementation-ready handoff.",
@@ -46,12 +46,7 @@
     "brainstorming",
     "writing-plans"
   ],
-  "sourceIds": [
-    "skill-0aea1470a8fb8c11",
-    "skill-330342e7e8edc510",
-    "skill-64376ecfd3fc8025",
-    "skill-7030d919fe03611f"
-  ],
+  "sourceIds": ["skill-0aea1470a8fb8c11", "skill-330342e7e8edc510", "skill-64376ecfd3fc8025", "skill-7030d919fe03611f"],
   "explicitOnly": false,
   "routes": [
     {
@@ -68,7 +63,15 @@
       "id": "existing-system",
       "capabilities": ["repository-evidence", "requirements", "design", "decision", "handoff"],
       "delegates": ["eternities-oracle", "brainstorming", "writing-plans"]
-    }
+    },
+    {"id":"assessment","capabilities":["assessment","requirements","tradeoff"],"delegates":["eternities-oracle"]},
+    {"id":"requirements-adr","capabilities":["requirements","decision","record"],"delegates":[]},
+    {"id":"diagrams","capabilities":["design","diagrams","assumptions"],"delegates":[]},
+    {"id":"cloud","capabilities":["cloud-boundary","provider-evidence","fail-closed"],"delegates":["eternities-oracle"]},
+    {"id":"interfaces-apis","capabilities":["interfaces","apis","schemas","compatibility"],"delegates":[]},
+    {"id":"reliability","capabilities":["reliability","observability","recovery"],"delegates":[]},
+    {"id":"security-architecture","capabilities":["security-boundary","trust-boundary","controls"],"delegates":["eternities-aegis"]},
+    {"id":"verification","capabilities":["verification","acceptance","evidence"],"delegates":[]}
   ],
   "terminationConditions": [
     "the chosen design traces to requirements and evidence",
