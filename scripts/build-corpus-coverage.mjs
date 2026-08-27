@@ -4,7 +4,7 @@ import { pathToFileURL } from "node:url";
 
 import { auditBodies } from "../src/body-audit.mjs";
 import { buildCoverageRows, summarizeCoverage } from "../src/coverage.mjs";
-import { sha256, writeJsonAtomic } from "../src/io.mjs";
+import { canonicalText, sha256, writeJsonAtomic } from "../src/io.mjs";
 import { classify } from "../src/ontology.mjs";
 import { loadClusterEvidence } from "../src/refinery-clusters.mjs";
 import { loadCandidateEvidence } from "../src/refinery-candidates.mjs";
@@ -124,10 +124,10 @@ export async function buildCorpusCoverage({
     warehouseRoot: path.resolve(warehouseRoot),
     ontologyVersion: ontology.version,
     inputDigests: {
-      sourceRecordsSha256: sha256(sourceText),
-      ontologySha256: sha256(ontologyText),
-      provenanceSha256: sha256(provenanceText),
-      duplicateGroupsSha256: sha256(duplicateText),
+      sourceRecordsSha256: sha256(canonicalText(sourceText)),
+      ontologySha256: sha256(canonicalText(ontologyText)),
+      provenanceSha256: sha256(canonicalText(provenanceText)),
+      duplicateGroupsSha256: sha256(canonicalText(duplicateText)),
     },
     artifactDigests: {
       bodyEvidenceSha256: sha256(bodyText),

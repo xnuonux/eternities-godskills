@@ -251,6 +251,10 @@ test("corpus coverage build is byte-stable and reconciles exact inputs", async (
       (name) => readFile(path.join(output, name), "utf8"),
     ),
   );
+  for (const inputPath of [sourceRecordsPath, ontologyPath, duplicateGroupsPath]) {
+    const lfText = await readFile(inputPath, "utf8");
+    await writeFile(inputPath, lfText.replaceAll("\n", "\r\n"), "utf8");
+  }
   const second = await buildCorpusCoverage(options);
   const secondFiles = await Promise.all(
     ["body-evidence.jsonl", "coverage-ledger.jsonl", "coverage-summary.json", "cluster-evidence.jsonl", "candidate-evidence.jsonl"].map(
