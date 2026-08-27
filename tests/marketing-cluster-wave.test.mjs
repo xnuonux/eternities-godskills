@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 
 import { classify } from "../src/ontology.mjs";
 import { loadReviewEvidence } from "../src/reviews.mjs";
-import { validateClusterBatch } from "../src/refinery-clusters.mjs";
+import { loadClusterEvidence, validateClusterBatch } from "../src/refinery-clusters.mjs";
 import { sha256 } from "../src/io.mjs";
 
 const root = new URL("../", import.meta.url);
@@ -29,31 +29,45 @@ async function jsonLines(relative) {
     .map(JSON.parse);
 }
 
-async function marketingReviews() {
+async function canonicalReviewState() {
   const [queue, bodies, records, ontology] = await Promise.all([
     json("artifacts/corpus/families/marketing-growth/queue.json"),
     jsonLines("artifacts/corpus/body-evidence.jsonl"),
     jsonLines("artifacts/release-one/source-records.jsonl"),
     json("data/ontology.v1.json"),
   ]);
-  const queueIds = new Set(queue.cards.map(({ sourceId }) => sourceId));
-  return (await loadReviewEvidence(
+  const queueIds = queue.cards.map(({ sourceId }) => sourceId).sort();
+  const reviews = await loadReviewEvidence(
     fileURLToPath(new URL("reviews/waves/", root)),
     records.map((record) => ({ ...record, families: classify(record, ontology) })),
     bodies,
-  )).filter(({ sourceId }) => queueIds.has(sourceId));
+  );
+  return { queueIds, reviews };
 }
 
 test("the complete marketing family reconciles exactly once into bounded clusters", async () => {
-  const reviews = await marketingReviews();
+  const { queueIds, reviews } = await canonicalReviewState();
+  const queueIdSet = new Set(queueIds);
+  const familyReviews = reviews.filter(({ familyId, sourceId }) =>
+    familyId === "marketing-growth" && queueIdSet.has(sourceId),
+  );
   const batch = await json("clusters/marketing-growth.v1.json");
-  const first = validateClusterBatch(batch, reviews);
-  const second = validateClusterBatch(batch, reviews);
+  const first = validateClusterBatch(batch, familyReviews);
+  const second = validateClusterBatch(batch, familyReviews);
   const clusteredIds = first.flatMap(({ members }) => members.map(({ sourceId }) => sourceId)).sort();
-  const reviewedIds = reviews.map(({ sourceId }) => sourceId).sort();
+  const reviewedIds = familyReviews.map(({ sourceId }) => sourceId).sort();
+  const allClusters = await loadClusterEvidence(
+    fileURLToPath(new URL("clusters/", root)),
+    reviews,
+  );
+  const globallyClusteredQueueIds = allClusters
+    .flatMap(({ members }) => members.map(({ sourceId }) => sourceId))
+    .filter((sourceId) => queueIdSet.has(sourceId))
+    .sort();
 
-  assert.equal(reviews.length, 291);
+  assert.equal(familyReviews.length, 253);
   assert.deepEqual(clusteredIds, reviewedIds);
+  assert.deepEqual(globallyClusteredQueueIds, queueIds);
   assert.deepEqual(second, first);
   assert.ok(first.every(({ synthesisDecision }) =>
     ["candidate", "deferred", "rejected"].includes(synthesisDecision),
@@ -63,7 +77,7 @@ test("the complete marketing family reconciles exactly once into bounded cluster
     cluster.synthesisDecision !== "candidate" || candidateRoutes.has(cluster.candidateRoute),
   ));
 
-  const reviewsById = new Map(reviews.map((review) => [review.sourceId, review]));
+  const reviewsById = new Map(familyReviews.map((review) => [review.sourceId, review]));
   for (const cluster of batch.clusters) {
     const kinds = new Set(cluster.members.map(({ sourceId }) => {
       const disposition = reviewsById.get(sourceId).disposition;
@@ -86,11 +100,13 @@ test("the marketing cluster receipt freezes exact decisions and deterministic ar
     readFile(new URL(`${checkpoint}coverage-ledger.jsonl`, root), "utf8"),
   ]);
   assert.equal(receipt.checkpointRoot, checkpoint.slice(0, -1));
-  assert.equal(receipt.counts.reviewedSources, 291);
-  assert.equal(receipt.counts.clusteredSources, 291);
+  assert.equal(receipt.counts.familyQueueSources, 291);
+  assert.equal(receipt.counts.priorCanonicalClusterSources, 38);
+  assert.equal(receipt.counts.reviewedSources, 253);
+  assert.equal(receipt.counts.clusteredSources, 253);
   assert.equal(
     receipt.counts.candidateSources + receipt.counts.deferredSources + receipt.counts.rejectedSources,
-    291,
+    253,
   );
   assert.equal(
     receipt.counts.candidateClusters + receipt.counts.deferredClusters + receipt.counts.rejectedClusters,

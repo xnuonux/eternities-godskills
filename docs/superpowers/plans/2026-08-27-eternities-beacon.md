@@ -69,12 +69,14 @@ memberships, and byte-stable outputs. Commit the reviews, test, and rebuilt arti
 - Modify: `artifacts/corpus/*`
 
 **Interfaces:**
-- Consumes: all exact normalized marketing reviews.
-- Produces: exhaustive candidate, deferred, and rejected clusters covering every reviewed source exactly once.
+- Consumes: all 253 canonical marketing-family reviews plus the 38 overlapping queue sources already frozen in prior-family clusters.
+- Produces: exhaustive candidate, deferred, and rejected clusters for the 253 new members, with all 291 queue sources covered exactly once by the global cluster union.
 
 - [ ] **Step 1: Write the failing cluster test**
 
-Assert exact review-to-cluster membership equality, unique source occurrence, exact review digests, valid relationships and roles, explicit decisions, and stable normalized digests.
+Assert exact 253-row review-to-new-cluster membership equality, global 291-row
+queue coverage, unique source occurrence, exact review digests, valid
+relationships and roles, explicit decisions, and stable normalized digests.
 
 - [ ] **Step 2: Run the red test**
 

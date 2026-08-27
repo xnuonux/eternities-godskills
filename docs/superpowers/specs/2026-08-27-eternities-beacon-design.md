@@ -46,8 +46,10 @@ Each review records exact source and body digests, neutral unnamed intents,
 inputs, operations, outputs, effects, failure behavior, exclusions, useful
 invariants, material risks, confidence, and one disposition. Every cluster
 preserves source and review digests, relationship, member role, rationale, and
-synthesis decision. All 291 sources must appear exactly once in final cluster
-evidence, including rejected and deferred rows.
+synthesis decision. The 253 new canonical marketing reviews enter the new
+marketing cluster set. The 38 prior-family overlaps retain their immutable
+existing cluster rows. All 291 queue sources must appear exactly once in the
+global final cluster evidence, including rejected and deferred rows.
 
 ## evidence-derived architecture hypothesis
 
