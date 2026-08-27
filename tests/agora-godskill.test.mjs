@@ -3,6 +3,10 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
 import { validateCompositionContract } from "../src/composition.mjs";
+import { evaluateSuite } from "../src/evaluate.mjs";
+import { canonicalText } from "../src/io.mjs";
+import { decidePromotion } from "../src/promote.mjs";
+import { deriveClusterSourceEvidence } from "../src/provenance-evidence.mjs";
 import { validateCapabilityContract } from "../src/schema.mjs";
 
 const skillPath = new URL("../skills/eternities-agora/SKILL.md", import.meta.url);
@@ -10,6 +14,53 @@ const contractPath = new URL(
   "../skills/eternities-agora/references/capability-contract.json",
   import.meta.url,
 );
+const root = new URL("../", import.meta.url);
+
+async function json(relative) {
+  return JSON.parse(await readFile(new URL(relative, root), "utf8"));
+}
+
+async function jsonLines(relative) {
+  return (await readFile(new URL(relative, root), "utf8"))
+    .trim()
+    .split(/\r?\n/)
+    .map(JSON.parse);
+}
+
+async function evaluateAgora() {
+  const suite = await json("skills/eternities-agora/evals/cases.json");
+  const skillText = canonicalText(await readFile(skillPath, "utf8"));
+  const contract = await json(
+    "skills/eternities-agora/references/capability-contract.json",
+  );
+  const sourceEvidence = deriveClusterSourceEvidence(
+    contract,
+    await jsonLines("artifacts/corpus/cluster-evidence.jsonl"),
+    await jsonLines("artifacts/corpus/review-evidence.jsonl"),
+  );
+  const baseline = {
+    ...evaluateSuite(suite.cases, suite.baseline.results),
+    tokenCount: suite.baseline.tokenCount,
+  };
+  const candidate = {
+    ...evaluateSuite(suite.cases, suite.candidate.results),
+    tokenCount: Math.ceil(Buffer.byteLength(skillText, "utf8") / 4),
+    improvements:
+      sourceEvidence.sourceCoverage > suite.baseline.sourceCoverage
+        ? ["sourceCoverage"]
+        : [],
+  };
+  return {
+    suite,
+    sourceEvidence,
+    candidate,
+    decision: decidePromotion({
+      baseline,
+      candidate,
+      policy: await json("policies/promotion.v1.json"),
+    }),
+  };
+}
 
 function parseFrontmatter(markdown) {
   const match = markdown.match(/^---\n([\s\S]*?)\n---\n/);
@@ -78,4 +129,43 @@ test("Agora contract exposes three bounded routes and exact candidate evidence",
   ]) {
     assert.doesNotMatch(serialized, new RegExp(deferred));
   }
+});
+
+test("Agora evaluation covers all seven outcomes and every required boundary", async () => {
+  const { suite } = await evaluateAgora();
+  assert.equal(suite.cases.length, 29);
+  assert.ok(suite.cases.every(({ critical }) => critical === true));
+  const outcomes = new Set(suite.cases.map(({ expected }) => expected));
+  for (const expected of [
+    "route:prospect-assessment:rapid-screen",
+    "route:prospect-assessment:multidimensional",
+    "route:account-operations:portfolio-pipeline",
+    "route:account-operations:client-account",
+    "route:account-operations:operational-rollup",
+    "route:client-deliverables:service-proposal",
+    "route:client-deliverables:client-report",
+    "skip",
+    "defer:eternities-oracle",
+    "defer:eternities-aegis",
+    "defer:eternities-forge",
+    "defer:document-rendering",
+    "refuse:legal-boundary",
+    "refuse:financial-boundary",
+    "refuse:regulated-identity-boundary",
+    "refuse:external-authority-required",
+    "refuse:runtime-administration-boundary",
+  ]) {
+    assert.ok(outcomes.has(expected), `missing outcome: ${expected}`);
+  }
+});
+
+test("Agora passes every critical promotion gate with exact cluster evidence", async () => {
+  const { sourceEvidence, candidate, decision } = await evaluateAgora();
+  assert.equal(sourceEvidence.sourceCoverage, 7);
+  assert.equal(sourceEvidence.proseCopied, false);
+  assert.equal(candidate.criticalPassed, 29);
+  assert.equal(candidate.criticalTotal, 29);
+  assert.deepEqual(candidate.unresolvedEffects, []);
+  assert.equal(candidate.tokenCount <= 4000, true);
+  assert.equal(decision.status, "promoted");
 });
