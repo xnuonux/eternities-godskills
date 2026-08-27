@@ -59,6 +59,8 @@ test("every exact marketing and growth source has one bounded semantic review", 
     "work through its",
     "result grounded in the source's",
     "may depend on stale assumptions or specialized tooling",
+    "as a bounded marketing workflow centered on",
+    "producing an auditable decision or draft without assuming authority",
   ];
   for (const review of reviews) {
     const semanticText = [
