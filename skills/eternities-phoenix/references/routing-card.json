@@ -1,1 +1,61 @@
-{"schemaVersion":1,"name":"eternities-phoenix","category":"debugging-recovery","summary":"bounded local diagnosis, incident recovery planning, observability, performance analysis, and specialist routing","routes":[{"id":"diagnosis-and-reproduction","triggers":["reproducible bug","failure diagnosis","root cause","focused fix","verification"],"effects":["read"]},{"id":"incident-triage-and-recovery","triggers":["incident triage","impact assessment","recovery plan","rollback plan"],"effects":["read"]},{"id":"observability-and-performance","triggers":["logs","traces","metrics","performance regression","baseline"],"effects":["read"]},{"id":"specialist-routing","triggers":["security boundary","provider boundary","database or platform specialist","authority gap"],"effects":["read"]}],"failClosed":["production mutation","destructive repair","credentials","external systems","missing reproduction","missing rollback","authority gap"]}
+{
+  "schemaVersion": 1,
+  "id": "eternities-phoenix",
+  "family": "debugging-recovery",
+  "intent": "Turn an authorized reproducible failure, incident, degradation, or recovery question into one bounded local diagnosis, plan, or specialist handoff.",
+  "successCondition": "One narrow route produces an evidence-linked local artifact, refusal, or handoff with reproduction, rollback, authority, uncertainty, and termination explicit.",
+  "provides": [
+    "diagnosis",
+    "incident-recovery",
+    "observability",
+    "performance-analysis",
+    "reproduction",
+    "specialist-handoff",
+    "verification"
+  ],
+  "requires": [],
+  "intentExamples": {
+    "direct": [
+      "analyze supplied telemetry for a performance regression",
+      "debug this reproducible failure from the available evidence",
+      "turn this incident timeline into a reversible recovery plan"
+    ],
+    "paraphrased": [
+      "find the smallest confirmed cause before changing behavior",
+      "rank the failure hypotheses and prove the narrow repair",
+      "show what broke and prepare a bounded specialist handoff"
+    ],
+    "contextual": [
+      "a regression has logs and a reproduction but no confirmed cause",
+      "an incident needs impact classification rollback and acceptance checks",
+      "the workload slowed down and the baseline must be reconstructed"
+    ]
+  },
+  "negativeIntents": [
+    "background monitoring without a termination condition",
+    "credential or secret use",
+    "destructive repair",
+    "production mutation",
+    "unbounded external-system action"
+  ],
+  "effects": [
+    "local-read"
+  ],
+  "riskClass": "moderate",
+  "authorityRequirements": [
+    "local-read"
+  ],
+  "preconditions": [],
+  "compatibleWith": [
+    "eternities-aegis",
+    "eternities-architect",
+    "eternities-forge",
+    "eternities-oracle"
+  ],
+  "conflictsWith": [],
+  "contextCost": 1500,
+  "dependencyCost": 4,
+  "evidenceConfidence": "verified",
+  "entrypoint": "skills/eternities-phoenix/SKILL.md",
+  "legacyAliases": []
+}

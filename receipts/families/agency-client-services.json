@@ -2,27 +2,79 @@
   "schemaVersion": 1,
   "familyId": "agency-client-services",
   "status": "certified",
-  "stage": null,
-  "sourceCount": 12,
-  "evidenceCounts": {
-    "cardReviewed": 12,
-    "clustered": 12,
-    "synthesized": 7,
-    "evaluated": 7,
-    "promoted": 7
+  "decision": "terminal",
+  "proof": {
+    "sourceCount": 12,
+    "reviewCount": 12,
+    "clusterCount": 7,
+    "candidateClusterCount": 3,
+    "promotedSynthesisCount": 1
   },
-  "queue": {
-    "path": "artifacts/corpus/owners/agency-client-services/queue.json",
-    "sha256": "9692f8e856ed8a3c448ae2e2fef64bbdf0315236506ae8e9a40dea984d7177d1"
+  "sourceCounts": {
+    "candidate": 7,
+    "deferred": 5,
+    "rejected": 0
   },
-  "packets": [
-    {
-      "path": "artifacts/corpus/owners/agency-client-services/packets/001.json",
-      "sha256": "62790808c13be99c9b175c03e4a0cebe2b21d2b31ae060a03fe592934443c60c"
-    }
+  "clusters": {
+    "candidate": [
+      {
+        "id": "agency-operational-state",
+        "decision": "promoted",
+        "synthesisId": "eternities-agora",
+        "sourceCount": 3
+      },
+      {
+        "id": "client-deliverable-construction",
+        "decision": "promoted",
+        "synthesisId": "eternities-agora",
+        "sourceCount": 2
+      },
+      {
+        "id": "prospect-assessment-depth",
+        "decision": "promoted",
+        "synthesisId": "eternities-agora",
+        "sourceCount": 2
+      }
+    ],
+    "terminal": [
+      {
+        "id": "business-agreement-drafting-boundary",
+        "decision": "deferred",
+        "sourceCount": 1
+      },
+      {
+        "id": "regulated-client-onboarding-extraction",
+        "decision": "deferred",
+        "sourceCount": 2
+      },
+      {
+        "id": "regulated-financial-planning-boundary",
+        "decision": "deferred",
+        "sourceCount": 1
+      },
+      {
+        "id": "runtime-capability-diagnostics-boundary",
+        "decision": "deferred",
+        "sourceCount": 1
+      }
+    ]
+  },
+  "digests": {
+    "queue": "f4896bfd05aea00de80cdf9498d32c6198491eead55dcc18f8acd2cbeb500082",
+    "reviews": "6e8b2c615fc662c31353dbd1f734a4bafeaf55f5f7030e1a9140eca55d122482",
+    "clusters": "f4f4e38aed0c24f04591c2de5a216e8b357f0e320e2084db7a85eb0ed47915ab",
+    "syntheses": "532c0a3d01a13083ee67b3e7f530ed61eee68b5623a7a35ea1a09d3aac4242b9"
+  },
+  "proofLimits": [
+    "local canonical evidence only",
+    "no live-agent, production, or external-system behavior is proven"
   ],
-  "promotionClaims": 0,
-  "allowedNextTransition": null,
+  "allowedTransitions": [
+    "candidate -> promoted",
+    "candidate -> second-order-deferred",
+    "deferred -> terminal",
+    "rejected -> terminal"
+  ],
   "gates": {
     "externalActivation": false,
     "profileMutation": false,
@@ -31,6 +83,5 @@
     "push": false,
     "accountMutation": false,
     "spending": false
-  },
-  "proofLimit": "historical local certification only; live-agent and production performance remain unproven"
+  }
 }

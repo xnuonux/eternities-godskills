@@ -1,32 +1,151 @@
 {
   "schemaVersion": 1,
   "familyId": "release-publishing",
-  "status": "pending-review",
-  "stage": 1,
-  "sourceCount": 31,
-  "evidenceCounts": {
-    "cardReviewed": 0,
-    "clustered": 0,
-    "synthesized": 0,
-    "evaluated": 0,
-    "promoted": 0
+  "status": "certified",
+  "decision": "terminal",
+  "proof": {
+    "sourceCount": 31,
+    "reviewCount": 31,
+    "clusterCount": 21,
+    "candidateClusterCount": 4,
+    "promotedSynthesisCount": 1
   },
-  "queue": {
-    "path": "artifacts/corpus/owners/release-publishing/queue.json",
-    "sha256": "6ebbad7c4d83a6636991eb35774a0c8c93ced571248a1ebe2eccc26c283092bd"
+  "sourceCounts": {
+    "candidate": 9,
+    "deferred": 20,
+    "rejected": 2
   },
-  "packets": [
-    {
-      "path": "artifacts/corpus/owners/release-publishing/packets/001.json",
-      "sha256": "5f1fab2cb6b7a7f59d8fafe35f9511da16d946552076bd99c7ed8097cf9eb1bc"
-    },
-    {
-      "path": "artifacts/corpus/owners/release-publishing/packets/002.json",
-      "sha256": "cae621ae64cc5374217961917157978540edcb7ec0702ee66e959d181ed31cb1"
-    }
+  "clusters": {
+    "candidate": [
+      {
+        "id": "release-change-lifecycle",
+        "decision": "promoted",
+        "synthesisId": "eternities-herald",
+        "sourceCount": 3
+      },
+      {
+        "id": "release-continuous-delivery-design",
+        "decision": "promoted",
+        "synthesisId": "eternities-herald",
+        "sourceCount": 3
+      },
+      {
+        "id": "release-dependency-name-screening",
+        "decision": "promoted",
+        "synthesisId": "eternities-herald",
+        "sourceCount": 1
+      },
+      {
+        "id": "release-production-readiness",
+        "decision": "promoted",
+        "synthesisId": "eternities-herald",
+        "sourceCount": 2
+      }
+    ],
+    "terminal": [
+      {
+        "id": "release-azure-deployment-adapters",
+        "decision": "deferred",
+        "sourceCount": 2
+      },
+      {
+        "id": "release-batch-inference-operations",
+        "decision": "deferred",
+        "sourceCount": 1
+      },
+      {
+        "id": "release-community-plugin-packaging",
+        "decision": "deferred",
+        "sourceCount": 1
+      },
+      {
+        "id": "release-github-state-observation",
+        "decision": "deferred",
+        "sourceCount": 2
+      },
+      {
+        "id": "release-incomplete-calibration-fixture",
+        "decision": "rejected",
+        "sourceCount": 1
+      },
+      {
+        "id": "release-media-render-and-publication",
+        "decision": "deferred",
+        "sourceCount": 2
+      },
+      {
+        "id": "release-microsoft-store-adapter",
+        "decision": "deferred",
+        "sourceCount": 1
+      },
+      {
+        "id": "release-model-extraction-monitoring",
+        "decision": "deferred",
+        "sourceCount": 1
+      },
+      {
+        "id": "release-python-package-publishing",
+        "decision": "deferred",
+        "sourceCount": 1
+      },
+      {
+        "id": "release-qdrant-deployment-selection",
+        "decision": "deferred",
+        "sourceCount": 1
+      },
+      {
+        "id": "release-signed-action-receipts",
+        "decision": "deferred",
+        "sourceCount": 1
+      },
+      {
+        "id": "release-supply-chain-security-investigation",
+        "decision": "deferred",
+        "sourceCount": 2
+      },
+      {
+        "id": "release-threat-intelligence-feed",
+        "decision": "deferred",
+        "sourceCount": 1
+      },
+      {
+        "id": "release-unrelated-note-review",
+        "decision": "rejected",
+        "sourceCount": 1
+      },
+      {
+        "id": "release-v8-pin-update",
+        "decision": "deferred",
+        "sourceCount": 1
+      },
+      {
+        "id": "release-vercel-preview-adapters",
+        "decision": "deferred",
+        "sourceCount": 2
+      },
+      {
+        "id": "release-vulnerability-management-platform",
+        "decision": "deferred",
+        "sourceCount": 1
+      }
+    ]
+  },
+  "digests": {
+    "queue": "df64382af53ab874d34d638ef02ebec2bd1112f17440b6081dfc5f69a0a9cdd5",
+    "reviews": "6f48539d5a3040be4e69d5588fc8904efd67dee7abc0a51563dccdd5e7a08600",
+    "clusters": "c5ff4db3ac87f2e9fef6acd46bec0a02c0e30bf53003cdb20bf16a26f9735879",
+    "syntheses": "fbe8e03ba8119263d5608a8f2a1180793a4d29330d3a30bba7cdee527a026b82"
+  },
+  "proofLimits": [
+    "local canonical evidence only",
+    "no live-agent, production, or external-system behavior is proven"
   ],
-  "promotionClaims": 0,
-  "allowedNextTransition": "reviewed",
+  "allowedTransitions": [
+    "candidate -> promoted",
+    "candidate -> second-order-deferred",
+    "deferred -> terminal",
+    "rejected -> terminal"
+  ],
   "gates": {
     "externalActivation": false,
     "profileMutation": false,
@@ -35,6 +154,5 @@
     "push": false,
     "accountMutation": false,
     "spending": false
-  },
-  "proofLimit": "semantic review, clustering, synthesis, evaluation, and promotion remain pending"
+  }
 }

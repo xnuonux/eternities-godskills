@@ -18,21 +18,18 @@ pretending structural indexing is semantic refinement:
 - 4,741 exact source bodies present and SHA-256 inspected as inert text;
 - 3,880 cards assigned at least one explicit ontology family;
 - 30 sources represented by the existing provenance ledger;
-- 396 exact bodies semantically reviewed in bounded waves;
-- 396 reviewed sources assigned to certified clusters;
-- 217 synthesized, 217 evaluated, and 217 promoted exact source rows from four
-  deterministic candidate receipts.
+- 4,741 exact bodies semantically reviewed in bounded waves;
+- 4,741 reviewed sources assigned exactly once across 3,349 certified clusters;
+- 579 synthesized, 579 evaluated, and 579 promoted exact source rows;
+- 743 candidate clusters terminally mapped to promotion or explicit
+  second-order deferral across 21 family receipts.
 
-the first explicit professional queues contain 12 agency and client-service
-cards, 291 marketing and growth cards, 106 social-media and community cards,
-and 25 game-design and development cards. queues are split into deterministic
-packets of at most 25 cards. the remaining work is visible rather than rounded
-up to completion.
-
-the repository now contains 11 promoted first-party capabilities. only Agora's
-7, Arcadia's 20, Chorus's 47, and Beacon's 143 exact reviewed source rows advance through corpus synthesis evidence;
-the ledger does not retroactively invent review history for earlier releases or
-claim the 4,741-source refinery is complete.
+all 21 owner-family queues are complete and remain split into deterministic
+packets of at most 25 cards. the repository now contains 19 promoted routing
+cards representing 17 corpus-synthesis capabilities plus the preserved
+Mnemosyne and sovereign refinery capabilities. candidate evidence advances only
+the exact selected clusters. 643 heavy-family candidates remain explicit
+second-order deferrals rather than being flattened into mega-skills.
 
 source slash commands and named invocation forms are retained only as inert,
 non-authoritative review evidence. canonical review intent is written as
@@ -41,16 +38,14 @@ to clustering, synthesis, evaluation, or promotion.
 
 ## agent-native routing
 
-agent-native routing v1 remains frozen and certified for its original seven
-capabilities. routing v2 is frozen for eight capabilities, routing v3 is frozen
-for nine capabilities, and router v5 is certified for all 11 promoted capabilities.
-router v4 preserved 10 promoted capabilities as an immutable checkpoint. an
+agent-native routing v1 through v5 remain frozen as historical checkpoints.
+router v6 is certified for 19 promoted capabilities across 18 families. an
 adapter translates an ordinary desired outcome into a neutral request envelope,
 retrieves at most 32 compact cards from the cold index, and
 loads only the selected entrypoint. the portable core then selects one smallest
 sufficient capability or an explicitly compatible composition of at most three.
 
-the current certification covers 33 direct, paraphrased, and contextual
+the current certification covers 57 direct, paraphrased, and contextual
 commandless envelopes, exact equality after all compatibility aliases are removed, a
 5,000-card bounded-disclosure fixture, authority and effect refusal, risk
 limits, and unresolved-decision refusal. skill selection never expands user
@@ -64,8 +59,12 @@ manifest is `runtime\portable-adapter.v1.json`. exact receipts are
 `receipts\agent-native-router-v2.json` and
 `receipts\agent-native-router-v3.json` and
 `receipts\agent-native-router-v4.json` and
-`receipts\agent-native-router-v5.json`. no global runtime adapter was enabled
+`receipts\agent-native-router-v5.json` and
+`receipts\agent-native-router-v6.json`. no global runtime adapter was enabled
 by this work.
+
+the full local completion report is `docs\eternities-godskills-completion-report.md`
+and its machine receipt is `receipts\eternities-godskills-completion.json`.
 
 ## eternities agora
 

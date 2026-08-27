@@ -2,27 +2,85 @@
   "schemaVersion": 1,
   "familyId": "game-design-development",
   "status": "certified",
-  "stage": null,
-  "sourceCount": 25,
-  "evidenceCounts": {
-    "cardReviewed": 25,
-    "clustered": 25,
-    "synthesized": 20,
-    "evaluated": 20,
-    "promoted": 20
+  "decision": "terminal",
+  "proof": {
+    "sourceCount": 25,
+    "reviewCount": 25,
+    "clusterCount": 8,
+    "candidateClusterCount": 4,
+    "promotedSynthesisCount": 1
   },
-  "queue": {
-    "path": "artifacts/corpus/owners/game-design-development/queue.json",
-    "sha256": "0529e507d7e2a11b63877f26035ea7378f38b18cf12545385970eb17dac9b64d"
+  "sourceCounts": {
+    "candidate": 20,
+    "deferred": 4,
+    "rejected": 1
   },
-  "packets": [
-    {
-      "path": "artifacts/corpus/owners/game-design-development/packets/001.json",
-      "sha256": "491e163a00de22df9c4f51dede18d3088f7a1b42703fe743447e433233c56c34"
-    }
+  "clusters": {
+    "candidate": [
+      {
+        "id": "game-direction-contract",
+        "decision": "promoted",
+        "synthesisId": "eternities-arcadia",
+        "sourceCount": 5
+      },
+      {
+        "id": "game-player-experience",
+        "decision": "promoted",
+        "synthesisId": "eternities-arcadia",
+        "sourceCount": 6
+      },
+      {
+        "id": "game-proof-and-verdict",
+        "decision": "promoted",
+        "synthesisId": "eternities-arcadia",
+        "sourceCount": 2
+      },
+      {
+        "id": "game-runtime-systems",
+        "decision": "promoted",
+        "synthesisId": "eternities-arcadia",
+        "sourceCount": 7
+      }
+    ],
+    "terminal": [
+      {
+        "id": "game-shipping-boundary",
+        "decision": "deferred",
+        "sourceCount": 1
+      },
+      {
+        "id": "generated-content-boundary",
+        "decision": "deferred",
+        "sourceCount": 2
+      },
+      {
+        "id": "narrow-demo-example",
+        "decision": "rejected",
+        "sourceCount": 1
+      },
+      {
+        "id": "runtime-administration-boundary",
+        "decision": "deferred",
+        "sourceCount": 1
+      }
+    ]
+  },
+  "digests": {
+    "queue": "04d667ea25c4ede6d8d510bb9cd8aa39700c5c8032d506be06eda4df8508be6c",
+    "reviews": "8740aa26cb26c8be6ffeb761f5ea3ff0187093de68ac81db21b7d2da17326280",
+    "clusters": "d3c4c7273dfe9118c9b6821f730109cb84083fdefbb40221101e7a6b54ec33e0",
+    "syntheses": "a1315c9f083cf87ab24ef90e7637df033baa17bb46d09df85b4cfd2db671806f"
+  },
+  "proofLimits": [
+    "local canonical evidence only",
+    "no live-agent, production, or external-system behavior is proven"
   ],
-  "promotionClaims": 0,
-  "allowedNextTransition": null,
+  "allowedTransitions": [
+    "candidate -> promoted",
+    "candidate -> second-order-deferred",
+    "deferred -> terminal",
+    "rejected -> terminal"
+  ],
   "gates": {
     "externalActivation": false,
     "profileMutation": false,
@@ -31,6 +89,5 @@
     "push": false,
     "accountMutation": false,
     "spending": false
-  },
-  "proofLimit": "historical local certification only; live-agent and production performance remain unproven"
+  }
 }

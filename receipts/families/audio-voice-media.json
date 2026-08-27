@@ -1,36 +1,85 @@
 {
   "schemaVersion": 1,
   "familyId": "audio-voice-media",
-  "status": "pending-review",
-  "stage": 2,
-  "sourceCount": 58,
-  "evidenceCounts": {
-    "cardReviewed": 0,
-    "clustered": 0,
-    "synthesized": 0,
-    "evaluated": 0,
-    "promoted": 0
+  "status": "certified",
+  "decision": "terminal",
+  "proof": {
+    "sourceCount": 58,
+    "reviewCount": 58,
+    "clusterCount": 8,
+    "candidateClusterCount": 3,
+    "promotedSynthesisCount": 1
   },
-  "queue": {
-    "path": "artifacts/corpus/owners/audio-voice-media/queue.json",
-    "sha256": "785fd8819316144cda8475cfd7c631a7cf38c1aa01e0f1fbd4c4b6e0a9a35fb0"
+  "sourceCounts": {
+    "candidate": 13,
+    "deferred": 45,
+    "rejected": 0
   },
-  "packets": [
-    {
-      "path": "artifacts/corpus/owners/audio-voice-media/packets/001.json",
-      "sha256": "fbc76bb196fd8f6e9a08f544306dea9d66e5df43d75090588213fbeb7a9e119a"
-    },
-    {
-      "path": "artifacts/corpus/owners/audio-voice-media/packets/002.json",
-      "sha256": "2c998aed5fa8a31df2b022c8096cb0ab349ad4f86d42bfd06b44d273629db890"
-    },
-    {
-      "path": "artifacts/corpus/owners/audio-voice-media/packets/003.json",
-      "sha256": "88f8c57214de3a05d4138be1dc14ad43065bd3540434bfbc001dd150c5291282"
-    }
+  "clusters": {
+    "candidate": [
+      {
+        "id": "audio-driven-media-timeline-rendering",
+        "decision": "promoted",
+        "synthesisId": "eternities-orpheus",
+        "sourceCount": 6
+      },
+      {
+        "id": "audio-media-intent-provenance",
+        "decision": "promoted",
+        "synthesisId": "eternities-orpheus",
+        "sourceCount": 2
+      },
+      {
+        "id": "speech-recognition-transcript-alignment",
+        "decision": "promoted",
+        "synthesisId": "eternities-orpheus",
+        "sourceCount": 5
+      }
+    ],
+    "terminal": [
+      {
+        "id": "audio-processing-orchestration",
+        "decision": "deferred",
+        "sourceCount": 3
+      },
+      {
+        "id": "media-authenticity-safety-analysis",
+        "decision": "deferred",
+        "sourceCount": 2
+      },
+      {
+        "id": "music-generation-duration-control",
+        "decision": "deferred",
+        "sourceCount": 14
+      },
+      {
+        "id": "realtime-capture-and-meeting-media",
+        "decision": "deferred",
+        "sourceCount": 1
+      },
+      {
+        "id": "speech-synthesis-voice-production",
+        "decision": "deferred",
+        "sourceCount": 25
+      }
+    ]
+  },
+  "digests": {
+    "queue": "a3bec5c5a6523d429ed36ef3638d74896405e530931a5eddd8531d03c1e5aa26",
+    "reviews": "15baaaf82362627f364da14eba4e6d56be7e83da3e747a2627bbf909bbec952a",
+    "clusters": "a5bb1f6156531df44af7eaa25828b197f8a313de6a39be4c7e83e02efee11d42",
+    "syntheses": "fcf853f0bda66ba667b12d9075a2deefdb12d38f2c08fdbfd4ada2c6738e70ce"
+  },
+  "proofLimits": [
+    "local canonical evidence only",
+    "no live-agent, production, or external-system behavior is proven"
   ],
-  "promotionClaims": 0,
-  "allowedNextTransition": "reviewed",
+  "allowedTransitions": [
+    "candidate -> promoted",
+    "candidate -> second-order-deferred",
+    "deferred -> terminal",
+    "rejected -> terminal"
+  ],
   "gates": {
     "externalActivation": false,
     "profileMutation": false,
@@ -39,6 +88,5 @@
     "push": false,
     "accountMutation": false,
     "spending": false
-  },
-  "proofLimit": "semantic review, clustering, synthesis, evaluation, and promotion remain pending"
+  }
 }

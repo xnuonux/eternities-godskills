@@ -68,9 +68,10 @@ for (const name of synthesisNames) {
     .sort((left, right) => left.localeCompare(right));
   if (new Set(sourceIds).size !== sourceIds.length) throw new Error(`${name} has duplicate promoted sources`);
 
-  const versionedReceipt = `receipts/promotions/${candidateId}-v2.json`;
+  const versionMatch = name.match(/\.v(\d+)\.json$/);
+  const versionedReceipt = versionMatch ? `receipts/promotions/${candidateId}-v${versionMatch[1]}.json` : null;
   const receiptPath = current.artifacts?.promotionReceipt?.path
-    ?? ((name.includes(".v2.") && await exists(versionedReceipt)) ? versionedReceipt : `receipts/promotions/${candidateId}.json`);
+    ?? ((versionedReceipt && await exists(versionedReceipt)) ? versionedReceipt : `receipts/promotions/${candidateId}.json`);
   const receipt = await readJson(receiptPath);
   const receiptEvidence = { ...(receipt.evidence ?? {}) };
   delete receiptEvidence.synthesisSha256;
@@ -104,8 +105,9 @@ for (const name of synthesisNames) {
   await writeJson(receiptPath, normalizedReceipt);
 
   const skillBase = `skills/${candidateId}`;
-  const evaluationPath = name.includes(".v2.") && await exists(`${skillBase}/evals/cases.v2.json`)
-    ? `${skillBase}/evals/cases.v2.json`
+  const versionedEvaluation = versionMatch ? `${skillBase}/evals/cases.v${versionMatch[1]}.json` : null;
+  const evaluationPath = versionedEvaluation && await exists(versionedEvaluation)
+    ? versionedEvaluation
     : `${skillBase}/evals/cases.json`;
   const requiredPaths = {
     skill: `${skillBase}/SKILL.md`,

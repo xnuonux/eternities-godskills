@@ -4,16 +4,60 @@
   "family": "audio-voice-media",
   "intent": "Reconcile authorized audio and media intent into local provenance, reviewable transcription, or checked timeline artifacts while preserving specialist and safety boundaries.",
   "successCondition": "One smallest-sufficient route yields a verified local artifact or explicit fail-closed handoff with claims, uncertainty, rights, consent, and effects visible.",
-  "provides": ["audio-media-intent-provenance", "speech-recognition-transcript-alignment", "audio-driven-media-timeline-rendering", "speech-synthesis-voice-production", "music-generation-duration-control", "audio-processing-orchestration", "realtime-capture-and-meeting-media", "media-authenticity-safety-analysis"],
+  "provides": [
+    "audio-driven-media-timeline-rendering",
+    "audio-media-intent-provenance",
+    "audio-processing-orchestration",
+    "media-authenticity-safety-analysis",
+    "music-generation-duration-control",
+    "realtime-capture-and-meeting-media",
+    "speech-recognition-transcript-alignment",
+    "speech-synthesis-voice-production"
+  ],
   "requires": [],
-  "intentExamples": {"direct": ["transcribe supplied speech with timings and uncertainty", "ledger an audio intent and build a checked local media timeline", "preserve audio provenance and hand off a bounded artifact"], "paraphrased": ["turn a recording into captions without inventing words or identities", "line up narration beats and captions with explicit timing checks", "classify a voice or music request and stop at provider, consent, or rights boundaries"], "contextual": ["the transcript, audio assets, and visual references disagree about timing", "a media request mixes safe local preparation with live or provider actions"]},
-  "negativeIntents": ["biometric inference", "impersonation or deceptive voice use", "rights-sensitive cloning or unauthorized voice conversion", "provider credentials or network action", "external publication or upload", "realtime capture without explicit consent and authority", "unverified authenticity or deepfake claims"],
-  "effects": ["local-read", "local-write"],
+  "intentExamples": {
+    "direct": [
+      "ledger an audio intent and build a checked local media timeline",
+      "preserve audio provenance and hand off a bounded artifact",
+      "transcribe supplied speech with timings and uncertainty"
+    ],
+    "paraphrased": [
+      "classify a voice or music request and stop at provider, consent, or rights boundaries",
+      "line up narration beats and captions with explicit timing checks",
+      "turn a recording into captions without inventing words or identities"
+    ],
+    "contextual": [
+      "a media request mixes safe local preparation with live or provider actions",
+      "the transcript, audio assets, and visual references disagree about timing"
+    ]
+  },
+  "negativeIntents": [
+    "biometric inference",
+    "external publication or upload",
+    "impersonation or deceptive voice use",
+    "provider credentials or network action",
+    "realtime capture without explicit consent and authority",
+    "rights-sensitive cloning or unauthorized voice conversion",
+    "unverified authenticity or deepfake claims"
+  ],
+  "effects": [
+    "local-read",
+    "local-write"
+  ],
   "riskClass": "high",
-  "authorityRequirements": ["local-read", "local-write", "rights-and-consent-when-applicable", "human-review-for-deferred-routes"],
+  "authorityRequirements": [
+    "human-review-for-deferred-routes",
+    "local-read",
+    "local-write",
+    "rights-and-consent-when-applicable"
+  ],
   "preconditions": [],
   "compatibleWith": [],
-  "conflictsWith": ["external-write", "biometric-inference", "deceptive-impersonation"],
+  "conflictsWith": [
+    "biometric-inference",
+    "deceptive-impersonation",
+    "external-write"
+  ],
   "contextCost": 1700,
   "dependencyCost": 4,
   "evidenceConfidence": "verified",

@@ -1,32 +1,114 @@
 {
   "schemaVersion": 1,
   "familyId": "product-operations",
-  "status": "pending-review",
-  "stage": 1,
-  "sourceCount": 47,
-  "evidenceCounts": {
-    "cardReviewed": 0,
-    "clustered": 0,
-    "synthesized": 0,
-    "evaluated": 0,
-    "promoted": 0
+  "status": "certified",
+  "decision": "terminal",
+  "proof": {
+    "sourceCount": 47,
+    "reviewCount": 47,
+    "clusterCount": 13,
+    "candidateClusterCount": 7,
+    "promotedSynthesisCount": 1
   },
-  "queue": {
-    "path": "artifacts/corpus/owners/product-operations/queue.json",
-    "sha256": "d8097218d0ae5ebab3c517cb894d42d2901c3b15e13b739964aee56734414391"
+  "sourceCounts": {
+    "candidate": 22,
+    "deferred": 18,
+    "rejected": 7
   },
-  "packets": [
-    {
-      "path": "artifacts/corpus/owners/product-operations/packets/001.json",
-      "sha256": "783f2bf4760366ba256f6a40470f8e8f8d0c1251d3d8b779fb0b5205a085121e"
-    },
-    {
-      "path": "artifacts/corpus/owners/product-operations/packets/002.json",
-      "sha256": "05ad2ef2c5b1d09bc3ad00629ad4a847fafd533c9de8523b5709e9e049f1a419"
-    }
+  "clusters": {
+    "candidate": [
+      {
+        "id": "product-business-growth-routing",
+        "decision": "promoted",
+        "synthesisId": "eternities-prometheus",
+        "sourceCount": 2
+      },
+      {
+        "id": "product-commercial-analytics",
+        "decision": "promoted",
+        "synthesisId": "eternities-prometheus",
+        "sourceCount": 4
+      },
+      {
+        "id": "product-customer-insight",
+        "decision": "promoted",
+        "synthesisId": "eternities-prometheus",
+        "sourceCount": 5
+      },
+      {
+        "id": "product-early-adopter-research",
+        "decision": "promoted",
+        "synthesisId": "eternities-prometheus",
+        "sourceCount": 1
+      },
+      {
+        "id": "product-learning-design",
+        "decision": "promoted",
+        "synthesisId": "eternities-prometheus",
+        "sourceCount": 1
+      },
+      {
+        "id": "product-operational-planning",
+        "decision": "promoted",
+        "synthesisId": "eternities-prometheus",
+        "sourceCount": 8
+      },
+      {
+        "id": "product-project-delivery-routing",
+        "decision": "promoted",
+        "synthesisId": "eternities-prometheus",
+        "sourceCount": 1
+      }
+    ],
+    "terminal": [
+      {
+        "id": "product-customer-leadership",
+        "decision": "deferred",
+        "sourceCount": 2
+      },
+      {
+        "id": "product-false-positive-specialist-boundaries",
+        "decision": "rejected",
+        "sourceCount": 7
+      },
+      {
+        "id": "product-governance-review",
+        "decision": "deferred",
+        "sourceCount": 6
+      },
+      {
+        "id": "product-provider-bound-media",
+        "decision": "deferred",
+        "sourceCount": 7
+      },
+      {
+        "id": "product-provider-bound-project-tools",
+        "decision": "deferred",
+        "sourceCount": 2
+      },
+      {
+        "id": "product-specialist-finance-and-procurement",
+        "decision": "deferred",
+        "sourceCount": 1
+      }
+    ]
+  },
+  "digests": {
+    "queue": "2e1630369dff6beaaa1474c6dee3822c9211f4b8193e30d85271a74f137e18a9",
+    "reviews": "ff842677c0e55ddb025e9565e29d0b0b95b214399005a9dde2cfb1bd1323ce4f",
+    "clusters": "b87c88ab6bda1295956fb584b006e05e73066955b105d3e9236a4883da203e3c",
+    "syntheses": "7d7d4c4b3af5026a78fa8595d933d321b5375d7aebe19d61d9ead29a47f0c124"
+  },
+  "proofLimits": [
+    "local canonical evidence only",
+    "no live-agent, production, or external-system behavior is proven"
   ],
-  "promotionClaims": 0,
-  "allowedNextTransition": "reviewed",
+  "allowedTransitions": [
+    "candidate -> promoted",
+    "candidate -> second-order-deferred",
+    "deferred -> terminal",
+    "rejected -> terminal"
+  ],
   "gates": {
     "externalActivation": false,
     "profileMutation": false,
@@ -35,6 +117,5 @@
     "push": false,
     "accountMutation": false,
     "spending": false
-  },
-  "proofLimit": "semantic review, clustering, synthesis, evaluation, and promotion remain pending"
+  }
 }

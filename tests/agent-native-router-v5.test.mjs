@@ -14,7 +14,7 @@ async function json(relative) {
 }
 
 async function cards() {
-  return (await readFile(new URL("artifacts/routing/cards.jsonl", root), "utf8"))
+  return (await readFile(new URL("artifacts/checkpoints/agent-native-router-v5/cards.jsonl", root), "utf8"))
     .trim().split(/\r?\n/).map(JSON.parse).map(validateRoutingCard);
 }
 
@@ -115,12 +115,12 @@ test("router v5 preserves Beacon authority effect and risk boundaries", async ()
   }).status, "no-qualified-route");
 });
 
-test("router v5 receipt reconciles exact live artifacts", async () => {
+test("router v5 receipt reconciles its immutable checkpoint artifacts", async () => {
   const receipt = await json("receipts/agent-native-router-v5.json");
   const [manifestText, cardsText, familyText] = await Promise.all([
-    readFile(new URL("artifacts/routing/manifest.json", root), "utf8"),
-    readFile(new URL("artifacts/routing/cards.jsonl", root), "utf8"),
-    readFile(new URL("artifacts/routing/family-map.json", root), "utf8"),
+    readFile(new URL("artifacts/checkpoints/agent-native-router-v5/manifest.json", root), "utf8"),
+    readFile(new URL("artifacts/checkpoints/agent-native-router-v5/cards.jsonl", root), "utf8"),
+    readFile(new URL("artifacts/checkpoints/agent-native-router-v5/family-map.json", root), "utf8"),
   ]);
   const manifest = JSON.parse(manifestText);
   assert.equal(receipt.id, "agent-native-router-v5");

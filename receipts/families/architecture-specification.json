@@ -1,40 +1,93 @@
 {
   "schemaVersion": 1,
   "familyId": "architecture-specification",
-  "status": "pending-review",
-  "stage": 2,
-  "sourceCount": 82,
-  "evidenceCounts": {
-    "cardReviewed": 0,
-    "clustered": 0,
-    "synthesized": 0,
-    "evaluated": 0,
-    "promoted": 0
+  "status": "certified",
+  "decision": "terminal",
+  "proof": {
+    "sourceCount": 82,
+    "reviewCount": 82,
+    "clusterCount": 9,
+    "candidateClusterCount": 6,
+    "promotedSynthesisCount": 1
   },
-  "queue": {
-    "path": "artifacts/corpus/owners/architecture-specification/queue.json",
-    "sha256": "b23eb5e23dace56e225dd0989b06101223aa9c9d1aec4b167994f58f4add78b3"
+  "sourceCounts": {
+    "candidate": 53,
+    "deferred": 4,
+    "rejected": 25
   },
-  "packets": [
-    {
-      "path": "artifacts/corpus/owners/architecture-specification/packets/001.json",
-      "sha256": "c8a22aa8b34c38288252db9f957ee82d7e1b7de283082e98c3e915f651eac8a5"
-    },
-    {
-      "path": "artifacts/corpus/owners/architecture-specification/packets/002.json",
-      "sha256": "f40c1178df813659e2eb9feda47763b7a4932c9f37631dcc76104fb50231aa3f"
-    },
-    {
-      "path": "artifacts/corpus/owners/architecture-specification/packets/003.json",
-      "sha256": "5aa2cf8cb6c376891f943c157033739ea95c46d6f5ef2c09ca8dc0d898af37b1"
-    },
-    {
-      "path": "artifacts/corpus/owners/architecture-specification/packets/004.json",
-      "sha256": "8a7c18e9de552036ac2ef46ae6ff8b37f079ea7b8833bd0cd20eaceba53cda96"
-    }
+  "clusters": {
+    "candidate": [
+      {
+        "id": "architecture-diagrams",
+        "decision": "promoted",
+        "synthesisId": "eternities-architect",
+        "sourceCount": 2
+      },
+      {
+        "id": "architecture-interface-and-api-design",
+        "decision": "promoted",
+        "synthesisId": "eternities-architect",
+        "sourceCount": 2
+      },
+      {
+        "id": "architecture-portable-assessment-and-design",
+        "decision": "promoted",
+        "synthesisId": "eternities-architect",
+        "sourceCount": 39
+      },
+      {
+        "id": "architecture-reliability-controls",
+        "decision": "promoted",
+        "synthesisId": "eternities-architect",
+        "sourceCount": 2
+      },
+      {
+        "id": "architecture-requirements-and-decision-records",
+        "decision": "promoted",
+        "synthesisId": "eternities-architect",
+        "sourceCount": 7
+      },
+      {
+        "id": "architecture-verification",
+        "decision": "promoted",
+        "synthesisId": "eternities-architect",
+        "sourceCount": 1
+      }
+    ],
+    "terminal": [
+      {
+        "id": "architecture-cloud-provider-boundary",
+        "decision": "deferred",
+        "sourceCount": 3
+      },
+      {
+        "id": "architecture-security-boundary",
+        "decision": "deferred",
+        "sourceCount": 1
+      },
+      {
+        "id": "architecture-specialist-and-incomplete-boundary",
+        "decision": "rejected",
+        "sourceCount": 25
+      }
+    ]
+  },
+  "digests": {
+    "queue": "92773528f1a0499111822c346c8c248e4371985e520281db4754bc4f9599aba9",
+    "reviews": "0ebc959c3004527e9700e1b2ff3d0c34afde55b05d4c5cd89bc3870001f9b507",
+    "clusters": "1f9bb41690799312c07a4b98b1566690c0196113acc8edf5a4a451970028474b",
+    "syntheses": "644ea300b8c542988418eee2e098ac965839d2d489a8e2a427e71e9bf26ecf71"
+  },
+  "proofLimits": [
+    "local canonical evidence only",
+    "no live-agent, production, or external-system behavior is proven"
   ],
-  "promotionClaims": 0,
-  "allowedNextTransition": "reviewed",
+  "allowedTransitions": [
+    "candidate -> promoted",
+    "candidate -> second-order-deferred",
+    "deferred -> terminal",
+    "rejected -> terminal"
+  ],
   "gates": {
     "externalActivation": false,
     "profileMutation": false,
@@ -43,6 +96,5 @@
     "push": false,
     "accountMutation": false,
     "spending": false
-  },
-  "proofLimit": "semantic review, clustering, synthesis, evaluation, and promotion remain pending"
+  }
 }
