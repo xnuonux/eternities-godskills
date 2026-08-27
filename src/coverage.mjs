@@ -50,6 +50,7 @@ export function buildCoverageRows(
   bodyEvidence = [],
   provenanceRows = [],
   reviewRows = [],
+  clusterRows = [],
 ) {
   if (!Array.isArray(records)) throw new TypeError("records must be an array");
   const sources = uniqueBy(records, (row) => row.id, "source id");
@@ -60,8 +61,23 @@ export function buildCoverageRows(
     "provenance source id",
   );
   const reviews = uniqueBy(reviewRows, (row) => row.sourceId, "review source id");
+  const clusteredSources = new Map();
+  for (const cluster of clusterRows ?? []) {
+    if (!Array.isArray(cluster.members)) throw new Error("cluster evidence members must be an array");
+    for (const member of cluster.members) {
+      if (clusteredSources.has(member.sourceId)) {
+        throw new Error(`duplicate cluster evidence source id: ${member.sourceId}`);
+      }
+      clusteredSources.set(member.sourceId, member);
+    }
+  }
 
-  for (const sourceId of [...bodies.keys(), ...provenance.keys(), ...reviews.keys()]) {
+  for (const sourceId of [
+    ...bodies.keys(),
+    ...provenance.keys(),
+    ...reviews.keys(),
+    ...clusteredSources.keys(),
+  ]) {
     if (!sources.has(sourceId)) throw new Error(`unknown evidence source id: ${sourceId}`);
   }
 
@@ -71,6 +87,7 @@ export function buildCoverageRows(
       const body = bodies.get(record.id);
       const provenanceRow = provenance.get(record.id);
       const reviewRow = reviews.get(record.id);
+      const clusterMember = clusteredSources.get(record.id);
       if (provenanceRow && provenanceRow.contentDigest !== record.contentDigest) {
         throw new Error(`stale provenance digest for ${record.id}`);
       }
@@ -78,6 +95,12 @@ export function buildCoverageRows(
       const inspected = body?.status === "inspected" && body?.present === true;
       if (reviewRow && (!inspected || reviewRow.bodySha256 !== body.bodySha256)) {
         throw new Error(`stale review body digest for ${record.id}`);
+      }
+      if (clusterMember && !reviewRow) {
+        throw new Error(`cluster evidence requires review evidence for ${record.id}`);
+      }
+      if (clusterMember && clusterMember.reviewDigest !== reviewRow.reviewDigest) {
+        throw new Error(`stale clustered review digest for ${record.id}`);
       }
       return {
         schemaVersion: 1,
@@ -95,7 +118,7 @@ export function buildCoverageRows(
           bodyInspected: inspected,
           cardReviewed: Boolean(reviewRow),
           provenanceCertified: Boolean(provenanceRow),
-          clustered: false,
+          clustered: Boolean(clusterMember),
           synthesized: false,
           evaluated: false,
           promoted: false,
