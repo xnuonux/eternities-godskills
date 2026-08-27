@@ -1,7 +1,13 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
 
-import { validateClusterBatch } from "../src/refinery-clusters.mjs";
+import {
+  loadClusterEvidence,
+  validateClusterBatch,
+} from "../src/refinery-clusters.mjs";
 import { buildCoverageRows } from "../src/coverage.mjs";
 
 const source = {
@@ -88,5 +94,29 @@ test("cluster evidence rejects duplicate membership and unknown policy values", 
   assert.throws(
     () => validateClusterBatch(batch({ role: "owner" }), [review]),
     /unknown cluster member role/,
+  );
+});
+
+test("cluster evidence loading is deterministic and rejects cross-batch membership", async (context) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "eternities-clusters-"));
+  context.after(() => rm(root, { recursive: true, force: true }));
+  await mkdir(path.join(root, "nested"));
+  await writeFile(
+    path.join(root, "nested", "wave-b.json"),
+    `${JSON.stringify(batch())}\n`,
+    "utf8",
+  );
+
+  const first = await loadClusterEvidence(root, [review]);
+  const second = await loadClusterEvidence(root, [review]);
+  assert.deepEqual(second, first);
+  assert.deepEqual(first.map(({ id }) => id), ["client-account-governance"]);
+
+  const duplicate = batch({}, { id: "second-cluster" });
+  duplicate.clusterSetId = "agency-client-services-clusters-v2";
+  await writeFile(path.join(root, "wave-a.json"), `${JSON.stringify(duplicate)}\n`, "utf8");
+  await assert.rejects(
+    loadClusterEvidence(root, [review]),
+    /duplicate clustered source across batches: skill-a/,
   );
 });

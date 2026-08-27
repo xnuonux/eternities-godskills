@@ -7,6 +7,7 @@ import path from "node:path";
 import { auditBody } from "../src/body-audit.mjs";
 import { buildCorpusCoverage } from "../scripts/build-corpus-coverage.mjs";
 import { sha256 } from "../src/io.mjs";
+import { validateReviewBatch } from "../src/reviews.mjs";
 
 function record(overrides = {}) {
   return {
@@ -139,6 +140,7 @@ test("corpus coverage build is byte-stable and reconciles exact inputs", async (
   const provenancePath = path.join(root, "provenance.jsonl");
   const duplicateGroupsPath = path.join(root, "duplicates.json");
   const reviewsPath = path.join(root, "reviews");
+  const clustersPath = path.join(root, "clusters");
   const target = path.join(warehouse, "repo", "skill-a", "SKILL.md");
   await mkdir(path.dirname(target), { recursive: true });
   await writeFile(target, "# Agency Client\n", "utf8");
@@ -155,38 +157,74 @@ test("corpus coverage build is byte-stable and reconciles exact inputs", async (
     "utf8",
   );
   await mkdir(reviewsPath);
+  const reviewBatch = {
+    schemaVersion: 1,
+    waveId: "agency-client-services-wave-001",
+    familyId: "agency-client-services",
+    reviewer: "test-reviewer",
+    reviewMethod: "bounded-source-review-v1",
+    reviews: [
+      {
+        sourceId: "skill-a",
+        bodySha256: sha256("# Agency Client\n"),
+        neutralCapabilitySummary: "Reconcile an authorized client intake into a bounded account contract.",
+        neutralIntentExamples: [
+          "reconcile authorized client evidence into a bounded account contract",
+        ],
+        legacyAliases: [],
+        inputs: ["client evidence"],
+        operations: ["reconcile evidence"],
+        outputs: ["account contract"],
+        effects: ["read"],
+        failureBehavior: ["defer on missing authority"],
+        exclusions: ["external communication"],
+        usefulInvariants: ["authority remains explicit"],
+        materialRisks: ["stale evidence"],
+        disposition: "independent-implementation",
+        proposedCluster: "client-intake",
+        confidence: "high",
+        copiedSourceProse: false,
+        promotionClaim: false,
+      },
+    ],
+  };
   await writeFile(
     path.join(reviewsPath, "wave-001.json"),
+    `${JSON.stringify(reviewBatch)}\n`,
+    "utf8",
+  );
+  const [normalizedReview] = validateReviewBatch(
+    reviewBatch,
+    [record()],
+    [{
+      schemaVersion: 1,
+      sourceId: "skill-a",
+      status: "inspected",
+      present: true,
+      bodySha256: sha256("# Agency Client\n"),
+      byteSize: Buffer.byteLength("# Agency Client\n"),
+      lineCount: 2,
+    }],
+  );
+  await mkdir(clustersPath);
+  await writeFile(
+    path.join(clustersPath, "agency.json"),
     `${JSON.stringify({
       schemaVersion: 1,
-      waveId: "agency-client-services-wave-001",
+      clusterSetId: "agency-client-services-clusters-v1",
       familyId: "agency-client-services",
-      reviewer: "test-reviewer",
-      reviewMethod: "bounded-source-review-v1",
-      reviews: [
-        {
+      clusters: [{
+        id: "client-intake",
+        intent: "Reconcile authorized client intake evidence.",
+        relationship: "canonical-with-variants",
+        synthesisDecision: "candidate",
+        rationale: "The reviewed source defines one bounded intake operation.",
+        members: [{
           sourceId: "skill-a",
-          bodySha256: sha256("# Agency Client\n"),
-          neutralCapabilitySummary: "Reconcile an authorized client intake into a bounded account contract.",
-          neutralIntentExamples: [
-            "reconcile authorized client evidence into a bounded account contract",
-          ],
-          legacyAliases: [],
-          inputs: ["client evidence"],
-          operations: ["reconcile evidence"],
-          outputs: ["account contract"],
-          effects: ["read"],
-          failureBehavior: ["defer on missing authority"],
-          exclusions: ["external communication"],
-          usefulInvariants: ["authority remains explicit"],
-          materialRisks: ["stale evidence"],
-          disposition: "independent-implementation",
-          proposedCluster: "client-intake",
-          confidence: "high",
-          copiedSourceProse: false,
-          promotionClaim: false,
-        },
-      ],
+          reviewDigest: normalizedReview.reviewDigest,
+          role: "canonical",
+        }],
+      }],
     })}\n`,
     "utf8",
   );
@@ -204,17 +242,18 @@ test("corpus coverage build is byte-stable and reconciles exact inputs", async (
     provenancePath,
     duplicateGroupsPath,
     reviewsPath,
+    clustersPath,
     outputPath: output,
   };
   const first = await buildCorpusCoverage(options);
   const firstFiles = await Promise.all(
-    ["body-evidence.jsonl", "coverage-ledger.jsonl", "coverage-summary.json"].map(
+    ["body-evidence.jsonl", "coverage-ledger.jsonl", "coverage-summary.json", "cluster-evidence.jsonl"].map(
       (name) => readFile(path.join(output, name), "utf8"),
     ),
   );
   const second = await buildCorpusCoverage(options);
   const secondFiles = await Promise.all(
-    ["body-evidence.jsonl", "coverage-ledger.jsonl", "coverage-summary.json"].map(
+    ["body-evidence.jsonl", "coverage-ledger.jsonl", "coverage-summary.json", "cluster-evidence.jsonl"].map(
       (name) => readFile(path.join(output, name), "utf8"),
     ),
   );
@@ -222,6 +261,8 @@ test("corpus coverage build is byte-stable and reconciles exact inputs", async (
   assert.equal(first.sourceCount, 1);
   assert.equal(first.evidenceCounts.bodyInspected, 1);
   assert.equal(first.evidenceCounts.cardReviewed, 1);
+  assert.equal(first.evidenceCounts.clustered, 1);
+  assert.match(first.artifactDigests.clusterEvidenceSha256, /^[0-9a-f]{64}$/);
   assert.equal(first.reviewQueues["agency-client-services"].sourceCount, 1);
   assert.equal(first.reviewQueues["agency-client-services"].packetCount, 1);
   const queue = JSON.parse(

@@ -1,4 +1,6 @@
 import { sha256 } from "./io.mjs";
+import { readFile, readdir } from "node:fs/promises";
+import path from "node:path";
 
 const RELATIONSHIPS = new Set([
   "canonical-with-variants",
@@ -103,4 +105,45 @@ export function validateClusterBatch(batch, reviewRows) {
   });
 
   return normalized.sort((left, right) => left.id.localeCompare(right.id));
+}
+
+async function jsonFiles(root) {
+  const files = [];
+  async function visit(directory) {
+    const entries = await readdir(directory, { withFileTypes: true });
+    entries.sort((left, right) => left.name.localeCompare(right.name));
+    for (const entry of entries) {
+      const target = path.join(directory, entry.name);
+      if (entry.isDirectory()) await visit(target);
+      else if (entry.isFile() && entry.name.toLowerCase().endsWith(".json")) files.push(target);
+    }
+  }
+  await visit(root);
+  return files;
+}
+
+export async function loadClusterEvidence(root, reviewRows) {
+  const rows = [];
+  const clusterSets = new Set();
+  const clusterIds = new Set();
+  const sourceIds = new Set();
+  for (const filePath of await jsonFiles(root)) {
+    const batch = JSON.parse(await readFile(filePath, "utf8"));
+    if (clusterSets.has(batch.clusterSetId)) {
+      throw new Error(`duplicate cluster set across batches: ${batch.clusterSetId}`);
+    }
+    clusterSets.add(batch.clusterSetId);
+    for (const row of validateClusterBatch(batch, reviewRows)) {
+      if (clusterIds.has(row.id)) throw new Error(`duplicate cluster id across batches: ${row.id}`);
+      clusterIds.add(row.id);
+      for (const member of row.members) {
+        if (sourceIds.has(member.sourceId)) {
+          throw new Error(`duplicate clustered source across batches: ${member.sourceId}`);
+        }
+        sourceIds.add(member.sourceId);
+      }
+      rows.push(row);
+    }
+  }
+  return rows.sort((left, right) => left.id.localeCompare(right.id));
 }
