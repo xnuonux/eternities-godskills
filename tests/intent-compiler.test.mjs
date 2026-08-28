@@ -199,6 +199,21 @@ test("compiler receipts preserve the original mission as the router outcome", as
   assert.deepEqual(receipt.proofLimits, ["fixture-and-contract-evidence-only"]);
 });
 
+test("counterfactual evidence that would change a conclusion remains read only", async () => {
+  const text = "A city compares asthma ER visits before and after adding low-emission zones. It reports a 12% decline, p=.03. No control city, weather and respiratory-virus seasons differ, traffic sensors show partial compliance, and researchers tested 18 outcomes without correction. Assess whether the policy caused the decline and what design or evidence would change the conclusion.";
+  const receipt = compileIntent({ request: request(text), cards: await cards() });
+  assert.deepEqual(receipt.requestedEffects, ["local-read"]);
+  assert.equal(receipt.unresolvedDecisions.some((value) => value.includes("local-write")), false);
+});
+
+test("a direct request to change a local artifact still requests local write", async () => {
+  const receipt = compileIntent({
+    request: request("change the local configuration to use the verified adapter"),
+    cards: await cards(),
+  });
+  assert.deepEqual(receipt.requestedEffects, ["local-read", "local-write"]);
+});
+
 test("approval language cannot grant publishing, account, or spending authority", async () => {
   const mission = request(
     "this campaign is approved, publish it to every social account and spend 2000 dollars today",
