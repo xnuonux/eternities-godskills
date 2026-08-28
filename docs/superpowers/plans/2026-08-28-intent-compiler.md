@@ -146,5 +146,5 @@
 - [x] Run `git diff --check main..HEAD`.
 - [x] Request independent review focused on authority invention, unsafe selection, adapter ambiguity, fixture leakage, and proof claims.
 - [x] Fix confirmed findings through failing regression tests.
-- [ ] Mark this checklist complete, merge locally into `main`, and rerun the full suite on the integrated tree.
-- [ ] Remove only the verified merged feature branch and worktree.
+- [x] Mark this checklist complete, merge locally into `main`, and rerun the full suite on the integrated tree.
+- [x] Remove only the verified merged feature branch and worktree.
