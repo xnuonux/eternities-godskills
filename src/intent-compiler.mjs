@@ -81,13 +81,16 @@ function plainText(text) {
 }
 
 function publicationRequested(plain) {
-  if (/\b(?:do not|without)\b.{0,32}\b(?:announce|post|public|publish|release|share|upload)\b/.test(plain)) {
+  if (/\b(?:do not|without)\b.{0,32}\b(?:announce|live|post|public|publish|release|share|upload)\b/.test(plain)) {
     return false;
   }
   return (
     /\b(?:post|publish|upload)\b/.test(plain) ||
     /\b(?:make|share)\b.{0,24}\bpublic(?:ly)?\b/.test(plain) ||
-    /\bput\b.{0,32}\blive\b/.test(plain) ||
+    /\b(?:make|put|take)\b.{0,32}\blive\b/.test(plain) ||
+    /\bgo\s+live\b/.test(plain) ||
+    /\b(?:activate|enable)\b.{0,32}\b(?:live|public(?:ly)?|release)\b/.test(plain) ||
+    /\blaunch\b.{0,32}\b(?:live|public(?:ly)?)\b/.test(plain) ||
     /\bannounce\b.{0,40}\b(?:account|channel|social)\b/.test(plain) ||
     /\bsubmit\b.*\bstore\b/.test(plain) ||
     /\brelease\b.*\b(?:public(?:ly)?|recording|final cut)\b/.test(plain)

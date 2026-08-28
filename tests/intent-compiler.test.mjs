@@ -322,6 +322,11 @@ test("publication paraphrases cannot select a communication skill without author
     "share the campaign publicly from the official account",
     "put the finished release live on every channel",
     "announce the update through our social channels",
+    "make the site live for all customers",
+    "activate the public release",
+    "enable the release for public access",
+    "launch the product publicly",
+    "take the finished site live",
   ]) {
     const receipt = compileIntent({
       request: request(text, {

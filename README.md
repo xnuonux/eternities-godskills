@@ -52,9 +52,9 @@ limits, and unresolved-decision refusal. skill selection never expands user
 authority. deterministic envelope routing is certified. the Eternities intent
 compiler now provides a local agent-neutral free-form-language bridge with
 deterministic card evidence, optional untrusted semantic proposals, explicit
-ambiguity, and fail-closed authority reconciliation. its 130-case v1 arena
+ambiguity, and fail-closed authority reconciliation. its 135-case v1 arena
 selects all 76 positive missions exactly, pauses 14 ambiguous or unknown
-missions, refuses 40 unsafe missions, and records zero authority invention.
+missions, refuses 45 unsafe missions, and records zero authority invention.
 this is local fixture proof, not an inflated claim about arbitrary live-model
 interpretation.
 
