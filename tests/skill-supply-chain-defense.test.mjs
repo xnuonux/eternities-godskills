@@ -4,7 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-import { scanSkill } from "../src/skill-supply-chain-defense.mjs";
+import { scanSkill, verifyStableFileSet } from "../src/skill-supply-chain-defense.mjs";
 
 async function fixture(context, files) {
   const root = await mkdtemp(path.join(os.tmpdir(), "eternities-skill-defense-"));
@@ -140,4 +140,18 @@ test("repository metadata is excluded from an otherwise root-level skill", async
 
   assert.deepEqual(result.manifest.map(({ path: filePath }) => filePath), ["SKILL.md"]);
   assert.deepEqual(result.surfaces, []);
+});
+
+test("final discovery rejects added, removed, or replaced files", () => {
+  const identity = { dev: 1, ino: 2, size: 3, mtimeMs: 4, ctimeMs: 5 };
+  const initial = [{ path: "SKILL.md", absolute: "C:\\skill\\SKILL.md", identity }];
+
+  assert.throws(
+    () => verifyStableFileSet(initial, [...initial, { path: "evil.js", absolute: "C:\\skill\\evil.js", identity }]),
+    /file set changed during scan/,
+  );
+  assert.throws(
+    () => verifyStableFileSet(initial, [{ ...initial[0], identity: { ...identity, ino: 9 } }]),
+    /file set changed during scan/,
+  );
 });

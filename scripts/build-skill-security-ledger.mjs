@@ -3,7 +3,7 @@ import { mkdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 
-import { scanSkill } from "../src/skill-supply-chain-defense.mjs";
+import { buildSkillLedgerRow, scanSkill } from "../src/skill-supply-chain-defense.mjs";
 import { writeJsonAtomic } from "../src/io.mjs";
 
 const compare = (left, right) => left < right ? -1 : left > right ? 1 : 0;
@@ -93,21 +93,7 @@ export async function buildSkillSecurityLedger(options = {}) {
     if (scan.scanDigest !== null && scannedBody?.sha256 !== record.bodySha256) {
       throw new Error(`scan body digest mismatch: ${record.id}`);
     }
-    rows.push({
-      schemaVersion: 1,
-      id: record.id,
-      repository: record.repository,
-      head: record.head,
-      sourcePath: record.sourcePath,
-      bodySha256: record.bodySha256,
-      scanDigest: scan.scanDigest,
-      disposition: scan.disposition,
-      requiredReview: scan.requiredReview,
-      surfaces: [...scan.surfaces].sort(compare),
-      findings: [...scan.findings].sort((left, right) =>
-        compare(left.ruleId, right.ruleId) || compare(left.path, right.path) || (left.line ?? 0) - (right.line ?? 0)),
-      ...(scan.scanError ? { scanError: scan.scanError } : {}),
-    });
+    rows.push(buildSkillLedgerRow(record, scan));
   }
 
   const ledgerBytes = await writeJsonlAtomic(ledgerPath, rows);

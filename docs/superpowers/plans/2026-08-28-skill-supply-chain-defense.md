@@ -224,25 +224,25 @@ git commit -m "feat: gate Wave 2 skills with static security evidence"
 - Consumes: the neutral contract, exact NVIDIA source digest and license evidence, scanner tests, Wave 2 ledger receipt, Aegis artifacts, and promotion policy
 - Produces: an independently written Aegis v3 candidate and an honest promotion or non-promotion receipt
 
-- [ ] **Step 1: Freeze the neutral contract and provenance review**
+- [x] **Step 1: Freeze the neutral contract and provenance review**
 
 Record the selected source id, exact SHA-256, Apache-2.0 signal, `independent-implementation` disposition, mechanisms studied, excluded implementation details, and `copiedSourceProse: false`.
 
-- [ ] **Step 2: Write failing promotion and regression tests**
+- [x] **Step 2: Write failing promotion and regression tests**
 
 Require direct, paraphrase, exclusion, conflict, malicious, documented-sensitive, stale-review, and missing-review cases. Preserve all Aegis v2 critical cases. Assert the receipt cannot say `promoted` unless every critical case passes, the token budget passes, no authority expands, and the Wave 2 security receipt reconciles.
 
-- [ ] **Step 3: Run the promotion test and observe failure**
+- [x] **Step 3: Run the promotion test and observe failure**
 
 Run: `node --test tests/skill-supply-chain-promotion.test.mjs`
 
 Expected: FAIL because v3 evidence does not exist.
 
-- [ ] **Step 4: Build the smallest Aegis v3 artifacts and decision receipt**
+- [x] **Step 4: Build the smallest Aegis v3 artifacts and decision receipt**
 
 Use `scripts/evaluate-skill.mjs` and `policies/promotion.v1.json`. If any gate fails, record `experimental`, `unverified`, or `blocked`; do not round up to `promoted`.
 
-- [ ] **Step 5: Run focused and full verification**
+- [x] **Step 5: Run focused and full verification**
 
 Run:
 
@@ -256,11 +256,11 @@ git diff --check
 
 Expected: all new critical cases pass, the existing 140-case intent arena has no regression, the full suite has zero failures, the exact D quarry audit passes, and patch hygiene is clean.
 
-- [ ] **Step 6: Document proof and limits**
+- [x] **Step 6: Document proof and limits**
 
 Report exact fixture counts, Wave 2 dispositions, false-positive controls, test counts, source provenance, and the limit that clean static evidence does not prove safety.
 
-- [ ] **Step 7: Commit the evaluated release**
+- [x] **Step 7: Commit the evaluated release**
 
 ```powershell
 git add data skills/eternities-aegis/evals/skill-supply-chain-cases.json receipts/promotions/eternities-aegis-v3.json syntheses/eternities-aegis.v3.json docs/skill-supply-chain-defense-report.md tests/skill-supply-chain-promotion.test.mjs README.md

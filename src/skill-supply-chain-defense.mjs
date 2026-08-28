@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { readFile, readdir, realpath, stat } from "node:fs/promises";
+import { lstat, open, readdir, realpath } from "node:fs/promises";
 import path from "node:path";
 
 const DEFAULTS = Object.freeze({
@@ -34,7 +34,11 @@ export function stableSkillScanDigest(scanWithoutDigest) {
 }
 
 function optionsWithDefaults(options) {
-  const values = { ...DEFAULTS, ...options };
+  const values = {
+    maxFiles: options.maxFiles ?? DEFAULTS.maxFiles,
+    maxTotalBytes: options.maxTotalBytes ?? DEFAULTS.maxTotalBytes,
+    maxFileBytes: options.maxFileBytes ?? DEFAULTS.maxFileBytes,
+  };
   for (const name of ["maxFiles", "maxTotalBytes", "maxFileBytes"]) {
     if (!Number.isInteger(values[name]) || values[name] < 1) {
       throw new Error(`${name} must be a positive integer`);
@@ -51,6 +55,31 @@ function relativePath(root, target) {
   return relative.split(path.sep).join("/");
 }
 
+function assertCanonicalChild(root, target) {
+  const relative = path.relative(root, target);
+  if (relative === "" || relative === ".." || relative.startsWith(`..${path.sep}`) || path.isAbsolute(relative)) {
+    throw new Error(`resolved path escapes canonical skill root: ${target}`);
+  }
+}
+
+function sameIdentity(left, right) {
+  return left.dev === right.dev && left.ino === right.ino && left.size === right.size &&
+    left.mtimeMs === right.mtimeMs && left.ctimeMs === right.ctimeMs;
+}
+
+export function verifyStableFileSet(initialRows, finalRows) {
+  const initial = [...initialRows].sort((left, right) => lexicalCompare(left.path, right.path));
+  const final = [...finalRows].sort((left, right) => lexicalCompare(left.path, right.path));
+  if (initial.length !== final.length) throw new Error("file set changed during scan");
+  for (let index = 0; index < initial.length; index += 1) {
+    if (initial[index].path !== final[index].path ||
+        initial[index].absolute !== final[index].absolute ||
+        !sameIdentity(initial[index].identity, final[index].identity)) {
+      throw new Error(`file set changed during scan: ${initial[index].path}`);
+    }
+  }
+}
+
 async function collectFiles(root, limits) {
   const files = [];
   let totalBytes = 0;
@@ -62,19 +91,29 @@ async function collectFiles(root, limits) {
       if (entry.isDirectory() && entry.name === ".git") continue;
       const target = path.join(directory, entry.name);
       const relative = relativePath(root, target);
-      if (entry.isSymbolicLink()) throw new Error(`symbolic links are prohibited: ${relative}`);
-      if (entry.isDirectory()) {
-        await visit(target);
+      const metadata = await lstat(target);
+      if (entry.isSymbolicLink() || metadata.isSymbolicLink()) throw new Error(`symbolic links are prohibited: ${relative}`);
+      const canonicalTarget = await realpath(target);
+      assertCanonicalChild(root, canonicalTarget);
+      const confirmed = await lstat(target);
+      if (!sameIdentity(metadata, confirmed)) throw new Error(`path changed during scan: ${relative}`);
+      if (entry.isDirectory() && metadata.isDirectory()) {
+        await visit(canonicalTarget);
         continue;
       }
-      if (!entry.isFile()) throw new Error(`special files are prohibited: ${relative}`);
-      const metadata = await stat(target);
+      if (!entry.isFile() || !metadata.isFile()) throw new Error(`special files are prohibited: ${relative}`);
       if (metadata.size > limits.maxFileBytes) {
         throw new Error(`file byte budget exceeded: ${relative}`);
       }
       totalBytes += metadata.size;
       if (totalBytes > limits.maxTotalBytes) throw new Error("total byte budget exceeded");
-      files.push({ absolute: target, path: relative, bytes: metadata.size });
+      files.push({
+        absolute: canonicalTarget,
+        lexicalAbsolute: target,
+        path: relative,
+        bytes: metadata.size,
+        identity: metadata,
+      });
       if (files.length > limits.maxFiles) throw new Error("file count budget exceeded");
     }
   }
@@ -260,7 +299,7 @@ function normalizedBodyDigests(rows) {
     .sort((left, right) => lexicalCompare(left.path, right.path));
 }
 
-export function reconcileSkillReview(scan, reviewValue) {
+function reconcileVerifiedSkillReview(scan, reviewValue) {
   if (!scan || scan.schemaVersion !== 1) throw new Error("scan.schemaVersion must be 1");
   if (stableSkillScanDigest(scan) !== scan.scanDigest) throw new Error("scan digest does not reconcile");
   const review = validateSemanticReview(reviewValue);
@@ -312,7 +351,70 @@ export function reconcileSkillReview(scan, reviewValue) {
     unresolved,
     reasons: [...new Set(reasons)].sort(),
   };
+  return decision;
+}
+
+export function buildSkillLedgerRow(record, scan) {
+  if (!record?.id || !record.repository || !record.head || !record.sourcePath || !record.bodySha256) {
+    throw new Error("complete source record identity is required");
+  }
+  return {
+    schemaVersion: 1,
+    id: record.id,
+    repository: record.repository,
+    head: record.head,
+    sourcePath: record.sourcePath,
+    bodySha256: record.bodySha256,
+    scanDigest: scan.scanDigest,
+    disposition: scan.disposition,
+    requiredReview: scan.requiredReview,
+    surfaces: [...scan.surfaces].sort(lexicalCompare),
+    findings: [...scan.findings].sort((left, right) =>
+      lexicalCompare(left.ruleId, right.ruleId) ||
+      lexicalCompare(left.path, right.path) ||
+      (left.line ?? 0) - (right.line ?? 0)),
+    ...(scan.scanError ? { scanError: scan.scanError } : {}),
+  };
+}
+
+export async function reconcileSkillSource({ record, ledgerRow, review, scanOptions } = {}) {
+  if (!record?.sourceAbsolutePath || record.inert !== true) throw new Error("an inert exact source record is required");
+  const scan = await scanSkill(path.dirname(path.resolve(record.sourceAbsolutePath)), scanOptions);
+  const sourceName = path.basename(record.sourceAbsolutePath).toLowerCase();
+  const sourceBody = scan.manifest.find(({ path: filePath }) => filePath.toLowerCase() === sourceName);
+  if (!sourceBody || sourceBody.bytes !== record.bodyBytes || sourceBody.sha256 !== record.bodySha256) {
+    throw new Error("source record body does not reconcile with current bytes");
+  }
+  const expectedLedgerRow = buildSkillLedgerRow(record, scan);
+  if (JSON.stringify(canonical(expectedLedgerRow)) !== JSON.stringify(canonical(ledgerRow))) {
+    throw new Error("ledger row does not reconcile with current source scan");
+  }
+  const core = reconcileVerifiedSkillReview(scan, review);
+  const decision = {
+    ...core,
+    sourceBinding: {
+      id: record.id,
+      repository: record.repository,
+      head: record.head,
+      sourcePath: record.sourcePath,
+      bodySha256: record.bodySha256,
+    },
+    ledgerRowDigest: sha256(JSON.stringify(canonical(expectedLedgerRow))),
+  };
   return { ...decision, decisionDigest: sha256(JSON.stringify(canonical(decision))) };
+}
+
+export async function gateSkillAdvancement({ record, ledgerRow, review, scanOptions } = {}) {
+  if (!review) return { status: "blocked", reasons: ["semantic review is absent"] };
+  try {
+    const decision = await reconcileSkillSource({ record, ledgerRow, review, scanOptions });
+    if (!decision.promotionEligible || decision.verdict === "REJECT") {
+      return { status: "blocked", reasons: decision.reasons, decision };
+    }
+    return { status: "eligible", reasons: [], decision };
+  } catch (error) {
+    return { status: "blocked", reasons: [String(error?.message ?? error)] };
+  }
 }
 
 export async function scanSkill(root, options = {}) {
@@ -321,7 +423,26 @@ export async function scanSkill(root, options = {}) {
   const { files: discovered, totalBytes } = await collectFiles(canonicalRoot, limits);
   const files = [];
   for (const row of discovered) {
-    const bytes = await readFile(row.absolute);
+    const currentLexical = await lstat(row.lexicalAbsolute);
+    if (currentLexical.isSymbolicLink()) throw new Error(`symbolic links are prohibited: ${row.path}`);
+    const currentCanonical = await realpath(row.lexicalAbsolute);
+    assertCanonicalChild(canonicalRoot, currentCanonical);
+    if (currentCanonical !== row.absolute || !sameIdentity(row.identity, currentLexical)) {
+      throw new Error(`file changed during scan: ${row.path}`);
+    }
+    const handle = await open(row.absolute, "r");
+    let bytes;
+    try {
+      const before = await handle.stat();
+      if (!sameIdentity(row.identity, before)) throw new Error(`file changed during scan: ${row.path}`);
+      bytes = await handle.readFile();
+      const after = await handle.stat();
+      if (!sameIdentity(before, after) || bytes.byteLength !== after.size) {
+        throw new Error(`file changed during scan: ${row.path}`);
+      }
+    } finally {
+      await handle.close();
+    }
     const binary = bytes.includes(0);
     files.push({
       ...row,
@@ -330,6 +451,9 @@ export async function scanSkill(root, options = {}) {
       text: binary ? "" : bytes.toString("utf8"),
     });
   }
+  const finalDiscovery = await collectFiles(canonicalRoot, limits);
+  verifyStableFileSet(discovered, finalDiscovery.files);
+  if (finalDiscovery.totalBytes !== totalBytes) throw new Error("file set changed during scan");
 
   const findings = [];
   const surfaces = new Set();
