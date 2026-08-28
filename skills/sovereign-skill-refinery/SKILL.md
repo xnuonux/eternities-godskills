@@ -26,6 +26,19 @@ Produce the smallest first-party capability that preserves the strongest verifie
 6. Evaluate the candidate against an executable baseline with `scripts/evaluate-skill.mjs`. A promotion requires every critical case, every policy kind threshold, resolved effects, token-budget compliance, no critical regression, and at least one policy-listed measured improvement.
 7. Write the decision receipt. If evidence is incomplete, retain `experimental`, `blocked`, or `unverified`; never round it up to `promoted`. Leave promoted output cold for a separate profile activation step.
 
+## Usage-driven evolution
+
+When the requested refinement is based on prior agent use, treat it as a stricter refinery path:
+
+1. Accept only reviewed, redacted trace records with exact evidence digests. Raw transcripts are upstream material, not refinery inputs.
+2. Mine recurring failure codes from a declared `development` partition. Do not let a one-off failure justify a durable skill edit.
+3. Require a host-configured review trust root to verify an attested development manifest. Bind each proposed edit to a recurring failure, derive baseline and candidate digests from exact bytes, and require the actual changed-section set to equal the bounded edit declaration before staging it inactive.
+4. Seal held-out identities, evidence digests, and suite digest away from proposal construction. Require a separately configured evaluator trust root to attest the leakage audit and both evaluation receipts.
+5. Evaluate baseline and candidate against the same held-out suite. Require measured gain, every critical case, no critical regression, resolved effects, and the normal token and kind gates.
+6. Return `eligible`, never `adopted`, when every gate passes. Eligibility only permits a separate explicit adoption action; it does not edit, install, activate, or globally route the skill.
+
+Never schedule self-modification, execute third-party optimization code, or infer permission to harvest private transcripts from a request to improve a skill.
+
 ## Required evidence
 
 Return or preserve:
@@ -36,5 +49,6 @@ Return or preserve:
 - token size and declared effects;
 - the promotion decision and failed gates;
 - verification commands and their observed results.
+- for usage-driven work, the partition declaration, leakage audit, staged proposal, and explicit-adoption boundary.
 
 The refinery is successful when another agent can reproduce why the capability was synthesized, what was intentionally excluded, and why its current disposition is warranted.

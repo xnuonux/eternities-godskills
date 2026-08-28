@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    { "id": "direct-stage", "kind": "direct", "critical": true, "expected": "stage-inactive" },
+    { "id": "direct-gain", "kind": "direct", "critical": true, "expected": "eligible-not-adopted" },
+    { "id": "paraphrase-history", "kind": "paraphrase", "critical": true, "expected": "development-only" },
+    { "id": "exclusion-live", "kind": "exclusion", "critical": true, "expected": "reject-live-mutation" },
+    { "id": "conflict-leakage", "kind": "conflict", "critical": true, "expected": "block-leakage" },
+    { "id": "conflict-regression", "kind": "conflict", "critical": true, "expected": "block-regression" }
+  ],
+  "baseline": {
+    "results": [
+      { "id": "direct-stage", "actual": "stage-inactive" },
+      { "id": "direct-gain", "actual": "adopt-automatically" },
+      { "id": "paraphrase-history", "actual": "all-history" },
+      { "id": "exclusion-live", "actual": "allow-live-mutation" },
+      { "id": "conflict-leakage", "actual": "allow" },
+      { "id": "conflict-regression", "actual": "allow" }
+    ]
+  },
+  "candidate": {
+    "results": [
+      { "id": "direct-stage", "actual": "stage-inactive" },
+      { "id": "direct-gain", "actual": "eligible-not-adopted" },
+      { "id": "paraphrase-history", "actual": "development-only" },
+      { "id": "exclusion-live", "actual": "reject-live-mutation" },
+      { "id": "conflict-leakage", "actual": "block-leakage" },
+      { "id": "conflict-regression", "actual": "block-regression" }
+    ]
+  }
+}

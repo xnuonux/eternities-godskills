@@ -1,0 +1,403 @@
+{
+  "schemaVersion": 1,
+  "id": "usage-driven-skill-evolution-certification-v1",
+  "construction": {
+    "schemaVersion": 1,
+    "developmentManifest": {
+      "schemaVersion": 1,
+      "partition": "development",
+      "reviewAuthority": "eternities-fixture-review",
+      "reviewLedgerDigest": "6a58021998c471f5bd0a31521a286c5fe3f721c159fe0a8df5eaad7297adab54",
+      "records": [
+        {
+          "id": "dev-001",
+          "partition": "development",
+          "reviewed": true,
+          "targetSkillId": "sovereign-skill-refinery",
+          "evidenceDigest": "1111111111111111111111111111111111111111111111111111111111111111",
+          "failureCodes": [
+            "missing-receipt-binding"
+          ],
+          "critical": true
+        },
+        {
+          "id": "dev-002",
+          "partition": "development",
+          "reviewed": true,
+          "targetSkillId": "sovereign-skill-refinery",
+          "evidenceDigest": "2222222222222222222222222222222222222222222222222222222222222222",
+          "failureCodes": [
+            "missing-receipt-binding",
+            "unsafe-auto-adoption"
+          ],
+          "critical": true
+        },
+        {
+          "id": "dev-003",
+          "partition": "development",
+          "reviewed": true,
+          "targetSkillId": "sovereign-skill-refinery",
+          "evidenceDigest": "3333333333333333333333333333333333333333333333333333333333333333",
+          "failureCodes": [
+            "unsafe-auto-adoption"
+          ],
+          "critical": false
+        }
+      ],
+      "manifestDigest": "bab4594e7ae4dc2a766e1d5d9c445f23ec769fcdf2a56c9d65d04bbee27b2ffe"
+    },
+    "miningReceipt": {
+      "schemaVersion": 1,
+      "status": "mined",
+      "developmentManifestDigest": "bab4594e7ae4dc2a766e1d5d9c445f23ec769fcdf2a56c9d65d04bbee27b2ffe",
+      "reviewAuthority": "eternities-fixture-review",
+      "reviewLedgerDigest": "6a58021998c471f5bd0a31521a286c5fe3f721c159fe0a8df5eaad7297adab54",
+      "parameters": {
+        "minimumOccurrences": 2,
+        "maximumClusters": 8
+      },
+      "clusters": [
+        {
+          "targetSkillId": "sovereign-skill-refinery",
+          "failureCode": "missing-receipt-binding",
+          "traceIds": [
+            "dev-001",
+            "dev-002"
+          ],
+          "evidenceDigests": [
+            "1111111111111111111111111111111111111111111111111111111111111111",
+            "2222222222222222222222222222222222222222222222222222222222222222"
+          ],
+          "criticalOccurrences": 2,
+          "occurrences": 2
+        },
+        {
+          "targetSkillId": "sovereign-skill-refinery",
+          "failureCode": "unsafe-auto-adoption",
+          "traceIds": [
+            "dev-002",
+            "dev-003"
+          ],
+          "evidenceDigests": [
+            "2222222222222222222222222222222222222222222222222222222222222222",
+            "3333333333333333333333333333333333333333333333333333333333333333"
+          ],
+          "criticalOccurrences": 1,
+          "occurrences": 2
+        }
+      ],
+      "receiptDigest": "7f8c46a540b8445cde4d6a09ce473cf52f56f14f02e44085e26802ca0cfda7c5"
+    },
+    "proposalPackage": {
+      "record": {
+        "schemaVersion": 1,
+        "status": "staged",
+        "targetSkillId": "sovereign-skill-refinery",
+        "baselineDigest": "9361e2e1acd41994d76acdbaac4f93252a2f063991fcc46f1f3a1ccf7969d096",
+        "candidateDigest": "71b39ba6963e030018c7830539e0ebe06dd902ffb4239fcd0f768a90d1791a4c",
+        "changes": [
+          {
+            "sectionId": "required-evidence",
+            "changeKind": "modified",
+            "beforeDigest": "301fc387b3c17a0b1ac9fe0e28b3c8ad518ddcc03168a871fa11186b8c0064bb",
+            "afterDigest": "70af0354a537313649c5a9af07ac5ed88ad531ba2fc7e5013dfb93c5d01cec80",
+            "beforeBytes": 496,
+            "afterBytes": 612
+          },
+          {
+            "sectionId": "usage-driven-evolution",
+            "changeKind": "added",
+            "beforeDigest": null,
+            "afterDigest": "9047dd2489772e6bf44b23170815d880eed252c84813ef8f704be343624ee11a",
+            "beforeBytes": 0,
+            "afterBytes": 1448
+          }
+        ],
+        "miningReceiptDigest": "7f8c46a540b8445cde4d6a09ce473cf52f56f14f02e44085e26802ca0cfda7c5",
+        "developmentManifestDigest": "bab4594e7ae4dc2a766e1d5d9c445f23ec769fcdf2a56c9d65d04bbee27b2ffe",
+        "reviewSubjectDigest": "9bf134238b149cdd309bd275361fd1a2d2216c3a353dfae4be200cb501ad6c79",
+        "reviewLedgerDigest": "6a58021998c471f5bd0a31521a286c5fe3f721c159fe0a8df5eaad7297adab54",
+        "reviewAttestation": {
+          "algorithm": "ed25519",
+          "keyId": "fixture-review",
+          "purpose": "reviewed-development",
+          "subjectDigest": "9bf134238b149cdd309bd275361fd1a2d2216c3a353dfae4be200cb501ad6c79",
+          "signature": "GNglsFKEI7d/mNFMpSB6+Q7XgfDSIILmzU+RhZIm6S8uVlaxyjQmDddeuaQCX4Q3urt/numu2mwC7woC5gYiBQ=="
+        },
+        "maximumEdits": 2,
+        "maximumSectionBytes": 16384,
+        "edits": [
+          {
+            "operation": "replace-section",
+            "sectionId": "required-evidence",
+            "rationaleCode": "missing-receipt-binding"
+          },
+          {
+            "operation": "append-boundary",
+            "sectionId": "usage-driven-evolution",
+            "rationaleCode": "unsafe-auto-adoption"
+          }
+        ],
+        "active": false,
+        "adopted": false,
+        "requiresExplicitAdoption": true,
+        "proposalDigest": "0288e187f813b0f881bc789f7470e3987ce6f77e7a2f7ddd5bb82d81bde367fb"
+      },
+      "attestation": {
+        "algorithm": "ed25519",
+        "purpose": "reviewed-construction",
+        "subjectDigest": "0288e187f813b0f881bc789f7470e3987ce6f77e7a2f7ddd5bb82d81bde367fb",
+        "keyId": "fixture-review",
+        "signature": "eWc8eOfNk9PW9oNQHtHGa5Pgwx/jNgqbxs7aHnktPoSfCo4y7hNef+VQtWOTh3+bEPeVRbWYW0j19V6HWD3VAg=="
+      }
+    },
+    "authority": {
+      "reviewKeyId": "fixture-review",
+      "algorithm": "ed25519"
+    },
+    "proofLimits": [
+      "synthetic reviewed fixtures exercise the evidence protocol but do not establish production trace authenticity",
+      "the committed private keys authenticate deterministic certification fixtures only and are not production trust roots"
+    ]
+  },
+  "evaluation": {
+    "heldOutManifest": {
+      "schemaVersion": 1,
+      "suiteId": "usage-evolution-v1",
+      "partition": "held-out",
+      "records": [
+        {
+          "id": "conflict-leakage",
+          "partition": "held-out",
+          "evidenceDigest": "d9fcd1cd57063301f354decae0e61d2b735d4d5f0951665c52d3762978072491"
+        },
+        {
+          "id": "conflict-regression",
+          "partition": "held-out",
+          "evidenceDigest": "c91129c7ed521a194639908814f9464e9641dde917ba8f5d94e7f1d6d7ef9bee"
+        },
+        {
+          "id": "direct-gain",
+          "partition": "held-out",
+          "evidenceDigest": "e55db79516d9d7717d0eb01a70e99511b0cdd8829fdfa957e59bbf9cebdf7b36"
+        },
+        {
+          "id": "direct-stage",
+          "partition": "held-out",
+          "evidenceDigest": "baba2eaf92b98e99f1c0f51804d5539b5c67b2921129acb214a6a5656c28f30b"
+        },
+        {
+          "id": "exclusion-live",
+          "partition": "held-out",
+          "evidenceDigest": "a52a18675f2eeab9e9e5e3ce8b692703e53061e16373860f91610b7bf2e63908"
+        },
+        {
+          "id": "paraphrase-history",
+          "partition": "held-out",
+          "evidenceDigest": "91a70215b646b39143ff6ba2845f8c7e7f4986b8616ee4e8d54e02fb20e06997"
+        }
+      ],
+      "manifestDigest": "5f4e9456ee2364649290402c782f5d1ed3f8ff74e329acb69c0a38e1bc23bcd8"
+    },
+    "leakageAuditPackage": {
+      "record": {
+        "schemaVersion": 1,
+        "status": "clear",
+        "proposalDigest": "0288e187f813b0f881bc789f7470e3987ce6f77e7a2f7ddd5bb82d81bde367fb",
+        "heldOutManifestDigest": "5f4e9456ee2364649290402c782f5d1ed3f8ff74e329acb69c0a38e1bc23bcd8",
+        "heldOutCases": 6,
+        "leaks": [],
+        "proofLimit": "manifest disjointness does not prove that an upstream constructor never observed held-out content"
+      },
+      "attestation": {
+        "algorithm": "ed25519",
+        "purpose": "heldout-audit",
+        "subjectDigest": "f0d4fcbee4f448627bdc780bfbdb1f7038d775bc1145190b3c82c7520c395ab8",
+        "keyId": "fixture-evaluator",
+        "signature": "8gjkzEO96DFcP8rPaQlwlZiPXk3/wVb3Ibi+NGrgOypRJQERc/UjmzomCQga8Ya0zJYILmO56buvFknalV7UCA=="
+      }
+    },
+    "baselinePackage": {
+      "record": {
+        "schemaVersion": 1,
+        "role": "baseline",
+        "evaluatorId": "fixture-evaluator",
+        "proposalDigest": "0288e187f813b0f881bc789f7470e3987ce6f77e7a2f7ddd5bb82d81bde367fb",
+        "targetSkillId": "sovereign-skill-refinery",
+        "artifactDigest": "9361e2e1acd41994d76acdbaac4f93252a2f063991fcc46f1f3a1ccf7969d096",
+        "baselineSkillDigest": "9361e2e1acd41994d76acdbaac4f93252a2f063991fcc46f1f3a1ccf7969d096",
+        "candidateSkillDigest": "71b39ba6963e030018c7830539e0ebe06dd902ffb4239fcd0f768a90d1791a4c",
+        "heldOutManifestDigest": "5f4e9456ee2364649290402c782f5d1ed3f8ff74e329acb69c0a38e1bc23bcd8",
+        "evaluation": {
+          "schemaVersion": 1,
+          "status": "evaluated",
+          "total": 6,
+          "passed": 1,
+          "criticalTotal": 6,
+          "criticalPassed": 1,
+          "score": 0.16666666666666666,
+          "tokenCount": 820,
+          "kindScores": {
+            "conflict": {
+              "total": 2,
+              "passed": 0,
+              "score": 0
+            },
+            "direct": {
+              "total": 2,
+              "passed": 1,
+              "score": 0.5
+            },
+            "exclusion": {
+              "total": 1,
+              "passed": 0,
+              "score": 0
+            },
+            "paraphrase": {
+              "total": 1,
+              "passed": 0,
+              "score": 0
+            }
+          },
+          "unresolvedEffects": [],
+          "failures": [
+            {
+              "id": "direct-gain",
+              "kind": "direct",
+              "critical": true,
+              "reason": "actual did not match expected"
+            },
+            {
+              "id": "paraphrase-history",
+              "kind": "paraphrase",
+              "critical": true,
+              "reason": "actual did not match expected"
+            },
+            {
+              "id": "exclusion-live",
+              "kind": "exclusion",
+              "critical": true,
+              "reason": "actual did not match expected"
+            },
+            {
+              "id": "conflict-leakage",
+              "kind": "conflict",
+              "critical": true,
+              "reason": "actual did not match expected"
+            },
+            {
+              "id": "conflict-regression",
+              "kind": "conflict",
+              "critical": true,
+              "reason": "actual did not match expected"
+            }
+          ],
+          "improvements": []
+        },
+        "evaluationDigest": "fd39452ff7575f4e9f9b0b7dac3f290cfccadf34d387910a8b0047d37e597051",
+        "receiptDigest": "195825c011ba7103c072837dc3991c76ef2cdbbef94c84a18bf4abc68d6a1024"
+      },
+      "attestation": {
+        "algorithm": "ed25519",
+        "purpose": "baseline-evaluation",
+        "subjectDigest": "195825c011ba7103c072837dc3991c76ef2cdbbef94c84a18bf4abc68d6a1024",
+        "keyId": "fixture-evaluator",
+        "signature": "AhLbwD3rdqD7QNMwhtamZyS2/Dwsqqgq+YeGiE5OAl7gb/Xk+KVW+aQD/d6dDCJhGY9rCjRtGNo7haX8xVCMBQ=="
+      }
+    },
+    "candidatePackage": {
+      "record": {
+        "schemaVersion": 1,
+        "role": "candidate",
+        "evaluatorId": "fixture-evaluator",
+        "proposalDigest": "0288e187f813b0f881bc789f7470e3987ce6f77e7a2f7ddd5bb82d81bde367fb",
+        "targetSkillId": "sovereign-skill-refinery",
+        "artifactDigest": "71b39ba6963e030018c7830539e0ebe06dd902ffb4239fcd0f768a90d1791a4c",
+        "baselineSkillDigest": "9361e2e1acd41994d76acdbaac4f93252a2f063991fcc46f1f3a1ccf7969d096",
+        "candidateSkillDigest": "71b39ba6963e030018c7830539e0ebe06dd902ffb4239fcd0f768a90d1791a4c",
+        "heldOutManifestDigest": "5f4e9456ee2364649290402c782f5d1ed3f8ff74e329acb69c0a38e1bc23bcd8",
+        "evaluation": {
+          "schemaVersion": 1,
+          "status": "evaluated",
+          "total": 6,
+          "passed": 6,
+          "criticalTotal": 6,
+          "criticalPassed": 6,
+          "score": 1,
+          "tokenCount": 1211,
+          "kindScores": {
+            "conflict": {
+              "total": 2,
+              "passed": 2,
+              "score": 1
+            },
+            "direct": {
+              "total": 2,
+              "passed": 2,
+              "score": 1
+            },
+            "exclusion": {
+              "total": 1,
+              "passed": 1,
+              "score": 1
+            },
+            "paraphrase": {
+              "total": 1,
+              "passed": 1,
+              "score": 1
+            }
+          },
+          "unresolvedEffects": [],
+          "failures": [],
+          "improvements": []
+        },
+        "evaluationDigest": "ffd0bfaded0a9e02081076f2977da511682b5711adde0469fa6bcb449eb1b36a",
+        "receiptDigest": "06eed9d316f7495ab575f3768328084d037eb7651e678adc3993f7a66c6c36b8"
+      },
+      "attestation": {
+        "algorithm": "ed25519",
+        "purpose": "candidate-evaluation",
+        "subjectDigest": "06eed9d316f7495ab575f3768328084d037eb7651e678adc3993f7a66c6c36b8",
+        "keyId": "fixture-evaluator",
+        "signature": "vauqYnsIBkNeRdYkigeseA9HuQayRpuvDSCzpGoT2lsnsqcR2FchOH1I4PyuZfV5+EHikBJarYVppIpe2PlVAw=="
+      }
+    },
+    "evolutionDecision": {
+      "schemaVersion": 1,
+      "status": "eligible",
+      "failedGates": [],
+      "improvements": [
+        "conflict",
+        "direct",
+        "exclusion",
+        "paraphrase",
+        "score"
+      ],
+      "reasons": [
+        "all promotion gates passed with measured improvement"
+      ],
+      "adopted": false,
+      "requiresExplicitAdoption": true,
+      "evidence": {
+        "proposalDigest": "0288e187f813b0f881bc789f7470e3987ce6f77e7a2f7ddd5bb82d81bde367fb",
+        "heldOutManifestDigest": "5f4e9456ee2364649290402c782f5d1ed3f8ff74e329acb69c0a38e1bc23bcd8",
+        "baselineReceiptDigest": "195825c011ba7103c072837dc3991c76ef2cdbbef94c84a18bf4abc68d6a1024",
+        "candidateReceiptDigest": "06eed9d316f7495ab575f3768328084d037eb7651e678adc3993f7a66c6c36b8"
+      }
+    }
+  },
+  "authority": {
+    "constructionProcessSeparated": true,
+    "targetCodeExecuted": false,
+    "liveSkillMutationByEngine": false,
+    "automaticAdoption": false,
+    "hostActivation": false
+  },
+  "proofLimits": [
+    "synthetic reviewed fixtures exercise the evidence protocol but do not establish production trace authenticity",
+    "the committed private keys authenticate deterministic certification fixtures only and are not production trust roots",
+    "construction and held-out evaluation run in separate processes, but synthetic fixtures do not establish production isolation",
+    "manifest disjointness does not prove that an upstream constructor never observed held-out content",
+    "eligibility does not authorize global installation activation or automatic adoption"
+  ]
+}
