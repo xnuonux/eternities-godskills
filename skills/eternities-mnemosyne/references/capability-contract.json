@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "id": "godskill-eternities-mnemosyne-v1",
+  "id": "godskill-eternities-mnemosyne-v2",
   "name": "eternities-mnemosyne",
   "category": "knowledge-memory-context",
   "intent": "Preserve and recover the smallest source-grounded state required for reliable continuity, context economy, and durable memory.",
   "successCondition": "The selected route produces a scope-bound, freshness-aware, provenance-linked result that preserves unresolved conflict and terminates without replaying unnecessary history.",
   "inputs": ["task, session, or memory-system scope", "available checkpoints, history, sources, or retrieval results", "context budget and authority boundaries"],
   "outputs": ["continuity packet or context budget", "memory contract or audit", "source and freshness map", "explicit next action and unresolved state"],
-  "operations": ["bind identity and scope", "retrieve smallest sufficient evidence", "separate active durable evidence and archive layers", "resolve freshness and conflicts", "measure context and verify recovery"],
+  "operations": ["bind identity and scope", "retrieve smallest sufficient evidence", "separate active durable evidence and archive layers", "resolve freshness and conflicts", "measure context and verify recovery", "attest task-scoped checkpoints", "validate parent-bound continuity chains"],
   "effects": ["read", "write"],
   "positiveTriggers": ["recover consequential work across a session boundary", "compress active context without losing executable state", "design a durable agent memory system", "audit memory retrieval freshness coverage or leakage"],
   "negativeTriggers": ["routine turn or ordinary status check", "simple factual recall", "fresh self-contained task", "exact installed boundary or debugging workflow"],
@@ -17,6 +17,7 @@
   "explicitOnly": false,
   "routes": [
     {"id":"continuity-recovery","capabilities":["identity","checkpoint","provenance","freshness","conflict","next-action"],"delegates":["keel-wake"]},
+    {"id":"attested-checkpoint","capabilities":["task-scope","revision-chain","signature","authority","evidence-pointer","freshness","context-budget","next-action"],"delegates":[]},
     {"id":"context-budget","capabilities":["inventory","tiering","compression","failure-preservation","measurement","next-action"],"delegates":["token-efficient-agents"]},
     {"id":"memory-design","capabilities":["scope","identity","storage","retrieval","retention","privacy","invalidation","verification"],"delegates":["eternities-architect"]},
     {"id":"memory-audit","capabilities":["freshness","conflict","coverage","leakage","precision","recoverability"],"delegates":["systematic-debugging","eternities-oracle"]}
