@@ -85,7 +85,7 @@ test("release two certifies three engineering Godskills and one bounded profile"
     );
   }
   assert.doesNotThrow(() => validateCompositionGraph(contracts));
-  assert.equal(certification.composition.routeCount, 11);
+  assert.equal(certification.composition.routeCount, 12);
   assert.equal(selectedSourceIds.size, certification.sourceEvidence.selectedSourceCount);
   const boundary = certification.provenanceBoundary;
   assert.match(boundary.ledgerPrefixSha256, /^[a-f0-9]{64}$/);

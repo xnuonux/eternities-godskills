@@ -78,7 +78,7 @@ test("Mnemosyne has bounded metadata and valid contracts", async () => {
   assert.match(markdown, /references\/operating-contract\.md/);
   assert.doesNotThrow(() => validateCapabilityContract(contract));
   assert.doesNotThrow(() => validateCompositionContract(contract));
-  assert.equal(contract.routes.length, 4);
+  assert.equal(contract.routes.length, 5);
 });
 
 test("Mnemosyne separates continuity, context, design, and audit routes", async () => {

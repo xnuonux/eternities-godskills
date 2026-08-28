@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "id": "attested-task-continuity-v1",
+  "status": "certified",
+  "purpose": "task-scoped-compaction-and-handoff-continuity",
+  "source": {
+    "id": "OthmanAdi/planning-with-files@9e94390e5912b1ff296556505cd999ff84838160:skills/planning-with-files/SKILL.md",
+    "bodySha256": "d57fd5bd607a15b3669b7d53b54b201994eb7dbe68f80ffc33ea0d7e53122f84",
+    "inert": true,
+    "disposition": "independent-pattern-adaptation",
+    "copiedSourceProse": false,
+    "copiedImplementation": false,
+    "targetCodeExecuted": false,
+    "excludedMechanisms": [
+      "always-on tool hooks",
+      "full plan injection before each tool call",
+      "slash-command dependence",
+      "stop-loop enforcement"
+    ]
+  },
+  "artifacts": {
+    "module": {
+      "path": "src/continuity-packets.mjs",
+      "sha256": "78ad97ef2e1dbd0016326414e0a9f1042db5f83614c59abf42051095f1b17a5c"
+    },
+    "tests": {
+      "path": "tests/continuity-packets.test.mjs",
+      "sha256": "938b96128b48cca138029b3193e9a3583c486fbfd11b3432d610e8f3b9b6d7a8"
+    },
+    "mnemosyne": {
+      "path": "skills/eternities-mnemosyne/SKILL.md",
+      "sha256": "69e1bae6e496f6bf5dac6492be32cf3b4d1504d8ce86a5c6f7da8a9a0fbe2078"
+    },
+    "mnemosyneContract": {
+      "path": "skills/eternities-mnemosyne/references/capability-contract.json",
+      "sha256": "69bbed128a0955fae85849d100079a16b3efa13162e7e9c1ed0bab93e8bd522d"
+    },
+    "continuityContract": {
+      "path": "skills/eternities-mnemosyne/references/attested-continuity.md",
+      "sha256": "af60a1af6f862187b8c2933aec7eba0ffd6bd84a9a0ad9eae2555160be7db32a"
+    },
+    "forge": {
+      "path": "skills/eternities-forge/SKILL.md",
+      "sha256": "6dbb7811b5e6f7c902bfa6be01245e1a3fc7d00bcf527981eddb355fe398f89e"
+    },
+    "forgeContract": {
+      "path": "skills/eternities-forge/references/capability-contract.json",
+      "sha256": "7254287bf79212d667e82f7c6eb0c07c0a292f435157b4076061c47e6454eae4"
+    },
+    "design": {
+      "path": "docs/superpowers/specs/2026-08-28-attested-task-continuity-design.md",
+      "sha256": "d072bc8077a3a6f2b4b409f575d29710959849832fb624d3cba5896d4c401ba1"
+    }
+  },
+  "metrics": {
+    "signatureVerified": true,
+    "parentChainVerified": true,
+    "latestOnlyRecovered": true,
+    "crossTaskRejected": true,
+    "tamperRejected": true,
+    "authorityExpansionRejected": true,
+    "futureTimeRejected": true,
+    "concurrentForkSingleWinner": true,
+    "immutableRecordCommit": true,
+    "estimatedCandidateRecoveryTokens": 247,
+    "declaredBaselinePerToolTokens": 90,
+    "declaredBaselineToolCalls": 20,
+    "syntheticBaselineTokens": 1800,
+    "estimatedContextReductionTokens": 1553,
+    "estimatedContextRatio": 0.13722222222222222,
+    "packetEstimatedTokens": 247
+  },
+  "gates": {
+    "exactInertSource": true,
+    "trustedSignatureRequired": true,
+    "parentBoundAppendOnlyChain": true,
+    "taskIsolation": true,
+    "latestPacketOnly": true,
+    "authorityCannotExpand": true,
+    "futureTimeRejected": true,
+    "immutableAtomicRevisionCommit": true,
+    "concurrentForkHasSingleWinner": true,
+    "lowerEstimatedContextCostThanDeclaredPerToolBaseline": true,
+    "perToolPromptInjectionInstalled": false,
+    "slashCommandRequired": false,
+    "hostActivationPerformed": false
+  },
+  "verification": {
+    "focusedCommand": "node --test tests/continuity-packets.test.mjs tests/attested-continuity-certification.test.mjs",
+    "fullCommand": "npm test"
+  },
+  "proofLimits": {
+    "fixtureTrustRoot": "local-generated-key-only",
+    "hostKeyCustody": "not-proven",
+    "hostActivation": "not-performed",
+    "arbitraryAgentRecovery": "not-proven",
+    "productionOperation": "not-performed",
+    "powerLossDurability": "fsynced-record-and-atomic-no-overwrite-link-used-but-platform-filesystem-guarantees-not-proven",
+    "contextCostComparison": "synthetic-source-declared-estimate-not-production-measurement"
+  }
+}

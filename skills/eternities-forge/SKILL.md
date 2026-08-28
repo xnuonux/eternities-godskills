@@ -18,7 +18,7 @@ and handoff, use this agent-neutral spine:
 2. resolve ambiguity before implementation with a settled decision record
 3. delegate only genuinely independent work with disjoint ownership and merge bounds
 4. execute approved plans in bounded slices with a verification command per slice
-5. preserve a source-labeled handoff containing state, evidence, risk, and next action
+5. preserve a source-labeled handoff containing state, evidence, risk, and next action; for a real compaction, session, or parallel-agent boundary, use Mnemosyne's attested checkpoint contract
 6. finish with fresh verification, review disposition, and an explicit integration or rollback decision
 
 Completion claims require direct evidence. Tests and fixtures prove contracts and
@@ -51,8 +51,9 @@ Yield when:
 4. **Create the proof surface.** Name the production change that would make each test fail. Use `test-driven-development` when practical behavior can be automated. For configuration or generated artifacts, define the direct validation that replaces a test.
 5. **Implement by bounded slices.** Each slice has one observable result, one verification command, and one rollback boundary. Keep speculative abstractions and unrelated cleanup outside the charge.
 6. **Track claims.** Maintain a compact claim-to-evidence ledger: changed behavior, supporting test or inspection, unresolved risk, and authority still required. A command exit code without relevant assertions is not sufficient evidence.
-7. **Review proportional to risk.** Request independent review for major, security-sensitive, cross-cutting, or integration-heavy changes. Evaluate findings technically; repair critical and important defects before continuing.
-8. **Verify and integrate.** Run focused checks, then the full relevant suite. Confirm diff scope, generated artifacts, profile or migration targets, and rollback. Hand branch integration to `finishing-a-development-branch` when that boundary exists.
+7. **Seal real boundaries.** At compaction, session handoff, parallel-agent transfer, or a major earned checkpoint, write one task-scoped, parent-bound, host-attested continuity packet. Do not inject it before every tool call. The receiving agent verifies task identity, signature, chain, freshness, authority, and context budget before using only its latest state.
+8. **Review proportional to risk.** Request independent review for major, security-sensitive, cross-cutting, or integration-heavy changes. Evaluate findings technically; repair critical and important defects before continuing.
+9. **Verify and integrate.** Run focused checks, then the full relevant suite. Confirm diff scope, generated artifacts, profile or migration targets, and rollback. Hand branch integration to `finishing-a-development-branch` when that boundary exists.
 
 ## Non-negotiable controls
 

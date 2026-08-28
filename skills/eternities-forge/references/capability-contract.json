@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "godskill-eternities-forge-v1",
+  "id": "godskill-eternities-forge-v3",
   "name": "eternities-forge",
   "category": "implementation-engineering",
   "intent": "Coordinate the smallest sufficient set of agent-neutral engineering workflows for a consequential multi-stage software change, including bounded delegation and fail-closed evidence gates.",
@@ -24,6 +24,7 @@
     "verify claims and integration",
     "resolve ambiguity and conflicts",
     "bound delegation and handoff",
+    "seal attested task continuity at real boundaries",
     "block unsupported completion claims"
   ],
   "effects": ["read", "write"],
@@ -70,6 +71,13 @@
       "delegates": ["writing-plans", "brainstorming", "dispatching-parallel-agents", "executing-plans", "requesting-code-review", "receiving-code-review", "verification-before-completion", "finishing-a-development-branch"],
       "maxComposedCapabilities": 3,
       "failClosedOn": ["ambiguous-authority", "conflict", "stale-evidence", "failed-critical-gate", "missing-precondition"]
+    },
+    {
+      "id": "attested-handoff",
+      "capabilities": ["task-scope", "checkpoint-chain", "authority", "evidence", "freshness", "context-budget", "next-action"],
+      "delegates": ["eternities-mnemosyne"],
+      "maxComposedCapabilities": 1,
+      "failClosedOn": ["task-mismatch", "invalid-attestation", "stale-evidence", "missing-authority", "context-budget"]
     },
     {
       "id": "feature",
