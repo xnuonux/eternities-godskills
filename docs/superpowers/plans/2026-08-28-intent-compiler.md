@@ -125,12 +125,12 @@
 - Consumes: compiler, runtime, cards, arena, and focused test evidence
 - Produces: portable adapter documentation and deterministic certification receipt
 
-- [ ] Write failing certification tests for exact artifact digests, arena gates, proof limits, and external-action prohibitions.
-- [ ] Run focused certification tests and verify missing artifacts fail.
-- [ ] Document JSON usage, generic adapter requirements, and host integration boundaries.
-- [ ] Implement the deterministic receipt builder and generate the receipt twice.
-- [ ] Verify byte-identical receipts and pass focused certification tests.
-- [ ] Commit documentation and certification.
+- [x] Write failing certification tests for exact artifact digests, arena gates, proof limits, and external-action prohibitions.
+- [x] Run focused certification tests and verify missing artifacts fail.
+- [x] Document JSON usage, generic adapter requirements, and host integration boundaries.
+- [x] Implement the deterministic receipt builder and generate the receipt twice.
+- [x] Verify byte-identical receipts and pass focused certification tests.
+- [x] Commit documentation and certification.
 
 ### Task 7: Review and integration
 

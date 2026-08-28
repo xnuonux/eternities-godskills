@@ -49,9 +49,14 @@ the current certification covers 57 direct, paraphrased, and contextual
 commandless envelopes, exact equality after all compatibility aliases are removed, a
 5,000-card bounded-disclosure fixture, authority and effect refusal, risk
 limits, and unresolved-decision refusal. skill selection never expands user
-authority. deterministic envelope routing is certified; live-model conversion
-from free-form language into an envelope remains an adapter-level evaluation,
-not an inflated proof claim.
+authority. deterministic envelope routing is certified. the Eternities intent
+compiler now provides a local agent-neutral free-form-language bridge with
+deterministic card evidence, optional untrusted semantic proposals, explicit
+ambiguity, and fail-closed authority reconciliation. its 120-case v1 arena
+selects all 76 positive missions exactly, pauses 14 ambiguous or unknown
+missions, refuses 30 unsafe missions, and records zero authority invention.
+this is local fixture proof, not an inflated claim about arbitrary live-model
+interpretation.
 
 the portable contract is documented in `runtime\agent-router.md`, its adapter
 manifest is `runtime\portable-adapter.v1.json`. exact receipts are
@@ -62,6 +67,11 @@ manifest is `runtime\portable-adapter.v1.json`. exact receipts are
 `receipts\agent-native-router-v5.json` and
 `receipts\agent-native-router-v6.json`. no global runtime adapter was enabled
 by this work.
+
+the compiler contract and host-adapter rules are documented in
+`docs\intent-compiler.md`; its certification receipt is
+`receipts\intent-compiler-v1.json`. run `npm run intent -- --request
+path\to\natural-request.json` to compile and route without execution.
 
 the full local completion report is `docs\eternities-godskills-completion-report.md`
 and its machine receipt is `receipts\eternities-godskills-completion.json`.
@@ -153,7 +163,11 @@ npm run sync:stars -- --manifest data/star-delta-2026-08-26.json
 npm run build:catalog
 npm run build:coverage
 npm run build:routing
+npm run build:intent-arena
+npm run evaluate:intent
+npm run build:intent-certification
 npm run route -- --request path\to\request.json --output path\to\receipt.json
+npm run intent -- --request path\to\natural-request.json --output path\to\result.json
 npm run profile -- preview profiles/eternities-core.lock.json
 ```
 
