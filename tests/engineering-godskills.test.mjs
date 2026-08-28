@@ -223,6 +223,7 @@ test("Aegis routes governed audits and refuses unauthorized action", async () =>
   assert.ok(expected.has("route:threat-model"));
   assert.ok(expected.has("route:mcp-audit"));
   assert.ok(expected.has("route:authority-review"));
+  assert.ok(expected.has("route:skill-supply-chain"));
   assert.ok(expected.has("skip"));
   assert.ok(expected.has("refuse:unauthorized"));
   assert.ok(expected.has("defer:installed-exact-security-skill"));
@@ -266,11 +267,11 @@ test("Aegis provenance matches the certified release-one records", async () => {
   );
 });
 
-test("Aegis v2 adds the three candidate governance routes without replacing v1", async () => {
+test("Aegis v3 adds skill supply-chain defense without replacing earlier routes", async () => {
   const contract = await json(
     "skills/eternities-aegis/references/capability-contract.json",
   );
-  assert.equal(contract.id, "godskill-eternities-aegis-v2");
+  assert.equal(contract.id, "godskill-eternities-aegis-v3");
   assert.deepEqual(
     contract.routes.map(({ id }) => id),
     [
@@ -281,6 +282,7 @@ test("Aegis v2 adds the three candidate governance routes without replacing v1",
       "policy-lifecycle",
       "identity-access",
       "security-assurance",
+      "skill-supply-chain",
     ],
   );
   assert.deepEqual(contract.sourceEvidence.clusters.map(({ id }) => id), [

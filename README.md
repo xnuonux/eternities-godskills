@@ -168,6 +168,14 @@ arena now pass 140 of 140 cases, including 81 of 81 exact positive selections.
 read `docs\universal-skill-quarry-wave-2-report.md` and the dated receipts for
 the measured result and proof limits.
 
+the Aegis v3 supply-chain gate now statically accounts for all 7,776 exact
+Wave 2 skill records without running acquired code. 1,844 sources are clear for
+semantic review, 5,593 require manual review, and 339 are rejected before
+indexing. static clearance is not trust or promotion. exact semantic review and
+authority reconciliation remain mandatory. read
+`docs\skill-supply-chain-defense-report.md` and
+`receipts\promotions\eternities-aegis-v3.json` for the result and limits.
+
 ## release-one commands
 
 ```powershell
@@ -179,6 +187,7 @@ npm run build:routing
 npm run build:intent-arena
 npm run evaluate:intent
 npm run build:intent-certification
+npm run build:skill-security-ledger
 npm run route -- --request path\to\request.json --output path\to\receipt.json
 npm run intent -- --request path\to\natural-request.json --output path\to\result.json
 npm run profile -- preview profiles/eternities-core.lock.json
