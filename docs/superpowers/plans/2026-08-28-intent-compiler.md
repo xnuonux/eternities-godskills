@@ -141,10 +141,10 @@
 - Consumes: the complete feature branch and independent review findings
 - Produces: verified local-main integration
 
-- [ ] Run `npm test` and require zero failures.
-- [ ] Run intent compiler artifact generation twice and compare exact hashes.
-- [ ] Run `git diff --check main..HEAD`.
-- [ ] Request independent review focused on authority invention, unsafe selection, adapter ambiguity, fixture leakage, and proof claims.
-- [ ] Fix confirmed findings through failing regression tests.
+- [x] Run `npm test` and require zero failures.
+- [x] Run intent compiler artifact generation twice and compare exact hashes.
+- [x] Run `git diff --check main..HEAD`.
+- [x] Request independent review focused on authority invention, unsafe selection, adapter ambiguity, fixture leakage, and proof claims.
+- [x] Fix confirmed findings through failing regression tests.
 - [ ] Mark this checklist complete, merge locally into `main`, and rerun the full suite on the integrated tree.
 - [ ] Remove only the verified merged feature branch and worktree.
