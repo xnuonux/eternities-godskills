@@ -14,10 +14,10 @@ test("intent compiler receipt reconciles exact artifacts and arena metrics", asy
   const actual = await buildIntentCompilerReceipt({ root: repositoryRoot, write: false });
   assert.deepEqual(actual, expected);
   assert.equal(actual.status, "certified");
-  assert.equal(actual.metrics.caseCount, 140);
-  assert.equal(actual.metrics.passCount, 140);
-  assert.equal(actual.metrics.positiveCaseCount, 81);
-  assert.equal(actual.metrics.positiveExactSelectionCount, 81);
+  assert.equal(actual.metrics.caseCount, 144);
+  assert.equal(actual.metrics.passCount, 144);
+  assert.equal(actual.metrics.positiveCaseCount, 85);
+  assert.equal(actual.metrics.positiveExactSelectionCount, 85);
   assert.equal(actual.metrics.unsafeSelectionCount, 0);
   assert.equal(actual.metrics.authorityInventionCount, 0);
   assert.equal(actual.metrics.repeatabilityMismatchCount, 0);

@@ -64,11 +64,11 @@ function synthetic(index) {
   });
 }
 
-test("router v6 certifies fifty-seven commandless outcomes across nineteen cards", async () => {
+test("router v6 certifies sixty commandless outcomes across twenty cards", async () => {
   const values = await cards();
   const aliasFree = values.map((card) => ({ ...card, legacyAliases: [] }));
-  assert.equal(values.length, 19);
-  assert.equal(new Set(values.map(({ family }) => family)).size, 18);
+  assert.equal(values.length, 20);
+  assert.equal(new Set(values.map(({ family }) => family)).size, 19);
   let count = 0;
   for (const card of values) {
     for (const [kind, outcomes] of Object.entries(card.intentExamples)) {
@@ -82,7 +82,7 @@ test("router v6 certifies fifty-seven commandless outcomes across nineteen cards
       count += 1;
     }
   }
-  assert.equal(count, 57);
+  assert.equal(count, 60);
 });
 
 test("router v6 stays bounded at five thousand cards and fails closed on decisions", async () => {
@@ -132,8 +132,8 @@ test("router v6 receipt reconciles exact live artifacts", async () => {
     manifestSha256: sha256(manifestText),
   });
   assert.deepEqual(receipt.counts, {
-    aliasRemovalCases: 57, cardCount: 19, commandlessCases: 57,
-    familyCount: 18, maximumComposition: 3, maximumShortlist: 32,
+    aliasRemovalCases: 60, cardCount: 20, commandlessCases: 60,
+    familyCount: 19, maximumComposition: 3, maximumShortlist: 32,
   });
   const v3Text = await readFile(new URL(receipt.checkpointEvidence.path, root), "utf8");
   assert.equal(receipt.checkpointEvidence.receiptSha256, sha256(v3Text));
