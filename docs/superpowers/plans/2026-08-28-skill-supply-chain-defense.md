@@ -32,7 +32,7 @@
 - Consumes: `scanSkill(root: string, options?: ScanOptions): Promise<SkillScan>`
 - Produces: `SkillScan` with `schemaVersion`, `root`, `manifest`, `findings`, `surfaces`, `disposition`, `requiredReview`, `summary`, and `scanDigest`
 
-- [ ] **Step 1: Write failing structural and behavior tests**
+- [x] **Step 1: Write failing structural and behavior tests**
 
 Create fixtures in temporary directories. Assert that `scanSkill()`:
 
@@ -45,13 +45,13 @@ assert.match(result.scanDigest, /^[a-f0-9]{64}$/);
 
 Cover symlink rejection, lexical escape, file/count/byte limits, decoded dynamic execution, download-and-execute, credential exfiltration, persistence, destructive behavior, prompt-boundary attacks, sensitive but documented shell use, and stable ordering.
 
-- [ ] **Step 2: Run the focused test and observe failure**
+- [x] **Step 2: Run the focused test and observe failure**
 
 Run: `node --test tests/skill-supply-chain-defense.test.mjs`
 
 Expected: FAIL because `src/skill-supply-chain-defense.mjs` does not exist.
 
-- [ ] **Step 3: Implement bounded traversal and evidence rules**
+- [x] **Step 3: Implement bounded traversal and evidence rules**
 
 Export:
 
@@ -63,13 +63,13 @@ export function stableSkillScanDigest(scanWithoutDigest) { /* canonical SHA-256 
 
 Use defaults `maxFiles: 256`, `maxTotalBytes: 4_194_304`, and `maxFileBytes: 524_288`. Read regular files only. Reject every symlink and special file. Redact secret-like matched values and retain at most three line-bounded evidence snippets per rule and file.
 
-- [ ] **Step 4: Run focused tests**
+- [x] **Step 4: Run focused tests**
 
 Run: `node --test tests/skill-supply-chain-defense.test.mjs`
 
 Expected: all scanner tests PASS.
 
-- [ ] **Step 5: Commit the scanner core**
+- [x] **Step 5: Commit the scanner core**
 
 ```powershell
 git add src/skill-supply-chain-defense.mjs tests/skill-supply-chain-defense.test.mjs
