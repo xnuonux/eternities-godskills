@@ -3,8 +3,8 @@
   "skillName": "sovereign-skill-refinery",
   "version": "usage-evolution-v1",
   "decision": {
-    "status": "promoted",
-    "basis": "exact candidate bytes passed a sealed held-out fixture and the repository integration remains an explicit reviewed action"
+    "status": "pending-review",
+    "basis": "the evidence chain is eligible but independent closure review has not yet passed"
   },
   "evolutionDecision": {
     "schemaVersion": 1,
@@ -23,17 +23,22 @@
     "adopted": false,
     "requiresExplicitAdoption": true,
     "evidence": {
-      "proposalDigest": "a16ac5c97a242bd1bd38a6e0cc016e854cdb523300120f8f2a853c7fbb0a57aa",
+      "proposalDigest": "8985a99a11d635f769491ecd4dbc4e8cad77a9db3632de8f1a57767bf6ac10a7",
       "heldOutManifestDigest": "5f4e9456ee2364649290402c782f5d1ed3f8ff74e329acb69c0a38e1bc23bcd8",
-      "baselineReceiptDigest": "24cd6a270895313221007b2b1d300f7eb39e85b04415401a8fa142e60dbeaa20",
-      "candidateReceiptDigest": "7eaf80d3f2bfee2845aafed40548ad460efa7ce832da56291f57e3e185346930"
+      "baselineReceiptDigest": "fb64b4d047d34d429b0b85153651e0ce7c8176c7836c51cf193de59c1466e1b4",
+      "candidateReceiptDigest": "2775f0edd7164963db7a03d012d6f97a568923f28bcf1e1269f364d616abbfda"
     }
   },
   "inputs": [
     {
+      "path": "artifacts/usage-evolution/construction.json",
+      "sha256": "2003199519b77e0c3921ee0e5d9dba9eeb03eaee878d7fa4b908295ac725c7c4",
+      "bytes": 4746
+    },
+    {
       "path": "data/usage-driven-skill-evolution-contract.json",
-      "sha256": "9ca2adcd291ee69db2e128a372a89fcb88341d863450d9ec09e7a2bc11ea4338",
-      "bytes": 3283
+      "sha256": "8b6bc1a079df26ee8ec17abf1b1783ad571d2aa5230f4a71ebe8978e8bd07f85",
+      "bytes": 3274
     },
     {
       "path": "data/evals/usage-evolution-development.json",
@@ -42,18 +47,18 @@
     },
     {
       "path": "docs/superpowers/specs/2026-08-28-usage-driven-skill-evolution-design.md",
-      "sha256": "c78a0d9c9e3e4d0c06198aed6f69fbd060eb324fb877e13aef70c2908b160f35",
-      "bytes": 2606
+      "sha256": "f0954248df831409ccd08a34a9bdd869056cab60e7c10cfe272b7e8bcd9ab55b",
+      "bytes": 3119
     },
     {
       "path": "src/skill-evolution.mjs",
-      "sha256": "edfd555c8a1701b561e93d53878e55ffd9b542c32cfdf4fff75b119fd67f7f40",
-      "bytes": 15619
+      "sha256": "234f38d2c7e8d4ad344dd1dff8145fc14bb3610575c30f826fed9581e691eec8",
+      "bytes": 20437
     },
     {
       "path": "skills/sovereign-skill-refinery/SKILL.md",
-      "sha256": "0720c1e162389202d255f01e849edf603aa3028c2cb15b01e131dc06e92bb6e7",
-      "bytes": 4626
+      "sha256": "71b39ba6963e030018c7830539e0ebe06dd902ffb4239fcd0f768a90d1791a4c",
+      "bytes": 4844
     },
     {
       "path": "skills/sovereign-skill-refinery/evals/usage-evolution-cases.json",
@@ -61,9 +66,19 @@
       "bytes": 1509
     },
     {
+      "path": "scripts/build-usage-evolution-construction.mjs",
+      "sha256": "45a7e378642db80aa3d590112f2df9ce0c863ced86449051474b461054a71d21",
+      "bytes": 2422
+    },
+    {
+      "path": "scripts/build-usage-evolution-evaluation.mjs",
+      "sha256": "ab23900fb71480ef098c5385a172cf77b58bbd63eddf0b4e17b45721c1c416c7",
+      "bytes": 6055
+    },
+    {
       "path": "tests/skill-evolution.test.mjs",
-      "sha256": "7de3ec469f3ffa8438088d655a4ce358fe32c7480a9d14e123143e1c74d5aa11",
-      "bytes": 9229
+      "sha256": "d211d83350a7a94c5dd995ebffa706f8bd18a34818bfa635f060e22d9b7d6a88",
+      "bytes": 12719
     },
     {
       "path": "tests/usage-driven-evolution-contract.test.mjs",
@@ -73,7 +88,7 @@
   ],
   "certification": {
     "path": "artifacts/usage-evolution/certification.json",
-    "sha256": "5d145065101ceb92addbbc2a538a43382b4a4a7686438fcf8afa3140991b91d2"
+    "sha256": "921f24db823b6ad1869ad86588182913ac309def24880154c609cfefb7c1f942"
   },
   "review": {
     "required": true,
@@ -85,7 +100,9 @@
     "automaticAdoption": false
   },
   "proofLimits": [
-    "synthetic deterministic fixtures do not establish authenticity of arbitrary production traces",
+    "synthetic reviewed fixtures exercise the evidence protocol but do not establish production trace authenticity",
+    "the committed private keys authenticate deterministic certification fixtures only and are not production trust roots",
+    "construction and held-out evaluation run in separate processes, but synthetic fixtures do not establish production isolation",
     "manifest disjointness does not prove that an upstream constructor never observed held-out content",
     "eligibility does not authorize global installation activation or automatic adoption"
   ]

@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "developmentManifest": {
+    "schemaVersion": 1,
+    "partition": "development",
+    "reviewAuthority": "eternities-fixture-review",
+    "reviewLedgerDigest": "6a58021998c471f5bd0a31521a286c5fe3f721c159fe0a8df5eaad7297adab54",
+    "records": [
+      {
+        "id": "dev-001",
+        "partition": "development",
+        "reviewed": true,
+        "targetSkillId": "sovereign-skill-refinery",
+        "evidenceDigest": "1111111111111111111111111111111111111111111111111111111111111111",
+        "failureCodes": [
+          "missing-receipt-binding"
+        ],
+        "critical": true
+      },
+      {
+        "id": "dev-002",
+        "partition": "development",
+        "reviewed": true,
+        "targetSkillId": "sovereign-skill-refinery",
+        "evidenceDigest": "2222222222222222222222222222222222222222222222222222222222222222",
+        "failureCodes": [
+          "missing-receipt-binding",
+          "unsafe-auto-adoption"
+        ],
+        "critical": true
+      },
+      {
+        "id": "dev-003",
+        "partition": "development",
+        "reviewed": true,
+        "targetSkillId": "sovereign-skill-refinery",
+        "evidenceDigest": "3333333333333333333333333333333333333333333333333333333333333333",
+        "failureCodes": [
+          "unsafe-auto-adoption"
+        ],
+        "critical": false
+      }
+    ],
+    "manifestDigest": "bab4594e7ae4dc2a766e1d5d9c445f23ec769fcdf2a56c9d65d04bbee27b2ffe"
+  },
+  "miningReceipt": {
+    "schemaVersion": 1,
+    "status": "mined",
+    "developmentManifestDigest": "bab4594e7ae4dc2a766e1d5d9c445f23ec769fcdf2a56c9d65d04bbee27b2ffe",
+    "reviewAuthority": "eternities-fixture-review",
+    "reviewLedgerDigest": "6a58021998c471f5bd0a31521a286c5fe3f721c159fe0a8df5eaad7297adab54",
+    "parameters": {
+      "minimumOccurrences": 2,
+      "maximumClusters": 8
+    },
+    "clusters": [
+      {
+        "targetSkillId": "sovereign-skill-refinery",
+        "failureCode": "missing-receipt-binding",
+        "traceIds": [
+          "dev-001",
+          "dev-002"
+        ],
+        "evidenceDigests": [
+          "1111111111111111111111111111111111111111111111111111111111111111",
+          "2222222222222222222222222222222222222222222222222222222222222222"
+        ],
+        "criticalOccurrences": 2,
+        "occurrences": 2
+      },
+      {
+        "targetSkillId": "sovereign-skill-refinery",
+        "failureCode": "unsafe-auto-adoption",
+        "traceIds": [
+          "dev-002",
+          "dev-003"
+        ],
+        "evidenceDigests": [
+          "2222222222222222222222222222222222222222222222222222222222222222",
+          "3333333333333333333333333333333333333333333333333333333333333333"
+        ],
+        "criticalOccurrences": 1,
+        "occurrences": 2
+      }
+    ],
+    "receiptDigest": "7f8c46a540b8445cde4d6a09ce473cf52f56f14f02e44085e26802ca0cfda7c5"
+  },
+  "proposal": {
+    "schemaVersion": 1,
+    "status": "staged",
+    "targetSkillId": "sovereign-skill-refinery",
+    "baselineDigest": "9361e2e1acd41994d76acdbaac4f93252a2f063991fcc46f1f3a1ccf7969d096",
+    "candidateDigest": "71b39ba6963e030018c7830539e0ebe06dd902ffb4239fcd0f768a90d1791a4c",
+    "changedSectionIds": [
+      "required-evidence",
+      "usage-driven-evolution"
+    ],
+    "miningReceiptDigest": "7f8c46a540b8445cde4d6a09ce473cf52f56f14f02e44085e26802ca0cfda7c5",
+    "developmentManifestDigest": "bab4594e7ae4dc2a766e1d5d9c445f23ec769fcdf2a56c9d65d04bbee27b2ffe",
+    "reviewLedgerDigest": "6a58021998c471f5bd0a31521a286c5fe3f721c159fe0a8df5eaad7297adab54",
+    "reviewAttestation": {
+      "algorithm": "ed25519",
+      "keyId": "fixture-review",
+      "purpose": "reviewed-development",
+      "subjectDigest": "9bf134238b149cdd309bd275361fd1a2d2216c3a353dfae4be200cb501ad6c79",
+      "signature": "GNglsFKEI7d/mNFMpSB6+Q7XgfDSIILmzU+RhZIm6S8uVlaxyjQmDddeuaQCX4Q3urt/numu2mwC7woC5gYiBQ=="
+    },
+    "maximumEdits": 2,
+    "edits": [
+      {
+        "operation": "replace-section",
+        "sectionId": "required-evidence",
+        "rationaleCode": "missing-receipt-binding"
+      },
+      {
+        "operation": "append-boundary",
+        "sectionId": "usage-driven-evolution",
+        "rationaleCode": "unsafe-auto-adoption"
+      }
+    ],
+    "active": false,
+    "adopted": false,
+    "requiresExplicitAdoption": true,
+    "proposalDigest": "8985a99a11d635f769491ecd4dbc4e8cad77a9db3632de8f1a57767bf6ac10a7"
+  },
+  "authority": {
+    "reviewKeyId": "fixture-review",
+    "algorithm": "ed25519"
+  },
+  "proofLimits": [
+    "synthetic reviewed fixtures exercise the evidence protocol but do not establish production trace authenticity",
+    "the committed private keys authenticate deterministic certification fixtures only and are not production trust roots"
+  ]
+}

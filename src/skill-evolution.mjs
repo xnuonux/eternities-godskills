@@ -1,3 +1,4 @@
+import { verify as verifySignature } from "node:crypto";
 import { sha256 } from "./io.mjs";
 import { decidePromotion } from "./promote.mjs";
 import { validateEvaluation } from "./schema.mjs";
@@ -13,6 +14,7 @@ function stable(value) {
   return value;
 }
 function hashRecord(value) { return sha256(JSON.stringify(stable(value)) ?? String(value)); }
+export function evidenceSubjectDigest(value) { return hashRecord(value); }
 function nonEmpty(value, label) {
   if (typeof value !== "string" || value.trim() === "") throw new Error(`${label} must be a non-empty string`);
   return value.trim();
@@ -33,6 +35,61 @@ function verifySelfDigest(record, field, label) {
   delete unsigned[field];
   if (hashRecord(unsigned) !== claimed) throw new Error(`${label} digest does not match its content`);
   return record;
+}
+
+export function attestationMessage({ purpose, subjectDigest, keyId }) {
+  purpose = identifier(purpose, "attestation purpose");
+  subjectDigest = digest(subjectDigest, "attestation subjectDigest");
+  keyId = identifier(keyId, "attestation keyId");
+  return Buffer.from(JSON.stringify(stable({ keyId, purpose, subjectDigest })), "utf8");
+}
+
+function verifyAttestation({ attestation, purpose, subjectDigest, trustedKeys }) {
+  if (attestation?.algorithm !== "ed25519") throw new Error(`${purpose} attestation must use ed25519`);
+  if (attestation.purpose !== purpose || attestation.subjectDigest !== subjectDigest) throw new Error(`${purpose} attestation binding mismatch`);
+  const publicKey = trustedKeys.get(attestation.keyId);
+  if (!publicKey) throw new Error(`${purpose} attestation key is not trusted`);
+  if (!verifySignature(null, attestationMessage(attestation), publicKey, Buffer.from(attestation.signature ?? "", "base64"))) throw new Error(`${purpose} attestation signature is invalid`);
+}
+
+export function reviewSubjectDigest(manifest) {
+  verifySelfDigest(manifest, "manifestDigest", "development manifest");
+  return hashRecord({ developmentManifestDigest: manifest.manifestDigest, reviewAuthority: manifest.reviewAuthority, reviewLedgerDigest: manifest.reviewLedgerDigest });
+}
+
+function sections(markdown, label) {
+  if (typeof markdown !== "string" || markdown.length === 0) throw new Error(`${label} must be non-empty text`);
+  const lines = markdown.replaceAll("\r\n", "\n").split("\n");
+  const result = new Map();
+  let current = "preamble";
+  let body = [];
+  const commit = () => {
+    if (result.has(current)) throw new Error(`${label} contains duplicate section id: ${current}`);
+    result.set(current, sha256(body.join("\n")));
+  };
+  for (const line of lines) {
+    const match = /^(#{1,6})\s+(.+?)\s*$/.exec(line);
+    if (match) {
+      commit();
+      current = match[2].toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+      current = identifier(current, `${label} section id`);
+      body = [line];
+    } else body.push(line);
+  }
+  commit();
+  return result;
+}
+
+function deriveCandidateManifest(baselineText, candidateText) {
+  const baselineSections = sections(baselineText, "baselineText");
+  const candidateSections = sections(candidateText, "candidateText");
+  const ids = sortedUnique([...baselineSections.keys(), ...candidateSections.keys()]);
+  const changedSectionIds = ids.filter((id) => baselineSections.get(id) !== candidateSections.get(id));
+  return {
+    baselineDigest: sha256(Buffer.from(baselineText.replaceAll("\r\n", "\n"))),
+    candidateDigest: sha256(Buffer.from(candidateText.replaceAll("\r\n", "\n"))),
+    changedSectionIds,
+  };
 }
 
 export function createDevelopmentManifest(traces, { reviewAuthority, reviewLedgerDigest }) {
@@ -84,13 +141,12 @@ export function mineRecurringFailures(manifest, { minimumOccurrences = 2, maximu
   return { ...unsigned, receiptDigest: hashRecord(unsigned) };
 }
 
-function validateMiningReceipt(receipt, developmentManifest, targetSkillId, trustedDevelopmentManifestDigest, trustedReviewLedgerDigest) {
+function validateMiningReceipt(receipt, developmentManifest, targetSkillId) {
   verifySelfDigest(developmentManifest, "manifestDigest", "development manifest");
-  if (developmentManifest.manifestDigest !== trustedDevelopmentManifestDigest) throw new Error("development manifest does not match the trusted manifest digest");
   verifySelfDigest(receipt, "receiptDigest", "mining receipt");
   if (receipt.status !== "mined") throw new Error("mining receipt status must be mined");
-  if (receipt.developmentManifestDigest !== trustedDevelopmentManifestDigest) throw new Error("mining receipt does not match the trusted development manifest");
-  if (receipt.reviewLedgerDigest !== trustedReviewLedgerDigest) throw new Error("mining receipt does not match the trusted review ledger");
+  if (receipt.developmentManifestDigest !== developmentManifest.manifestDigest) throw new Error("mining receipt does not match the development manifest");
+  if (receipt.reviewLedgerDigest !== developmentManifest.reviewLedgerDigest) throw new Error("mining receipt does not match the review ledger");
   const expected = mineRecurringFailures(developmentManifest, receipt.parameters);
   if (expected.receiptDigest !== receipt.receiptDigest) throw new Error("mining receipt does not reconcile to the trusted development manifest");
   const codes = new Set();
@@ -104,17 +160,15 @@ function validateMiningReceipt(receipt, developmentManifest, targetSkillId, trus
   return codes;
 }
 
-export function stageEvolutionProposal({ targetSkillId, baselineDigest, candidateDigest, edits, miningReceipt, developmentManifest, trustedDevelopmentManifestDigest, trustedReviewLedgerDigest, maximumEdits = 4 }) {
+function stageEvolutionProposal({ targetSkillId, baselineText, candidateText, edits, miningReceipt, developmentManifest, reviewAttestation, reviewKeys, maximumEdits = 4 }) {
   targetSkillId = identifier(targetSkillId, "targetSkillId");
-  baselineDigest = digest(baselineDigest, "baselineDigest");
-  candidateDigest = digest(candidateDigest, "candidateDigest");
-  trustedDevelopmentManifestDigest = digest(trustedDevelopmentManifestDigest, "trustedDevelopmentManifestDigest");
-  trustedReviewLedgerDigest = digest(trustedReviewLedgerDigest, "trustedReviewLedgerDigest");
-  if (baselineDigest === candidateDigest) throw new Error("candidateDigest must differ from baselineDigest");
+  verifyAttestation({ attestation: reviewAttestation, purpose: "reviewed-development", subjectDigest: reviewSubjectDigest(developmentManifest), trustedKeys: reviewKeys });
+  const candidateManifest = deriveCandidateManifest(baselineText, candidateText);
+  if (candidateManifest.baselineDigest === candidateManifest.candidateDigest) throw new Error("candidate bytes must differ from baseline bytes");
   if (!Number.isInteger(maximumEdits) || maximumEdits < 1 || maximumEdits > 16) throw new Error("maximumEdits must be an integer between 1 and 16");
   if (!Array.isArray(edits) || edits.length === 0) throw new Error("edits must be a non-empty array");
   if (edits.length > maximumEdits) throw new Error("proposal exceeds its edit budget");
-  const failureCodes = validateMiningReceipt(miningReceipt, developmentManifest, targetSkillId, trustedDevelopmentManifestDigest, trustedReviewLedgerDigest);
+  const failureCodes = validateMiningReceipt(miningReceipt, developmentManifest, targetSkillId);
   const normalizedEdits = edits.map((edit, index) => {
     const operation = identifier(edit?.operation, `edit ${index}.operation`);
     if (!ALLOWED_EDIT_OPERATIONS.has(operation)) throw new Error(`edit ${index}.operation is not allowed`);
@@ -123,7 +177,9 @@ export function stageEvolutionProposal({ targetSkillId, baselineDigest, candidat
     if (!failureCodes.has(rationaleCode)) throw new Error(`edit ${index}.rationaleCode lacks recurring failure evidence`);
     return { operation, sectionId, rationaleCode };
   });
-  const unsigned = { schemaVersion: 1, status: "staged", targetSkillId, baselineDigest, candidateDigest, miningReceiptDigest: miningReceipt.receiptDigest, developmentManifestDigest: trustedDevelopmentManifestDigest, reviewLedgerDigest: trustedReviewLedgerDigest, maximumEdits, edits: normalizedEdits, active: false, adopted: false, requiresExplicitAdoption: true };
+  const declaredSections = sortedUnique(normalizedEdits.map(({ sectionId }) => sectionId));
+  if (JSON.stringify(declaredSections) !== JSON.stringify(candidateManifest.changedSectionIds)) throw new Error("candidate section diff does not match the bounded edit set");
+  const unsigned = { schemaVersion: 1, status: "staged", targetSkillId, baselineDigest: candidateManifest.baselineDigest, candidateDigest: candidateManifest.candidateDigest, changedSectionIds: candidateManifest.changedSectionIds, miningReceiptDigest: miningReceipt.receiptDigest, developmentManifestDigest: developmentManifest.manifestDigest, reviewLedgerDigest: developmentManifest.reviewLedgerDigest, reviewAttestation: { algorithm: reviewAttestation.algorithm, keyId: reviewAttestation.keyId, purpose: reviewAttestation.purpose, subjectDigest: reviewAttestation.subjectDigest, signature: reviewAttestation.signature }, maximumEdits, edits: normalizedEdits, active: false, adopted: false, requiresExplicitAdoption: true };
   return { ...unsigned, proposalDigest: hashRecord(unsigned) };
 }
 
@@ -181,15 +237,21 @@ function verifyEvaluationReceipt(receipt, role, proposal, heldOutManifestDigest)
   validateEvaluation(receipt.evaluation);
 }
 
-export function decideEvolutionAdoption({ proposal, baselineReceipt, candidateReceipt, policy, leakageAudit }) {
+function decideEvolutionAdoption({ proposal, baselinePackage, candidatePackage, policy, leakageAuditPackage, evaluatorKeys }) {
+  const baselineReceipt = baselinePackage?.record;
+  const candidateReceipt = candidatePackage?.record;
+  const leakageAudit = leakageAuditPackage?.record;
   const failedGates = [];
   try { verifySelfDigest(proposal, "proposalDigest", "proposal"); } catch { failedGates.push("proposal-binding"); }
   if (proposal?.status !== "staged" || proposal?.active !== false || proposal?.adopted !== false) failedGates.push("inactive-staged-proposal");
   if (leakageAudit?.status !== "clear") failedGates.push("held-out-leakage");
   if (leakageAudit?.proposalDigest !== proposal?.proposalDigest) failedGates.push("leakage-audit-binding");
+  try { verifyAttestation({ attestation: leakageAuditPackage?.attestation, purpose: "heldout-audit", subjectDigest: hashRecord(leakageAudit), trustedKeys: evaluatorKeys }); } catch { failedGates.push("held-out-audit-attestation"); }
   const heldOutManifestDigest = leakageAudit?.heldOutManifestDigest;
   try { verifyEvaluationReceipt(baselineReceipt, "baseline", proposal, heldOutManifestDigest); } catch { failedGates.push("baseline-receipt-binding"); }
   try { verifyEvaluationReceipt(candidateReceipt, "candidate", proposal, heldOutManifestDigest); } catch { failedGates.push("candidate-receipt-binding"); }
+  try { verifyAttestation({ attestation: baselinePackage?.attestation, purpose: "baseline-evaluation", subjectDigest: baselineReceipt?.receiptDigest, trustedKeys: evaluatorKeys }); } catch { failedGates.push("baseline-evaluator-attestation"); }
+  try { verifyAttestation({ attestation: candidatePackage?.attestation, purpose: "candidate-evaluation", subjectDigest: candidateReceipt?.receiptDigest, trustedKeys: evaluatorKeys }); } catch { failedGates.push("candidate-evaluator-attestation"); }
   if (failedGates.length > 0) {
     const unique = sortedUnique(failedGates);
     return { schemaVersion: 1, status: "blocked", adopted: false, requiresExplicitAdoption: true, failedGates: unique, improvements: [], reasons: unique.map((gate) => `evolution gate failed: ${gate}`) };
@@ -198,4 +260,18 @@ export function decideEvolutionAdoption({ proposal, baselineReceipt, candidateRe
   const candidate = { ...candidateReceipt.evaluation, improvements: [] };
   const promotion = decidePromotion({ baseline, candidate, policy });
   return { ...promotion, status: promotion.status === "promoted" ? "eligible" : promotion.status, adopted: false, requiresExplicitAdoption: true, evidence: { proposalDigest: proposal.proposalDigest, heldOutManifestDigest, baselineReceiptDigest: baselineReceipt.receiptDigest, candidateReceiptDigest: candidateReceipt.receiptDigest } };
+}
+
+function trustedKeyMap(entries, label) {
+  if (entries === null || typeof entries !== "object" || Array.isArray(entries) || Object.keys(entries).length === 0) throw new Error(`${label} must contain at least one trusted key`);
+  return new Map(Object.entries(entries).map(([keyId, publicKey]) => [identifier(keyId, `${label} key id`), nonEmpty(publicKey, `${label} public key`)]));
+}
+
+export function configureEvolutionTrust({ reviewPublicKeys, evaluatorPublicKeys }) {
+  const reviewKeys = trustedKeyMap(reviewPublicKeys, "reviewPublicKeys");
+  const evaluatorKeys = trustedKeyMap(evaluatorPublicKeys, "evaluatorPublicKeys");
+  return Object.freeze({
+    stageProposal: (input) => stageEvolutionProposal({ ...input, reviewKeys }),
+    decideAdoption: (input) => decideEvolutionAdoption({ ...input, evaluatorKeys }),
+  });
 }

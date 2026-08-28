@@ -32,8 +32,8 @@ When the requested refinement is based on prior agent use, treat it as a stricte
 
 1. Accept only reviewed, redacted trace records with exact evidence digests. Raw transcripts are upstream material, not refinery inputs.
 2. Mine recurring failure codes from a declared `development` partition. Do not let a one-off failure justify a durable skill edit.
-3. Bind each proposed edit to a recurring failure and the exact baseline skill digest. Keep the edit set bounded and stage it inactive.
-4. Seal held-out identities, evidence digests, and suite digest away from proposal construction. Audit identity, digest, and suite overlap before evaluation.
+3. Require a host-configured review trust root to verify an attested development manifest. Bind each proposed edit to a recurring failure, derive baseline and candidate digests from exact bytes, and require the actual changed-section set to equal the bounded edit declaration before staging it inactive.
+4. Seal held-out identities, evidence digests, and suite digest away from proposal construction. Require a separately configured evaluator trust root to attest the leakage audit and both evaluation receipts.
 5. Evaluate baseline and candidate against the same held-out suite. Require measured gain, every critical case, no critical regression, resolved effects, and the normal token and kind gates.
 6. Return `eligible`, never `adopted`, when every gate passes. Eligibility only permits a separate explicit adoption action; it does not edit, install, activate, or globally route the skill.
 

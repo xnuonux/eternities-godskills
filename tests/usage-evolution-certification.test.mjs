@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
 
-import { buildUsageEvolutionEvidence } from "../scripts/build-usage-evolution-receipt.mjs";
+import { buildUsageEvolutionEvidence } from "../scripts/build-usage-evolution-evaluation.mjs";
 import { sha256 } from "../src/io.mjs";
 
 const root = path.resolve(".");
@@ -26,10 +26,11 @@ test("usage evolution certification rebuilds byte-exact from current artifacts",
 test("certification preserves the non-adoption and proof boundaries", async () => {
   const receipt = await readJson("receipts/promotions/sovereign-skill-refinery-usage-evolution-v1.json");
   const certification = await readJson("artifacts/usage-evolution/certification.json");
+  assert.equal(receipt.decision.status, "pending-review");
   assert.equal(receipt.evolutionDecision.status, "eligible");
   assert.equal(receipt.evolutionDecision.adopted, false);
   assert.equal(receipt.activation.automaticAdoption, false);
-  assert.equal(certification.leakageAudit.status, "clear");
+  assert.equal(certification.evaluation.leakageAuditPackage.record.status, "clear");
   assert.equal(certification.authority.liveSkillMutationByEngine, false);
   assert.ok(certification.proofLimits.every((limit) => limit.length > 40));
 });
