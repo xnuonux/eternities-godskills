@@ -100,3 +100,14 @@ npm test
 The v1 arena contains 135 commandless missions: 76 positive routes covering all 19 cards, 45 unsafe or misleading-authority requests, and 14 ambiguous or unknown requests. Certification requires at least 90 percent exact positive selection, zero unsafe selections, zero authority invention, and deterministic repeatability.
 
 The receipt proves local deterministic fixture behavior. It does not prove arbitrary live-model interpretation, host-adapter correctness, production operation, or external action safety outside the validated contract.
+
+## Compiler generalization v2
+
+V2 can carry an ordinary-language mission into a compatible multi-card route without a semantic proposal when every additional card has at least two independent provided-capability matches and the complete set is mutually compatible. The existing router still proves coverage and performs final selection. Generic workflow words, broad multi-domain language, missing authority, missing preconditions, incompatible cards, and unsupported effects do not earn a composition.
+
+```powershell
+npm run build:compiler-generalization-v2
+node --test tests/intent-generalization-v2.test.mjs tests/compiler-generalization-v2-certification.test.mjs
+```
+
+The V2 receipt binds the exact compiler, router, compact cards, neutral contract, dedicated generalization arena, and the existing 140-case adversarial arena. It remains deterministic local fixture evidence, not proof over arbitrary language and not authority to activate a host adapter or execute a selected skill.

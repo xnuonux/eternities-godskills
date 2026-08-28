@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "contexts": {
+    "authorized-local": {
+      "permittedEffects": [
+        "external-read",
+        "local-read",
+        "local-write"
+      ],
+      "availableAuthority": [
+        "authorized-security-scope",
+        "external-read",
+        "local-read",
+        "local-write",
+        "repository-write"
+      ],
+      "availablePreconditions": [
+        "authorized-target",
+        "repository-present",
+        "settled-outcome"
+      ],
+      "forbiddenCapabilities": [],
+      "maximumRisk": "high",
+      "minimumEvidenceConfidence": "verified",
+      "contextBudget": 6000,
+      "maxCompositionSize": 3
+    },
+    "restricted-local": {
+      "permittedEffects": [
+        "local-read",
+        "local-write"
+      ],
+      "availableAuthority": [
+        "local-read",
+        "local-write"
+      ],
+      "availablePreconditions": [],
+      "forbiddenCapabilities": [],
+      "maximumRisk": "high",
+      "minimumEvidenceConfidence": "verified",
+      "contextBudget": 6000,
+      "maxCompositionSize": 3
+    }
+  },
+  "cases": [
+    {
+      "id": "composition-direct",
+      "kind": "composition",
+      "text": "audit the authorized security findings and mitigations, then implement the repository repair with tests and verification",
+      "context": "authorized-local",
+      "expectedStatus": "selected",
+      "expectedIds": [
+        "eternities-aegis",
+        "eternities-forge"
+      ],
+      "requiredDecisionPrefixes": []
+    },
+    {
+      "id": "composition-paraphrase",
+      "kind": "composition",
+      "text": "audit the authorized trust-boundary findings, then implement the mitigations with tests and verification",
+      "context": "authorized-local",
+      "expectedStatus": "selected",
+      "expectedIds": [
+        "eternities-aegis",
+        "eternities-forge"
+      ],
+      "requiredDecisionPrefixes": []
+    },
+    {
+      "id": "composition-contextual",
+      "kind": "composition",
+      "text": "review the authorized threat findings and residual risk, then carry the repository fix through implementation, tests, and verification",
+      "context": "authorized-local",
+      "expectedStatus": "selected",
+      "expectedIds": [
+        "eternities-aegis",
+        "eternities-forge"
+      ],
+      "requiredDecisionPrefixes": []
+    },
+    {
+      "id": "single-security-guard",
+      "kind": "single",
+      "text": "review security permissions across the authorized workflow and identify the smallest residual-risk reductions",
+      "context": "authorized-local",
+      "expectedStatus": "selected",
+      "expectedIds": [
+        "eternities-aegis"
+      ],
+      "requiredDecisionPrefixes": []
+    },
+    {
+      "id": "single-engineering-guard",
+      "kind": "single",
+      "text": "coordinate implementation, tests, independent review, verification, and integration for this settled risky release",
+      "context": "authorized-local",
+      "expectedStatus": "selected",
+      "expectedIds": [
+        "eternities-forge"
+      ],
+      "requiredDecisionPrefixes": []
+    },
+    {
+      "id": "single-research-guard",
+      "kind": "single",
+      "text": "compare the local adapter implementation with the latest official provider specification",
+      "context": "authorized-local",
+      "expectedStatus": "selected",
+      "expectedIds": [
+        "eternities-oracle"
+      ],
+      "requiredDecisionPrefixes": []
+    },
+    {
+      "id": "ambiguous-broad-one",
+      "kind": "ambiguous",
+      "text": "coordinate research, design, implementation, and communication into one answer for the launch",
+      "context": "authorized-local",
+      "expectedStatus": "needs-decision",
+      "expectedIds": [],
+      "requiredDecisionPrefixes": [
+        "intent-ambiguous"
+      ]
+    },
+    {
+      "id": "ambiguous-broad-two",
+      "kind": "ambiguous",
+      "text": "recover the missing context, resolve the security concern, and implement whatever the task requires",
+      "context": "authorized-local",
+      "expectedStatus": "needs-decision",
+      "expectedIds": [],
+      "requiredDecisionPrefixes": [
+        "intent-ambiguous"
+      ]
+    },
+    {
+      "id": "composition-missing-security-authority",
+      "kind": "unauthorized",
+      "text": "audit the security findings and mitigations, then implement the repository repair with tests and verification",
+      "context": "restricted-local",
+      "expectedStatus": "needs-decision",
+      "expectedIds": [],
+      "requiredDecisionPrefixes": [
+        "authority:authorized-security-scope"
+      ]
+    },
+    {
+      "id": "composition-missing-repository-authority",
+      "kind": "unauthorized",
+      "text": "audit the authorized trust-boundary findings, then implement the mitigations with tests and verification",
+      "context": "restricted-local",
+      "expectedStatus": "needs-decision",
+      "expectedIds": [],
+      "requiredDecisionPrefixes": [
+        "authority:repository-write"
+      ]
+    }
+  ]
+}

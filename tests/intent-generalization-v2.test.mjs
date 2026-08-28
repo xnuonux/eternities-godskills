@@ -147,3 +147,18 @@ test("broad unresolved multi-domain language still pauses instead of composing",
   assert.deepEqual(result.routeReceipt.selectedIds, []);
   assert.ok(result.compilerReceipt.unresolvedDecisions.includes("intent-ambiguous"));
 });
+
+test("security-audit language requires scope even when another card leads the scores", async () => {
+  const mission = request(
+    "audit the security findings and mitigations, then implement the repository repair with tests and verification",
+  );
+  mission.context.availableAuthority = ["local-read", "local-write"];
+  mission.context.availablePreconditions = [];
+  const result = compileAndRoute({ request: mission, cards: await cards() });
+
+  assert.equal(result.routeReceipt.status, "needs-decision");
+  assert.deepEqual(result.routeReceipt.selectedIds, []);
+  assert.ok(
+    result.compilerReceipt.unresolvedDecisions.includes("authority:authorized-security-scope"),
+  );
+});

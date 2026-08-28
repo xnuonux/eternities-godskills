@@ -269,7 +269,11 @@ function consequentialDecisions(text, requestedEffects, context, selectedCards, 
       !authority.has("rights-and-consent-when-applicable")) {
     decisions.push("authority:rights-and-consent-when-applicable");
   }
-  if (/\b(?:scan|probe|security test|intrusive security|exploitable|weakness|firewall)\b/.test(plain) &&
+  const securityScopeRequested =
+    /\b(?:scan|probe|security test|intrusive security|exploitable|weakness|firewall)\b/.test(plain) ||
+    /\b(?:audit|assess|review|threat model)\b.{0,64}\b(?:authorization|credential|permission|security|trust boundar\w*)\b/.test(plain) ||
+    /\b(?:authorization|credential|permission|security|trust boundar\w*)\b.{0,64}\b(?:audit|assess|review|threat model)\b/.test(plain);
+  if (securityScopeRequested &&
       !authority.has("authorized-security-scope")) {
     decisions.push("authority:authorized-security-scope");
   }

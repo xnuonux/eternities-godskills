@@ -30,12 +30,12 @@
 - Consumes: validated natural request and validated compact cards passed to `compileIntent({ request, cards })`
 - Produces: an envelope whose candidate families and required capabilities can be covered only by the smallest mutually compatible card set
 
-- [ ] Write a failing test proving Aegis plus Forge is selected from natural language without a proposal.
-- [ ] Write exclusion fixtures proving generic review language remains Aegis-only and broad ambiguous language still pauses.
-- [ ] Run `node --test tests/intent-generalization-v2.test.mjs` and observe the missing-composition failure.
-- [ ] Add bounded morphological capability matching and compatible-set derivation.
-- [ ] Re-run the focused tests and preserve deterministic output.
-- [ ] Commit the independently testable behavior.
+- [x] Write a failing test proving Aegis plus Forge is selected from natural language without a proposal.
+- [x] Write exclusion fixtures proving generic review language remains Aegis-only and broad ambiguous language still pauses.
+- [x] Run `node --test tests/intent-generalization-v2.test.mjs` and observe the missing-composition failure.
+- [x] Add bounded capability-evidence and compatible-set derivation.
+- [x] Re-run the focused tests and preserve deterministic output.
+- [x] Commit the independently testable behavior.
 
 ### Task 2: Certification and proof limits
 
@@ -50,9 +50,9 @@
 - Consumes: exact compiler, runtime, contract, routing-card, and arena bytes plus observed focused metrics
 - Produces: deterministic certification receipt with exact hashes and explicit proof limits
 
-- [ ] Write a failing certification test that requires exact artifact reconciliation and zero existing arena regressions.
-- [ ] Implement the deterministic receipt builder and package command.
-- [ ] Generate the receipt twice and compare exact bytes.
-- [ ] Run focused tests, intent arena, and the full repository suite.
+- [x] Write a failing certification test that requires exact artifact reconciliation and zero existing arena regressions.
+- [x] Implement the deterministic receipt builder and package command.
+- [x] Generate the receipt twice and compare exact bytes.
+- [x] Run focused tests, intent arena, and the full repository suite.
 - [ ] Obtain independent review of over-composition, authority invention, and proof claims.
 - [ ] Commit only after all gates pass.
