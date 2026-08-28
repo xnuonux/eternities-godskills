@@ -84,12 +84,12 @@
 - Consumes: `compileIntent`, `buildRoutingIndex`, `shortlistRoutingCards`, and `routeCapabilities`
 - Produces: `compileAndRoute({ request, cards }) -> { compilerReceipt, routeReceipt }` and `npm run intent -- --request <json> [--cards <jsonl>] [--output <json>]`
 
-- [ ] Write failing runtime tests for selected, needs-decision, no-qualified-route, bounded shortlisting, and absence of skill-body reads.
-- [ ] Write failing CLI tests for stdout, canonical output, unknown flags, and refusal of apply-style flags.
-- [ ] Run focused tests and verify missing runtime/transport behavior.
-- [ ] Implement the runtime composition and file-only CLI.
-- [ ] Run focused tests and verify deterministic output.
-- [ ] Commit runtime transport.
+- [x] Write failing runtime tests for selected, needs-decision, no-qualified-route, bounded shortlisting, and absence of skill-body reads.
+- [x] Write failing CLI tests for stdout, canonical output, unknown flags, and refusal of apply-style flags.
+- [x] Run focused tests and verify missing runtime/transport behavior.
+- [x] Implement the runtime composition and file-only CLI.
+- [x] Run focused tests and verify deterministic output.
+- [x] Commit runtime transport.
 
 ### Task 5: Adversarial arena
 
