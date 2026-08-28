@@ -292,3 +292,25 @@ test("unsupported semantic proposals are recorded but cannot override lexical ev
   assert.ok(receipt.envelope.requiredCapabilities.includes("continuity"));
   assert.equal(receipt.envelope.requiredCapabilities.includes("market-truth-and-positioning"), false);
 });
+
+test("an untrusted proposal cannot remove effects evident in the natural mission", async () => {
+  const receipt = compileIntent({
+    request: request("prepare the social editorial campaign and publish it to every account", {
+      context: context({
+        permittedEffects: ["local-read", "local-write"],
+        availableAuthority: ["local-read", "local-write"],
+      }),
+      proposal: {
+        schemaVersion: 1,
+        candidateIds: ["eternities-chorus"],
+        requiredCapabilities: ["editorial-production"],
+        requestedEffects: ["local-read"],
+        unresolvedDecisions: [],
+      },
+    }),
+    cards: await cards(),
+  });
+  assert.ok(receipt.requestedEffects.includes("external-write"));
+  assert.ok(receipt.unresolvedDecisions.includes("effect-authority:external-write"));
+  assert.ok(receipt.unresolvedDecisions.includes("authority:publication-authority"));
+});

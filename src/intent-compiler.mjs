@@ -285,7 +285,10 @@ export function compileIntent({ request, cards }) {
         ? []
         : [byId.get(meaningful[0].id)];
 
-  const requestedEffects = proposal?.requestedEffects ?? inferRequestedEffects(natural.text);
+  const requestedEffects = sorted([
+    ...inferRequestedEffects(natural.text),
+    ...(proposal?.requestedEffects ?? []),
+  ]);
   const unresolvedDecisions = sorted([
     ...(selectedCards.length === 0 ? ["intent-not-understood"] : []),
     ...(ambiguous ? ["intent-ambiguous"] : []),
