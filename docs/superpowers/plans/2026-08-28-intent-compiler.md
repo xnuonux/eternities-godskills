@@ -47,11 +47,11 @@
 - Consumes: validated natural request and compact routing cards
 - Produces: `compileIntent({ request, cards }) -> compilerReceipt`
 
-- [ ] Write failing tests for architecture, security, visual, continuity, Forge, social, game, media, data, writing, debugging, and unknown-intent missions.
-- [ ] Run the focused test and verify the compiler module is missing.
-- [ ] Implement normalized phrase/token evidence, stable scoring, negative-intent penalties, eight-card bounds, confidence, and ambiguity detection.
-- [ ] Run focused tests and verify exact expected candidates without aliases or slash commands.
-- [ ] Commit candidate retrieval.
+- [x] Write failing tests for architecture, security, visual, continuity, Forge, social, game, media, data, writing, debugging, and unknown-intent missions.
+- [x] Run the focused test and verify the compiler module is missing.
+- [x] Implement normalized phrase/token evidence, stable scoring, negative-intent penalties, eight-card bounds, confidence, and ambiguity detection.
+- [x] Run focused tests and verify exact expected candidates without aliases or slash commands.
+- [x] Commit candidate retrieval.
 
 ### Task 3: Authority, effect, and proposal reconciliation
 
@@ -63,13 +63,13 @@
 - Consumes: host context and optional untrusted semantic proposal
 - Produces: canonical router envelope plus requested-effect and decision evidence
 
-- [ ] Add failing tests proving prose cannot grant external-write, spending, production, security, rights, or account authority.
-- [ ] Add failing tests for valid host authority, unsupported proposals, effect mismatches, and missing card preconditions.
-- [ ] Run focused tests and verify policy assertions fail before implementation.
-- [ ] Implement effect inference and missing-authority/precondition decisions without expanding host context.
-- [ ] Implement proposal reconciliation that rejects unsupported ids and cannot carry authority.
-- [ ] Run focused tests and verify all policy cases pass.
-- [ ] Commit policy reconciliation.
+- [x] Add failing tests proving prose cannot grant external-write, spending, production, security, rights, or account authority.
+- [x] Add failing tests for valid host authority, unsupported proposals, effect mismatches, and missing card preconditions.
+- [x] Run focused tests and verify policy assertions fail before implementation.
+- [x] Implement effect inference and missing-authority/precondition decisions without expanding host context.
+- [x] Implement proposal reconciliation that rejects unsupported ids and cannot carry authority.
+- [x] Run focused tests and verify all policy cases pass.
+- [x] Commit policy reconciliation.
 
 ### Task 4: Compile-and-route runtime and CLI
 
