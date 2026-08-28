@@ -224,6 +224,96 @@ export function classifySkillEvidence({ findings }) {
   return { disposition: "clear-for-semantic-review", requiredReview: "semantic" };
 }
 
+const REVIEW_VOCABULARY = Object.freeze({
+  purposeFit: ["matches", "mismatch", "uncertain"],
+  permissionFit: ["bounded", "excessive", "undeclared", "uncertain"],
+  externalTransmission: ["none", "documented-bounded", "unexplained", "uncertain"],
+  execution: ["none", "documented-local", "hidden", "uncertain"],
+  persistence: ["none", "documented-bounded", "hidden", "uncertain"],
+  promptBehavior: ["bounded", "hostile", "uncertain"],
+  triggerScope: ["bounded", "broad", "uncertain"],
+  dependencies: ["reviewed", "unreviewed", "uncertain"],
+  userControl: ["explicit", "partial", "absent", "uncertain"],
+});
+
+function validateSemanticReview(review) {
+  if (!review || review.schemaVersion !== 1) throw new Error("review.schemaVersion must be 1");
+  if (!/^[a-f0-9]{64}$/.test(review.scanDigest ?? "")) {
+    throw new Error("review.scanDigest must be a lowercase SHA-256 digest");
+  }
+  if (!Array.isArray(review.bodyDigests)) throw new Error("review.bodyDigests must be an array");
+  for (const [field, allowed] of Object.entries(REVIEW_VOCABULARY)) {
+    if (!allowed.includes(review[field])) {
+      throw new Error(`review.${field} must be one of: ${allowed.join(", ")}`);
+    }
+  }
+  if (!Array.isArray(review.unresolved) || review.unresolved.some((value) => typeof value !== "string" || value.trim() === "")) {
+    throw new Error("review.unresolved must be an array of non-empty strings");
+  }
+  return review;
+}
+
+function normalizedBodyDigests(rows) {
+  return rows
+    .map((row) => ({ path: row.path, sha256: row.sha256 }))
+    .sort((left, right) => lexicalCompare(left.path, right.path));
+}
+
+export function reconcileSkillReview(scan, reviewValue) {
+  if (!scan || scan.schemaVersion !== 1) throw new Error("scan.schemaVersion must be 1");
+  if (stableSkillScanDigest(scan) !== scan.scanDigest) throw new Error("scan digest does not reconcile");
+  const review = validateSemanticReview(reviewValue);
+  if (review.scanDigest !== scan.scanDigest) throw new Error("stale semantic review scan digest");
+  const expectedBodies = normalizedBodyDigests(scan.manifest);
+  const reviewedBodies = normalizedBodyDigests(review.bodyDigests);
+  if (JSON.stringify(expectedBodies) !== JSON.stringify(reviewedBodies)) {
+    throw new Error("stale semantic review body digest");
+  }
+
+  const reasons = [];
+  const blocking = [];
+  if (scan.disposition === "reject-before-indexing") blocking.push("static scan rejected source");
+  if (review.purposeFit === "mismatch") blocking.push("declared purpose does not match behavior");
+  if (review.permissionFit === "excessive") blocking.push("requested permissions exceed declared purpose");
+  if (review.externalTransmission === "unexplained") blocking.push("external transmission is unexplained");
+  if (review.execution === "hidden") blocking.push("execution behavior is hidden");
+  if (review.persistence === "hidden") blocking.push("persistence behavior is hidden");
+  if (review.promptBehavior === "hostile") blocking.push("prompt behavior is hostile");
+  if (review.userControl === "absent") blocking.push("sensitive behavior lacks user control");
+
+  const uncertainFields = Object.keys(REVIEW_VOCABULARY)
+    .filter((field) => ["uncertain", "unreviewed", "undeclared", "broad", "partial"].includes(review[field]));
+  const unresolved = [...new Set([...review.unresolved, ...uncertainFields.map((field) => `review:${field}`)])].sort();
+  let verdict;
+  let promotionEligible;
+  if (blocking.length > 0) {
+    verdict = "REJECT";
+    promotionEligible = false;
+    reasons.push(...blocking);
+  } else if (scan.disposition === "manual-review-required" || unresolved.length > 0) {
+    verdict = "CAUTION";
+    promotionEligible = unresolved.length === 0;
+    reasons.push(scan.disposition === "manual-review-required"
+      ? "documented sensitive behavior remains explicitly bounded"
+      : "semantic review retains unresolved boundaries");
+  } else {
+    verdict = "APPROVE";
+    promotionEligible = true;
+    reasons.push("static evidence and exact semantic review are bounded");
+  }
+
+  const decision = {
+    schemaVersion: 1,
+    scanDigest: scan.scanDigest,
+    bodyDigests: expectedBodies,
+    verdict,
+    promotionEligible,
+    unresolved,
+    reasons: [...new Set(reasons)].sort(),
+  };
+  return { ...decision, decisionDigest: sha256(JSON.stringify(canonical(decision))) };
+}
+
 export async function scanSkill(root, options = {}) {
   const limits = optionsWithDefaults(options);
   const canonicalRoot = await realpath(path.resolve(root));

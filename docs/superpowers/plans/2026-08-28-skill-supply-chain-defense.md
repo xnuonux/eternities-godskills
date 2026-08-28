@@ -92,7 +92,7 @@ git commit -m "feat: add inert skill supply-chain scanner"
 - Consumes: `reconcileSkillReview(scan: SkillScan, review: SemanticSkillReview): SkillTrustDecision`
 - Produces: `SkillTrustDecision` with `verdict: "APPROVE" | "CAUTION" | "REJECT"`, exact evidence digests, unresolved boundaries, and `promotionEligible`
 
-- [ ] **Step 1: Write failing semantic-binding tests**
+- [x] **Step 1: Write failing semantic-binding tests**
 
 Assert exact digest binding and fail-closed behavior:
 
@@ -118,23 +118,23 @@ assert.equal(decision.promotionEligible, true);
 
 Reject stale scan digests, stale body digests, missing review fields, unresolved critical behavior, static rejection, and semantic purpose mismatch.
 
-- [ ] **Step 2: Run tests and observe failure**
+- [x] **Step 2: Run tests and observe failure**
 
 Run: `node --test tests/skill-supply-chain-review.test.mjs`
 
 Expected: FAIL because `reconcileSkillReview` is not exported.
 
-- [ ] **Step 3: Implement reconciliation and extend Aegis**
+- [x] **Step 3: Implement reconciliation and extend Aegis**
 
 Add the `skill-supply-chain` route with capabilities `canonical-scan`, `purpose-fit`, `permission-fit`, `sensitive-surfaces`, `semantic-review`, `verdict`, and `promotion-gate`. Preserve every existing Aegis route and refusal. A static clear result without semantic review remains ineligible.
 
-- [ ] **Step 4: Run semantic and Aegis tests**
+- [x] **Step 4: Run semantic and Aegis tests**
 
 Run: `node --test tests/skill-supply-chain-review.test.mjs tests/engineering-godskills.test.mjs`
 
 Expected: all tests PASS and existing Aegis routes remain unchanged.
 
-- [ ] **Step 5: Commit semantic reconciliation**
+- [x] **Step 5: Commit semantic reconciliation**
 
 ```powershell
 git add src/skill-supply-chain-defense.mjs tests/skill-supply-chain-review.test.mjs skills/eternities-aegis
