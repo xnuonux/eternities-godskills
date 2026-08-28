@@ -129,3 +129,15 @@ test("scan evidence and digest are deterministic", async (context) => {
   assert.equal(first.requiredReview, "semantic");
   assert.deepEqual(first.manifest.map(({ path: filePath }) => filePath), ["SKILL.md", "scripts/read.js"]);
 });
+
+test("repository metadata is excluded from an otherwise root-level skill", async (context) => {
+  const root = await fixture(context, {
+    "SKILL.md": "---\nname: root-skill\ndescription: Read supplied text.\n---\n# Root skill\n",
+    ".git/config": "[remote \"origin\"]\nurl = https://example.invalid/repository.git\n",
+  });
+
+  const result = await scanSkill(root);
+
+  assert.deepEqual(result.manifest.map(({ path: filePath }) => filePath), ["SKILL.md"]);
+  assert.deepEqual(result.surfaces, []);
+});

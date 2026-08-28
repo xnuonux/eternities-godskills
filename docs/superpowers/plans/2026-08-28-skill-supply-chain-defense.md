@@ -156,7 +156,7 @@ git commit -m "feat: add Aegis skill trust reconciliation"
 - Consumes: `artifacts/github-wave-2/source-records.jsonl` and exact D-drive `sourceAbsolutePath` values
 - Produces: one deterministic ledger row per exact source id plus a receipt binding source-record bytes, ledger bytes, counts, dispositions, and rule totals
 
-- [ ] **Step 1: Write failing fixture-ledger tests**
+- [x] **Step 1: Write failing fixture-ledger tests**
 
 Test a three-record fixture containing one clear skill, one documented sensitive skill, and one critical malicious skill. Assert exact source coverage, deterministic lexical order, digest binding, and these dispositions:
 
@@ -168,13 +168,13 @@ assert.deepEqual(summary.dispositions, {
 });
 ```
 
-- [ ] **Step 2: Run the ledger test and observe failure**
+- [x] **Step 2: Run the ledger test and observe failure**
 
 Run: `node --test tests/skill-security-ledger.test.mjs`
 
 Expected: FAIL because the builder does not exist.
 
-- [ ] **Step 3: Implement the builder and package command**
+- [x] **Step 3: Implement the builder and package command**
 
 Export `buildSkillSecurityLedger(options)` and add:
 
@@ -184,7 +184,7 @@ Export `buildSkillSecurityLedger(options)` and add:
 
 The CLI writes atomically, refuses duplicate source ids, verifies each body digest before scanning, and never changes the D repositories or acquisition receipt.
 
-- [ ] **Step 4: Run fixture tests and build the actual Wave 2 ledger**
+- [x] **Step 4: Run fixture tests and build the actual Wave 2 ledger**
 
 Run:
 
@@ -195,11 +195,11 @@ npm run build:skill-security-ledger
 
 Expected: tests PASS; the receipt accounts for all 7,776 Wave 2 source records and reports every rejected or manual-review source explicitly.
 
-- [ ] **Step 5: Rebuild and verify byte stability**
+- [x] **Step 5: Rebuild and verify byte stability**
 
 Hash the ledger and receipt inputs, rerun the builder, and assert the ledger digest is unchanged. The receipt may carry a generated timestamp only if it is excluded from deterministic artifact identity.
 
-- [ ] **Step 6: Commit the Wave 2 ledger**
+- [x] **Step 6: Commit the Wave 2 ledger**
 
 ```powershell
 git add scripts/build-skill-security-ledger.mjs tests/skill-security-ledger.test.mjs artifacts/github-wave-2/skill-security-ledger.jsonl receipts/github-wave-2-skill-security.json package.json

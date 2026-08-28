@@ -59,6 +59,7 @@ async function collectFiles(root, limits) {
     const entries = await readdir(directory, { withFileTypes: true });
     entries.sort((left, right) => lexicalCompare(left.name, right.name));
     for (const entry of entries) {
+      if (entry.isDirectory() && entry.name === ".git") continue;
       const target = path.join(directory, entry.name);
       const relative = relativePath(root, target);
       if (entry.isSymbolicLink()) throw new Error(`symbolic links are prohibited: ${relative}`);
