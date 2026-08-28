@@ -9,10 +9,12 @@ Extend Eternities Mnemosyne and Forge with a portable continuity primitive that 
 - one append-only checkpoint chain per `taskRef`;
 - monotonic revisions bound by the previous packet digest;
 - Ed25519 signatures verified against host-configured trust roots;
+- authority may only narrow across revisions: available authority cannot grow, exclusions cannot be removed, and the sets cannot overlap;
 - explicit task, session, objective, proven state, completed work, open work, blockers, authority, evidence pointers, next action, freshness, and context budget;
 - recovery returns only the newest verified packet and never imports another task;
 - evidence pointers carry locators and optional digests, never fetched bodies;
-- stale, forged, cross-task, over-budget, malformed, or discontinuous state fails closed;
+- stale, future-dated beyond explicit clock skew, forged, cross-task, over-budget, malformed, or discontinuous state fails closed;
+- commits use a fsynced same-directory temporary snapshot and atomic replacement; dead-owner stale locks have a bounded local recovery rule;
 - no hooks, per-tool reinjection, slash commands, stop loops, host activation, or automatic execution.
 
 ## source boundary

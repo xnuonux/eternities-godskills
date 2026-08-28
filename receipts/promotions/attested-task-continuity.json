@@ -21,11 +21,11 @@
   "artifacts": {
     "module": {
       "path": "src/continuity-packets.mjs",
-      "sha256": "26ac451626172eacdcf116d15a9ef35140cd11b87a498bc3a9443b5cc0a51e6a"
+      "sha256": "df202abf1ec9bd66e5eb5e63e54c4ffab8a36befaad46c27b3f71f389e53aa56"
     },
     "tests": {
       "path": "tests/continuity-packets.test.mjs",
-      "sha256": "3ddc1452dfa3848bf229ccaa10a366f919d94b071f933dfc4973f9384e44ba45"
+      "sha256": "5fcbb22545d438fd31601d2b909bc62d2dadbf9146ab5b1187c5b5f3bde5e9bb"
     },
     "mnemosyne": {
       "path": "skills/eternities-mnemosyne/SKILL.md",
@@ -37,7 +37,7 @@
     },
     "continuityContract": {
       "path": "skills/eternities-mnemosyne/references/attested-continuity.md",
-      "sha256": "b34269b197ee8c28874a744e600acd8442cd496e7e6e7670346775b1cb528d3c"
+      "sha256": "43186a7b46712faa8d4d7f2f7e61c3b0171d2b9f10d8c757c8dad4d69f301e1c"
     },
     "forge": {
       "path": "skills/eternities-forge/SKILL.md",
@@ -49,7 +49,7 @@
     },
     "design": {
       "path": "docs/superpowers/specs/2026-08-28-attested-task-continuity-design.md",
-      "sha256": "bc484b69e2c89b7e2681dc87e55b9369c2faa064a71b275b1982ecef7f096e2f"
+      "sha256": "6fd680d13fa5c40bbb39c18c1c376db18d840509520948a2f6a623170d56d750"
     }
   },
   "metrics": {
@@ -58,11 +58,16 @@
     "latestOnlyRecovered": true,
     "crossTaskRejected": true,
     "tamperRejected": true,
-    "authorityPreserved": true,
-    "candidateRecoveryTokens": 247,
-    "baselinePerToolReinjectionTokens": 1800,
-    "contextReductionTokens": 1553,
-    "contextReductionRatio": 0.13722222222222222,
+    "authorityExpansionRejected": true,
+    "futureTimeRejected": true,
+    "deadOwnerLockRecovered": true,
+    "atomicSnapshotComplete": true,
+    "estimatedCandidateRecoveryTokens": 247,
+    "declaredBaselinePerToolTokens": 90,
+    "declaredBaselineToolCalls": 20,
+    "syntheticBaselineTokens": 1800,
+    "estimatedContextReductionTokens": 1553,
+    "estimatedContextRatio": 0.13722222222222222,
     "packetEstimatedTokens": 247
   },
   "gates": {
@@ -71,8 +76,11 @@
     "parentBoundAppendOnlyChain": true,
     "taskIsolation": true,
     "latestPacketOnly": true,
-    "authorityPreserved": true,
-    "lowerContextCostThanPerToolReinjection": true,
+    "authorityCannotExpand": true,
+    "futureTimeRejected": true,
+    "atomicSnapshotCommit": true,
+    "deadOwnerLockRecovery": true,
+    "lowerEstimatedContextCostThanDeclaredPerToolBaseline": true,
     "perToolPromptInjectionInstalled": false,
     "slashCommandRequired": false,
     "hostActivationPerformed": false
@@ -86,6 +94,8 @@
     "hostKeyCustody": "not-proven",
     "hostActivation": "not-performed",
     "arbitraryAgentRecovery": "not-proven",
-    "productionOperation": "not-performed"
+    "productionOperation": "not-performed",
+    "powerLossDurability": "fsync-and-atomic-replace-used-but-platform-filesystem-guarantees-not-proven",
+    "contextCostComparison": "synthetic-source-declared-estimate-not-production-measurement"
   }
 }

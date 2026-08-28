@@ -1,5 +1,6 @@
-import { sign as signMessage, verify as verifySignature } from "node:crypto";
-import { appendFile, mkdir, open, readFile, rm } from "node:fs/promises";
+import { randomUUID, sign as signMessage, verify as verifySignature } from "node:crypto";
+import { mkdir, open, readFile, rename, rm } from "node:fs/promises";
+import os from "node:os";
 import path from "node:path";
 
 import { sha256 } from "./io.mjs";
@@ -78,10 +79,22 @@ export function estimateTokens(value) {
 
 function validateAuthority(value) {
   exactFields(value, ["available", "excluded"], "checkpoint.authority");
-  return {
+  const authority = {
     available: sortedStringList(value.available, "checkpoint.authority.available"),
     excluded: sortedStringList(value.excluded, "checkpoint.authority.excluded"),
   };
+  const excluded = new Set(authority.excluded);
+  if (authority.available.some((entry) => excluded.has(entry))) throw new Error("checkpoint authority available and excluded sets overlap");
+  return authority;
+}
+
+function canonicalLocator(value, label) {
+  nonEmptyString(value, label);
+  if (value.length > 512 || /[\u0000-\u001f\u007f]/.test(value)) throw new Error(`${label} must be a bounded single-line locator`);
+  const uri = /^[a-z][a-z0-9+.-]*:[^\s]+$/i.test(value);
+  const pathLike = /[\\/]/.test(value) && !/[<>|?*"\r\n]/.test(value);
+  if (!uri && !pathLike) throw new Error(`${label} must be a URI or path-like pointer`);
+  return value;
 }
 
 function validateEvidencePointers(value) {
@@ -89,7 +102,7 @@ function validateEvidencePointers(value) {
   const rows = value.map((entry, index) => {
     exactFields(entry, ["id", "locator", "digest"], `checkpoint.evidencePointers[${index}]`);
     identifier(entry.id, `checkpoint.evidencePointers[${index}].id`);
-    nonEmptyString(entry.locator, `checkpoint.evidencePointers[${index}].locator`);
+    canonicalLocator(entry.locator, `checkpoint.evidencePointers[${index}].locator`);
     digest(entry.digest, `checkpoint.evidencePointers[${index}].digest`);
     return { id: entry.id, locator: entry.locator, digest: entry.digest };
   });
@@ -137,7 +150,18 @@ function coreFromInput(input) {
 
 export function createCheckpoint(input) {
   const core = coreFromInput(input);
-  return { ...core, packetDigest: sha256(canonicalBytes(core)) };
+  let estimatedTokens = core.estimatedTokens;
+  let packet;
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    const body = { ...core, estimatedTokens };
+    packet = { ...body, packetDigest: sha256(canonicalBytes(body)) };
+    const actual = estimateTokens(packet);
+    if (actual === estimatedTokens) break;
+    estimatedTokens = actual;
+  }
+  if (packet.estimatedTokens !== estimateTokens(packet)) throw new Error("checkpoint token estimate did not converge");
+  if (packet.estimatedTokens > packet.contextBudget) throw new Error("checkpoint exceeds its declared context budget");
+  return packet;
 }
 
 function validateCheckpoint(packet) {
@@ -185,8 +209,12 @@ export function verifyCheckpointEnvelope(envelope, { trustedKeys, expectedTaskRe
   if (attestation.subjectDigest !== packet.packetDigest) throw new Error("continuity attestation digest binding mismatch");
   const publicKey = trustedKeys.get(attestation.keyId);
   if (!publicKey) throw new Error("continuity attestation key is not trusted");
+  if (typeof attestation.signature !== "string" || !/^[A-Za-z0-9+/]{86}==$/.test(attestation.signature)) {
+    throw new Error("continuity attestation signature must be canonical base64");
+  }
   const signature = Buffer.from(attestation.signature ?? "", "base64");
-  if (signature.length !== 64 || !verifySignature(null, continuityAttestationMessage(attestation), publicKey, signature)) {
+  if (signature.length !== 64 || signature.toString("base64") !== attestation.signature ||
+      !verifySignature(null, continuityAttestationMessage(attestation), publicKey, signature)) {
     throw new Error("continuity attestation signature is invalid");
   }
   return packet;
@@ -202,6 +230,10 @@ function verifyChain(envelopes, trustedKeys, expectedTaskRef) {
       if (packet.revision !== previous.revision + 1) throw new Error("checkpoint revision is not monotonic");
       if (packet.parentDigest !== previous.packetDigest) throw new Error("checkpoint parent digest mismatch");
       if (new Date(packet.createdAt) < new Date(previous.createdAt)) throw new Error("checkpoint time moved backwards");
+      const previousAvailable = new Set(previous.authority.available);
+      const currentExcluded = new Set(packet.authority.excluded);
+      if (packet.authority.available.some((entry) => !previousAvailable.has(entry))) throw new Error("checkpoint authority cannot expand across revisions");
+      if (previous.authority.excluded.some((entry) => !currentExcluded.has(entry))) throw new Error("checkpoint authority exclusions cannot be removed");
     }
     previous = packet;
   }
@@ -222,23 +254,73 @@ async function readLog(logPath) {
   }
 }
 
-export async function appendCheckpoint({ logPath, envelope, trustedKeys }) {
+function processAlive(pid) {
+  try { process.kill(pid, 0); return true; } catch (error) { return error.code === "EPERM"; }
+}
+
+async function acquireLock(lockPath, staleLockMs) {
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      const handle = await open(lockPath, "wx");
+      const record = { schemaVersion: 1, pid: process.pid, host: os.hostname(), createdAt: new Date().toISOString() };
+      await handle.writeFile(JSON.stringify(record), "utf8");
+      await handle.sync();
+      return handle;
+    } catch (error) {
+      if (error.code !== "EEXIST") throw error;
+      let staleDeadOwner = false;
+      try {
+        const record = JSON.parse(await readFile(lockPath, "utf8"));
+        const created = new Date(record.createdAt).valueOf();
+        staleDeadOwner = record.schemaVersion === 1 && record.host === os.hostname() &&
+          Number.isSafeInteger(record.pid) && Number.isFinite(created) &&
+          Date.now() - created > staleLockMs && !processAlive(record.pid);
+      } catch {
+        staleDeadOwner = false;
+      }
+      if (!staleDeadOwner || attempt > 0) throw new Error("checkpoint log is locked by another writer");
+      await rm(lockPath, { force: true });
+    }
+  }
+  throw new Error("checkpoint log lock could not be acquired");
+}
+
+async function durableReplace(logPath, text) {
+  const directory = path.dirname(logPath);
+  const temporary = path.join(directory, `.${path.basename(logPath)}.${process.pid}.${randomUUID()}.tmp`);
+  let handle;
+  try {
+    handle = await open(temporary, "wx");
+    await handle.writeFile(text, "utf8");
+    await handle.sync();
+    await handle.close();
+    handle = null;
+    await rename(temporary, logPath);
+    try {
+      const directoryHandle = await open(directory, "r");
+      try { await directoryHandle.sync(); } finally { await directoryHandle.close(); }
+    } catch (error) {
+      if (!["EACCES", "EISDIR", "EINVAL", "EPERM"].includes(error.code)) throw error;
+    }
+  } catch (error) {
+    if (handle) await handle.close().catch(() => {});
+    await rm(temporary, { force: true });
+    throw error;
+  }
+}
+
+export async function appendCheckpoint({ logPath, envelope, trustedKeys, staleLockMs = 5 * 60 * 1000 }) {
   if (typeof logPath !== "string" || logPath.trim() === "") throw new Error("logPath is required");
+  if (!Number.isSafeInteger(staleLockMs) || staleLockMs < 0) throw new Error("staleLockMs must be a non-negative safe integer");
   const directory = path.dirname(logPath);
   await mkdir(directory, { recursive: true });
   const lockPath = `${logPath}.lock`;
-  let lock;
-  try {
-    lock = await open(lockPath, "wx");
-  } catch (error) {
-    if (error.code === "EEXIST") throw new Error("checkpoint log is locked by another writer");
-    throw error;
-  }
+  const lock = await acquireLock(lockPath, staleLockMs);
   try {
     const current = await readLog(logPath);
     const expectedTaskRef = current[0]?.packet?.taskRef ?? envelope?.packet?.taskRef;
     verifyChain([...current, envelope], trustedKeys, expectedTaskRef);
-    await appendFile(logPath, `${JSON.stringify(envelope)}\n`, { encoding: "utf8", flag: "a" });
+    await durableReplace(logPath, `${current.map(JSON.stringify).join("\n")}${current.length ? "\n" : ""}${JSON.stringify(envelope)}\n`);
     return envelope.packet;
   } finally {
     await lock.close();
@@ -246,7 +328,7 @@ export async function appendCheckpoint({ logPath, envelope, trustedKeys }) {
   }
 }
 
-export async function recoverContinuity({ logPath, trustedKeys, expectedTaskRef, maxTokens, now, maxAgeMs } = {}) {
+export async function recoverContinuity({ logPath, trustedKeys, expectedTaskRef, maxTokens, now, maxAgeMs, allowedClockSkewMs = 5 * 60 * 1000 } = {}) {
   identifier(expectedTaskRef, "expectedTaskRef");
   if (!Number.isSafeInteger(maxTokens) || maxTokens < 1) throw new Error("maxTokens must be a positive safe integer");
   const envelopes = await readLog(logPath);
@@ -254,11 +336,14 @@ export async function recoverContinuity({ logPath, trustedKeys, expectedTaskRef,
   const packet = verifyChain(envelopes, trustedKeys, expectedTaskRef);
   const recoveryTokens = estimateTokens(packet);
   if (recoveryTokens > maxTokens || recoveryTokens > packet.contextBudget) throw new Error("recovered checkpoint exceeds context budget");
+  if (!Number.isSafeInteger(allowedClockSkewMs) || allowedClockSkewMs < 0) throw new Error("allowedClockSkewMs must be a non-negative safe integer");
+  const current = now === undefined ? new Date() : new Date(now);
+  if (Number.isNaN(current.valueOf())) throw new Error("now must be a valid time");
+  const created = new Date(packet.createdAt).valueOf();
+  if (created > current.valueOf() + allowedClockSkewMs) throw new Error("recovered checkpoint is future-dated beyond allowed clock skew");
   if (maxAgeMs !== undefined) {
     if (!Number.isSafeInteger(maxAgeMs) || maxAgeMs < 0) throw new Error("maxAgeMs must be a non-negative safe integer");
-    const current = now === undefined ? new Date() : new Date(now);
-    if (Number.isNaN(current.valueOf())) throw new Error("now must be a valid time");
-    if (current.valueOf() - new Date(packet.createdAt).valueOf() > maxAgeMs) throw new Error("recovered checkpoint is stale");
+    if (current.valueOf() - created > maxAgeMs) throw new Error("recovered checkpoint is stale");
   }
   return {
     schemaVersion: 1,

@@ -1,5 +1,5 @@
 import { generateKeyPairSync } from "node:crypto";
-import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
@@ -61,6 +61,7 @@ async function evaluateMechanism() {
   const root = await mkdtemp(path.join(os.tmpdir(), "eternities-continuity-cert-"));
   try {
     const logPath = path.join(root, "certification-task.jsonl");
+    await writeFile(`${logPath}.lock`, JSON.stringify({ schemaVersion: 1, pid: 2147483647, host: os.hostname(), createdAt: "2020-01-01T00:00:00.000Z" }));
     await appendCheckpoint({ logPath, envelope: firstEnvelope, trustedKeys });
     const second = createCheckpoint(input({
       sessionRef: "certification-session-b",
@@ -80,6 +81,18 @@ async function evaluateMechanism() {
       now: "2026-08-28T21:31:00.000Z",
       maxAgeMs: 60 * 60 * 1000,
     });
+    let authorityExpansionRejected = false;
+    try {
+      const expanded = createCheckpoint(input({
+        sessionRef: "certification-session-c",
+        revision: 3,
+        parentDigest: second.packetDigest,
+        createdAt: "2026-08-28T21:35:00.000Z",
+        authority: { available: ["external-write", "local-read", "repository-write"], excluded: [] },
+        nextAction: "perform external write",
+      }));
+      await appendCheckpoint({ logPath, envelope: attestCheckpoint(expanded, { keyId: "certification-key", privateKey }), trustedKeys });
+    } catch { authorityExpansionRejected = true; }
     let crossTaskRejected = false;
     try {
       await recoverContinuity({ logPath, trustedKeys, expectedTaskRef: "other-task", maxTokens: 700 });
@@ -88,18 +101,33 @@ async function evaluateMechanism() {
     const tampered = structuredClone(firstEnvelope);
     tampered.packet.nextAction = "perform an unauthorized external action";
     try { verifyCheckpointEnvelope(tampered, { trustedKeys, expectedTaskRef: first.taskRef }); } catch { tamperRejected = true; }
-    const baselineTokens = 90 * 20;
+    const futurePath = path.join(root, "future-task.jsonl");
+    const future = createCheckpoint(input({ createdAt: "2099-01-01T00:00:00.000Z" }));
+    await appendCheckpoint({ logPath: futurePath, envelope: attestCheckpoint(future, { keyId: "certification-key", privateKey }), trustedKeys });
+    let futureTimeRejected = false;
+    try {
+      await recoverContinuity({ logPath: futurePath, trustedKeys, expectedTaskRef: future.taskRef, maxTokens: 700, now: "2026-08-28T21:31:00.000Z", allowedClockSkewMs: 1000 });
+    } catch { futureTimeRejected = true; }
+    const logText = await readFile(logPath, "utf8");
+    const declaredBaselinePerToolTokens = 90;
+    const declaredBaselineToolCalls = 20;
+    const syntheticBaselineTokens = declaredBaselinePerToolTokens * declaredBaselineToolCalls;
     return {
       signatureVerified,
       parentChainVerified: recovered.packet.parentDigest === first.packetDigest && recovered.packet.revision === 2,
       latestOnlyRecovered: !("history" in recovered) && recovered.packet.sessionRef === "certification-session-b",
       crossTaskRejected,
       tamperRejected,
-      authorityPreserved: recovered.packet.authority.excluded.includes("external-write"),
-      candidateRecoveryTokens: recovered.recoveryTokens,
-      baselinePerToolReinjectionTokens: baselineTokens,
-      contextReductionTokens: baselineTokens - recovered.recoveryTokens,
-      contextReductionRatio: recovered.recoveryTokens / baselineTokens,
+      authorityExpansionRejected,
+      futureTimeRejected,
+      deadOwnerLockRecovered: !(await readFile(`${logPath}.lock`, "utf8").then(() => true).catch(() => false)),
+      atomicSnapshotComplete: logText.endsWith("\n") && logText.trim().split(/\r?\n/).length === 2,
+      estimatedCandidateRecoveryTokens: recovered.recoveryTokens,
+      declaredBaselinePerToolTokens,
+      declaredBaselineToolCalls,
+      syntheticBaselineTokens,
+      estimatedContextReductionTokens: syntheticBaselineTokens - recovered.recoveryTokens,
+      estimatedContextRatio: recovered.recoveryTokens / syntheticBaselineTokens,
       packetEstimatedTokens: estimateTokens(recovered.packet),
     };
   } finally {
@@ -120,8 +148,11 @@ export async function buildAttestedContinuityReceipt({ root = path.resolve("."),
     parentBoundAppendOnlyChain: metrics.parentChainVerified,
     taskIsolation: metrics.crossTaskRejected,
     latestPacketOnly: metrics.latestOnlyRecovered,
-    authorityPreserved: metrics.authorityPreserved,
-    lowerContextCostThanPerToolReinjection: metrics.contextReductionTokens > 0,
+    authorityCannotExpand: metrics.authorityExpansionRejected,
+    futureTimeRejected: metrics.futureTimeRejected,
+    atomicSnapshotCommit: metrics.atomicSnapshotComplete,
+    deadOwnerLockRecovery: metrics.deadOwnerLockRecovered,
+    lowerEstimatedContextCostThanDeclaredPerToolBaseline: metrics.estimatedContextReductionTokens > 0,
     perToolPromptInjectionInstalled: false,
     slashCommandRequired: false,
     hostActivationPerformed: false,
@@ -159,6 +190,8 @@ export async function buildAttestedContinuityReceipt({ root = path.resolve("."),
       hostActivation: "not-performed",
       arbitraryAgentRecovery: "not-proven",
       productionOperation: "not-performed",
+      powerLossDurability: "fsync-and-atomic-replace-used-but-platform-filesystem-guarantees-not-proven",
+      contextCostComparison: "synthetic-source-declared-estimate-not-production-measurement",
     },
   };
   if (write) await writeJsonAtomic(path.join(root, "receipts/promotions/attested-task-continuity.json"), receipt);

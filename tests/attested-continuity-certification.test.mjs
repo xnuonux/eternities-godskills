@@ -12,8 +12,10 @@ test("attested continuity certification rebuilds from exact current artifacts", 
   const actual = await buildAttestedContinuityReceipt({ root, write: false });
   assert.deepEqual(actual, expected);
   assert.equal(actual.status, "certified");
-  assert.equal(actual.metrics.contextReductionTokens > 0, true);
-  assert.equal(actual.metrics.contextReductionRatio < 1, true);
+  assert.equal(actual.metrics.estimatedContextReductionTokens > 0, true);
+  assert.equal(actual.metrics.estimatedContextRatio < 1, true);
+  assert.equal(actual.metrics.authorityExpansionRejected, true);
+  assert.equal(actual.metrics.futureTimeRejected, true);
 });
 
 test("certification excludes source hooks and makes no host activation claim", async () => {
@@ -28,4 +30,5 @@ test("certification excludes source hooks and makes no host activation claim", a
   assert.equal(receipt.gates.slashCommandRequired, false);
   assert.equal(receipt.gates.hostActivationPerformed, false);
   assert.equal(receipt.proofLimits.hostActivation, "not-performed");
+  assert.match(receipt.proofLimits.contextCostComparison, /synthetic.*estimate/i);
 });
