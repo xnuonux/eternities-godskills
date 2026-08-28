@@ -297,6 +297,20 @@ function explicitlyCompatible(left, right) {
   return left.compatibleWith.includes(right.id) && right.compatibleWith.includes(left.id);
 }
 
+function naturalComposition(scores, byId, maxCompositionSize) {
+  if (scores.length < 2 || capabilityEvidenceCount(scores[0]) === 0) return null;
+  const selected = [byId.get(scores[0].id)];
+  for (const score of scores.slice(1)) {
+    if (selected.length >= maxCompositionSize) break;
+    if (score.score < 20 || capabilityEvidenceCount(score) < 2) continue;
+    const card = byId.get(score.id);
+    if (selected.every((candidate) => explicitlyCompatible(candidate, card))) {
+      selected.push(card);
+    }
+  }
+  return selected.length > 1 ? selected : null;
+}
+
 function broadDomainCount(text) {
   const plain = text.normalize("NFKD").toLowerCase();
   const domains = [
@@ -351,10 +365,15 @@ export function compileIntent({ request, cards }) {
     (closePair !== null && capabilityEvidenceLead === null && !explicitlyCompatible(closePair[0], closePair[1]))
   );
   const ambiguousCards = closePair ?? meaningful.slice(0, 2).map(({ id }) => byId.get(id));
+  const evidencedComposition = acceptedProposalIds.length === 0 && !ambiguous
+    ? naturalComposition(meaningful, byId, natural.context.maxCompositionSize)
+    : null;
   const selectedCards = acceptedProposalIds.length > 0
     ? acceptedProposalIds.map((id) => byId.get(id))
     : ambiguous
       ? ambiguousCards
+      : evidencedComposition !== null
+        ? evidencedComposition
       : meaningful.length === 0
         ? []
         : [capabilityEvidenceLead ?? byId.get(meaningful[0].id)];
