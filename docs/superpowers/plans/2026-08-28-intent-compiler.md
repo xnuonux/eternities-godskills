@@ -31,11 +31,11 @@
 - Consumes: routing effect, risk, and evidence vocabularies from `src/routing-contracts.mjs`
 - Produces: `validateNaturalRequest(value)`, `validateSemanticProposal(value, cards)`, and `validateCompilerReceipt(value)`
 
-- [ ] Write failing tests for canonical natural requests, forbidden authority proposal fields, unknown card ids, unstable arrays, malformed receipts, and deterministic accepted values.
-- [ ] Run `node --test tests/intent-contracts.test.mjs` and verify failures identify the absent module.
-- [ ] Implement strict schema-versioned validators with no authority field in semantic proposals.
-- [ ] Run the focused tests and verify they pass.
-- [ ] Commit the contract slice.
+- [x] Write failing tests for canonical natural requests, forbidden authority proposal fields, unknown card ids, unstable arrays, malformed receipts, and deterministic accepted values.
+- [x] Run `node --test tests/intent-contracts.test.mjs` and verify failures identify the absent module.
+- [x] Implement strict schema-versioned validators with no authority field in semantic proposals.
+- [x] Run the focused tests and verify they pass.
+- [x] Commit the contract slice.
 
 ### Task 2: Deterministic candidate evidence
 
