@@ -209,8 +209,14 @@ function inferRequestedEffects(text) {
 }
 
 function matchedCapabilities(card, requestTokens) {
-  const matches = card.provides.filter((capability) => overlap(requestTokens, tokens(capability)).length > 0);
+  const matches = evidencedCapabilities(card, requestTokens);
   return sorted(matches.length > 0 ? matches : [card.provides[0]]);
+}
+
+function evidencedCapabilities(card, requestTokens) {
+  return sorted(
+    card.provides.filter((capability) => overlap(requestTokens, tokens(capability)).length > 0),
+  );
 }
 
 function missingPolicyDecisions(cards, context) {
@@ -298,15 +304,21 @@ function confidenceFor(scores) {
 }
 
 function explicitlyCompatible(left, right) {
-  return left.compatibleWith.includes(right.id) && right.compatibleWith.includes(left.id);
+  return left.compatibleWith.includes(right.id) &&
+    right.compatibleWith.includes(left.id) &&
+    !left.conflictsWith.includes(right.id) &&
+    !right.conflictsWith.includes(left.id);
 }
 
-function naturalComposition(scores, byId, maxCompositionSize) {
-  if (scores.length < 2 || capabilityEvidenceCount(scores[0]) === 0) return null;
-  const selected = [byId.get(scores[0].id)];
-  for (const score of scores.slice(1)) {
+function naturalComposition(scores, byId, requestTokens, maxCompositionSize) {
+  if (scores.length < 2 || maxCompositionSize < 2) return null;
+  const eligible = scores.filter((score) =>
+    score.score >= 20 &&
+    evidencedCapabilities(byId.get(score.id), requestTokens).length >= 2);
+  if (eligible.length < 2 || eligible[0].id !== scores[0].id) return null;
+  const selected = [byId.get(eligible[0].id)];
+  for (const score of eligible.slice(1)) {
     if (selected.length >= maxCompositionSize) break;
-    if (score.score < 20 || capabilityEvidenceCount(score) < 2) continue;
     const card = byId.get(score.id);
     if (selected.every((candidate) => explicitlyCompatible(candidate, card))) {
       selected.push(card);
@@ -370,7 +382,12 @@ export function compileIntent({ request, cards }) {
   );
   const ambiguousCards = closePair ?? meaningful.slice(0, 2).map(({ id }) => byId.get(id));
   const evidencedComposition = acceptedProposalIds.length === 0 && !ambiguous
-    ? naturalComposition(meaningful, byId, natural.context.maxCompositionSize)
+    ? naturalComposition(
+      meaningful,
+      byId,
+      requestTokens,
+      natural.context.maxCompositionSize,
+    )
     : null;
   const selectedCards = acceptedProposalIds.length > 0
     ? acceptedProposalIds.map((id) => byId.get(id))

@@ -13,6 +13,7 @@ const ARTIFACT_PATHS = Object.freeze({
   contract: "data/compiler-generalization-v2-contract.json",
   design: "docs/superpowers/specs/2026-08-28-compiler-generalization-v2-design.md",
   existingArena: "data/intent-arena.v1.json",
+  genericBoundaryTests: "tests/intent-generalization-v2.test.mjs",
   router: "src/router.mjs",
   runtime: "src/intent-runtime.mjs",
 });
