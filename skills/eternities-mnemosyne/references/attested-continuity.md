@@ -8,11 +8,11 @@ Each packet binds one task and contains a session reference, monotonic revision,
 
 ## append and recover
 
-- keep one logical JSONL chain per task and commit its complete validated snapshot through fsync plus same-directory atomic replacement;
+- keep one immutable record directory per task and commit each canonical JSON record through fsync plus a same-directory atomic no-overwrite hard link;
 - validate every existing record before appending;
 - require revision one to have no parent and every later revision to bind the exact previous digest;
 - reject task mismatch, unknown key, invalid or non-canonical signature, authority expansion, malformed locators, time reversal, stale state, future time beyond allowed clock skew, incomplete records, or budget overflow;
-- recover a stale local lock only when its bounded timeout has elapsed and its same-host owner process is dead;
+- allow exactly one committed winner for a revision; competing parent-bound forks fail rather than overwrite each other, and abandoned temporary records are ignored;
 - after compaction, return only the newest verified packet, its signer identity, measured recovery cost, and proof limits;
 - keep parallel tasks in separate chains and never merge their open state implicitly.
 

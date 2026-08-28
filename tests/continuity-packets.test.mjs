@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { generateKeyPairSync, sign } from "node:crypto";
-import { mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { mkdtemp, readdir, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
@@ -95,7 +95,8 @@ test("append-only chain recovers only the newest compact packet after compaction
   assert.equal(recovered.packet.sessionRef, "session-b");
   assert.equal(recovered.packet.nextAction, "request independent review of the exact committed diff");
   assert.equal("history" in recovered, false);
-  assert.equal((await readFile(logPath, "utf8")).trim().split(/\r?\n/).length, 2);
+  const records = (await readdir(`${logPath}.records`)).filter((name) => name.endsWith(".json"));
+  assert.equal(records.length, 2);
 });
 
 test("cross-task, stale-parent, stale-time, and over-budget recovery fail closed", async () => {
@@ -144,19 +145,24 @@ test("cross-task, stale-parent, stale-time, and over-budget recovery fail closed
   );
 });
 
-test("dead-owner stale locks recover into a complete atomic chain", async () => {
+test("competing revision forks have exactly one immutable winner and ignore abandoned temporaries", async () => {
   const root = await mkdtemp(path.join(os.tmpdir(), "continuity-"));
   const logPath = path.join(root, "task.jsonl");
-  await writeFile(`${logPath}.lock`, JSON.stringify({
-    schemaVersion: 1,
-    pid: 2147483647,
-    host: os.hostname(),
-    createdAt: "2020-01-01T00:00:00.000Z",
-  }));
-  await appendCheckpoint({ logPath, envelope: signed(), trustedKeys, staleLockMs: 1000 });
-  const text = await readFile(logPath, "utf8");
-  assert.equal(text.endsWith("\n"), true);
-  assert.doesNotThrow(() => JSON.parse(text.trim()));
+  const first = packet();
+  await appendCheckpoint({ logPath, envelope: signed(first), trustedKeys });
+  const branchA = packet({ sessionRef: "session-branch-a", revision: 2, parentDigest: first.packetDigest, createdAt: "2026-08-28T12:10:00.000Z", nextAction: "branch-a" });
+  const branchB = packet({ sessionRef: "session-branch-b", revision: 2, parentDigest: first.packetDigest, createdAt: "2026-08-28T12:10:00.000Z", nextAction: "branch-b" });
+  const settled = await Promise.allSettled([
+    appendCheckpoint({ logPath, envelope: signed(branchA), trustedKeys }),
+    appendCheckpoint({ logPath, envelope: signed(branchB), trustedKeys }),
+  ]);
+  assert.equal(settled.filter(({ status }) => status === "fulfilled").length, 1);
+  assert.equal(settled.filter(({ status }) => status === "rejected").length, 1);
+  const winner = settled.find(({ status }) => status === "fulfilled").value;
+  await writeFile(path.join(`${logPath}.records`, ".abandoned.tmp"), "partial");
+  const recovered = await recoverContinuity({ logPath, trustedKeys, expectedTaskRef: first.taskRef, maxTokens: 900 });
+  assert.equal(recovered.packet.packetDigest, winner.packetDigest);
+  assert.equal((await readdir(`${logPath}.records`)).filter((name) => name.endsWith(".json")).length, 2);
 });
 
 test("parallel task logs remain isolated", async () => {

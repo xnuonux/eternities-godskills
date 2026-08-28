@@ -14,7 +14,7 @@ Extend Eternities Mnemosyne and Forge with a portable continuity primitive that 
 - recovery returns only the newest verified packet and never imports another task;
 - evidence pointers carry locators and optional digests, never fetched bodies;
 - stale, future-dated beyond explicit clock skew, forged, cross-task, over-budget, malformed, or discontinuous state fails closed;
-- commits use a fsynced same-directory temporary snapshot and atomic replacement; dead-owner stale locks have a bounded local recovery rule;
+- each revision commits from a fsynced same-directory temporary record through an atomic no-overwrite hard link; competing forks have exactly one immutable winner and abandoned temporaries are ignored;
 - no hooks, per-tool reinjection, slash commands, stop loops, host activation, or automatic execution.
 
 ## source boundary

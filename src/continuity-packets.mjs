@@ -1,6 +1,5 @@
 import { randomUUID, sign as signMessage, verify as verifySignature } from "node:crypto";
-import { mkdir, open, readFile, rename, rm } from "node:fs/promises";
-import os from "node:os";
+import { link, mkdir, open, readFile, readdir, rm } from "node:fs/promises";
 import path from "node:path";
 
 import { sha256 } from "./io.mjs";
@@ -116,7 +115,7 @@ function coreFromInput(input) {
   exactFields(input, INPUT_FIELDS, "checkpoint input");
   identifier(input.taskRef, "checkpoint.taskRef");
   identifier(input.sessionRef, "checkpoint.sessionRef");
-  if (!Number.isSafeInteger(input.revision) || input.revision < 1) throw new Error("checkpoint.revision must be a positive safe integer");
+  if (!Number.isSafeInteger(input.revision) || input.revision < 1 || input.revision > 999999999999) throw new Error("checkpoint.revision must be an integer from 1 through 999999999999");
   if (input.parentDigest !== null) digest(input.parentDigest, "checkpoint.parentDigest");
   if (input.revision === 1 && input.parentDigest !== null) throw new Error("first checkpoint parentDigest must be null");
   if (input.revision > 1 && input.parentDigest === null) throw new Error("later checkpoint parentDigest is required");
@@ -241,91 +240,62 @@ function verifyChain(envelopes, trustedKeys, expectedTaskRef) {
 }
 
 async function readLog(logPath) {
+  const recordRoot = `${logPath}.records`;
+  let names;
   try {
-    const text = await readFile(logPath, "utf8");
-    if (text === "") return [];
-    if (!text.endsWith("\n")) throw new Error("checkpoint log has an incomplete final record");
-    return text.trim().split(/\r?\n/).map((line, index) => {
-      try { return JSON.parse(line); } catch { throw new Error(`checkpoint log record ${index + 1} is invalid JSON`); }
-    });
+    names = (await readdir(recordRoot)).filter((name) => /^\d{12}\.json$/.test(name)).sort();
   } catch (error) {
     if (error.code === "ENOENT") return [];
     throw error;
   }
+  return Promise.all(names.map(async (name, index) => {
+    const text = await readFile(path.join(recordRoot, name), "utf8");
+    if (!text.endsWith("\n") || text.trim().includes("\n")) throw new Error(`checkpoint record ${index + 1} is incomplete or not singular`);
+    try { return JSON.parse(text); } catch { throw new Error(`checkpoint record ${index + 1} is invalid JSON`); }
+  }));
 }
 
-function processAlive(pid) {
-  try { process.kill(pid, 0); return true; } catch (error) { return error.code === "EPERM"; }
-}
-
-async function acquireLock(lockPath, staleLockMs) {
-  for (let attempt = 0; attempt < 2; attempt += 1) {
-    try {
-      const handle = await open(lockPath, "wx");
-      const record = { schemaVersion: 1, pid: process.pid, host: os.hostname(), createdAt: new Date().toISOString() };
-      await handle.writeFile(JSON.stringify(record), "utf8");
-      await handle.sync();
-      return handle;
-    } catch (error) {
-      if (error.code !== "EEXIST") throw error;
-      let staleDeadOwner = false;
-      try {
-        const record = JSON.parse(await readFile(lockPath, "utf8"));
-        const created = new Date(record.createdAt).valueOf();
-        staleDeadOwner = record.schemaVersion === 1 && record.host === os.hostname() &&
-          Number.isSafeInteger(record.pid) && Number.isFinite(created) &&
-          Date.now() - created > staleLockMs && !processAlive(record.pid);
-      } catch {
-        staleDeadOwner = false;
-      }
-      if (!staleDeadOwner || attempt > 0) throw new Error("checkpoint log is locked by another writer");
-      await rm(lockPath, { force: true });
-    }
-  }
-  throw new Error("checkpoint log lock could not be acquired");
-}
-
-async function durableReplace(logPath, text) {
-  const directory = path.dirname(logPath);
-  const temporary = path.join(directory, `.${path.basename(logPath)}.${process.pid}.${randomUUID()}.tmp`);
+async function commitRecord(logPath, envelope) {
+  const recordRoot = `${logPath}.records`;
+  await mkdir(recordRoot, { recursive: true });
+  const temporary = path.join(recordRoot, `.${process.pid}.${randomUUID()}.tmp`);
+  const finalPath = path.join(recordRoot, `${String(envelope.packet.revision).padStart(12, "0")}.json`);
   let handle;
+  let committed = false;
   try {
     handle = await open(temporary, "wx");
-    await handle.writeFile(text, "utf8");
+    await handle.writeFile(`${JSON.stringify(envelope)}\n`, "utf8");
     await handle.sync();
     await handle.close();
     handle = null;
-    await rename(temporary, logPath);
     try {
-      const directoryHandle = await open(directory, "r");
-      try { await directoryHandle.sync(); } finally { await directoryHandle.close(); }
+      await link(temporary, finalPath);
     } catch (error) {
-      if (!["EACCES", "EISDIR", "EINVAL", "EPERM"].includes(error.code)) throw error;
+      if (error.code === "EEXIST") throw new Error("checkpoint revision already has a committed winner");
+      throw error;
     }
+    committed = true;
+    try {
+      const directoryHandle = await open(recordRoot, "r");
+      try { await directoryHandle.sync(); } finally { await directoryHandle.close(); }
+    } catch {}
   } catch (error) {
-    if (handle) await handle.close().catch(() => {});
-    await rm(temporary, { force: true });
     throw error;
+  } finally {
+    if (handle) await handle.close().catch(() => {});
+    await rm(temporary, { force: true }).catch((error) => {
+      if (!committed) throw error;
+    });
   }
 }
 
-export async function appendCheckpoint({ logPath, envelope, trustedKeys, staleLockMs = 5 * 60 * 1000 }) {
+export async function appendCheckpoint({ logPath, envelope, trustedKeys }) {
   if (typeof logPath !== "string" || logPath.trim() === "") throw new Error("logPath is required");
-  if (!Number.isSafeInteger(staleLockMs) || staleLockMs < 0) throw new Error("staleLockMs must be a non-negative safe integer");
-  const directory = path.dirname(logPath);
-  await mkdir(directory, { recursive: true });
-  const lockPath = `${logPath}.lock`;
-  const lock = await acquireLock(lockPath, staleLockMs);
-  try {
-    const current = await readLog(logPath);
-    const expectedTaskRef = current[0]?.packet?.taskRef ?? envelope?.packet?.taskRef;
-    verifyChain([...current, envelope], trustedKeys, expectedTaskRef);
-    await durableReplace(logPath, `${current.map(JSON.stringify).join("\n")}${current.length ? "\n" : ""}${JSON.stringify(envelope)}\n`);
-    return envelope.packet;
-  } finally {
-    await lock.close();
-    await rm(lockPath, { force: true });
-  }
+  const current = await readLog(logPath);
+  const expectedTaskRef = current[0]?.packet?.taskRef ?? envelope?.packet?.taskRef;
+  verifyChain([...current, envelope], trustedKeys, expectedTaskRef);
+  await commitRecord(logPath, envelope);
+  return envelope.packet;
 }
 
 export async function recoverContinuity({ logPath, trustedKeys, expectedTaskRef, maxTokens, now, maxAgeMs, allowedClockSkewMs = 5 * 60 * 1000 } = {}) {

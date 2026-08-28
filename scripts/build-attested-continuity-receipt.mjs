@@ -1,5 +1,5 @@
 import { generateKeyPairSync } from "node:crypto";
-import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, readFile, readdir, rm } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
@@ -61,7 +61,6 @@ async function evaluateMechanism() {
   const root = await mkdtemp(path.join(os.tmpdir(), "eternities-continuity-cert-"));
   try {
     const logPath = path.join(root, "certification-task.jsonl");
-    await writeFile(`${logPath}.lock`, JSON.stringify({ schemaVersion: 1, pid: 2147483647, host: os.hostname(), createdAt: "2020-01-01T00:00:00.000Z" }));
     await appendCheckpoint({ logPath, envelope: firstEnvelope, trustedKeys });
     const second = createCheckpoint(input({
       sessionRef: "certification-session-b",
@@ -108,7 +107,19 @@ async function evaluateMechanism() {
     try {
       await recoverContinuity({ logPath: futurePath, trustedKeys, expectedTaskRef: future.taskRef, maxTokens: 700, now: "2026-08-28T21:31:00.000Z", allowedClockSkewMs: 1000 });
     } catch { futureTimeRejected = true; }
-    const logText = await readFile(logPath, "utf8");
+    const forkPath = path.join(root, "fork-task.jsonl");
+    await appendCheckpoint({ logPath: forkPath, envelope: firstEnvelope, trustedKeys });
+    const branchA = createCheckpoint(input({ sessionRef: "branch-a", revision: 2, parentDigest: first.packetDigest, createdAt: "2026-08-28T21:10:00.000Z", nextAction: "branch-a" }));
+    const branchB = createCheckpoint(input({ sessionRef: "branch-b", revision: 2, parentDigest: first.packetDigest, createdAt: "2026-08-28T21:10:00.000Z", nextAction: "branch-b" }));
+    const forkResults = await Promise.allSettled([
+      appendCheckpoint({ logPath: forkPath, envelope: attestCheckpoint(branchA, { keyId: "certification-key", privateKey }), trustedKeys }),
+      appendCheckpoint({ logPath: forkPath, envelope: attestCheckpoint(branchB, { keyId: "certification-key", privateKey }), trustedKeys }),
+    ]);
+    const forkWinner = forkResults.find(({ status }) => status === "fulfilled")?.value;
+    const forkRecovered = await recoverContinuity({ logPath: forkPath, trustedKeys, expectedTaskRef: first.taskRef, maxTokens: 700, now: "2026-08-28T21:11:00.000Z" });
+    const recordRoot = `${logPath}.records`;
+    const recordNames = (await readdir(recordRoot)).filter((name) => name.endsWith(".json"));
+    const recordTexts = await Promise.all(recordNames.map((name) => readFile(path.join(recordRoot, name), "utf8")));
     const declaredBaselinePerToolTokens = 90;
     const declaredBaselineToolCalls = 20;
     const syntheticBaselineTokens = declaredBaselinePerToolTokens * declaredBaselineToolCalls;
@@ -120,8 +131,10 @@ async function evaluateMechanism() {
       tamperRejected,
       authorityExpansionRejected,
       futureTimeRejected,
-      deadOwnerLockRecovered: !(await readFile(`${logPath}.lock`, "utf8").then(() => true).catch(() => false)),
-      atomicSnapshotComplete: logText.endsWith("\n") && logText.trim().split(/\r?\n/).length === 2,
+      concurrentForkSingleWinner: forkResults.filter(({ status }) => status === "fulfilled").length === 1 &&
+        forkResults.filter(({ status }) => status === "rejected").length === 1 &&
+        forkRecovered.packet.packetDigest === forkWinner?.packetDigest,
+      immutableRecordCommit: recordNames.length === 2 && recordTexts.every((text) => text.endsWith("\n") && !text.trim().includes("\n")),
       estimatedCandidateRecoveryTokens: recovered.recoveryTokens,
       declaredBaselinePerToolTokens,
       declaredBaselineToolCalls,
@@ -150,8 +163,8 @@ export async function buildAttestedContinuityReceipt({ root = path.resolve("."),
     latestPacketOnly: metrics.latestOnlyRecovered,
     authorityCannotExpand: metrics.authorityExpansionRejected,
     futureTimeRejected: metrics.futureTimeRejected,
-    atomicSnapshotCommit: metrics.atomicSnapshotComplete,
-    deadOwnerLockRecovery: metrics.deadOwnerLockRecovered,
+    immutableAtomicRevisionCommit: metrics.immutableRecordCommit,
+    concurrentForkHasSingleWinner: metrics.concurrentForkSingleWinner,
     lowerEstimatedContextCostThanDeclaredPerToolBaseline: metrics.estimatedContextReductionTokens > 0,
     perToolPromptInjectionInstalled: false,
     slashCommandRequired: false,
@@ -190,7 +203,7 @@ export async function buildAttestedContinuityReceipt({ root = path.resolve("."),
       hostActivation: "not-performed",
       arbitraryAgentRecovery: "not-proven",
       productionOperation: "not-performed",
-      powerLossDurability: "fsync-and-atomic-replace-used-but-platform-filesystem-guarantees-not-proven",
+      powerLossDurability: "fsynced-record-and-atomic-no-overwrite-link-used-but-platform-filesystem-guarantees-not-proven",
       contextCostComparison: "synthetic-source-declared-estimate-not-production-measurement",
     },
   };
