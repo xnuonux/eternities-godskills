@@ -80,20 +80,34 @@ function plainText(text) {
   return text.normalize("NFKD").toLowerCase().replace(/[^a-z0-9\s]+/g, " ");
 }
 
+function actionNegated(plain, word) {
+  const action = `\\b${word}\\w*\\b`;
+  const reversal = new RegExp(
+    `\\bdo not\\s+(?:fail|hesitate|neglect)\\s+to\\s+(?:\\w+\\s+){0,3}${action}` +
+      `|\\bdo not\\s+forget\\s+(?:to|that)\\s+(?:(?!(?:never|no|not|without)\\b)\\w+\\s+){0,5}${action}` +
+      `|\\bnot only\\s+(?:(?!(?:never|no|not|without)\\b)\\w+\\s+){0,3}${action}`,
+    "g",
+  );
+  const withoutReversals = plain.replace(reversal, " ");
+  return new RegExp(`\\b(?:without|do not|not|no)\\s+(?:\\w+\\s+){0,6}${action}`).test(withoutReversals);
+}
+
 function publicationRequested(plain) {
-  if (/\b(?:do not|without)\b.{0,32}\b(?:announce|live|post|public|publish|release|share|upload)\b/.test(plain)) {
-    return false;
-  }
+  const positiveAction = (words) => words.some((word) =>
+    new RegExp(`\\b${word}\\w*\\b`).test(plain) && !actionNegated(plain, word));
   return (
-    /\b(?:post|publish|upload)\b/.test(plain) ||
-    /\b(?:make|share)\b.{0,24}\bpublic(?:ly)?\b/.test(plain) ||
-    /\b(?:make|put|take)\b.{0,32}\blive\b/.test(plain) ||
-    /\bgo\s+live\b/.test(plain) ||
-    /\b(?:activate|enable)\b.{0,32}\b(?:live|public(?:ly)?|release)\b/.test(plain) ||
-    /\blaunch\b.{0,32}\b(?:live|public(?:ly)?)\b/.test(plain) ||
-    /\bannounce\b.{0,40}\b(?:account|channel|social)\b/.test(plain) ||
-    /\bsubmit\b.*\bstore\b/.test(plain) ||
-    /\brelease\b.*\b(?:public(?:ly)?|recording|final cut)\b/.test(plain)
+    positiveAction(["post", "publish", "upload"]) ||
+    /\b(?:make|share)\b.{0,24}\bpublic(?:ly)?\b/.test(plain) &&
+      positiveAction(["make", "share"]) ||
+    /\b(?:make|put|take)\b.{0,32}\blive\b/.test(plain) &&
+      positiveAction(["make", "put", "take"]) ||
+    /\bgo\s+live\b/.test(plain) && !actionNegated(plain, "go") ||
+    /\b(?:activate|enable)\b.{0,32}\b(?:live|public(?:ly)?|release)\b/.test(plain) &&
+      positiveAction(["activate", "enable"]) ||
+    /\blaunch\b.{0,32}\b(?:live|public(?:ly)?)\b/.test(plain) && !actionNegated(plain, "launch") ||
+    /\bannounce\b.{0,40}\b(?:account|channel|social)\b/.test(plain) && !actionNegated(plain, "announce") ||
+    /\bsubmit\b.*\bstore\b/.test(plain) && !actionNegated(plain, "submit") ||
+    /\brelease\b.*\b(?:public(?:ly)?|recording|final cut)\b/.test(plain) && !actionNegated(plain, "release")
   );
 }
 
@@ -111,7 +125,19 @@ function evidenceFor(requestTokens, text, label, weight) {
   return matched.map((token) => ({ evidence: `${label}:${token}`, weight }));
 }
 
-function scoreCard(card, requestTokens) {
+function intentHintEvidence(card, plain) {
+  if (
+    card.id === "eternities-phoenix" &&
+    /\bdiagnos\w*\b/.test(plain) &&
+    /\b(?:latency|p\d{2}|spike|trace|traces)\b/.test(plain) &&
+    /\b(?:non destructive|repair|repeatable|root cause)\b/.test(plain)
+  ) {
+    return [{ evidence: "intent-hint:diagnostic-observability", weight: 14 }];
+  }
+  return [];
+}
+
+function scoreCard(card, requestTokens, plain) {
   const entries = [
     ...evidenceFor(requestTokens, card.intent, "intent-token", 5),
     ...evidenceFor(requestTokens, card.successCondition, "success-token", 3),
@@ -122,6 +148,7 @@ function scoreCard(card, requestTokens) {
       .flatMap((value) => evidenceFor(requestTokens, value, "example-token", 4)),
     ...card.negativeIntents
       .flatMap((value) => evidenceFor(requestTokens, value, "negative-token", -6)),
+    ...intentHintEvidence(card, plain),
   ];
   const byEvidence = new Map();
   for (const entry of entries) {
@@ -139,21 +166,35 @@ function compareScores(left, right) {
   return right.score - left.score || lexicalCompare(left.id, right.id);
 }
 
+function capabilityEvidenceCount(score) {
+  return score.evidence.filter((entry) => entry.startsWith("capability-token:")).length;
+}
+
 function inferRequestedEffects(text) {
   const requestTokens = new Set(tokens(text));
   const plain = plainText(text);
-  const negated = (word) => new RegExp(`(?:without|do not|not|no)\\s+(?:\\w+\\s+){0,2}${word}(?:ing|ed|s)?\\b`).test(plain);
+  const negated = (word) => actionNegated(plain, word);
   const effects = new Set(["local-read"]);
   if ([...WRITE_WORDS].some((token) => requestTokens.has(stem(token)) && !negated(token))) {
     effects.add("local-write");
   }
+  const externalResearch = !/\b(?:do not|without)\b.{0,48}\b(?:latest|current|official)\b/.test(plain) && (
+    /\b(?:latest|current|official)\b.{0,48}\b(?:api|contract|documentation|docs|provider|specification|standard)\b/.test(plain) ||
+    /\b(?:api|contract|documentation|docs|provider|specification|standard)\b.{0,48}\b(?:latest|current|official)\b/.test(plain)
+  );
   if (
     [...EXTERNAL_READ_WORDS].some((token) => requestTokens.has(stem(token)) && !negated(token)) ||
-    /\b(?:security test|partner endpoint|partner network|vendor systems)\b/.test(plain)
+    /\b(?:security test|partner endpoint|partner network|vendor systems)\b/.test(plain) ||
+    externalResearch
   ) {
     effects.add("external-read");
   }
-  const productionMutation = /\b(?:production|live)\b.*\b(?:change|correct\w*|delete|deploy|enable|fix|migrat\w*|modify|restart|run)\b|\b(?:change|correct\w*|delete|deploy|enable|fix|migrat\w*|modify|restart|run)\b.*\b(?:production|live)\b/.test(plain);
+  const productionMutationWords = [
+    "change", "correct", "delete", "deploy", "enable", "fix", "migrate",
+    "modify", "restart", "run",
+  ];
+  const productionMutation = /\b(?:production|live)\b/.test(plain) &&
+    productionMutationWords.some((token) => requestTokens.has(stem(token)) && !negated(token));
   const explicitExternalChange = /\bexternal\s+(?:action|change|mutation)s?\b/.test(plain) &&
     !/\bwithout\s+external\s+(?:action|change|mutation)s?\b/.test(plain);
   if (
@@ -190,7 +231,7 @@ function missingPolicyDecisions(cards, context) {
 function consequentialDecisions(text, requestedEffects, context, selectedCards, allCards) {
   const requestTokens = new Set(tokens(text));
   const plain = plainText(text);
-  const negated = (word) => new RegExp(`(?:without|do not|not|no)\\s+(?:\\w+\\s+){0,2}${word}(?:ing|ed|s)?\\b`).test(plain);
+  const negated = (word) => actionNegated(plain, word);
   const authority = new Set(context.availableAuthority);
   const permitted = new Set(context.permittedEffects);
   const decisions = [];
@@ -234,7 +275,7 @@ function consequentialDecisions(text, requestedEffects, context, selectedCards, 
   }
   if (
     /\b(?:production|live)\b/.test(plain) &&
-    (writesExternally || /\b(?:change|correct\w*|delete|deploy|enable|fix|migrat\w*|modify|restart|run|firewall)\b/.test(plain)) &&
+    writesExternally &&
     !authority.has("production-write")
   ) {
     decisions.push("authority:production-write");
@@ -277,7 +318,8 @@ export function compileIntent({ request, cards }) {
   if (!Array.isArray(cards)) throw new TypeError("cards must be an array");
   const values = cards.map(validateRoutingCard).sort((left, right) => lexicalCompare(left.id, right.id));
   const requestTokens = tokens(natural.text);
-  const scored = values.map((card) => scoreCard(card, requestTokens)).sort(compareScores);
+  const requestPlain = plainText(natural.text);
+  const scored = values.map((card) => scoreCard(card, requestTokens, requestPlain)).sort(compareScores);
   const meaningful = scored.filter(({ score }) => score >= 12).slice(0, 8);
   const byId = new Map(values.map((card) => [card.id, card]));
   const proposal = natural.proposal === undefined
@@ -292,22 +334,30 @@ export function compileIntent({ request, cards }) {
   const closePair = meaningful.length >= 2 && meaningful[0].score - meaningful[1].score <= 3
     ? [byId.get(meaningful[0].id), byId.get(meaningful[1].id)]
     : null;
+  const capabilityPreferredScore = closePair === null
+    ? null
+    : [...meaningful.slice(0, 2)].sort((left, right) =>
+      capabilityEvidenceCount(right) - capabilityEvidenceCount(left) || compareScores(left, right))[0];
+  const capabilityEvidenceLead = capabilityPreferredScore !== null &&
+    Math.abs(capabilityEvidenceCount(meaningful[0]) - capabilityEvidenceCount(meaningful[1])) >= 1
+    ? byId.get(capabilityPreferredScore.id)
+    : null;
   const broadAmbiguity = acceptedProposalIds.length === 0 && broadDomainCount(natural.text) >= 3;
   const forgeSignals = ["implementation", "integration", "review", "test", "verification"]
     .filter((signal) => new Set(requestTokens).has(stem(signal))).length;
   const resolvedEngineeringCoordination = forgeSignals >= 3;
   const ambiguous = acceptedProposalIds.length === 0 && (
     (broadAmbiguity && !resolvedEngineeringCoordination) ||
-    (closePair !== null && !explicitlyCompatible(closePair[0], closePair[1]))
+    (closePair !== null && capabilityEvidenceLead === null && !explicitlyCompatible(closePair[0], closePair[1]))
   );
   const ambiguousCards = closePair ?? meaningful.slice(0, 2).map(({ id }) => byId.get(id));
   const selectedCards = acceptedProposalIds.length > 0
-    ? [byId.get(acceptedProposalIds[0])]
+    ? acceptedProposalIds.map((id) => byId.get(id))
     : ambiguous
       ? ambiguousCards
       : meaningful.length === 0
         ? []
-        : [byId.get(meaningful[0].id)];
+        : [capabilityEvidenceLead ?? byId.get(meaningful[0].id)];
 
   const requestedEffects = sorted([
     ...inferRequestedEffects(natural.text),

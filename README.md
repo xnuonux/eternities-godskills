@@ -155,6 +155,19 @@ verdict. it is not globally activated by this release.
 Beacon advances the corpus to exactly 217 synthesized, 217 evaluated, and 217
 promoted source rows while preserving the frozen evidence of earlier releases.
 
+## universal skill quarry ... wave 2
+
+wave 2 adds twenty inert public repositories to the canonical D-drive quarry.
+their 31,528 non-Git files and 821,147,580 bytes match exact source manifests,
+with 7,776 skill bodies cold-indexed and 2,146 exact duplicate groups retained
+as evidence. no third-party code or instruction was executed or activated.
+
+a cold Terra subagent exposed five intent-interpretation defects without making
+an unsafe selection or inventing authority. the repaired compiler and expanded
+arena now pass 140 of 140 cases, including 81 of 81 exact positive selections.
+read `docs\universal-skill-quarry-wave-2-report.md` and the dated receipts for
+the measured result and proof limits.
+
 ## release-one commands
 
 ```powershell
