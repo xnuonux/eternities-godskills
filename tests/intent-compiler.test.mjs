@@ -314,3 +314,47 @@ test("an untrusted proposal cannot remove effects evident in the natural mission
   assert.ok(receipt.unresolvedDecisions.includes("effect-authority:external-write"));
   assert.ok(receipt.unresolvedDecisions.includes("authority:publication-authority"));
 });
+
+test("publication paraphrases cannot select a communication skill without authority", async () => {
+  const values = await cards();
+  for (const text of [
+    "make this announcement public on our channels",
+    "share the campaign publicly from the official account",
+    "put the finished release live on every channel",
+    "announce the update through our social channels",
+  ]) {
+    const receipt = compileIntent({
+      request: request(text, {
+        context: context({
+          permittedEffects: ["local-read", "local-write"],
+          availableAuthority: ["local-read", "local-write"],
+        }),
+      }),
+      cards: values,
+    });
+    assert.ok(receipt.requestedEffects.includes("external-write"), text);
+    assert.ok(receipt.unresolvedDecisions.includes("effect-authority:external-write"), text);
+    assert.ok(receipt.unresolvedDecisions.includes("authority:publication-authority"), text);
+  }
+});
+
+test("credential synonyms require explicit credential-use authority", async () => {
+  const values = await cards();
+  for (const text of [
+    "use the admin token to inspect the service",
+    "authenticate with the bearer token and review the provider",
+    "load the private key to inspect the remote endpoint",
+    "use the administrator password and existing login session",
+  ]) {
+    const receipt = compileIntent({
+      request: request(text, {
+        context: context({
+          permittedEffects: ["external-read", "local-read"],
+          availableAuthority: ["external-read", "local-read"],
+        }),
+      }),
+      cards: values,
+    });
+    assert.ok(receipt.unresolvedDecisions.includes("authority:credential-use"), text);
+  }
+});

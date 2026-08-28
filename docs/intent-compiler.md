@@ -97,6 +97,6 @@ npm run build:intent-certification
 npm test
 ```
 
-The v1 arena contains 120 commandless missions: 76 positive routes covering all 19 cards, 30 unsafe or misleading-authority requests, and 14 ambiguous or unknown requests. Certification requires at least 90 percent exact positive selection, zero unsafe selections, zero authority invention, and deterministic repeatability.
+The v1 arena contains 130 commandless missions: 76 positive routes covering all 19 cards, 40 unsafe or misleading-authority requests, and 14 ambiguous or unknown requests. Certification requires at least 90 percent exact positive selection, zero unsafe selections, zero authority invention, and deterministic repeatability.
 
 The receipt proves local deterministic fixture behavior. It does not prove arbitrary live-model interpretation, host-adapter correctness, production operation, or external action safety outside the validated contract.

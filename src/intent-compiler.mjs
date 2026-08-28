@@ -76,6 +76,28 @@ function tokens(text) {
   );
 }
 
+function plainText(text) {
+  return text.normalize("NFKD").toLowerCase().replace(/[^a-z0-9\s]+/g, " ");
+}
+
+function publicationRequested(plain) {
+  if (/\b(?:do not|without)\b.{0,32}\b(?:announce|post|public|publish|release|share|upload)\b/.test(plain)) {
+    return false;
+  }
+  return (
+    /\b(?:post|publish|upload)\b/.test(plain) ||
+    /\b(?:make|share)\b.{0,24}\bpublic(?:ly)?\b/.test(plain) ||
+    /\bput\b.{0,32}\blive\b/.test(plain) ||
+    /\bannounce\b.{0,40}\b(?:account|channel|social)\b/.test(plain) ||
+    /\bsubmit\b.*\bstore\b/.test(plain) ||
+    /\brelease\b.*\b(?:public(?:ly)?|recording|final cut)\b/.test(plain)
+  );
+}
+
+function credentialUseRequested(plain) {
+  return /\b(?:admin(?:istrator)?\s+(?:password|token)|access token|api key|bearer token|client secret|credential|database password|login session|private key|secret manager|service token|session cookie|shared vault|vault)\b/.test(plain);
+}
+
 function overlap(left, right) {
   const rightSet = new Set(right);
   return left.filter((token) => rightSet.has(token));
@@ -116,7 +138,7 @@ function compareScores(left, right) {
 
 function inferRequestedEffects(text) {
   const requestTokens = new Set(tokens(text));
-  const plain = text.normalize("NFKD").toLowerCase().replace(/[^a-z0-9\s]+/g, " ");
+  const plain = plainText(text);
   const negated = (word) => new RegExp(`(?:without|do not|not|no)\\s+(?:\\w+\\s+){0,2}${word}(?:ing|ed|s)?\\b`).test(plain);
   const effects = new Set(["local-read"]);
   if ([...WRITE_WORDS].some((token) => requestTokens.has(stem(token)) && !negated(token))) {
@@ -133,6 +155,7 @@ function inferRequestedEffects(text) {
     !/\bwithout\s+external\s+(?:action|change|mutation)s?\b/.test(plain);
   if (
     [...EXTERNAL_WRITE_WORDS].some((token) => requestTokens.has(stem(token)) && !negated(token)) ||
+    publicationRequested(plain) ||
     productionMutation ||
     explicitExternalChange
   ) {
@@ -163,7 +186,7 @@ function missingPolicyDecisions(cards, context) {
 
 function consequentialDecisions(text, requestedEffects, context, selectedCards, allCards) {
   const requestTokens = new Set(tokens(text));
-  const plain = text.normalize("NFKD").toLowerCase().replace(/[^a-z0-9\s]+/g, " ");
+  const plain = plainText(text);
   const negated = (word) => new RegExp(`(?:without|do not|not|no)\\s+(?:\\w+\\s+){0,2}${word}(?:ing|ed|s)?\\b`).test(plain);
   const authority = new Set(context.availableAuthority);
   const permitted = new Set(context.permittedEffects);
@@ -190,13 +213,11 @@ function consequentialDecisions(text, requestedEffects, context, selectedCards, 
   ) {
     if (!authority.has("spending-authority")) decisions.push("authority:spending-authority");
   }
-  const publication =
-    ((/\b(?:post|publish|upload)\b/.test(plain) && !negated("post") && !negated("publish") && !negated("upload")) ||
-      /\bsubmit\b.*\bstore\b|\brelease\b.*\b(?:public|recording|final cut)\b/.test(plain));
+  const publication = publicationRequested(plain);
   if (publication && !authority.has("publication-authority")) {
     decisions.push("authority:publication-authority");
   }
-  if (/\b(?:api key|credential|database password|secret manager|shared vault|vault)\b/.test(plain) &&
+  if (credentialUseRequested(plain) &&
       !authority.has("credential-use")) {
     decisions.push("authority:credential-use");
   }
