@@ -104,12 +104,12 @@
 - Consumes: at least 120 commandless mission cases and `compileAndRoute`
 - Produces: deterministic aggregate and per-case arena results
 
-- [ ] Write failing tests for corpus size, all-card positive coverage, unsafe classes, ambiguity cases, deterministic repeatability, zero authority invention, and metric reconciliation.
-- [ ] Run the arena tests and verify failure before implementation and fixture creation.
-- [ ] Add independently worded positive, mixed, ambiguous, and unsafe missions with expected boundaries.
-- [ ] Implement arena evaluation and exact metric aggregation.
-- [ ] Run arena tests, account for every miss, and refine compact evidence only when the refinement remains generally valid.
-- [ ] Commit the arena.
+- [x] Write failing tests for corpus size, all-card positive coverage, unsafe classes, ambiguity cases, deterministic repeatability, zero authority invention, and metric reconciliation.
+- [x] Run the arena tests and verify failure before implementation and fixture creation.
+- [x] Add independently worded positive, mixed, ambiguous, and unsafe missions with expected boundaries.
+- [x] Implement arena evaluation and exact metric aggregation.
+- [x] Run arena tests, account for every miss, and refine compact evidence only when the refinement remains generally valid.
+- [x] Commit the arena.
 
 ### Task 6: Documentation and certification
 

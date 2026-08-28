@@ -16,15 +16,15 @@ const STOP_WORDS = new Set([
 ]);
 
 const WRITE_WORDS = new Set([
-  "build", "change", "create", "design", "edit", "fix", "implement", "integrate",
-  "migrate", "produce", "recover", "redesign", "refactor", "rewrite", "update",
+  "build", "change", "edit", "fix", "implement", "integrate", "migrate",
+  "redesign", "refactor", "rewrite", "update",
 ]);
 const EXTERNAL_READ_WORDS = new Set([
-  "browse", "current", "internet", "online", "research", "search", "web",
+  "browse", "internet", "online", "probe", "scan", "web",
 ]);
 const EXTERNAL_WRITE_WORDS = new Set([
-  "buy", "deploy", "email", "message", "post", "publish", "purchase", "send",
-  "spend", "upload",
+  "buy", "deploy", "email", "message", "notify", "post", "publish", "purchase",
+  "send", "spend", "submit", "upload",
 ]);
 
 function lexicalCompare(left, right) {
@@ -116,10 +116,28 @@ function compareScores(left, right) {
 
 function inferRequestedEffects(text) {
   const requestTokens = new Set(tokens(text));
+  const plain = text.normalize("NFKD").toLowerCase().replace(/[^a-z0-9\s]+/g, " ");
+  const negated = (word) => new RegExp(`(?:without|do not|not|no)\\s+(?:\\w+\\s+){0,2}${word}(?:ing|ed|s)?\\b`).test(plain);
   const effects = new Set(["local-read"]);
-  if ([...WRITE_WORDS].some((token) => requestTokens.has(stem(token)))) effects.add("local-write");
-  if ([...EXTERNAL_READ_WORDS].some((token) => requestTokens.has(stem(token)))) effects.add("external-read");
-  if ([...EXTERNAL_WRITE_WORDS].some((token) => requestTokens.has(stem(token)))) effects.add("external-write");
+  if ([...WRITE_WORDS].some((token) => requestTokens.has(stem(token)) && !negated(token))) {
+    effects.add("local-write");
+  }
+  if (
+    [...EXTERNAL_READ_WORDS].some((token) => requestTokens.has(stem(token)) && !negated(token)) ||
+    /\b(?:security test|partner endpoint|partner network|vendor systems)\b/.test(plain)
+  ) {
+    effects.add("external-read");
+  }
+  const productionMutation = /\b(?:production|live)\b.*\b(?:change|correct\w*|delete|deploy|enable|fix|migrat\w*|modify|restart|run)\b|\b(?:change|correct\w*|delete|deploy|enable|fix|migrat\w*|modify|restart|run)\b.*\b(?:production|live)\b/.test(plain);
+  const explicitExternalChange = /\bexternal\s+(?:action|change|mutation)s?\b/.test(plain) &&
+    !/\bwithout\s+external\s+(?:action|change|mutation)s?\b/.test(plain);
+  if (
+    [...EXTERNAL_WRITE_WORDS].some((token) => requestTokens.has(stem(token)) && !negated(token)) ||
+    productionMutation ||
+    explicitExternalChange
+  ) {
+    effects.add("external-write");
+  }
   return sorted(effects);
 }
 
@@ -145,6 +163,8 @@ function missingPolicyDecisions(cards, context) {
 
 function consequentialDecisions(text, requestedEffects, context, selectedCards, allCards) {
   const requestTokens = new Set(tokens(text));
+  const plain = text.normalize("NFKD").toLowerCase().replace(/[^a-z0-9\s]+/g, " ");
+  const negated = (word) => new RegExp(`(?:without|do not|not|no)\\s+(?:\\w+\\s+){0,2}${word}(?:ing|ed|s)?\\b`).test(plain);
   const authority = new Set(context.availableAuthority);
   const permitted = new Set(context.permittedEffects);
   const decisions = [];
@@ -165,13 +185,32 @@ function consequentialDecisions(text, requestedEffects, context, selectedCards, 
     if (!authority.has("account-write")) decisions.push("authority:account-write");
   }
   if (
-    requestTokens.has("spend") || requestTokens.has("buy") || requestTokens.has("purchase")
+    (requestTokens.has("spend") || requestTokens.has("buy") || requestTokens.has("purchase")) &&
+    !negated("spend") && !negated("buy") && !negated("purchase")
   ) {
     if (!authority.has("spending-authority")) decisions.push("authority:spending-authority");
   }
+  const publication =
+    ((/\b(?:post|publish|upload)\b/.test(plain) && !negated("post") && !negated("publish") && !negated("upload")) ||
+      /\bsubmit\b.*\bstore\b|\brelease\b.*\b(?:public|recording|final cut)\b/.test(plain));
+  if (publication && !authority.has("publication-authority")) {
+    decisions.push("authority:publication-authority");
+  }
+  if (/\b(?:api key|credential|database password|secret manager|shared vault|vault)\b/.test(plain) &&
+      !authority.has("credential-use")) {
+    decisions.push("authority:credential-use");
+  }
+  if (/\b(?:clone\w*\s+(?:this\s+)?(?:singer s\s+)?voice|likeness|licensed footage|commercial spot|endorsement)\b/.test(plain) &&
+      !authority.has("rights-and-consent-when-applicable")) {
+    decisions.push("authority:rights-and-consent-when-applicable");
+  }
+  if (/\b(?:scan|probe|security test|intrusive security|exploitable|weakness|firewall)\b/.test(plain) &&
+      !authority.has("authorized-security-scope")) {
+    decisions.push("authority:authorized-security-scope");
+  }
   if (
-    (requestTokens.has("production") || requestTokens.has("live")) &&
-    (writesExternally || requestTokens.has("change") || requestTokens.has("deploy")) &&
+    /\b(?:production|live)\b/.test(plain) &&
+    (writesExternally || /\b(?:change|correct\w*|delete|deploy|enable|fix|migrat\w*|modify|restart|run|firewall)\b/.test(plain)) &&
     !authority.has("production-write")
   ) {
     decisions.push("authority:production-write");
@@ -191,6 +230,22 @@ function confidenceFor(scores) {
 
 function explicitlyCompatible(left, right) {
   return left.compatibleWith.includes(right.id) && right.compatibleWith.includes(left.id);
+}
+
+function broadDomainCount(text) {
+  const plain = text.normalize("NFKD").toLowerCase();
+  const domains = [
+    /\b(?:customer|growth|campaign|product|prospect)\b/,
+    /\b(?:accessible|interface|media|visual)\b/,
+    /\b(?:launch|production|release|rollout|ship)\b/,
+    /\b(?:architecture|code|engineering|implement|implementation|schema|technical)\b/,
+    /\b(?:governance|mitigation|security|trust)\b/,
+    /\b(?:compaction|context|memory|recover)\b/,
+    /\b(?:evidence|investigate|research|review)\b/,
+    /\b(?:failure|incident|recovery)\b/,
+    /\b(?:delivery|operating|operations|service)\b/,
+  ];
+  return domains.filter((pattern) => pattern.test(plain)).length;
 }
 
 export function compileIntent({ request, cards }) {
@@ -213,12 +268,19 @@ export function compileIntent({ request, cards }) {
   const closePair = meaningful.length >= 2 && meaningful[0].score - meaningful[1].score <= 3
     ? [byId.get(meaningful[0].id), byId.get(meaningful[1].id)]
     : null;
-  const ambiguous = acceptedProposalIds.length === 0 && closePair !== null &&
-    !explicitlyCompatible(closePair[0], closePair[1]);
+  const broadAmbiguity = acceptedProposalIds.length === 0 && broadDomainCount(natural.text) >= 3;
+  const forgeSignals = ["implementation", "integration", "review", "test", "verification"]
+    .filter((signal) => new Set(requestTokens).has(stem(signal))).length;
+  const resolvedEngineeringCoordination = forgeSignals >= 3;
+  const ambiguous = acceptedProposalIds.length === 0 && (
+    (broadAmbiguity && !resolvedEngineeringCoordination) ||
+    (closePair !== null && !explicitlyCompatible(closePair[0], closePair[1]))
+  );
+  const ambiguousCards = closePair ?? meaningful.slice(0, 2).map(({ id }) => byId.get(id));
   const selectedCards = acceptedProposalIds.length > 0
     ? [byId.get(acceptedProposalIds[0])]
     : ambiguous
-      ? closePair
+      ? ambiguousCards
       : meaningful.length === 0
         ? []
         : [byId.get(meaningful[0].id)];
