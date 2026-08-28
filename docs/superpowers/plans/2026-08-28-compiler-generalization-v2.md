@@ -54,5 +54,5 @@
 - [x] Implement the deterministic receipt builder and package command.
 - [x] Generate the receipt twice and compare exact bytes.
 - [x] Run focused tests, intent arena, and the full repository suite.
-- [ ] Obtain independent review of over-composition, authority invention, and proof claims.
-- [ ] Commit only after all gates pass.
+- [x] Obtain independent review of over-composition, authority invention, and proof claims.
+- [x] Commit only after all gates pass.
