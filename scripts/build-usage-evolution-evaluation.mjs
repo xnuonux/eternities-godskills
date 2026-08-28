@@ -17,23 +17,33 @@ async function fileEvidence(root, relativePath) {
   return { path: relativePath.replaceAll("\\", "/"), sha256: sha256(bytes), bytes: bytes.length };
 }
 
+export function assertConstructionArtifactBytes(proposal, baselineText, candidateText) {
+  const baselineDigest = sha256(Buffer.from(baselineText.replaceAll("\r\n", "\n")));
+  const candidateDigest = sha256(Buffer.from(candidateText.replaceAll("\r\n", "\n")));
+  if (baselineDigest !== proposal.baselineDigest) throw new Error("baseline bytes drifted from the construction proposal");
+  if (candidateDigest !== proposal.candidateDigest) throw new Error("candidate bytes drifted from the construction proposal");
+  return { baselineDigest, candidateDigest };
+}
+
 export async function buildUsageEvolutionEvidence(root = path.resolve(".")) {
   const construction = await json(root, "artifacts/usage-evolution/construction.json");
   const suite = await json(root, "skills/sovereign-skill-refinery/evals/usage-evolution-cases.json");
   const policy = await json(root, "policies/promotion.v1.json");
-  const currentSkill = await readFile(path.join(root, TARGET));
-  const baselineSkill = execFileSync("git", ["show", `${BASE_COMMIT}:${TARGET}`], { cwd: root });
+  const currentSkill = await readFile(path.join(root, TARGET), "utf8");
+  const baselineSkill = execFileSync("git", ["show", `${BASE_COMMIT}:${TARGET}`], { cwd: root, encoding: "utf8" });
+  const proposal = construction.proposalPackage.record;
+  assertConstructionArtifactBytes(proposal, baselineSkill, currentSkill);
   const heldOutManifest = sealHeldOutManifest(suite.cases.map(({ id, kind, critical, expected }) => ({ id, partition: "held-out", evidenceDigest: sha256(JSON.stringify({ id, kind, critical, expected })) })), { suiteId: "usage-evolution-v1" });
-  const leakageAudit = auditHeldOutLeakage({ proposal: construction.proposal, heldOutManifest });
-  const baselineEvaluation = { ...evaluateSuite(suite.cases, suite.baseline.results), tokenCount: Math.ceil(baselineSkill.length / 4) };
-  const candidateEvaluation = { ...evaluateSuite(suite.cases, suite.candidate.results), tokenCount: Math.ceil(currentSkill.length / 4) };
-  const baselineReceipt = createEvaluationReceipt({ role: "baseline", proposal: construction.proposal, heldOutManifest, artifactDigest: construction.proposal.baselineDigest, evaluation: baselineEvaluation, evaluatorId: EVALUATOR_KEY_ID });
-  const candidateReceipt = createEvaluationReceipt({ role: "candidate", proposal: construction.proposal, heldOutManifest, artifactDigest: construction.proposal.candidateDigest, evaluation: candidateEvaluation, evaluatorId: EVALUATOR_KEY_ID });
+  const leakageAudit = auditHeldOutLeakage({ proposal, heldOutManifest });
+  const baselineEvaluation = { ...evaluateSuite(suite.cases, suite.baseline.results), tokenCount: Math.ceil(Buffer.byteLength(baselineSkill) / 4) };
+  const candidateEvaluation = { ...evaluateSuite(suite.cases, suite.candidate.results), tokenCount: Math.ceil(Buffer.byteLength(currentSkill) / 4) };
+  const baselineReceipt = createEvaluationReceipt({ role: "baseline", proposal, heldOutManifest, artifactDigest: proposal.baselineDigest, evaluation: baselineEvaluation, evaluatorId: EVALUATOR_KEY_ID });
+  const candidateReceipt = createEvaluationReceipt({ role: "candidate", proposal, heldOutManifest, artifactDigest: proposal.candidateDigest, evaluation: candidateEvaluation, evaluatorId: EVALUATOR_KEY_ID });
   const leakageAuditPackage = { record: leakageAudit, attestation: attestEvaluation("heldout-audit", evidenceSubjectDigest(leakageAudit)) };
   const baselinePackage = { record: baselineReceipt, attestation: attestEvaluation("baseline-evaluation", baselineReceipt.receiptDigest) };
   const candidatePackage = { record: candidateReceipt, attestation: attestEvaluation("candidate-evaluation", candidateReceipt.receiptDigest) };
   const authority = configureEvolutionTrust({ reviewPublicKeys: { [REVIEW_KEY_ID]: REVIEW_PUBLIC_KEY }, evaluatorPublicKeys: { [EVALUATOR_KEY_ID]: EVALUATOR_PUBLIC_KEY } });
-  const evolutionDecision = authority.decideAdoption({ proposal: construction.proposal, baselinePackage, candidatePackage, policy, leakageAuditPackage });
+  const evolutionDecision = authority.decideAdoption({ proposalPackage: construction.proposalPackage, baselinePackage, candidatePackage, policy, leakageAuditPackage });
   const proofLimits = [
     ...construction.proofLimits,
     fixtureKeyProofLimit,

@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
 
-import { buildUsageEvolutionEvidence } from "../scripts/build-usage-evolution-evaluation.mjs";
+import { assertConstructionArtifactBytes, buildUsageEvolutionEvidence } from "../scripts/build-usage-evolution-evaluation.mjs";
 import { sha256 } from "../src/io.mjs";
 
 const root = path.resolve(".");
@@ -33,4 +33,11 @@ test("certification preserves the non-adoption and proof boundaries", async () =
   assert.equal(certification.evaluation.leakageAuditPackage.record.status, "clear");
   assert.equal(certification.authority.liveSkillMutationByEngine, false);
   assert.ok(certification.proofLimits.every((limit) => limit.length > 40));
+});
+
+test("the evaluator rejects stale construction artifact bytes", async () => {
+  const construction = await readJson("artifacts/usage-evolution/construction.json");
+  const baseline = "# baseline\n";
+  const candidate = "# candidate\n";
+  assert.throws(() => assertConstructionArtifactBytes(construction.proposalPackage.record, baseline, candidate), /baseline bytes drifted/);
 });

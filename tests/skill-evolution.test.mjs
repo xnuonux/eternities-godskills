@@ -72,7 +72,7 @@ function proposal(overrides = {}) {
   return authority.stageProposal({
     targetSkillId: "oracle",
     baselineText: "# Oracle\n\n## Evaluation\nold\n",
-    candidateText: "# Oracle\n\n## Evaluation\nnew\n",
+    candidateText: "# Oracle\n\n## Evaluation\nold\nnew\n",
     edits: [{ operation: "append-case", sectionId: "evaluation", rationaleCode: "weak-date-check" }],
     miningReceipt,
     developmentManifest,
@@ -87,6 +87,7 @@ function evidence({ baseline = evaluation({ score: 0.75, passed: 3 }), candidate
   const baselineReceipt = createEvaluationReceipt({ role: "baseline", proposal: staged, heldOutManifest: held, artifactDigest: staged.baselineDigest, evaluation: baseline, evaluatorId: "deterministic-evaluator" });
   const candidateReceipt = createEvaluationReceipt({ role: "candidate", proposal: staged, heldOutManifest: held, artifactDigest: staged.candidateDigest, evaluation: candidate, evaluatorId: "deterministic-evaluator" });
   return {
+    proposalPackage: { record: staged, attestation: attest("reviewed-construction", staged.proposalDigest, "fixture-review", REVIEW_PRIVATE) },
     leakageAuditPackage: { record: leakageAudit, attestation: attest("heldout-audit", evidenceSubjectDigest(leakageAudit), "fixture-evaluator", EVALUATOR_PRIVATE) },
     baselinePackage: { record: baselineReceipt, attestation: attest("baseline-evaluation", baselineReceipt.receiptDigest, "fixture-evaluator", EVALUATOR_PRIVATE) },
     candidatePackage: { record: candidateReceipt, attestation: attest("candidate-evaluation", candidateReceipt.receiptDigest, "fixture-evaluator", EVALUATOR_PRIVATE) },
@@ -130,6 +131,7 @@ test("a coherent self-signed reviewed manifest is rejected by the host trust roo
 
 test("candidate bytes must reconcile exactly to declared changed sections", () => {
   assert.throws(() => proposal({ candidateText: "# Oracle\n\n## Evaluation\nnew\n\n## Hidden\nunrelated\n" }), /section diff does not match/);
+  assert.throws(() => proposal({ candidateText: "# Oracle\n\n## Evaluation\nwholesale rewrite\n" }), /append-case must preserve/);
 });
 
 test("held-out manifest derives its own digest and rejects duplicate evidence", () => {
@@ -152,7 +154,7 @@ test("evaluation receipts bind proposal, exact artifacts, and sealed suite", () 
 test("measured held-out gain can become eligible but never adopted", () => {
   const staged = proposal();
   const receipts = evidence({ staged });
-  const decision = authority.decideAdoption({ proposal: staged, ...receipts, policy });
+  const decision = authority.decideAdoption({ ...receipts, policy });
   assert.equal(decision.status, "eligible");
   assert.equal(decision.adopted, false);
   assert.equal(decision.requiresExplicitAdoption, true);
@@ -162,16 +164,16 @@ test("self-declared improvements cannot forge measured gain", () => {
   const staged = proposal();
   const equal = evaluation({ improvements: ["score"] });
   const receipts = evidence({ staged, baseline: equal, candidate: equal });
-  const decision = authority.decideAdoption({ proposal: staged, ...receipts, policy });
+  const decision = authority.decideAdoption({ ...receipts, policy });
   assert.equal(decision.status, "unverified");
   assert.deepEqual(decision.improvements, []);
 });
 
 test("swapped proposal audit and evaluation receipts fail closed", () => {
   const staged = proposal();
-  const other = proposal({ candidateText: "# Oracle\n\n## Evaluation\nother\n" });
+  const other = proposal({ candidateText: "# Oracle\n\n## Evaluation\nold\nother\n" });
   const wrong = evidence({ staged: other });
-  const decision = authority.decideAdoption({ proposal: staged, ...wrong, policy });
+  const decision = authority.decideAdoption({ ...wrong, proposalPackage: { record: staged, attestation: attest("reviewed-construction", staged.proposalDigest, "fixture-review", REVIEW_PRIVATE) }, policy });
   assert.equal(decision.status, "blocked");
   assert.ok(decision.failedGates.includes("leakage-audit-binding"));
   assert.ok(decision.failedGates.includes("baseline-receipt-binding"));
@@ -183,11 +185,11 @@ test("suite drift, critical regression, and unresolved effects fail closed", () 
   const alternateHeld = sealHeldOutManifest([{ id: "h-3", partition: "held-out", evidenceDigest: digest("e") }], { suiteId: "other-holdout" });
   const mixed = evidence({ staged });
   mixed.candidatePackage = evidence({ staged, held: alternateHeld }).candidatePackage;
-  assert.equal(authority.decideAdoption({ proposal: staged, ...mixed, policy }).status, "blocked");
+  assert.equal(authority.decideAdoption({ ...mixed, policy }).status, "blocked");
   const critical = evidence({ staged, candidate: evaluation({ criticalPassed: 1 }) });
-  assert.equal(authority.decideAdoption({ proposal: staged, ...critical, policy }).status, "blocked");
+  assert.equal(authority.decideAdoption({ ...critical, policy }).status, "blocked");
   const unresolved = evidence({ staged, candidate: evaluation({ unresolvedEffects: ["network"] }) });
-  assert.equal(authority.decideAdoption({ proposal: staged, ...unresolved, policy }).status, "blocked");
+  assert.equal(authority.decideAdoption({ ...unresolved, policy }).status, "blocked");
 });
 
 test("a forged clear leakage audit without evaluator attestation fails closed", () => {
@@ -196,16 +198,25 @@ test("a forged clear leakage audit without evaluator attestation fails closed", 
   assert.equal(realAudit.status, "leaked");
   const receipts = evidence({ staged });
   receipts.leakageAuditPackage = { record: { ...realAudit, status: "clear", leaks: [] }, attestation: receipts.leakageAuditPackage.attestation };
-  const decision = authority.decideAdoption({ proposal: staged, ...receipts, policy });
+  const decision = authority.decideAdoption({ ...receipts, policy });
   assert.equal(decision.status, "blocked");
   assert.ok(decision.failedGates.includes("held-out-audit-attestation"));
 });
 
-test("receipt-bound ordering is ordinal for unicode identifiers", () => {
-  const unicodeTraces = [
+test("a self-consistent proposal without review-root construction attestation fails closed", () => {
+  const staged = proposal();
+  const receipts = evidence({ staged });
+  receipts.proposalPackage.attestation = { ...receipts.proposalPackage.attestation, signature: Buffer.alloc(64).toString("base64") };
+  const decision = authority.decideAdoption({ ...receipts, policy });
+  assert.equal(decision.status, "blocked");
+  assert.ok(decision.failedGates.includes("construction-attestation"));
+});
+
+test("receipt-bound ASCII identifiers use ordinal ordering", () => {
+  const unorderedTraces = [
     { id: "z-trace", partition: "development", reviewed: true, evidenceDigest: digest("4"), targetSkillId: "oracle", failureCodes: ["z-failure"], critical: false },
     { id: "a-trace", partition: "development", reviewed: true, evidenceDigest: digest("5"), targetSkillId: "oracle", failureCodes: ["a-failure"], critical: false },
   ];
-  const manifest = createDevelopmentManifest(unicodeTraces, { reviewAuthority: "review-board", reviewLedgerDigest });
+  const manifest = createDevelopmentManifest(unorderedTraces, { reviewAuthority: "review-board", reviewLedgerDigest });
   assert.deepEqual(manifest.records.map(({ id }) => id), ["a-trace", "z-trace"]);
 });

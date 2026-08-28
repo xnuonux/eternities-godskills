@@ -65,7 +65,8 @@ function sections(markdown, label) {
   let body = [];
   const commit = () => {
     if (result.has(current)) throw new Error(`${label} contains duplicate section id: ${current}`);
-    result.set(current, sha256(body.join("\n")));
+    const text = body.join("\n");
+    result.set(current, { digest: sha256(text), text, bytes: Buffer.byteLength(text) });
   };
   for (const line of lines) {
     const match = /^(#{1,6})\s+(.+?)\s*$/.exec(line);
@@ -84,11 +85,26 @@ function deriveCandidateManifest(baselineText, candidateText) {
   const baselineSections = sections(baselineText, "baselineText");
   const candidateSections = sections(candidateText, "candidateText");
   const ids = sortedUnique([...baselineSections.keys(), ...candidateSections.keys()]);
-  const changedSectionIds = ids.filter((id) => baselineSections.get(id) !== candidateSections.get(id));
+  const changes = ids
+    .filter((id) => baselineSections.get(id)?.digest !== candidateSections.get(id)?.digest)
+    .map((sectionId) => {
+      const before = baselineSections.get(sectionId);
+      const after = candidateSections.get(sectionId);
+      return {
+        sectionId,
+        changeKind: before === undefined ? "added" : after === undefined ? "removed" : "modified",
+        beforeDigest: before?.digest ?? null,
+        afterDigest: after?.digest ?? null,
+        beforeBytes: before?.bytes ?? 0,
+        afterBytes: after?.bytes ?? 0,
+        appendOnly: before !== undefined && after !== undefined && after.text.startsWith(before.text),
+      };
+    });
   return {
     baselineDigest: sha256(Buffer.from(baselineText.replaceAll("\r\n", "\n"))),
     candidateDigest: sha256(Buffer.from(candidateText.replaceAll("\r\n", "\n"))),
-    changedSectionIds,
+    changes,
+    changedSectionIds: changes.map(({ sectionId }) => sectionId),
   };
 }
 
@@ -160,12 +176,13 @@ function validateMiningReceipt(receipt, developmentManifest, targetSkillId) {
   return codes;
 }
 
-function stageEvolutionProposal({ targetSkillId, baselineText, candidateText, edits, miningReceipt, developmentManifest, reviewAttestation, reviewKeys, maximumEdits = 4 }) {
+function stageEvolutionProposal({ targetSkillId, baselineText, candidateText, edits, miningReceipt, developmentManifest, reviewAttestation, reviewKeys, maximumEdits = 4, maximumSectionBytes = 16384 }) {
   targetSkillId = identifier(targetSkillId, "targetSkillId");
   verifyAttestation({ attestation: reviewAttestation, purpose: "reviewed-development", subjectDigest: reviewSubjectDigest(developmentManifest), trustedKeys: reviewKeys });
   const candidateManifest = deriveCandidateManifest(baselineText, candidateText);
   if (candidateManifest.baselineDigest === candidateManifest.candidateDigest) throw new Error("candidate bytes must differ from baseline bytes");
   if (!Number.isInteger(maximumEdits) || maximumEdits < 1 || maximumEdits > 16) throw new Error("maximumEdits must be an integer between 1 and 16");
+  if (!Number.isInteger(maximumSectionBytes) || maximumSectionBytes < 1 || maximumSectionBytes > 65536) throw new Error("maximumSectionBytes must be an integer between 1 and 65536");
   if (!Array.isArray(edits) || edits.length === 0) throw new Error("edits must be a non-empty array");
   if (edits.length > maximumEdits) throw new Error("proposal exceeds its edit budget");
   const failureCodes = validateMiningReceipt(miningReceipt, developmentManifest, targetSkillId);
@@ -178,8 +195,16 @@ function stageEvolutionProposal({ targetSkillId, baselineText, candidateText, ed
     return { operation, sectionId, rationaleCode };
   });
   const declaredSections = sortedUnique(normalizedEdits.map(({ sectionId }) => sectionId));
+  if (declaredSections.length !== normalizedEdits.length) throw new Error("each changed section must have exactly one edit declaration");
   if (JSON.stringify(declaredSections) !== JSON.stringify(candidateManifest.changedSectionIds)) throw new Error("candidate section diff does not match the bounded edit set");
-  const unsigned = { schemaVersion: 1, status: "staged", targetSkillId, baselineDigest: candidateManifest.baselineDigest, candidateDigest: candidateManifest.candidateDigest, changedSectionIds: candidateManifest.changedSectionIds, miningReceiptDigest: miningReceipt.receiptDigest, developmentManifestDigest: developmentManifest.manifestDigest, reviewLedgerDigest: developmentManifest.reviewLedgerDigest, reviewAttestation: { algorithm: reviewAttestation.algorithm, keyId: reviewAttestation.keyId, purpose: reviewAttestation.purpose, subjectDigest: reviewAttestation.subjectDigest, signature: reviewAttestation.signature }, maximumEdits, edits: normalizedEdits, active: false, adopted: false, requiresExplicitAdoption: true };
+  for (const edit of normalizedEdits) {
+    const change = candidateManifest.changes.find(({ sectionId }) => sectionId === edit.sectionId);
+    if (change.afterBytes > maximumSectionBytes) throw new Error(`changed section exceeds maximumSectionBytes: ${edit.sectionId}`);
+    if (edit.operation === "append-boundary" && change.changeKind !== "added") throw new Error(`append-boundary requires a newly added section: ${edit.sectionId}`);
+    if (edit.operation === "append-case" && (change.changeKind !== "modified" || !change.appendOnly)) throw new Error(`append-case must preserve the existing section as a prefix: ${edit.sectionId}`);
+    if (edit.operation === "replace-section" && change.changeKind !== "modified") throw new Error(`replace-section requires an existing bounded section: ${edit.sectionId}`);
+  }
+  const unsigned = { schemaVersion: 1, status: "staged", targetSkillId, baselineDigest: candidateManifest.baselineDigest, candidateDigest: candidateManifest.candidateDigest, changes: candidateManifest.changes.map(({ appendOnly, ...change }) => change), miningReceiptDigest: miningReceipt.receiptDigest, developmentManifestDigest: developmentManifest.manifestDigest, reviewSubjectDigest: reviewSubjectDigest(developmentManifest), reviewLedgerDigest: developmentManifest.reviewLedgerDigest, reviewAttestation: { algorithm: reviewAttestation.algorithm, keyId: reviewAttestation.keyId, purpose: reviewAttestation.purpose, subjectDigest: reviewAttestation.subjectDigest, signature: reviewAttestation.signature }, maximumEdits, maximumSectionBytes, edits: normalizedEdits, active: false, adopted: false, requiresExplicitAdoption: true };
   return { ...unsigned, proposalDigest: hashRecord(unsigned) };
 }
 
@@ -237,12 +262,14 @@ function verifyEvaluationReceipt(receipt, role, proposal, heldOutManifestDigest)
   validateEvaluation(receipt.evaluation);
 }
 
-function decideEvolutionAdoption({ proposal, baselinePackage, candidatePackage, policy, leakageAuditPackage, evaluatorKeys }) {
+function decideEvolutionAdoption({ proposalPackage, baselinePackage, candidatePackage, policy, leakageAuditPackage, evaluatorKeys, reviewKeys }) {
+  const proposal = proposalPackage?.record;
   const baselineReceipt = baselinePackage?.record;
   const candidateReceipt = candidatePackage?.record;
   const leakageAudit = leakageAuditPackage?.record;
   const failedGates = [];
   try { verifySelfDigest(proposal, "proposalDigest", "proposal"); } catch { failedGates.push("proposal-binding"); }
+  try { verifyAttestation({ attestation: proposalPackage?.attestation, purpose: "reviewed-construction", subjectDigest: proposal?.proposalDigest, trustedKeys: reviewKeys }); } catch { failedGates.push("construction-attestation"); }
   if (proposal?.status !== "staged" || proposal?.active !== false || proposal?.adopted !== false) failedGates.push("inactive-staged-proposal");
   if (leakageAudit?.status !== "clear") failedGates.push("held-out-leakage");
   if (leakageAudit?.proposalDigest !== proposal?.proposalDigest) failedGates.push("leakage-audit-binding");
@@ -272,6 +299,6 @@ export function configureEvolutionTrust({ reviewPublicKeys, evaluatorPublicKeys 
   const evaluatorKeys = trustedKeyMap(evaluatorPublicKeys, "evaluatorPublicKeys");
   return Object.freeze({
     stageProposal: (input) => stageEvolutionProposal({ ...input, reviewKeys }),
-    decideAdoption: (input) => decideEvolutionAdoption({ ...input, evaluatorKeys }),
+    decideAdoption: (input) => decideEvolutionAdoption({ ...input, evaluatorKeys, reviewKeys }),
   });
 }

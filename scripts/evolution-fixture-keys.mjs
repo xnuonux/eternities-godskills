@@ -14,7 +14,7 @@ function attest(purpose, subjectDigest, keyId, privateKey) {
   return { ...unsigned, signature: sign(null, attestationMessage(unsigned), privateKey).toString("base64") };
 }
 
-export function attestReview(subjectDigest) { return attest("reviewed-development", subjectDigest, REVIEW_KEY_ID, REVIEW_PRIVATE_KEY); }
+export function attestReview(subjectDigest, purpose = "reviewed-development") { return attest(purpose, subjectDigest, REVIEW_KEY_ID, REVIEW_PRIVATE_KEY); }
 export function attestEvaluation(purpose, subjectDigest) { return attest(purpose, subjectDigest, EVALUATOR_KEY_ID, EVALUATOR_PRIVATE_KEY); }
 
 export const fixtureKeyProofLimit = "the committed private keys authenticate deterministic certification fixtures only and are not production trust roots";

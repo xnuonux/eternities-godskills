@@ -32,7 +32,8 @@ export async function buildConstruction(root = path.resolve(".")) {
     reviewAttestation,
     maximumEdits: 2,
   });
-  return { schemaVersion: 1, developmentManifest, miningReceipt, proposal, authority: { reviewKeyId: REVIEW_KEY_ID, algorithm: "ed25519" }, proofLimits: [development.proofLimit, fixtureKeyProofLimit] };
+  const proposalPackage = { record: proposal, attestation: attestReview(proposal.proposalDigest, "reviewed-construction") };
+  return { schemaVersion: 1, developmentManifest, miningReceipt, proposalPackage, authority: { reviewKeyId: REVIEW_KEY_ID, algorithm: "ed25519" }, proofLimits: [development.proofLimit, fixtureKeyProofLimit] };
 }
 
 const root = path.resolve(".");
