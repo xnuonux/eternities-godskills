@@ -3,42 +3,27 @@ import assert from "node:assert/strict";
 
 import {
   auditHeldOutLeakage,
+  createDevelopmentManifest,
+  createEvaluationReceipt,
   decideEvolutionAdoption,
   mineRecurringFailures,
+  sealHeldOutManifest,
   stageEvolutionProposal,
 } from "../src/skill-evolution.mjs";
 
 const digest = (character) => character.repeat(64);
-const development = [
+const traces = [
   { id: "d-1", partition: "development", reviewed: true, evidenceDigest: digest("1"), targetSkillId: "oracle", failureCodes: ["missing-source-boundary"], critical: true },
   { id: "d-2", partition: "development", reviewed: true, evidenceDigest: digest("2"), targetSkillId: "oracle", failureCodes: ["missing-source-boundary", "weak-date-check"], critical: false },
   { id: "d-3", partition: "development", reviewed: true, evidenceDigest: digest("3"), targetSkillId: "oracle", failureCodes: ["weak-date-check"], critical: false },
 ];
-
-const heldOut = [
+const reviewLedgerDigest = digest("9");
+const developmentManifest = createDevelopmentManifest(traces, { reviewAuthority: "review-board", reviewLedgerDigest });
+const miningReceipt = mineRecurringFailures(developmentManifest, { minimumOccurrences: 2 });
+const heldOutManifest = sealHeldOutManifest([
   { id: "h-1", partition: "held-out", evidenceDigest: digest("a") },
   { id: "h-2", partition: "held-out", evidenceDigest: digest("b") },
-];
-
-function evaluation(overrides = {}) {
-  return {
-    status: "evaluated",
-    targetSkillId: "oracle",
-    baselineDigest: digest("c"),
-    datasetPartition: "held-out",
-    suiteDigest: digest("f"),
-    total: 4,
-    passed: 4,
-    criticalTotal: 2,
-    criticalPassed: 2,
-    score: 1,
-    tokenCount: 100,
-    kindScores: { direct: { total: 4, passed: 4, score: 1 } },
-    unresolvedEffects: [],
-    improvements: [],
-    ...overrides,
-  };
-}
+], { suiteId: "oracle-holdout" });
 
 const policy = {
   schemaVersion: 1,
@@ -51,89 +36,135 @@ const policy = {
   improvementDimensions: ["score", "tokenCount", "direct"],
 };
 
-test("recurring failure mining is deterministic and development-only", () => {
-  const forward = mineRecurringFailures(development, { minimumOccurrences: 2 });
-  const reverse = mineRecurringFailures([...development].reverse(), { minimumOccurrences: 2 });
-  assert.deepEqual(forward, reverse);
-  assert.deepEqual(forward.map(({ failureCode }) => failureCode), ["missing-source-boundary", "weak-date-check"]);
-  assert.throws(() => mineRecurringFailures([...development, heldOut[0]]), /development partition/);
-  assert.throws(() => mineRecurringFailures([{ ...development[0], reviewed: false }]), /reviewed/);
-});
+function evaluation(overrides = {}) {
+  return {
+    schemaVersion: 1,
+    status: "evaluated",
+    total: 4,
+    passed: 4,
+    criticalTotal: 2,
+    criticalPassed: 2,
+    score: 1,
+    tokenCount: 100,
+    kindScores: { direct: { total: 4, passed: 4, score: 1 } },
+    unresolvedEffects: [],
+    failures: [],
+    improvements: [],
+    ...overrides,
+  };
+}
 
-test("staging is bounded, byte-bound, and inactive by default", () => {
-  const failures = mineRecurringFailures(development, { minimumOccurrences: 2 });
-  const proposal = stageEvolutionProposal({
+function proposal(overrides = {}) {
+  return stageEvolutionProposal({
     targetSkillId: "oracle",
     baselineDigest: digest("c"),
-    edits: [
-      { operation: "replace-section", section: "source boundaries", rationaleCode: "missing-source-boundary" },
-      { operation: "append-case", section: "evaluation", rationaleCode: "weak-date-check" },
-    ],
-    failures,
+    candidateDigest: digest("d"),
+    edits: [{ operation: "append-case", sectionId: "evaluation", rationaleCode: "weak-date-check" }],
+    miningReceipt,
+    developmentManifest,
+    trustedDevelopmentManifestDigest: developmentManifest.manifestDigest,
+    trustedReviewLedgerDigest: reviewLedgerDigest,
     maximumEdits: 2,
+    ...overrides,
   });
-  assert.equal(proposal.status, "staged");
-  assert.equal(proposal.active, false);
-  assert.equal(proposal.adopted, false);
-  assert.deepEqual(proposal.constructionEvidenceIds, ["d-1", "d-2", "d-3"]);
-  assert.throws(() => stageEvolutionProposal({ targetSkillId: "oracle", baselineDigest: digest("c"), edits: [...proposal.edits, proposal.edits[0]], failures, maximumEdits: 2 }), /edit budget/);
+}
+
+function evidence({ baseline = evaluation({ score: 0.75, passed: 3 }), candidate = evaluation(), staged = proposal(), held = heldOutManifest } = {}) {
+  const leakageAudit = auditHeldOutLeakage({ proposal: staged, heldOutManifest: held });
+  const baselineReceipt = createEvaluationReceipt({ role: "baseline", proposal: staged, heldOutManifest: held, artifactDigest: staged.baselineDigest, evaluation: baseline, evaluatorId: "deterministic-evaluator" });
+  const candidateReceipt = createEvaluationReceipt({ role: "candidate", proposal: staged, heldOutManifest: held, artifactDigest: staged.candidateDigest, evaluation: candidate, evaluatorId: "deterministic-evaluator" });
+  return { leakageAudit, baselineReceipt, candidateReceipt };
+}
+
+test("development manifest and recurring failure receipt are deterministic and partition-bound", () => {
+  const reverse = createDevelopmentManifest([...traces].reverse(), { reviewAuthority: "review-board", reviewLedgerDigest });
+  assert.equal(reverse.manifestDigest, developmentManifest.manifestDigest);
+  assert.deepEqual(mineRecurringFailures(reverse), miningReceipt);
+  assert.deepEqual(miningReceipt.clusters.map(({ failureCode }) => failureCode), ["missing-source-boundary", "weak-date-check"]);
+  assert.throws(() => createDevelopmentManifest([{ ...traces[0], partition: "held-out" }], { reviewAuthority: "review-board", reviewLedgerDigest }), /development partition/);
+  assert.throws(() => createDevelopmentManifest([{ ...traces[0], reviewed: false }], { reviewAuthority: "review-board", reviewLedgerDigest }), /reviewed/);
 });
 
-test("held-out leakage catches identity digest and suite construction overlap", () => {
-  const failures = mineRecurringFailures(development, { minimumOccurrences: 2 });
-  const clean = stageEvolutionProposal({ targetSkillId: "oracle", baselineDigest: digest("c"), edits: [{ operation: "append-case", section: "evaluation", rationaleCode: "weak-date-check" }], failures, maximumEdits: 2 });
-  assert.equal(auditHeldOutLeakage({ proposal: clean, heldOutCases: heldOut, heldOutSuiteDigest: digest("f") }).status, "clear");
-  const leaked = { ...clean, constructionEvidenceDigests: [...clean.constructionEvidenceDigests, digest("a")] };
-  const audit = auditHeldOutLeakage({ proposal: leaked, heldOutCases: heldOut, heldOutSuiteDigest: digest("f") });
-  assert.equal(audit.status, "leaked");
-  assert.ok(audit.leaks.some(({ type }) => type === "evidence-digest"));
-  assert.equal(auditHeldOutLeakage({ proposal: { ...clean, constructionInputDigests: [digest("f")] }, heldOutCases: heldOut, heldOutSuiteDigest: digest("f") }).status, "leaked");
+test("staging reconciles exact reviewed evidence and remains inactive", () => {
+  const staged = proposal();
+  assert.equal(staged.status, "staged");
+  assert.equal(staged.active, false);
+  assert.equal(staged.adopted, false);
+  assert.match(staged.proposalDigest, /^[a-f0-9]{64}$/);
+  assert.throws(() => proposal({ edits: [staged.edits[0], staged.edits[0], staged.edits[0]] }), /edit budget/);
+  assert.throws(() => proposal({ trustedReviewLedgerDigest: digest("8") }), /trusted review ledger/);
 });
 
-test("adoption eligibility requires same held-out suite, clean leakage, and measured gain", () => {
-  const failures = mineRecurringFailures(development, { minimumOccurrences: 2 });
-  const proposal = stageEvolutionProposal({ targetSkillId: "oracle", baselineDigest: digest("c"), edits: [{ operation: "append-case", section: "evaluation", rationaleCode: "weak-date-check" }], failures, maximumEdits: 2 });
-  const leakageAudit = auditHeldOutLeakage({ proposal, heldOutCases: heldOut, heldOutSuiteDigest: digest("f") });
-  const decision = decideEvolutionAdoption({ proposal, baseline: evaluation({ score: 0.75, passed: 3 }), candidate: evaluation({ score: 1 }), policy, leakageAudit });
+test("fabricated or tampered mining evidence cannot stage", () => {
+  const fabricated = structuredClone(miningReceipt);
+  fabricated.clusters[0].failureCode = "fabricated-failure";
+  assert.throws(() => proposal({ miningReceipt: fabricated, edits: [{ operation: "append-case", sectionId: "evaluation", rationaleCode: "fabricated-failure" }] }), /digest does not match/);
+  const tamperedManifest = structuredClone(developmentManifest);
+  tamperedManifest.records[0].failureCodes.push("fabricated-failure");
+  assert.throws(() => proposal({ developmentManifest: tamperedManifest }), /digest does not match/);
+});
+
+test("held-out manifest derives its own digest and rejects duplicate evidence", () => {
+  const reversed = sealHeldOutManifest([...heldOutManifest.records].reverse(), { suiteId: "oracle-holdout" });
+  assert.equal(reversed.manifestDigest, heldOutManifest.manifestDigest);
+  assert.throws(() => sealHeldOutManifest([{ id: "h-1", partition: "held-out", evidenceDigest: digest("a") }, { id: "h-2", partition: "held-out", evidenceDigest: digest("a") }], { suiteId: "oracle-holdout" }), /duplicate held-out evidence digest/);
+});
+
+test("evaluation receipts bind proposal, exact artifacts, and sealed suite", () => {
+  const staged = proposal();
+  const { baselineReceipt, candidateReceipt } = evidence({ staged });
+  assert.equal(baselineReceipt.artifactDigest, staged.baselineDigest);
+  assert.equal(candidateReceipt.artifactDigest, staged.candidateDigest);
+  assert.equal(candidateReceipt.heldOutManifestDigest, heldOutManifest.manifestDigest);
+  assert.throws(() => createEvaluationReceipt({ role: "candidate", proposal: staged, heldOutManifest, artifactDigest: digest("e"), evaluation: evaluation(), evaluatorId: "deterministic-evaluator" }), /artifact digest/);
+});
+
+test("measured held-out gain can become eligible but never adopted", () => {
+  const staged = proposal();
+  const receipts = evidence({ staged });
+  const decision = decideEvolutionAdoption({ proposal: staged, ...receipts, policy });
   assert.equal(decision.status, "eligible");
   assert.equal(decision.adopted, false);
   assert.equal(decision.requiresExplicitAdoption, true);
 });
 
-test("leakage, suite drift, critical regression, and absent gain fail closed", () => {
-  const failures = mineRecurringFailures(development, { minimumOccurrences: 2 });
-  const proposal = stageEvolutionProposal({ targetSkillId: "oracle", baselineDigest: digest("c"), edits: [{ operation: "append-case", section: "evaluation", rationaleCode: "weak-date-check" }], failures, maximumEdits: 2 });
-  const clean = auditHeldOutLeakage({ proposal, heldOutCases: heldOut, heldOutSuiteDigest: digest("f") });
-  assert.equal(decideEvolutionAdoption({ proposal, baseline: evaluation(), candidate: evaluation(), policy, leakageAudit: clean }).status, "unverified");
-  assert.equal(decideEvolutionAdoption({ proposal, baseline: evaluation(), candidate: evaluation({ suiteDigest: digest("e") }), policy, leakageAudit: clean }).status, "blocked");
-  assert.equal(decideEvolutionAdoption({ proposal, baseline: evaluation(), candidate: evaluation({ criticalPassed: 1 }), policy, leakageAudit: clean }).status, "blocked");
-  assert.equal(decideEvolutionAdoption({ proposal, baseline: evaluation({ score: 0.75, passed: 3 }), candidate: evaluation(), policy, leakageAudit: { status: "leaked", leaks: [{ type: "case-id" }] } }).status, "blocked");
+test("self-declared improvements cannot forge measured gain", () => {
+  const staged = proposal();
+  const equal = evaluation({ improvements: ["score"] });
+  const receipts = evidence({ staged, baseline: equal, candidate: equal });
+  const decision = decideEvolutionAdoption({ proposal: staged, ...receipts, policy });
+  assert.equal(decision.status, "unverified");
+  assert.deepEqual(decision.improvements, []);
 });
 
-test("a clean audit from another proposal cannot be substituted", () => {
-  const failures = mineRecurringFailures(development, { minimumOccurrences: 2 });
-  const proposal = stageEvolutionProposal({ targetSkillId: "oracle", baselineDigest: digest("c"), edits: [{ operation: "append-case", section: "evaluation", rationaleCode: "weak-date-check" }], failures, maximumEdits: 2 });
-  const other = { ...proposal, edits: [{ ...proposal.edits[0], section: "different section" }] };
-  const wrongAudit = auditHeldOutLeakage({ proposal: other, heldOutCases: heldOut, heldOutSuiteDigest: digest("f") });
-  const decision = decideEvolutionAdoption({ proposal, baseline: evaluation({ score: 0.75, passed: 3 }), candidate: evaluation(), policy, leakageAudit: wrongAudit });
+test("swapped proposal audit and evaluation receipts fail closed", () => {
+  const staged = proposal();
+  const other = proposal({ candidateDigest: digest("e") });
+  const wrong = evidence({ staged: other });
+  const decision = decideEvolutionAdoption({ proposal: staged, ...wrong, policy });
   assert.equal(decision.status, "blocked");
   assert.ok(decision.failedGates.includes("leakage-audit-binding"));
+  assert.ok(decision.failedGates.includes("baseline-receipt-binding"));
+  assert.ok(decision.failedGates.includes("candidate-receipt-binding"));
 });
 
-test("evaluation evidence must bind the target skill and exact baseline", () => {
-  const failures = mineRecurringFailures(development, { minimumOccurrences: 2 });
-  const proposal = stageEvolutionProposal({ targetSkillId: "oracle", baselineDigest: digest("c"), edits: [{ operation: "append-case", section: "evaluation", rationaleCode: "weak-date-check" }], failures, maximumEdits: 2 });
-  const audit = auditHeldOutLeakage({ proposal, heldOutCases: heldOut, heldOutSuiteDigest: digest("f") });
-  const wrongTarget = decideEvolutionAdoption({ proposal, baseline: evaluation(), candidate: evaluation({ targetSkillId: "aegis" }), policy, leakageAudit: audit });
-  const wrongBaseline = decideEvolutionAdoption({ proposal, baseline: evaluation(), candidate: evaluation({ baselineDigest: digest("d") }), policy, leakageAudit: audit });
-  assert.ok(wrongTarget.failedGates.includes("target-binding"));
-  assert.ok(wrongBaseline.failedGates.includes("baseline-binding"));
+test("suite drift, critical regression, and unresolved effects fail closed", () => {
+  const staged = proposal();
+  const alternateHeld = sealHeldOutManifest([{ id: "h-3", partition: "held-out", evidenceDigest: digest("e") }], { suiteId: "other-holdout" });
+  const mixed = evidence({ staged });
+  mixed.candidateReceipt = evidence({ staged, held: alternateHeld }).candidateReceipt;
+  assert.equal(decideEvolutionAdoption({ proposal: staged, ...mixed, policy }).status, "blocked");
+  const critical = evidence({ staged, candidate: evaluation({ criticalPassed: 1 }) });
+  assert.equal(decideEvolutionAdoption({ proposal: staged, ...critical, policy }).status, "blocked");
+  const unresolved = evidence({ staged, candidate: evaluation({ unresolvedEffects: ["network"] }) });
+  assert.equal(decideEvolutionAdoption({ proposal: staged, ...unresolved, policy }).status, "blocked");
 });
 
-test("forged recurrence and duplicate held-out digests fail validation", () => {
-  const failures = mineRecurringFailures(development, { minimumOccurrences: 2 });
-  const forged = [{ ...failures[0], occurrences: 2, traceIds: ["d-1"], evidenceDigests: [digest("1")] }];
-  assert.throws(() => stageEvolutionProposal({ targetSkillId: "oracle", baselineDigest: digest("c"), edits: [{ operation: "append-case", section: "evaluation", rationaleCode: forged[0].failureCode }], failures: forged }), /recurrence evidence/);
-  const proposal = stageEvolutionProposal({ targetSkillId: "oracle", baselineDigest: digest("c"), edits: [{ operation: "append-case", section: "evaluation", rationaleCode: "weak-date-check" }], failures, maximumEdits: 2 });
-  assert.throws(() => auditHeldOutLeakage({ proposal, heldOutCases: [heldOut[0], { ...heldOut[1], evidenceDigest: heldOut[0].evidenceDigest }], heldOutSuiteDigest: digest("f") }), /duplicate held-out evidence digest/);
+test("receipt-bound ordering is ordinal for unicode identifiers", () => {
+  const unicodeTraces = [
+    { id: "z-trace", partition: "development", reviewed: true, evidenceDigest: digest("4"), targetSkillId: "oracle", failureCodes: ["z-failure"], critical: false },
+    { id: "a-trace", partition: "development", reviewed: true, evidenceDigest: digest("5"), targetSkillId: "oracle", failureCodes: ["a-failure"], critical: false },
+  ];
+  const manifest = createDevelopmentManifest(unicodeTraces, { reviewAuthority: "review-board", reviewLedgerDigest });
+  assert.deepEqual(manifest.records.map(({ id }) => id), ["a-trace", "z-trace"]);
 });
