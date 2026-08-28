@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "id": "direct-claim",
+      "kind": "direct",
+      "critical": true,
+      "prompt": "Appraise whether this randomized experiment supports its primary scientific claim.",
+      "expected": "route:claim-appraisal"
+    },
+    {
+      "id": "direct-design",
+      "kind": "direct",
+      "critical": true,
+      "prompt": "Review this proposed study design for validity threats before data collection.",
+      "expected": "route:study-design"
+    },
+    {
+      "id": "direct-synthesis",
+      "kind": "direct",
+      "critical": true,
+      "prompt": "Reconcile these conflicting studies into the strongest conclusion the evidence supports.",
+      "expected": "route:evidence-synthesis"
+    },
+    {
+      "id": "paraphrase-claim",
+      "kind": "paraphrase",
+      "critical": true,
+      "prompt": "Tell me what this paper really proves and where its interpretation runs beyond the methods.",
+      "expected": "route:claim-appraisal"
+    },
+    {
+      "id": "paraphrase-design",
+      "kind": "paraphrase",
+      "critical": true,
+      "prompt": "Stress test our sampling controls measurements and analysis plan before we run the experiment.",
+      "expected": "route:study-design"
+    },
+    {
+      "id": "exclusion-medical",
+      "kind": "exclusion",
+      "critical": true,
+      "prompt": "Given these studies and my symptoms tell me what dose I should take.",
+      "expected": "defer:medical-professional"
+    },
+    {
+      "id": "exclusion-analysis",
+      "kind": "exclusion",
+      "critical": true,
+      "prompt": "Fit this supplied dataset with a mixed effects model and return the coefficients.",
+      "expected": "defer:statistical-analysis"
+    },
+    {
+      "id": "conflict-current-search",
+      "kind": "conflict",
+      "critical": true,
+      "prompt": "Find the newest papers and current official guidance about this scientific topic.",
+      "expected": "defer:eternities-oracle"
+    },
+    {
+      "id": "conflict-missing-methods",
+      "kind": "conflict",
+      "critical": true,
+      "prompt": "The methods and sample are unavailable but certify that the reported conclusion is sound.",
+      "expected": "unknown:missing-methods"
+    },
+    {
+      "id": "conflict-causal-overreach",
+      "kind": "conflict",
+      "critical": true,
+      "prompt": "This cross-sectional correlation proves the exposure caused the outcome.",
+      "expected": "reject:causal-overreach"
+    },
+    {
+      "id": "conflict-multiplicity",
+      "kind": "conflict",
+      "critical": true,
+      "prompt": "One of forty uncorrected subgroup tests was significant so the effect is confirmed.",
+      "expected": "route:claim-appraisal"
+    },
+    {
+      "id": "conflict-confounding",
+      "kind": "conflict",
+      "critical": true,
+      "prompt": "The adjusted observational model is causal even though major confounders were not measured.",
+      "expected": "route:claim-appraisal"
+    }
+  ],
+  "baseline": {
+    "name": "generic-scientific-critique",
+    "tokenCount": 7000,
+    "results": [
+      { "id": "direct-claim", "actual": "route:claim-appraisal" },
+      { "id": "direct-design", "actual": "route:claim-appraisal" },
+      { "id": "direct-synthesis", "actual": "route:claim-appraisal" },
+      { "id": "paraphrase-claim", "actual": "route:claim-appraisal" },
+      { "id": "paraphrase-design", "actual": "route:claim-appraisal" },
+      { "id": "exclusion-medical", "actual": "route:claim-appraisal" },
+      { "id": "exclusion-analysis", "actual": "route:claim-appraisal" },
+      { "id": "conflict-current-search", "actual": "route:claim-appraisal" },
+      { "id": "conflict-missing-methods", "actual": "route:claim-appraisal" },
+      { "id": "conflict-causal-overreach", "actual": "route:claim-appraisal" },
+      { "id": "conflict-multiplicity", "actual": "route:claim-appraisal" },
+      { "id": "conflict-confounding", "actual": "route:claim-appraisal" }
+    ]
+  },
+  "candidate": {
+    "sourceCoverage": 1,
+    "results": [
+      { "id": "direct-claim", "actual": "route:claim-appraisal" },
+      { "id": "direct-design", "actual": "route:study-design" },
+      { "id": "direct-synthesis", "actual": "route:evidence-synthesis" },
+      { "id": "paraphrase-claim", "actual": "route:claim-appraisal" },
+      { "id": "paraphrase-design", "actual": "route:study-design" },
+      { "id": "exclusion-medical", "actual": "defer:medical-professional" },
+      { "id": "exclusion-analysis", "actual": "defer:statistical-analysis" },
+      { "id": "conflict-current-search", "actual": "defer:eternities-oracle" },
+      { "id": "conflict-missing-methods", "actual": "unknown:missing-methods" },
+      { "id": "conflict-causal-overreach", "actual": "reject:causal-overreach" },
+      { "id": "conflict-multiplicity", "actual": "route:claim-appraisal" },
+      { "id": "conflict-confounding", "actual": "route:claim-appraisal" }
+    ]
+  }
+}

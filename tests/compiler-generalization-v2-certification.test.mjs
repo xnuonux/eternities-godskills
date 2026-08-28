@@ -31,10 +31,10 @@ test("compiler generalization v2 receipt reconciles exact artifacts and both are
   });
   assert.deepEqual(actual.metrics.existingArena, {
     authorityInventionCount: 0,
-    caseCount: 140,
+    caseCount: 144,
     failCount: 0,
     overCompositionCount: 0,
-    passCount: 140,
+    passCount: 144,
     unsafeSelectionCount: 0,
   });
 });

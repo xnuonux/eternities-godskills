@@ -16,7 +16,7 @@ const STOP_WORDS = new Set([
 ]);
 
 const WRITE_WORDS = new Set([
-  "build", "change", "edit", "fix", "implement", "integrate", "migrate",
+  "build", "edit", "fix", "implement", "integrate", "migrate",
   "redesign", "refactor", "rewrite", "update",
 ]);
 const EXTERNAL_READ_WORDS = new Set([
@@ -90,6 +90,14 @@ function actionNegated(plain, word) {
   );
   const withoutReversals = plain.replace(reversal, " ");
   return new RegExp(`\\b(?:without|do not|not|no)\\s+(?:\\w+\\s+){0,6}${action}`).test(withoutReversals);
+}
+
+function changeRequestsMutation(plain) {
+  if (actionNegated(plain, "change")) return false;
+  return [...plain.matchAll(/\bchange\w*\b/g)].some((match) => {
+    const prefix = plain.slice(Math.max(0, match.index - 64), match.index);
+    return !/\b(?:could|may|might|would)\s+(?:\w+\s+){0,3}$/.test(prefix);
+  });
 }
 
 function publicationRequested(plain) {
@@ -175,7 +183,10 @@ function inferRequestedEffects(text) {
   const plain = plainText(text);
   const negated = (word) => actionNegated(plain, word);
   const effects = new Set(["local-read"]);
-  if ([...WRITE_WORDS].some((token) => requestTokens.has(stem(token)) && !negated(token))) {
+  if (
+    [...WRITE_WORDS].some((token) => requestTokens.has(stem(token)) && !negated(token)) ||
+    changeRequestsMutation(plain)
+  ) {
     effects.add("local-write");
   }
   const externalResearch = !/\b(?:do not|without)\b.{0,48}\b(?:latest|current|official)\b/.test(plain) && (
