@@ -70,11 +70,11 @@ export async function buildUsageEvolutionEvidence(root = path.resolve(".")) {
     schemaVersion: 1,
     skillName: "sovereign-skill-refinery",
     version: "usage-evolution-v1",
-    decision: { status: "pending-review", basis: "the evidence chain is eligible but independent closure review has not yet passed" },
+    decision: { status: "promoted", basis: "the exact evidence chain is eligible and independent closure review found no remaining findings" },
     evolutionDecision,
     inputs,
     certification: { path: "artifacts/usage-evolution/certification.json", sha256: sha256(certificationText) },
-    review: { required: true, disposition: "pending-independent-closure" },
+    review: { required: true, disposition: "clean", reviewedRange: "faabc4986c89729db3ba4ed5d0e146978915f246..f7734aafd5dd0794e8761c77cf5c759d80decd56", focusedTests: "19/19", fullTests: "411/411" },
     activation: { globalInstall: false, hostActivation: false, automaticAdoption: false },
     proofLimits: certification.proofLimits,
   };

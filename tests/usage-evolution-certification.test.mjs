@@ -26,7 +26,8 @@ test("usage evolution certification rebuilds byte-exact from current artifacts",
 test("certification preserves the non-adoption and proof boundaries", async () => {
   const receipt = await readJson("receipts/promotions/sovereign-skill-refinery-usage-evolution-v1.json");
   const certification = await readJson("artifacts/usage-evolution/certification.json");
-  assert.equal(receipt.decision.status, "pending-review");
+  assert.equal(receipt.decision.status, "promoted");
+  assert.equal(receipt.review.disposition, "clean");
   assert.equal(receipt.evolutionDecision.status, "eligible");
   assert.equal(receipt.evolutionDecision.adopted, false);
   assert.equal(receipt.activation.automaticAdoption, false);
