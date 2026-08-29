@@ -241,3 +241,17 @@ test("repeated generic operation fragments cannot hide behind a varied first ope
     /repeated operation fragment/,
   );
 });
+
+test("heading-shaped template extraction is not semantic review", () => {
+  assert.throws(
+    () => validateWave2ReviewBatch(batch([review({
+      neutralCapabilitySummary: "This source centers on Overview, Workflow, and Verification for alpha-specific work.",
+      operations: [
+        "use Overview to establish the applicable workflow",
+        "apply Workflow to produce its stated artifact",
+        "record alpha evidence, boundary outcome, and verification result",
+      ],
+    })]), [facet()], [bodyEvidence()]),
+    /generic semantic review boilerplate/,
+  );
+});

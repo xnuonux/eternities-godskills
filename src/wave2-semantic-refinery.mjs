@@ -21,6 +21,10 @@ const GENERIC_REVIEW_PATTERNS = [
   "inspect configuration and constraints apply or describe the relevant mechanism check boundaries and verification conditions",
   "identify applicable structures or mechanisms apply bounded domain guidance check the result against stated constraints",
   "workflow and its documented configuration and execution steps",
+  "this source centers on",
+  "to establish the applicable workflow",
+  "to produce its stated artifact",
+  "evidence boundary outcome and verification result",
 ].map(normalizeText);
 
 function nonEmptyString(value, field) {
