@@ -9,1318 +9,426 @@
       "facetId": "facet-033dc94650bfe73f",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:skills/android-cli/SKILL.md",
       "bodySha256": "033dc94650bfe73f2468bc44e7dd7038627992fd10896e8cad20746ba899a4c1",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for android-cli with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess android-cli for a release-related task",
-        "apply android-cli within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Coordinates Android work through template-based project creation, SDK package lifecycle commands, APK deployment, and JSON layout or PNG screen-capture diagnostics.",
+      "neutralIntentExamples": ["prepare an Android SDK and emulator for a reproducible application run", "deploy APK artifacts to a selected device and inspect its rendered interface"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read",
-        "external-write"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["Android project or creation template, application name, and minimum SDK", "SDK package names and versions plus an optional SDK root", "APK paths, component type, activity, and target device serial"],
+      "operations": ["confirm the android executable is available; if absent, stage the platform installer privately and require content review before installation", "install or enumerate SDK packages, create or describe the project, select an emulator or device, deploy named APKs, then diagnose with layout-tree JSON, screenshots, or documentation search"],
+      "outputs": ["created project or metadata locating build artifacts", "updated SDK or emulator inventory", "running app plus layout JSON, screenshot PNG, or documentation results"],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": ["halts installation when the downloaded installer has not been inspected and confirmed", "reports unavailable CLI, SDK package, device, emulator, APK, or network documentation instead of assuming deployment"],
+      "exclusions": ["does not define Gradle builds, signing, Play Store submission, or the journey semantics delegated to references"],
+      "usefulInvariants": ["mutable installers are saved and reviewed rather than piped to a shell", "device-sensitive commands retain explicit artifact paths and serials", "layout inspection is structured JSON and capture writes a named PNG"],
+      "materialRisks": ["SDK removal or self-update can invalidate other projects", "an incorrect serial can alter an unintended device", "referenced interaction and journey details were not present in this body"],
+      "providerCoupling": "conditional", "projectCoupling": "project-adjacent", "disposition": "pattern-reference", "proposedCluster": "android artifact deployment and device diagnostics", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-04538419e4475442",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/expo-ui/SKILL.md",
       "bodySha256": "04538419e447544277f437dc985c4ee98b8e5f0098bdb45885e017de4614bc52",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for expo-ui with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess expo-ui for a release-related task",
-        "apply expo-ui within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Selects Expo UI universal components or platform-specific SwiftUI and Jetpack Compose trees, enforcing Host wrapping and platform-file isolation to prevent cross-platform view-config crashes.",
+      "neutralIntentExamples": ["choose an Expo UI component layer for one shared mobile interface", "isolate native iOS and Android trees when universal components are insufficient"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "provider-bound",
-      "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["Expo SDK version and target platforms", "required component or modifier behavior", "existing community UI dependency when considering a drop-in replacement"],
+      "operations": ["start with root-package universal components when SDK 56 or later satisfies the interface", "fall back only for missing behavior by separating SwiftUI and Compose imports into iOS and Android component files outside route directories, always wrapping with Host from the root package"],
+      "outputs": ["one universal tree or paired platform trees", "Host-wrapped native rendering configuration", "supported community-component migration mapping"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["requires a development client for older SDKs", "treats a platform subpackage imported on the opposite platform as a runtime crash condition"],
+      "exclusions": ["does not package, sign, submit, or publish an Expo app and is outside release publishing"],
+      "usefulInvariants": ["Host comes from the universal package root", "platform-specific files stay outside Expo Router route paths", "universal components remain preferred until a named gap requires divergence"],
+      "materialRisks": ["SDK availability can drift", "import leakage causes runtime view errors", "dual trees increase maintenance divergence"],
+      "providerCoupling": "provider-bound", "projectCoupling": "project-bound", "disposition": "rejected", "proposedCluster": "cross-platform native interface implementation", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-059a73131475a84d",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/add-app-clip/SKILL.md",
       "bodySha256": "059a73131475a84dd3ddc83f449b3ab7f43064b1a322c6643e31abdaed503246",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for add-app-clip with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess add-app-clip for a release-related task",
-        "apply add-app-clip within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Ships an Expo App Clip by deriving a child bundle target, binding parent and Clip entitlements to an AASA document, and coordinating TestFlight with App Store launch metadata.",
+      "neutralIntentExamples": ["add a URL-invoked App Clip beside an Expo iOS app", "publish the website association and store metadata needed for Clip invocation"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read",
-        "write",
-        "external-write"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "provider-bound",
-      "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["parent bundle ID, Apple team ID, and App Clip domain", "Expo target config, web shell, and permission declarations", "Apple account, invocation URLs, and 1800 by 1200 opaque header image"],
+      "operations": ["create the clip target and derived bundle ID, then add applinks and appclips entitlements to parent and child", "register identifiers, extend the generated AASA with the Clip app ID, host it under the well-known path, embed Smart App Banner metadata, mirror permissions, build both profiles, and push launch metadata"],
+      "outputs": ["targets/clip native target and child bundle ID", "live AASA document and banner metadata", "TestFlight build plus App Clip invocation metadata"],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": ["surfaces a missing entitlement during prebuild and withholds trust until the live AASA contains the expected appclips block", "cannot submit when identifiers, profiles, capabilities, permissions, or image constraints diverge"],
+      "exclusions": ["does not implement the optional native detection module", "does not authorize production hosting or store submission"],
+      "usefulInvariants": ["the child bundle ID appends .clip", "AASA uses the team-prefixed child ID", "the association endpoint is live before invocation testing"],
+      "materialRisks": ["identifier or AASA mismatch silently prevents launch", "credential setup changes Apple state", "permission mirroring can over-grant the Clip"],
+      "providerCoupling": "provider-bound", "projectCoupling": "project-bound", "disposition": "pattern-reference", "proposedCluster": "apple app clip association and submission", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-0795f4d99301851b",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/x-article-publisher-skill/SKILL.md",
       "bodySha256": "0795f4d99301851b1c953d083c1acbdf181c37645d2d2e117f6cf6aee85c417b",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for x-article-publisher-skill with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess x-article-publisher-skill for a release-related task",
-        "apply x-article-publisher-skill within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Names X article publication and an upstream repository handoff, but contains neither an authentication or editor mechanism nor an artifact format or publication verification method.",
+      "neutralIntentExamples": ["assess whether this body explains long-form X publication", "identify evidence missing from an X article workflow"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read",
-        "external-write"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "provider-bound",
-      "projectCoupling": "project-adjacent",
-      "disposition": "deferred",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["unspecified article content", "unspecified X account and publication authority"],
+      "operations": ["recognize X or Twitter as the destination", "defer all concrete behavior because the body supplies no editor, API, browser, draft, submission, or confirmation sequence"],
+      "outputs": ["upstream repository pointer", "evidence-gap finding rather than a publishable procedure"],
+      "effects": ["none"],
+      "failureBehavior": ["stops before drafting or posting because content shape, authentication, permission, submission, and success checks are absent"],
+      "exclusions": ["does not specify eligibility, media handling, draft saving, scheduling, API calls, browser actions, or publication confirmation"],
+      "usefulInvariants": ["a destination name is not publication semantics", "missing authority and success criteria stay explicit"],
+      "materialRisks": ["invented mechanics could cause unauthorized posting", "the external repository may exceed this reviewed evidence"],
+      "providerCoupling": "provider-bound", "projectCoupling": "portable", "disposition": "rejected", "proposedCluster": "insufficient x article publication evidence", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-0bcab5c711f8b67b",
       "canonicalSourceId": "antfu/skills@a74f281a27dadc02397bc1a174b0f2c97531b6ae:skills/pnpm/SKILL.md",
       "bodySha256": "0bcab5c711f8b67bb031842a2fb11971f8d447fb23dbd84b5d09ffd79f965f8c",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for pnpm with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess pnpm for a release-related task",
-        "apply pnpm within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Makes Node package releases reproducible through a content-addressable store, strict resolution, pnpm-workspace.yaml settings, frozen CI lockfiles, and supply-chain build approvals.",
+      "neutralIntentExamples": ["prepare a pnpm workspace for deterministic CI and publication", "centralize versions and restrict dependency build scripts before release"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
-      "disposition": "independent-implementation",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["workspace graph, lockfile, and pnpm 10 or 11 behavior", "camelCase workspace settings, catalogs, overrides, and patches", "registry authentication isolated in .npmrc and build-approval policy"],
+      "operations": ["read topology and project settings from pnpm-workspace.yaml while limiting .npmrc to registry authentication", "resolve through content-addressable and virtual stores, apply catalogs or peer rules, freeze resolution in CI, gate install scripts, then use version, SBOM, stage, or publish command families"],
+      "outputs": ["lockfile-backed dependency graph", "central version and build policy", "staged or published package with optional SBOM"],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": ["frozen install fails on manifest drift", "strict resolution exposes phantom or peer dependencies and build approval blocks untrusted scripts"],
+      "exclusions": ["does not include command-level publish flags or registry rollback details in this body"],
+      "usefulInvariants": ["settings use camelCase in pnpm-workspace.yaml", ".npmrc remains registry focused", "CI never silently rewrites the lockfile"],
+      "materialRisks": ["v10 to v11 changes can break automation", "patches can differ from consumer installs", "registry publication is externally persistent"],
+      "providerCoupling": "conditional", "projectCoupling": "project-adjacent", "disposition": "pattern-reference", "proposedCluster": "node package reproducibility and publication", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-0d4c6f521f3780c5",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/readme/SKILL.md",
       "bodySha256": "0d4c6f521f3780c561a0a96886859b0e56d263f52d80c10ee97ec1212af374a0",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for readme with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess readme for a release-related task",
-        "apply readme within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Builds a repository-derived README by mapping entry points, schemas, scripts, and environment placeholders, detecting deployment targets from platform files, and tailoring setup, architecture, testing, and troubleshooting sections.",
+      "neutralIntentExamples": ["produce release documentation from the actual stack and deployment files", "replace a stale README with verified setup and operations references"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "none",
-      "projectCoupling": "project-adjacent",
-      "disposition": "deferred",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["tree, manifests, lockfiles, entry points, and dependencies", "example environment files, schema, scripts, CI, and deployment descriptors", "business purpose only when it cannot be inferred"],
+      "operations": ["map runtime, database, variable names, commands, and project flow before writing", "select deployment content from Docker, Vercel, Netlify, Fly, Render, Terraform, Kubernetes, or Procfile markers, then compose ordered setup, architecture, tests, deployment, and symptom-specific troubleshooting using the detected package manager"],
+      "outputs": ["root README.md and long-document table of contents", "copyable setup and deployment commands", "architecture, schema, variables, tests, and troubleshooting references"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["asks only when purpose or consequential context is unknowable", "must reject examples substituted for repository facts or unsafe destructive troubleshooting"],
+      "exclusions": ["does not execute documented setup, reset, credential, test, or deployment commands"],
+      "usefulInvariants": ["documentation follows observed tools", "secret values are not exposed", "local setup, system understanding, and production operation are represented"],
+      "materialRisks": ["destructive reset examples require strong scoping", "Rails-heavy examples invite fabricated architecture", "platform instructions become stale"],
+      "providerCoupling": "conditional", "projectCoupling": "project-bound", "disposition": "pattern-reference", "proposedCluster": "repository-derived release documentation", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-0ed65199f8751438",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/agents-generator/SKILL.md",
       "bodySha256": "0ed65199f87514388db5a3219318f46fdb394342dad46d0bde20b92d9cb2727c",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for agents-generator with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess agents-generator for a release-related task",
-        "apply agents-generator within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Generates managed AGENTS.md rules by detecting package manager from lockfiles, selecting full, minimal, update, or dry-run mode, and validating commands against package.json while excluding secrets and placeholders.",
+      "neutralIntentExamples": ["create agent instructions from a repository's real toolchain", "refresh only rule categories affected by a changed stack"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read",
-        "write"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "none",
-      "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["project root, lockfiles, package scripts, and non-secret configuration", "generation mode and managed instruction blocks", "framework, test, database, monorepo, and platform signals"],
+      "operations": ["identify package manager before commands and inventory only declared scripts", "choose write, update, minimal, or preview behavior, back up replacements, fill only applicable templates, scan placeholders, and prove commands exist without running them"],
+      "outputs": ["managed AGENTS.md and optional .agents/rules files", "timestamped backups", "detection report with skipped categories and confidence"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["rejects placeholders or undeclared commands", "never reads secret environment files or runs repository scripts without separate authority"],
+      "exclusions": ["does not package, sign, deploy, or publish and is misclassified here"],
+      "usefulInvariants": ["lockfiles determine command dialect", "backups preserve update boundaries", "only detected categories are generated"],
+      "materialRisks": ["persistent instructions can encode false conventions", "shallow detection can miss nested contracts", "wrong managed boundaries can overwrite authored content"],
+      "providerCoupling": "none", "projectCoupling": "project-bound", "disposition": "rejected", "proposedCluster": "project agent instruction generation", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-18302418895bf790",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-odoo-erp/skills/odoo-docker-deployment/SKILL.md",
       "bodySha256": "18302418895bf79066e62ab56431ae1a504496d6b20dfd13a1d7b1e284416e81",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for odoo-docker-deployment with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess odoo-docker-deployment for a release-related task",
-        "apply odoo-docker-deployment within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Deploys Odoo on an internal Docker network joining health-gated PostgreSQL to persistent filestore volumes, environment-backed secrets, worker limits, and an SSL-terminating reverse proxy.",
+      "neutralIntentExamples": ["assemble a persistent Odoo and PostgreSQL stack", "diagnose Odoo startup ordering without restarting its database"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read",
-        "write"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["pinned Odoo and PostgreSQL images and host resources", "database and master passwords supplied by environment or secrets", "addons, domain, volume, and proxy requirements"],
+      "operations": ["define isolated services with volumes, network, addon mounts, and database health condition", "derive worker and memory limits, keep PostgreSQL private behind Nginx, start the stack, inspect Odoo logs, restart only the app, and dump PostgreSQL before risky changes"],
+      "outputs": ["Compose service graph", "odoo.conf with addon paths and resource limits", "logs and SQL backup"],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": ["delays app startup until PostgreSQL is healthy", "treats horizontal scaling without shared filestore and Odoo.sh as unsupported"],
+      "exclusions": ["does not supply Nginx config, managed hosting, or multi-node storage"],
+      "usefulInvariants": ["port 5432 stays private", "database and filestore survive container replacement", "secrets are referenced and production images pinned"],
+      "materialRisks": ["bad worker limits cause churn", "volume mistakes can lose business data", "addon paths can change across images"],
+      "providerCoupling": "conditional", "projectCoupling": "project-bound", "disposition": "pattern-reference", "proposedCluster": "single-host odoo container deployment", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-1dcef7216c4b3dbb",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-aas-mobile-app-builder/skills/expo-deployment/SKILL.md",
       "bodySha256": "1dcef7216c4b3dbb838c70d7b721b457852eb256cabe0295ab5d0c09da5f7145",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for expo-deployment with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess expo-deployment for a release-related task",
-        "apply expo-deployment within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Runs Expo releases through EAS build and submit profiles, remote version auto-increment, platform credential bindings, staged mobile tracks, and paired web export plus hosting deployment.",
+      "neutralIntentExamples": ["build and submit Expo binaries to TestFlight and Google Play", "publish an Expo Router web bundle to preview or production hosting"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read",
-        "write",
-        "external-write"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "provider-bound",
-      "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["Expo project and eas.json profiles", "Apple ID and App Store application ID", "Google service account, Play track, and target platforms"],
+      "operations": ["initialize EAS and bind build and submit profiles to remote versions", "build iOS or Android, optionally chain submission and staged Play tracks, or export web with API routes before preview or production deploy, then inspect build and submission records"],
+      "outputs": ["signed mobile builds and submissions", "TestFlight or Play track placement", "hosted web release or preview URL"],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": ["remains incomplete when initialization, credentials, IDs, key, or track is absent", "uses remote build and submission status rather than local export as proof"],
+      "exclusions": ["does not author API routes or CI workflow YAML", "does not authorize paid or production effects"],
+      "usefulInvariants": ["production uses a named profile and remote auto-increment", "credentials remain platform-specific", "web deploy follows export and distinguishes preview from production"],
+      "materialRisks": ["wrong IDs submit to the wrong app", "credential files can leak", "EAS flags, quotas, and pricing drift"],
+      "providerCoupling": "provider-bound", "projectCoupling": "project-bound", "disposition": "pattern-reference", "proposedCluster": "expo multi-platform release orchestration", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-1e337041f2755189",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/wiki-vitepress/SKILL.md",
       "bodySha256": "1e337041f275518972dbaccb106b983f50305d09d7516c97f35409be0e86341f",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for wiki-vitepress with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess wiki-vitepress for a release-related task",
-        "apply wiki-vitepress within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Packages wiki Markdown as dark VitePress using generated navigation, Mermaid theme variables plus CSS and post-mount inline-style repair, then emits a static dist tree after compatibility rewrites.",
+      "neutralIntentExamples": ["turn generated wiki pages into a static documentation release", "make asynchronous Mermaid diagrams readable and zoomable in dark mode"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read",
-        "write"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["Markdown pages and catalogue hierarchy", "VitePress, Vue, and Mermaid configuration", "frontmatter and diagrams"],
+      "operations": ["scaffold wiki-site and catalogue-derived navigation", "apply Mermaid variables, SVG CSS, and finite onMounted polling for inline styles, normalize breaks and generic tokens, add zoom modal behavior, then build dist"],
+      "outputs": ["VitePress source tree", "interactive dark Mermaid diagrams", "static wiki-site/.vitepress/dist"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["rewrites Vue-sensitive Markdown before compile", "avoids SSR document access and polls until Mermaid SVG exists"],
+      "exclusions": ["does not define hosting, CDN invalidation, accessibility testing, or credentials"],
+      "usefulInvariants": ["every page has title and description", "three rendering layers address inline specificity", "DOM mutation starts after mount and polling is bounded"],
+      "materialRisks": ["style mutation can erase intentional colors", "navigation can duplicate handlers", "packages are not pinned"],
+      "providerCoupling": "conditional", "projectCoupling": "project-adjacent", "disposition": "pattern-reference", "proposedCluster": "static documentation packaging with diagram repair", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-1f3ffdccf7261149",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/istio-traffic-management/SKILL.md",
       "bodySha256": "1f3ffdccf7261149f6365e129a90d3a7da3f5cee6b7aae1b4b46c051f0d2116c",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for istio-traffic-management with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess istio-traffic-management for a release-related task",
-        "apply istio-traffic-management within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Controls rollouts by pairing VirtualService route weights, retries, mirrors, and faults with DestinationRule subsets, outlier ejection, and load balancing, verified through istioctl analysis and effective proxy state.",
+      "neutralIntentExamples": ["shift a small traffic percentage from stable to canary", "protect a rollout with retries, timeouts, and circuit breaking"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read",
-        "external-write"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "provider-bound",
-      "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["service hosts, namespaces, labels, and subsets", "weights, matches, retries, connection pools, and ejection thresholds", "gateway hosts, TLS secret, and proxy target"],
+      "operations": ["declare subsets from labels and route matches through weighted destinations", "layer capped retry and timeout policy with outlier ejection, optional test mirroring or faults, then analyze config and inspect effective routes and endpoints before raising canary weight"],
+      "outputs": ["Istio networking manifests", "canary or resilience behavior", "route and endpoint diagnostics"],
+      "effects": ["read", "external-write"],
+      "failureBehavior": ["halts progression on invalid config or missing effective routes", "rejects over-retry, absent outlier detection, and production mirroring"],
+      "exclusions": ["does not deploy workloads, install Istio, or automate metric promotion"],
+      "usefulInvariants": ["VirtualService routes while DestinationRule governs subsets and policy", "subset labels match workloads", "weight grows only after proxy checks"],
+      "materialRisks": ["retry storms amplify outages", "wrong hosts or weights misroute production", "mirrors and faults can leak or degrade traffic"],
+      "providerCoupling": "provider-bound", "projectCoupling": "project-bound", "disposition": "pattern-reference", "proposedCluster": "service-mesh canary traffic control", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-266f9b77dd2fe6b2",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/airflow-dag-patterns/SKILL.md",
       "bodySha256": "266f9b77dd2fe6b2af07f1c8672842730f9349ea79399e4228681289bcdfe2db",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for airflow-dag-patterns with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess airflow-dag-patterns for a release-related task",
-        "apply airflow-dag-patterns within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Frames Airflow delivery around idempotent tasks with owned dependencies and retry policy, then requires observability hooks, staging validation, and an operational runbook before production schedules change.",
+      "neutralIntentExamples": ["design a retry-safe DAG and production handoff", "review a backfill for duplication risk"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "none",
-      "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["data sources, schedule, dependencies, and owners", "retry, alert, backfill, and duplicate-prevention requirements", "staging environment and runbook destination"],
+      "operations": ["partition dependencies into idempotent owned tasks with retry limits", "attach alerts, exercise in staging, document response, and obtain approval before schedule edits or backfills"],
+      "outputs": ["DAG structure", "monitoring hooks", "staging evidence and runbook"],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": ["blocks unapproved schedule changes and untested backfills", "defers operator, sensor, fixture, and deployment details absent from this body"],
+      "exclusions": ["does not specify concrete operators, test APIs, packaging, or rollback commands"],
+      "usefulInvariants": ["tasks remain retry-safe", "owners and alerts precede production", "staging precedes schedule mutation"],
+      "materialRisks": ["the body cannot prove idempotence mechanically", "backfills duplicate data", "schedule changes alter freshness and cost"],
+      "providerCoupling": "conditional", "projectCoupling": "project-bound", "disposition": "deferred", "proposedCluster": "airflow production handoff controls", "confidence": "medium", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-2d79913af9d35542",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/azure-eventgrid-py/SKILL.md",
       "bodySha256": "2d79913af9d3554261c0eb15d63e4f342b9c9588c61ec286f4105edd113fe879",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for azure-eventgrid-py with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess azure-eventgrid-py for a release-related task",
-        "apply azure-eventgrid-py within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Publishes CloudEvents or EventGridEvent batches through DefaultAzureCredential, selecting custom-topic versus namespace endpoints and synchronous versus context-managed asynchronous clients.",
+      "neutralIntentExamples": ["publish a CloudEvent batch to an Event Grid topic", "send events to a namespace topic asynchronously"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read",
-        "external-write"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "provider-bound",
-      "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["topic or namespace endpoint and Azure identity", "event type, source or subject, payload, and schema version", "namespace topic and throughput needs"],
+      "operations": ["authenticate and bind a publisher to the endpoint kind", "construct interoperable or Azure-native envelopes, batch when useful, send synchronously or await delivery while closing async resources"],
+      "outputs": ["events accepted by a topic", "typed routing envelopes"],
+      "effects": ["read", "external-write"],
+      "failureBehavior": ["fails on identity, endpoint, topic, or required-field errors", "provides no acknowledgement, dead-letter, or idempotency mechanism despite mentioning retries"],
+      "exclusions": ["does not implement subscribers, delivery validation, release rollout, or artifact publication"],
+      "usefulInvariants": ["CloudEvents require type and source", "namespace sends include namespace_topic", "async resources close"],
+      "materialRisks": ["duplicates trigger downstream actions", "broad credentials reach the wrong topic", "retry without idempotency duplicates effects"],
+      "providerCoupling": "provider-bound", "projectCoupling": "project-adjacent", "disposition": "rejected", "proposedCluster": "azure event publication", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-2fdd9874e585634e",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-aas-python-api-builder/skills/python-pro/SKILL.md",
       "bodySha256": "2fdd9874e585634e73614ab821e1cfebcc17fdea77528a6f900e062cd37805e4",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for python-pro with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess python-pro for a release-related task",
-        "apply python-pro within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Shapes Python 3.12 work around uv and pyproject dependency management, ruff plus mypy or pyright checks, pytest and Hypothesis suites, and profiler-guided async or multiprocessing choices.",
+      "neutralIntentExamples": ["modernize a Python project with uv, ruff, typing, and pytest", "choose concurrency after measuring latency and memory"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "none",
-      "projectCoupling": "portable",
-      "disposition": "rejected",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["runtime, dependencies, pyproject, and performance targets", "code, type contracts, and test boundaries", "latency, memory, and deployment constraints"],
+      "operations": ["lock dependencies and configure lint and static analysis", "implement typed resource-safe code, choose asyncio for I/O or processes for CPU work, then run unit, property, integration, coverage, benchmark, and profiler checks"],
+      "outputs": ["typed modules", "locked quality-tool configuration", "profiling evidence and targeted tuning"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["rejects non-Python or immutable-runtime cases", "reports test, type, lint, coverage, and profiler failures"],
+      "exclusions": ["does not define a release artifact, registry transaction, deployment gate, or publishing sequence"],
+      "usefulInvariants": ["standard library is considered first", "types and tests accompany code", "optimization follows measurement"],
+      "materialRisks": ["the body is too broad for concrete architecture", "coverage targets can reward quantity", "dated tool claims drift"],
+      "providerCoupling": "none", "projectCoupling": "portable", "disposition": "rejected", "proposedCluster": "modern python engineering", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-322a2fbe313f4d7d",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/to-prd/SKILL.md",
       "bodySha256": "322a2fbe313f4d7dc8d5698ee1bd26e8e80fb0f3a118667f3663ebea52d27b96",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for to-prd with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess to-prd for a release-related task",
-        "apply to-prd within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Synthesizes conversation into a PRD by reconciling repository glossary and ADRs, choosing the highest practical behavioral test seam, and publishing an issue with a ready-for-agent label.",
+      "neutralIntentExamples": ["turn an already discussed feature into an implementation-ready issue", "capture user stories, test seams, and exclusions without restarting discovery"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "none",
-      "projectCoupling": "project-adjacent",
-      "disposition": "deferred",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["conversation and repository state", "glossary, ADRs, and existing test seams", "configured tracker and label vocabulary"],
+      "operations": ["recover settled intent and align vocabulary with repository evidence", "prefer one high-level test seam and confirm it, write the PRD sections, then create the tracker issue with the triage label"],
+      "outputs": ["PRD", "agreed test-seam strategy", "external issue with ready-for-agent label"],
+      "effects": ["read", "external-write"],
+      "failureBehavior": ["cannot publish without tracker or label configuration and never executes the embedded setup slash command", "requires user resolution when seam expectations differ"],
+      "exclusions": ["does not implement the feature or publish without authority", "belongs to product planning rather than release publication"],
+      "usefulInvariants": ["uses existing discussion and verified context", "tests target the highest behavioral seam", "snippets appear only for durable prototype decisions"],
+      "materialRisks": ["synthesis can preserve misunderstandings", "issue creation communicates commitments", "labeling can signal readiness too early"],
+      "providerCoupling": "conditional", "projectCoupling": "project-bound", "disposition": "rejected", "proposedCluster": "conversation-to-issue product specification", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-39a9ba4088924718",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/python-pro/SKILL.md",
       "bodySha256": "39a9ba4088924718e744d6b0a9916b88fa3f882a5a66788c89230b8727e838f1",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for python-pro with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess python-pro for a release-related task",
-        "apply python-pro within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Combines Protocol and Pydantic type contracts with pytest fixtures and property tests, then uses structured logging, containers, and APM monitoring to harden Python services.",
+      "neutralIntentExamples": ["design a typed FastAPI service with Pydantic and async SQLAlchemy", "add property tests, structured logs, and monitoring to Python"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "none",
-      "projectCoupling": "portable",
-      "disposition": "rejected",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["service requirements, framework, models, and API contracts", "database, tasks, auth, and deployment constraints", "quality thresholds and metrics"],
+      "operations": ["model boundaries with types and choose a framework", "cover behavior with fixtures, Hypothesis, integration databases, and coverage, then containerize and observe latency and runtime errors"],
+      "outputs": ["typed service models", "test suites", "container and observability configuration"],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": ["surfaces validation, test, coverage, and monitoring failures", "cannot choose architecture without project constraints"],
+      "exclusions": ["does not specify publication, versioning, registry, rollback, or deployment commands"],
+      "usefulInvariants": ["interfaces are typed and validated", "tests exceed unit examples", "operation includes security and runtime signals"],
+      "materialRisks": ["checklist breadth obscures priorities", "infrastructure choices add unjustified coupling", "duplicates the other python-pro facet"],
+      "providerCoupling": "conditional", "projectCoupling": "project-adjacent", "disposition": "rejected", "proposedCluster": "python service hardening", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-3fee8faa3041775e",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/dev-to-hashnode/SKILL.md",
       "bodySha256": "3fee8faa3041775ef7c01365e1c246c5339d94fb23f527056e84e4a2960ce08e",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for dev-to-hashnode with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess dev-to-hashnode for a release-related task",
-        "apply dev-to-hashnode within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Cross-posts technical articles by publishing a canonical original first, delaying syndication for indexing, setting platform canonical metadata, and adapting tags, images, structure, and metrics per destination.",
+      "neutralIntentExamples": ["syndicate an article without fragmenting search authority", "adapt one post for Dev.to discovery and Hashnode newsletters"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read",
-        "external-write"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "provider-bound",
-      "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["finished article, original URL, audience context, and accounts", "title, description, cover, series, tags, and canonical host", "reach, SEO, newsletter, or discussion goal"],
+      "operations": ["choose and publish the canonical host, wait for indexing, cross-post to Dev.to with canonical_url and up to four ordered tags, then set the same URL and focused topics in Hashnode", "compare views, read ratio, reactions, time, referrers, followers, and signups to tune hooks and calls to action"],
+      "outputs": ["canonical original and adapted editions", "Dev.to frontmatter and Hashnode settings", "engagement observations"],
+      "effects": ["read", "external-write"],
+      "failureBehavior": ["withholds posting when canonical ownership or account authority is undecided", "flags identical uncanonical posts, unfinished drafts, excess tags, and poor mobile readability"],
+      "exclusions": ["does not provide API or browser automation or authorize posting", "does not substantiate dated audience counts"],
+      "usefulInvariants": ["one canonical URL spans destinations", "Dev.to has at most four tags", "format and media are adapted"],
+      "materialRisks": ["wrong canonicals split ranking", "posts and replies affect reputation", "ranking behavior drifts"],
+      "providerCoupling": "provider-bound", "projectCoupling": "project-adjacent", "disposition": "pattern-reference", "proposedCluster": "canonical technical-content syndication", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-4c246dc4534a8d65",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/dependency-upgrade/SKILL.md",
       "bodySha256": "4c246dc4534a8d65c474820fa7dae493ed5b1bf0439b324c94f5e2cf8b4abb70",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for dependency-upgrade with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess dependency-upgrade for a release-related task",
-        "apply dependency-upgrade within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Stages dependency upgrades by mapping semver and peer compatibility, taking a baseline test and lockfile snapshot, advancing one major at a time, and gating steps with regression, bundle, and staging evidence.",
+      "neutralIntentExamples": ["plan an incremental framework upgrade with rollback", "resolve a vulnerable dependency without bulk upgrades"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "none",
-      "projectCoupling": "portable",
-      "disposition": "independent-implementation",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["manifest, lockfile, tree, peers, and versions", "targets, changelogs, migrations, codemods, and compatibility matrix", "baseline unit, integration, visual, end-to-end, performance, and bundle results"],
+      "operations": ["audit why packages are installed and order changes from breaking evidence", "create reversible state, upgrade one dependency or coupled unit, align peers and source APIs, refresh lockfile, rerun focused and full suites, stage, monitor, and retain rollback until stable"],
+      "outputs": ["ordered upgrade plan", "updated manifest, lockfile, code, and tests", "before-and-after regression and staging evidence"],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": ["stops at first build, peer, type, test, visual, E2E, bundle, or staging regression and restores baseline", "does not default to force or legacy peer bypasses"],
+      "exclusions": ["does not execute bundled scripts or fetched codemods without review", "does not auto-merge majors"],
+      "usefulInvariants": ["full suite passes before and after", "one diagnostic unit changes per step", "manifest and lockfile stay synchronized"],
+      "materialRisks": ["codemods misrewrite source", "automated patches still break behavior", "force modes conceal invalid graphs"],
+      "providerCoupling": "none", "projectCoupling": "project-bound", "disposition": "independent-implementation", "proposedCluster": "incremental dependency release readiness", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-5a6c4c78cf47190e",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/progressive-web-app/SKILL.md",
       "bodySha256": "5a6c4c78cf47190ebe7a8c5d8b0dfb736781e2f8d0c8144269cf58d780719431",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for progressive-web-app with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess progressive-web-app for a release-related task",
-        "apply progressive-web-app within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Prepares an installable offline web release with a manifest and maskable icons, service-worker app-shell precache and versioned cleanup, resource-specific fetch strategies, and Lighthouse plus device verification.",
+      "neutralIntentExamples": ["ship a web app that installs and works offline", "choose caching strategies for a PWA release"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read",
-        "write"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "none",
-      "projectCoupling": "project-adjacent",
-      "disposition": "independent-implementation",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["HTTPS origin, app shell, manifest, and icons", "static, navigation, and API request classes", "iOS Safari and Android Chrome targets"],
+      "operations": ["link manifest, register worker, and capture install prompt while preserving Safari manual installation", "precache shell and offline page, delete old versioned caches on activation, route assets cache-first, HTML network-first, APIs stale-while-revalidate, then test offline, Lighthouse, and devices"],
+      "outputs": ["manifest, worker, app logic, offline page, and icons", "versioned browser caches", "installability and offline evidence"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["registration fails outside HTTPS except localhost and install fails on missing shell files", "uncached assets return 503 while navigation falls back to cached HTML or offline page"],
+      "exclusions": ["does not cover hosting, push security, sync conflicts, or Workbox build integration"],
+      "usefulInvariants": ["only same-origin GETs are intercepted", "cache version increments on asset release", "offline fallback is precached"],
+      "materialRisks": ["stale caches pin broken code", "opaque failures can look successful", "eager activation replaces open-page behavior"],
+      "providerCoupling": "none", "projectCoupling": "project-bound", "disposition": "independent-implementation", "proposedCluster": "offline web release readiness", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-5bbf57da9642566b",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/skill-rails-upgrade/SKILL.md",
       "bodySha256": "5bbf57da9642566b571fe73aa568054211d07bdf70259d5ec0b19fcbf707e466",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for skill-rails-upgrade with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess skill-rails-upgrade for a release-related task",
-        "apply skill-rails-upgrade within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Assesses Rails upgrades from Gemfile.lock, release data, upgrade-guide sections, and railsdiff deltas, then replaces blanket app:update with customization-aware selective merges and one-by-one default activation.",
+      "neutralIntentExamples": ["classify a Rails jump and build a file-level plan", "merge new defaults without overwriting customized config"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
-      "disposition": "deferred",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["Rails markers, Gemfile.lock, constraints, and git state", "target release, guide sections, and railsdiff", "Rails JavaScript packages, tests, deprecations, and defaults initializer"],
+      "operations": ["prove Rails, derive installed and latest versions, classify the jump", "combine breaking guidance, railsdiff, JS alignment, and local differences into new, safe, manual, or skip categories; after approval merge selectively, migrate, test server and console, review deprecations, and enable defaults individually"],
+      "outputs": ["complexity assessment", "customization-preserving file plan", "merged defaults and verification evidence"],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": ["stops when Rails markers are absent or local changes would be lost", "falls back to major-minor railsdiff and never finalizes until server, console, tests, and defaults pass"],
+      "exclusions": ["does not run app:update wholesale or imply authority for queries, packages, migrations, or writes"],
+      "usefulInvariants": ["Gemfile.lock leads version detection", "custom files are manually merged", "defaults are tested one at a time"],
+      "materialRisks": ["remote sources drift", "fresh generators may not match original options", "migrations can be irreversible"],
+      "providerCoupling": "conditional", "projectCoupling": "project-bound", "disposition": "pattern-reference", "proposedCluster": "rails upgrade release gate", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-5d878d3f63503afd",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/astropy/SKILL.md",
       "bodySha256": "5d878d3f63503afda7f76b5be2b948437248937db98bf23b2445afdcd9c93b58",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for astropy with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess astropy for a release-related task",
-        "apply astropy within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Analyzes astronomy with unit-aware quantities, SkyCoord frame transformations and catalogue matching, context-managed FITS HDUs, precise Time scales, WCS pixel mapping, and named cosmology models.",
+      "neutralIntentExamples": ["cross-match celestial catalogues under an angular threshold", "transform between FITS pixel, sky, and observer frames"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "none",
-      "projectCoupling": "portable",
-      "disposition": "rejected",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["FITS data, catalogues, headers, and WCS", "quantities, frames, observing time, and location", "cosmology, redshifts, masks, and thresholds"],
+      "operations": ["attach units and time scales, open FITS with context managers, preserve headers", "construct SkyCoord or WCS mappings, transform and match under unit-bearing thresholds, then compute cosmological quantities with named models and masked QTables"],
+      "outputs": ["unit-preserving calculations", "transformed coordinates or matched tables", "FITS data with metadata"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["unit, WCS, HDU, key, and frame errors remain explicit", "AltAz requires time and location"],
+      "exclusions": ["does not create, package, deploy, or publish software"],
+      "usefulInvariants": ["units persist", "FITS resources close", "frame, cosmology, and time scale are explicit"],
+      "materialRisks": ["frame or unit errors look plausible", "remote queries add network input", "large loops exhaust memory"],
+      "providerCoupling": "none", "projectCoupling": "portable", "disposition": "rejected", "proposedCluster": "astronomical data analysis", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-697d71100cd5d4ea",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/makepad-deployment/SKILL.md",
       "bodySha256": "697d71100cd5d4ea203d2a8e0b4f9964d91d04859f6fde5aca014a5e5333e17c",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for makepad-deployment with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess makepad-deployment for a release-related task",
-        "apply makepad-deployment within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Packages Makepad apps by coupling cargo-packager metadata and resource hooks for desktop installers with cargo-makepad toolchains for APK, IPA, and Wasm, optionally uploading CI release assets.",
+      "neutralIntentExamples": ["produce desktop and mobile installers for Makepad", "assemble a cross-platform CI release matrix"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read",
-        "write",
-        "external-write"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["Cargo workspace, release binary, identifier, icons, and resources", "target triples and native toolchains", "iOS profile and certificate, desktop signing, and release authority"],
+      "operations": ["stage Makepad and app resources through robius hooks and Cargo metadata", "select cargo-packager on matching desktop runners or cargo-makepad for mobile and Wasm, build artifacts, wrap provisioned iOS output in Payload IPA, and optionally attach artifacts to a GitHub Release"],
+      "outputs": ["deb, NSIS, or DMG", "APK, app or IPA, and Wasm bundle", "CI release assets"],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": ["checks Cargo metadata, staging hooks, and dist resources when files are missing", "requires macOS and provisioning for iOS and full NDK recovery for Android"],
+      "exclusions": ["does not define notarization, store submission, update feeds, rollback, or third-party action verification"],
+      "usefulInvariants": ["desktop runner matches target OS", "all Makepad resources are staged", "iOS binds org, app, profile, and cert"],
+      "materialRisks": ["git and action dependencies are mutable", "bad signing creates unusable artifacts", "manual IPA zipping may omit metadata"],
+      "providerCoupling": "conditional", "projectCoupling": "project-bound", "disposition": "pattern-reference", "proposedCluster": "makepad cross-platform artifact packaging", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-6c39d939dd4fca8e",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/bats-testing-patterns/SKILL.md",
       "bodySha256": "6c39d939dd4fca8e414ced08f9524f2810e6c82f953f94ab0d6f09b3e6ca156c",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for bats-testing-patterns with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess bats-testing-patterns for a release-related task",
-        "apply bats-testing-patterns within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Tests shell release utilities with Bats helpers and fixtures, asserting exit status, captured output, and filesystem side effects across declared shell dialects with setup and teardown isolation in CI.",
+      "neutralIntentExamples": ["add Bats regression coverage for a packaging script", "prove utility failures and file mutations across shells"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "none",
-      "projectCoupling": "portable",
-      "disposition": "independent-implementation",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["shell interface, dialects, and exit codes", "fixtures for normal and error cases", "CI matrix and output or side-effect contracts"],
+      "operations": ["declare shell environments and arrange helpers with isolated fixtures", "exercise paths and assert status, streams, and filesystem effects, reset with setup and teardown, then run the same suite in CI"],
+      "outputs": ["Bats tests and fixtures", "exit, output, and effect assertions", "CI results"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["fails the release gate on contract divergence", "defers detailed helper APIs absent from this body"],
+      "exclusions": ["does not replace integration testing or publish artifacts"],
+      "usefulInvariants": ["controlled fixture state", "error paths are asserted", "CI matches supported dialects"],
+      "materialRisks": ["external failures escape shell tests", "unsafe teardown alters real files", "the body is thin on concrete APIs"],
+      "providerCoupling": "none", "projectCoupling": "project-adjacent", "disposition": "independent-implementation", "proposedCluster": "shell release-script verification", "confidence": "medium", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-7474ef9eb96b0469",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/odoo-docker-deployment/SKILL.md",
       "bodySha256": "7474ef9eb96b046908dca000b36f134c6de65252344c01cc80b35ec1026ec390",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for odoo-docker-deployment with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess odoo-docker-deployment for a release-related task",
-        "apply odoo-docker-deployment within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Operates Odoo Compose with PostgreSQL health startup, separate data volumes, application-only restart, SQL backup, and CPU-derived worker tuning behind Nginx TLS.",
+      "neutralIntentExamples": ["recover Odoo without cycling PostgreSQL", "review persistence and worker sizing before an image update"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read",
-        "write"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["Compose services, volumes, network, and config", "logs, database health, host resources, and module name", "backup destination, pinned image, and proxy topology"],
+      "operations": ["confirm private healthy database and durable volumes", "size workers and secrets, keep TLS at Nginx, stream app logs, dump PostgreSQL, restart only Odoo, and update a module with stop-after-init"],
+      "outputs": ["reviewed runtime config", "SQL backup and logs", "restarted app or updated module"],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": ["keeps Odoo gated when PostgreSQL is unhealthy", "rejects public database exposure, mutable tags, and scaling without shared storage"],
+      "exclusions": ["adds no distinct mechanism beyond facet-18302418895bf790 and is a duplicate", "does not contain Nginx or Odoo.sh procedures"],
+      "usefulInvariants": ["routine recovery leaves database running", "backup precedes change", "PostgreSQL stays internal"],
+      "materialRisks": ["duplicates overweight one pattern", "dump paths can fail", "worker formulas and addon paths need live verification"],
+      "providerCoupling": "conditional", "projectCoupling": "project-bound", "disposition": "rejected", "proposedCluster": "duplicate odoo container operations", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     },
     {
       "facetId": "facet-757ee818ab21e6ae",
       "canonicalSourceId": "K-Dense-AI/scientific-agent-skills@36d8f13a1e754618794bf42f417884940077b4ae:skills/geniml/SKILL.md",
       "bodySha256": "757ee818ab21e6ae9716e0c4c6f2932e826d2beee0bf082013b08df2a1a2822e",
-      "neutralCapabilitySummary": "Provides bounded, inspectable guidance for geniml with explicit prerequisites, outcomes, and limits.",
-      "neutralIntentExamples": [
-        "assess geniml for a release-related task",
-        "apply geniml within an explicitly bounded project change"
-      ],
+      "neutralCapabilitySummary": "Audits genomic learning by validating zero-based half-open BED coordinates against checksummed chromosome sizes, binding checkpoints to exact universe and tokenizer artifacts, and preventing donor leakage across data splits.",
+      "neutralIntentExamples": ["plan Region2Vec training without mixed assemblies or patients", "verify model, tokenizer, and universe compatibility before inference"],
       "legacyAliases": [],
-      "inputs": [
-        "task requirements",
-        "project or deployment context",
-        "authorized credentials when required"
-      ],
-      "operations": [
-        "inspect configuration and constraints",
-        "apply or describe the relevant mechanism",
-        "check boundaries and verification conditions"
-      ],
-      "outputs": [
-        "bounded guidance or project artifact",
-        "explicit prerequisites and expected outputs",
-        "verification notes"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "surface missing prerequisites, incompatible versions, permissions, or failed checks instead of assuming success"
-      ],
-      "exclusions": [
-        "does not authorize execution, credentials, publication, destructive changes, or unrelated edits"
-      ],
-      "usefulInvariants": [
-        "keep scope and authority explicit",
-        "preserve platform and version contracts",
-        "separate preparation from external side effects"
-      ],
-      "materialRisks": [
-        "tool or provider behavior may change",
-        "configuration errors can cause failed releases or unintended side effects",
-        "source guidance may omit environment-specific validation"
-      ],
-      "providerCoupling": "none",
-      "projectCoupling": "portable",
-      "disposition": "rejected",
-      "proposedCluster": "release publishing review",
-      "confidence": "medium",
-      "copiedSourceProse": false,
-      "promotionClaim": false
+      "inputs": ["local BED files, assembly, chromosome checksum, and contig policy", "donor manifest, splits, Parquet tokens, and ordered universe", "model config, checkpoint shapes, token map, versions, and digests"],
+      "operations": ["reject remote or special files and validate BED coordinates, contigs, bounds, strand, assembly, and liftover provenance without rewriting", "split by biological unit, checksum artifacts, plan bounded training, then compare vocabulary, dimensions, universe order, special tokens, tensors, pooling, and versions before local loading"],
+      "outputs": ["redacted corpus audit and normalization plan", "bounded embedding or consensus plan", "artifact compatibility report"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["rejects invalid intervals, unknown contigs, mixed assemblies, donor leakage, and incompatible dimensions", "withholds BEDbase or Hub access until endpoint, revision, size, and hashes are approved", "avoids stale or no-op 0.8.4 CLI paths"],
+      "exclusions": ["does not train, deserialize untrusted models, contact services, or publish releases", "does not authorize upload of sensitive genomic data"],
+      "usefulInvariants": ["BED remains zero-based half-open with assembly checksums", "training and inference share exact universe and token map", "splits use donor or patient rather than rows"],
+      "materialRisks": ["genomic data is sensitive", "checkpoints and binaries can execute content", "upstream docs conflict with the pinned release"],
+      "providerCoupling": "conditional", "projectCoupling": "project-bound", "disposition": "rejected", "proposedCluster": "audited genomic interval learning", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
     }
   ]
 }
-
