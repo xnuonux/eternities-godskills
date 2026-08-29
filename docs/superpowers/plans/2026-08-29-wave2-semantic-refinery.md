@@ -33,11 +33,11 @@
 - Consumes: `facet`, exact body text, security row, and review batch metadata.
 - Produces: `validateWave2ReviewBatch(batch, facets, bodyEvidence)` and canonical review rows with deterministic `reviewDigest`.
 
-- [ ] **Step 1: Write failing contract tests** for exact facet and body binding, all neutral capability fields, effect vocabulary, copied-description rejection, stale digest rejection, duplicate review rejection, security-rejected input rejection, and deterministic digest output.
-- [ ] **Step 2: Run `node --test tests/wave2-semantic-refinery.test.mjs`** and observe the missing-module failure.
-- [ ] **Step 3: Implement strict validators** with dispositions `independent-implementation`, `pattern-reference`, `deferred`, and `rejected`; confidence `high`, `medium`, or `low`; effects `none`, `read`, `write`, or `external-write`.
-- [ ] **Step 4: Run the focused test** and require zero failures.
-- [ ] **Step 5: Commit** `src/wave2-semantic-refinery.mjs` and its tests.
+- [x] **Step 1: Write failing contract tests** for exact facet and body binding, all neutral capability fields, effect vocabulary, copied-description rejection, stale digest rejection, duplicate review rejection, security-rejected input rejection, and deterministic digest output.
+- [x] **Step 2: Run `node --test tests/wave2-semantic-refinery.test.mjs`** and observe the missing-module failure.
+- [x] **Step 3: Implement strict validators** with dispositions `independent-implementation`, `pattern-reference`, `deferred`, and `rejected`; confidence `high`, `medium`, or `low`; effects `none`, `read`, `write`, or `external-write`.
+- [x] **Step 4: Run the focused test** and require zero failures.
+- [x] **Step 5: Commit** `src/wave2-semantic-refinery.mjs` and its tests.
 
 ### Task 2: Deterministic family queues and bounded review packets
 
@@ -156,4 +156,3 @@
 - [ ] **Step 4: Request independent adversarial review** of evidence coverage, review quality, clustering, overlap, promotion claims, routing authority, determinism, and proof language.
 - [ ] **Step 5: Fix every confirmed critical or important finding** and rerun complete verification.
 - [ ] **Step 6: Merge to `main` only after review closure**, rerun the full suite from merged `main`, and remove only the owned worktree and merged feature branch.
-
