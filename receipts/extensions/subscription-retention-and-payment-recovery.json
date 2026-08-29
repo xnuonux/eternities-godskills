@@ -3,8 +3,8 @@
   "receiptId": "extension-subscription-retention-and-payment-recovery-promotion-v1",
   "extensionId": "subscription-retention-and-payment-recovery",
   "status": "promoted",
-  "evaluationMode": "deterministic-owner-local-feature-selection",
-  "limitation": "This receipt proves exact local registry selection and contract gates. It does not prove arbitrary natural-language routing, live-agent interpretation, external execution safety, or domain correctness.",
+  "evaluationMode": "independent-positive-and-denied-host-policy-fixtures",
+  "limitation": "This receipt proves exact owner-policy subsets and separately materialized local positive and denial fixtures. It does not prove arbitrary natural-language routing, live-agent interpretation, external execution safety, or universal domain correctness.",
   "categoricalOwnerId": "eternities-beacon",
   "delegateId": "eternities-beacon",
   "sourceBinding": {
@@ -24,7 +24,9 @@
   },
   "artifactDigests": {
     "ownerSkill": "4e534765f4be8c79b6302aa986c8c8944d89048e616129a36c2348e1969f3ac4",
-    "registry": "527f86a533c346e63e8ee63cdd98be86ec3b5fdcca8c18555844d99ec987d051"
+    "registry": "ec47483b504eb98168f5e05649067483f04ee89cb30b516fa00fd844c9570eff",
+    "ownerPolicySet": "8f278ee413327748893de683de53062ed57f7c66c27b8752985c0076d80f6cc6",
+    "evaluationFixtureSet": "c6275faad5a0258a1242f38e6b9dfe6c19fe4a31a9c1262111449ad696325520"
   },
   "selection": {
     "selected": true,
@@ -32,7 +34,29 @@
     "selectedIds": [
       "subscription-retention-and-payment-recovery"
     ],
-    "maximumSelection": 3
+    "maximumSelection": 3,
+    "evaluatedCases": [
+      {
+        "id": "positive-owner-policy",
+        "expected": "selected",
+        "actual": "selected",
+        "selectedIds": [
+          "subscription-retention-and-payment-recovery"
+        ]
+      },
+      {
+        "id": "denied-missing-authority",
+        "expected": "denied",
+        "actual": "denied",
+        "selectedIds": []
+      },
+      {
+        "id": "denied-missing-effect",
+        "expected": "denied",
+        "actual": "denied",
+        "selectedIds": []
+      }
+    ]
   },
   "gates": {
     "exactEvidence": true,
@@ -40,7 +64,11 @@
     "sourceProseCopied": false,
     "sourceInstructionsExecuted": false,
     "recursiveOwnerHandoff": false,
+    "ownerAuthoritySubset": true,
+    "ownerEffectSubset": true,
+    "forbiddenEffectDisjoint": true,
+    "deniedPolicyCasesPassed": 2,
     "externalActivation": false
   },
-  "receiptDigest": "0965b05a61d3e47fd09706de21e348b4d1a643bf127a829a6691a54b6da78661"
+  "receiptDigest": "61604a38070121bce5687b9f9402656efe8ba949aa006a09d3cda139c7ff3ecb"
 }

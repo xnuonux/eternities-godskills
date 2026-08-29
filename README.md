@@ -187,6 +187,25 @@ loading source bodies, executing source instructions, or expanding authority.
 read `docs\wave2-semantic-refinery-report.md` and
 `receipts\wave2-semantic-refinery-v1.json` for exact bindings and proof limits.
 
+## universal capability construction
+
+the certified construction wave converts all 48 mechanism-owning Wave 2 targets
+into 22 operational skills and 26 bounded owner extensions without changing the
+21 existing top-level Godskills. operational promotions use exact current-owner
+entrypoint baselines. extensions use immutable owner policies, independent
+positive and denied-policy fixtures, and cycle-checked routable handoffs.
+
+the portable manifest exposes 43 selected entrypoints and 13 owner registries.
+the full Godagents compatibility fixture validates authority, effects, receipt
+status, entrypoint identity, bounded composition, and operational-owner
+hierarchy without changing the Godagents runtime. no source instruction,
+external activation, host profile, genome, Realm Contract, or product runtime
+was changed.
+
+read `docs\universal-capability-construction-report.md` and
+`receipts\universal-capability-construction-v1.json` for the exact result,
+adversarial dispositions, digests, and proof limits.
+
 ## release-one commands
 
 ```powershell

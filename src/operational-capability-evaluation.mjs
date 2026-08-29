@@ -74,18 +74,38 @@ function exactArtifacts(actual, expected) {
   return expectedKeys.every((key) => actual[key] === expected[key]);
 }
 
-export function buildOperationalCapabilityReceipt({ record, target, sourceReviews, files }) {
+export function buildOperationalCapabilityReceipt({
+  record,
+  target,
+  sourceReviews,
+  files,
+  baselineEvidence,
+  baselineOwnerFiles,
+}) {
   const expectedFiles = materializeOperationalCapability({ record, target, sourceReviews });
   if (!exactArtifacts(files, expectedFiles)) throw new Error("artifact bytes do not match materialized record");
+  if (!baselineEvidence) throw new Error("baseline evidence is required");
+  if (baselineEvidence.skillId !== record.id || baselineEvidence.ownerId !== record.ownerGodskillId) {
+    throw new Error("baseline evidence identity does not match operational record");
+  }
+  if (!baselineOwnerFiles?.entrypoint || !baselineOwnerFiles?.contract) {
+    throw new Error("baseline owner artifacts are required");
+  }
+  if (sha256(baselineOwnerFiles.entrypoint) !== baselineEvidence.ownerArtifacts?.entrypoint?.sha256) {
+    throw new Error("baseline owner entrypoint digest is stale");
+  }
+  if (sha256(baselineOwnerFiles.contract) !== baselineEvidence.ownerArtifacts?.contract?.sha256) {
+    throw new Error("baseline owner contract digest is stale");
+  }
   const cases = record.evaluationCases;
-  const baselineResults = cases.map((entry) => ({ id: entry.id, actual: `not-covered:${target.categoricalOwnerId}` }));
+  const baselineResults = baselineEvidence.results;
   const candidateResults = cases.map((entry) => ({ id: entry.id, actual: classifyOperationalPrompt(record, entry.prompt) }));
   const baseline = {
     ...evaluateSuite(cases, baselineResults),
-    tokenCount: 1600,
-    sourceCoverage: 0,
-    provenanceCoverage: 0,
-    unresolvedEffects: [],
+    tokenCount: baselineEvidence.tokenCount,
+    sourceCoverage: baselineEvidence.sourceCoverage,
+    provenanceCoverage: baselineEvidence.provenanceCoverage,
+    unresolvedEffects: baselineEvidence.unresolvedEffects,
   };
   const candidate = {
     ...evaluateSuite(cases, candidateResults),
@@ -114,6 +134,8 @@ export function buildOperationalCapabilityReceipt({ record, target, sourceReview
       comparisonDigests: [...target.comparisonDigests].sort(),
       exactArtifacts: true,
       artifactDigests,
+      baselineDigest: baselineEvidence.baselineDigest,
+      baselineOwnerArtifacts: baselineEvidence.ownerArtifacts,
       sourceProseCopied: false,
       sourceInstructionsExecuted: false,
       capabilityDoesNotGrantAuthority: true,

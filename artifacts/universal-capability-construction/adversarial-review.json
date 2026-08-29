@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "reviewId": "universal-capability-construction-terra-review-v1",
+  "status": "resolved",
+  "reviewer": {
+    "agentId": "01a04eb8-3467-7c72-8486-ff2120bf4731",
+    "model": "gpt-5.6-terra",
+    "mode": "read-only-adversarial-review",
+    "commitRange": "895dee6..db9fb8f"
+  },
+  "scope": {
+    "artifacts": [
+      {
+        "path": "data/universal-capability-wave.v1.json",
+        "sha256": "dcad5f850b948ee5db2d760bc1f5254195d84376ccd1f8b5caf3d6dfec3755f5"
+      },
+      {
+        "path": "data/operational-capability-baselines.v1.json",
+        "sha256": "abcf904c353176dee598532b4252d40de5872a596487794934eb3639ef4c6c5c"
+      },
+      {
+        "path": "receipts/operational-capabilities-v1.json",
+        "sha256": "4bdde6ccdb19681f635a1e02927d44f3bdbf806835f01eef3d1409e111d4dd2f"
+      },
+      {
+        "path": "data/godskill-owner-policies.v1.json",
+        "sha256": "8f278ee413327748893de683de53062ed57f7c66c27b8752985c0076d80f6cc6"
+      },
+      {
+        "path": "data/godskill-extension-evaluation-fixtures.v1.json",
+        "sha256": "c6275faad5a0258a1242f38e6b9dfe6c19fe4a31a9c1262111449ad696325520"
+      },
+      {
+        "path": "receipts/godskill-extensions-v1.json",
+        "sha256": "9d5c69ace57b163ca1b8f3d37f4e0f402fe97b443c1b19397276f3fdf43fb302"
+      },
+      {
+        "path": "artifacts/portable-capabilities/manifest.v1.json",
+        "sha256": "9c00586c1958ff12c5082792e444cbdfcfefecdec433cd0ec5256ff49b5bb9c2"
+      },
+      {
+        "path": "receipts/portable-capability-manifest-v1.json",
+        "sha256": "9d009ff5f94b29572d6877d688e3f32183fcb8f5f194b5677a3493e342a58a59"
+      },
+      {
+        "path": "artifacts/compatibility/godagents-v1.json",
+        "sha256": "3f0ac222fb59cb892aef275ce3f26d04a2df4767467cf9dbd8a7c39ee504d9d5"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "terminal-certificate-absent",
+      "severity": "important",
+      "status": "resolved-by-terminal-gate",
+      "resolution": "A fail-closed terminal builder and three behavioral certificate tests now require exact 48-target accounting, exact artifact bytes, closed review, and explicit proof limits.",
+      "evidence": [
+        "scripts/build-universal-capability-certification.mjs",
+        "tests/universal-capability-certification.test.mjs"
+      ]
+    },
+    {
+      "id": "synthetic-empty-operational-baseline",
+      "severity": "important",
+      "status": "resolved",
+      "resolution": "All 22 promotions now consume separately materialized current-owner entrypoint results bound to exact owner entrypoint and contract bytes.",
+      "evidence": [
+        "data/operational-capability-baselines.v1.json",
+        "tests/operational-capability-baseline-artifacts.test.mjs"
+      ]
+    },
+    {
+      "id": "tautological-extension-promotion",
+      "severity": "important",
+      "status": "resolved",
+      "resolution": "All 26 extensions are checked against immutable owner policy artifacts and one positive plus two denied host-policy fixtures.",
+      "evidence": [
+        "data/godskill-owner-policies.v1.json",
+        "data/godskill-extension-evaluation-fixtures.v1.json",
+        "tests/godskill-extension-evidence.test.mjs"
+      ]
+    },
+    {
+      "id": "cyclic-owner-handoff-graph",
+      "severity": "important",
+      "status": "resolved",
+      "resolution": "Advisory handoffs are terminal escalation metadata, routable owner edges are separately modeled, and any routable owner cycle fails construction.",
+      "evidence": [
+        "src/godskill-extension-registry.mjs",
+        "tests/godskill-extension-registry.test.mjs"
+      ]
+    },
+    {
+      "id": "incomplete-godagents-envelope-proof",
+      "severity": "important",
+      "status": "resolved",
+      "resolution": "The local compatibility validator now matches authority, effects, status, entrypoint, composition, and top-level owner selection semantics.",
+      "evidence": [
+        "src/portable-capability-manifest.mjs",
+        "tests/portable-capability-manifest.test.mjs",
+        "artifacts/compatibility/godagents-v1.json"
+      ]
+    }
+  ],
+  "unresolvedCritical": 0,
+  "unresolvedImportant": 0,
+  "confirmedNonFindings": {
+    "exact48TargetAccounting": true,
+    "providerOrLunariIdentityLeakage": false,
+    "copiedReviewedSourceProseMatches": 0,
+    "sourceInstructionsExecuted": false
+  },
+  "proofLimits": [
+    "review-limited-to-declared-range-and-repaired-risk-surfaces",
+    "no-live-agent-provider-or-external-system-execution",
+    "source-prose-check-limited-to-reviewed-wave-evidence"
+  ]
+}

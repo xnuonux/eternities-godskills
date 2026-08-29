@@ -3,8 +3,8 @@
   "receiptId": "extension-node-package-release-reproducibility-promotion-v1",
   "extensionId": "node-package-release-reproducibility",
   "status": "promoted",
-  "evaluationMode": "deterministic-owner-local-feature-selection",
-  "limitation": "This receipt proves exact local registry selection and contract gates. It does not prove arbitrary natural-language routing, live-agent interpretation, external execution safety, or domain correctness.",
+  "evaluationMode": "independent-positive-and-denied-host-policy-fixtures",
+  "limitation": "This receipt proves exact owner-policy subsets and separately materialized local positive and denial fixtures. It does not prove arbitrary natural-language routing, live-agent interpretation, external execution safety, or universal domain correctness.",
   "categoricalOwnerId": "eternities-herald",
   "delegateId": "eternities-herald",
   "sourceBinding": {
@@ -23,16 +23,39 @@
   },
   "artifactDigests": {
     "ownerSkill": "7bf0df8857b68347dc14224f0e15ab5b47f4ebb972ac442f8ff34735eb609a8e",
-    "registry": "72af7a4aeece9a5a3ba15010869facc2a646348cfda75d3d3cc0242eba87829d"
+    "registry": "9fb854e5d48278cb2eec541446d2e2dcc138a4f3c3016e1ca0309ac50a88aa4a",
+    "ownerPolicySet": "8f278ee413327748893de683de53062ed57f7c66c27b8752985c0076d80f6cc6",
+    "evaluationFixtureSet": "c6275faad5a0258a1242f38e6b9dfe6c19fe4a31a9c1262111449ad696325520"
   },
   "selection": {
     "selected": true,
     "ownerLocal": true,
     "selectedIds": [
-      "node-package-release-reproducibility",
-      "monorepo-release-graph-cache-correctness"
+      "node-package-release-reproducibility"
     ],
-    "maximumSelection": 3
+    "maximumSelection": 3,
+    "evaluatedCases": [
+      {
+        "id": "positive-owner-policy",
+        "expected": "selected",
+        "actual": "selected",
+        "selectedIds": [
+          "node-package-release-reproducibility"
+        ]
+      },
+      {
+        "id": "denied-missing-authority",
+        "expected": "denied",
+        "actual": "denied",
+        "selectedIds": []
+      },
+      {
+        "id": "denied-missing-effect",
+        "expected": "denied",
+        "actual": "denied",
+        "selectedIds": []
+      }
+    ]
   },
   "gates": {
     "exactEvidence": true,
@@ -40,7 +63,11 @@
     "sourceProseCopied": false,
     "sourceInstructionsExecuted": false,
     "recursiveOwnerHandoff": false,
+    "ownerAuthoritySubset": true,
+    "ownerEffectSubset": true,
+    "forbiddenEffectDisjoint": true,
+    "deniedPolicyCasesPassed": 2,
     "externalActivation": false
   },
-  "receiptDigest": "0153f6393857f09ee710c3767edffc39bc2a2d47678ee82209aac5b653ab20e6"
+  "receiptDigest": "56de824633d62682b5450cd72537dba5509a6255a8a5b51fbee77f2901ab4d88"
 }

@@ -13,15 +13,18 @@ function jsonLines(text) {
 
 export async function buildOperationalCapabilityReceipts({ root, write = false } = {}) {
   const repositoryRoot = path.resolve(root ?? fileURLToPath(new URL("../", import.meta.url)));
-  const [recordBytes, waveBytes, reviewBytes] = await Promise.all([
+  const [recordBytes, waveBytes, reviewBytes, baselineBytes] = await Promise.all([
     readFile(path.join(repositoryRoot, "data/operational-capabilities.v1.json")),
     readFile(path.join(repositoryRoot, "data/universal-capability-wave.v1.json")),
     readFile(path.join(repositoryRoot, "artifacts/wave2-semantic/review-evidence.jsonl")),
+    readFile(path.join(repositoryRoot, "data/operational-capability-baselines.v1.json")),
   ]);
   const records = JSON.parse(recordBytes.toString("utf8")).records;
   const wave = JSON.parse(waveBytes.toString("utf8"));
   const targetById = new Map(wave.targets.filter((target) => target.kind === "operational-skill").map((target) => [target.implementationOwnerId, target]));
   const reviewByDigest = new Map(jsonLines(reviewBytes.toString("utf8")).map((review) => [review.reviewDigest, review]));
+  const baselineSet = JSON.parse(baselineBytes.toString("utf8"));
+  const baselineBySkill = new Map(baselineSet.baselines.map((baseline) => [baseline.skillId, baseline]));
   if (records.length !== 22 || targetById.size !== 22) throw new Error("receipt build requires exact 22-record coverage");
 
   const skillRows = [];
@@ -37,7 +40,20 @@ export async function buildOperationalCapabilityReceipts({ root, write = false }
       file,
       await readFile(path.join(repositoryRoot, "skills", record.id, file), "utf8"),
     ])));
-    const receipt = buildOperationalCapabilityReceipt({ record, target, sourceReviews, files });
+    const baselineEvidence = baselineBySkill.get(record.id);
+    if (!baselineEvidence) throw new Error(`missing current-owner baseline: ${record.id}`);
+    const baselineOwnerFiles = {
+      entrypoint: await readFile(path.join(repositoryRoot, baselineEvidence.ownerArtifacts.entrypoint.path)),
+      contract: await readFile(path.join(repositoryRoot, baselineEvidence.ownerArtifacts.contract.path)),
+    };
+    const receipt = buildOperationalCapabilityReceipt({
+      record,
+      target,
+      sourceReviews,
+      files,
+      baselineEvidence,
+      baselineOwnerFiles,
+    });
     if (receipt.status !== "promoted") throw new Error(`operational skill did not promote: ${record.id}`);
     const receiptPath = `receipts/operational/${record.id}.json`;
     const receiptText = `${JSON.stringify(receipt, null, 2)}\n`;
@@ -59,6 +75,8 @@ export async function buildOperationalCapabilityReceipts({ root, write = false }
     status: "certified-local-fixtures",
     sourceWaveDigest: wave.waveDigest,
     recordSetSha256: sha256(recordBytes),
+    baselineSetSha256: sha256(baselineBytes),
+    baselineSetDigest: baselineSet.baselineSetDigest,
     operationalSkillCount: skillRows.length,
     promotedCount: skillRows.filter((row) => row.status === "promoted").length,
     skills: skillRows,

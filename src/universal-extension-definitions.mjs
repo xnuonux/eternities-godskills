@@ -35,7 +35,7 @@ export function buildUniversalExtensionDefinitions(wave) {
     definitionSetId: "universal-godskill-extensions-v1",
     sourceWaveDigest: wave.waveDigest,
     extensions: targets.map((target) => {
-      const [intent, triggerKeywords, requiredEvidence, outputs, handoffOwnerIds] = DETAILS[target.clusterId] ?? [];
+      const [intent, triggerKeywords, requiredEvidence, outputs, terminalEscalationOwnerIds] = DETAILS[target.clusterId] ?? [];
       if (!intent) throw new Error(`missing extension definition: ${target.clusterId}`);
       return {
         schemaVersion: 1,
@@ -51,7 +51,7 @@ export function buildUniversalExtensionDefinitions(wave) {
         requiredEffects: ["read", "write"],
         requiredAuthority: ["local-read", "repository-write"],
         forbiddenEffects: ["credential-use", "external-write", "production-mutation"],
-        handoffOwnerIds,
+        terminalEscalationOwnerIds,
         terminationCondition: `Stop when ${outputs[0].toLowerCase()} and ${outputs[1].toLowerCase()} satisfy the declared evidence and authority gates.`,
         capabilityDoesNotGrantAuthority: true,
         sourceBinding: {

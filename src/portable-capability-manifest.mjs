@@ -2,6 +2,13 @@ import { sha256 } from "./io.mjs";
 
 const ENTRYPOINT = /^skills\/([a-z0-9-]+)\/SKILL\.md$/;
 const HOST_OR_SECRET = /(?:[A-Z]:\\|[A-Z]:\/|Users\\|sk-or-v1-|api[_-]?key|password|credential value)/i;
+const ROUTE_STATUSES = new Set(["selected", "needs-decision", "no-qualified-route"]);
+
+function requireSubset(actual, available, kind) {
+  if (!Array.isArray(actual) || !Array.isArray(available)) throw new Error(`${kind} boundary must be arrays`);
+  const allowed = new Set(available);
+  if (actual.some((value) => !allowed.has(value))) throw new Error(`Godagents route attempted to expand ${kind}`);
+}
 
 export function validateSelectedEntrypointPackage({ selectedIds, selectedEntrypoints, maxCompositionSize }) {
   if (!Array.isArray(selectedIds) || !Array.isArray(selectedEntrypoints) || selectedIds.length !== selectedEntrypoints.length) {
@@ -15,6 +22,45 @@ export function validateSelectedEntrypointPackage({ selectedIds, selectedEntrypo
     if (!match || match[1] !== selectedIds[index]) throw new Error("selected entrypoint does not match its id");
   }
   return [...selectedEntrypoints];
+}
+
+export function validateGodagentsRouteEnvelope({ result, requestId, hostContext, manifest }) {
+  if (!result?.compilerReceipt || !result?.routeReceipt) throw new Error("Godagents route receipt result is incomplete");
+  const { compilerReceipt, routeReceipt } = result;
+  if (compilerReceipt.requestId !== requestId || routeReceipt.requestId !== requestId) {
+    throw new Error("Godagents route request identity does not match");
+  }
+  if (!compilerReceipt.envelope) throw new Error("Godagents compiler envelope is incomplete");
+  requireSubset(compilerReceipt.envelope.availableAuthority, hostContext.availableAuthority, "authority");
+  requireSubset(compilerReceipt.envelope.permittedEffects, hostContext.permittedEffects, "effects");
+  requireSubset(routeReceipt.requestFeatures?.permittedEffects ?? [], hostContext.permittedEffects, "effects");
+  if (!ROUTE_STATUSES.has(routeReceipt.status)) throw new Error("Godagents route status is unknown");
+  const entrypoints = validateSelectedEntrypointPackage({
+    selectedIds: routeReceipt.selectedIds,
+    selectedEntrypoints: routeReceipt.selectedEntrypoints,
+    maxCompositionSize: hostContext.maxCompositionSize,
+  });
+  if (routeReceipt.status === "selected") {
+    if (routeReceipt.selectedIds.length === 0 || routeReceipt.selectionKind === "none") {
+      throw new Error("Godagents selected route has no selection");
+    }
+  } else if (routeReceipt.selectedIds.length !== 0 || routeReceipt.selectionKind !== "none") {
+    throw new Error("Godagents non-selected route contains a selection");
+  }
+  if (routeReceipt.status === "needs-decision"
+      && (!Array.isArray(routeReceipt.unresolvedDecisions) || routeReceipt.unresolvedDecisions.length === 0)) {
+    throw new Error("Godagents needs-decision route lacks unresolved decisions");
+  }
+  const capabilities = new Map(manifest?.capabilities?.map((row) => [row.id, row]) ?? []);
+  for (const selectedId of routeReceipt.selectedIds) {
+    const capability = capabilities.get(selectedId);
+    if (!capability) throw new Error(`Godagents route selected an unknown capability: ${selectedId}`);
+    if (capability.tier === "operational-skill"
+        && !routeReceipt.selectedIds.includes(capability.ownerGodskillId)) {
+      throw new Error(`operational delegate lacks a valid top-level owner selection receipt: ${selectedId}`);
+    }
+  }
+  return entrypoints;
 }
 
 export function buildPortableCapabilityManifest({ capabilities, ownerRegistries, releaseEvidence }) {

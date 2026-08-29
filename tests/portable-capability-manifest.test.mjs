@@ -4,7 +4,10 @@ import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
 
-import { validateSelectedEntrypointPackage } from "../src/portable-capability-manifest.mjs";
+import {
+  validateGodagentsRouteEnvelope,
+  validateSelectedEntrypointPackage,
+} from "../src/portable-capability-manifest.mjs";
 
 const root = path.resolve(new URL("../", import.meta.url).pathname.replace(/^\/(.:)/, "$1"));
 const manifestBytes = fs.readFileSync(path.join(root, "artifacts/portable-capabilities/manifest.v1.json"));
@@ -61,4 +64,59 @@ test("selected entrypoint package matches the Godagents adapter boundary", () =>
     selectedEntrypoints: ["skills/a/SKILL.md", "skills/b/SKILL.md", "skills/c/SKILL.md", "skills/d/SKILL.md"],
     maxCompositionSize: 3,
   }), /exceeds maximum composition/);
+});
+
+test("Godagents compatibility validates full authority effect status and hierarchy semantics", () => {
+  const hostContext = {
+    availableAuthority: ["local-read", "repository-write"],
+    permittedEffects: ["read", "write"],
+    maxCompositionSize: 3,
+  };
+  const result = {
+    compilerReceipt: {
+      requestId: "compat-1",
+      envelope: {
+        availableAuthority: ["local-read"],
+        permittedEffects: ["read"],
+      },
+    },
+    routeReceipt: {
+      requestId: "compat-1",
+      status: "selected",
+      selectionKind: "composition",
+      selectedIds: ["eternities-daedalus", "bounded-service-shutdown"],
+      selectedEntrypoints: [
+        "skills/eternities-daedalus/SKILL.md",
+        "skills/bounded-service-shutdown/SKILL.md",
+      ],
+      requestFeatures: { permittedEffects: ["read"] },
+      unresolvedDecisions: [],
+    },
+  };
+  assert.deepEqual(
+    validateGodagentsRouteEnvelope({ result, requestId: "compat-1", hostContext, manifest }),
+    result.routeReceipt.selectedEntrypoints,
+  );
+
+  const authorityExpansion = structuredClone(result);
+  authorityExpansion.compilerReceipt.envelope.availableAuthority.push("credential-use");
+  assert.throws(
+    () => validateGodagentsRouteEnvelope({ result: authorityExpansion, requestId: "compat-1", hostContext, manifest }),
+    /expand authority/,
+  );
+
+  const effectExpansion = structuredClone(result);
+  effectExpansion.routeReceipt.requestFeatures.permittedEffects.push("external-write");
+  assert.throws(
+    () => validateGodagentsRouteEnvelope({ result: effectExpansion, requestId: "compat-1", hostContext, manifest }),
+    /expand effects/,
+  );
+
+  const ownerlessDelegate = structuredClone(result);
+  ownerlessDelegate.routeReceipt.selectedIds.shift();
+  ownerlessDelegate.routeReceipt.selectedEntrypoints.shift();
+  assert.throws(
+    () => validateGodagentsRouteEnvelope({ result: ownerlessDelegate, requestId: "compat-1", hostContext, manifest }),
+    /owner selection receipt/,
+  );
 });

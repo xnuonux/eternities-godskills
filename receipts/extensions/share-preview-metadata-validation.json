@@ -3,8 +3,8 @@
   "receiptId": "extension-share-preview-metadata-validation-promotion-v1",
   "extensionId": "share-preview-metadata-validation",
   "status": "promoted",
-  "evaluationMode": "deterministic-owner-local-feature-selection",
-  "limitation": "This receipt proves exact local registry selection and contract gates. It does not prove arbitrary natural-language routing, live-agent interpretation, external execution safety, or domain correctness.",
+  "evaluationMode": "independent-positive-and-denied-host-policy-fixtures",
+  "limitation": "This receipt proves exact owner-policy subsets and separately materialized local positive and denial fixtures. It does not prove arbitrary natural-language routing, live-agent interpretation, external execution safety, or universal domain correctness.",
   "categoricalOwnerId": "eternities-chorus",
   "delegateId": "eternities-chorus",
   "sourceBinding": {
@@ -21,7 +21,9 @@
   },
   "artifactDigests": {
     "ownerSkill": "0054c131d94cc0f842ad2e5107135bc4379fbd0ba716ef00a4b1a98bab5b2d51",
-    "registry": "f912b9de3acb1d84a128ae833c2d2e1a2f24d01ea1da90cff815c854be1d0ffb"
+    "registry": "43a94a46f5b96a56400b59ded900f0fec2eff26ffd4741b3285816847f7f3ed7",
+    "ownerPolicySet": "8f278ee413327748893de683de53062ed57f7c66c27b8752985c0076d80f6cc6",
+    "evaluationFixtureSet": "c6275faad5a0258a1242f38e6b9dfe6c19fe4a31a9c1262111449ad696325520"
   },
   "selection": {
     "selected": true,
@@ -29,7 +31,29 @@
     "selectedIds": [
       "share-preview-metadata-validation"
     ],
-    "maximumSelection": 3
+    "maximumSelection": 3,
+    "evaluatedCases": [
+      {
+        "id": "positive-owner-policy",
+        "expected": "selected",
+        "actual": "selected",
+        "selectedIds": [
+          "share-preview-metadata-validation"
+        ]
+      },
+      {
+        "id": "denied-missing-authority",
+        "expected": "denied",
+        "actual": "denied",
+        "selectedIds": []
+      },
+      {
+        "id": "denied-missing-effect",
+        "expected": "denied",
+        "actual": "denied",
+        "selectedIds": []
+      }
+    ]
   },
   "gates": {
     "exactEvidence": true,
@@ -37,7 +61,11 @@
     "sourceProseCopied": false,
     "sourceInstructionsExecuted": false,
     "recursiveOwnerHandoff": false,
+    "ownerAuthoritySubset": true,
+    "ownerEffectSubset": true,
+    "forbiddenEffectDisjoint": true,
+    "deniedPolicyCasesPassed": 2,
     "externalActivation": false
   },
-  "receiptDigest": "865cab663e8e42a6946d8456fa692b488c7786542a349132347df6c697cd4883"
+  "receiptDigest": "ac7aeecf1946a92e284a66e4f06fbacbd339713a284a049ce2a4bb4cb97d4794"
 }

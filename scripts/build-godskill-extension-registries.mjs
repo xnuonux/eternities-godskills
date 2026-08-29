@@ -7,13 +7,25 @@ import { sha256, writeJsonAtomic } from "../src/io.mjs";
 
 export async function buildExtensionArtifacts({ root, write = false } = {}) {
   const repositoryRoot = path.resolve(root ?? fileURLToPath(new URL("../", import.meta.url)));
-  const [waveBytes, definitionBytes] = await Promise.all([
+  const [waveBytes, definitionBytes, policyBytes, fixtureBytes] = await Promise.all([
     readFile(path.join(repositoryRoot, "data/universal-capability-wave.v1.json")),
     readFile(path.join(repositoryRoot, "data/godskill-extensions.v1.json")),
+    readFile(path.join(repositoryRoot, "data/godskill-owner-policies.v1.json")),
+    readFile(path.join(repositoryRoot, "data/godskill-extension-evaluation-fixtures.v1.json")),
   ]);
   const wave = JSON.parse(waveBytes.toString("utf8"));
   const definitions = JSON.parse(definitionBytes.toString("utf8"));
-  const built = buildGodskillExtensionRegistries({ wave, definitions });
+  const ownerPolicies = JSON.parse(policyBytes.toString("utf8"));
+  const evaluationFixtures = JSON.parse(fixtureBytes.toString("utf8"));
+  for (const policy of ownerPolicies.owners) {
+    const [ownerSkill, ownerContract] = await Promise.all([
+      readFile(path.join(repositoryRoot, policy.ownerSkill.path)),
+      readFile(path.join(repositoryRoot, policy.ownerContract.path)),
+    ]);
+    if (sha256(ownerSkill) !== policy.ownerSkill.sha256) throw new Error(`stale owner skill policy: ${policy.ownerId}`);
+    if (sha256(ownerContract) !== policy.ownerContract.sha256) throw new Error(`stale owner contract policy: ${policy.ownerId}`);
+  }
+  const built = buildGodskillExtensionRegistries({ wave, definitions, ownerPolicies, evaluationFixtures });
   const ownerRows = [];
   const extensionRows = [];
 
@@ -34,35 +46,43 @@ export async function buildExtensionArtifacts({ root, write = false } = {}) {
     });
 
     for (const extension of registry.extensions) {
-      const selected = selectOwnerExtension({
-        ownerId,
-        requestFeatures: {
-          keywords: extension.triggerKeywords,
-          allowedEffects: extension.requiredEffects,
-          grantedAuthority: extension.requiredAuthority,
-        },
-        registries: built.registries,
+      const fixture = built.fixtures[extension.id];
+      const evaluatedCases = fixture.cases.map((entry) => {
+        const selected = selectOwnerExtension({ ownerId, requestFeatures: entry.requestFeatures, registries: built.registries });
+        const selectedSelf = selected.some((row) => row.id === extension.id);
+        return {
+          id: entry.id,
+          expected: entry.expected,
+          actual: selectedSelf ? "selected" : "denied",
+          selectedIds: selected.map((row) => row.id),
+        };
       });
-      const selectedSelf = selected.some((row) => row.id === extension.id);
+      const fixturePassed = evaluatedCases.every((entry) => entry.actual === entry.expected);
+      const positive = evaluatedCases.find((entry) => entry.expected === "selected");
+      const denied = evaluatedCases.filter((entry) => entry.expected === "denied");
       const receiptBody = {
         schemaVersion: 1,
         receiptId: `extension-${extension.id}-promotion-v1`,
         extensionId: extension.id,
-        status: selectedSelf ? "promoted" : "blocked",
-        evaluationMode: "deterministic-owner-local-feature-selection",
-        limitation: "This receipt proves exact local registry selection and contract gates. It does not prove arbitrary natural-language routing, live-agent interpretation, external execution safety, or domain correctness.",
+        status: fixturePassed ? "promoted" : "blocked",
+        evaluationMode: "independent-positive-and-denied-host-policy-fixtures",
+        limitation: "This receipt proves exact owner-policy subsets and separately materialized local positive and denial fixtures. It does not prove arbitrary natural-language routing, live-agent interpretation, external execution safety, or universal domain correctness.",
         categoricalOwnerId: ownerId,
         delegateId: extension.delegateId,
         sourceBinding: extension.sourceBinding,
         artifactDigests: {
           ownerSkill: sha256(ownerSkillBytes),
           registry: sha256(registryText),
+          ownerPolicySet: sha256(policyBytes),
+          evaluationFixtureSet: sha256(fixtureBytes),
         },
         selection: {
-          selected: selectedSelf,
-          ownerLocal: selected.every((row) => row.categoricalOwnerId === ownerId),
-          selectedIds: selected.map((row) => row.id),
+          selected: positive?.actual === "selected",
+          ownerLocal: evaluatedCases.flatMap((row) => row.selectedIds).every((id) =>
+            registry.extensions.some((extensionRow) => extensionRow.id === id)),
+          selectedIds: positive?.selectedIds ?? [],
           maximumSelection: registry.maximumSelection,
+          evaluatedCases,
         },
         gates: {
           exactEvidence: true,
@@ -70,6 +90,10 @@ export async function buildExtensionArtifacts({ root, write = false } = {}) {
           sourceProseCopied: false,
           sourceInstructionsExecuted: false,
           recursiveOwnerHandoff: false,
+          ownerAuthoritySubset: true,
+          ownerEffectSubset: true,
+          forbiddenEffectDisjoint: true,
+          deniedPolicyCasesPassed: denied.filter((entry) => entry.actual === "denied").length,
           externalActivation: false,
         },
       };
@@ -96,6 +120,10 @@ export async function buildExtensionArtifacts({ root, write = false } = {}) {
     status: "certified-local-fixtures",
     sourceWaveDigest: wave.waveDigest,
     definitionSetSha256: sha256(definitionBytes),
+    ownerPolicySetSha256: sha256(policyBytes),
+    ownerPolicySetDigest: ownerPolicies.policySetDigest,
+    evaluationFixtureSetSha256: sha256(fixtureBytes),
+    evaluationFixtureSetDigest: evaluationFixtures.fixtureSetDigest,
     ownerCount: ownerRows.length,
     extensionCount: extensionRows.length,
     promotedCount: extensionRows.filter((row) => row.status === "promoted").length,

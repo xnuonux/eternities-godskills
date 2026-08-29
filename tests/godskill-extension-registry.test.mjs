@@ -6,13 +6,29 @@ import {
   buildGodskillExtensionRegistries,
   selectOwnerExtension,
 } from "../src/godskill-extension-registry.mjs";
+import { buildUniversalExtensionDefinitions } from "../src/universal-extension-definitions.mjs";
 
 const wave = JSON.parse(fs.readFileSync(new URL("../data/universal-capability-wave.v1.json", import.meta.url)));
 const definitions = JSON.parse(fs.readFileSync(new URL("../data/godskill-extensions.v1.json", import.meta.url)));
+const ownerPolicies = JSON.parse(fs.readFileSync(new URL("../data/godskill-owner-policies.v1.json", import.meta.url)));
+const evaluationFixtures = JSON.parse(fs.readFileSync(new URL("../data/godskill-extension-evaluation-fixtures.v1.json", import.meta.url)));
 const expected = wave.targets.filter((target) => target.kind === "godskill-extension");
 
+const build = (changed = definitions) => buildGodskillExtensionRegistries({
+  wave,
+  definitions: changed,
+  ownerPolicies,
+  evaluationFixtures,
+});
+
+test("definition rebuild encodes advisory escalation without routable legacy handoffs", () => {
+  const rebuilt = buildUniversalExtensionDefinitions(wave);
+  assert.ok(rebuilt.extensions.every((row) => Array.isArray(row.terminalEscalationOwnerIds)));
+  assert.ok(rebuilt.extensions.every((row) => row.handoffOwnerIds === undefined));
+});
+
 test("all 26 certified extensions appear exactly once under a current categorical owner", () => {
-  const result = buildGodskillExtensionRegistries({ wave, definitions });
+  const result = build();
   assert.equal(result.extensionCount, 26);
   assert.equal(result.ownerCount, 13);
   const rows = Object.values(result.registries).flatMap((registry) => registry.extensions);
@@ -25,7 +41,7 @@ test("all 26 certified extensions appear exactly once under a current categorica
 });
 
 test("extension selection is deterministic bounded and owner-local", () => {
-  const { registries } = buildGodskillExtensionRegistries({ wave, definitions });
+  const { registries } = build();
   const request = {
     keywords: ["graphql", "typed", "resolver", "contract"],
     allowedEffects: ["read", "write"],
@@ -40,7 +56,7 @@ test("extension selection is deterministic bounded and owner-local", () => {
 });
 
 test("selection fails closed on authority effects and recursive ownership", () => {
-  const { registries } = buildGodskillExtensionRegistries({ wave, definitions });
+  const { registries } = build();
   assert.deepEqual(selectOwnerExtension({
     ownerId: "eternities-daedalus",
     requestFeatures: { keywords: ["graphql", "typed"], allowedEffects: ["read"], grantedAuthority: ["local-read"] },
@@ -49,19 +65,24 @@ test("selection fails closed on authority effects and recursive ownership", () =
   assert.throws(() => selectOwnerExtension({ ownerId: "unknown", requestFeatures: {}, registries }), /unknown owner registry/);
 
   const changed = structuredClone(definitions);
-  changed.extensions[0].handoffOwnerIds = [changed.extensions[0].categoricalOwnerId];
-  assert.throws(() => buildGodskillExtensionRegistries({ wave, definitions: changed }), /recursive owner handoff/);
+  changed.extensions[0].routableHandoffOwnerIds = [changed.extensions[1].categoricalOwnerId];
+  changed.extensions[1].routableHandoffOwnerIds = [changed.extensions[0].categoricalOwnerId];
+  assert.throws(() => build(changed), /recursive owner handoff graph/);
 });
 
 test("missing duplicate stale and authority-expanding extensions fail closed", () => {
   const missing = { ...definitions, extensions: definitions.extensions.slice(1) };
-  assert.throws(() => buildGodskillExtensionRegistries({ wave, definitions: missing }), /requires exactly 26 extensions/);
+  assert.throws(() => build(missing), /requires exactly 26 extensions/);
   const duplicate = { ...definitions, extensions: [...definitions.extensions, definitions.extensions[0]] };
-  assert.throws(() => buildGodskillExtensionRegistries({ wave, definitions: duplicate }), /requires exactly 26 extensions/);
+  assert.throws(() => build(duplicate), /requires exactly 26 extensions/);
   const stale = structuredClone(definitions);
   stale.extensions[0].sourceBinding.clusterDigest = "f".repeat(64);
-  assert.throws(() => buildGodskillExtensionRegistries({ wave, definitions: stale }), /cluster digest does not match target/);
+  assert.throws(() => build(stale), /cluster digest does not match target/);
   const authority = structuredClone(definitions);
   authority.extensions[0].capabilityDoesNotGrantAuthority = false;
-  assert.throws(() => buildGodskillExtensionRegistries({ wave, definitions: authority }), /capability must not grant authority/);
+  assert.throws(() => build(authority), /capability must not grant authority/);
+
+  const expanded = structuredClone(definitions);
+  expanded.extensions[0].requiredAuthority.push("credential-use");
+  assert.throws(() => build(expanded), /owner authority policy/);
 });
