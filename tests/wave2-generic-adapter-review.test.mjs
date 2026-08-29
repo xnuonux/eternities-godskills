@@ -16,11 +16,19 @@ description: "Automate Alpha tasks via Rube MCP (Composio)."
 # Alpha Automation via Rube MCP
 
 Automate Alpha operations through an adapter.
+
+Toolkit: https://composio.dev/toolkits/alpha
 `;
 
 const equivalentBody = body
   .replaceAll("alpha-automation", "beta-automation")
-  .replaceAll("Alpha", "Beta");
+  .replaceAll("Alpha", "Beta")
+  .replaceAll("toolkits/alpha", "toolkits/beta");
+
+const separatedToolkitBody = body
+  .replaceAll("alpha-automation", "gamma-service-automation")
+  .replaceAll("Alpha", "Gamma Service")
+  .replaceAll("toolkits/alpha", "toolkits/gamma_service");
 
 function cardFor(value, name = "alpha-automation") {
   return {
@@ -36,6 +44,10 @@ test("normalizes toolkit substitutions without erasing added behavior", () => {
   assert.equal(
     normalizeRubeAdapterTemplate(body, "alpha-automation"),
     normalizeRubeAdapterTemplate(equivalentBody, "beta-automation"),
+  );
+  assert.equal(
+    normalizeRubeAdapterTemplate(body, "alpha-automation"),
+    normalizeRubeAdapterTemplate(separatedToolkitBody, "gamma-service-automation"),
   );
   assert.notEqual(
     normalizeRubeAdapterTemplate(`${body}\n## Domain operation\nCreate a record.\n`),

@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 
 export const APPROVED_EMPTY_RUBE_TEMPLATE_DIGESTS = Object.freeze([
-  "1907eb25cf212dc7ad5ea552b89ef7e8fb4a8fed673b27e7f1b93e11bb53e6e2",
+  "50cfe934b260c4eefbba8aff4e1dd7ce3a407f47f717e7186ec510a7b6e8eb5c",
 ]);
 
 function sha256(value) {
@@ -28,20 +28,24 @@ function displayName(body, fallbackName) {
 }
 
 export function normalizeRubeAdapterTemplate(body, fallbackName = "") {
-  let normalized = body.replace(/\r/g, "").toLowerCase();
-  const name = sourceName(normalized, fallbackName.toLowerCase());
+  let normalized = body.replace(/\r/g, "");
+  const name = sourceName(normalized, fallbackName);
   const slug = name.replace(/-automation$/, "");
   const display =
-    normalized.match(/^#\s+(.+?)\s+automation via rube mcp\s*$/m)?.[1] || slug;
+    normalized.match(/^#\s+(.+?)\s+Automation via Rube MCP\s*$/im)?.[1] || slug;
+  const toolkit = normalized.match(/composio\.dev\/toolkits\/([a-z0-9_-]+)/i)?.[1] || slug;
+  const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-  for (const [value, token] of [
-    [name, "{name}"],
-    [display, "{display}"],
-    [slug, "{slug}"],
-  ]) {
-    if (value) normalized = normalized.split(value).join(token);
+  for (const value of [...new Set([name, display, toolkit, slug])].sort(
+    (left, right) => right.length - left.length,
+  )) {
+    if (!value) continue;
+    normalized = normalized.replace(
+      new RegExp(`(?<![A-Za-z0-9])${escapeRegExp(value)}(?![A-Za-z0-9])`, "g"),
+      "{provider}",
+    );
   }
-  return normalized;
+  return normalized.toLowerCase();
 }
 
 export function inspectGenericRubeAdapterBody(
