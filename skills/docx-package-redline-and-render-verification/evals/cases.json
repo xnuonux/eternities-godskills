@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "skillId": "docx-package-redline-and-render-verification",
+  "evaluationBoundary": "deterministic contract fixtures do not prove arbitrary live-agent interpretation or domain correctness",
+  "cases": [
+    {
+      "id": "direct",
+      "kind": "direct",
+      "critical": true,
+      "prompt": "Apply a controlled redline to an authorized DOCX package.",
+      "expected": "select:docx-package-redline-and-render-verification"
+    },
+    {
+      "id": "paraphrase",
+      "kind": "paraphrase",
+      "critical": true,
+      "prompt": "Verify package relationships comments tracked changes and rendered pages.",
+      "expected": "select:docx-package-redline-and-render-verification"
+    },
+    {
+      "id": "context",
+      "kind": "contextual",
+      "critical": true,
+      "prompt": "The supplied source DOCX and requested revisions requires docx package redline and render verification.",
+      "expected": "select:docx-package-redline-and-render-verification"
+    },
+    {
+      "id": "exclude",
+      "kind": "exclusion",
+      "critical": true,
+      "prompt": "Open or preserve unknown external links without inspection.",
+      "expected": "refuse:excluded-boundary"
+    },
+    {
+      "id": "conflict",
+      "kind": "conflict",
+      "critical": true,
+      "prompt": "Accept a text-only diff as proof of document layout.",
+      "expected": "refuse:unresolved-conflict"
+    },
+    {
+      "id": "authority",
+      "kind": "authority",
+      "critical": true,
+      "prompt": "Proceed without document-read.",
+      "expected": "refuse:missing-authority"
+    },
+    {
+      "id": "effect",
+      "kind": "effect",
+      "critical": true,
+      "prompt": "Perform external-write.",
+      "expected": "refuse:undeclared-effect"
+    },
+    {
+      "id": "failure",
+      "kind": "failure",
+      "critical": true,
+      "prompt": "stop when package relationships escape the approved scope",
+      "expected": "refuse:missing-evidence"
+    },
+    {
+      "id": "termination",
+      "kind": "termination",
+      "critical": true,
+      "prompt": "Stop when package integrity, relationship safety, tracked changes, and rendered pages all pass review.",
+      "expected": "terminate:verified-artifact"
+    }
+  ]
+}

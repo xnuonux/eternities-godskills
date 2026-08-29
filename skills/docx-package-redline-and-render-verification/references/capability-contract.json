@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "id": "operational-docx-package-redline-and-render-verification-v1",
+  "name": "docx-package-redline-and-render-verification",
+  "category": "verification-evidence",
+  "tier": "operational-skill",
+  "ownerGodskillId": "eternities-logos",
+  "supportingGodskillIds": [
+    "eternities-aegis",
+    "eternities-muse"
+  ],
+  "intent": "Edit a word-processing package while preserving structure, relationships, review semantics, and visually verified pagination.",
+  "successCondition": "Stop when package integrity, relationship safety, tracked changes, and rendered pages all pass review.",
+  "inputs": [
+    "source DOCX and requested revisions",
+    "relationship and embedded-object inventory",
+    "rendering and review requirements"
+  ],
+  "outputs": [
+    "relationship-safe redlined DOCX",
+    "package validation and rendered-page evidence"
+  ],
+  "operations": [
+    "inspect package parts relationships and external targets",
+    "apply minimal tracked structural edits",
+    "validate XML relationships comments and change markup",
+    "render pages and compare layout pagination and visual defects"
+  ],
+  "effects": [
+    "read",
+    "write"
+  ],
+  "capabilityDoesNotGrantAuthority": true,
+  "authority": {
+    "required": [
+      "artifact-write",
+      "document-read"
+    ],
+    "forbiddenEffects": [
+      "active-content-execution",
+      "external-write",
+      "uninspected-external-link"
+    ]
+  },
+  "preconditions": [
+    "the original package is preserved",
+    "external relationships and embedded content are inventoried"
+  ],
+  "positiveTriggers": [
+    "Apply a controlled redline to an authorized DOCX package.",
+    "Verify package relationships comments tracked changes and rendered pages."
+  ],
+  "negativeTriggers": [
+    "Open or preserve unknown external links without inspection.",
+    "Accept a text-only diff as proof of document layout."
+  ],
+  "failureModes": [
+    "stop when package relationships escape the approved scope",
+    "reject edits that corrupt tracked-change or rendering semantics"
+  ],
+  "exclusions": [
+    "does not follow external package links",
+    "does not claim legal adequacy of a redline"
+  ],
+  "terminationConditions": [
+    "Stop when package integrity, relationship safety, tracked changes, and rendered pages all pass review."
+  ],
+  "measurableImprovement": {
+    "baseline": "the current eternities-logos route without this exact operational mechanism",
+    "metric": "critical mechanism contract cases passed",
+    "threshold": "all critical cases pass with exact evidence and no authority or effect regression"
+  },
+  "sourceEvidence": {
+    "mode": "wave2-target-v1",
+    "targetId": "verification-evidence::docx-package-redline-and-render-verification",
+    "clusterDigest": "bb88e465f8a5be6d66a8a71b35d1ad11331a4d4b121c3a03d864c65471654e7e",
+    "overlapDigest": "69873831b2a803d5c1b2334f611414c1000bacb1ddc80f239769f67fd8e86543",
+    "reviewDigests": [
+      "765ac9415ab44e6378eb021aff4371cc64b947747cbdf20b31d3aba40abacacc"
+    ],
+    "comparisonDigests": [
+      "0e17c452b55bbdc72a4a484e5ca782ab1314c1acdbe9d17168f44d72ba35e19b",
+      "317e1846fcddb2c5850a8c381a46197b7f5f44f79a20315455938c70dd580f17",
+      "5b51f6c100f02ab5069de67a8f87fc239ba108a13ed9b952cbf0fd3919a64044",
+      "a99ebea42c22b4c234ddc6161f1927a57615a27e58bbcf54fd01b2359ba45ecd",
+      "e01ac038db93fab2b86d09e23c7c7da8441bd6484eca8ecc434709b7ede1f9b1"
+    ]
+  },
+  "sourceProvenance": {
+    "sourceProseCopied": false,
+    "sourceInstructionsExecuted": false,
+    "independentlyWritten": true
+  }
+}

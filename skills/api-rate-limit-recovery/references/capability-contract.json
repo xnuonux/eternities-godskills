@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "id": "operational-api-rate-limit-recovery-v1",
+  "name": "api-rate-limit-recovery",
+  "category": "implementation-engineering",
+  "tier": "operational-skill",
+  "ownerGodskillId": "eternities-daedalus",
+  "supportingGodskillIds": [
+    "eternities-aegis",
+    "eternities-hermes"
+  ],
+  "intent": "Implement protocol-aware retry behavior that respects server guidance, preserves idempotency, and terminates under a declared attempt and time budget.",
+  "successCondition": "Stop when bounded success, cancellation, exhaustion, malformed guidance, and duplicate-prevention cases pass locally.",
+  "inputs": [
+    "documented response and retry semantics",
+    "request idempotency model",
+    "attempt latency and concurrency budgets"
+  ],
+  "outputs": [
+    "bounded rate-limit recovery path",
+    "retry trace and exhaustion evidence"
+  ],
+  "operations": [
+    "classify retryable responses and server delay hints",
+    "bind attempts to idempotency and cancellation",
+    "apply capped backoff and jitter",
+    "verify success exhaustion malformed-hint and concurrency cases"
+  ],
+  "effects": [
+    "read",
+    "write"
+  ],
+  "capabilityDoesNotGrantAuthority": true,
+  "authority": {
+    "required": [
+      "local-read",
+      "repository-write"
+    ],
+    "forbiddenEffects": [
+      "dependency-installation",
+      "formal-proof-claim",
+      "production-mutation"
+    ]
+  },
+  "preconditions": [
+    "retry semantics are current and documented",
+    "the operation's idempotency class is known"
+  ],
+  "positiveTriggers": [
+    "Add bounded recovery for documented rate-limit responses.",
+    "Verify retry delay, idempotency, jitter, and terminal failure behavior."
+  ],
+  "negativeTriggers": [
+    "Circumvent a provider quota or access policy.",
+    "Retry non-idempotent work without a deduplication contract."
+  ],
+  "failureModes": [
+    "stop at the attempt or elapsed-time ceiling",
+    "surface malformed delay guidance instead of retrying indefinitely"
+  ],
+  "exclusions": [
+    "does not increase account quota",
+    "does not authorize network calls or credential use"
+  ],
+  "terminationConditions": [
+    "Stop when bounded success, cancellation, exhaustion, malformed guidance, and duplicate-prevention cases pass locally."
+  ],
+  "measurableImprovement": {
+    "baseline": "the current eternities-daedalus route without this exact operational mechanism",
+    "metric": "critical mechanism contract cases passed",
+    "threshold": "all critical cases pass with exact evidence and no authority or effect regression"
+  },
+  "sourceEvidence": {
+    "mode": "wave2-target-v1",
+    "targetId": "implementation-engineering::idempotent-api-rate-limit-recovery",
+    "clusterDigest": "89272d6fcfae7de215d5168d4175499f422014e74711540ffa519d7ef4443f70",
+    "overlapDigest": "3f29a285d37cc296eb095ca701fabcba760286b4f2a6ada67be9835f872aba11",
+    "reviewDigests": [
+      "c014bcbe00a7f7971edf24fe9d5a16135f801899614e5eb74b58921d07a1aa39"
+    ],
+    "comparisonDigests": [
+      "1011c45e7350d9bedc8ffeb0bddd0e88e26a8a79c12244e61af3ff703331fe90",
+      "43fc6411b9aba41a1a0b2b4f04d3bd8e3f336a5a620b4f6e4088d846d313304b",
+      "7a9b88ac24a979cb605a0a7e4da96c2827b84658373718b568365b2dac1c783d",
+      "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"
+    ]
+  },
+  "sourceProvenance": {
+    "sourceProseCopied": false,
+    "sourceInstructionsExecuted": false,
+    "independentlyWritten": true
+  }
+}

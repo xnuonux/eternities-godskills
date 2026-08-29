@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "id": "operational-physics-constrained-numerical-validation-v1",
+  "name": "physics-constrained-numerical-validation",
+  "category": "verification-evidence",
+  "tier": "operational-skill",
+  "ownerGodskillId": "eternities-athena",
+  "supportingGodskillIds": [
+    "eternities-aegis",
+    "eternities-daedalus"
+  ],
+  "intent": "Validate numerical behavior against physical constraints and convergence evidence while keeping model, discretization, and real-world claims separate.",
+  "successCondition": "Stop when units, invariants, limiting cases, convergence, stability, and proof limits are recorded with a pass or failure.",
+  "inputs": [
+    "equations units and physical assumptions",
+    "numerical method mesh timestep and tolerances",
+    "analytic limiting or trusted reference cases"
+  ],
+  "outputs": [
+    "physics-constrained validation report",
+    "convergence residual invariant and limitation evidence"
+  ],
+  "operations": [
+    "check dimensional consistency and sign conventions",
+    "test conservation bounds and limiting cases",
+    "measure mesh timestep and solver convergence",
+    "separate discretization model and measurement uncertainty"
+  ],
+  "effects": [
+    "read",
+    "write"
+  ],
+  "capabilityDoesNotGrantAuthority": true,
+  "authority": {
+    "required": [
+      "artifact-write",
+      "local-compute"
+    ],
+    "forbiddenEffects": [
+      "external-write",
+      "hardware-control",
+      "physical-certification-claim"
+    ]
+  },
+  "preconditions": [
+    "units equations boundary conditions and tolerances are explicit",
+    "at least one independent physical or analytic reference exists"
+  ],
+  "positiveTriggers": [
+    "Validate a numerical simulation against physical invariants and limits.",
+    "Check units convergence stability and reference cases before interpretation."
+  ],
+  "negativeTriggers": [
+    "Claim hardware performance from simulation alone.",
+    "Run a model whose units boundary conditions or solver tolerances are undefined."
+  ],
+  "failureModes": [
+    "stop interpretation when conservation or convergence fails",
+    "report model-form uncertainty instead of tuning it away"
+  ],
+  "exclusions": [
+    "does not validate physical hardware",
+    "does not turn numerical stability into physical truth"
+  ],
+  "terminationConditions": [
+    "Stop when units, invariants, limiting cases, convergence, stability, and proof limits are recorded with a pass or failure."
+  ],
+  "measurableImprovement": {
+    "baseline": "the current eternities-athena route without this exact operational mechanism",
+    "metric": "critical mechanism contract cases passed",
+    "threshold": "all critical cases pass with exact evidence and no authority or effect regression"
+  },
+  "sourceEvidence": {
+    "mode": "wave2-target-v1",
+    "targetId": "verification-evidence::physics-constrained-numerical-validation",
+    "clusterDigest": "999e153c89504e2f5da879d90f5a214500ac8bdabde6f2b6cd50597996bcebb5",
+    "overlapDigest": "48db6fa79e04893ab99405a9a93ccfd52ecdb8f91fc405cebb812fd9de3e69e6",
+    "reviewDigests": [
+      "796d99562bb1737920af741340e21d409984bc40f838c47a7d28e73273af759d"
+    ],
+    "comparisonDigests": [
+      "7d65005a642381cbdb8996c71295ddd728eb1f57eaf91b08850e98e9257f4479",
+      "825c26252f346b01ef07d14a3625a71e113f6755c666c402f7e75336f285cfde",
+      "afb8a2afb0886265f00b3884b68ede1f79f75a8d3b476dfdee8c631b40c7784a",
+      "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557",
+      "bba70856183678a8d9e5d37c9b30123c610464107b2d990623886f5de7d9c856",
+      "d9aae0f40700727cf7ecc97f5d134b03f6340d06240ff5eb7d00b44798b5a2ea",
+      "f38d938b1f26757aa1ffd2a7ca856c4f7e441a07fe16fd5b9bcf176f3cec40a1"
+    ]
+  },
+  "sourceProvenance": {
+    "sourceProseCopied": false,
+    "sourceInstructionsExecuted": false,
+    "independentlyWritten": true
+  }
+}

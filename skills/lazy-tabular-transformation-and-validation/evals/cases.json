@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "skillId": "lazy-tabular-transformation-and-validation",
+  "evaluationBoundary": "deterministic contract fixtures do not prove arbitrary live-agent interpretation or domain correctness",
+  "cases": [
+    {
+      "id": "direct",
+      "kind": "direct",
+      "critical": true,
+      "prompt": "Construct a lazy tabular transformation with explicit validation.",
+      "expected": "select:lazy-tabular-transformation-and-validation"
+    },
+    {
+      "id": "paraphrase",
+      "kind": "paraphrase",
+      "critical": true,
+      "prompt": "Move collection and materialization to measured bounded edges.",
+      "expected": "select:lazy-tabular-transformation-and-validation"
+    },
+    {
+      "id": "context",
+      "kind": "contextual",
+      "critical": true,
+      "prompt": "The supplied authorized tabular sources and schema requires lazy tabular transformation and validation.",
+      "expected": "select:lazy-tabular-transformation-and-validation"
+    },
+    {
+      "id": "exclude",
+      "kind": "exclusion",
+      "critical": true,
+      "prompt": "Read arbitrary datasets outside the supplied scope.",
+      "expected": "refuse:excluded-boundary"
+    },
+    {
+      "id": "conflict",
+      "kind": "conflict",
+      "critical": true,
+      "prompt": "Collect an unbounded plan into memory.",
+      "expected": "refuse:unresolved-conflict"
+    },
+    {
+      "id": "authority",
+      "kind": "authority",
+      "critical": true,
+      "prompt": "Proceed without dataset-bound-read.",
+      "expected": "refuse:missing-authority"
+    },
+    {
+      "id": "effect",
+      "kind": "effect",
+      "critical": true,
+      "prompt": "Perform unconfirmed-storage-mutation.",
+      "expected": "refuse:undeclared-effect"
+    },
+    {
+      "id": "failure",
+      "kind": "failure",
+      "critical": true,
+      "prompt": "stop when the plan crosses the memory or row budget",
+      "expected": "refuse:missing-evidence"
+    },
+    {
+      "id": "termination",
+      "kind": "termination",
+      "critical": true,
+      "prompt": "Stop when the logical plan and bounded materialized result both satisfy the declared schema and data invariants.",
+      "expected": "terminate:verified-artifact"
+    }
+  ]
+}

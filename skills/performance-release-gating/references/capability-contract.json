@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "id": "operational-performance-release-gating-v1",
+  "name": "performance-release-gating",
+  "category": "release-publishing",
+  "tier": "operational-skill",
+  "ownerGodskillId": "eternities-herald",
+  "supportingGodskillIds": [
+    "eternities-aegis",
+    "eternities-daedalus"
+  ],
+  "intent": "Bind release readiness to measured performance evidence without confusing a local load fixture with production capacity.",
+  "successCondition": "Stop when the bounded run set yields a reproducible pass or a failure receipt under the declared budgets.",
+  "inputs": [
+    "authorized local target and workload",
+    "baseline distribution and performance budget",
+    "functional correctness and resource ceilings"
+  ],
+  "outputs": [
+    "local performance gate",
+    "baseline candidate variance and failure receipt"
+  ],
+  "operations": [
+    "freeze workload environment and warmup policy",
+    "measure baseline distribution and variance",
+    "run the candidate under identical bounded conditions",
+    "gate on predeclared latency throughput error and resource budgets"
+  ],
+  "effects": [
+    "read",
+    "write"
+  ],
+  "capabilityDoesNotGrantAuthority": true,
+  "authority": {
+    "required": [
+      "artifact-write",
+      "local-load-authority"
+    ],
+    "forbiddenEffects": [
+      "advertising-spend",
+      "arbitrary-file-read",
+      "database-installation",
+      "external-deployment",
+      "external-load-generation",
+      "financial-commitment",
+      "unconfirmed-storage-mutation"
+    ]
+  },
+  "preconditions": [
+    "the load target is local and authorized",
+    "budgets and run count are predeclared"
+  ],
+  "positiveTriggers": [
+    "Create a local performance release gate for a bounded workload.",
+    "Compare a candidate against a baseline budget with variance controls."
+  ],
+  "negativeTriggers": [
+    "Generate load against an external or production target.",
+    "Deploy because one benchmark happened to pass."
+  ],
+  "failureModes": [
+    "stop when the target or load authorization is unclear",
+    "fail the gate when variance or functional errors invalidate comparison"
+  ],
+  "exclusions": [
+    "does not deploy or publish",
+    "does not claim production capacity from a local fixture"
+  ],
+  "terminationConditions": [
+    "Stop when the bounded run set yields a reproducible pass or a failure receipt under the declared budgets."
+  ],
+  "measurableImprovement": {
+    "baseline": "the current eternities-herald route without this exact operational mechanism",
+    "metric": "critical mechanism contract cases passed",
+    "threshold": "all critical cases pass with exact evidence and no authority or effect regression"
+  },
+  "sourceEvidence": {
+    "mode": "wave2-target-v1",
+    "targetId": "release-publishing::k6-performance-release-gate-duplicates",
+    "clusterDigest": "ef479f231cbd256749c9ecbcf6883d51892c6dcfbd8ce725ae6b717a3a73919c",
+    "overlapDigest": "2430cd0d43bd5c2a3ce5f5721807e7cd16c4e5f08e0d31cae31c2c9e888a5950",
+    "reviewDigests": [
+      "5cb60e8ef73247a8e60963348c17c9db4424b570886435d2ab2a91f26f08c397",
+      "9821edaace76670af911a801f02be859084310f8b3cdb06a098f3d405e60226c"
+    ],
+    "comparisonDigests": [
+      "a417817bc6496099f1276bc6fd43116c27229a55d8399f78025fa8404ad2efeb",
+      "bbcdfff7d94207067d38c96346a1deaf37a8f1bd665f8d5b1010ee6ff516727e",
+      "d17e2bd96b8689989fb20227f4ebaf671e912c19d069445b7194ea6595662c45",
+      "d25612248f4c3512529eb46536656cb067a4355fc783e74273201980ceb5d36a"
+    ]
+  },
+  "sourceProvenance": {
+    "sourceProseCopied": false,
+    "sourceInstructionsExecuted": false,
+    "independentlyWritten": true
+  }
+}

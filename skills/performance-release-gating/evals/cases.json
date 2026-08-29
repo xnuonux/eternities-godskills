@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "skillId": "performance-release-gating",
+  "evaluationBoundary": "deterministic contract fixtures do not prove arbitrary live-agent interpretation or domain correctness",
+  "cases": [
+    {
+      "id": "direct",
+      "kind": "direct",
+      "critical": true,
+      "prompt": "Create a local performance release gate for a bounded workload.",
+      "expected": "select:performance-release-gating"
+    },
+    {
+      "id": "paraphrase",
+      "kind": "paraphrase",
+      "critical": true,
+      "prompt": "Compare a candidate against a baseline budget with variance controls.",
+      "expected": "select:performance-release-gating"
+    },
+    {
+      "id": "context",
+      "kind": "contextual",
+      "critical": true,
+      "prompt": "The supplied authorized local target and workload requires performance release gating.",
+      "expected": "select:performance-release-gating"
+    },
+    {
+      "id": "exclude",
+      "kind": "exclusion",
+      "critical": true,
+      "prompt": "Generate load against an external or production target.",
+      "expected": "refuse:excluded-boundary"
+    },
+    {
+      "id": "conflict",
+      "kind": "conflict",
+      "critical": true,
+      "prompt": "Deploy because one benchmark happened to pass.",
+      "expected": "refuse:unresolved-conflict"
+    },
+    {
+      "id": "authority",
+      "kind": "authority",
+      "critical": true,
+      "prompt": "Proceed without local-load-authority.",
+      "expected": "refuse:missing-authority"
+    },
+    {
+      "id": "effect",
+      "kind": "effect",
+      "critical": true,
+      "prompt": "Perform unconfirmed-storage-mutation.",
+      "expected": "refuse:undeclared-effect"
+    },
+    {
+      "id": "failure",
+      "kind": "failure",
+      "critical": true,
+      "prompt": "stop when the target or load authorization is unclear",
+      "expected": "refuse:missing-evidence"
+    },
+    {
+      "id": "termination",
+      "kind": "termination",
+      "critical": true,
+      "prompt": "Stop when the bounded run set yields a reproducible pass or a failure receipt under the declared budgets.",
+      "expected": "terminate:verified-artifact"
+    }
+  ]
+}

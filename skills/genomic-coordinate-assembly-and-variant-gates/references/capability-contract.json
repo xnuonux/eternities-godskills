@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "id": "operational-genomic-coordinate-assembly-and-variant-gates-v1",
+  "name": "genomic-coordinate-assembly-and-variant-gates",
+  "category": "verification-evidence",
+  "tier": "operational-skill",
+  "ownerGodskillId": "eternities-athena",
+  "supportingGodskillIds": [
+    "eternities-aegis",
+    "eternities-atlas"
+  ],
+  "intent": "Prevent coordinate and allele drift by binding every transformation and comparison to declared assemblies, contigs, orientation, normalization, and provenance.",
+  "successCondition": "Stop when every retained record has one validated assembly coordinate representation and every rejected mapping has a reason.",
+  "inputs": [
+    "variant and coordinate records with provenance",
+    "reference assembly contig and orientation metadata",
+    "normalization and liftover criteria"
+  ],
+  "outputs": [
+    "assembly-bound normalized variant set",
+    "mapping rejection and provenance ledger"
+  ],
+  "operations": [
+    "validate assembly contig coordinate system and allele orientation",
+    "normalize equivalent variant representations",
+    "perform bounded assembly transformation with chain provenance",
+    "reject ambiguous failed or nonunique mappings"
+  ],
+  "effects": [
+    "read",
+    "write"
+  ],
+  "capabilityDoesNotGrantAuthority": true,
+  "authority": {
+    "required": [
+      "artifact-write",
+      "dataset-bound-read"
+    ],
+    "forbiddenEffects": [
+      "clinical-interpretation",
+      "external-write",
+      "mixed-assembly-merge"
+    ]
+  },
+  "preconditions": [
+    "every record has or can earn an explicit reference build",
+    "reference assets and coordinate conventions are exact"
+  ],
+  "positiveTriggers": [
+    "Reconcile genomic coordinates and variants across declared assemblies.",
+    "Gate a variant workflow on reference build normalization and provenance."
+  ],
+  "negativeTriggers": [
+    "Combine coordinates whose reference build is unknown.",
+    "Provide clinical or personalized genomic conclusions."
+  ],
+  "failureModes": [
+    "stop on unknown reference build or coordinate convention",
+    "quarantine nonunique or reference-inconsistent mappings"
+  ],
+  "exclusions": [
+    "does not infer clinical significance",
+    "does not silently coerce assemblies or allele orientation"
+  ],
+  "terminationConditions": [
+    "Stop when every retained record has one validated assembly coordinate representation and every rejected mapping has a reason."
+  ],
+  "measurableImprovement": {
+    "baseline": "the current eternities-athena route without this exact operational mechanism",
+    "metric": "critical mechanism contract cases passed",
+    "threshold": "all critical cases pass with exact evidence and no authority or effect regression"
+  },
+  "sourceEvidence": {
+    "mode": "wave2-target-v1",
+    "targetId": "verification-evidence::genomic-coordinate-assembly-and-variant-gates",
+    "clusterDigest": "c5f5ea184c3c66472c28d5972edb464c2ae2cc0679aa3b9365bdbcc64bfa4a87",
+    "overlapDigest": "1eae2a20cc5536c50ead09bfcac16e0d30a9ed475d65db07a27a01f51c036a6f",
+    "reviewDigests": [
+      "727982b34c813e94ec184826fd87bb48c18f5a8d4e492896cff26473232244ce"
+    ],
+    "comparisonDigests": [
+      "04d21c4cf4e89eab2ce3bb238bbd659984de2a52968bc12847b73cb13882d429",
+      "2ca23164b5bd1e382a0f57b916291ae56a5bc1daee420a67e7d6d5186a6f03de",
+      "825c26252f346b01ef07d14a3625a71e113f6755c666c402f7e75336f285cfde",
+      "afb8a2afb0886265f00b3884b68ede1f79f75a8d3b476dfdee8c631b40c7784a",
+      "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557",
+      "d9aae0f40700727cf7ecc97f5d134b03f6340d06240ff5eb7d00b44798b5a2ea",
+      "f38d938b1f26757aa1ffd2a7ca856c4f7e441a07fe16fd5b9bcf176f3cec40a1"
+    ]
+  },
+  "sourceProvenance": {
+    "sourceProseCopied": false,
+    "sourceInstructionsExecuted": false,
+    "independentlyWritten": true
+  }
+}

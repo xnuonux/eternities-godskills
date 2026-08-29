@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "id": "operational-approval-bound-private-session-mining-v1",
+  "name": "approval-bound-private-session-mining",
+  "category": "verification-evidence",
+  "tier": "operational-skill",
+  "ownerGodskillId": "eternities-mnemosyne",
+  "supportingGodskillIds": [
+    "eternities-aegis",
+    "eternities-oracle"
+  ],
+  "intent": "Extract bounded evidence from approved private transcripts while preserving provenance, minimization, redaction, and revocation boundaries.",
+  "successCondition": "Stop when every finding is source-labeled within the approved scope and the minimization and retention receipt is complete.",
+  "inputs": [
+    "approved transcript manifest and purpose",
+    "redaction and retention policy",
+    "specific extraction questions"
+  ],
+  "outputs": [
+    "minimized source-labeled evidence ledger",
+    "scope redaction and retention receipt"
+  ],
+  "operations": [
+    "freeze approved file and date scope",
+    "minimize and redact content before analysis",
+    "extract source-labeled findings with confidence",
+    "record exclusions unresolved ambiguity and revocation handling"
+  ],
+  "effects": [
+    "read",
+    "write"
+  ],
+  "capabilityDoesNotGrantAuthority": true,
+  "authority": {
+    "required": [
+      "artifact-write",
+      "private-data-read"
+    ],
+    "forbiddenEffects": [
+      "cross-user-access",
+      "external-write",
+      "secret-extraction"
+    ]
+  },
+  "preconditions": [
+    "approval names the private scope purpose and retention",
+    "the transcript set belongs to the authorized user or project"
+  ],
+  "positiveTriggers": [
+    "Mine an explicitly approved private session export for a named question.",
+    "Build a source-labeled pattern ledger from a bounded transcript set."
+  ],
+  "negativeTriggers": [
+    "Access private sessions without explicit scope and approval.",
+    "Infer identity secrets or unrelated personal traits."
+  ],
+  "failureModes": [
+    "stop when approval scope or ownership is ambiguous",
+    "exclude content unrelated to the named question"
+  ],
+  "exclusions": [
+    "does not monitor live conversations",
+    "does not transmit private content"
+  ],
+  "terminationConditions": [
+    "Stop when every finding is source-labeled within the approved scope and the minimization and retention receipt is complete."
+  ],
+  "measurableImprovement": {
+    "baseline": "the current eternities-mnemosyne route without this exact operational mechanism",
+    "metric": "critical mechanism contract cases passed",
+    "threshold": "all critical cases pass with exact evidence and no authority or effect regression"
+  },
+  "sourceEvidence": {
+    "mode": "wave2-target-v1",
+    "targetId": "verification-evidence::approval-bound-private-session-mining",
+    "clusterDigest": "81735070efa0d17b9a7795163634f2abb1a428ba62e40013c2c59e62bb4e0e6a",
+    "overlapDigest": "29cb786ccf5f911be84b5e3e08ff7c41924978ebd89f9f57e9b79c0131a06b7b",
+    "reviewDigests": [
+      "6d587f2743f24787d0d0113a11e28f44165114b5615ae51637cf965d433fd374"
+    ],
+    "comparisonDigests": [
+      "2ff01e644d8b740244ec9ba905988339ddf10e7e18169d117cf6ceb625205fdc",
+      "35558ff1782e705c1ff96c6d3a568a640ded0767edd8acb1b840052d174b6922",
+      "5b51f6c100f02ab5069de67a8f87fc239ba108a13ed9b952cbf0fd3919a64044",
+      "69bbed128a0955fae85849d100079a16b3efa13162e7e9c1ed0bab93e8bd522d"
+    ]
+  },
+  "sourceProvenance": {
+    "sourceProseCopied": false,
+    "sourceInstructionsExecuted": false,
+    "independentlyWritten": true
+  }
+}

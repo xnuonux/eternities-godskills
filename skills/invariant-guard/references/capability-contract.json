@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "id": "operational-invariant-guard-v1",
+  "name": "invariant-guard",
+  "category": "implementation-engineering",
+  "tier": "operational-skill",
+  "ownerGodskillId": "eternities-daedalus",
+  "supportingGodskillIds": [
+    "eternities-aegis",
+    "eternities-athena"
+  ],
+  "intent": "Translate an algorithm contract into preserved invariants and adversarial checks that expose incorrect branches without overstating proof.",
+  "successCondition": "Stop when every declared invariant has a passing guard and every discovered counterexample has a regression case or an explicit unresolved status.",
+  "inputs": [
+    "algorithm contract and domain bounds",
+    "candidate implementation",
+    "trusted examples or reference oracle"
+  ],
+  "outputs": [
+    "invariant ledger and oracle",
+    "counterexample and regression suite"
+  ],
+  "operations": [
+    "state preconditions postconditions and loop invariants",
+    "construct a small independent oracle",
+    "generate boundary and adversarial cases",
+    "minimize counterexamples and repair the violated branch"
+  ],
+  "effects": [
+    "read",
+    "write"
+  ],
+  "capabilityDoesNotGrantAuthority": true,
+  "authority": {
+    "required": [
+      "local-read",
+      "repository-write"
+    ],
+    "forbiddenEffects": [
+      "dependency-installation",
+      "formal-proof-claim",
+      "production-mutation"
+    ]
+  },
+  "preconditions": [
+    "the contract is falsifiable",
+    "an independent expected result can be derived for bounded cases"
+  ],
+  "positiveTriggers": [
+    "Guard an algorithm with explicit invariants and counterexamples.",
+    "Build a reference oracle for edge-case comparison."
+  ],
+  "negativeTriggers": [
+    "Certify a theorem from a finite test suite.",
+    "Implement before the input and output contract is settled."
+  ],
+  "failureModes": [
+    "stop when the expected behavior is circularly derived from the candidate",
+    "report unproved regions instead of generalizing from fixtures"
+  ],
+  "exclusions": [
+    "does not replace formal verification",
+    "does not accept self-referential test oracles"
+  ],
+  "terminationConditions": [
+    "Stop when every declared invariant has a passing guard and every discovered counterexample has a regression case or an explicit unresolved status."
+  ],
+  "measurableImprovement": {
+    "baseline": "the current eternities-daedalus route without this exact operational mechanism",
+    "metric": "critical mechanism contract cases passed",
+    "threshold": "all critical cases pass with exact evidence and no authority or effect regression"
+  },
+  "sourceEvidence": {
+    "mode": "wave2-target-v1",
+    "targetId": "implementation-engineering::contract-first-algorithm-correctness",
+    "clusterDigest": "08e49344738cc2237c4cb3d410d54d14f8eb92997b4f8b03d255885367d88544",
+    "overlapDigest": "e1ce9ddcac4ef1ebd6c623c0c47c2d69f23228d2dbf177b37e81b46c46defef4",
+    "reviewDigests": [
+      "838c07e6ecacd3d7b8cb1668cde686cae859f4be70a4be8f4f9db991f150af01"
+    ],
+    "comparisonDigests": [
+      "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557",
+      "d9aae0f40700727cf7ecc97f5d134b03f6340d06240ff5eb7d00b44798b5a2ea",
+      "f3d04dacbaf6937f30af3b2fb158ebb875f96b3a92fa23d4c599667ff33ef02d"
+    ]
+  },
+  "sourceProvenance": {
+    "sourceProseCopied": false,
+    "sourceInstructionsExecuted": false,
+    "independentlyWritten": true
+  }
+}

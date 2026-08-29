@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "id": "operational-lazy-tabular-transformation-and-validation-v1",
+  "name": "lazy-tabular-transformation-and-validation",
+  "category": "data-infrastructure",
+  "tier": "operational-skill",
+  "ownerGodskillId": "eternities-atlas",
+  "supportingGodskillIds": [
+    "eternities-aegis",
+    "eternities-daedalus"
+  ],
+  "intent": "Build a reproducible tabular transformation whose logical plan, schema invariants, collection points, and validation evidence are explicit.",
+  "successCondition": "Stop when the logical plan and bounded materialized result both satisfy the declared schema and data invariants.",
+  "inputs": [
+    "authorized tabular sources and schema",
+    "transformation and validation requirements",
+    "resource budget and materialization targets"
+  ],
+  "outputs": [
+    "lazy transformation pipeline",
+    "plan schema resource and validation evidence"
+  ],
+  "operations": [
+    "declare schema and row-level invariants",
+    "compose lazy projections filters joins and aggregations",
+    "inspect and constrain the execution plan",
+    "materialize bounded results and validate counts nulls keys and types"
+  ],
+  "effects": [
+    "read",
+    "write"
+  ],
+  "capabilityDoesNotGrantAuthority": true,
+  "authority": {
+    "required": [
+      "artifact-write",
+      "dataset-bound-read"
+    ],
+    "forbiddenEffects": [
+      "advertising-spend",
+      "arbitrary-file-read",
+      "database-installation",
+      "external-deployment",
+      "external-load-generation",
+      "financial-commitment",
+      "unconfirmed-storage-mutation"
+    ]
+  },
+  "preconditions": [
+    "source scope and schema are explicit",
+    "materialization has a declared resource ceiling"
+  ],
+  "positiveTriggers": [
+    "Construct a lazy tabular transformation with explicit validation.",
+    "Move collection and materialization to measured bounded edges."
+  ],
+  "negativeTriggers": [
+    "Read arbitrary datasets outside the supplied scope.",
+    "Collect an unbounded plan into memory."
+  ],
+  "failureModes": [
+    "stop when the plan crosses the memory or row budget",
+    "reject schema drift before downstream materialization"
+  ],
+  "exclusions": [
+    "does not hide eager operations behind naming",
+    "does not mutate source datasets"
+  ],
+  "terminationConditions": [
+    "Stop when the logical plan and bounded materialized result both satisfy the declared schema and data invariants."
+  ],
+  "measurableImprovement": {
+    "baseline": "the current eternities-atlas route without this exact operational mechanism",
+    "metric": "critical mechanism contract cases passed",
+    "threshold": "all critical cases pass with exact evidence and no authority or effect regression"
+  },
+  "sourceEvidence": {
+    "mode": "wave2-target-v1",
+    "targetId": "data-infrastructure::lazy-tabular-transformation-and-validation",
+    "clusterDigest": "5de019ccdc58c12e48476ea787a1e3fda7cb33acfb37501e7f98291c4d5fcf2c",
+    "overlapDigest": "9a999b5b15de67e27c16d441e8ea5149a391e8d89f96ec702fd3564e5c42bb18",
+    "reviewDigests": [
+      "6ef7318bd688c320c12848680ebe093b0d8e1266ae6b0b2b1d653bf89db5b389",
+      "e458aa63b9a2137a66e8983d74de199945ba4b5bdd24c871826ba98d01a0f426"
+    ],
+    "comparisonDigests": [
+      "04d21c4cf4e89eab2ce3bb238bbd659984de2a52968bc12847b73cb13882d429",
+      "7d65005a642381cbdb8996c71295ddd728eb1f57eaf91b08850e98e9257f4479",
+      "afb8a2afb0886265f00b3884b68ede1f79f75a8d3b476dfdee8c631b40c7784a"
+    ]
+  },
+  "sourceProvenance": {
+    "sourceProseCopied": false,
+    "sourceInstructionsExecuted": false,
+    "independentlyWritten": true
+  }
+}

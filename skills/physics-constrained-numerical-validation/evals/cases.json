@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "skillId": "physics-constrained-numerical-validation",
+  "evaluationBoundary": "deterministic contract fixtures do not prove arbitrary live-agent interpretation or domain correctness",
+  "cases": [
+    {
+      "id": "direct",
+      "kind": "direct",
+      "critical": true,
+      "prompt": "Validate a numerical simulation against physical invariants and limits.",
+      "expected": "select:physics-constrained-numerical-validation"
+    },
+    {
+      "id": "paraphrase",
+      "kind": "paraphrase",
+      "critical": true,
+      "prompt": "Check units convergence stability and reference cases before interpretation.",
+      "expected": "select:physics-constrained-numerical-validation"
+    },
+    {
+      "id": "context",
+      "kind": "contextual",
+      "critical": true,
+      "prompt": "The supplied equations units and physical assumptions requires physics-constrained numerical validation.",
+      "expected": "select:physics-constrained-numerical-validation"
+    },
+    {
+      "id": "exclude",
+      "kind": "exclusion",
+      "critical": true,
+      "prompt": "Claim hardware performance from simulation alone.",
+      "expected": "refuse:excluded-boundary"
+    },
+    {
+      "id": "conflict",
+      "kind": "conflict",
+      "critical": true,
+      "prompt": "Run a model whose units boundary conditions or solver tolerances are undefined.",
+      "expected": "refuse:unresolved-conflict"
+    },
+    {
+      "id": "authority",
+      "kind": "authority",
+      "critical": true,
+      "prompt": "Proceed without local-compute.",
+      "expected": "refuse:missing-authority"
+    },
+    {
+      "id": "effect",
+      "kind": "effect",
+      "critical": true,
+      "prompt": "Perform external-write.",
+      "expected": "refuse:undeclared-effect"
+    },
+    {
+      "id": "failure",
+      "kind": "failure",
+      "critical": true,
+      "prompt": "stop interpretation when conservation or convergence fails",
+      "expected": "refuse:missing-evidence"
+    },
+    {
+      "id": "termination",
+      "kind": "termination",
+      "critical": true,
+      "prompt": "Stop when units, invariants, limiting cases, convergence, stability, and proof limits are recorded with a pass or failure.",
+      "expected": "terminate:verified-artifact"
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "id": "operational-bounded-service-shutdown-v1",
+  "name": "bounded-service-shutdown",
+  "category": "implementation-engineering",
+  "tier": "operational-skill",
+  "ownerGodskillId": "eternities-daedalus",
+  "supportingGodskillIds": [
+    "eternities-aegis",
+    "eternities-phoenix"
+  ],
+  "intent": "Engineer an idempotent shutdown path whose readiness, drain, cleanup, timeout, and exit evidence are explicit.",
+  "successCondition": "Stop when shutdown, duplicate-signal, clean-drain, and forced-timeout paths have local verification evidence.",
+  "inputs": [
+    "service lifecycle and active-work accounting",
+    "platform termination window",
+    "cleanup and health-check hooks"
+  ],
+  "outputs": [
+    "bounded shutdown implementation",
+    "clean timeout and duplicate-signal verification"
+  ],
+  "operations": [
+    "map signal handling and idempotent state transition",
+    "lower readiness and refuse new work",
+    "drain tracked work below the external deadline",
+    "close resources and classify clean versus forced exit"
+  ],
+  "effects": [
+    "read",
+    "write"
+  ],
+  "capabilityDoesNotGrantAuthority": true,
+  "authority": {
+    "required": [
+      "local-read",
+      "repository-write"
+    ],
+    "forbiddenEffects": [
+      "dependency-installation",
+      "formal-proof-claim",
+      "production-mutation"
+    ]
+  },
+  "preconditions": [
+    "active work can be measured",
+    "the external kill deadline is known"
+  ],
+  "positiveTriggers": [
+    "Add a bounded shutdown lifecycle to an authorized local service.",
+    "Verify readiness, drain accounting, cleanup, and timeout behavior before release."
+  ],
+  "negativeTriggers": [
+    "Terminate a production process without operational authority.",
+    "Choose a shutdown deadline without the platform grace-period evidence."
+  ],
+  "failureModes": [
+    "stop when active-work accounting cannot be trusted",
+    "fail closed when cleanup exceeds the bounded deadline"
+  ],
+  "exclusions": [
+    "does not control a live orchestrator",
+    "does not claim every transport drains through one listener close"
+  ],
+  "terminationConditions": [
+    "Stop when shutdown, duplicate-signal, clean-drain, and forced-timeout paths have local verification evidence."
+  ],
+  "measurableImprovement": {
+    "baseline": "the current eternities-daedalus route without this exact operational mechanism",
+    "metric": "critical mechanism contract cases passed",
+    "threshold": "all critical cases pass with exact evidence and no authority or effect regression"
+  },
+  "sourceEvidence": {
+    "mode": "wave2-target-v1",
+    "targetId": "implementation-engineering::bounded-service-shutdown",
+    "clusterDigest": "66dcc9bdf129e3453a5c4bed5235241ed4efe7ad632b36849df93c9aa2a49e4b",
+    "overlapDigest": "60d0268da293ce3d69815b2314e5c4d01506f23ce743a42800ed6ff18016efc0",
+    "reviewDigests": [
+      "ecebb7e04563501bddb430a86012ca9874b909ee3c62b7d2cc58faf8842f447a"
+    ],
+    "comparisonDigests": [
+      "1011c45e7350d9bedc8ffeb0bddd0e88e26a8a79c12244e61af3ff703331fe90",
+      "43fc6411b9aba41a1a0b2b4f04d3bd8e3f336a5a620b4f6e4088d846d313304b",
+      "7a9b88ac24a979cb605a0a7e4da96c2827b84658373718b568365b2dac1c783d",
+      "821e37236ffe24736878b7264e6401c033a56ceedc593beacd4935a50fcf76ac",
+      "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557",
+      "bbcdfff7d94207067d38c96346a1deaf37a8f1bd665f8d5b1010ee6ff516727e"
+    ]
+  },
+  "sourceProvenance": {
+    "sourceProseCopied": false,
+    "sourceInstructionsExecuted": false,
+    "independentlyWritten": true
+  }
+}

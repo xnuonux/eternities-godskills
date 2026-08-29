@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "id": "operational-bounded-verified-object-ingestion-v1",
+  "name": "bounded-verified-object-ingestion",
+  "category": "data-infrastructure",
+  "tier": "operational-skill",
+  "ownerGodskillId": "eternities-atlas",
+  "supportingGodskillIds": [
+    "eternities-aegis",
+    "eternities-oracle"
+  ],
+  "intent": "Convert a declared object set into a reconciled local ingestion artifact with exact membership, validation, quarantine, and replay evidence.",
+  "successCondition": "Stop when every manifest object is accepted, quarantined, or rejected exactly once and replay verification is clean.",
+  "inputs": [
+    "authorized object manifest and scope",
+    "identity schema and integrity digests",
+    "destination contract and rollback location"
+  ],
+  "outputs": [
+    "bounded ingested object set",
+    "accepted rejected quarantine and rollback ledger"
+  ],
+  "operations": [
+    "freeze exact source membership",
+    "validate identity shape size and digest",
+    "quarantine malformed or conflicting objects",
+    "write accepted objects and reconcile a replay ledger"
+  ],
+  "effects": [
+    "read",
+    "write"
+  ],
+  "capabilityDoesNotGrantAuthority": true,
+  "authority": {
+    "required": [
+      "destination-write",
+      "manifest-bound-read"
+    ],
+    "forbiddenEffects": [
+      "advertising-spend",
+      "arbitrary-file-read",
+      "database-installation",
+      "external-deployment",
+      "external-load-generation",
+      "financial-commitment",
+      "unconfirmed-storage-mutation"
+    ]
+  },
+  "preconditions": [
+    "source membership is explicit",
+    "destination and rollback boundaries are writable and distinct"
+  ],
+  "positiveTriggers": [
+    "Ingest a declared object set with exact integrity checks.",
+    "Reconcile accepted quarantined and rejected objects into a replayable ledger."
+  ],
+  "negativeTriggers": [
+    "Crawl or read files outside the authorized manifest.",
+    "Mutate storage before identity integrity and rollback gates pass."
+  ],
+  "failureModes": [
+    "stop when source membership drifts",
+    "quarantine collisions instead of overwriting them"
+  ],
+  "exclusions": [
+    "does not enumerate arbitrary paths",
+    "does not delete source objects"
+  ],
+  "terminationConditions": [
+    "Stop when every manifest object is accepted, quarantined, or rejected exactly once and replay verification is clean."
+  ],
+  "measurableImprovement": {
+    "baseline": "the current eternities-atlas route without this exact operational mechanism",
+    "metric": "critical mechanism contract cases passed",
+    "threshold": "all critical cases pass with exact evidence and no authority or effect regression"
+  },
+  "sourceEvidence": {
+    "mode": "wave2-target-v1",
+    "targetId": "data-infrastructure::bounded-verified-object-ingestion",
+    "clusterDigest": "e4a932a3d9251422b5e9629b008f0464c0f05d67260471d62f9cc0ce15b68ba9",
+    "overlapDigest": "66eae0fbd8f9f02c560e5b8357bec13e1e4ea2cdc1ae6110466d9fe7a25dd03a",
+    "reviewDigests": [
+      "304162c1411547b9bf9af69fde68d7c129ecea8dc1f6bee6589d5c4ec9ec39a1"
+    ],
+    "comparisonDigests": [
+      "5b4dd5838854734ebddda0f1a8edb63912ccb80c3b842d06ec4c7e5136c6524c",
+      "5b51f6c100f02ab5069de67a8f87fc239ba108a13ed9b952cbf0fd3919a64044",
+      "aa130c1cf91a16f5a26f19ecd1b95747a20890b28d4411c4850f241fcf602478",
+      "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"
+    ]
+  },
+  "sourceProvenance": {
+    "sourceProseCopied": false,
+    "sourceInstructionsExecuted": false,
+    "independentlyWritten": true
+  }
+}

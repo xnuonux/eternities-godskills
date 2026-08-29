@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "skillId": "formula-preserving-workbook-engineering",
+  "evaluationBoundary": "deterministic contract fixtures do not prove arbitrary live-agent interpretation or domain correctness",
+  "cases": [
+    {
+      "id": "direct",
+      "kind": "direct",
+      "critical": true,
+      "prompt": "Change an authorized workbook while preserving formulas and references.",
+      "expected": "select:formula-preserving-workbook-engineering"
+    },
+    {
+      "id": "paraphrase",
+      "kind": "paraphrase",
+      "critical": true,
+      "prompt": "Repair spreadsheet structure and verify recalculation and rendering.",
+      "expected": "select:formula-preserving-workbook-engineering"
+    },
+    {
+      "id": "context",
+      "kind": "contextual",
+      "critical": true,
+      "prompt": "The supplied source workbook and requested change requires formula-preserving workbook engineering.",
+      "expected": "select:formula-preserving-workbook-engineering"
+    },
+    {
+      "id": "exclude",
+      "kind": "exclusion",
+      "critical": true,
+      "prompt": "Overwrite formulas with cached values.",
+      "expected": "refuse:excluded-boundary"
+    },
+    {
+      "id": "conflict",
+      "kind": "conflict",
+      "critical": true,
+      "prompt": "Trust a library round trip without package and visual verification.",
+      "expected": "refuse:unresolved-conflict"
+    },
+    {
+      "id": "authority",
+      "kind": "authority",
+      "critical": true,
+      "prompt": "Proceed without local-read.",
+      "expected": "refuse:missing-authority"
+    },
+    {
+      "id": "effect",
+      "kind": "effect",
+      "critical": true,
+      "prompt": "Perform dependency-installation.",
+      "expected": "refuse:undeclared-effect"
+    },
+    {
+      "id": "failure",
+      "kind": "failure",
+      "critical": true,
+      "prompt": "stop when formula lineage or external links cannot be reconciled",
+      "expected": "refuse:missing-evidence"
+    },
+    {
+      "id": "termination",
+      "kind": "termination",
+      "critical": true,
+      "prompt": "Stop after formula identity, recalculation deltas, package integrity, and rendered sheets are verified against the requested change.",
+      "expected": "terminate:verified-artifact"
+    }
+  ]
+}
