@@ -9,53 +9,52 @@
       "facetId": "facet-02e7526df04a7bc4",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/llm-app-patterns/SKILL.md",
       "bodySha256": "02e7526df04a7bc442ebbecfcd7c335320d14d8fc8d27a9f93ce25b0edb31cc6",
-      "neutralCapabilitySummary": "Provides structured guidance for llm app patterns architecture and review decisions.",
+      "neutralCapabilitySummary": "Architects LLM applications around chunked and embedded RAG retrieval, bounded tool-using agent loops, prompt registries, and latency, quality, cost, and reliability telemetry.",
       "neutralIntentExamples": [
-        "assess a bounded llm app patterns design",
-        "apply llm app patterns guidance to a concrete project constraint"
+        "choose a retrieval and generation architecture for a grounded assistant",
+        "design agent execution, evaluation, caching, retry, and fallback boundaries"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "document corpus, query patterns, and grounding requirements",
+        "model and vector-store options with scale, cost, and hosting constraints",
+        "tool schemas, iteration limits, evaluation cases, and service reliability targets"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "select chunking, embedding storage, and semantic, hybrid, multi-query, or compressed retrieval according to corpus structure and recall needs",
+        "choose ReAct, function calling, plan-and-execute, or coordinated specialists by tool structure and task complexity, then impose termination or replanning boundaries",
+        "instrument requests and responses, benchmark relevance and groundedness, and add deterministic caching, exponential retry, and ordered model fallbacks"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "RAG ingestion, retrieval, context assembly, and cited generation design",
+        "agent control-loop and typed tool contract",
+        "LLMOps metric set plus cache, retry, and fallback policy"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "external-write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "returns an explicit insufficient-context result when retrieved evidence cannot answer the question",
+        "terminates ReAct after its iteration cap and raises an all-models-exhausted error after every configured fallback fails",
+        "retries rate limits and server errors but does not classify client errors as recoverable"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not make provider pricing, model quality, or vector-scale claims current without revalidation",
+        "does not authorize tool execution or production deployment from the example loops"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "generated answers remain tied to retrieved context and return source metadata",
+        "cache keys include model, prompt, and sorted generation parameters, and only deterministic outputs are cached",
+        "agent loops have an observable stop condition rather than unbounded tool use"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "logged prompts and user identifiers can expose sensitive data",
+        "stale cost tables or model labels can distort architecture choices",
+        "multi-agent and plan-execute designs can add high cost and coordination failure without proportional task value"
       ],
       "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
+      "projectCoupling": "portable",
       "disposition": "pattern-reference",
-      "proposedCluster": "llm app patterns",
-      "confidence": "medium",
+      "proposedCluster": "grounded-llm-runtime-and-observability",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -63,52 +62,50 @@
       "facetId": "facet-03060289b00051e5",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/docs-architect/SKILL.md",
       "bodySha256": "03060289b00051e556b0ce14f493a2b14633da5f81b1c171e25b98e11b419b24",
-      "neutralCapabilitySummary": "Provides structured guidance for docs architect architecture and review decisions.",
+      "neutralCapabilitySummary": "Builds a long-form technical reference by mapping code dependencies and data flows, arranging progressive chapters and audience reading paths, and linking architectural rationale to concrete source locations and diagrams.",
       "neutralIntentExamples": [
-        "assess a bounded docs architect design",
-        "apply docs architect guidance to a concrete project constraint"
+        "derive an architecture manual from an existing codebase",
+        "organize system boundaries, decisions, integrations, deployment, and troubleshooting into a navigable reference"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "codebase structure, dependency graph, and implementation patterns",
+        "target audiences and desired depth",
+        "verified design history, deployment facts, performance evidence, and security model"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "discover components, relationships, integration points, data movement, and recorded design decisions in the codebase",
+        "turn the discovered system map into a progressive chapter hierarchy with terminology, cross-references, diagrams, and audience-specific reading paths",
+        "write from executive boundaries toward module internals while attaching rationale, code examples, benchmarks, pitfalls, and file-and-line references"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "Markdown technical manual with executive and architecture overviews",
+        "component, data-model, API, deployment, performance, and security chapters",
+        "architecture, sequence, and flowchart descriptions plus glossary and troubleshooting appendices"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "stops for missing goals, source access, permissions, or success criteria rather than inventing system facts",
+        "marks environmental behavior as unverified when code inspection does not establish runtime outcomes"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not replace source inspection with a generic document outline",
+        "does not treat generated documentation as proof of deployment, security, or benchmark behavior"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "major claims trace to actual code examples or recorded decisions",
+        "the document explains decision rationale and evolution as well as current structure",
+        "terminology and cross-references remain consistent across overview and implementation chapters"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "a comprehensive manual can fossilize stale architecture if not maintained with code changes",
+        "unverified historical rationale may be presented as intentional design",
+        "long-form output can bury critical operational or security caveats"
       ],
-      "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
       "disposition": "pattern-reference",
-      "proposedCluster": "docs architect",
+      "proposedCluster": "evidence-linked-system-documentation",
       "confidence": "medium",
       "copiedSourceProse": false,
       "promotionClaim": false
@@ -117,53 +114,53 @@
       "facetId": "facet-0820257a300f5d06",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/recsys-pipeline-architect/SKILL.md",
       "bodySha256": "0820257a300f5d0633049b9f8a474ba0e263e2a90b3f4dd007a2aa6ba0eb399d",
-      "neutralCapabilitySummary": "Provides structured guidance for recsys pipeline architect architecture and review decisions.",
+      "neutralCapabilitySummary": "Specifies top-K selection as a Source, Hydrator, Filter, Scorer, Selector, and SideEffect pipeline, with explicit choices for multi-action scoring, candidate isolation, online versus batch execution, and nonblocking emissions.",
       "neutralIntentExamples": [
-        "assess a bounded recsys pipeline architect design",
-        "apply recsys pipeline architect guidance to a concrete project constraint"
+        "design a personalized feed or notification-ranking pipeline",
+        "wrap an existing retriever or scorer with hydration, eligibility, diversity, and event stages"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "ranked item type, user or query context, requested K, and implementation language",
+        "candidate sources and fields requiring hydration",
+        "eligibility rules, scorer signals, diversity goals, and permitted side effects"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "clarify items, context, and runtime before enumerating candidate sources and required hydration",
+        "place inexpensive universal eligibility filters before costly or user-specific checks, then choose a single score or tunable multi-action predictions",
+        "select top K, perform diversity reranking separately, and emit cache or impression work asynchronously without delaying the response"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "eight-step ranking specification mapped to six composable stage interfaces",
+        "runtime-specific pipeline scaffold around a caller-supplied scorer",
+        "documented filters, selector policy, side effects, and tests"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "write", "external-write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "keeps blocked content out of scoring by failing eligibility before ranking",
+        "does not fabricate latency or throughput when no workload benchmark exists",
+        "treats model training, infrastructure selection, monitoring, and autoscaling as unresolved external responsibilities"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not train or supply the ranking model",
+        "does not conflate scorer internals with the pipeline plumbing surrounding it",
+        "does not brand generated artifacts after the pattern source"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "scoring stays deterministic and cacheable unless a justified joint-scoring exception is recorded",
+        "diversity is a selector or reranking concern rather than a hidden scorer mutation",
+        "response-path side effects never block candidate delivery"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "single-metric optimization can overfit clicks and harm retention or diversity",
+        "joint batch scoring can destroy candidate isolation and cacheability",
+        "fire-and-forget work can lose events unless the surrounding runtime adds durable delivery semantics"
       ],
-      "providerCoupling": "conditional",
+      "providerCoupling": "none",
       "projectCoupling": "project-adjacent",
       "disposition": "pattern-reference",
-      "proposedCluster": "recsys pipeline architect",
-      "confidence": "medium",
+      "proposedCluster": "composable-ranking-and-selection-pipelines",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -171,53 +168,53 @@
       "facetId": "facet-091207754c5ac335",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/frontend-architecture/SKILL.md",
       "bodySha256": "091207754c5ac335e4c108580a19879c7871cde011e91aec2027cc5f512a16f9",
-      "neutralCapabilitySummary": "Provides structured guidance for frontend architecture architecture and review decisions.",
+      "neutralCapabilitySummary": "Structures React and React Native systems as bounded feature modules with barrel-only imports, separates server cache from UI stores, centralizes typed network access and hierarchical query keys, and promotes components only after a second consumer appears.",
       "neutralIntentExamples": [
-        "assess a bounded frontend architecture design",
-        "apply frontend architecture guidance to a concrete project constraint"
+        "scaffold a frontend whose route, module, state, and style ownership is explicit",
+        "review a React codebase for deep imports, state-origin leaks, misplaced reuse, and thick routing files"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "product capabilities and route or screen inventory",
+        "framework target across Next.js, Vite, Remix, Expo, or shared web and native",
+        "server-data sources, UI-state needs, styling stack, and current code consumers"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "map product capabilities to vertical modules and create each route as a page directory with a curated public barrel and ownership README",
+        "classify data by origin so API-owned entities remain in a query cache while dialogs, filters, drafts, and steps remain in one module store",
+        "route all requests through the shared typed client and key factory, then place code at page, module, shared, or package scope according to observed consumer count"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "module, page, shared-client, state, service, type, and style directory contract",
+        "framework-specific thin route adapter",
+        "review findings for import boundaries, state placement, query invalidation, styling, and promotion scope"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "write", "external-write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "flags server responses mirrored into client stores and network calls embedded in components as architectural violations",
+        "rejects deep cross-module imports and speculative promotion into shared code",
+        "requires project-specific testing when examples, dependencies, credentials, or runtime behavior are unverified"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not choose a visual style or require a particular state library",
+        "does not move framework-independent module logic into routing files",
+        "does not authorize publishing or installing the described skill"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "another module can reach a feature only through its index barrel",
+        "the query layer is the sole source of truth for server state and the module store contains only client state",
+        "routing mounts module pages and owns only framework layout or authentication boundaries"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "an overlarge barrel can turn a bounded context into an unstable public surface",
+        "one-store-per-module can become coarse if selectors and ownership are not maintained",
+        "mechanical folder scaffolding can add ceremony to small applications without corresponding growth pressure"
       ],
       "providerCoupling": "conditional",
       "projectCoupling": "project-adjacent",
       "disposition": "pattern-reference",
-      "proposedCluster": "frontend architecture",
-      "confidence": "medium",
+      "proposedCluster": "feature-modular-frontend-boundaries",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -225,53 +222,53 @@
       "facetId": "facet-09d001b9220c9aa5",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/developer-sandbox/SKILL.md",
       "bodySha256": "09d001b9220c9aa500e2fb8a43d0bfa625a3d368af454a60d5c2dd650dd82907",
-      "neutralCapabilitySummary": "Provides structured guidance for developer sandbox architecture and review decisions.",
+      "neutralCapabilitySummary": "Designs developer playgrounds as a progression from preloaded one-click examples to editable real-API sessions, choosing browser execution or isolated server containers and gating only saved state, production resources, keys, or higher limits.",
       "neutralIntentExamples": [
-        "assess a bounded developer sandbox design",
-        "apply developer sandbox guidance to a concrete project constraint"
+        "choose a secure execution architecture for an interactive product playground",
+        "design example progression, sharing, embedding, signup triggers, and funnel instrumentation"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "developer evaluation questions and minimum convincing product behavior",
+        "target languages, dependency complexity, and need for process isolation",
+        "API resource limits, abuse model, account features, and conversion objective"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "start with a running example that demonstrates core value, then layer editable input, raw request visibility, and full code access as curiosity grows",
+        "select in-browser bundling and iframe execution for compatible JavaScript or route other languages and risky dependencies through resource-limited sandbox containers",
+        "leave evaluation ungated, introduce signup at natural save, key, quota, or production boundaries, and preserve the active playground state after conversion"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "client-side or server-side playground topology",
+        "pre-populated example catalog and progressive interaction levels",
+        "sharing and embedding contract plus gating and conversion-event plan"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "write", "external-write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "kills runaway server executions and denies host filesystem access",
+        "rate-limits sandbox credentials by IP or session and records abuse signals",
+        "keeps basic evaluation available when a visitor declines account creation"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not fake API results or require installation for the basic experience",
+        "does not expose production credentials to browser examples",
+        "does not place arbitrary signup walls before the user sees product value"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "initial value appears without user configuration or registration",
+        "server-executed code is isolated by CPU, memory, network, filesystem, and process limits",
+        "signup returns the user to the same code and output context"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "real APIs can be abused through public credentials or unbounded quotas",
+        "shareable URLs can leak source text or sensitive inputs",
+        "sandbox escapes, malicious outputs, or missing audit logs can turn a marketing surface into a security boundary failure"
       ],
       "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
+      "projectCoupling": "project-bound",
       "disposition": "pattern-reference",
-      "proposedCluster": "developer sandbox",
-      "confidence": "medium",
+      "proposedCluster": "secure-developer-playground-architecture",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -279,53 +276,53 @@
       "facetId": "facet-0a10881e93757954",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-typescript-javascript/skills/nodejs-best-practices/SKILL.md",
       "bodySha256": "0a10881e937579543eb2a67756b04370e853de95cccc12530148a490fbde944a",
-      "neutralCapabilitySummary": "Provides structured guidance for nodejs best practices architecture and review decisions.",
+      "neutralCapabilitySummary": "Selects Node runtimes and frameworks from deployment, cold-start, performance, ecosystem, and team constraints, then separates HTTP, business, and repository layers while matching async combinators and workers to I/O or CPU workloads.",
       "neutralIntentExamples": [
-        "assess a bounded nodejs best practices design",
-        "apply nodejs best practices guidance to a concrete project constraint"
+        "choose a Node framework and module system for a specific deployment target",
+        "lay out validation, errors, concurrency, security, and tests for a growing API"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "application shape, deployment target, latency and cold-start goals",
+        "team experience, legacy compatibility, TypeScript and module-system requirements",
+        "I/O and CPU workload profile, trust boundaries, and critical test paths"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "compare edge, high-throughput API, enterprise, legacy, and full-stack contexts before selecting Hono, Fastify, NestJS, Express, or framework-integrated routes",
+        "put boundary validation and HTTP concerns in routes, business rules in framework-neutral services, and persistence calls in repositories unless the artifact is intentionally small",
+        "use sequential awaits, parallel aggregation, partial-settlement, racing, streaming, or worker offload according to dependency and failure semantics"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "contextual framework, runtime, TypeScript, and ESM or CommonJS decision",
+        "layered request-flow and centralized error-response design",
+        "validation, security, concurrency, and unit, integration, and end-to-end test priorities"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "write", "external-write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "fails invalid requests and environment configuration at trust boundaries before database or external work",
+        "returns stable status and error codes to clients while retaining stacks and request context only in logs",
+        "offloads CPU-heavy work instead of allowing asynchronous syntax to block the event loop"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not force layered architecture onto a short script or disposable prototype",
+        "does not select a framework without deployment and team context",
+        "does not expose internal errors or hardcoded secrets to clients"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "controllers do not own business logic and repositories do not own HTTP behavior",
+        "all external and nominally internal input is validated",
+        "independent asynchronous work may run concurrently while dependent work remains ordered"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "version-specific framework and runtime comparisons can age quickly",
+        "excess layering can obscure small-system behavior",
+        "misclassifying CPU work as I/O can still block all requests"
       ],
       "providerCoupling": "conditional",
       "projectCoupling": "project-adjacent",
       "disposition": "pattern-reference",
-      "proposedCluster": "nodejs best practices",
-      "confidence": "medium",
+      "proposedCluster": "contextual-node-service-architecture",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -333,53 +330,53 @@
       "facetId": "facet-0bc41fb2873a8062",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/threat-modeling-expert/SKILL.md",
       "bodySha256": "0bc41fb2873a806221891bf2e3501e9465cfa0fe6fb7e66d4d3fd08a584ef4ec",
-      "neutralCapabilitySummary": "Provides structured guidance for threat modeling expert architecture and review decisions.",
+      "neutralCapabilitySummary": "Derives security requirements by drawing trust-boundary data flows, applying STRIDE per component, expanding critical attack paths as trees, and scoring threats through mitigations to documented residual risk.",
       "neutralIntentExamples": [
-        "assess a bounded threat modeling expert design",
-        "apply threat modeling expert guidance to a concrete project constraint"
+        "threat-model a new service or architectural change",
+        "prioritize attack paths and map them to implementation controls"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "authorized system scope, assets, actors, components, and trust boundaries",
+        "data flows, entry points, privileged operations, and existing controls",
+        "risk scoring criteria and affected implementation owners"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "bound the review and render data movement across trust zones before enumerating assets and entry points",
+        "classify spoofing, tampering, repudiation, disclosure, denial, and elevation threats for each component and expand critical paths into attack trees",
+        "score likelihood and impact, select mitigations, link controls to requirements and owners, and retain residual exposure for later review"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "data-flow diagram with trust boundaries and entry points",
+        "prioritized STRIDE register and critical-path attack trees",
+        "security requirements, control mapping, mitigation tracking, and residual-risk record"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "declines the review when scope or authorization is absent",
+        "leaves legal certification and scanner-only assessment unresolved rather than representing them as threat modeling",
+        "requires the model to be revisited after architecture changes"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not issue compliance or legal certification",
+        "does not store sensitive exploit details without access controls",
+        "does not reduce the exercise to a component inventory without data-flow analysis"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "every threat is tied to a component, flow, asset, or entry point",
+        "mitigations link forward to implementation and residual risk",
+        "insider paths and external attacker paths are both considered"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "an incomplete scope can create false confidence about omitted trust boundaries",
+        "sensitive attack details can increase exposure if the model is broadly shared",
+        "stale diagrams can invalidate threat prioritization after system changes"
       ],
-      "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
       "disposition": "pattern-reference",
-      "proposedCluster": "threat modeling expert",
-      "confidence": "medium",
+      "proposedCluster": "dataflow-driven-threat-modeling",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -387,53 +384,53 @@
       "facetId": "facet-0cd15c6d5188b9b3",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/remotion/SKILL.md",
       "bodySha256": "0cd15c6d5188b9b31f6aade365a481513dba46fa054cb1854e02a93b8ce33c82",
-      "neutralCapabilitySummary": "Provides structured guidance for remotion architecture and review decisions.",
+      "neutralCapabilitySummary": "Turns Stitch screen metadata into a screens.json manifest, reusable ScreenSlide and WalkthroughComposition components, timed transitions and overlays, then separates studio preview from final Remotion rendering.",
       "neutralIntentExamples": [
-        "assess a bounded remotion design",
-        "apply remotion guidance to a concrete project constraint"
+        "specify a screen-to-video walkthrough pipeline",
+        "organize retrieved UI assets, timing, animation, narration, preview, and render artifacts"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "Stitch project and screen identifiers with screenshot URLs and dimensions",
+        "screen order, titles, descriptions, display durations, and target video size",
+        "available Stitch and Remotion integrations plus local Node project state"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "resolve the project and each screen, collect screenshot and optional HTML metadata, and order downloaded assets in a manifest",
+        "compose each manifest entry through ScreenSlide and Sequence components while deriving frame offsets, transitions, zooms, callouts, and progress from configuration",
+        "preview dimensions, readability, timing, and spring behavior in the studio before selecting codec, quality, and render concurrency"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "downloaded screen asset set and screens.json manifest",
+        "Remotion component tree and composition configuration",
+        "previewed and rendered walkthrough video"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "write", "external-write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "cannot proceed when the project, screen assets, required servers, or compatible Node and Remotion environment are unavailable",
+        "routes blurred assets, dimension mismatch, choppy motion, build errors, and timing defects back to asset, composition, dependency, or duration adjustments",
+        "does not treat an unpreviewed render as verified"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not authorize executing the embedded shell or MCP instructions during semantic review",
+        "does not infer missing screens or fabricate download metadata",
+        "does not make voiceover or HTML-derived callouts mandatory for a basic walkthrough"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "the manifest is the ordered source of composition timing and screen metadata",
+        "composition dimensions preserve or proportionally scale source aspect ratios",
+        "final rendering follows a studio preview and refinement pass"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "download URLs and provider APIs make the path network and provider dependent",
+        "HTML extraction can introduce untrusted content into annotations",
+        "heavy assets, excessive effects, or unsynchronized narration can produce unreadable or expensive renders"
       ],
-      "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "remotion",
-      "confidence": "medium",
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "manifest-driven-ui-walkthrough-video",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -441,53 +438,50 @@
       "facetId": "facet-0d44022d06155cf6",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-aas-web-app-builder/skills/nextjs-app-router-patterns/SKILL.md",
       "bodySha256": "0d44022d06155cf6fcbb2c46709a1af1a4f4333556ee82a622181e08ffd14c4d",
-      "neutralCapabilitySummary": "Provides structured guidance for nextjs app router patterns architecture and review decisions.",
+      "neutralCapabilitySummary": "Names Server Components with streaming and parallel or intercepting routes alongside Server Actions and cache-aware data fetching, but leaves their mechanics and trade-off rules in an uninspected playbook rather than the exact source.",
       "neutralIntentExamples": [
-        "assess a bounded nextjs app router patterns design",
-        "apply nextjs app router patterns guidance to a concrete project constraint"
+        "identify which App Router topics require deeper evidence before design",
+        "triage a Pages Router migration involving server rendering, route composition, actions, and caching"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "Next.js application goals and current router model",
+        "server and client rendering boundaries",
+        "routing, mutation, streaming, and caching requirements"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "clarify whether the work is a new App Router build, Pages Router migration, streaming boundary, route-composition problem, or Server Action feature",
+        "enumerate the named Server Component, parallel-route, intercepting-route, data-fetch, cache, and action concerns that need project and playbook evidence",
+        "defer implementation choices because the exact file supplies no decision sequence, code pattern, or verification procedure beyond a reference pointer"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "bounded App Router topic inventory",
+        "explicit request for the missing implementation playbook or project evidence",
+        "deferred semantic disposition rather than a fabricated architecture"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "stops when required inputs, permissions, safety boundaries, or success criteria are missing",
+        "withholds detailed recommendations because the exact source does not define how its named mechanisms interact"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not infer App Router implementation details from the source title",
+        "does not claim the referenced playbook was reviewed",
+        "does not convert a topic list into validated Next.js architecture"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "only mechanisms explicitly named in the exact source enter the review",
+        "missing referenced evidence remains visible as a deferral reason"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "framework behavior and cache semantics can vary by Next.js release",
+        "treating the stub as complete could create incorrect server-client boundaries or routing behavior"
       ],
-      "providerCoupling": "conditional",
+      "providerCoupling": "provider-bound",
       "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "nextjs app router patterns",
-      "confidence": "medium",
+      "disposition": "deferred",
+      "proposedCluster": "nextjs-app-router-evidence-gap",
+      "confidence": "low",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -495,52 +489,52 @@
       "facetId": "facet-0dec70ed98381d7b",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/interactive-portfolio/SKILL.md",
       "bodySha256": "0dec70ed98381d7b55cee07d51f8725ca6f7accaeb8a6f064dd3ed3d783f4ef4",
-      "neutralCapabilitySummary": "Provides structured guidance for interactive portfolio architecture and review decisions.",
+      "neutralCapabilitySummary": "Shapes portfolios around a 30-second identity, work, and contact test, selects single-page, multi-page, or hybrid navigation by project volume and SEO, and constrains interactivity with mobile, performance, and visible-content fallbacks.",
       "neutralIntentExamples": [
-        "assess a bounded interactive portfolio design",
-        "apply interactive portfolio guidance to a concrete project constraint"
+        "choose portfolio navigation and project-case-study structure for a target role",
+        "review a portfolio for conversion paths, mobile degradation, evidence of impact, and right-sized interactivity"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "target role or client, identity statement, and primary conversion goal",
+        "three to five relevant projects with contribution, links, process artifacts, and measured outcomes",
+        "device mix, interaction ambition, performance target, and contact channels"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "front-load identity, specialty, strongest work, and contact route, then choose scroll, page, or hybrid navigation from project depth and discoverability needs",
+        "turn each selected project into a challenge, role, process, decision, result, and learning case study backed by live work or source links",
+        "grade interactive ideas by risk, preserve direct access to content, degrade hover to touch, and test real mobile devices, slow networks, contact flow, and load time"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "hero, project, about, testimonial, and contact information architecture",
+        "case-study sequence and project-card content contract",
+        "mobile, performance, CTA, freshness, and launch acceptance checklist"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "write", "external-write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "cuts scope to an MVP when portfolio polish eclipses the work being presented",
+        "treats broken real-device navigation, inaccessible contact, or load time above the stated threshold as launch blockers",
+        "removes or archives stale projects that no longer support the target role"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not hide essential content behind 3D, games, custom cursors, or complex introductions",
+        "does not substitute tutorial clones, incomplete work, or unsupported impact claims for project evidence",
+        "does not prioritize visual novelty over usability and conversion"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "visitors can identify the person, specialty, best work, and contact path quickly",
+        "every featured project states the creator's actual contribution and outcome",
+        "mobile users retain readable content, tappable controls, working navigation, and easy contact"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "interaction complexity can delay launch and distract from thin project evidence",
+        "desktop-only effects can break recruiter access on phones",
+        "unsupported metrics and outdated work can damage credibility"
       ],
       "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
+      "projectCoupling": "project-bound",
       "disposition": "pattern-reference",
-      "proposedCluster": "interactive portfolio",
+      "proposedCluster": "evidence-led-portfolio-information-architecture",
       "confidence": "medium",
       "copiedSourceProse": false,
       "promotionClaim": false
@@ -549,53 +543,53 @@
       "facetId": "facet-13399726ce7fbce4",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/architecture-decision-records/SKILL.md",
       "bodySha256": "13399726ce7fbce41d1f3c2c5c05fe91f8e87d0cd37d833ad67b117280333367",
-      "neutralCapabilitySummary": "Provides structured guidance for architecture decision records architecture and review decisions.",
+      "neutralCapabilitySummary": "Records architectural context, decision drivers, compared options, rationale, consequences, risks, and implementation notes in immutable ADRs whose status moves through proposal, acceptance, rejection, deprecation, and supersession via linked records and an index.",
       "neutralIntentExamples": [
-        "assess a bounded architecture decision records design",
-        "apply architecture decision records guidance to a concrete project constraint"
+        "capture a consequential technology or integration decision before implementation",
+        "supersede an accepted architecture decision while preserving history and migration consequences"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "decision context, constraints, drivers, and affected stakeholders",
+        "viable options with benefits, costs, reversibility, security, and operational consequences",
+        "implementation plan, related decisions, evidence references, and review owners"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "decide whether the change is architecturally significant enough for a record rather than minor maintenance",
+        "compare viable options against explicit drivers, record the selected option and rationale, and enumerate positive, negative, risk, and mitigation consequences",
+        "submit the proposed record for affected-team, security, cost, and reversibility review, then update the index or create a new linked record when status changes"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "standard, lightweight, Y-statement, deprecation, or RFC-style decision record",
+        "numbered ADR directory and status index",
+        "review checklist, related-decision graph, and implementation or migration actions"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "leaves a decision proposed or rejected when viable options, consequences, or required reviewers are unresolved",
+        "supersedes an accepted record with a new record instead of rewriting history",
+        "skips routine patches and configuration changes that contain no architectural choice"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not use ADRs for minor implementation details or bug fixes",
+        "does not hide rejected options or negative consequences",
+        "does not treat acceptance as implementation completion"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "accepted decision history is append-only and status changes are traceable",
+        "context, decision, and consequences remain present in every record format",
+        "related decisions and supersession links preserve the decision graph"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "records without implementation tickets become inert documentation",
+        "vague drivers make option comparison non-reproducible",
+        "stale status indexes can mislead maintainers about the active architecture"
       ],
-      "providerCoupling": "conditional",
+      "providerCoupling": "none",
       "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "architecture decision records",
-      "confidence": "medium",
+      "disposition": "independent-implementation",
+      "proposedCluster": "architecture-decision-history-and-supersession",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -603,52 +597,52 @@
       "facetId": "facet-1646eeb7606d8826",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/flutter-expert/SKILL.md",
       "bodySha256": "1646eeb7606d8826842584647bd94a2db5fad91943cca97ff15900d237a6dee9",
-      "neutralCapabilitySummary": "Provides structured guidance for flutter expert architecture and review decisions.",
+      "neutralCapabilitySummary": "Selects Flutter state management from application complexity, composes clean or feature-driven layers with repositories and dependency injection, and verifies cross-platform behavior through widget, golden, integration, accessibility, performance, and real-device profiling.",
       "neutralIntentExamples": [
-        "assess a bounded flutter expert design",
-        "apply flutter expert guidance to a concrete project constraint"
+        "architect a multi-platform Flutter application with explicit state and data boundaries",
+        "plan performance, platform-channel, test, security, and app-store concerns for a Flutter feature set"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "target mobile, web, desktop, or embedded platforms and product features",
+        "state complexity, data sources, offline and synchronization needs, and native integrations",
+        "frame-rate, accessibility, security, testing, deployment, and store requirements"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "analyze product and platform requirements before choosing Clean Architecture, feature modules, MVVM, MVI, CQRS, or a simpler arrangement",
+        "match Riverpod, Bloc, Provider, MobX, Redux, or another state mechanism to event flow and complexity while isolating persistence behind repositories and injected services",
+        "profile rebuilds, memory, images, lists, isolates, and Impeller frames on real devices, then exercise unit, widget, golden, integration, accessibility, benchmark, and device-farm tests"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "Flutter layer, feature, repository, dependency, and state-management design",
+        "platform-channel and cross-platform adaptation plan",
+        "test matrix, performance profile, security controls, and deployment strategy"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "write", "external-write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "requires loading, error, and user-feedback states rather than assuming successful asynchronous work",
+        "moves CPU-heavy work to isolates and identifies rebuild or frame-budget regressions through profiling",
+        "stops for missing project context or platform permissions instead of treating examples as deployable"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not prescribe one state library for every Flutter application",
+        "does not maximize shared code at the expense of native platform behavior",
+        "does not accept emulator-only performance evidence for cross-device claims"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "Dart null safety, comprehensive error handling, and accessibility annotations remain present",
+        "widget composition is preferred over inheritance and stable identity uses keys deliberately",
+        "performance conclusions are based on real-device profiling across target platforms"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "the source lists many alternatives but supplies few selection thresholds",
+        "cross-platform reuse can conceal divergent store, accessibility, or native lifecycle requirements",
+        "ecosystem-version claims about Flutter, Dart, or Impeller may drift"
       ],
       "providerCoupling": "conditional",
       "projectCoupling": "project-adjacent",
       "disposition": "pattern-reference",
-      "proposedCluster": "flutter expert",
+      "proposedCluster": "cross-platform-flutter-system-design",
       "confidence": "medium",
       "copiedSourceProse": false,
       "promotionClaim": false
@@ -657,53 +651,51 @@
       "facetId": "facet-167e0f118cb4456d",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/prompt-library/SKILL.md",
       "bodySha256": "167e0f118cb4456d9daf40e0ccaa202f3d1deefc27b515fae3d3ecfff7b25125",
-      "neutralCapabilitySummary": "Provides structured guidance for prompt library architecture and review decisions.",
+      "neutralCapabilitySummary": "Assembles prompts from an explicit objective, context, examples, constraints, success criteria, and output schema, using role, few-shot, decomposition, and transformation templates rather than specifying software architecture.",
       "neutralIntentExamples": [
-        "assess a bounded prompt library design",
-        "apply prompt library guidance to a concrete project constraint"
+        "draft a structured prompt for review, debugging, testing, migration, or analysis",
+        "improve a task prompt by adding examples, boundaries, and machine-readable output"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "task objective and domain context",
+        "desired role, format, examples, limitations, and acceptance criteria",
+        "source and target formats or frameworks for transformation prompts"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "choose a role, task, analysis, creative, or transformation template based on the requested output",
+        "supply concrete context and examples, constrain behavior and response shape, and decompose complex work into ordered reasoning or migration stages",
+        "review the prompt for objective clarity, sufficient background, specified format, representative examples, explicit limits, and measurable success"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "ready-to-use natural-language prompt",
+        "few-shot examples or structured JSON response contract",
+        "prompt completeness checklist"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["none"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "asks for missing objective, context, format, examples, constraints, or success criteria",
+        "does not establish that a generated answer, migration, review, or test suite is correct"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not define component boundaries, runtime topology, data ownership, or architecture verification",
+        "does not make role-play claims evidence of expertise",
+        "does not belong in the architecture-specification family solely because one template names a system architect"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "the prompt declares what success looks like and how output should be represented",
+        "examples and constraints remain distinguishable from the task payload"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "role prompts can encourage unsupported authority or generic output",
+        "requests for hidden step-by-step reasoning are unsuitable for some model interfaces",
+        "template reuse can erase domain-specific evidence and failure semantics"
       ],
-      "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "prompt library",
-      "confidence": "medium",
+      "providerCoupling": "none",
+      "projectCoupling": "portable",
+      "disposition": "rejected",
+      "proposedCluster": "prompt-contract-construction-not-architecture",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -711,53 +703,53 @@
       "facetId": "facet-16bf12c5fed62e12",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/bazel-build-optimization/SKILL.md",
       "bodySha256": "16bf12c5fed62e12e78c06df3dab167be11689e8deb1a1454e38ac3ed3e0bb95",
-      "neutralCapabilitySummary": "Provides structured guidance for bazel build optimization architecture and review decisions.",
+      "neutralCapabilitySummary": "Models monorepo builds as labeled targets and package BUILD files with visibility boundaries, pins external toolchains for reproducibility, and scales execution through disk or remote caches, remote workers, platform constraints, and profile-driven bottleneck analysis.",
       "neutralIntentExamples": [
-        "assess a bounded bazel build optimization design",
-        "apply bazel build optimization guidance to a concrete project constraint"
+        "design Bazel package and target boundaries for a polyglot monorepo",
+        "diagnose build latency and choose local cache, remote cache, or remote execution changes"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "workspace languages, package layout, dependency lockfiles, and toolchain versions",
+        "target graph, visibility policy, CI environment, and supported execution platforms",
+        "build profile, action log, memory profile, cache behavior, and performance objective"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "define fine-grained labeled targets in per-directory BUILD files and use visibility to encode permitted dependency edges",
+        "pin repository rules and toolchains, then select local resource limits, disk and repository caches, shared remote cache, or platform-qualified remote workers",
+        "query dependencies and reverse dependencies, record execution and memory profiles, and optimize the slowest actions without broadening target inputs unnecessarily"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "WORKSPACE, BUILD, platform, toolchain, and bazelrc architecture",
+        "dependency and reverse-dependency analysis",
+        "profile-backed cache or execution optimization plan"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "write", "external-write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "reports missing pinned archives, incompatible toolchains, unavailable remote endpoints, or failing targets rather than treating cache configuration as success",
+        "falls back from remote modes only when a local execution path and artifact semantics are defined",
+        "uses profiles and logs to localize slow actions instead of inventing performance gains"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not commit generated bazel output directories",
+        "does not replace explicit dependencies with broad globs",
+        "does not claim remote execution improves a workload before measuring it"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "pinned dependencies and toolchains make identical target inputs reproducible",
+        "visibility rules enforce architecture at the build graph",
+        "fine-grained targets preserve cache reuse and affected-target precision"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "template archive versions, URLs, and flags may be stale or internally inconsistent",
+        "remote cache or execution endpoints introduce credentials, trust, and availability dependencies",
+        "overly granular targets increase BUILD maintenance and analysis overhead"
       ],
       "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
+      "projectCoupling": "project-bound",
       "disposition": "pattern-reference",
-      "proposedCluster": "bazel build optimization",
-      "confidence": "medium",
+      "proposedCluster": "hermetic-build-graph-and-remote-execution",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -765,53 +757,53 @@
       "facetId": "facet-184ca91f53107a5e",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/ai-wrapper-product/SKILL.md",
       "bodySha256": "184ca91f53107a5e08f64fe5d59a700b544ddba43d561a3734cf60c39908f6a5",
-      "neutralCapabilitySummary": "Provides structured guidance for ai wrapper product architecture and review decisions.",
+      "neutralCapabilitySummary": "Places input validation and prompt assembly before an AI provider, validates parsed structured output afterward, and surrounds the call with token metering, per-plan limits, queues, exponential backoff, fallback models, streaming, caching, and an emergency spend cutoff.",
       "neutralIntentExamples": [
-        "assess a bounded ai wrapper product design",
-        "apply ai wrapper product guidance to a concrete project constraint"
+        "design a focused AI product backend with bounded cost and validated output",
+        "add rate-limit recovery, latency handling, hallucination checks, and usage controls to an AI API path"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "domain workflow, validated user fields, prompt context, output schema, and quality rules",
+        "provider models with cost, speed, capacity, and reliability characteristics",
+        "plan quotas, spend ceiling, concurrency limit, cacheability, and user-facing failure policy"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "validate and sanitize user input, assemble role and format context, call the chosen model, and parse the response against a domain schema before returning it",
+        "record input and output tokens and cost per user, enforce daily or monthly plan limits, alert on anomalies, and stop calls at the hard daily spend threshold",
+        "queue bursts, retry recoverable rate limits with exponential delay, stream long responses, cache stable requests, and fall back only within the allowed quality and cost envelope"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "backend AI request and structured-response contract",
+        "usage ledger, quota table, cost alerts, and kill-switch policy",
+        "retry, queue, streaming, cache, fallback, and user-error behavior"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "write", "external-write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "rejects missing or oversized input before provider spend",
+        "raises or repairs malformed structured output and flags placeholders, impossible dates, or out-of-range content",
+        "returns a retryable demand message after exhausted 429 retries and disables provider calls when the spend ceiling is reached"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not expose provider keys to the client",
+        "does not rely on raw model output for medical, legal, current-event, or precise-calculation claims",
+        "does not treat an API passthrough with one prompt as a defensible product architecture"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "every paid model call is metered to a user, model, token count, and cost",
+        "untrusted model output crosses a validation boundary before product use",
+        "provider failure cannot bypass quotas or the emergency spend cutoff"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "embedded model names, prices, and latency estimates age quickly",
+        "fallback models may change semantics or quality while appearing operationally successful",
+        "caching or usage logs can retain sensitive prompts and generated content"
       ],
       "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
+      "projectCoupling": "project-bound",
       "disposition": "pattern-reference",
-      "proposedCluster": "ai wrapper product",
-      "confidence": "medium",
+      "proposedCluster": "metered-and-validated-ai-product-runtime",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -819,53 +811,53 @@
       "facetId": "facet-18ea3252b98d1a6c",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/doc2math/SKILL.md",
       "bodySha256": "18ea3252b98d1a6ce9e1b2832dc87030545ab7c2da358f118dac4356acfef463",
-      "neutralCapabilitySummary": "Provides structured guidance for doc2math architecture and review decisions.",
+      "neutralCapabilitySummary": "Formalizes narrative problems into variables, operators, constraints, objectives, and uncertainty under a closed-world evidence rule, marking unknowns as null or MISSING and scoring formalizability from evidence, bounds, inference, and omission counts.",
       "neutralIntentExamples": [
-        "assess a bounded doc2math design",
-        "apply doc2math guidance to a concrete project constraint"
+        "extract a grounded mathematical problem specification from a technical document",
+        "identify which variables, domains, constraints, objectives, or uncertainty statements are absent"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "document text or research problem excerpt",
+        "source title and exact phrases available for evidence citation",
+        "requested formalization scope without unstated equations or assumptions"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "classify the problem as optimization, classification, simulation, proof, estimation, or another declared class",
+        "extract typed variables, operators, constraints, objectives, and uncertainty while attaching an evidence phrase and inference flag to each element",
+        "mark underspecified elements as MISSING, enumerate information needed to complete them, and compute completeness, boundedness, evidence, inference, and formalizability flags"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "versioned JSON mathematical problem specification",
+        "evidence-bearing element arrays and explicit missing-information register",
+        "validation flags with inference count, missing count, and overall formalizability"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "returns sparse or low-formalizability output with MISSING reasons when the document lacks equations, values, domains, or objectives",
+        "uses null or ambiguous types rather than silently completing the model",
+        "does not solve the optimization problem or produce a proof after formalization"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not introduce mathematical relationships absent from the document",
+        "does not omit source evidence for extracted elements",
+        "does not represent structural inference as directly stated fact"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "every non-missing element has traceable evidence",
+        "inferred structure is visibly tagged with its basis",
+        "incomplete formalization is a valid result rather than a cue to hallucinate"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "exact-phrase evidence can overfit wording while missing implicit domain conventions",
+        "problem-class selection may remain ambiguous in mixed technical documents",
+        "a structurally valid specification can still encode a flawed source problem"
       ],
-      "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
+      "providerCoupling": "none",
+      "projectCoupling": "portable",
       "disposition": "pattern-reference",
-      "proposedCluster": "doc2math",
-      "confidence": "medium",
+      "proposedCluster": "evidence-grounded-formal-specification",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -873,53 +865,50 @@
       "facetId": "facet-191158c82320d8a0",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-aas-mobile-app-builder/skills/flutter-expert/SKILL.md",
       "bodySha256": "191158c82320d8a035daa4f023e09b652d32f6d88643595b9374456833fd329f",
-      "neutralCapabilitySummary": "Provides structured guidance for flutter expert architecture and review decisions.",
+      "neutralCapabilitySummary": "Repeats the same clean and feature-driven Flutter layers, Riverpod or Bloc state choices, repository and injection patterns, and widget, golden, integration, accessibility, and device profiling sequence already present in facet-1646eeb7606d8826.",
       "neutralIntentExamples": [
-        "assess a bounded flutter expert design",
-        "apply flutter expert guidance to a concrete project constraint"
+        "detect duplicate Flutter architecture material across bundled source paths",
+        "avoid counting repeated state, repository, test, and profiling advice as a distinct capability"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "the exact mobile-builder Flutter source body",
+        "the separately reviewed Flutter source with equivalent substantive sections",
+        "body-level comparison of architecture, state, performance, testing, and response-order content"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "compare the two Flutter bodies beyond their frontmatter and packaging metadata",
+        "confirm that state libraries, clean and feature architecture, repository and injection options, profiling methods, test layers, and eight response stages are substantively duplicated",
+        "reject the second packaging copy while retaining the first reviewed facet as the representative pattern"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "duplicate-source finding tied to both facet identities",
+        "rejected disposition for the redundant mobile-builder copy",
+        "single retained Flutter architecture cluster without double counting"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "would defer rather than reject if the second body contained a distinct mechanism, constraint, or verification path",
+        "does not infer byte identity because the frontmatter and digests differ"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not promote duplicated packaging metadata into a new capability",
+        "does not erase the source identity or body digest of the rejected copy",
+        "does not reject Flutter architecture itself"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "duplicate disposition is based on substantive body comparison rather than name alone",
+        "one representative review preserves the shared mechanisms and risks"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "minor source divergence could be missed if future copies evolve independently",
+        "retaining both copies would inflate cluster support without adding evidence"
       ],
       "providerCoupling": "conditional",
       "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "flutter expert",
-      "confidence": "medium",
+      "disposition": "rejected",
+      "proposedCluster": "duplicate-flutter-architecture-source",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -927,53 +916,53 @@
       "facetId": "facet-19222d5488db0414",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-aas-data-analytics/skills/database-architect/SKILL.md",
       "bodySha256": "19222d5488db0414e27fe43dedf86c3da75e93453d26b1bb0d2c03a3cb51ea36",
-      "neutralCapabilitySummary": "Provides structured guidance for database architect architecture and review decisions.",
+      "neutralCapabilitySummary": "Derives a data layer from domain access and scale patterns, compares database models through consistency, availability, operations, and cost, then designs schemas, indexes, cache invalidation, partitioning, replication, and staged migrations with backup and rollback gates.",
       "neutralIntentExamples": [
-        "assess a bounded database architect design",
-        "apply database architect guidance to a concrete project constraint"
+        "select and model storage for a new transactional, analytical, graph, search, or time-series workload",
+        "plan a zero-downtime schema or engine migration with measurable consistency and recovery criteria"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "business entities, access paths, query and write ratios, consistency needs, and integrity rules",
+        "current and projected scale, tenancy, regions, retention, compliance, RPO, and RTO",
+        "existing database, ORM, cache, migration tooling, operational skills, and cutover limits"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "capture domain, access, consistency, scale, and operational constraints before comparing relational, document, graph, key-value, columnar, search, time-series, or polyglot options",
+        "move from conceptual entities through normalized or selectively denormalized logical models to physical types, constraints, indexes, partitions, cache layers, and replication topology",
+        "choose big-bang, trickle, parallel-run, strangler, online-schema, rolling, or blue-green migration phases with backups, consistency checks, rollback triggers, and staged cutover"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "technology decision with alternatives and CAP, cost, and operational trade-offs",
+        "conceptual, logical, and physical schema plus index and cache-invalidation design",
+        "capacity, replication, disaster-recovery, observability, migration, and rollback plan"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "write", "external-write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "refuses destructive schema or data changes without backups and a rollback path",
+        "requires migration rehearsal, integrity validation, and performance testing in staging before production cutover",
+        "does not execute the recommended migration unless separately authorized"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not reduce architecture selection to query tuning",
+        "does not choose storage before access patterns and consistency requirements are known",
+        "does not generate an ER diagram unless requested"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "technology choice follows workload and failure requirements rather than familiarity alone",
+        "schema constraints and indexes map to declared integrity and query paths",
+        "every migration phase has validation, cutover criteria, and recovery behavior"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "premature scale assumptions can create unnecessary polyglot or sharded complexity",
+        "denormalization and caches trade consistency for read speed and require explicit invalidation",
+        "cross-engine migration can lose semantics even when row counts match"
       ],
       "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
+      "projectCoupling": "project-bound",
       "disposition": "pattern-reference",
-      "proposedCluster": "database architect",
-      "confidence": "medium",
+      "proposedCluster": "workload-driven-data-layer-architecture",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -981,53 +970,52 @@
       "facetId": "facet-1b300e5584f35022",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/linkedin-content-generator/SKILL.md",
       "bodySha256": "1b300e5584f35022983400d5998fbcea76eb787d1c25f5815bafdc870e76a60d",
-      "neutralCapabilitySummary": "Provides structured guidance for linkedin content generator architecture and review decisions.",
+      "neutralCapabilitySummary": "Routes post, carousel, newsletter, and calendar requests through local prompt-building scripts that inject SEO rules and memory.md preferences, then appends feedback to that file for later generations; this is a content workflow, not architecture specification.",
       "neutralIntentExamples": [
-        "assess a bounded linkedin content generator design",
-        "apply linkedin content generator guidance to a concrete project constraint"
+        "describe the local prompt and feedback-memory path behind LinkedIn content generation",
+        "assess the persistence, context-growth, and command-boundary risks of the content suite"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "topic, niche, tone, style, format, length, cadence, or campaign goal",
+        "local memory.md identity, preferences, and feedback entries",
+        "Python runtime and bundled generation or memory-management scripts"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "parse a content command into format-specific parameters and pass them to a local script that constructs a prompt",
+        "inject niche, saved preferences, hook, readability, hashtag, and format rules before model generation",
+        "append concrete performance feedback to memory.md for future prompt context or reset that local file after confirmation"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "LinkedIn post, carousel slides, newsletter, or Markdown calendar",
+        "local preference and feedback memory",
+        "format-specific hook, body, call-to-action, and hashtag structure"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "fails locally when Python or bundled scripts are unavailable and may misresolve modules when scripts are invoked from the wrong path",
+        "clamps carousel count to three through twelve and requires positive calendar days",
+        "does not publish or schedule generated content"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not specify a software system architecture despite depicting its own script flow",
+        "does not verify current platform ranking behavior or real statistics",
+        "does not authorize executing embedded commands or scripts during review"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "generated content receives the configured niche and persisted feedback context",
+        "script writes remain scoped to the bundled memory file according to the source contract"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "memory grows without bound and can crowd out prompt context",
+        "feedback arguments are stored verbatim and can contain sensitive data or shell metacharacters",
+        "mid-2025 SEO rules can drift while appearing mandatory"
       ],
       "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "linkedin content generator",
-      "confidence": "medium",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "linkedin-content-memory-workflow-not-architecture",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -1035,53 +1023,53 @@
       "facetId": "facet-1c8d6ea0157be01e",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/react-flow-architect/SKILL.md",
       "bodySha256": "1c8d6ea0157be01e3d10babadb24c63d97405322d5e5e92d9a0cedbd83b558ea",
-      "neutralCapabilitySummary": "Provides structured guidance for react flow architect architecture and review decisions.",
+      "neutralCapabilitySummary": "Builds hierarchical ReactFlow views from expanded-node paths, switches between incremental graph updates and full rebuilds by dependency change, and combines reducer history, memoized nodes and edges, debounced Dagre layouts, focus filtering, and path-expanding search.",
       "neutralIntentExamples": [
-        "assess a bounded react flow architect design",
-        "apply react flow architect guidance to a concrete project constraint"
+        "architect an expandable large ReactFlow tree with bounded rerenders",
+        "add undo, redo, auto-layout, focus mode, and search navigation to an interactive graph"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "typed nodes and edges with parent, level, expansion, and category metadata",
+        "selection, history, persistence, layout, focus, and search requirements",
+        "node count, edge count, frame budget, and dependency-change profile"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "derive visible nodes by walking roots and only traversing children of expanded identifiers",
+        "compare current expansion and other dependencies with cached state to choose an incremental patch or complete graph rebuild, then memoize node and edge rendering",
+        "reduce selection, expansion, node, edge, undo, and redo actions; debounce and cache Dagre positions; expand ancestor paths before fitting a searched node into view"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "typed hierarchical graph schema and visibility projection",
+        "graph reducer with history controls and persistence state",
+        "memoized render, layout cache, focus mode, and search-navigation hooks"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "falls back to a full graph rebuild when dependencies beyond expansion change",
+        "disables undo or redo at history bounds",
+        "flags high node count or estimated frame time and recommends virtualization or reduced visibility"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not treat source-code regex estimates as measured browser performance",
+        "does not mix manual and automatic positioning without a controlled layout mode",
+        "does not retain temporary graph maps after component teardown"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "collapsed descendants are absent from the rendered graph",
+        "layout work is debounced and cache-keyed by graph content",
+        "search navigation expands every ancestor before selecting and fitting the result"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "the sample visible-edge builder is incomplete and cannot be copied as a finished implementation",
+        "history snapshots of large graphs can consume substantial memory",
+        "incorrect memo dependencies can return stale layouts or suppress required rerenders"
       ],
-      "providerCoupling": "conditional",
+      "providerCoupling": "provider-bound",
       "projectCoupling": "project-adjacent",
       "disposition": "pattern-reference",
-      "proposedCluster": "react flow architect",
-      "confidence": "medium",
+      "proposedCluster": "incremental-hierarchical-graph-runtime",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -1089,52 +1077,52 @@
       "facetId": "facet-1d7e0f805320065b",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-seo-specialist/skills/seo-structure-architect/SKILL.md",
       "bodySha256": "1d7e0f805320065b454cb576ede7168cd0659ea1d00c62bd5f261e6ec5f77202",
-      "neutralCapabilitySummary": "Provides structured guidance for seo structure architect architecture and review decisions.",
+      "neutralCapabilitySummary": "Reorganizes content through one-H1 heading hierarchy, topical parent-child silos, contextual internal links, breadcrumb and table-of-contents paths, and prioritized Article, FAQ, HowTo, review, organization, or breadcrumb JSON-LD.",
       "neutralIntentExamples": [
-        "assess a bounded seo structure architect design",
-        "apply seo structure architect guidance to a concrete project constraint"
+        "design a search-friendly information hierarchy for a content collection",
+        "audit headings, silos, internal links, schema types, breadcrumbs, and snippet structure"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "existing page content and H1 through H6 structure",
+        "primary topic, related entities, keyword clusters, and parent-child content relationships",
+        "site platform, URLs, candidate schema types, and featured-snippet objectives"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "inspect content order and enforce a single topical H1 with nested H2 and H3 sections that preserve logical flow",
+        "group pages into topical silos, establish parent-child paths, add contextually relevant internal links, and avoid unrelated cross-silo edges",
+        "select high-impact schema types and produce JSON-LD, breadcrumb, table-of-contents, jump-link, list, table, definition, or step structures suited to the content"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "heading hierarchy blueprint",
+        "silo or cluster map and internal-link matrix",
+        "schema JSON-LD, breadcrumbs, table of contents, jump links, and snippet-format recommendations"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "asks for the missing content, topic, platform, or success criteria before producing a page-specific structure",
+        "withholds unrelated cross-links when they weaken topical relevance",
+        "does not treat suggested markup as validated search-engine behavior"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not define runtime component or service architecture",
+        "does not replace content-quality or factual review",
+        "does not assert featured-snippet placement from formatting alone"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "each page retains one H1 and a logically nested section hierarchy",
+        "internal links express real topical relationships",
+        "schema type matches the visible content rather than being added generically"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "keyword-driven headings can damage readability when natural language is subordinated to terms",
+        "misapplied structured data can conflict with page content",
+        "SEO conventions and supported rich-result schemas change over time"
       ],
       "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
+      "projectCoupling": "project-bound",
       "disposition": "pattern-reference",
-      "proposedCluster": "seo structure architect",
+      "proposedCluster": "content-information-architecture-and-schema",
       "confidence": "medium",
       "copiedSourceProse": false,
       "promotionClaim": false
@@ -1143,53 +1131,53 @@
       "facetId": "facet-1dcaa692457ec9c2",
       "canonicalSourceId": "Yuan1z0825/nature-skills@bd4e415c1dcaf6df4ca701f8f8492a97e4b49921:skills/nature-literature-pipeline/SKILL.md",
       "bodySha256": "1dcaa692457ec9c2be409cb7777f834a2db833788b2e9b680baf0e961126b01a",
-      "neutralCapabilitySummary": "Provides structured guidance for nature literature pipeline architecture and review decisions.",
+      "neutralCapabilitySummary": "Automates daily literature search, weighted six-dimension filtering, source-level-tagged reading, digest delivery, and DOI or repository-ID archival deduplication, with provider fallback and writes restricted to a raw literature area.",
       "neutralIntentExamples": [
-        "assess a bounded nature literature pipeline design",
-        "apply nature literature pipeline guidance to a concrete project constraint"
+        "specify a daily research-discovery and digest automation",
+        "review scoring, provider degradation, deduplication, delivery, and archive-write boundaries"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "research keywords in configured languages and search-provider availability",
+        "six scoring weights, candidate count, selected count, and classification rules",
+        "delivery channel, local archive path, schedule, and machine availability"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "collect candidates from scholarly indexes and degrade to the remaining providers when one source is unavailable",
+        "score topic match, methodology, journal quality, network relevance, applied value, and archival value with capped dimensions, then fine-read the top set at declared evidence depth",
+        "format and deliver the ranked digest, deduplicate by DOI, arXiv, or OpenAlex identity, classify notes, and update only the raw archive index"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "ranked literature digest with methods, key results, commentary, and evidence-depth tags",
+        "deduplicated raw literature notes and updated archive index",
+        "configurable schedule, provider, scoring, classification, delivery, and archive contract"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "write", "external-write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "switches among scholarly providers when one service fails",
+        "recalculates capped dimensions to detect score inflation",
+        "cannot deliver on schedule when the local cron host is not running and does not write into the curated wiki without approval"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not modify the knowledge base outside the raw literature directory",
+        "does not present metadata-only reading as full-text review",
+        "does not belong in architecture specification when evaluated as a domain automation rather than a reusable architecture method"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "every reviewed item declares full-text, abstract-only, or metadata-only evidence depth",
+        "scores respect per-dimension caps and sum from configured weights",
+        "archive identity checks all three declared scholarly identifiers"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "keyword drift and score inflation can systematically bias discovery",
+        "provider metadata differences can defeat deduplication or evidence-depth claims",
+        "local scheduling and messaging platforms introduce availability and privacy dependencies"
       ],
       "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "nature literature pipeline",
-      "confidence": "medium",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "literature-automation-not-architecture-specification",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -1197,53 +1185,53 @@
       "facetId": "facet-1e083ef270c520f8",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/premium-3d-website/SKILL.md",
       "bodySha256": "1e083ef270c520f866873ecdccac82fc5f03c9c386e2bc7edbc6af2f8c9d0f0c",
-      "neutralCapabilitySummary": "Provides structured guidance for premium 3d website architecture and review decisions.",
+      "neutralCapabilitySummary": "Builds a WebGL scene around a capped device-pixel-ratio render loop, low-pass post-processing and instancing, then adds input-driven physics or springs plus Draco or Meshopt asset compression and a loading-manager preloader.",
       "neutralIntentExamples": [
-        "assess a bounded premium 3d website design",
-        "apply premium 3d website guidance to a concrete project constraint"
+        "architect an immersive 3D page without abandoning mobile frame budgets",
+        "choose shader, post-processing, interaction, asset, and preload strategies for a Three.js or R3F scene"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "target devices, viewport behavior, frame budget, and desired visual effects",
+        "3D models, texture and lighting strategy, repeated mesh count, and asset sizes",
+        "interaction model, physics requirements, trusted asset origins, and loading experience"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "establish resize-aware rendering with device pixel ratio capped at two and disable redundant renderer antialiasing when post-processing owns edge treatment",
+        "combine only necessary bloom, depth, grain, or custom shader passes, bake expensive lighting where possible, and instance repeated geometry",
+        "attach physics or spring response to pointer events, compress models, load through a manager, and expose progress through an interactive preloader before scene activation"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "WebGL or R3F render and post-processing topology",
+        "shader, interaction, instancing, lighting, and mobile-degradation policy",
+        "compressed asset manifest and loading-manager preloader behavior"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "write", "external-write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "reduces pixel ratio and unused passes when high-DPI or mobile frame rate collapses",
+        "uses a loading manager and visible progress state instead of a blank initialization screen",
+        "requires manual testing across device chipsets for complex shaders and physics"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not load arbitrary model URLs or run unvalidated optimization scripts",
+        "does not use uncompressed models or real-time mobile shadows as defaults",
+        "does not treat visual complexity as exempt from frame and loading budgets"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "render resolution never exceeds twice the CSS pixel density",
+        "asset loading has an observable progress and completion boundary",
+        "post-processing pass count and dynamic lighting remain deliberate performance costs"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "external assets and packages can introduce supply-chain or content trust failures",
+        "shader and physics behavior varies across GPUs and mobile chipsets",
+        "aesthetic effects can overwhelm accessibility, battery, memory, and load-time limits"
       ],
       "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
+      "projectCoupling": "project-bound",
       "disposition": "pattern-reference",
-      "proposedCluster": "premium 3d website",
-      "confidence": "medium",
+      "proposedCluster": "performance-bounded-webgl-experience",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -1251,53 +1239,53 @@
       "facetId": "facet-1e884a5af978ca79",
       "canonicalSourceId": "cathrynlavery/diagram-design@ac490fd1ac4b4014100f93e729cb4ad198700bd4:skills/diagram-design/SKILL.md",
       "bodySha256": "1e884a5af978ca79ce67409454e13654e892c0d29a946f5752c746ac977ee271",
-      "neutralCapabilitySummary": "Provides structured guidance for diagram design architecture and review decisions.",
+      "neutralCapabilitySummary": "Gates first-use diagrams on an explicit style profile, selects a behavioral semantic pattern before one of thirty-nine layout grammars, enforces node and connector budgets on a four-pixel grid, and verifies accessible SVG, orthogonal routing, label masks, geometry, motion, and import fidelity.",
       "neutralIntentExamples": [
-        "assess a bounded diagram design design",
-        "apply diagram design guidance to a concrete project constraint"
+        "choose and produce an accessible branded architecture or process diagram",
+        "redraw an untrusted draw.io or Mermaid source while preserving content and reporting fidelity cuts"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "diagram subject, audience, semantic behavior, and candidate visual type",
+        "brand profile or explicit default-skin choice plus format, size, detail, and motion dials",
+        "components, relationships, grouping, source labels, and required fidelity for new or imported diagrams"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "resolve the project style marker or pause for brand-token onboarding when only shipped defaults exist",
+        "decide whether a visual beats prose, select one semantic pattern when behavior carries meaning, choose the dominant layout type, and cut or split content that exceeds its budget",
+        "draw zones first, connectors before nodes, route off-axis edges with rounded orthogonal paths and distinct attach points, then run accessibility, four-pixel-grid, geometry, motion, and remove-tests before delivery"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "single self-contained HTML artifact with inline CSS and accessible SVG",
+        "selected type, semantic pattern, brand profile, size, detail, and audience declaration",
+        "verification result and, for imports, a fidelity ledger of merged, collapsed, or dropped source content"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "pauses at the style gate when a new project still uses unconfirmed default tokens",
+        "splits diagrams that exceed type-specific node, edge, lane, entity, class, or annotation budgets",
+        "fails connector geometry for diagonals, shared strokes, clipped masks, hidden transit, or reused attach points and rejects inaccessible SVG contracts"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not draw when a paragraph, bullet list, or small table communicates the relationship better",
+        "does not render imported coordinates or silently invent or remove source components",
+        "does not add animation unless ordered change materially benefits and static meaning remains complete"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "accent color is limited to one or two focal elements and node count normally remains at or below nine",
+        "every off-axis connection is independently traceable through rounded right-angle routing",
+        "SVG title and description identifiers are unique, wired through aria-labelledby, and meaningful without geometry narration"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "the entrypoint depends on many referenced type and verification files not included in this exact-source review",
+        "strict aesthetic budgets can omit necessary detail if the split and fidelity ledger are not handled carefully",
+        "Google Fonts or browser rendering differences can alter verified typography and geometry"
       ],
       "providerCoupling": "conditional",
       "projectCoupling": "project-adjacent",
       "disposition": "pattern-reference",
-      "proposedCluster": "diagram design",
-      "confidence": "medium",
+      "proposedCluster": "verified-editorial-diagram-specification",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -1305,56 +1293,55 @@
       "facetId": "facet-1f014a3a69a1a198",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/ui-ux-designer/SKILL.md",
       "bodySha256": "1f014a3a69a1a198a2df2ebaf158db0760f1a1479116ad33bb59566c0973e354",
-      "neutralCapabilitySummary": "Provides structured guidance for ui ux designer architecture and review decisions.",
+      "neutralCapabilitySummary": "Connects user research and task analysis to tokenized atomic component systems, embeds WCAG contrast, semantics, keyboard, and focus behavior into those components, and closes the loop through prototypes, usability tests, analytics, versioned handoff, and adoption tracking.",
       "neutralIntentExamples": [
-        "assess a bounded ui ux designer design",
-        "apply ui ux designer guidance to a concrete project constraint"
+        "design an accessible multi-brand component and token architecture",
+        "plan research, prototyping, handoff, automated accessibility checks, and post-launch measurement for a cross-platform interface"
       ],
       "legacyAliases": [],
       "inputs": [
-        "task requirements",
-        "relevant project and source context",
-        "constraints and acceptance criteria"
+        "user goals, interview or analytics evidence, task flows, and business outcomes",
+        "brand families, design tokens, component inventory, platforms, and native conventions",
+        "WCAG target, assistive-technology needs, implementation stack, and success metrics"
       ],
       "operations": [
-        "identify applicable mechanisms and boundaries",
-        "apply the mechanism within requested scope",
-        "check assumptions outputs and failure boundaries"
+        "research users and tasks through interviews, analytics, journey mapping, card sorting, or usability studies before fixing navigation and hierarchy assumptions",
+        "encode typography, color, spacing, states, themes, and variants as governed tokens and reusable components with cross-platform adaptations",
+        "prototype interactions and error states, test contrast, semantics, keyboard and screen-reader behavior, hand off through documented Storybook or design artifacts, and iterate from user feedback and adoption metrics"
       ],
       "outputs": [
-        "structured architecture guidance",
-        "bounded design or review result",
-        "verification considerations"
+        "research-backed information architecture and user flows",
+        "versioned token, component, theme, documentation, and governance system",
+        "accessible prototype, developer handoff, test plan, and post-launch measurement model"
       ],
-      "effects": [
-        "read"
-      ],
+      "effects": ["read", "write"],
       "failureBehavior": [
-        "surfaces missing inputs unsupported integrations and failed checks",
-        "does not treat unavailable providers or unverified runtime behavior as successful"
+        "returns to research when user needs or assumptions lack evidence",
+        "treats contrast, keyboard, focus, semantic, and screen-reader failures as component defects rather than optional polish",
+        "iterates designs when usability tests, analytics, or adoption tracking contradict the intended flow"
       ],
       "exclusions": [
-        "does not authorize execution deployment publication or unrelated changes",
-        "does not establish project suitability without validation"
+        "does not optimize one-off screens at the expense of reusable system behavior",
+        "does not substitute trend adoption for user evidence or accessibility",
+        "does not claim implementation fidelity without developer collaboration and testing"
       ],
       "usefulInvariants": [
-        "keep boundaries and ownership explicit",
-        "make assumptions and dependencies visible",
-        "preserve traceability from inputs to outputs"
+        "design decisions link to user evidence, business goals, or accessibility requirements",
+        "tokens and reusable components are the cross-platform source of visual and interaction consistency",
+        "design impact is measured after release and feeds subsequent versions"
       ],
       "materialRisks": [
-        "guidance may be stale or incomplete",
-        "framework or provider assumptions may cause lock-in or integration failure",
-        "persistence or automation paths may expose data or create side effects"
+        "the source enumerates broad expertise but gives few concrete thresholds or artifact schemas",
+        "multi-brand and cross-platform systems can become governance-heavy",
+        "automated accessibility checks can miss assistive-technology and cognitive-use failures"
       ],
       "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
+      "projectCoupling": "project-bound",
       "disposition": "pattern-reference",
-      "proposedCluster": "ui ux designer",
+      "proposedCluster": "research-backed-accessible-design-systems",
       "confidence": "medium",
       "copiedSourceProse": false,
       "promotionClaim": false
     }
   ]
 }
-
