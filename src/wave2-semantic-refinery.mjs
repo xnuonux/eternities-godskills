@@ -11,6 +11,16 @@ const CONFIDENCE = new Set(["high", "medium", "low"]);
 const EFFECTS = new Set(["none", "read", "write", "external-write"]);
 const PROVIDER_COUPLING = new Set(["none", "conditional", "provider-bound"]);
 const PROJECT_COUPLING = new Set(["portable", "project-adjacent", "project-bound"]);
+const GENERIC_REVIEW_PATTERNS = [
+  "provides a bounded method for",
+  "provides bounded inspectable guidance for",
+  "provides structured guidance for",
+  "provides bounded guidance for",
+  "interpret the requested outcome apply the source pattern within scope check results against stated constraints",
+  "identify applicable mechanisms and boundaries apply the mechanism within requested scope check assumptions outputs and failure boundaries",
+  "inspect configuration and constraints apply or describe the relevant mechanism check boundaries and verification conditions",
+  "identify applicable structures or mechanisms apply bounded domain guidance check the result against stated constraints",
+].map(normalizeText);
 
 function nonEmptyString(value, field) {
   if (typeof value !== "string" || value.trim() === "") {
@@ -55,6 +65,7 @@ export function validateWave2ReviewBatch(batch, facets, bodyEvidence) {
   const bodyByDigest = uniqueMap(bodyEvidence, "bodySha256", "body evidence");
   const seen = new Set();
   const rows = [];
+  const operationScaffolds = new Map();
 
   for (const review of batch.reviews) {
     nonEmptyString(review?.facetId, "review.facetId");
@@ -108,6 +119,12 @@ export function validateWave2ReviewBatch(batch, facets, bodyEvidence) {
     ]) {
       stringArray(review[field], `review.${field}`);
     }
+    const qualityText = normalizeText([review.neutralCapabilitySummary, ...review.operations].join(" "));
+    if (GENERIC_REVIEW_PATTERNS.some((pattern) => qualityText.includes(pattern))) {
+      throw new Error(`generic semantic review boilerplate for ${review.facetId}`);
+    }
+    const operationScaffold = normalizeText(review.operations.join(" "));
+    operationScaffolds.set(operationScaffold, (operationScaffolds.get(operationScaffold) ?? 0) + 1);
     if (review.effects.some((effect) => !EFFECTS.has(effect))) {
       throw new Error(`review contains an unknown effect for ${review.facetId}`);
     }
@@ -160,6 +177,13 @@ export function validateWave2ReviewBatch(batch, facets, bodyEvidence) {
     };
     normalized.reviewDigest = sha256(JSON.stringify(normalized));
     rows.push(normalized);
+  }
+
+  if (batch.reviews.length >= 5) {
+    const repeated = [...operationScaffolds.values()].find(
+      (count) => count >= 5 && count / batch.reviews.length >= 0.2,
+    );
+    if (repeated) throw new Error(`repeated operation scaffold appears in ${repeated} semantic reviews`);
   }
 
   return rows.sort((left, right) => left.facetId.localeCompare(right.facetId));

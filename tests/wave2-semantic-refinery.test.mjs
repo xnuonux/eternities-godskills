@@ -172,3 +172,42 @@ test("reviews require complete neutral behavior and cannot claim promotion", () 
     /cannot claim promotion/,
   );
 });
+
+test("generic semantic-review boilerplate is rejected", () => {
+  assert.throws(
+    () => validateWave2ReviewBatch(batch([review({
+      neutralCapabilitySummary: "Provides a bounded method for alpha with explicit inputs, outcomes, and limits.",
+      operations: [
+        "interpret the requested outcome",
+        "apply the source pattern within scope",
+        "check results against stated constraints",
+      ],
+    })]), [facet()], [bodyEvidence()]),
+    /generic semantic review boilerplate/,
+  );
+});
+
+test("mass-repeated operation scaffolds fail batch quality review", () => {
+  const facets = [];
+  const bodies = [];
+  const reviews = [];
+  for (let index = 0; index < 5; index += 1) {
+    const suffix = String(index + 1);
+    const bodySha256 = suffix.repeat(64);
+    const facetId = `facet-${suffix}`;
+    const canonicalSourceId = `owner/repo@head:skills/alpha-${suffix}/SKILL.md`;
+    facets.push(facet({ id: facetId, bodySha256, canonicalSourceId, name: `alpha-${suffix}` }));
+    bodies.push(bodyEvidence({ bodySha256, canonicalSourceId }));
+    reviews.push(review({
+      facetId,
+      bodySha256,
+      canonicalSourceId,
+      neutralCapabilitySummary: `Derives alpha mechanism ${suffix} through a distinct evidence path and preserves its observable contract.`,
+    }));
+  }
+
+  assert.throws(
+    () => validateWave2ReviewBatch(batch(reviews), facets, bodies),
+    /repeated operation scaffold/,
+  );
+});
