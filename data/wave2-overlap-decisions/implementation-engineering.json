@@ -1,0 +1,290 @@
+{
+  "schemaVersion": 1,
+  "overlapSetId": "wave2-implementation-engineering-overlaps-v1",
+  "familyId": "implementation-engineering",
+  "decisions": [
+    {
+      "schemaVersion": 1,
+      "familyId": "implementation-engineering",
+      "clusterId": "contract-first-algorithm-correctness",
+      "targetSkillId": "invariant-guard",
+      "disposition": "new-operational-skill",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-daedalus", "digest": "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind": "legacy-cluster", "id": "implementation-refactoring-quality", "digest": "f3d04dacbaf6937f30af3b2fb158ebb875f96b3a92fa23d4c599667ff33ef02d"},
+        {"kind": "legacy-cluster", "id": "implementation-specialist-methods", "digest": "d9aae0f40700727cf7ecc97f5d134b03f6340d06240ff5eb7d00b44798b5a2ea"}
+      ],
+      "mechanismComparison": "Daedalus and the original quality and specialist clusters require tests, bounded change, and maintainability evidence, but none requires a pre-write function contract, named loop invariant, decreasing termination measure, and trap-specific edge table before implementation.",
+      "rationale": "Retain the proof protocol as a narrow operational skill beneath Daedalus. It does not grant formal-verification authority or replace project tests, and its algorithm examples remain illustrative rather than universal.",
+      "intendedTier": "operational-skill"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "implementation-engineering",
+      "clusterId": "red-green-refactor-behavior-proof",
+      "targetSkillId": "eternities-daedalus",
+      "disposition": "extend-existing",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-daedalus", "digest": "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind": "godskill", "id": "eternities-forge", "digest": "238584921303ad9b9e0946a5b5222c2b380a715ee38d716a3accfd07cc9d54d2"},
+        {"kind": "legacy-cluster", "id": "implementation-refactoring-quality", "digest": "f3d04dacbaf6937f30af3b2fb158ebb875f96b3a92fa23d4c599667ff33ef02d"},
+        {"kind": "legacy-cluster", "id": "verification-007-test-driven-development-provides-a-bounded", "digest": "2ad7de870271ee4467077a9d181ca23100a93329fea8b6d57759db5ec1801ae6"},
+        {"kind": "legacy-cluster", "id": "verification-238-test-driven-development-provides-a-bounded", "digest": "eae3b6d08ff56a5013843f7d0a17f7ae9d4990d41f4e308f97b860f58b88a72b"},
+        {"kind": "wave2-cluster", "id": "question-driven-disposable-prototyping", "digest": "ece2ad091fdadc04dea33012614a204a6f79e9dc4eba2038c54f49e813b92ac7"}
+      ],
+      "mechanismComparison": "Daedalus already mandates test-first behavior changes and Forge can orchestrate regression work, while the two original verification clusters preserve TDD as evidence. The Wave 2 prototype cluster answers one uncertainty but does not prove production behavior. The missing Daedalus detail is explicit observation that the test fails for the intended absent behavior rather than passing or erroring, followed by focused and surrounding green checks.",
+      "rationale": "Extend Daedalus's refactoring-quality route with the red-proof and post-refactor evidence requirements. This records proof discipline without creating a competing implementation owner or claiming that unexecuted tests passed.",
+      "intendedTier": "godskill-extension"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "implementation-engineering",
+      "clusterId": "idempotent-api-rate-limit-recovery",
+      "targetSkillId": "api-rate-limit-recovery",
+      "disposition": "new-operational-skill",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-architect", "digest": "1011c45e7350d9bedc8ffeb0bddd0e88e26a8a79c12244e61af3ff703331fe90"},
+        {"kind": "godskill", "id": "eternities-daedalus", "digest": "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind": "legacy-cluster", "id": "architecture-reliability-controls", "digest": "43fc6411b9aba41a1a0b2b4f04d3bd8e3f336a5a620b4f6e4088d846d313304b"},
+        {"kind": "legacy-cluster", "id": "implementation-integrations-observability", "digest": "7a9b88ac24a979cb605a0a7e4da96c2827b84658373718b568365b2dac1c783d"}
+      ],
+      "mechanismComparison": "Architect and its reliability cluster can design thresholds and abort conditions, while Daedalus and the original integration cluster govern named API boundaries and effects. None binds 429 classification, Retry-After parsing, safe-method and idempotency checks, bounded jittered backoff, and terminal-response propagation into one client loop.",
+      "rationale": "Preserve the loop as a focused operational skill consumed by Daedalus or an architecture handoff. It must not replay non-idempotent writes, infer provider quotas, or hide the final failure.",
+      "intendedTier": "operational-skill"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "implementation-engineering",
+      "clusterId": "symbolic-mathematics-implementation",
+      "targetSkillId": "symbolic-mathematics-python",
+      "disposition": "new-operational-skill",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-athena", "digest": "825c26252f346b01ef07d14a3625a71e113f6755c666c402f7e75336f285cfde"},
+        {"kind": "godskill", "id": "eternities-daedalus", "digest": "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind": "legacy-cluster", "id": "implementation-language-framework", "digest": "821e37236ffe24736878b7264e6401c033a56ceedc593beacd4935a50fcf76ac"},
+        {"kind": "legacy-cluster", "id": "implementation-specialist-methods", "digest": "d9aae0f40700727cf7ecc97f5d134b03f6340d06240ff5eb7d00b44798b5a2ea"}
+      ],
+      "mechanismComparison": "Daedalus and the original language and specialist clusters preserve a named-library boundary but do not supply symbol-domain declarations, exact rational arithmetic, symbolic-first simplification, or explicit lambdify and LaTeX transitions. Athena evaluates scientific inference and does not implement symbolic algebra.",
+      "rationale": "Keep the SymPy mechanism as a narrow local operational skill, not a Godskill extension. It carries no authority to validate a scientific model, install dependencies, or treat a symbolic result as empirical evidence.",
+      "intendedTier": "operational-skill"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "implementation-engineering",
+      "clusterId": "distributed-tracing-context-and-export",
+      "targetSkillId": "eternities-daedalus",
+      "disposition": "covered-stronger",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-daedalus", "digest": "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind": "godskill", "id": "eternities-phoenix", "digest": "bbcdfff7d94207067d38c96346a1deaf37a8f1bd665f8d5b1010ee6ff516727e"},
+        {"kind": "legacy-cluster", "id": "debugging-diagnosis-and-verification-arize-trace", "digest": "db9c95e63f2aa3e9eb6b4985ada5c0bbea6e945504b51f19db228e915777b86b"},
+        {"kind": "legacy-cluster", "id": "implementation-integrations-observability", "digest": "7a9b88ac24a979cb605a0a7e4da96c2827b84658373718b568365b2dac1c783d"}
+      ],
+      "mechanismComparison": "Daedalus's integrations-observability route and its original source cluster already govern named telemetry endpoints, propagation, configuration, effect classification, verification, and authority handoff. Phoenix owns read-only trace diagnosis, while the Arize legacy row preserves a provider-specific diagnostic boundary. The Wave 2 duplicates add Jaeger, Tempo, and Kubernetes examples but no distinct terminal artifact or authority.",
+      "rationale": "Retain trace-parent and exporter-health details as Daedalus implementation patterns and let Phoenix consume resulting traces. A duplicate distributed-tracing owner would split one existing telemetry boundary.",
+      "intendedTier": "none"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "implementation-engineering",
+      "clusterId": "evidence-ranked-design-review",
+      "targetSkillId": "eternities-daedalus",
+      "disposition": "covered-stronger",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-architect", "digest": "1011c45e7350d9bedc8ffeb0bddd0e88e26a8a79c12244e61af3ff703331fe90"},
+        {"kind": "godskill", "id": "eternities-daedalus", "digest": "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind": "godskill", "id": "eternities-logos", "digest": "0e17c452b55bbdc72a4a484e5ca782ab1314c1acdbe9d17168f44d72ba35e19b"},
+        {"kind": "legacy-cluster", "id": "implementation-refactoring-quality", "digest": "f3d04dacbaf6937f30af3b2fb158ebb875f96b3a92fa23d4c599667ff33ef02d"},
+        {"kind": "legacy-cluster", "id": "writing-structural-review-patterns", "digest": "da5de533b98e0acc8209d7d0ef4fa075bdcff4a732a4985617557bda1cca08d2"}
+      ],
+      "mechanismComparison": "Daedalus already owns maintainability review from exact repository evidence, Architect owns consequential boundary and trade-off assessment, and Logos owns read-only structural review with invariants and blast radius. The original quality and structural clusters cover the same evidence-bearing review surfaces more precisely than an unspecified set of book lenses.",
+      "rationale": "Keep the concrete coupling and responsibility heuristics as optional Daedalus review evidence. They add no owner, acceptance artifact, or authority beyond the current review routes.",
+      "intendedTier": "none"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "implementation-engineering",
+      "clusterId": "pull-request-integration-readiness",
+      "targetSkillId": "eternities-forge",
+      "disposition": "covered-stronger",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-forge", "digest": "238584921303ad9b9e0946a5b5222c2b380a715ee38d716a3accfd07cc9d54d2"},
+        {"kind": "godskill", "id": "eternities-herald", "digest": "d17e2bd96b8689989fb20227f4ebaf671e912c19d069445b7194ea6595662c45"},
+        {"kind": "legacy-cluster", "id": "general-569-b0fe2b13b2f8ed2b", "digest": "5bd40e10bf9c8c282a31a5d07d1c7af68b3e9965f140d78c90d717ca7b39b3b3"},
+        {"kind": "legacy-cluster", "id": "implementation-workflow-delivery", "digest": "69702997d2fd0059ae166f9e6de6ab7a6722ad76df89a14274eccea49becd06e"},
+        {"kind": "legacy-cluster", "id": "release-change-lifecycle", "digest": "5052e13bfbef9ac688d1ba67c58d86f7e9385f256f26d69056b7e88c74b71dff"}
+      ],
+      "mechanismComparison": "Forge already binds diff review, tests, independent review, conflict resolution, evidence gates, and explicit integration state. Herald and the original release cluster own the downstream pull-request-to-version boundary, while the ready-for-merge legacy row preserves the narrower gate. The Wave 2 card adds no merge authority or terminal evidence class.",
+      "rationale": "Use its pull-request description and deliberate-conflict notes as Forge patterns, with Herald consuming verified changes when release work begins. No separate merge owner is justified.",
+      "intendedTier": "none"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "implementation-engineering",
+      "clusterId": "bounded-evidence-led-implementation",
+      "targetSkillId": "eternities-daedalus",
+      "disposition": "covered-stronger",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-daedalus", "digest": "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind": "godskill", "id": "eternities-forge", "digest": "238584921303ad9b9e0946a5b5222c2b380a715ee38d716a3accfd07cc9d54d2"},
+        {"kind": "legacy-cluster", "id": "implementation-refactoring-quality", "digest": "f3d04dacbaf6937f30af3b2fb158ebb875f96b3a92fa23d4c599667ff33ef02d"},
+        {"kind": "legacy-cluster", "id": "implementation-workflow-delivery", "digest": "69702997d2fd0059ae166f9e6de6ab7a6722ad76df89a14274eccea49becd06e"},
+        {"kind": "legacy-cluster", "id": "orchestration-source-driven-development-bounded-capability", "digest": "5c9abbc056b1f90710c4808c5eb420f02c18d1ac3d3a5371465f115bc9947fd1"},
+        {"kind": "wave2-cluster", "id": "question-driven-disposable-prototyping", "digest": "ece2ad091fdadc04dea33012614a204a6f79e9dc4eba2038c54f49e813b92ac7"}
+      ],
+      "mechanismComparison": "Daedalus already requires exact source inspection, a constraint ledger, test-first bounded change, smallest coherent implementation, fresh verification, effect classification, and refusal or handoff. Forge adds multi-stage sequencing and closure. The original implementation clusters cover workflow and quality, while the cross-owner source-driven row correctly withheld orchestration authority and the certified prototype cluster remains disposable rather than production implementation.",
+      "rationale": "Retain the assumption, changed-line trace, and early-boundary guard patterns inside Daedalus. The combined Wave 2 material does not add a terminal artifact or authority absent from the current owner.",
+      "intendedTier": "none"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "implementation-engineering",
+      "clusterId": "fp-ts-functional-refactoring",
+      "targetSkillId": "fp-ts-functional-refactoring",
+      "disposition": "new-operational-skill",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-daedalus", "digest": "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind": "legacy-cluster", "id": "implementation-language-framework", "digest": "821e37236ffe24736878b7264e6401c033a56ceedc593beacd4935a50fcf76ac"},
+        {"kind": "legacy-cluster", "id": "implementation-refactoring-quality", "digest": "f3d04dacbaf6937f30af3b2fb158ebb875f96b3a92fa23d4c599667ff33ef02d"}
+      ],
+      "mechanismComparison": "Daedalus and the original language and refactoring clusters govern behavior preservation, named framework constraints, and tests, but do not encode fp-ts Either, TaskEither, pure transformation, immutable composition, and effect-boundary conversion patterns.",
+      "rationale": "Preserve the library-specific method as an operational skill under Daedalus rather than widening the Godskill contract with one functional ecosystem. Characterization tests remain mandatory, and no fp-ts dependency installation is implied.",
+      "intendedTier": "operational-skill"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "implementation-engineering",
+      "clusterId": "measured-web-performance-optimization",
+      "targetSkillId": "web-performance-optimization",
+      "disposition": "new-operational-skill",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-daedalus", "digest": "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind": "godskill", "id": "eternities-muse", "digest": "b8fb2a01a595b2b03133a9732e352e07f3d884ad5210684b19b98a72ee5f5134"},
+        {"kind": "godskill", "id": "eternities-phoenix", "digest": "bbcdfff7d94207067d38c96346a1deaf37a8f1bd665f8d5b1010ee6ff516727e"},
+        {"kind": "legacy-cluster", "id": "implementation-language-framework", "digest": "821e37236ffe24736878b7264e6401c033a56ceedc593beacd4935a50fcf76ac"},
+        {"kind": "wave2-cluster", "id": "k6-performance-release-gate-duplicates", "digest": "ef479f231cbd256749c9ecbcf6883d51892c6dcfbd8ce725ae6b717a3a73919c"},
+        {"kind": "wave2-cluster", "id": "purpose-led-interface-motion-and-scroll", "digest": "366457d8fba2f9a5c09bb92306afabf39c5674b3baba32f87cd21043d0c98e69"}
+      ],
+      "mechanismComparison": "Daedalus requires baseline, workload, measurement, and a regression guard, Phoenix analyzes supplied degradation evidence, and Muse verifies visual and device budgets. The original framework cluster preserves web boundaries. The certified k6 cluster owns authorized load generation, while the motion cluster owns interaction purpose and timing. None binds Core Web Vitals, bundle and render-blocking diagnosis, caching or lazy-loading edits, matched route and device conditions, and visual regression into one local optimization loop.",
+      "rationale": "Create a focused operational skill that hands implementation to Daedalus, diagnosis evidence to Phoenix, and visual acceptance to Muse. It must not infer production performance from an unmatched local measurement.",
+      "intendedTier": "operational-skill"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "implementation-engineering",
+      "clusterId": "behavior-preserving-code-refactoring",
+      "targetSkillId": "eternities-daedalus",
+      "disposition": "covered-stronger",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-daedalus", "digest": "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind": "godskill", "id": "eternities-forge", "digest": "238584921303ad9b9e0946a5b5222c2b380a715ee38d716a3accfd07cc9d54d2"},
+        {"kind": "legacy-cluster", "id": "implementation-refactoring-quality", "digest": "f3d04dacbaf6937f30af3b2fb158ebb875f96b3a92fa23d4c599667ff33ef02d"},
+        {"kind": "wave2-cluster", "id": "exported-web-application-release-cleanup", "digest": "b1867720e91abc19d834b0faa8e5e75383e0eb8e448dd424be38a4fe87f146a2"}
+      ],
+      "mechanismComparison": "Daedalus's refactoring-quality route and its original cluster already require scoped behavior preservation, test-first evidence, project conventions, reviewability, and rollback or handoff. Forge covers consequential multi-slice refactors, and the certified exported-app cleanup cluster is already adjudicated as a Daedalus pattern. The Wave 2 trio adds no independent terminal artifact.",
+      "rationale": "Keep explicit-control-flow and changed-code-scope details as Daedalus patterns. A second generic refactoring skill would duplicate current ownership and overweight two near-identical source bodies.",
+      "intendedTier": "none"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "implementation-engineering",
+      "clusterId": "bias-aware-comparative-evaluation",
+      "targetSkillId": "eternities-daedalus",
+      "disposition": "covered-stronger",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-athena", "digest": "825c26252f346b01ef07d14a3625a71e113f6755c666c402f7e75336f285cfde"},
+        {"kind": "godskill", "id": "eternities-daedalus", "digest": "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind": "legacy-cluster", "id": "implementation-specialist-methods", "digest": "d9aae0f40700727cf7ecc97f5d134b03f6340d06240ff5eb7d00b44798b5a2ea"}
+      ],
+      "mechanismComparison": "Daedalus's specialist-methods route and the original specialist cluster already own bounded code-model evaluation, while Athena supplies stronger validity, bias, uncertainty, and inference calibration when a study-level claim is at stake. The reviewed rubric and position-bias controls add useful procedure but no new authority or artifact class.",
+      "rationale": "Retain matched prompts, declared criteria, disagreement, and position-bias checks as Daedalus evaluation patterns, with Athena taking scientific-validity questions. No separate evaluation owner is needed.",
+      "intendedTier": "none"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "implementation-engineering",
+      "clusterId": "bounded-service-shutdown",
+      "targetSkillId": "bounded-service-shutdown",
+      "disposition": "new-operational-skill",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-architect", "digest": "1011c45e7350d9bedc8ffeb0bddd0e88e26a8a79c12244e61af3ff703331fe90"},
+        {"kind": "godskill", "id": "eternities-daedalus", "digest": "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind": "godskill", "id": "eternities-phoenix", "digest": "bbcdfff7d94207067d38c96346a1deaf37a8f1bd665f8d5b1010ee6ff516727e"},
+        {"kind": "legacy-cluster", "id": "architecture-reliability-controls", "digest": "43fc6411b9aba41a1a0b2b4f04d3bd8e3f336a5a620b4f6e4088d846d313304b"},
+        {"kind": "legacy-cluster", "id": "implementation-integrations-observability", "digest": "7a9b88ac24a979cb605a0a7e4da96c2827b84658373718b568365b2dac1c783d"},
+        {"kind": "legacy-cluster", "id": "implementation-language-framework", "digest": "821e37236ffe24736878b7264e6401c033a56ceedc593beacd4935a50fcf76ac"}
+      ],
+      "mechanismComparison": "Architect and its reliability cluster can specify lifecycle and abort conditions, Daedalus can implement within the runtime, and Phoenix can diagnose failed termination from logs and metrics. The original implementation clusters preserve runtime and telemetry boundaries. None requires the exact readiness-before-refusal ordering, active-work accounting, duplicate-signal idempotence, deadline shorter than the orchestrator kill window, awaited cleanup, and clean-versus-forced exit evidence.",
+      "rationale": "Preserve the mechanism as a focused operational skill beneath the three owners. It must keep WebSocket, SSE, clustered worker, keep-alive, and platform grace-period variants explicit rather than treating server.close as proof.",
+      "intendedTier": "operational-skill"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "implementation-engineering",
+      "clusterId": "repository-native-engineering-continuity",
+      "targetSkillId": "eternities-mnemosyne",
+      "disposition": "covered-stronger",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-daedalus", "digest": "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind": "godskill", "id": "eternities-mnemosyne", "digest": "69bbed128a0955fae85849d100079a16b3efa13162e7e9c1ed0bab93e8bd522d"},
+        {"kind": "legacy-cluster", "id": "implementation-workflow-delivery", "digest": "69702997d2fd0059ae166f9e6de6ab7a6722ad76df89a14274eccea49becd06e"},
+        {"kind": "legacy-cluster", "id": "knowledge-memory-deferred", "digest": "8147400217a0a38a5c29c58067ad8818bbfd27a56fdd39c9c2ab07bd123418ee"},
+        {"kind": "wave2-cluster", "id": "evidence-governed-durable-project-state", "digest": "35558ff1782e705c1ff96c6d3a568a640ded0767edd8acb1b840052d174b6922"}
+      ],
+      "mechanismComparison": "Mnemosyne already owns task-scoped continuity, smallest sufficient retrieval, active-versus-durable layers, freshness, conflict resolution, recovery verification, and next action. Daedalus consumes repository evidence, the original implementation cluster handles workflow handoff, and the older memory cluster correctly deferred unsupported continuity. The certified Wave 2 project-state cluster already establishes authority ranking and lifecycle separation. Three Markdown filenames and a feature directory add layout patterns, not a new memory contract.",
+      "rationale": "Retain the task-plan, findings, progress, and feature-track separation as optional Mnemosyne storage patterns. Prevent duplicate truth by promoting only verified durable state and leaving provider hooks unevidenced.",
+      "intendedTier": "none"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "implementation-engineering",
+      "clusterId": "semantic-implementation-equivalence-tracing",
+      "targetSkillId": "semantic-implementation-diff",
+      "disposition": "new-operational-skill",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-daedalus", "digest": "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind": "godskill", "id": "eternities-forge", "digest": "238584921303ad9b9e0946a5b5222c2b380a715ee38d716a3accfd07cc9d54d2"},
+        {"kind": "legacy-cluster", "id": "architecture-verification", "digest": "c8f16586f52edeca6e61b7ac49efe10134e9716b15d788f302dfe88c33f9a7d4"},
+        {"kind": "legacy-cluster", "id": "implementation-refactoring-quality", "digest": "f3d04dacbaf6937f30af3b2fb158ebb875f96b3a92fa23d4c599667ff33ef02d"}
+      ],
+      "mechanismComparison": "Daedalus requires behavior preservation during refactoring, Forge can run adversarial closure, and the architecture verification cluster designs layered tests. None owns independent premise construction for two implementations, matched input traces, first-divergence localization, declared-change exclusion, and a conditional-equivalence verdict with an exact trigger.",
+      "rationale": "Retain the read-only comparison as a narrow operational skill. Its verdict is bounded by the supplied specification and selected cases and must not be represented as formal proof or exhaustive testing.",
+      "intendedTier": "operational-skill"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "implementation-engineering",
+      "clusterId": "formula-preserving-workbook-engineering",
+      "targetSkillId": "formula-preserving-workbook-engineering",
+      "disposition": "new-operational-skill",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-atlas", "digest": "afb8a2afb0886265f00b3884b68ede1f79f75a8d3b476dfdee8c631b40c7784a"},
+        {"kind": "godskill", "id": "eternities-daedalus", "digest": "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind": "legacy-cluster", "id": "automation-xlsx", "digest": "455cdf29cc14eb61414d65caee0dd9a290c600fce3fec9b85ed4fe453728dcd3"},
+        {"kind": "legacy-cluster", "id": "implementation-language-framework", "digest": "821e37236ffe24736878b7264e6401c033a56ceedc593beacd4935a50fcf76ac"},
+        {"kind": "legacy-cluster", "id": "orchestration-xlsx-author-bounded-workflow", "digest": "41e88eef0b610800622b52914fcfd96927cce2de08d268c7c86d818df3ec7bbb"}
+      ],
+      "mechanismComparison": "Atlas owns data analysis, schemas, and quality gates but not workbook rendering or formula preservation. Daedalus and the original language cluster can govern local Python tooling without encoding template precedence, formula-versus-hardcode rules, cached recalculation, and all-cell error scans. The original automation and orchestration XLSX clusters deferred the specialist boundary rather than supplying this local mechanism.",
+      "rationale": "Preserve the canonical workbook method as an operational skill, with duplicate bodies contributing no extra weight and the proprietary copy excluded from prose reuse. Recalculation availability, external links, sensitive inputs, and formula results still require fresh proof.",
+      "intendedTier": "operational-skill"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "implementation-engineering",
+      "clusterId": "product-grounded-interface-implementation",
+      "targetSkillId": "eternities-muse",
+      "disposition": "covered-stronger",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-daedalus", "digest": "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind": "godskill", "id": "eternities-muse", "digest": "b8fb2a01a595b2b03133a9732e352e07f3d884ad5210684b19b98a72ee5f5134"},
+        {"kind": "legacy-cluster", "id": "implementation-language-framework", "digest": "821e37236ffe24736878b7264e6401c033a56ceedc593beacd4935a50fcf76ac"},
+        {"kind": "legacy-cluster", "id": "orchestration-anti-ui-slop-orchestration-boundary", "digest": "7ea140b42304a09451b92302fc13f58457499e6aa7a28cb31589247e17277e7c"},
+        {"kind": "wave2-cluster", "id": "product-concept-design-systems-and-flows", "digest": "dbea643848a9684439645d4c24f81dec03b97508cedc47cd1c602bdcc5e79e5e"},
+        {"kind": "wave2-cluster", "id": "responsive-interface-visual-systems", "digest": "bf57ce3206c45a1af36dfd9c324ad654ec86a294d5febd615c562659292f408e"}
+      ],
+      "mechanismComparison": "Muse already owns product intent, local visual evidence, hierarchy, tokens, components, required states, responsive and accessibility constraints, bounded outside reference use, deterministic rendered acceptance, and rejection criteria. Daedalus owns the source changes and the original framework cluster preserves implementation constraints. The older anti-ui orchestration row withheld authority, while both certified Wave 2 interface clusters already route the visual system to Muse.",
+      "rationale": "Retain the compact design-contract and question-driven reference-search details as Muse patterns, with Daedalus implementing the bounded handoff. A separate anti-slop owner would duplicate current visual and implementation contracts.",
+      "intendedTier": "none"
+    }
+  ]
+}

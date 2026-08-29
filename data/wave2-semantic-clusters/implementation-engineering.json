@@ -1,0 +1,382 @@
+{
+  "schemaVersion": 1,
+  "clusterSetId": "wave2-implementation-engineering-clusters-v1",
+  "familyId": "implementation-engineering",
+  "clusters": [
+    {
+      "id": "contract-first-algorithm-correctness",
+      "intent": "Implement boundary-sensitive algorithms only after stating the function contract, loop invariant, edge cases, and decreasing termination measure, then verify the named traps against that proof frame.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The reviewed body contributes a coherent pre-write correctness protocol whose contract, invariant, termination, implementation, and boundary checks are ordered and independently inspectable.",
+      "members": [
+        {"facetId": "facet-01c7f253850f08a0", "reviewDigest": "838c07e6ecacd3d7b8cb1668cde686cae859f4be70a4be8f4f9db991f150af01", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "red-green-refactor-behavior-proof",
+      "intent": "Prove one requested behavior through an intended failing test, the smallest green production change, surrounding-suite verification, and behavior-preserving cleanup.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The thin green-phase card is an ordered subset of the full red-green-refactor mechanism. Keeping it as a component preserves its provenance without double-counting a second TDD capability.",
+      "members": [
+        {"facetId": "facet-0d96adccafb392b2", "reviewDigest": "0039c10b9cf7a38b078fd3b601877803a1bcea17b57868befec247e25e3c0d04", "role": "component"},
+        {"facetId": "facet-784399849c142436", "reviewDigest": "8284b9718844e8daf42580964c389e1a8713d764aa9d94958cd31f5310d282a1", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "idempotent-api-rate-limit-recovery",
+      "intent": "Handle API rate limiting by classifying responses, parsing server timing signals, replaying only safe or idempotent operations, and bounding attempts and delay before returning the terminal failure.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "Status classification, Retry-After interpretation, idempotency gating, capped backoff, and final-failure propagation form one portable client recovery loop with explicit replay risk.",
+      "members": [
+        {"facetId": "facet-0f12e0705eb0fb9a", "reviewDigest": "c014bcbe00a7f7971edf24fe9d5a16135f801899614e5eb74b58921d07a1aa39", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "symbolic-mathematics-implementation",
+      "intent": "Implement symbolic mathematics in Python by declaring symbols and domains, preserving exact arithmetic, and separating symbolic transformation from numeric or callable conversion.",
+      "relationship": "boundary",
+      "synthesisDecision": "candidate",
+      "rationale": "The mechanism is a substantive local specialist method with explicit domain assumptions and exactness invariants. Its SymPy boundary remains visible rather than being flattened into generic Python engineering.",
+      "members": [
+        {"facetId": "facet-20a1373694fdc498", "reviewDigest": "dbeb83818bcb81a9fab777ae45b3a0cf0aef543cfa7dfa9c76d5802d626b085a", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "distributed-tracing-context-and-export",
+      "intent": "Instrument distributed services by propagating parent trace context, emitting coherent service spans, and diagnosing collector or exporter health while retaining deployment-specific boundaries.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "candidate",
+      "rationale": "The two independently packaged bodies expose the same trace propagation, span, Jaeger or Tempo, Kubernetes, and exporter-health behavior. One canonical member and one variant prevent duplicate semantic weight.",
+      "members": [
+        {"facetId": "facet-26a4f475821a54e7", "reviewDigest": "623c1157d87ff146610d1b0eb43413fae10e6081d05aa061a2a515c2152ff844", "role": "canonical"},
+        {"facetId": "facet-59cf8b09d3e73078", "reviewDigest": "56666c2f87b9bb935571d280c29c7d9491af482f317a7f10b8b6ede5b983cd40", "role": "variant"}
+      ]
+    },
+    {
+      "id": "evidence-ranked-design-review",
+      "intent": "Review implementation design by tracing concrete responsibility and coupling relationships, ranking evidenced smells, and withholding findings when source context is insufficient.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The body supplies a bounded inspect, relate, rank, and explain review loop. Its book-derived lenses remain heuristics rather than implementation or architecture authority.",
+      "members": [
+        {"facetId": "facet-2bcac6f7ec08a9ac", "reviewDigest": "569e3a39bd7ee5872f863f9a1e8db86aa0e226b3c5415f394e7ee34c932f2cac", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "pull-request-integration-readiness",
+      "intent": "Prepare a pull request for integration by inspecting its diff and required checks, resolving conflicts deliberately, recording outstanding gates, and refusing merge while review or automation remains unresolved.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "Diff review, conflict handling, local verification, pull-request description, approvals, and merge gating form one bounded integration-readiness sequence without granting merge authority.",
+      "members": [
+        {"facetId": "facet-2e64bf6c96f7df6c", "reviewDigest": "2ee477bac04b1af85d7a04dbff5fe4cd396dbc833d0287910edfcb3c2bc960f9", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "bounded-evidence-led-implementation",
+      "intent": "Turn a scoped repository request into a source-grounded, minimal, convention-matching change whose assumptions, changed lines, incremental guards, and fresh verification remain traceable.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The members contribute compatible decomposition, source inspection, ambiguity handling, surgical editing, early error prevention, and verification stages. Sharp Coder repeats the surgical mechanism with a response-compression variant that adds no implementation authority.",
+      "members": [
+        {"facetId": "facet-3dd677e6e2cd0b6e", "reviewDigest": "9a54be48bdc890e44521ab8e87e6fed396f9af2228d32b7a6dc2d4759b172a7c", "role": "component"},
+        {"facetId": "facet-3ffb72efc78c2908", "reviewDigest": "3ecefbcb88d9c0c31c75e453a195bbaf73a6d12a31440ccb739591187f00fa5e", "role": "component"},
+        {"facetId": "facet-71b82e57fb534c63", "reviewDigest": "59bea02190de55ce58fddbd01dc7852a41b46a8229b8014cacd5c82577cbc2be", "role": "variant"},
+        {"facetId": "facet-adb7febc4a065de8", "reviewDigest": "4e8cea4b51c212287fe6b1f66340793f1a7aad5375adb0a89238269e7ffa3702", "role": "component"},
+        {"facetId": "facet-fa7cd608e04c6634", "reviewDigest": "85c28bde7e2142e081ab144bc580f0b72d878db5f31756f2b3129d8c2956137f", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "fp-ts-functional-refactoring",
+      "intent": "Refactor TypeScript control flow into fp-ts pure and effect-aware composition while preserving behavior through characterization tests and keeping side-effect boundaries explicit.",
+      "relationship": "boundary",
+      "synthesisDecision": "candidate",
+      "rationale": "The reviewed 47-kilobyte body supplies a concrete library-bound refactoring method rather than a generic functional-programming slogan. Its fp-ts types and effect model must remain a specialist boundary.",
+      "members": [
+        {"facetId": "facet-3f754862abd43e10", "reviewDigest": "c7dcaa7bc01a949fa37d69b819ac5bbf31ce3db93ecbe0b09338bba757f1bfed", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "measured-web-performance-optimization",
+      "intent": "Optimize a web route from a reproducible Core Web Vitals and bundle baseline through one prioritized caching, loading, or asset change to a matched before-and-after measurement and visual-regression check.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "Baseline measurement, bottleneck localization, one bounded optimization, matched-condition comparison, and visible-behavior acceptance form a concrete web performance loop distinct from load generation.",
+      "members": [
+        {"facetId": "facet-4de71ffe88a92d22", "reviewDigest": "b1196081d8f6f3a40affab8aa911c2cdb4d4516bf237d7a850bf516525242049", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "behavior-preserving-code-refactoring",
+      "intent": "Improve code structure and clarity through ranked small refactors and explicit simplification while preserving public behavior, limiting scope, and running regression checks after each bounded change.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The two Refactor and Clean Code bodies are behavioral variants, while Code Simplifier contributes a narrower changed-code cleanup stage. Together they form one behavior-preserving refactoring sequence without treating line-count reduction as success.",
+      "members": [
+        {"facetId": "facet-4f53f864bdd03722", "reviewDigest": "4f85a52d6b10b3f2471597730163e0412df90b180c1336a80c29ef49c0fb5a81", "role": "canonical"},
+        {"facetId": "facet-5cd6fd0dc3c66091", "reviewDigest": "201336a884f2650373d107b1959a1b773d5c25324d96b81f7f004356815d005c", "role": "variant"},
+        {"facetId": "facet-df3e888e9bfbd4f9", "reviewDigest": "372915b54ef28646825d5ee4e39f425f720fbdafe67869da5ab6b252e0164f60", "role": "component"}
+      ]
+    },
+    {
+      "id": "bias-aware-comparative-evaluation",
+      "intent": "Compare candidate outputs under matched prompts and declared rubric dimensions, preserve evaluator disagreement, and inspect position or evaluator bias before drawing a calibrated conclusion.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "Rubric definition, matched-condition comparison, bias controls, disagreement inspection, and bounded conclusion form an evidence-bearing evaluation method without creating model or benchmark authority.",
+      "members": [
+        {"facetId": "facet-5aaa711c9af6e967", "reviewDigest": "db45158691c91c504f9235008fefe9488b7c1fefafe6b70215c48c23fad0c0f3", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "bounded-service-shutdown",
+      "intent": "Terminate a server or worker by becoming not-ready, refusing new work, draining tracked work under a deadline shorter than the platform grace period, flushing and closing resources, and distinguishing clean from forced exit.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "Signal registration, idempotent state transition, readiness change, listener or poller stop, tracked drain, deadline race, cleanup, and exit classification form a concrete reusable lifecycle mechanism.",
+      "members": [
+        {"facetId": "facet-72d76683ec07a97e", "reviewDigest": "ecebb7e04563501bddb430a86012ca9874b909ee3c62b7d2cc58faf8842f447a", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "repository-native-engineering-continuity",
+      "intent": "Maintain task and feature continuity in separate repository-native layers by restoring active phase evidence, recording failures and findings, and promoting only verified durable behavior, decisions, risks, and links into a feature track.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "Planning with Files supplies active task recovery and error history, while Feature Tracking supplies durable repository feature state. Their compatible but distinct lifetimes compose only when transient progress is not mistaken for verified current behavior.",
+      "members": [
+        {"facetId": "facet-86672c57a5616b15", "reviewDigest": "743d167b5fa5f5c4d2ece20226ad825fb508d6e39a7173a0d88fc1e846812152", "role": "component"},
+        {"facetId": "facet-a2f9eee053cc311b", "reviewDigest": "d5f7d33e185cb2d61674fd30f7664f3f003c3823108cd01c9e34339e43f6e6d0", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "semantic-implementation-equivalence-tracing",
+      "intent": "Compare two implementations against one shared specification by constructing premises independently, tracing identical inputs to the first semantic divergence, and returning an exact equivalent, conditional, or divergent verdict.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "Declared-change capture, independent premise construction, matched traces, first-divergence analysis, trigger and consequence recording, and verdict selection form a distinct read-only equivalence method.",
+      "members": [
+        {"facetId": "facet-ad35d009324e5d59", "reviewDigest": "6aaf8645191213ce11a6db319d17d489b4f564013d17007bf76061695e209790", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "formula-preserving-workbook-engineering",
+      "intent": "Create or edit XLSX workbooks while preserving template conventions, retaining formulas and sourced assumptions, recalculating through an available spreadsheet runtime, and rejecting delivery while formula errors remain.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "candidate",
+      "rationale": "All three bodies expose the same workbook mechanism. The earlier xlsx-official review is canonical, the bundled copy is a non-additive variant, and the proprietary-noticed copy remains a license boundary that contributes no extra semantic weight.",
+      "members": [
+        {"facetId": "facet-c466c6a176e789b0", "reviewDigest": "393c220cf28e56076392ea1e4083b1b9e31e7adcf067ae34c216809d83b77e92", "role": "canonical"},
+        {"facetId": "facet-d0841ac0b6551d86", "reviewDigest": "038f9247f7f6042627b401149e24f526f5fb92784f8b5620a38ab41b9d975bdb", "role": "variant"},
+        {"facetId": "facet-eef11f091ab6e942", "reviewDigest": "c7f53a435f0a891113177d022ebe115ce4529d281beb13de3f322c6ae3a5b6ba", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "product-grounded-interface-implementation",
+      "intent": "Implement an interface from the product brief and local design system, cover explicit non-happy-path states, use outside references only for named questions, and close with rendered inspection plus repository checks.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "Product contract, local primitive selection, bounded reference search, implementation, rendered inspection, repair, and normal verification form one coherent interface workflow with accessibility and specialist acceptance boundaries intact.",
+      "members": [
+        {"facetId": "facet-d571337b7fdcfe36", "reviewDigest": "6f0455c21142007335255285469e88a3918aa621d5fd0abf5abc280bf0df44a7", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "provider-bound-azure-skill-authoring",
+      "intent": "Author progressively disclosed Azure SDK skills from package and documentation identifiers, metadata, references, and scenario fixtures without generalizing provider documentation assumptions.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The body contains useful skill-structure mechanics, but package identifiers, fresh Microsoft SDK documentation, credential conventions, and provider-specific acceptance keep it an adapter boundary rather than a portable implementation candidate.",
+      "members": [
+        {"facetId": "facet-01a3de98f4dea2f3", "reviewDigest": "7c70a7595b414cb258b702b7b8a8bbf3b28eaf7b8801583e87c8e9e5fb37f0c5", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "thin-python-testing-pattern-duplicates",
+      "intent": "Inventory Python test surfaces such as fixtures, mocks, parameterization, async code, APIs, databases, and property checks without claiming the absent concrete testing playbook.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "deferred",
+      "rationale": "The two near-duplicate Python Testing Patterns bodies list the same concerns but omit fixture scopes, mock boundaries, property strategies, async configuration, and executable examples. They remain one thin evidence boundary.",
+      "members": [
+        {"facetId": "facet-168cd55bd17134a3", "reviewDigest": "1ca3995b262071405d537f197fad95d9a60daad71c057e3f3e7122903741325b", "role": "variant"},
+        {"facetId": "facet-f9979a37ac287e0b", "reviewDigest": "19bd4160d7484f183b720ede65116da3aa90d8fe27eb9d8eb888bdc12fba36f6", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "thin-vector-retrieval-specialist",
+      "intent": "Select embeddings and distance strategy, query a vector index, and measure recall and latency only after concrete dimensions, index configuration, and evaluation data are supplied.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The 1.4-kilobyte body is a specialist outline without schemas, index operations, tuning ranges, fixtures, or provider evidence. It cannot support an implementation contract beyond preserving the retrieval boundary.",
+      "members": [
+        {"facetId": "facet-1f0b030f6074a75c", "reviewDigest": "4796b095177914eeff5b0c5a890d439a29a7dcbc9ff5ead64a93c7129b1b8c22", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "azure-conversation-analysis-adapter",
+      "intent": "Call Azure conversation analysis through a configured endpoint, project deployment, and credential chain while retaining service errors and provider identity boundaries.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "Endpoint, deployment identity, DefaultAzureCredential behavior, remote request effects, and current SDK semantics make this a provider adapter, not a portable implementation cluster.",
+      "members": [
+        {"facetId": "facet-3dde0eb0edbcbb11", "reviewDigest": "9fe87b6e5a12e3b14a6d013c704ab65a339fd1b967a7c0c6768f303a0b61588a", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "controlled-experimentation-family-misroute",
+      "intent": "Design randomized control and treatment cohorts with predeclared metrics, guardrails, exposure counts, and inconclusive outcomes outside implementation-engineering ownership.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "The reviewed behavior is product or growth experimentation, not repository implementation. Assignment validity, sample size, contamination, and decision interpretation belong to experimentation owners.",
+      "members": [
+        {"facetId": "facet-4594dd8de675ac8b", "reviewDigest": "f9a3722f4a0b26531ee7f41168caee9010d0f1646fc8aa267748d8ed7ca7e391", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "conductor-worktree-setup-adapter",
+      "intent": "Prepare Conductor project metadata and Rails worktree scripts that symlink environment and key material, isolate ports and Redis state, install dependencies, and synchronize track status.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The exact body is a project-specific Conductor and Rails setup, not generic workflow planning. Secret symlinks, executable scripts, dependency installation, and framework configuration require current project authority and verification.",
+      "members": [
+        {"facetId": "facet-4a4a17c799429e90", "reviewDigest": "be591424c8ac78ef457e3c3b9376a0a99e57d9904ee06fd91b9aa9479efb496b", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "thin-data-quality-framework-duplicates",
+      "intent": "Keep schema, completeness, data-contract, CI-gate, alert, fallback, and remediation design with data-infrastructure ownership rather than inferring implementation from absent playbooks.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "rejected",
+      "rationale": "The two near-duplicate bodies are thin data-quality outlines with no executable suites, dbt tests, contract schemas, or thresholds. Their primary behavior is a data-family misroute and cannot be promoted by duplicate wording.",
+      "members": [
+        {"facetId": "facet-4ddea1169a9fd47f", "reviewDigest": "b3916f4cbc42ced67c80b4810f23e9cdc1e4c2c1930bc1ad35ca56d9f210968b", "role": "variant"},
+        {"facetId": "facet-c61b7bdf6ed2a7e2", "reviewDigest": "88eb22e6f8e1382d6d6460805bd3a3ecacc2b140492b622c0ee6503710cd1a59", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "opinionated-typescript-react-conventions",
+      "intent": "Apply TypeScript, React, module, validation, and test conventions only after reconciling them with the target repository and rejecting provider, framework, and market-domain defaults that do not fit.",
+      "relationship": "specialized-alternative",
+      "synthesisDecision": "deferred",
+      "rationale": "The Antfu card and broad coding-standards card overlap on explicit TypeScript and colocated tests but carry incompatible personal, framework, Supabase, and domain assumptions. Contradictory immutability and optimization rules prevent a portable merged standard.",
+      "members": [
+        {"facetId": "facet-60095009fb6331a7", "reviewDigest": "6aef1d55f699fc32214d8cb798cca396d126efda74372012f82c08e64b33ad49", "role": "boundary"},
+        {"facetId": "facet-beb894adde5ad044", "reviewDigest": "9c208f6797f73aaf3017edf669201fc0ece73035e0c9a316376830b1f76be2ff", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "gemini-context-filtering-adapter",
+      "intent": "Generate and validate Gemini-specific workspace ignore rules that remove dependencies, builds, caches, binaries, logs, and databases while preserving critical source and example configuration.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The useful allowlist and overbroad-pattern checks are inseparable from one provider's context semantics and a mutable .geminiignore file. The reviewed effect record also understates the required write, so no portable candidate is inferred.",
+      "members": [
+        {"facetId": "facet-6f6906c8994f930d", "reviewDigest": "3cd877e480684f9ff3abe0f47a95ec03d3ca6a459ffc4c37c23975714c3dab7d", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "unevidenced-ux-review-router",
+      "intent": "Route an interface question to one of five named UX roles only when the missing principle corpus and optional citation service can be independently inspected.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The body is mostly a role catalogue and install pointer. It omits the claimed 168 principles, smell taxonomy, AI-interface rules, rendered acceptance, and accessibility proof, so severity labels would be unevidenced.",
+      "members": [
+        {"facetId": "facet-75671b3460c07536", "reviewDigest": "f611e46f065a09efc0c9640e98b86d3fc111618c44c98368ce3c55a583af6e27", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "developer-coaching-family-misroute",
+      "intent": "Keep private chat-history coaching, external reading search, and Slack delivery outside implementation engineering and behind explicit privacy and account authority.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "The mechanism reads sensitive Claude history, infers developer growth, calls named Rube search operations, and sends direct messages. It is a coaching and external-communication misroute with provider and privacy risks.",
+      "members": [
+        {"facetId": "facet-9c16dac9549d4df4", "reviewDigest": "c3bbd2c0c9e0bfbe5601a7faee362eee01556f6138df19a3c3230ea2db0e76ca", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "exam-study-planning-family-misroute",
+      "intent": "Turn syllabi and past papers into bounded study priorities and practice artifacts without treating education planning as implementation engineering.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "Question classification, recurrence scoring, syllabus coverage, flashcards, and readiness estimates belong to learning design. OCR and probability-calibration risks do not create an engineering implementation mechanism.",
+      "members": [
+        {"facetId": "facet-a6db74da9b265c5a", "reviewDigest": "e32de7300e340a1cf3e8b7639987f4dceac6d254807911fc127aff6fd681d69d", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "provider-routed-multi-agent-feature-pipeline",
+      "intent": "Coordinate a twelve-stage feature pipeline across named specialist agents only after their availability, authority, artifacts, thresholds, rollout controls, and external effects are independently established.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The broad pipeline depends on provider-specific agents and a Task surface absent from the exact evidence, mixes local work with deployment and monitoring effects, and hardcodes ungrounded coverage and canary defaults.",
+      "members": [
+        {"facetId": "facet-bb153fc8180d5f08", "reviewDigest": "510bbb01ecf1ca272887c73940587d824d77d13a3ccce9364068babaf77c9031", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "thin-cqrs-design-boundary",
+      "intent": "Assess CQRS from measured read and write workloads, consistency requirements, command and query separation, projection lag, and recovery without inventing event, replay, ordering, or idempotency mechanics.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The 1.6-kilobyte body is an architecture sketch with no event schema, duplicate handling, replay algorithm, or implementation playbook. Operational dual-model risk remains unresolved.",
+      "members": [
+        {"facetId": "facet-cafd5773c121a424", "reviewDigest": "bc6f07c143724dfdc6293e475055ddf40876a9a5d7ed97547945c8e8c8686649", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "thin-legacy-migration-scaffold",
+      "intent": "Preserve a gradual legacy migration outline around characterization tests, strangler boundaries, compatibility adapters, feature flags, phased milestones, deprecation, and rollback without claiming an executable migration.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The body omits framework steps, dependency analysis, data migration, synchronization, backfill, dual-write controls, and the referenced playbook. Its generic phases do not add evidence beyond the current migration owner.",
+      "members": [
+        {"facetId": "facet-d6ae0124e227d482", "reviewDigest": "b0961b9a1d28f93d33f31d545351fa5e98430df46b1454c8400e9bf2e5775bdc", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "provider-bound-clinical-model-pipeline",
+      "intent": "Use PyHealth's Dataset-to-Task-to-Model-to-Trainer-to-Metrics interfaces with patient-level splits and task-matched checkpoint metrics while retaining clinical, privacy, validity, and version boundaries.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The mechanism is coherent but provider-library-bound and handles sensitive clinical data. Missing referenced tables, API drift, privacy, bias, and external-validity controls prevent portable implementation synthesis.",
+      "members": [
+        {"facetId": "facet-d8f3502b16791e07", "reviewDigest": "4a7be42562d0626290e45489cd1a4092372db876115c477b09dcef1147299e92", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "thin-slo-error-budget-scaffold",
+      "intent": "Define service indicators, objectives, error budgets, dashboards, alerts, and reporting only after validated telemetry, stakeholder outcomes, burn windows, and response ownership are supplied.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The body omits SLI equations, burn-rate windows, thresholds, queries, and its implementation playbook. Accepting it would risk decorative reliability targets with no actionable policy.",
+      "members": [
+        {"facetId": "facet-d923fab5f9df04a6", "reviewDigest": "f9bd2f02af68d08d0faea2e88dfcb75b061e92d3e09e0429f9eae5741c6a8235", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "thin-error-telemetry-duplicates",
+      "intent": "Inventory error capture, grouping, severity, routing, dashboards, and controlled test-signal needs without inferring provider configuration, recovery automation, or safe production mutation.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "deferred",
+      "rationale": "The stronger sibling still omits schemas, vendor configuration, and its playbook, while the second body merely restates deliverable headings. Synthetic errors can page operators and mutate incident metrics, so both remain one unsafe thin boundary.",
+      "members": [
+        {"facetId": "facet-de1b2a4ddcae1c87", "reviewDigest": "4f9180ab6d3d176c1271cf46080cce501bd74977705c7d46e7d910abc7d41fbe", "role": "canonical"},
+        {"facetId": "facet-e42ac2b906810899", "reviewDigest": "ebd07ccc93ad3344bda3b6a02735089bcedb4554d9a24ae43aa0d703179b5230", "role": "variant"}
+      ]
+    },
+    {
+      "id": "beta-visual-browser-test-runner",
+      "intent": "Run AWT visual or OCR-assisted browser scenarios only after its runtime, YAML schema, match thresholds, safe target, and diagnosable execution receipt are available.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The exact body is a beta vendor feature list without command surface, scenario schema, thresholds, example run, or failure receipt. Visual targeting can mutate the wrong application state, and provider claims remain unverified.",
+      "members": [
+        {"facetId": "facet-e6ec25a889757eeb", "reviewDigest": "bbf70e22340b28e2838c904af02c38bda1791e86eab250435a7d9b2dfd85d762", "role": "boundary"}
+      ]
+    }
+  ]
+}
