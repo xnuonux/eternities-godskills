@@ -5,6 +5,7 @@ import {
   validateSemanticProposal,
 } from "./intent-contracts.mjs";
 import { validateRoutingCard } from "./routing-contracts.mjs";
+import { searchWave2SemanticAtlas } from "./quarry-atlas.mjs";
 
 const STOP_WORDS = new Set([
   "a", "about", "after", "all", "an", "and", "anything", "as", "at", "be",
@@ -470,4 +471,62 @@ export function compileIntent({ request, cards }) {
     envelope,
     proofLimits: ["fixture-and-contract-evidence-only"],
   });
+}
+
+export function compileIntentWithGapLookup({ request, cards, semanticAtlas }) {
+  const compilerReceipt = compileIntent({ request, cards });
+  const promotedRouteQualified =
+    !compilerReceipt.unresolvedDecisions.includes("intent-not-understood") &&
+    !compilerReceipt.unresolvedDecisions.includes("intent-ambiguous") &&
+    (["verified", "high"].includes(compilerReceipt.confidence) ||
+      (compilerReceipt.confidence === "medium" && (compilerReceipt.candidateScores[0]?.score ?? 0) >= 20));
+  if (promotedRouteQualified) {
+    return {
+      compilerReceipt,
+      gapLookup: {
+        invoked: false,
+        reason: "promoted-route-qualified",
+        cards: [],
+        terminalRoute: "promoted-capability",
+        targetSkillId: compilerReceipt.candidateScores[0]?.id ?? null,
+        authorityExpanded: false,
+        sourceBodiesTransported: 0,
+      },
+    };
+  }
+  const consequential =
+    compilerReceipt.requestedEffects.some((effect) => effect !== "local-read" && effect !== "none") ||
+    ["high", "critical"].includes(request.context.maximumRisk);
+  if (!consequential) {
+    return {
+      compilerReceipt,
+      gapLookup: {
+        invoked: false,
+        reason: "ordinary-uncovered-intent",
+        cards: [],
+        terminalRoute: "native-fallback",
+        targetSkillId: null,
+        authorityExpanded: false,
+        sourceBodiesTransported: 0,
+      },
+    };
+  }
+  if (semanticAtlas?.certificate?.stale !== false) {
+    throw new Error("Wave 2 semantic atlas certification is stale");
+  }
+  const gapCards = searchWave2SemanticAtlas(semanticAtlas, { query: request.text, limit: 5 });
+  const first = gapCards[0] ?? null;
+  const promoted = first?.evaluationStatus === "promoted" && first?.targetSkillId;
+  return {
+    compilerReceipt,
+    gapLookup: {
+      invoked: true,
+      reason: "uncovered-consequential-intent",
+      cards: gapCards,
+      terminalRoute: promoted ? "promoted-capability" : first ? "refinery-handoff" : "unresolved-gap",
+      targetSkillId: promoted ? first.targetSkillId : first ? "sovereign-skill-refinery" : null,
+      authorityExpanded: false,
+      sourceBodiesTransported: 0,
+    },
+  };
 }
