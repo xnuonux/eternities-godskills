@@ -1,0 +1,1467 @@
+{
+  "schemaVersion": 1,
+  "waveId": "wave2-verification-evidence-001",
+  "familyId": "verification-evidence",
+  "reviewer": "codex:wave2-verification-evidence-001",
+  "reviewMethod": "exact-inert-body-semantic-review-v1",
+  "reviews": [
+    {
+      "facetId": "facet-01ddd08f77af303e",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/design-ux/SKILL.md",
+      "bodySha256": "01ddd08f77af303e939f8f7455fe887b1feff8475f80efd1661e70d50b58a637",
+      "neutralCapabilitySummary": "Audits a rendered interactive interface against named usability heuristics by recording its untouched first-load state, tracing primary tasks, assigning located severities, and repeating the same inspection after fixes.",
+      "neutralIntentExamples": [
+        "audit whether a first-time user can complete the primary interface task",
+        "compare a corrected interface with its original usability findings"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "the live default interface at wide and narrow viewports",
+        "one or more explicit primary user tasks",
+        "screenshots and an interaction trace captured at each task step"
+      ],
+      "operations": [
+        "capture the unarranged first-load state before forming a verdict",
+        "have a judge who did not build the interface locate and severity-rate each heuristic breach",
+        "group blockers, major obstacles, and minor friction by the surface that must change",
+        "repeat rendering and scoring on the changed artifact instead of closing findings from a diff"
+      ],
+      "outputs": [
+        "a heuristic-by-heuristic table with location, severity, and corrective action",
+        "a prioritized remediation sequence",
+        "before-and-after task traces that show whether each observed failure remains"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "withholds a usability verdict when only descriptions or hand-arranged screenshots are available",
+        "leaves a finding open when the revised interface has not been rendered and rescored"
+      ],
+      "exclusions": [
+        "does not substitute visual attractiveness for task usability",
+        "does not treat heuristic scoring as observed user research or accessibility conformance"
+      ],
+      "usefulInvariants": [
+        "every finding names a visible location and a primary-task consequence",
+        "the same default-state and viewport boundary applies before and after remediation",
+        "the builder does not serve as the sole judge of its own interface"
+      ],
+      "materialRisks": [
+        "heuristic ratings remain judge-dependent even with a separate reviewer",
+        "scripted task traces can miss behavior used by real users",
+        "fix-oriented auditing can change product behavior beyond the observed usability defect"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "pattern-reference",
+      "proposedCluster": "rendered-usability-evidence-loop",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-033c8aa77a506233",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/re-create/SKILL.md",
+      "bodySha256": "033c8aa77a50623392228c3c0d19c6c7dd7d6d6fe8f7b20b9f63620f413b3896",
+      "neutralCapabilitySummary": "Places a destructive rewrite behind a necessity argument, complete target reading, an interface-and-behavior preservation ledger, dependency mapping, explicit confirmation, and post-rebuild compatibility checks.",
+      "neutralIntentExamples": [
+        "decide whether structural incompatibility justifies replacing an entire module",
+        "rebuild a confirmed target without silently losing callers or edge behavior"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "the exact file, component, or module proposed for replacement",
+        "its complete body and every located importer or dependent",
+        "specific evidence that targeted repair would compound the structural fault",
+        "an explicit user confirmation tied to a written erasure declaration"
+      ],
+      "operations": [
+        "test the rewrite rationale against concrete rot, patching cost, and maintenance impact",
+        "inventory public surfaces, implicit contracts, working behavior, and non-obvious guards",
+        "declare the deletion boundary and intended omissions before seeking confirmation",
+        "reconstruct against each preservation obligation and re-read every known dependent"
+      ],
+      "outputs": [
+        "a confirmed erasure declaration with preservation and blast-radius records",
+        "a replacement implementation limited to the declared target",
+        "a compatibility report for each preserved contract and dependent file"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "falls back to targeted repair when full replacement is not specifically justified",
+        "performs no deletion before confirmation or before the preservation ledger is complete",
+        "stops when an undeclared dependent expands the blast radius"
+      ],
+      "exclusions": [
+        "does not authorize adjacent cleanup or undeclared feature work",
+        "does not apply to a partial refactor or isolated function correction",
+        "does not prove that the dependency search found runtime or reflection-based consumers"
+      ],
+      "usefulInvariants": [
+        "every preserved interface and behavior remains an explicit rebuild obligation",
+        "only the confirmed target may be erased",
+        "completion requires compatibility evidence from the known blast radius"
+      ],
+      "materialRisks": [
+        "an incomplete dependency map can make irreversible behavior loss appear clean",
+        "a nominal confirmation may not communicate the true recovery cost",
+        "the fixed eighty-percent trigger is not a reliable measure of semantic rewrite scope"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "confirmed-destructive-reconstruction",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-06f4b00fef01f6da",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/verification-before-completion/SKILL.md",
+      "bodySha256": "06f4b00fef01f6da90adfc2160f6cc76152a598885bf8f2c5231d48de517bf72",
+      "neutralCapabilitySummary": "Binds each positive work-state claim to a freshly run command that directly proves that claim, with full output, exit status, and failure count read before any completion language or transition.",
+      "neutralIntentExamples": [
+        "verify a test-pass statement immediately before committing",
+        "separate a successful lint result from an unverified build claim"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "the exact status claim about to be made",
+        "the strongest command or checklist that directly tests that claim",
+        "fresh complete command output including exit state and failures"
+      ],
+      "operations": [
+        "map the proposed assertion to evidence with matching scope",
+        "run the full proving command in the current work state",
+        "read its complete result and compare observed failures with the assertion",
+        "state either the evidenced result or the unresolved condition without extrapolation"
+      ],
+      "outputs": [
+        "a claim-specific verification record",
+        "an evidence-qualified status statement",
+        "an explicit failure report when the proving command does not support the claim"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "blocks positive status language when evidence is stale, partial, indirect, or failing",
+        "does not infer build, regression, or requirement success from a narrower passing check"
+      ],
+      "exclusions": [
+        "does not select project acceptance criteria on its own",
+        "does not prove untested environments, production behavior, or semantic completeness",
+        "does not replace the substantive debugging or repair workflow"
+      ],
+      "usefulInvariants": [
+        "evidence is newer than the state it describes",
+        "the command scope is at least as broad as the claim scope",
+        "observed failures remain visible in the final status"
+      ],
+      "materialRisks": [
+        "a poorly chosen command can pass while leaving the claimed behavior untested",
+        "non-deterministic tests can create a misleading fresh result",
+        "requirements can remain unmet even when the executable checks pass"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "portable",
+      "disposition": "independent-implementation",
+      "proposedCluster": "claim-matched-fresh-verification",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-18e6fa44ef82f668",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/docs-generator/SKILL.md",
+      "bodySha256": "18e6fa44ef82f66891a9ecd24632dc7c1f3f87d66dfccd6f1989e4f70f028906",
+      "neutralCapabilitySummary": "Turns completed technical or security analysis into a dated project report by selecting a task-specific structure, linking each finding to supporting evidence and a reproducible path, redacting secrets, and checking examples against observed behavior.",
+      "neutralIntentExamples": [
+        "produce a reproducible report from a completed binary analysis",
+        "document a validated security finding without exposing credentials"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "completed analysis conclusions and their captured evidence",
+        "the target audience, conversation language, and report category",
+        "project documentation layout and any applicable case scope or timeline"
+      ],
+      "operations": [
+        "choose a general, malware, campaign, or thin vulnerability structure from the evidence type",
+        "connect each consequential finding to its source artifact and reproduction path",
+        "place prerequisites and breaking conditions before procedural detail",
+        "redact credentials and test code samples before saving the dated report"
+      ],
+      "outputs": [
+        "a UTF-8 Markdown report in the project or its documentation directory",
+        "evidence-linked findings and third-party reproduction steps",
+        "task-relevant diagrams only when their provenance and rendering path are available"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "does not invent missing analysis evidence or mark untested examples runnable",
+        "uses no report flavor when the evidence does not establish the specialized category",
+        "omits external diagram generation when transmission approval or dependencies are absent"
+      ],
+      "exclusions": [
+        "does not perform the underlying penetration, reverse-engineering, or malware analysis",
+        "does not establish factual correctness beyond the supplied evidence",
+        "does not supply the referenced templates or evidence contract inside this exact body"
+      ],
+      "usefulInvariants": [
+        "each key conclusion retains an evidence and reproduction link",
+        "sensitive values are replaced before the report is shared",
+        "the chosen structure follows the actual case rather than a vendor aesthetic"
+      ],
+      "materialRisks": [
+        "mandatory references outside the reviewed body can alter the report contract",
+        "an automatic post-analysis trigger can write before the user requests a deliverable",
+        "external diagram generation can transmit confidential case descriptions"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "evidence-linked-technical-reporting",
+      "confidence": "medium",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-19141fd9e71308e6",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/leiloeiro-risco/SKILL.md",
+      "bodySha256": "19141fd9e71308e665f01dee433b68e610a309f704114aaf11f36ba0a9b94eec",
+      "neutralCapabilitySummary": "Attempts to rank Brazilian real-estate auction exposure with legal, debt, possession, property-condition, market, tax, and environmental checklists, then combines a thirty-six-point rubric with four return scenarios and bid-or-abstain thresholds.",
+      "neutralIntentExamples": [
+        "enumerate unresolved diligence items for a Brazilian property auction",
+        "stress a property resale estimate across delay and hidden-cost scenarios"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "auction notice, court docket, current property registry, and occupancy status",
+        "municipal tax, condominium, utility, repair, and transaction-cost evidence",
+        "local comparable sales, financing assumptions, time horizon, and investor constraints"
+      ],
+      "operations": [
+        "sort documented exposures into legal, financial, operational, market, and environmental buckets",
+        "assign fixed rubric points to selected diligence answers",
+        "combine optimistic, base, adverse, and catastrophic return assumptions with preset weights",
+        "compare the resulting score and weighted return with stated interest-rate hurdles"
+      ],
+      "outputs": [
+        "a diligence checklist with unresolved records",
+        "a numeric risk class and scenario table",
+        "a conditional bid, seek-counsel, or avoid recommendation"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "labels missing registry, court, debt, or possession evidence as unresolved rather than clear",
+        "routes higher-value or high-score cases toward legal and engineering review",
+        "cannot safely resolve the recommendation when current law, local practice, or source records differ from its constants"
+      ],
+      "exclusions": [
+        "does not establish title, extinguish encumbrances, or substitute for current Brazilian legal advice",
+        "does not validate the listed probabilities, cost bands, tax rules, case-law statements, or scoring cutoffs",
+        "does not justify investment suitability from a weighted average alone"
+      ],
+      "usefulInvariants": [
+        "unknown obligations remain visible in total acquisition cost",
+        "capital lockup and exit delay are included in return scenarios",
+        "third-party claims and possession disputes are not collapsed into cosmetic property risk"
+      ],
+      "materialRisks": [
+        "dated and jurisdiction-sensitive legal assertions can materially misstate liability",
+        "arbitrary point weights and scenario probabilities can manufacture decision confidence",
+        "the body contains an incomplete repair-cost table and unsupported governance claims",
+        "a bid recommendation is high-stakes financial and legal guidance"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unsupported-auction-investment-scoring",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-1d2c41eb58585acf",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/brooks-test/SKILL.md",
+      "bodySha256": "1d2c41eb58585acf6f9ef0fe54af349d2de8db8aaca2b3491f5901ae7e3bac08",
+      "neutralCapabilitySummary": "Routes an existing test suite through an external shared rubric and test guide after mapping scope, promising a decay-risk scan and a health report but defining almost none of those checks in the reviewed body.",
+      "neutralIntentExamples": [
+        "map the boundaries of an unfamiliar test suite before quality review",
+        "request a test-decay assessment when its referenced rubric is available"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "test files or a project location from which scope can be inferred",
+        "three shared reference documents and a local test guide not present in the exact body"
+      ],
+      "operations": [
+        "resolve the suite boundary when the requester did not identify one",
+        "delegate symptom definitions and source tradeoffs to external reference files",
+        "label the eventual result as a test-quality review"
+      ],
+      "outputs": [
+        "a suite map",
+        "a referenced but unspecified decay-risk report and health score"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "cannot conduct the promised scan when the shared guide, risk definitions, or report contract is absent",
+        "does not define how conflicting findings or unsupported test stacks change the verdict"
+      ],
+      "exclusions": [
+        "does not state the actual test-smell criteria in this source body",
+        "does not run the suite or prove that tests detect production defects",
+        "does not identify concrete evidence artifacts beyond an unnamed report template"
+      ],
+      "usefulInvariants": [
+        "review scope is mapped before conclusions are drawn",
+        "the report mode distinguishes test quality from production-code linting"
+      ],
+      "materialRisks": [
+        "book names and reference filenames can be mistaken for an implemented method",
+        "missing reference bodies make severity and health scoring unauditable",
+        "automatic scope detection may include unrelated or generated tests"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "reference-dependent-test-quality-shell",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-208f188c04fef666",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/smartui-skill/SKILL.md",
+      "bodySha256": "208f188c04fef666ddcc9f91cea0dbcac9fe869aaa0482c05a80b0c10f591f06",
+      "neutralCapabilitySummary": "Configures a TestMu SmartUI baseline-and-diff workflow around browser screenshots, selected routes, multiple viewports, render waits, cloud credentials, and dashboard approval of changed visual baselines.",
+      "neutralIntentExamples": [
+        "compare selected responsive pages with an approved screenshot baseline",
+        "review whether a visual difference should replace the cloud baseline"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "browser automation tests and named snapshot points",
+        "browser, viewport, and rendering-delay configuration",
+        "a SmartUI project token and optional LambdaTest cloud credentials"
+      ],
+      "operations": [
+        "instrument chosen browser states with named screenshot captures",
+        "create an initial cloud baseline and calculate diffs on later runs",
+        "present highlighted changes for a dashboard approval decision",
+        "replace the comparison baseline only after an explicit review action"
+      ],
+      "outputs": [
+        "a SmartUI configuration and instrumented test path",
+        "cloud-hosted baseline images and visual differences",
+        "an approved or rejected baseline transition"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "treats missing credentials, incomplete rendering, or an unavailable dashboard as unresolved",
+        "retains the prior baseline when a visual change is rejected",
+        "does not infer application correctness from a matching screenshot"
+      ],
+      "exclusions": [
+        "does not provide a provider-neutral image-diff engine",
+        "does not cover unscripted states, semantic accessibility, interaction correctness, or backend behavior",
+        "does not authorize uploading private pages or screenshots"
+      ],
+      "usefulInvariants": [
+        "each comparison uses named states and configured viewport dimensions",
+        "a baseline update is separate from diff generation",
+        "credentials remain outside test source"
+      ],
+      "materialRisks": [
+        "screenshots and page content leave the local environment",
+        "fixed waits can capture unstable or partially rendered states",
+        "latest-package installation and dashboard approval couple evidence to mutable provider behavior"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-adjacent",
+      "disposition": "deferred",
+      "proposedCluster": "provider-hosted-visual-regression",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-20efbcc66189eea6",
+      "canonicalSourceId": "antfu/skills@a74f281a27dadc02397bc1a174b0f2c97531b6ae:skills/vitest/SKILL.md",
+      "bodySha256": "20efbcc66189eea685472886eb5b030d76b218fde646ebdbabd7f5622eff6204",
+      "neutralCapabilitySummary": "Indexes Vitest topics such as configuration, assertions, hooks, mocking, snapshots, coverage, environments, filtering, concurrency, and type checks, while leaving all operational guidance to referenced pages.",
+      "neutralIntentExamples": [
+        "locate the Vitest reference for custom fixtures",
+        "identify which Vitest feature covers type-level assertions"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a Vitest-specific testing question",
+        "the project version and the relevant referenced topic page"
+      ],
+      "operations": [
+        "classify the question into a core, feature, or advanced Vitest topic",
+        "route the reader to a named reference document",
+        "distinguish runners, assertions, setup hooks, and execution environments at catalog level"
+      ],
+      "outputs": [
+        "a Vitest documentation route",
+        "a topic inventory rather than a test or verification verdict"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "defers when the project version differs from the stated beta snapshot",
+        "cannot prescribe a concrete test design when the linked reference body is unavailable"
+      ],
+      "exclusions": [
+        "does not define pass criteria, failure triage, regression proof, or coverage thresholds",
+        "does not itself configure or execute Vitest",
+        "does not establish that Jest compatibility holds for a particular suite"
+      ],
+      "usefulInvariants": [
+        "feature routing stays within the declared Vitest version family",
+        "testing concerns remain separated by reference topic"
+      ],
+      "materialRisks": [
+        "a future-dated beta description can drift before use",
+        "feature names can be mistaken for evidence that a project has configured or exercised them",
+        "the exact body is a catalog and is misclassified as a verification mechanism"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-adjacent",
+      "disposition": "deferred",
+      "proposedCluster": "versioned-test-framework-index",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-21b8a0a69f443568",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/avoid-ai-writing/SKILL.md",
+      "bodySha256": "21b8a0a69f443568a4de74083d91db397c18951a579fcc06eee842a3bb629639",
+      "neutralCapabilitySummary": "Reviews prose for a fixed set of formatting, phrasing, sentence, attribution, and structure signals, rewrites located passages in plainer context-sensitive language, records the edits, and audits the revision a second time.",
+      "neutralIntentExamples": [
+        "remove formulaic phrasing from a draft without changing its facts",
+        "perform a second-pass style audit on edited documentation"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "the exact prose to inspect",
+        "its audience, meaning, and publication context",
+        "a guideline list of suspected machine-like writing patterns"
+      ],
+      "operations": [
+        "locate each candidate style signal in context instead of banning words globally",
+        "rewrite only passages whose phrasing obscures or inflates the intended meaning",
+        "record the reason for each material edit",
+        "scan the rewritten text again for surviving formulaic structures"
+      ],
+      "outputs": [
+        "a located issue list",
+        "a meaning-preserving revised draft",
+        "an edit rationale and second-pass findings"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "retains a flagged term when context makes it accurate or necessary",
+        "marks factual or citation concerns unresolved rather than rewriting them as style",
+        "does not close the audit until the revised draft receives the second pass"
+      ],
+      "exclusions": [
+        "does not classify authorship or prove that text was generated by a model",
+        "does not verify factual claims or retrieve supporting citations",
+        "does not apply to source code"
+      ],
+      "usefulInvariants": [
+        "the revision preserves the original supported meaning",
+        "every reported pattern is tied to an exact passage",
+        "guideline matches remain defeasible by context"
+      ],
+      "materialRisks": [
+        "mechanical replacement can erase authorial voice or technical precision",
+        "the pattern inventory can encode stylistic bias",
+        "a polished rewrite can make unsupported claims sound more credible"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "portable",
+      "disposition": "pattern-reference",
+      "proposedCluster": "contextual-prose-pattern-audit",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-23528e67b0fe2a97",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/test-guard/SKILL.md",
+      "bodySha256": "23528e67b0fe2a9705bd8b9173a01adc74659877a34411e6df60ae38be471f8f",
+      "neutralCapabilitySummary": "Reviews changed tests for observable-behavior assertions, justified boundary mocks, data-driven variants, unique defect detection, scenario naming, preserved incident regressions, real state objects, and real infrastructure when persistence is the subject.",
+      "neutralIntentExamples": [
+        "review a test diff for brittle internal-call assertions",
+        "decide whether repeated test cases should become one parameterized scenario"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "the changed test files or exact test diff",
+        "project testing instructions and stack-specific conventions",
+        "the system-boundary map and existing fixtures",
+        "incident references for production regression tests"
+      ],
+      "operations": [
+        "trace each assertion to caller-visible behavior or an allowed external boundary",
+        "challenge every mock with the defect it could hide",
+        "merge value-only variants while preserving genuinely different scenarios",
+        "protect incident regressions and construct real state objects",
+        "rank located violations by their likelihood of brittleness or false confidence"
+      ],
+      "outputs": [
+        "file-grouped findings with rule, location, impact, and repair",
+        "a must-fix, should-fix, protected-regression, or architecture-note severity",
+        "a test set whose members have distinct defect-detection purposes"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "does not report untouched pre-existing violations unless the requested scope is an audit",
+        "keeps separate cases when setup, assertions, or boundary responses differ",
+        "does not mark the suite passing because this review never runs tests"
+      ],
+      "exclusions": [
+        "does not choose product behaviors that need coverage",
+        "does not enforce formatting or production-code style",
+        "does not replace execution of the project test runner"
+      ],
+      "usefulInvariants": [
+        "internal refactors do not break behavior-focused tests",
+        "boundary mocks remain explicit and justified",
+        "a production incident regression is never removed as redundant"
+      ],
+      "materialRisks": [
+        "overly strict mock rules can make isolated failure testing expensive",
+        "deleting apparently trivial tests can remove cheap contract protection",
+        "project-specific constraints can conflict with the universal rubric"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
+      "disposition": "independent-implementation",
+      "proposedCluster": "behavioral-test-maintainability-review",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-291a78b32d06f66d",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/pytest-skill/SKILL.md",
+      "bodySha256": "291a78b32d06f66d9469deda15b6281a17ca000392a5b5bec39f06a2c6bf9e93",
+      "neutralCapabilitySummary": "Provides pytest syntax examples for assertions, exceptions, fixtures with teardown, parameter tables, markers, mocks, shared configuration, filtering, coverage, and parallel execution, with advanced behavior deferred to a playbook.",
+      "neutralIntentExamples": [
+        "translate repeated Python examples into a pytest parameter table",
+        "set up fixture teardown for a test resource"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "Python behavior to test and its observable expectations",
+        "resource lifecycle and isolation boundaries",
+        "pytest configuration, plugin availability, and suite conventions"
+      ],
+      "operations": [
+        "express values and expected exceptions with pytest assertions",
+        "allocate and release reusable resources through fixture scopes",
+        "collapse input-output variants into parameterized cases",
+        "select markers, filters, and reporting options for a requested run"
+      ],
+      "outputs": [
+        "pytest test and fixture examples",
+        "a project-level pytest option and marker sketch",
+        "runner commands for selected tests or coverage"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "defers async, CI, factory, and advanced mocking decisions to an unreviewed playbook",
+        "cannot validate examples that reference undefined application classes and plugins",
+        "does not treat a generated test as evidence until the project runner executes it"
+      ],
+      "exclusions": [
+        "does not define which application behavior deserves a test",
+        "does not establish safe mock boundaries or integration coverage",
+        "does not install pytest or its optional plugins"
+      ],
+      "usefulInvariants": [
+        "yield fixtures perform teardown after use",
+        "variant expectations remain explicit in their parameter rows",
+        "known-bug and skipped cases remain visibly marked"
+      ],
+      "materialRisks": [
+        "examples assert internal mock calls and can encourage brittle tests",
+        "autouse fixtures can hide global state mutation",
+        "optional runner flags fail when their plugins are absent"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-adjacent",
+      "disposition": "deferred",
+      "proposedCluster": "pytest-syntax-and-fixture-reference",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-291ec85618b820a0",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/ab-test-setup/SKILL.md",
+      "bodySha256": "291ec85618b820a09efa67f6799e4688c5b8019be6b4f36f75076a6f56891d74",
+      "neutralCapabilitySummary": "Gates an online controlled experiment behind a committed hypothesis, one frozen primary metric, assumptions, power and duration estimates, guardrails, event-attribution checks, and a predeclared interpretation record that resists peeking and mid-test changes.",
+      "neutralIntentExamples": [
+        "decide whether an experiment is ready for implementation",
+        "interpret a completed variant comparison without overriding a failed guardrail"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "an observed user problem and a single proposed change",
+        "target population, baseline rate, minimum detectable effect, significance level, and power",
+        "event schemas, assignment records, analytics destination, and guardrail definitions",
+        "achieved sample, duration, external events, and outcome data"
+      ],
+      "operations": [
+        "freeze the audience, directional hypothesis, primary metric, and detectable effect before variants",
+        "surface independence, traffic, randomization, seasonality, and measurement assumptions",
+        "calculate required exposure and compare it with realistic traffic duration",
+        "trace metric events through attribution, deduplication, allocation, and guardrail pipelines",
+        "classify the observed result without generalizing beyond the tested change and population"
+      ],
+      "outputs": [
+        "a preregistered experiment contract",
+        "an execution-readiness verdict with unresolved checks",
+        "a searchable record of achieved exposure, results, decision, and limitations"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "blocks implementation when the hypothesis, primary metric, power, duration, guardrails, or tracking evidence is missing",
+        "recommends redesign when assumptions or available traffic cannot support the intended inference",
+        "rejects rollout when a guardrail materially fails even if the primary metric improves"
+      ],
+      "exclusions": [
+        "does not authorize launching an experiment or changing production traffic",
+        "does not supply a sample-size formula, sequential-testing method, or multiple-comparison correction",
+        "does not prove causality outside the randomized population and tested intervention"
+      ],
+      "usefulInvariants": [
+        "the primary decision metric is fixed before exposure",
+        "variant identity follows every metric event",
+        "success criteria and stop conditions do not change after results appear"
+      ],
+      "materialRisks": [
+        "the fixed thirty-second, five-event, and one-hundred-assignment checks are unsupported heuristics",
+        "the allocation tolerance can pass biased assignment or fail healthy random variation",
+        "business rollout still requires effect-size, uncertainty, and operational judgment absent from the body"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "precommitted-experiment-readiness",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-2bc66da541cf04e4",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-skill-author/skills/verification-before-completion/SKILL.md",
+      "bodySha256": "2bc66da541cf04e477bb7b39bc8196e5c4d1ef63471ec4cc2465b345c0363404",
+      "neutralCapabilitySummary": "Repeats the same claim-to-command gate, failure tables, rationalization warnings, and fresh-evidence rule as the earlier verification body, with only packaging metadata changed and no additional proof mechanism.",
+      "neutralIntentExamples": [
+        "detect a second copy of the fresh-evidence completion gate",
+        "avoid weighting identical verification doctrine twice"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "this canonical body and the earlier body with the same verification sections",
+        "their distinct source identifiers and byte digests"
+      ],
+      "operations": [
+        "compare the gate sequence, failure matrix, warning list, and examples across both bodies",
+        "confirm that changed frontmatter does not add a behavioral contract",
+        "retain provenance while rejecting duplicate semantic contribution"
+      ],
+      "outputs": [
+        "a duplicate-mechanism finding",
+        "a rejection that prevents repeated verification evidence from inflating support"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "reopens the comparison if either body gains a distinct evidence rule or failure control",
+        "does not merge or discard the separate canonical source identity"
+      ],
+      "exclusions": [
+        "does not reject the underlying fresh-verification mechanism",
+        "does not treat metadata vocabulary as an operational difference"
+      ],
+      "usefulInvariants": [
+        "deduplication preserves each source digest",
+        "one semantic candidate represents the repeated claim-evidence gate"
+      ],
+      "materialRisks": [
+        "retaining both copies would overstate independent corroboration",
+        "future source drift could make the current duplicate decision stale"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "portable",
+      "disposition": "rejected",
+      "proposedCluster": "duplicate-fresh-verification-gate",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-2d1cf3e77db8ac97",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/manifest/SKILL.md",
+      "bodySha256": "2d1cf3e77db8ac97392e18c272eb2bdc014eec7a72b27437f87ed820cf1c2c94",
+      "neutralCapabilitySummary": "Prescribes stopping a Claude gateway, installing a Manifest telemetry plugin, collecting an API credential, mutating plugin configuration, restarting the gateway, and accepting one log phrase as connection proof.",
+      "neutralIntentExamples": [
+        "assess whether a Manifest telemetry setup has adequate secret and rollback controls",
+        "troubleshoot a provider-specific observability connection without exposing its key"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a Claude gateway environment",
+        "a Manifest account credential and optional custom collection endpoint",
+        "gateway logs after plugin installation and restart"
+      ],
+      "operations": [
+        "stop a running gateway before plugin configuration",
+        "install the named telemetry package and write a key into configuration",
+        "restart the gateway and search recent logs for one activation string",
+        "map a small set of connection errors to configuration retries"
+      ],
+      "outputs": [
+        "a modified gateway plugin configuration",
+        "an installed provider telemetry component",
+        "a log-string-based setup verdict"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "asks again when a credential lacks the expected prefix",
+        "checks logs after a fixed delay and offers narrow error-specific retries",
+        "provides no rollback path when installation, restart, or endpoint validation fails"
+      ],
+      "exclusions": [
+        "does not verify package identity, version, permissions, or telemetry payload contents",
+        "does not prove end-to-end receipt of events from a local activation log",
+        "does not define consent for transmitting agent data to the provider"
+      ],
+      "usefulInvariants": [
+        "the credential is not intentionally printed after configuration",
+        "custom endpoint handling remains separate from the default path"
+      ],
+      "materialRisks": [
+        "the user is instructed to paste a live API secret into the conversation",
+        "plugin installation and gateway mutation occur without package pinning or recovery evidence",
+        "telemetry can disclose agent content to an external service",
+        "a single expected log line is an insufficient operational proof"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unsafe-provider-telemetry-bootstrap",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-3531a52d1afd521c",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/ditto/SKILL.md",
+      "bodySha256": "3531a52d1afd521c3abd23d17a6368a1a20cd7e5eed2c4328d29eeb1bf44b08f",
+      "neutralCapabilitySummary": "Mines a private behavior profile only from user-authored local session text through an installed runtime, exposes token and call counts before model work, binds approval to a plan hash, validates worker and reducer artifacts, and activates only a complete accepted pack.",
+      "neutralIntentExamples": [
+        "preview the exact cost and source coverage of a private session-mining run",
+        "reject activation when one segment report fails validation"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "an explicitly requested profile-mining task",
+        "a trusted existing runtime, exact Python executable, and matching mining contract",
+        "eligible local sessions containing the user's own words",
+        "an approved plan hash, segment reports, and a reduced profile pack"
+      ],
+      "operations": [
+        "exclude authored rules, memory files, and agent text from behavioral evidence",
+        "display deduplicated source volume, selected tokens, caches, and planned model calls",
+        "bind preparation to the approved mode and immutable plan hash",
+        "validate every segment report and the reduced pack before activation",
+        "report active domains, source coverage, cache reuse, and targeted gaps"
+      ],
+      "outputs": [
+        "a read-only preflight with an approval hash",
+        "validated per-segment reports and a private profile pack",
+        "an activation status and concise profile card"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "stops when no trusted runtime exists instead of downloading executable code",
+        "requires renewed approval when the plan hash or preview mode changes",
+        "preserves rejection evidence and refuses partial activation after validation failure"
+      ],
+      "exclusions": [
+        "does not trigger merely because personalization could be useful",
+        "does not mine rules, memory, or a typed self-description as observed behavior",
+        "does not provide the runtime implementation or mining prompt in this exact body"
+      ],
+      "usefulInvariants": [
+        "model-backed work matches the displayed source selection and approval hash",
+        "raw sessions and full profiles remain private by default",
+        "activation references only a fully validated pack"
+      ],
+      "materialRisks": [
+        "best-effort redaction can leak sensitive session content to the selected model provider",
+        "a compromised installed runtime can violate the declared read-only boundary",
+        "profiles can overfit sparse or repetitive histories",
+        "the missing mining contract prevents full independent verification"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "approval-bound-private-session-mining",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-3747d8427ee443e2",
+      "canonicalSourceId": "K-Dense-AI/scientific-agent-skills@36d8f13a1e754618794bf42f417884940077b4ae:skills/qutip/SKILL.md",
+      "bodySha256": "3747d8427ee443e2de9de604d0331a97998800bf942835af319a8632ba6edbad",
+      "neutralCapabilitySummary": "Frames finite-dimensional quantum simulation as a source-bound model contract covering units, tensor order, state validity, generator semantics, approximations, solver choice, pinned dependencies, numerical controls, invariant checks, and convergence sweeps.",
+      "neutralIntentExamples": [
+        "audit whether an open-system model uses dimensionally consistent collapse rates",
+        "test a stochastic quantum result for seed and trajectory convergence"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "Hamiltonian, state, subsystem dimensions, observables, and collapse channels",
+        "unit conventions, physical approximations, solver family, and dependency versions",
+        "time or frequency grids, tolerances, cutoffs, seeds, and trajectory counts",
+        "solver statistics and portable numeric result summaries"
+      ],
+      "operations": [
+        "check norms, trace, Hermiticity, positivity tolerance, shapes, and structured dimensions",
+        "select unitary, Lindblad, jump, weak-bath, stochastic, periodic, hierarchy, or symmetric solvers from physical assumptions",
+        "record integration options and inspect solver statistics rather than relying on defaults",
+        "sweep every artificial cutoff and compare invariant residuals across numerical choices",
+        "separate stationary spectra from finite-window transforms and audit aliasing, tails, and conventions"
+      ],
+      "outputs": [
+        "a pinned quantum-model specification",
+        "simulation results with physical and numerical diagnostics",
+        "convergence tables and invariant residuals",
+        "an explicit boundary between local simulation and hardware execution"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "invalidates materially non-positive states or inconsistent tensor dimensions",
+        "requires a new convergence run when solver, tolerance, cutoff, or seed policy changes",
+        "does not deserialize untrusted object files or construct executable coefficient text"
+      ],
+      "exclusions": [
+        "does not execute quantum hardware",
+        "does not establish that Markov, secular, truncation, or weak-coupling assumptions fit a real experiment",
+        "does not prove the future-dated package versions or APIs remain current"
+      ],
+      "usefulInvariants": [
+        "subsystem ordering is identical across states, operators, channels, and partial traces",
+        "rates and Hamiltonian entries use a declared compatible unit convention",
+        "reported conclusions remain stable under justified numerical sweeps"
+      ],
+      "materialRisks": [
+        "physically invalid assumptions can survive numerically stable integration",
+        "specialized solvers can produce misleading results outside their approximation regime",
+        "version-specific APIs and package classifications can drift",
+        "stochastic precision can be overstated without uncertainty reporting"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-adjacent",
+      "disposition": "pattern-reference",
+      "proposedCluster": "physics-constrained-numerical-validation",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-38028ce202ece577",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/shellcheck-configuration/SKILL.md",
+      "bodySha256": "38028ce202ece5773b307b74a70d43eae31254033c22f8045a419632b03017f4",
+      "neutralCapabilitySummary": "Mixes ShellCheck installation paths, project configuration claims, warning examples, CI and pre-commit snippets, suppression patterns, output formats, parallel scans, and a homemade hash cache into one tool-specific linting guide.",
+      "neutralIntentExamples": [
+        "review a proposed ShellCheck exclusion before adding it to CI",
+        "select a parser-friendly diagnostic format for shell lint results"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "shell scripts and their declared interpreter dialect",
+        "a ShellCheck installation and project rule configuration",
+        "CI, hook, or local execution boundaries"
+      ],
+      "operations": [
+        "install or build the analyzer through several unpinned package paths",
+        "assign a target shell and enabled or suppressed warning identifiers",
+        "scan selected files and emit default, GCC, JSON, or quiet diagnostics",
+        "cache results by source hash and parallelize file checks",
+        "translate selected warning codes into suggested code changes"
+      ],
+      "outputs": [
+        "a ShellCheck configuration sketch",
+        "static diagnostics and CI failure status",
+        "suppression annotations and cached per-file outcomes"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "returns nonzero findings through local or CI wrappers",
+        "offers suppression when a sourced file or rule is treated as a false positive",
+        "does not distinguish analyzer failure from all script-selection and cache-corruption cases"
+      ],
+      "exclusions": [
+        "does not execute the analyzed scripts or prove runtime correctness",
+        "does not verify that its environment variables, rule descriptions, and configuration syntax are supported by the installed version",
+        "does not pin installer, source revision, action version, or analyzer image"
+      ],
+      "usefulInvariants": [
+        "analysis dialect matches the script interpreter",
+        "every suppression carries a local reason",
+        "machine-readable diagnostics preserve file, line, severity, code, and message"
+      ],
+      "materialRisks": [
+        "the body contains contradictory or ineffective quoting fixes",
+        "invented or stale configuration claims can silently disable intended checks",
+        "unpinned installation and CI examples expand supply-chain exposure",
+        "a cache keyed only by script bytes can ignore analyzer and configuration changes"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unreliable-shellcheck-configuration-compendium",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-39606d9c00e78099",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/accesslint-diff/SKILL.md",
+      "bodySha256": "39606d9c00e78099ab081840b40e1f755beaad861f12f93548aa2847a151ba0c",
+      "neutralCapabilitySummary": "Attempts to isolate newly introduced accessibility findings by mutating git state to capture a baseline, scanning a live URL twice with an on-demand AccessLint browser and CLI, then reporting new, fixed, and hidden pre-existing violations.",
+      "neutralIntentExamples": [
+        "compare accessibility findings on a local page with a branch baseline",
+        "locate only violations introduced by uncommitted frontend changes"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a live URL, optional baseline branch, and optional selector or AAA scope",
+        "a git worktree with current, staged, untracked, and branch state",
+        "two DOM scan results and any source-location metadata"
+      ],
+      "operations": [
+        "derive a baseline by stashing changes or switching branches",
+        "install and start the latest provider browser tooling on a discovered port",
+        "snapshot the baseline DOM and compare a second scan after restoring current state",
+        "partition diagnostics into introduced, removed, and pre-existing sets",
+        "stop the managed browser after producing located evidence"
+      ],
+      "outputs": [
+        "a baseline snapshot in temporary storage",
+        "a severity-grouped accessibility difference report",
+        "selectors, observed evidence, and proposed mechanical or human fixes"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "stops when the initial stash operation fails",
+        "reports URL or page-load failure from the provider exit code",
+        "warns that rebuild latency or selector drift can invalidate the comparison",
+        "does not reliably recover when branch switch, chained scan, or stash restoration fails midway"
+      ],
+      "exclusions": [
+        "does not provide a read-only baseline mechanism",
+        "does not prove full accessibility conformance from rule-engine output",
+        "does not authorize installing latest remote packages or rewriting the user's git state"
+      ],
+      "usefulInvariants": [
+        "scope flags are intended to match across baseline and current scans",
+        "pre-existing violations remain separate from introduced regressions",
+        "source locations are reported only when the scanner supplies them"
+      ],
+      "materialRisks": [
+        "stash and branch mutations can lose or misapply concurrent work",
+        "latest-package execution is an unpinned supply-chain action",
+        "fixed sleeps and live rebuilds can compare different application states",
+        "restoration commands are conditionally chained and can leave the worktree altered"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "destructive-live-accessibility-diff",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-3b5e5a0749d36582",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/debugger/SKILL.md",
+      "bodySha256": "3b5e5a0749d36582141f861dac0fc6a0777546c6125ea151f40f3c11e7dc3969",
+      "neutralCapabilitySummary": "Offers a short debugging sequence that gathers an error and stack, looks at reproduction and recent changes, tests hypotheses with logs and variable inspection, applies a small fix, and requests a root-cause and prevention report.",
+      "neutralIntentExamples": [
+        "collect the visible error and reproduction steps for an unexpected failure",
+        "summarize evidence for a proposed root cause"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "an error message, stack trace, and reproduction description",
+        "recent code changes, logs, and selected runtime state"
+      ],
+      "operations": [
+        "locate the apparent failure site from the trace",
+        "form and test an unspecified sequence of causal hypotheses",
+        "add diagnostic logging or inspect variable state",
+        "apply a minimally described correction and check it"
+      ],
+      "outputs": [
+        "a root-cause explanation",
+        "a proposed code change and testing note",
+        "general prevention recommendations"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "asks for missing inputs but defines no reproduction gate or stopping rule",
+        "does not specify how disconfirming evidence changes or retires a hypothesis"
+      ],
+      "exclusions": [
+        "does not define a concrete isolation method, evidence artifact, regression test, rollback, or verification command",
+        "does not distinguish environmental, concurrency, data, performance, or integration failures",
+        "does not constrain debug logging of sensitive values"
+      ],
+      "usefulInvariants": [
+        "the stated objective is root cause rather than symptom concealment",
+        "a repair is expected to be smaller than unrelated refactoring"
+      ],
+      "materialRisks": [
+        "generic sequencing can be mistaken for an evidence-complete debugging method",
+        "unbounded logging can disclose secrets or perturb timing",
+        "a minimal patch can be accepted without reproducing the original symptom"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "thin-generic-debugging-checklist",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-3d6f3e78151b3e5e",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/plan-writing/SKILL.md",
+      "bodySha256": "3d6f3e78151b3e5e931b648d0138dde3bc19ba44669b740c262975c17fb3284e",
+      "neutralCapabilitySummary": "Shapes a short project-root Markdown plan around one goal, five to ten ordered tasks, per-task observable checks, dependencies, a final verification stage, and checkbox updates, while prescribing fixed size and duration heuristics.",
+      "neutralIntentExamples": [
+        "turn a settled multi-step change into ordered checkable tasks",
+        "add an observable result to an otherwise vague implementation step"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a settled engineering goal and project type",
+        "affected files, dependencies, constraints, and available verification surfaces",
+        "the critical path and any independent work"
+      ],
+      "operations": [
+        "reduce the goal to a small sequence of single-outcome tasks",
+        "attach a project-specific observation or command to each task",
+        "order prerequisites before dependents and reserve a final integrated check",
+        "save and update one task-named plan in the repository root"
+      ],
+      "outputs": [
+        "a concise Markdown goal and task checklist",
+        "dependency-aware ordering and per-step acceptance observations",
+        "a final done-when list"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "splits or simplifies a plan that exceeds its fixed one-page and ten-task limits",
+        "rejects tasks whose completion cannot be observed",
+        "does not state how to handle repository conventions that forbid root-level plans"
+      ],
+      "exclusions": [
+        "does not resolve ambiguous product intent or choose architecture",
+        "does not execute, test, or certify the planned work",
+        "does not justify universal two-to-five-minute task sizing"
+      ],
+      "usefulInvariants": [
+        "each task has one inspectable outcome",
+        "dependency order remains explicit",
+        "integrated verification follows implementation steps"
+      ],
+      "materialRisks": [
+        "arbitrary brevity can omit migration, rollback, security, or compatibility work",
+        "forcing plans into the project root can conflict with repository policy",
+        "prescriptive example commands can age or mismatch the actual stack"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "compact-checkable-implementation-planning",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-40c690712529243d",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/llm-evaluation/SKILL.md",
+      "bodySha256": "40c690712529243d0ef97fe1c1fbbbc0aafb98e4cf8668f39e29f6b62feaeb84",
+      "neutralCapabilitySummary": "Surveys automated text, classification, retrieval, human-rating, model-judge, A/B, regression, and benchmark techniques, then illustrates them with incomplete or obsolete Python interfaces and simplistic aggregate decision logic.",
+      "neutralIntentExamples": [
+        "list candidate metric families for an LLM evaluation suite",
+        "compare the stated evaluation examples with current statistical and provider requirements"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "model outputs, references, contexts, labels, and benchmark cases",
+        "metric selection, human rating dimensions, judge prompts, and baselines",
+        "variant scores and a nominal significance threshold"
+      ],
+      "operations": [
+        "calculate lexical, embedding, classification, and retrieval scores",
+        "collect human ratings and attempt an inter-rater agreement label",
+        "send outputs to a named model judge for pointwise or pairwise JSON ratings",
+        "apply an independent-sample t test and pooled-standard-deviation effect size",
+        "flag relative baseline drops and summarize benchmark distributions"
+      ],
+      "outputs": [
+        "metric dictionaries and aggregate benchmark statistics",
+        "human or model-judge ratings",
+        "a variant winner and regression list"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "mentions small samples, contamination, metric mismatch, and variance as pitfalls",
+        "does not implement schema validation, API errors, judge disagreement, missing baselines, zero denominators, degenerate variance, or multiple testing controls",
+        "can emit a winner solely from the larger sample mean even when the test is inconclusive"
+      ],
+      "exclusions": [
+        "does not provide the imported evaluation framework or complete factuality implementation",
+        "does not control judge position bias, prompt injection, nondeterminism, cost, latency, or data transmission",
+        "does not justify metric suitability for a specific task or distribution"
+      ],
+      "usefulInvariants": [
+        "candidate results are intended to be compared with a baseline",
+        "evaluation should include representative cases and failure analysis",
+        "automated scores should not fully replace human review"
+      ],
+      "materialRisks": [
+        "the model API and example package are not source-bound or shown to exist",
+        "the agreement interpretation code is logically unsound because boolean dictionary keys collide",
+        "the statistical routine ignores assumptions and can divide by zero",
+        "sending evaluation data to a model provider can disclose sensitive content"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "unsound-llm-evaluation-compendium",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-48a3b32aa9273343",
+      "canonicalSourceId": "K-Dense-AI/scientific-agent-skills@36d8f13a1e754618794bf42f417884940077b4ae:skills/scientific-critical-thinking/SKILL.md",
+      "bodySha256": "48a3b32aa9273343dacae7532546a2fee375b148bb467305905b0ca169c1d3b0",
+      "neutralCapabilitySummary": "Structures scientific critique around whether methods answer the question, bias and confounding, statistical validity, evidence strength, logical inference, proportional severity, uncertainty, and a distinction between observations and the conclusions drawn from them.",
+      "neutralIntentExamples": [
+        "evaluate whether a study design supports its causal claim",
+        "separate fatal validity threats from interpretation limits in a paper critique"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "the scientific claim, study report, methods, data summaries, and stated conclusions",
+        "field context, exploratory or confirmatory status, and applicable assessment framework",
+        "missing details whose presence would change the interpretation"
+      ],
+      "operations": [
+        "compare the research question with design, controls, sampling, measurement, and analysis",
+        "identify named bias, confounding, multiplicity, power, and inference threats",
+        "separate observed data, statistical result, practical importance, and causal interpretation",
+        "grade concerns by their impact on the main conclusion and state conditional alternatives",
+        "request the specific missing evidence that would resolve each material uncertainty"
+      ],
+      "outputs": [
+        "a balanced summary of strengths and limitations",
+        "severity-ordered concerns tied to study locations",
+        "specific methodological recommendations and a bounded overall assessment"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "uses conditional conclusions when key design information is absent",
+        "does not convert statistical significance into practical or causal importance",
+        "omits optional diagram generation unless explicitly requested and external transmission is appropriate"
+      ],
+      "exclusions": [
+        "does not supply the detailed GRADE or Cochrane criteria located only in referenced files",
+        "does not replace domain peer review, replication, or access to underlying data",
+        "does not establish evidence quality from study type alone"
+      ],
+      "usefulInvariants": [
+        "criticism severity tracks impact on the supported conclusion",
+        "the same methodological standards apply regardless of result preference",
+        "uncertainty and required resolving evidence remain explicit"
+      ],
+      "materialRisks": [
+        "framework labels can create false precision when referenced criteria are not loaded",
+        "critical appraisal can miss fraud, reporting omissions, or domain constraints absent from the paper",
+        "optional schematic generation transmits prompt content to a third party"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "portable",
+      "disposition": "pattern-reference",
+      "proposedCluster": "scientific-claim-validity-appraisal",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-4983c910022c5b26",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/redesign-existing-projects/SKILL.md",
+      "bodySha256": "4983c910022c5b268da096548240acfa96e1a3e87a8bb15362b2816c1f291f36",
+      "neutralCapabilitySummary": "Scans an existing frontend and proposes targeted typography, color, layout, interaction, content, component, icon, semantic-markup, and state changes, then asks for browser and viewport validation without defining objective acceptance measurements.",
+      "neutralIntentExamples": [
+        "inventory missing loading, empty, error, focus, and responsive states",
+        "review a visual redesign without changing framework or product architecture"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "an existing application's source, styling system, routes, and dependencies",
+        "rendered screens across supported browsers and viewports",
+        "current behavior, accessibility semantics, design goals, and tests"
+      ],
+      "operations": [
+        "identify the framework and existing visual conventions before changing files",
+        "inventory subjective style patterns and missing interaction states",
+        "apply a prioritized sequence from fonts and palette through component and state changes",
+        "check imports, semantics, focus treatment, and responsive rendering in the actual application"
+      ],
+      "outputs": [
+        "a broad visual and interaction audit",
+        "targeted frontend modifications in the existing stack",
+        "rendered browser and viewport observations"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "avoids framework migration and undeclared product-scope expansion",
+        "requires existing behavior and tests to remain intact",
+        "provides no scoring rule for resolving conflicts between taste prescriptions, brand requirements, accessibility, and performance"
+      ],
+      "exclusions": [
+        "does not provide evidence that named fonts, icon families, motion patterns, or placeholder images fit the product",
+        "does not prove usability, accessibility conformance, performance, or cross-browser correctness",
+        "does not authorize loading third-party imagery or adding legal content without requirements"
+      ],
+      "usefulInvariants": [
+        "the implementation stack and product architecture remain stable",
+        "working routes, data flow, semantics, and tests are intended to survive",
+        "new dependencies are checked against the project manifest first"
+      ],
+      "materialRisks": [
+        "blanket aesthetic rules can erase brand identity and replace one generic style with another",
+        "remote placeholder imagery can create privacy, licensing, and reliability problems",
+        "aggressive motion, texture, parallax, and smooth scrolling can harm accessibility and performance",
+        "the source is primarily redesign doctrine and is weakly classified as verification evidence"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "subjective-existing-interface-redesign",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-4a1c60ea215e9226",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/robot-framework-skill/SKILL.md",
+      "bodySha256": "4a1c60ea215e9226abd399fd4b8f9d4b3731548986dd84066e077ec88d06c6f3",
+      "neutralCapabilitySummary": "Shows Robot Framework syntax for browser login flows, reusable keywords, table-driven cases, HTTP requests, remote browser capabilities, package installation, runner selection, and generated HTML reports, with production detail delegated elsewhere.",
+      "neutralIntentExamples": [
+        "express a repeated login matrix as one Robot Framework template",
+        "create a keyword that waits for an observable browser state"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "application behavior, URLs, selectors, credentials, and expected states",
+        "Robot Framework libraries and local or remote browser environment",
+        "provider credentials and desired capabilities for cloud execution"
+      ],
+      "operations": [
+        "encode suite setup, teardown, variables, keywords, and test cases in Robot syntax",
+        "wait for visible UI state and assert content or navigation outcomes",
+        "parameterize repeated credential scenarios through a template keyword",
+        "issue HTTP requests and inspect status plus selected response fields",
+        "configure a credential-bearing remote browser session and generate standard reports"
+      ],
+      "outputs": [
+        "Robot Framework suite and custom keyword examples",
+        "browser or API assertions",
+        "local report and log files or provider-hosted session evidence"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "test keywords fail when waits, content, locations, or expected HTTP statuses do not match",
+        "cannot validate undefined variables, libraries, application objects, and provider capabilities in the examples",
+        "defers isolation, retries, secret handling, and CI behavior to unreviewed references"
+      ],
+      "exclusions": [
+        "does not install the framework or libraries during semantic review",
+        "does not provide a provider-neutral cloud execution contract",
+        "does not prove test quality merely because an HTML report is generated"
+      ],
+      "usefulInvariants": [
+        "suite resources are opened and closed through explicit lifecycle hooks",
+        "shared flow steps remain centralized in named keywords",
+        "data variants retain explicit expected outcomes"
+      ],
+      "materialRisks": [
+        "sample credentials and selectors encourage brittle or insecure test construction",
+        "remote execution embeds provider credentials into a URL-like connection string",
+        "package and cloud examples are unpinned",
+        "referenced production patterns are outside the exact reviewed body"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-adjacent",
+      "disposition": "deferred",
+      "proposedCluster": "robot-framework-example-catalog",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-4c1b9d3c108ef6d3",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/finishing-a-development-branch/SKILL.md",
+      "bodySha256": "4c1b9d3c108ef6d325292507b3df9daf8fe9fc6721877c5fdbe5591e8e9b67e1",
+      "neutralCapabilitySummary": "Moves a verified development branch through base discovery and repository-policy inspection, presents merge, pull-request, preserve, or confirmed discard choices, and ties cleanup behavior to the selected integration path.",
+      "neutralIntentExamples": [
+        "offer integration choices after the current branch passes its full test suite",
+        "discard a worktree only after the user confirms the exact branch and commits at risk"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "the feature branch, worktree, candidate base, and commit list",
+        "fresh complete project test output",
+        "repository instructions and effective branch-protection policy",
+        "the user's explicit integration, preservation, or discard choice"
+      ],
+      "operations": [
+        "gate all integration options on a fresh full-suite result",
+        "resolve the merge base and inspect whether local integration is permitted",
+        "present only workflow choices allowed by protection policy",
+        "execute the chosen merge, push-and-PR, preservation, or confirmed destruction path",
+        "rerun tests after a local merge and remove owned state only where the choice permits"
+      ],
+      "outputs": [
+        "a test-qualified set of branch completion choices",
+        "a local merge, pull request, preserved branch, or deletion result",
+        "a worktree and branch cleanup record where applicable"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "stops before integration when the project test suite fails",
+        "removes local merge from the choices when protection or maintainer policy forbids it",
+        "requires the exact discard confirmation before deleting branch or worktree state",
+        "retains the worktree when the branch is kept or a pull request still needs follow-up"
+      ],
+      "exclusions": [
+        "does not choose an integration path for the user",
+        "does not force-push or bypass protected-branch policy",
+        "does not prove production readiness or requirement completeness from tests alone"
+      ],
+      "usefulInvariants": [
+        "integration starts only from freshly verified branch state",
+        "destructive cleanup is scoped and explicitly confirmed",
+        "post-merge verification occurs on the merged result"
+      ],
+      "materialRisks": [
+        "an unconditional pull can introduce unreviewed upstream changes",
+        "incorrect base-branch inference can target the wrong history",
+        "push and pull-request creation mutate external repository state",
+        "worktree cleanup can destroy untracked material if ownership checks are incomplete"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "policy-aware-branch-finalization",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    }
+  ]
+}
