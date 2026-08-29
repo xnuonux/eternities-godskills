@@ -23,4 +23,3 @@
 ## Failure behavior
 
 Fail closed on stale evidence, unsafe facets, missing authority, ambiguous provenance, or no positive lexical match. Return no candidate rather than inventing one.
-

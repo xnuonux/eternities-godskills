@@ -21,4 +21,3 @@ Use Omnibus only when the requested outcome explicitly requires specialist-corpu
 6. State whether the result was selected, deferred for synthesis, or unresolved. Keep semantic uncertainty explicit.
 
 Omnibus succeeds when the agent discovers a useful specialist pattern with bounded context and exact provenance while the third-party corpus remains cold, inert, and outside execution authority.
-
