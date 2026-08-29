@@ -63,4 +63,4 @@
 - [x] Generate exact SHA-256 evidence and a promotion receipt from current bytes.
 - [x] Run focused Forge, routing, and promotion tests.
 - [x] Run the full repository suite and inspect the final diff.
-- [ ] Commit, integrate into main, and re-run the focused post-merge gate.
+- [x] Commit, integrate into main, and re-run the focused post-merge gate.
