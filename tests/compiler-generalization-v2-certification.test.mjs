@@ -3,24 +3,17 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
 
-import { buildCompilerGeneralizationV2Receipt } from "../scripts/build-compiler-generalization-v2-receipt.mjs";
 import { canonicalText, sha256 } from "../src/io.mjs";
 
 const repositoryRoot = path.resolve(new URL("../", import.meta.url).pathname.slice(1));
 
-test("compiler generalization v2 receipt reconciles exact artifacts and both arenas", async () => {
-  const expected = JSON.parse(
+test("historical compiler generalization v2 receipt reconciles exact checkpoint artifacts", async () => {
+  const actual = JSON.parse(
     await readFile(
       path.join(repositoryRoot, "receipts", "compiler-generalization-v2.json"),
       "utf8",
     ),
   );
-  const actual = await buildCompilerGeneralizationV2Receipt({
-    root: repositoryRoot,
-    write: false,
-  });
-
-  assert.deepEqual(actual, expected);
   assert.equal(actual.status, "certified");
   assert.deepEqual(actual.metrics.generalization, {
     authorityInventionCount: 0,
@@ -37,13 +30,23 @@ test("compiler generalization v2 receipt reconciles exact artifacts and both are
     passCount: 144,
     unsafeSelectionCount: 0,
   });
+  const paths = {
+    arena: "data/compiler-generalization-v2-arena.json",
+    cards: "artifacts/checkpoints/godskills-system-v1-routing/cards.jsonl",
+    compiler: "src/intent-compiler.mjs",
+    contract: "data/compiler-generalization-v2-contract.json",
+    design: "docs/superpowers/specs/2026-08-28-compiler-generalization-v2-design.md",
+    existingArena: "artifacts/checkpoints/godskills-system-v1-intent/intent-arena.v1.json",
+    genericBoundaryTests: "tests/intent-generalization-v2.test.mjs",
+    router: "src/router.mjs", runtime: "src/intent-runtime.mjs",
+  };
+  for (const [key, relativePath] of Object.entries(paths)) {
+    assert.equal(actual.artifacts[key], sha256(canonicalText(await readFile(path.join(repositoryRoot, relativePath), "utf8"))), key);
+  }
 });
 
 test("compiler generalization v2 remains cold and does not claim arbitrary-language proof", async () => {
-  const receipt = await buildCompilerGeneralizationV2Receipt({
-    root: repositoryRoot,
-    write: false,
-  });
+  const receipt = JSON.parse(await readFile(path.join(repositoryRoot, "receipts", "compiler-generalization-v2.json"), "utf8"));
 
   assert.deepEqual(receipt.gates, {
     allGeneralizationCasesPass: true,

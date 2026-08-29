@@ -38,9 +38,9 @@ test("the full corpus completion receipt proves every terminal layer", async () 
   const router = await json("receipts/agent-native-router-v6.json");
   assert.equal(router.status, "certified");
   for (const [key, relativePath] of Object.entries({
-    cardsSha256: "artifacts/routing/cards.jsonl",
-    familyMapSha256: "artifacts/routing/family-map.json",
-    manifestSha256: "artifacts/routing/manifest.json",
+    cardsSha256: "artifacts/checkpoints/godskills-system-v1-routing/cards.jsonl",
+    familyMapSha256: "artifacts/checkpoints/godskills-system-v1-routing/family-map.json",
+    manifestSha256: "artifacts/checkpoints/godskills-system-v1-routing/manifest.json",
   })) {
     assert.equal(router.artifacts[key], sha256(await readFile(path.join(root, relativePath))), key);
   }

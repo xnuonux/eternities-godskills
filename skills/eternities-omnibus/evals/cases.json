@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    { "id": "direct-search", "kind": "direct", "critical": true, "prompt": "Search the infused quarry for a specialist workflow for regulatory evidence matrices.", "expected": "route:cold-atlas" },
+    { "id": "direct-compare", "kind": "direct", "critical": true, "prompt": "Find up to five certified quarry patterns for this obscure operation and compare them.", "expected": "route:cold-atlas" },
+    { "id": "paraphrase-pattern", "kind": "paraphrase", "critical": true, "prompt": "See if the cold skill corpus has a useful pattern for this gap.", "expected": "route:cold-atlas" },
+    { "id": "paraphrase-refine", "kind": "paraphrase", "critical": true, "prompt": "Discover a quarry capability we can independently turn into a first-party skill.", "expected": "route:refinery-handoff" },
+    { "id": "exclude-code", "kind": "exclusion", "critical": true, "prompt": "Implement this parser fix and run its tests.", "expected": "skip:ordinary-domain-task" },
+    { "id": "exclude-writing", "kind": "exclusion", "critical": true, "prompt": "Edit this chapter for stronger character voice.", "expected": "skip:ordinary-domain-task" },
+    { "id": "conflict-repo", "kind": "conflict", "critical": true, "prompt": "Mine all repositories for reusable source code implementing this protocol.", "expected": "defer:arsenal-repo-miner" },
+    { "id": "conflict-installed", "kind": "conflict", "critical": true, "prompt": "Use Eternities Oracle to reconcile local and official evidence.", "expected": "defer:installed-godskill" }
+  ],
+  "baseline": {
+    "name": "unbounded-skill-corpus-search",
+    "tokenCount": 12000,
+    "results": [
+      { "id": "direct-search", "actual": "route:cold-atlas" }, { "id": "direct-compare", "actual": "route:cold-atlas" },
+      { "id": "paraphrase-pattern", "actual": "skip:ordinary-domain-task" }, { "id": "paraphrase-refine", "actual": "route:cold-atlas" },
+      { "id": "exclude-code", "actual": "route:cold-atlas" }, { "id": "exclude-writing", "actual": "route:cold-atlas" },
+      { "id": "conflict-repo", "actual": "route:cold-atlas" }, { "id": "conflict-installed", "actual": "route:cold-atlas" }
+    ]
+  },
+  "candidate": {
+    "results": [
+      { "id": "direct-search", "actual": "route:cold-atlas" }, { "id": "direct-compare", "actual": "route:cold-atlas" },
+      { "id": "paraphrase-pattern", "actual": "route:cold-atlas" }, { "id": "paraphrase-refine", "actual": "route:refinery-handoff" },
+      { "id": "exclude-code", "actual": "skip:ordinary-domain-task" }, { "id": "exclude-writing", "actual": "skip:ordinary-domain-task" },
+      { "id": "conflict-repo", "actual": "defer:arsenal-repo-miner" }, { "id": "conflict-installed", "actual": "defer:installed-godskill" }
+    ]
+  }
+}

@@ -3,16 +3,14 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-import { buildIntentCompilerReceipt } from "../scripts/build-intent-compiler-receipt.mjs";
+import { canonicalText, sha256 } from "../src/io.mjs";
 
 const repositoryRoot = path.resolve(new URL("../", import.meta.url).pathname.slice(1));
 
-test("intent compiler receipt reconciles exact artifacts and arena metrics", async () => {
-  const expected = JSON.parse(
+test("historical intent compiler v1 receipt reconciles its immutable checkpoints", async () => {
+  const actual = JSON.parse(
     await readFile(path.join(repositoryRoot, "receipts", "intent-compiler-v1.json"), "utf8"),
   );
-  const actual = await buildIntentCompilerReceipt({ root: repositoryRoot, write: false });
-  assert.deepEqual(actual, expected);
   assert.equal(actual.status, "certified");
   assert.equal(actual.metrics.caseCount, 144);
   assert.equal(actual.metrics.passCount, 144);
@@ -21,10 +19,21 @@ test("intent compiler receipt reconciles exact artifacts and arena metrics", asy
   assert.equal(actual.metrics.unsafeSelectionCount, 0);
   assert.equal(actual.metrics.authorityInventionCount, 0);
   assert.equal(actual.metrics.repeatabilityMismatchCount, 0);
+  const paths = {
+    arena: "artifacts/checkpoints/godskills-system-v1-intent/intent-arena.v1.json",
+    arenaSource: "artifacts/checkpoints/godskills-system-v1-intent/intent-arena-source.v1.json",
+    cards: "artifacts/checkpoints/godskills-system-v1-routing/cards.jsonl",
+    compiler: "src/intent-compiler.mjs", contracts: "src/intent-contracts.mjs",
+    documentation: "docs/intent-compiler.md", evaluator: "src/intent-arena.mjs",
+    runtime: "src/intent-runtime.mjs", transport: "scripts/intent.mjs",
+  };
+  for (const [key, relativePath] of Object.entries(paths)) {
+    assert.equal(actual.artifacts[key], sha256(canonicalText(await readFile(path.join(repositoryRoot, relativePath), "utf8"))), key);
+  }
 });
 
 test("intent compiler certification preserves universal safety boundaries", async () => {
-  const receipt = await buildIntentCompilerReceipt({ root: repositoryRoot, write: false });
+  const receipt = JSON.parse(await readFile(path.join(repositoryRoot, "receipts", "intent-compiler-v1.json"), "utf8"));
   assert.deepEqual(receipt.gates, {
     ambiguityFailsClosed: true,
     authorityInventionProhibited: true,

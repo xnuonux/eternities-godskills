@@ -31,10 +31,10 @@
 - Consumes: source rows, security rows, ontology, routing-family map, and extracted body structures.
 - Produces: `buildQuarryInfusion({ sources, securityRows, ontology, familyTargets, bodyTexts })` with `canonical`, `dispositions`, `facets`, `familyIndex`, and `coverage`.
 
-- [ ] Write failing fixtures proving exact duplicate folding, rejected canonical bodies, deterministic family assignment, preserved security evidence, and exactly-once terminal coverage.
-- [ ] Run `node --test tests/quarry-total-infusion.test.mjs` and observe missing-module failure.
-- [ ] Implement strict validators, canonical representative selection, structural extraction, family mapping, facet construction, and coverage reconciliation.
-- [ ] Run the focused test and commit the model.
+- [x] Write failing fixtures proving exact duplicate folding, rejected canonical bodies, deterministic family assignment, preserved security evidence, and exactly-once terminal coverage.
+- [x] Run `node --test tests/quarry-total-infusion.test.mjs` and observe missing-module failure.
+- [x] Implement strict validators, canonical representative selection, structural extraction, family mapping, facet construction, and coverage reconciliation.
+- [x] Run the focused test and commit the model.
 
 ### Task 2: Rebuildable corpus artifacts
 
@@ -49,10 +49,10 @@
 - Consumes: exact Wave 2 receipts and D-drive source bodies.
 - Produces: deterministic byte-bound artifacts plus `buildQuarryInfusionReceipt({ root, write })`.
 
-- [ ] Write a failing rebuild test comparing generated evidence with committed artifacts.
-- [ ] Implement atomic JSONL generation and raw-byte receipt bindings.
-- [ ] Generate all artifacts, require exact expected counts, then rerun twice for byte stability.
-- [ ] Commit the certified corpus layer.
+- [x] Write a failing rebuild test comparing generated evidence with committed artifacts.
+- [x] Implement atomic JSONL generation and raw-byte receipt bindings.
+- [x] Generate all artifacts, require exact expected counts, then rerun twice for byte stability.
+- [x] Commit the certified corpus layer.
 
 ### Task 3: Cold specialist retrieval
 
@@ -65,10 +65,10 @@
 - Consumes: verified infusion receipt, facet JSONL, query text, optional family, and limit.
 - Produces: bounded ranked facet cards containing provenance, risk, and target Godskill but no source body.
 
-- [ ] Write failing direct, paraphrase, family-filter, duplicate, rejected, tampered-receipt, and limit tests.
-- [ ] Implement deterministic lexical ranking with exact digest verification and fail-closed empty results.
-- [ ] Verify CLI JSON transport and repeated byte-identical output.
-- [ ] Commit the retrieval layer.
+- [x] Write failing direct, paraphrase, family-filter, duplicate, rejected, tampered-receipt, and limit tests.
+- [x] Implement deterministic lexical ranking with exact digest verification and fail-closed empty results.
+- [x] Verify CLI JSON transport and repeated byte-identical output.
+- [x] Commit the retrieval layer.
 
 ### Task 4: Omnibus Godskill
 
@@ -80,17 +80,17 @@
 - Create: `skills/eternities-omnibus/evals/cases.json`
 - Create: `scripts/build-omnibus-receipt.mjs`
 - Create: `receipts/promotions/eternities-omnibus.json`
-- Create: `syntheses/eternities-omnibus.v1.json`
+- Create: `artifacts/omnibus/synthesis.v1.json`
 - Test: `tests/eternities-omnibus-godskill.test.mjs`
 
 **Interfaces:**
 - Consumes: a specialist-discovery outcome with local-read authority.
 - Produces: up to five inert facets and a narrow Godskill handoff recommendation.
 
-- [ ] Write failing routing, exclusion, conflict, authority, and exact-artifact tests.
-- [ ] Implement the independently written entrypoint and contracts with no copied source prose.
-- [ ] Evaluate against the promotion policy and generate an exact receipt.
-- [ ] Commit the promoted but cold Omnibus capability.
+- [x] Write failing routing, exclusion, conflict, authority, and exact-artifact tests.
+- [x] Implement the independently written entrypoint and contracts with no copied source prose.
+- [x] Evaluate against the promotion policy and generate an exact receipt.
+- [x] Commit the promoted but cold Omnibus capability.
 
 ### Task 5: Routing and total-system certification
 
@@ -107,10 +107,10 @@
 - Consumes: the 21-card routing layer and infusion/Omnibus receipts.
 - Produces: a final certificate requiring total quarry coverage and all prior v1 gates.
 
-- [ ] Write failing commandless routing and stale-infusion negative tests.
-- [ ] Rebuild routing artifacts and certify Omnibus is selected only for explicit specialist-corpus discovery.
-- [ ] Build v2 certification requiring all 7,776 terminal rows, all 3,581 canonical bodies, zero unresolved sources, and no activation.
-- [ ] Run focused tests and `npm test`, then commit.
+- [x] Write failing commandless routing and stale-infusion negative tests.
+- [x] Rebuild routing artifacts and certify Omnibus is selected only for explicit specialist-corpus discovery.
+- [x] Build v2 certification requiring all 7,776 terminal rows, all 3,581 canonical bodies, zero unresolved sources, and no activation.
+- [x] Run focused tests and `npm test`, then commit.
 
 ### Task 6: Closure and integration
 
