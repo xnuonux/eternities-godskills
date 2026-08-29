@@ -94,11 +94,11 @@
 - Consumes: all exact Wave 2 reviews, original corpus reviews and clusters, promoted contracts, and Lunari first-party contracts.
 - Produces: exactly-one cluster membership per review and exactly-one overlap disposition per candidate cluster.
 
-- [ ] **Step 1: Write failing validators** for exact review-digest membership, duplicate membership, unknown reviews, missing cluster decisions, stale overlap targets, and unsupported overlap dispositions.
-- [ ] **Step 2: Cluster each family by compatible inputs, operations, outputs, effects, failure behavior, and risks**, never by names or lexical similarity alone.
-- [ ] **Step 3: Compare every candidate cluster** against existing Godskills, original 4,741-source clusters, other Wave 2 clusters, and Lunari contracts; record `covered-stronger`, `extend-existing`, `new-operational-skill`, `new-godskill`, `ultragodskill-candidate`, `deferred`, or `rejected` with mechanism-level rationale.
-- [ ] **Step 4: Build aggregate cluster artifacts twice** and require 3,448 memberships, zero unresolved candidate clusters, and byte-identical digests.
-- [ ] **Step 5: Commit** family cluster and overlap decisions with passing coverage tests.
+- [x] **Step 1: Write failing validators** for exact review-digest membership, duplicate membership, unknown reviews, missing cluster decisions, stale overlap targets, and unsupported overlap dispositions.
+- [x] **Step 2: Cluster each family by compatible inputs, operations, outputs, effects, failure behavior, and risks**, never by names or lexical similarity alone.
+- [x] **Step 3: Compare every candidate cluster** against existing Godskills, original 4,741-source clusters, other Wave 2 clusters, and Lunari contracts; record `covered-stronger`, `extend-existing`, `new-operational-skill`, `new-godskill`, `ultragodskill-candidate`, `deferred`, or `rejected` with mechanism-level rationale.
+- [x] **Step 4: Build aggregate cluster artifacts twice** and require 3,448 memberships, zero unresolved candidate clusters, and byte-identical digests.
+- [x] **Step 5: Commit** family cluster and overlap decisions with passing coverage tests.
 
 ### Task 5: Evidence-earned capability synthesis
 
@@ -111,12 +111,12 @@
 - Consumes: exact candidate cluster and overlap evidence.
 - Produces: a disjoint plan assigning every candidate to one terminal action and independently written capability artifacts for actions that require synthesis.
 
-- [ ] **Step 1: Write a failing synthesis-plan gate** requiring every candidate cluster exactly once, exact review and cluster digests, no unsupported source, no duplicate mechanism ownership, and explicit intended tier.
-- [ ] **Step 2: Construct the synthesis plan** using evidence rather than quotas; distinguish atoms, operational skills, Godskill extensions, new Godskills, and Ultragodskill candidates.
-- [ ] **Step 3: For each synthesized capability, write failing direct, paraphrased, contextual, negative, conflict, effect, authority, termination, and regression fixtures before implementation.**
-- [ ] **Step 4: Implement the smallest independent capability** from neutral contracts without copying source prose or provider identity.
-- [ ] **Step 5: Evaluate against the strongest applicable baseline** and retain `experimental`, `deferred`, or `rejected` unless all promotion gates and a measured improvement pass.
-- [ ] **Step 6: Commit** each independently testable capability or coherent owner-family batch with exact receipts.
+- [x] **Step 1: Write a failing synthesis-plan gate** requiring every candidate cluster exactly once, exact review and cluster digests, no unsupported source, no duplicate mechanism ownership, and explicit intended tier.
+- [x] **Step 2: Construct the synthesis plan** using evidence rather than quotas; distinguish atoms, operational skills, Godskill extensions, new Godskills, and Ultragodskill candidates.
+- [x] **Step 3: For each synthesized capability, write failing direct, paraphrased, contextual, negative, conflict, effect, authority, termination, and regression fixtures before implementation.**
+- [x] **Step 4: Implement the smallest independent capability** from neutral contracts without copying source prose or provider identity.
+- [x] **Step 5: Evaluate against the strongest applicable baseline** and retain `experimental`, `deferred`, or `rejected` unless all promotion gates and a measured improvement pass.
+- [x] **Step 6: Commit** each independently testable capability or coherent owner-family batch with exact receipts.
 
 ### Task 6: Automatic bounded capability-gap routing
 
@@ -132,10 +132,10 @@
 - Consumes: a consequential request that no promoted card completely covers and the certified semantic cluster atlas.
 - Produces: at most five compact reviewed cards and a safe terminal route, refinery handoff, or unresolved gap without source-body loading.
 
-- [ ] **Step 1: Write failing fixtures** proving automatic lookup on uncovered consequential intent, no lookup for completely covered ordinary work, no authority expansion, five-card maximum, no source body in transport, deterministic selection, and fail-closed stale certification.
-- [ ] **Step 2: Implement one bounded gap trigger** after normal promoted-card qualification fails and before native fallback.
-- [ ] **Step 3: Rebuild routing and intent receipts** and require all historical routing fixtures plus the new gap fixtures.
-- [ ] **Step 4: Commit** the routing evolution without enabling Pantheon or changing a host profile.
+- [x] **Step 1: Write failing fixtures** proving automatic lookup on uncovered consequential intent, no lookup for completely covered ordinary work, no authority expansion, five-card maximum, no source body in transport, deterministic selection, and fail-closed stale certification.
+- [x] **Step 2: Implement one bounded gap trigger** after normal promoted-card qualification fails and before native fallback.
+- [x] **Step 3: Rebuild routing and intent receipts** and require all historical routing fixtures plus the new gap fixtures.
+- [x] **Step 4: Commit** the routing evolution without enabling Pantheon or changing a host profile.
 
 ### Task 7: Semantic completion certification and integration
 
@@ -150,9 +150,9 @@
 - Consumes: all review, cluster, overlap, synthesis, evaluation, routing, and historical structural receipts.
 - Produces: one rebuildable certificate with exact counts, artifact hashes, terminal gates, and explicit proof limits.
 
-- [ ] **Step 1: Write the failing final certificate test** requiring 3,448 reviews, 3,448 cluster memberships, zero unresolved candidate clusters, exact duplicate inheritance, terminal synthesis decisions, passing promotion receipts, bounded automatic retrieval, historical receipt integrity, and no activation or third-party execution.
-- [ ] **Step 2: Implement the certificate builder** and rebuild it twice for byte identity.
-- [ ] **Step 3: Run focused tests and `npm test`** and require zero failures.
-- [ ] **Step 4: Request independent adversarial review** of evidence coverage, review quality, clustering, overlap, promotion claims, routing authority, determinism, and proof language.
-- [ ] **Step 5: Fix every confirmed critical or important finding** and rerun complete verification.
+- [x] **Step 1: Write the failing final certificate test** requiring 3,448 reviews, 3,448 cluster memberships, zero unresolved candidate clusters, exact duplicate inheritance, terminal synthesis decisions, passing promotion receipts, bounded automatic retrieval, historical receipt integrity, and no activation or third-party execution.
+- [x] **Step 2: Implement the certificate builder** and rebuild it twice for byte identity.
+- [x] **Step 3: Run focused tests and `npm test`** and require zero failures.
+- [x] **Step 4: Request independent adversarial review** of evidence coverage, review quality, clustering, overlap, promotion claims, routing authority, determinism, and proof language.
+- [x] **Step 5: Fix every confirmed critical or important finding** and rerun complete verification.
 - [ ] **Step 6: Merge to `main` only after review closure**, rerun the full suite from merged `main`, and remove only the owned worktree and merged feature branch.

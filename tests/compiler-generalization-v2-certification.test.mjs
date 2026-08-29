@@ -7,7 +7,7 @@ import { canonicalText, sha256 } from "../src/io.mjs";
 
 const repositoryRoot = path.resolve(new URL("../", import.meta.url).pathname.slice(1));
 
-test("historical compiler generalization v2 receipt reconciles exact checkpoint artifacts", async () => {
+test("active compiler generalization v2 receipt reconciles exact current artifacts", async () => {
   const actual = JSON.parse(
     await readFile(
       path.join(repositoryRoot, "receipts", "compiler-generalization-v2.json"),
@@ -24,19 +24,19 @@ test("historical compiler generalization v2 receipt reconciles exact checkpoint 
   });
   assert.deepEqual(actual.metrics.existingArena, {
     authorityInventionCount: 0,
-    caseCount: 144,
+    caseCount: 148,
     failCount: 0,
     overCompositionCount: 0,
-    passCount: 144,
+    passCount: 148,
     unsafeSelectionCount: 0,
   });
   const paths = {
     arena: "data/compiler-generalization-v2-arena.json",
-    cards: "artifacts/checkpoints/godskills-system-v1-routing/cards.jsonl",
+    cards: "artifacts/routing/cards.jsonl",
     compiler: "src/intent-compiler.mjs",
     contract: "data/compiler-generalization-v2-contract.json",
     design: "docs/superpowers/specs/2026-08-28-compiler-generalization-v2-design.md",
-    existingArena: "artifacts/checkpoints/godskills-system-v1-intent/intent-arena.v1.json",
+    existingArena: "data/intent-arena.v1.json",
     genericBoundaryTests: "tests/intent-generalization-v2.test.mjs",
     router: "src/router.mjs", runtime: "src/intent-runtime.mjs",
   };

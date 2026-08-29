@@ -7,22 +7,22 @@ import { canonicalText, sha256 } from "../src/io.mjs";
 
 const repositoryRoot = path.resolve(new URL("../", import.meta.url).pathname.slice(1));
 
-test("historical intent compiler v1 receipt reconciles its immutable checkpoints", async () => {
+test("active intent compiler v1 receipt reconciles its exact current artifacts", async () => {
   const actual = JSON.parse(
     await readFile(path.join(repositoryRoot, "receipts", "intent-compiler-v1.json"), "utf8"),
   );
   assert.equal(actual.status, "certified");
-  assert.equal(actual.metrics.caseCount, 144);
-  assert.equal(actual.metrics.passCount, 144);
-  assert.equal(actual.metrics.positiveCaseCount, 85);
-  assert.equal(actual.metrics.positiveExactSelectionCount, 85);
+  assert.equal(actual.metrics.caseCount, 148);
+  assert.equal(actual.metrics.passCount, 148);
+  assert.equal(actual.metrics.positiveCaseCount, 89);
+  assert.equal(actual.metrics.positiveExactSelectionCount, 89);
   assert.equal(actual.metrics.unsafeSelectionCount, 0);
   assert.equal(actual.metrics.authorityInventionCount, 0);
   assert.equal(actual.metrics.repeatabilityMismatchCount, 0);
   const paths = {
-    arena: "artifacts/checkpoints/godskills-system-v1-intent/intent-arena.v1.json",
-    arenaSource: "artifacts/checkpoints/godskills-system-v1-intent/intent-arena-source.v1.json",
-    cards: "artifacts/checkpoints/godskills-system-v1-routing/cards.jsonl",
+    arena: "data/intent-arena.v1.json",
+    arenaSource: "data/intent-arena-source.v1.json",
+    cards: "artifacts/routing/cards.jsonl",
     compiler: "src/intent-compiler.mjs", contracts: "src/intent-contracts.mjs",
     documentation: "docs/intent-compiler.md", evaluator: "src/intent-arena.mjs",
     runtime: "src/intent-runtime.mjs", transport: "scripts/intent.mjs",

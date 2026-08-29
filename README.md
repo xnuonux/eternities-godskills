@@ -164,7 +164,7 @@ as evidence. no third-party code or instruction was executed or activated.
 
 a cold Terra subagent exposed five intent-interpretation defects without making
 an unsafe selection or inventing authority. the repaired compiler and expanded
-arena now pass 140 of 140 cases, including 81 of 81 exact positive selections.
+arena remain historically certified, including 81 of 81 exact positive selections.
 read `docs\universal-skill-quarry-wave-2-report.md` and the dated receipts for
 the measured result and proof limits.
 
@@ -175,6 +175,17 @@ indexing. static clearance is not trust or promotion. exact semantic review and
 authority reconciliation remain mandatory. read
 `docs\skill-supply-chain-defense-report.md` and
 `receipts\promotions\eternities-aegis-v3.json` for the result and limits.
+
+the semantic refinery now terminally accounts for the complete accepted Wave 2
+corpus. exact duplicate inheritance reduces 7,776 sources to 3,581 canonical
+bodies; 133 are rejected and all 3,448 accepted facets are reviewed and assigned
+exactly once across 1,674 behavioral clusters. all 267 candidate clusters have
+one overlap decision and one terminal synthesis action. exact current owner
+receipts retain 35 promoted outcomes while 232 remain deferred. uncovered
+consequential intent can consult at most five certified metadata cards without
+loading source bodies, executing source instructions, or expanding authority.
+read `docs\wave2-semantic-refinery-report.md` and
+`receipts\wave2-semantic-refinery-v1.json` for exact bindings and proof limits.
 
 ## release-one commands
 

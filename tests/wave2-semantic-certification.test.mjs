@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { certifyWave2SemanticRefinery } from "../scripts/build-wave2-semantic-certification.mjs";
+import {
+  buildWave2SemanticCertification,
+  certifyWave2SemanticRefinery,
+} from "../scripts/build-wave2-semantic-certification.mjs";
 
 const DIGEST = "a".repeat(64);
 
@@ -53,6 +56,7 @@ function evidence(overrides = {}) {
     independentReview: {
       artifactSha256: DIGEST,
       mode: "separate-adversarial-review-pass",
+      scopeExact: true,
       unresolvedCritical: 0,
       unresolvedImportant: 0,
       reviewerIndependenceProven: false,
@@ -160,4 +164,26 @@ test("unresolved critical or important adversarial findings block certification"
     })),
     /adversarial review/i,
   );
+});
+
+test("a stale adversarial review scope cannot certify current artifacts", () => {
+  assert.throws(
+    () => certifyWave2SemanticRefinery(evidence({
+      independentReview: { ...evidence().independentReview, scopeExact: false },
+    })),
+    /adversarial review scope/i,
+  );
+});
+
+test("the repository rebuilds one exact terminal Wave 2 certificate", async () => {
+  const receipt = await buildWave2SemanticCertification({
+    root: new URL("../", import.meta.url).pathname.replace(/^\/(.:)/, "$1"),
+    write: false,
+  });
+  assert.equal(receipt.status, "certified");
+  assert.equal(receipt.counts.reviewedFacets, 3448);
+  assert.equal(receipt.counts.clusteredFacets, 3448);
+  assert.equal(receipt.counts.candidateClusters, 267);
+  assert.equal(receipt.adversarialReview.unresolvedCritical, 0);
+  assert.equal(receipt.adversarialReview.unresolvedImportant, 0);
 });
