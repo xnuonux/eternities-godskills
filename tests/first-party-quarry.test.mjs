@@ -126,6 +126,93 @@ test("owner recommendations distinguish coordination debugging and schema mechan
   );
 });
 
+test("evidence inspection uses bounded concurrency without changing path order", async () => {
+  let active = 0;
+  let maximumActive = 0;
+  const records = ["d", "b", "a", "c"].map((name) => ({
+    relativePath: `${name}.md`,
+    byteSize: 64,
+    state: "working",
+    read: async () => {
+      active += 1;
+      maximumActive = Math.max(maximumActive, active);
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      active -= 1;
+      return Buffer.from("# Debug\nmeasurement before hypothesis\n");
+    },
+  }));
+
+  const built = await buildFirstPartyEvidence(records, {
+    sourceIdentity: "lunari-archive@test",
+    concurrency: 4,
+  });
+
+  assert.ok(maximumActive >= 2);
+  assert.deepEqual(built.ledger.map((row) => row.relativePath), ["a.md", "b.md", "c.md", "d.md"]);
+});
+
+test("read fallback provenance is explicit and one unreadable file does not abort coverage", async () => {
+  const built = await buildFirstPartyEvidence(
+    [
+      {
+        relativePath: "fallback.md",
+        byteSize: 64,
+        state: "modified",
+        read: async () => ({
+          bytes: Buffer.from("# Debug\nmeasurement before hypothesis\n"),
+          readSource: "head-fallback",
+        }),
+      },
+      {
+        relativePath: "unreadable.md",
+        byteSize: 64,
+        state: "working-only",
+        read: async () => Object.assign(Promise.reject(new Error("device read failed")), {}),
+      },
+    ],
+    { sourceIdentity: "lunari-archive@test" },
+  );
+
+  const fallback = built.ledger.find((row) => row.relativePath === "fallback.md");
+  const unreadable = built.ledger.find((row) => row.relativePath === "unreadable.md");
+  assert.equal(fallback.readSource, "head-fallback");
+  assert.equal(fallback.contentInspected, true);
+  assert.equal(unreadable.disposition, "unresolved");
+  assert.equal(unreadable.reason, "read-failed");
+  assert.equal(unreadable.contentInspected, false);
+  assert.equal(built.cards.some((card) => card.relativePath === "unreadable.md"), false);
+});
+
+test("owner recommendation spans the complete twenty-one-card Godskills surface", async () => {
+  const examples = new Map([
+    ["eternities-aegis", "threat model trust boundary permissions and vulnerability mitigation"],
+    ["eternities-agora", "prospect assessment account operations client deliverable agency service"],
+    ["eternities-arcadia", "game design gameplay player experience level systems release verdict"],
+    ["eternities-architect", "system architecture adr interfaces reliability tradeoff implementation handoff"],
+    ["eternities-athena", "scientific study validity bias confounding causal inference evidence quality"],
+    ["eternities-atlas", "schema information_schema migration constraints reconciliation rollback"],
+    ["eternities-beacon", "market positioning seo conversion lifecycle growth customer journey"],
+    ["eternities-chorus", "social media community editorial calendar moderation audience channel"],
+    ["eternities-daedalus", "implementation refactor adapter integration performance configuration migration"],
+    ["eternities-forge", "shared tree coordination lease mutex goal wiring independent review"],
+    ["eternities-herald", "release production readiness version bump rollback deployment gate"],
+    ["eternities-hermes", "automation mcp browser workflow tool schema transport integration"],
+    ["eternities-logos", "technical writing editorial narrative canon structure claim support"],
+    ["eternities-mnemosyne", "memory continuity context budget compaction checkpoint retrieval"],
+    ["eternities-muse", "visual art direction interface motion design tokens deterministic render"],
+    ["eternities-omnibus", "cold quarry specialist facet search catalog retrieve skill pattern"],
+    ["eternities-oracle", "multi source research current official sources provenance synthesis"],
+    ["eternities-orpheus", "audio voice music transcription timing captions media timeline"],
+    ["eternities-phoenix", "debug reproduce hypothesis eliminated root cause regression"],
+    ["eternities-prometheus", "product operations commercial analytics customer insight operational planning"],
+    ["sovereign-skill-refinery", "refine synthesize overlapping skills provenance evaluation promotion"],
+  ]);
+  const records = [...examples.entries()].map(([owner, text]) => record(`${owner}.md`, `# Capability\n${text}\n`));
+  const built = await buildFirstPartyEvidence(records, { sourceIdentity: "lunari-archive@test" });
+  const actual = new Map(built.ownerMap.map((row) => [row.relativePath.replace(/\.md$/, ""), row.owner]));
+  assert.deepEqual(actual, new Map([...examples.keys()].map((owner) => [owner, owner])));
+});
+
 test("archive builder unions head and working files without reading excluded bodies", async () => {
   const { buildArchiveArtifacts } = await import("../scripts/build-lunari-first-party-quarry.mjs");
   const root = await mkdtemp(path.join(os.tmpdir(), "lunari-quarry-"));

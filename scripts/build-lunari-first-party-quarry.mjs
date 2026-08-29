@@ -25,12 +25,12 @@ function parseArgs(argv) {
   return options;
 }
 
-async function runGit(sourceRoot, args, { encoding = "utf8" } = {}) {
+async function runGit(sourceRoot, args, { encoding = "utf8", timeout = 30_000 } = {}) {
   const safeRoot = path.resolve(sourceRoot).replaceAll("\\", "/");
   const { stdout } = await execFileAsync(
     "git",
     ["-c", `safe.directory=${safeRoot}`, ...args],
-    { cwd: sourceRoot, encoding, maxBuffer: MAX_BUFFER, windowsHide: true },
+    { cwd: sourceRoot, encoding, maxBuffer: MAX_BUFFER, windowsHide: true, timeout },
   );
   return stdout;
 }
@@ -48,6 +48,7 @@ function parseHeadTree(value) {
     const relativePath = entry.slice(tab + 1).replaceAll("\\", "/");
     if (metadata[1] !== "blob") continue;
     records.set(relativePath, {
+      mode: metadata[0],
       objectId: metadata[2],
       byteSize: metadata[3] === "-" ? null : Number(metadata[3]),
     });
@@ -82,54 +83,66 @@ async function presentFileRows(sourceRoot, paths, excludedRoot) {
   return rows;
 }
 
-async function inventorySource(sourceRoot, outputRoot) {
-  const [head, treeText, cachedText, untrackedText, ignoredText, modifiedText] = await Promise.all([
+async function inventorySource(sourceRoot, outputRoot, onProgress) {
+  onProgress({ phase: "git-inventory", completed: 0, total: 1 });
+  const [head, treeText, untrackedText, modifiedText, deletedText] = await Promise.all([
     runGit(sourceRoot, ["rev-parse", "HEAD"]),
     runGit(sourceRoot, ["ls-tree", "-r", "-l", "-z", "--full-tree", "HEAD"]),
-    runGit(sourceRoot, ["ls-files", "-c", "-z"]),
     runGit(sourceRoot, ["ls-files", "-o", "--exclude-standard", "-z"]),
-    runGit(sourceRoot, ["ls-files", "-o", "-i", "--exclude-standard", "-z"]),
     runGit(sourceRoot, ["ls-files", "-m", "-z"]),
+    runGit(sourceRoot, ["ls-files", "-d", "-z"]),
   ]);
   const headTree = parseHeadTree(treeText);
-  const currentPaths = new Set([
-    ...splitNull(cachedText),
-    ...splitNull(untrackedText),
-    ...splitNull(ignoredText),
-  ].map((value) => value.replaceAll("\\", "/")));
+  const untracked = new Set(splitNull(untrackedText).map((value) => value.replaceAll("\\", "/")));
   const modified = new Set(splitNull(modifiedText).map((value) => value.replaceAll("\\", "/")));
+  const deleted = new Set(splitNull(deletedText).map((value) => value.replaceAll("\\", "/")));
+  const mutablePaths = new Set([...untracked, ...modified].filter((value) => !deleted.has(value)));
   const absoluteOutput = path.resolve(outputRoot);
   const outputInsideSource = path.relative(path.resolve(sourceRoot), absoluteOutput);
   const excludedRoot = outputInsideSource === "" || (!outputInsideSource.startsWith("..") && !path.isAbsolute(outputInsideSource))
     ? absoluteOutput
     : null;
-  const present = await presentFileRows(sourceRoot, currentPaths, excludedRoot);
+  const present = await presentFileRows(sourceRoot, mutablePaths, excludedRoot);
+  onProgress({ phase: "git-inventory", completed: 1, total: 1 });
   const union = [...new Set([...headTree.keys(), ...present.keys()])].sort((left, right) => left.localeCompare(right));
 
   const records = union.map((relativePath) => {
     const headRow = headTree.get(relativePath);
     const workingRow = present.get(relativePath);
-    const state = headRow && !workingRow
+    const state = headRow && deleted.has(relativePath)
       ? "head-only"
       : !headRow && workingRow
         ? "working-only"
-        : modified.has(relativePath)
+        : headRow && modified.has(relativePath)
           ? "modified"
           : "both";
-    const classification = workingRow?.forceExcludeReason
+    const headSymlink = headRow?.mode === "120000";
+    const forceExcludeReason = workingRow?.forceExcludeReason ?? (headSymlink ? "symbolic-link" : null);
+    const classification = forceExcludeReason
       ? { inspectContent: false }
       : classifyArchivePath(relativePath);
+    const workingPath = workingRow?.absolutePath ?? (state === "both" ? path.resolve(sourceRoot, relativePath) : null);
     return {
       relativePath,
       state,
       byteSize: workingRow?.byteSize ?? headRow?.byteSize ?? null,
       headObjectId: headRow?.objectId ?? null,
-      forceExcludeReason: workingRow?.forceExcludeReason ?? null,
+      forceExcludeReason,
+      defaultReadSource: state === "head-only" ? "head" : "working",
       read: async () => {
         if (!classification.inspectContent) throw new Error(`inert source read attempted: ${relativePath}`);
-        if (workingRow) return readFile(workingRow.absolutePath);
-        const bytes = await runGit(sourceRoot, ["cat-file", "blob", headRow.objectId], { encoding: "buffer" });
-        return Buffer.from(bytes);
+        if (workingPath) {
+          try {
+            const bytes = await readFile(workingPath, { signal: AbortSignal.timeout(15_000) });
+            return { bytes, readSource: "working" };
+          } catch (error) {
+            if (!headRow) throw error;
+            const bytes = await runGit(sourceRoot, ["cat-file", "blob", headRow.objectId], { encoding: "buffer", timeout: 15_000 });
+            return { bytes: Buffer.from(bytes), readSource: "head-fallback" };
+          }
+        }
+        const bytes = await runGit(sourceRoot, ["cat-file", "blob", headRow.objectId], { encoding: "buffer", timeout: 15_000 });
+        return { bytes: Buffer.from(bytes), readSource: "head" };
       },
     };
   });
@@ -204,13 +217,13 @@ function countBy(rows, field) {
   return Object.fromEntries(Object.entries(counts).sort(([left], [right]) => left.localeCompare(right)));
 }
 
-export async function buildArchiveArtifacts({ sourceRoot, outputRoot, existingRoot }) {
+export async function buildArchiveArtifacts({ sourceRoot, outputRoot, existingRoot, onProgress = () => {} }) {
   const resolvedSource = path.resolve(sourceRoot);
   const resolvedOutput = path.resolve(outputRoot);
-  const { gitHead, records } = await inventorySource(resolvedSource, resolvedOutput);
+  const { gitHead, records } = await inventorySource(resolvedSource, resolvedOutput, onProgress);
   const sourceIdentity = `lunari-claude-archive@${gitHead}+working-snapshot`;
   const existing = await loadExistingEvidence(path.resolve(existingRoot));
-  const evidence = await buildFirstPartyEvidence(records, { sourceIdentity, ...existing });
+  const evidence = await buildFirstPartyEvidence(records, { sourceIdentity, ...existing, onProgress });
 
   const ledgerText = jsonLines(evidence.ledger);
   const cardsText = jsonLines(evidence.cards);
@@ -224,7 +237,7 @@ export async function buildArchiveArtifacts({ sourceRoot, outputRoot, existingRo
     pathCount: evidence.ledger.length,
     inspectedCount: evidence.ledger.filter((row) => row.contentInspected).length,
     candidateCount: evidence.cards.length,
-    unresolvedCount: 0,
+    unresolvedCount: evidence.ledger.filter((row) => row.disposition === "unresolved").length,
     stateCounts: countBy(evidence.ledger, "state"),
     dispositionCounts: countBy(evidence.ledger, "disposition"),
     reasonCounts: countBy(evidence.ledger, "reason"),
@@ -256,7 +269,16 @@ export async function buildArchiveArtifacts({ sourceRoot, outputRoot, existingRo
 }
 
 async function main() {
-  const result = await buildArchiveArtifacts(parseArgs(process.argv.slice(2)));
+  let lastReported = -1;
+  const result = await buildArchiveArtifacts({
+    ...parseArgs(process.argv.slice(2)),
+    onProgress(progress) {
+      if (progress.phase === "git-inventory" || progress.completed === progress.total || progress.completed - lastReported >= 512) {
+        process.stderr.write(`[lunari-quarry] ${progress.phase} ${progress.completed}/${progress.total}\n`);
+        lastReported = progress.completed;
+      }
+    },
+  });
   process.stdout.write(`${JSON.stringify(result.coverage, null, 2)}\n`);
 }
 

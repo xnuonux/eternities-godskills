@@ -15,43 +15,27 @@ const BINARY_EXTENSIONS = new Set([
 ]);
 
 const OWNER_TERMS = [
-  {
-    owner: "eternities-forge",
-    terms: [
-      "coordination", "shared tree", "lease", "mutex", "handoff", "goal backward", "observable truth",
-      "wiring", "multi lens", "skeptic", "claim ledger", "completion proof", "independent review",
-    ],
-  },
-  {
-    owner: "eternities-phoenix",
-    terms: [
-      "diagnostic", "debug", "hypothesis", "reproduce", "reproduction", "eliminated", "root cause",
-      "measurement before hypothesis", "incident", "failure", "regression",
-    ],
-  },
-  {
-    owner: "eternities-atlas",
-    terms: [
-      "schema", "information_schema", "migration", "constraint", "rls", "database", "sql", "query",
-      "coverage before ranking", "data coverage", "rollback", "dry run",
-    ],
-  },
-  {
-    owner: "eternities-mnemosyne",
-    terms: ["keel", "memory", "continuity", "context budget", "compaction", "wake", "letter", "checkpoint"],
-  },
-  {
-    owner: "eternities-herald",
-    terms: ["deploy", "release", "ship sequence", "production readiness", "version bump", "rollback"],
-  },
-  {
-    owner: "eternities-aegis",
-    terms: ["security", "threat", "permission", "trust boundary", "secret", "vulnerability"],
-  },
-  {
-    owner: "eternities-logos",
-    terms: ["voice check", "editorial", "writing", "canon", "style guide", "claim support"],
-  },
+  { owner: "eternities-aegis", terms: ["security", "threat", "permission", "trust boundary", "secret", "vulnerability", "mitigation"] },
+  { owner: "eternities-agora", terms: ["prospect assessment", "account operations", "client deliverable", "client service", "agency service", "proposal evidence"] },
+  { owner: "eternities-arcadia", terms: ["game design", "gameplay", "player experience", "level design", "game systems", "playtest", "release verdict"] },
+  { owner: "eternities-architect", terms: ["system architecture", "architecture decision", "adr", "interfaces", "reliability", "tradeoff", "implementation handoff"] },
+  { owner: "eternities-athena", terms: ["scientific study", "study design", "validity", "bias", "confounding", "causal inference", "evidence quality", "statistical"] },
+  { owner: "eternities-atlas", terms: ["schema", "information_schema", "migration", "constraint", "rls", "database", "sql", "query", "coverage before ranking", "data coverage", "rollback", "dry run", "reconciliation"] },
+  { owner: "eternities-beacon", terms: ["market positioning", "seo", "conversion", "lifecycle", "growth", "customer journey", "go to market", "discoverability"] },
+  { owner: "eternities-chorus", terms: ["social media", "community", "editorial calendar", "moderation", "audience", "channel strategy", "content calendar"] },
+  { owner: "eternities-daedalus", terms: ["implementation", "refactor", "adapter", "integration", "performance", "configuration", "code migration", "compatibility"] },
+  { owner: "eternities-forge", terms: ["coordination", "shared tree", "lease", "mutex", "handoff", "goal backward", "observable truth", "wiring", "multi lens", "skeptic", "claim ledger", "completion proof", "independent review"] },
+  { owner: "eternities-herald", terms: ["deploy", "release", "ship sequence", "production readiness", "version bump", "rollback", "deployment gate"] },
+  { owner: "eternities-hermes", terms: ["automation", "mcp", "browser workflow", "tool schema", "transport", "remote executor", "batch workflow"] },
+  { owner: "eternities-logos", terms: ["voice check", "technical writing", "editorial", "writing", "narrative", "canon", "style guide", "claim support"] },
+  { owner: "eternities-mnemosyne", terms: ["keel", "memory", "continuity", "context budget", "compaction", "wake", "letter", "checkpoint", "retrieval"] },
+  { owner: "eternities-muse", terms: ["visual", "art direction", "interface", "motion", "design tokens", "render", "visual acceptance", "story motion"] },
+  { owner: "eternities-omnibus", terms: ["cold quarry", "specialist facet", "skill catalog", "skill search", "retrieve skill", "workflow quarry", "specialist pattern"] },
+  { owner: "eternities-oracle", terms: ["multi source research", "official sources", "current sources", "provenance", "research synthesis", "source reconciliation", "literature search"] },
+  { owner: "eternities-orpheus", terms: ["audio", "voice", "music", "transcription", "captions", "media timeline", "speech", "alignment"] },
+  { owner: "eternities-phoenix", terms: ["diagnostic", "debug", "hypothesis", "reproduce", "reproduction", "eliminated", "root cause", "measurement before hypothesis", "incident", "failure", "regression"] },
+  { owner: "eternities-prometheus", terms: ["product operations", "commercial analytics", "customer insight", "operational planning", "early adopter", "learning design", "project delivery"] },
+  { owner: "sovereign-skill-refinery", terms: ["refine", "synthesize", "overlapping skills", "skill provenance", "skill evaluation", "skill promotion", "promotion", "candidate skill"] },
 ];
 
 function portablePath(value) {
@@ -161,12 +145,17 @@ export async function buildFirstPartyEvidence(records, options = {}) {
     sourceIdentity = "unidentified-first-party-archive",
     maxEvidenceChars = 64_000,
     maxInspectableBytes = 2_000_000,
+    concurrency = 16,
+    onProgress = () => {},
     corpusDigests = new Set(),
     godskillDigestPaths = new Map(),
   } = options;
   if (!Array.isArray(records)) throw new TypeError("records must be an array");
   if (!Number.isInteger(maxEvidenceChars) || maxEvidenceChars < 1) {
     throw new Error("maxEvidenceChars must be a positive integer");
+  }
+  if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 64) {
+    throw new Error("concurrency must be an integer from 1 to 64");
   }
 
   const ordered = [...records].sort((left, right) =>
@@ -176,7 +165,7 @@ export async function buildFirstPartyEvidence(records, options = {}) {
   const cards = [];
   const digestPaths = new Map();
 
-  for (const record of ordered) {
+  async function inspectRecord(record) {
     const relativePath = portablePath(record.relativePath);
     let classification = record.forceExcludeReason
       ? { disposition: "excluded", reason: record.forceExcludeReason, inspectContent: false }
@@ -194,26 +183,33 @@ export async function buildFirstPartyEvidence(records, options = {}) {
       reason: classification.reason,
       contentInspected: false,
       sha256: null,
+      readSource: null,
     };
 
     if (!classification.inspectContent) {
-      ledger.push(row);
-      continue;
+      return { row, card: null, digest: null };
     }
 
-    const bytes = await record.read();
+    let bytes;
+    try {
+      const readResult = await record.read();
+      bytes = Buffer.isBuffer(readResult) ? readResult : readResult?.bytes;
+      if (!Buffer.isBuffer(bytes)) throw new TypeError("record read must return bytes");
+      row.readSource = Buffer.isBuffer(readResult)
+        ? (record.defaultReadSource ?? "working")
+        : (readResult.readSource ?? record.defaultReadSource ?? "working");
+    } catch (error) {
+      row.disposition = "unresolved";
+      row.reason = "read-failed";
+      row.errorCode = error?.code ?? error?.name ?? "UNKNOWN";
+      return { row, card: null, digest: null };
+    }
     const digest = sha256(bytes);
     const text = bytes.toString("utf8");
     row.contentInspected = true;
     row.sha256 = digest;
-    ledger.push(row);
-    const paths = digestPaths.get(digest) ?? [];
-    paths.push(relativePath);
-    digestPaths.set(digest, paths);
-
     const recommendation = recommendOwner(relativePath, text, maxEvidenceChars);
-    if (!recommendation) continue;
-    cards.push({
+    const card = recommendation ? {
       schemaVersion: 1,
       sourceIdentity,
       relativePath,
@@ -225,7 +221,22 @@ export async function buildFirstPartyEvidence(records, options = {}) {
       mechanismTerms: recommendation.matchedTerms,
       ownerRecommendation: recommendation.owner,
       reviewState: "unreviewed-first-party",
-    });
+    } : null;
+    return { row, card, digest };
+  }
+
+  for (let offset = 0; offset < ordered.length; offset += concurrency) {
+    const batch = await Promise.all(ordered.slice(offset, offset + concurrency).map(inspectRecord));
+    for (const result of batch) {
+      ledger.push(result.row);
+      if (result.card) cards.push(result.card);
+      if (result.digest) {
+        const paths = digestPaths.get(result.digest) ?? [];
+        paths.push(result.row.relativePath);
+        digestPaths.set(result.digest, paths);
+      }
+    }
+    onProgress({ phase: "inspect", completed: Math.min(offset + concurrency, ordered.length), total: ordered.length });
   }
 
   cards.sort((left, right) => left.relativePath.localeCompare(right.relativePath));
