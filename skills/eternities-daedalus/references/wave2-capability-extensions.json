@@ -1,0 +1,653 @@
+{
+  "schemaVersion": 1,
+  "registryId": "eternities-daedalus-wave2-extensions-v1",
+  "ownerId": "eternities-daedalus",
+  "maximumSelection": 3,
+  "extensions": [
+    {
+      "schemaVersion": 1,
+      "id": "behavioral-test-maintainability-review",
+      "targetId": "verification-evidence::behavioral-test-maintainability-review",
+      "categoricalOwnerId": "eternities-daedalus",
+      "delegateId": "eternities-daedalus",
+      "intent": "Review tests for behavioral value, isolation, mutation sensitivity, and maintenance cost rather than line coverage theater.",
+      "triggerKeywords": [
+        "behavior",
+        "maintainability",
+        "mutation",
+        "review",
+        "test"
+      ],
+      "negativeKeywords": [
+        "external",
+        "unauthorized",
+        "unresolved"
+      ],
+      "requiredEvidence": [
+        "test suite and behavior contract",
+        "failure and maintenance evidence"
+      ],
+      "outputs": [
+        "test quality findings",
+        "bounded remediation plan"
+      ],
+      "allowedEffects": [
+        "read",
+        "write"
+      ],
+      "requiredEffects": [
+        "read",
+        "write"
+      ],
+      "requiredAuthority": [
+        "local-read",
+        "repository-write"
+      ],
+      "forbiddenEffects": [
+        "credential-use",
+        "external-write",
+        "production-mutation"
+      ],
+      "handoffOwnerIds": [
+        "eternities-aegis",
+        "eternities-forge"
+      ],
+      "terminationCondition": "Stop when test quality findings and bounded remediation plan satisfy the declared evidence and authority gates.",
+      "capabilityDoesNotGrantAuthority": true,
+      "sourceBinding": {
+        "targetId": "verification-evidence::behavioral-test-maintainability-review",
+        "clusterDigest": "7002b996f64fbbb9d5752e2da05875fe1b32d94aa5b4c3113647ac4c273e017e",
+        "overlapDigest": "6f94a7705a816a85575e95f6963fdec88c65e0c05faf4c60dd4fd9ec7ae20cf9",
+        "reviewDigests": [
+          "ceb3afca44829ff419d6769ccb5a6ea5afc03214292ba9060786d92469549c9f"
+        ],
+        "comparisonDigests": [
+          "238584921303ad9b9e0946a5b5222c2b380a715ee38d716a3accfd07cc9d54d2",
+          "4f9d197b051fa7830ad82db88687498b5adace62caeab82dfc6cc68442d9f5ee",
+          "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557",
+          "c733b54bd52137750692e6b87e4c7fd7e4883be9267c286c5714f32c138b207d",
+          "f3d04dacbaf6937f30af3b2fb158ebb875f96b3a92fa23d4c599667ff33ef02d"
+        ]
+      },
+      "sourceProvenance": {
+        "sourceProseCopied": false,
+        "sourceInstructionsExecuted": false,
+        "independentlyWritten": true
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "bounded-typed-graphql-contract-and-execution",
+      "targetId": "data-infrastructure::bounded-typed-graphql-contract-and-execution",
+      "categoricalOwnerId": "eternities-daedalus",
+      "delegateId": "eternities-daedalus",
+      "intent": "Implement a bounded typed GraphQL contract with resolver, authorization, error, and query-cost proof.",
+      "triggerKeywords": [
+        "contract",
+        "graphql",
+        "query",
+        "resolver",
+        "typed"
+      ],
+      "negativeKeywords": [
+        "external",
+        "unauthorized",
+        "unresolved"
+      ],
+      "requiredEvidence": [
+        "schema and resolver scope",
+        "authorization and cost rules"
+      ],
+      "outputs": [
+        "typed GraphQL implementation",
+        "contract and execution tests"
+      ],
+      "allowedEffects": [
+        "read",
+        "write"
+      ],
+      "requiredEffects": [
+        "read",
+        "write"
+      ],
+      "requiredAuthority": [
+        "local-read",
+        "repository-write"
+      ],
+      "forbiddenEffects": [
+        "credential-use",
+        "external-write",
+        "production-mutation"
+      ],
+      "handoffOwnerIds": [
+        "eternities-aegis",
+        "eternities-architect"
+      ],
+      "terminationCondition": "Stop when typed graphql implementation and contract and execution tests satisfy the declared evidence and authority gates.",
+      "capabilityDoesNotGrantAuthority": true,
+      "sourceBinding": {
+        "targetId": "data-infrastructure::bounded-typed-graphql-contract-and-execution",
+        "clusterDigest": "66bf1a3fcf4753da44cde41f863560767c63d477350b72dda8a0f706b705b607",
+        "overlapDigest": "edceb3bbf1b66cd05a0d9f7bc0bcc8536e58ea120ebcd2653afd6aa5a42be7b8",
+        "reviewDigests": [
+          "991fab508a95345e11510ae9fd92d86826e224ea27a51b03e7e3af965329ee5a",
+          "b537b9ee171038296e8024990c3bd283934dfadd5b2de28b5332b197f31eff42"
+        ],
+        "comparisonDigests": [
+          "1011c45e7350d9bedc8ffeb0bddd0e88e26a8a79c12244e61af3ff703331fe90",
+          "5b51f6c100f02ab5069de67a8f87fc239ba108a13ed9b952cbf0fd3919a64044",
+          "713ebcaf5784f70ed2b201cb5258eb74e218cd775deef2c71c0d7200f083191f",
+          "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"
+        ]
+      },
+      "sourceProvenance": {
+        "sourceProseCopied": false,
+        "sourceInstructionsExecuted": false,
+        "independentlyWritten": true
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "configuration-schema-environment-and-migration-validation",
+      "targetId": "data-infrastructure::configuration-schema-environment-and-migration-validation",
+      "categoricalOwnerId": "eternities-daedalus",
+      "delegateId": "eternities-daedalus",
+      "intent": "Validate configuration shape, environment precedence, compatibility, and migration before runtime use.",
+      "triggerKeywords": [
+        "configuration",
+        "environment",
+        "migration",
+        "schema",
+        "validation"
+      ],
+      "negativeKeywords": [
+        "external",
+        "unauthorized",
+        "unresolved"
+      ],
+      "requiredEvidence": [
+        "configuration sources",
+        "compatibility and rollback rules"
+      ],
+      "outputs": [
+        "validated configuration contract",
+        "migration and failure evidence"
+      ],
+      "allowedEffects": [
+        "read",
+        "write"
+      ],
+      "requiredEffects": [
+        "read",
+        "write"
+      ],
+      "requiredAuthority": [
+        "local-read",
+        "repository-write"
+      ],
+      "forbiddenEffects": [
+        "credential-use",
+        "external-write",
+        "production-mutation"
+      ],
+      "handoffOwnerIds": [
+        "eternities-aegis",
+        "eternities-architect"
+      ],
+      "terminationCondition": "Stop when validated configuration contract and migration and failure evidence satisfy the declared evidence and authority gates.",
+      "capabilityDoesNotGrantAuthority": true,
+      "sourceBinding": {
+        "targetId": "data-infrastructure::configuration-schema-environment-and-migration-validation",
+        "clusterDigest": "6ff012d28520e426af2c06b0929796414916c2c7e01229f80e9409e92e971ed8",
+        "overlapDigest": "c487a78e391e588902bc41898a790df84d687ee3e128e4e7104c5d6b9f4152b0",
+        "reviewDigests": [
+          "4a1b3c2463f2fba02539d33999bb15c4d4e55d03aade7305839492b4d72d066b"
+        ],
+        "comparisonDigests": [
+          "04d21c4cf4e89eab2ce3bb238bbd659984de2a52968bc12847b73cb13882d429",
+          "43fc6411b9aba41a1a0b2b4f04d3bd8e3f336a5a620b4f6e4088d846d313304b",
+          "5b51f6c100f02ab5069de67a8f87fc239ba108a13ed9b952cbf0fd3919a64044",
+          "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"
+        ]
+      },
+      "sourceProvenance": {
+        "sourceProseCopied": false,
+        "sourceInstructionsExecuted": false,
+        "independentlyWritten": true
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "evidence-first-data-path-performance-reduction",
+      "targetId": "data-infrastructure::evidence-first-data-path-performance-reduction",
+      "categoricalOwnerId": "eternities-daedalus",
+      "delegateId": "eternities-daedalus",
+      "intent": "Reduce a measured data-path bottleneck through causal traces, bounded changes, and repeated comparison.",
+      "triggerKeywords": [
+        "data",
+        "latency",
+        "path",
+        "performance",
+        "trace"
+      ],
+      "negativeKeywords": [
+        "external",
+        "unauthorized",
+        "unresolved"
+      ],
+      "requiredEvidence": [
+        "repeatable baseline",
+        "functional and resource budgets"
+      ],
+      "outputs": [
+        "bounded optimization",
+        "before-after trace evidence"
+      ],
+      "allowedEffects": [
+        "read",
+        "write"
+      ],
+      "requiredEffects": [
+        "read",
+        "write"
+      ],
+      "requiredAuthority": [
+        "local-read",
+        "repository-write"
+      ],
+      "forbiddenEffects": [
+        "credential-use",
+        "external-write",
+        "production-mutation"
+      ],
+      "handoffOwnerIds": [
+        "eternities-aegis",
+        "eternities-atlas"
+      ],
+      "terminationCondition": "Stop when bounded optimization and before-after trace evidence satisfy the declared evidence and authority gates.",
+      "capabilityDoesNotGrantAuthority": true,
+      "sourceBinding": {
+        "targetId": "data-infrastructure::evidence-first-data-path-performance-reduction",
+        "clusterDigest": "8bbddec22d70605e36900ff97afa8a40d6418ffcaa00d2b32040519b855efe9c",
+        "overlapDigest": "715a217328f05c09d1d1f52105fc2bea1cb900d8a81514fc780d0b6e632c6b41",
+        "reviewDigests": [
+          "04117c62e050fc8de0cc9b2a81d9aaca9360cbce76bdd894a1829722cd1cff56",
+          "6ee86e321b7f40291d847a8c2be313fe0d68e3ba87db12b9299bc3613ddc0bc9",
+          "8f9c607292c472d605907808d083ce9ee1cde6b17a4819f20cb777c88ed2113d",
+          "f8af040568ae353f9aa7ffcac8b13f4f798a8dd97d6d63786a2a91f9b4d939ed"
+        ],
+        "comparisonDigests": [
+          "7a9b88ac24a979cb605a0a7e4da96c2827b84658373718b568365b2dac1c783d",
+          "afb8a2afb0886265f00b3884b68ede1f79f75a8d3b476dfdee8c631b40c7784a",
+          "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557",
+          "ce799252e7049eb740691c15ba24a14fa6abc115d9b5f8f11f94b8140af30605"
+        ]
+      },
+      "sourceProvenance": {
+        "sourceProseCopied": false,
+        "sourceInstructionsExecuted": false,
+        "independentlyWritten": true
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fp-ts-react-state-validation-and-effects",
+      "targetId": "web-interface-accessibility::fp-ts-react-state-validation-and-effects",
+      "categoricalOwnerId": "eternities-daedalus",
+      "delegateId": "fp-ts-functional-refactoring",
+      "intent": "Apply typed functional validation and effect boundaries to React state without obscuring lifecycle or accessibility behavior.",
+      "triggerKeywords": [
+        "effects",
+        "fp",
+        "react",
+        "state",
+        "validation"
+      ],
+      "negativeKeywords": [
+        "external",
+        "unauthorized",
+        "unresolved"
+      ],
+      "requiredEvidence": [
+        "component state and lifecycle contract",
+        "typed validation and effect model"
+      ],
+      "outputs": [
+        "typed React state implementation",
+        "runtime and accessibility evidence"
+      ],
+      "allowedEffects": [
+        "read",
+        "write"
+      ],
+      "requiredEffects": [
+        "read",
+        "write"
+      ],
+      "requiredAuthority": [
+        "local-read",
+        "repository-write"
+      ],
+      "forbiddenEffects": [
+        "credential-use",
+        "external-write",
+        "production-mutation"
+      ],
+      "handoffOwnerIds": [
+        "eternities-aegis",
+        "eternities-muse"
+      ],
+      "terminationCondition": "Stop when typed react state implementation and runtime and accessibility evidence satisfy the declared evidence and authority gates.",
+      "capabilityDoesNotGrantAuthority": true,
+      "sourceBinding": {
+        "targetId": "web-interface-accessibility::fp-ts-react-state-validation-and-effects",
+        "clusterDigest": "8eed9c7765ed310b5398e2678f5fc4215f5744121cd5a2fc47913fdb7310bd8b",
+        "overlapDigest": "72c4774c4904c379d3a9b485d26526d6ecfe2b7f2dc091968815160303400704",
+        "reviewDigests": [
+          "04e591816da614d0997097f9a1807c2046133c9e22b4a453a9620cdad3641081",
+          "61c3d6671e90d65586512f92fbfb5d3dc28d4819b96cefea04407e53ec4b8edd"
+        ],
+        "comparisonDigests": [
+          "2c871c89f61a3bdfe04fc5e3938c1604481ea119cf2ad990314ba30484b884f5",
+          "821e37236ffe24736878b7264e6401c033a56ceedc593beacd4935a50fcf76ac",
+          "b348dafe5a2ea387d382ef0e1037141a5a209a995b0e3f4a0b1dedd4148bd3ed",
+          "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557",
+          "f3d04dacbaf6937f30af3b2fb158ebb875f96b3a92fa23d4c599667ff33ef02d"
+        ]
+      },
+      "sourceProvenance": {
+        "sourceProseCopied": false,
+        "sourceInstructionsExecuted": false,
+        "independentlyWritten": true
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "incremental-dependency-and-framework-upgrades",
+      "targetId": "release-publishing::incremental-dependency-and-framework-upgrades",
+      "categoricalOwnerId": "eternities-daedalus",
+      "delegateId": "eternities-daedalus",
+      "intent": "Upgrade dependencies or frameworks in reversible increments with compatibility, deprecation, and regression proof.",
+      "triggerKeywords": [
+        "compatibility",
+        "dependency",
+        "framework",
+        "incremental",
+        "upgrade"
+      ],
+      "negativeKeywords": [
+        "external",
+        "unauthorized",
+        "unresolved"
+      ],
+      "requiredEvidence": [
+        "current dependency graph",
+        "release notes and compatibility evidence"
+      ],
+      "outputs": [
+        "incremental upgrade changes",
+        "regression and rollback evidence"
+      ],
+      "allowedEffects": [
+        "read",
+        "write"
+      ],
+      "requiredEffects": [
+        "read",
+        "write"
+      ],
+      "requiredAuthority": [
+        "local-read",
+        "repository-write"
+      ],
+      "forbiddenEffects": [
+        "credential-use",
+        "external-write",
+        "production-mutation"
+      ],
+      "handoffOwnerIds": [
+        "eternities-aegis",
+        "eternities-herald"
+      ],
+      "terminationCondition": "Stop when incremental upgrade changes and regression and rollback evidence satisfy the declared evidence and authority gates.",
+      "capabilityDoesNotGrantAuthority": true,
+      "sourceBinding": {
+        "targetId": "release-publishing::incremental-dependency-and-framework-upgrades",
+        "clusterDigest": "b6033156a0eafd405a24ba5020dd3ebff0eb4b2480044ee67ce58867f6d89d64",
+        "overlapDigest": "57e220a06cde682e32640021e78d04d2da2c77a921d765f1719ccb42543ff8bc",
+        "reviewDigests": [
+          "4b3ff9814440f233a9813b8923e24a485f5cb52b937d9d81b39e43ec0cb7ee0f",
+          "7d57254f79d504adda03a0cd28a21586aaa435efff7ce0d9019553c3d2169145"
+        ],
+        "comparisonDigests": [
+          "87eff8b9fbf25f5d90d058050303c9d8869358fb2d86c4bf73ce5f4b658818a3",
+          "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557",
+          "d17e2bd96b8689989fb20227f4ebaf671e912c19d069445b7194ea6595662c45",
+          "d25612248f4c3512529eb46536656cb067a4355fc783e74273201980ceb5d36a"
+        ]
+      },
+      "sourceProvenance": {
+        "sourceProseCopied": false,
+        "sourceInstructionsExecuted": false,
+        "independentlyWritten": true
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "offline-pwa-release-readiness",
+      "targetId": "release-publishing::offline-pwa-release-readiness",
+      "categoricalOwnerId": "eternities-daedalus",
+      "delegateId": "eternities-daedalus",
+      "intent": "Verify a progressive web application under offline, update, cache, install, and recovery scenarios before release.",
+      "triggerKeywords": [
+        "cache",
+        "offline",
+        "pwa",
+        "service",
+        "worker"
+      ],
+      "negativeKeywords": [
+        "external",
+        "unauthorized",
+        "unresolved"
+      ],
+      "requiredEvidence": [
+        "application routes and asset policy",
+        "offline and update acceptance matrix"
+      ],
+      "outputs": [
+        "PWA readiness changes",
+        "offline update and recovery evidence"
+      ],
+      "allowedEffects": [
+        "read",
+        "write"
+      ],
+      "requiredEffects": [
+        "read",
+        "write"
+      ],
+      "requiredAuthority": [
+        "local-read",
+        "repository-write"
+      ],
+      "forbiddenEffects": [
+        "credential-use",
+        "external-write",
+        "production-mutation"
+      ],
+      "handoffOwnerIds": [
+        "eternities-aegis",
+        "eternities-herald"
+      ],
+      "terminationCondition": "Stop when pwa readiness changes and offline update and recovery evidence satisfy the declared evidence and authority gates.",
+      "capabilityDoesNotGrantAuthority": true,
+      "sourceBinding": {
+        "targetId": "release-publishing::offline-pwa-release-readiness",
+        "clusterDigest": "d6aefdd5ef69dea25eaf5594077310af75ee68e883425c7f44de0c20909b8be1",
+        "overlapDigest": "b618fa30b4288fe7ef1445be5827737a6fca03b827384a934adb1415ff633521",
+        "reviewDigests": [
+          "ac84344731fc7f8a696f1d676a23cd9e4c677b0e938104d0f3bddae7a024a0f3"
+        ],
+        "comparisonDigests": [
+          "6cdde1d7da1ab5870a814f244104328d0a27ff9e8a60177b4c1e5cc3b104067b",
+          "821e37236ffe24736878b7264e6401c033a56ceedc593beacd4935a50fcf76ac",
+          "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557",
+          "d17e2bd96b8689989fb20227f4ebaf671e912c19d069445b7194ea6595662c45",
+          "d25612248f4c3512529eb46536656cb067a4355fc783e74273201980ceb5d36a"
+        ]
+      },
+      "sourceProvenance": {
+        "sourceProseCopied": false,
+        "sourceInstructionsExecuted": false,
+        "independentlyWritten": true
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "question-driven-telemetry-self-verification",
+      "targetId": "verification-evidence::question-driven-telemetry-self-verification",
+      "categoricalOwnerId": "eternities-daedalus",
+      "delegateId": "eternities-daedalus",
+      "intent": "Instrument only the evidence needed for a declared question and verify telemetry semantics before using the result.",
+      "triggerKeywords": [
+        "evidence",
+        "instrumentation",
+        "question",
+        "telemetry",
+        "verification"
+      ],
+      "negativeKeywords": [
+        "external",
+        "unauthorized",
+        "unresolved"
+      ],
+      "requiredEvidence": [
+        "decision question",
+        "event semantics and privacy boundary"
+      ],
+      "outputs": [
+        "bounded instrumentation",
+        "semantic and self-verification evidence"
+      ],
+      "allowedEffects": [
+        "read",
+        "write"
+      ],
+      "requiredEffects": [
+        "read",
+        "write"
+      ],
+      "requiredAuthority": [
+        "local-read",
+        "repository-write"
+      ],
+      "forbiddenEffects": [
+        "credential-use",
+        "external-write",
+        "production-mutation"
+      ],
+      "handoffOwnerIds": [
+        "eternities-aegis",
+        "eternities-atlas"
+      ],
+      "terminationCondition": "Stop when bounded instrumentation and semantic and self-verification evidence satisfy the declared evidence and authority gates.",
+      "capabilityDoesNotGrantAuthority": true,
+      "sourceBinding": {
+        "targetId": "verification-evidence::question-driven-telemetry-self-verification",
+        "clusterDigest": "b5a5539b502ad15f7f280bbc4d29bf494fb1e62dbc5fc60ab23cd9183a5c3d3d",
+        "overlapDigest": "6f6a87a9ef6c02cb7cb05e29ac4f6b1bca46ac46ab3266be367397e1e40bd58f",
+        "reviewDigests": [
+          "999e85a50f1da34520797dca5adc1fdf8c419d2a705e0c56ac3807464c010245",
+          "f8e7cb6bca7ab9b6731c6b6ade63c8fae6a0562949d027351e250731afe42a3a"
+        ],
+        "comparisonDigests": [
+          "1011c45e7350d9bedc8ffeb0bddd0e88e26a8a79c12244e61af3ff703331fe90",
+          "1435f80bb965f525393ca8960f4295e31e6e744bc86acff58368fb0cc8422d40",
+          "43fc6411b9aba41a1a0b2b4f04d3bd8e3f336a5a620b4f6e4088d846d313304b",
+          "7a9b88ac24a979cb605a0a7e4da96c2827b84658373718b568365b2dac1c783d",
+          "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557",
+          "bbcdfff7d94207067d38c96346a1deaf37a8f1bd665f8d5b1010ee6ff516727e"
+        ]
+      },
+      "sourceProvenance": {
+        "sourceProseCopied": false,
+        "sourceInstructionsExecuted": false,
+        "independentlyWritten": true
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "red-green-refactor-behavior-proof",
+      "targetId": "implementation-engineering::red-green-refactor-behavior-proof",
+      "categoricalOwnerId": "eternities-daedalus",
+      "delegateId": "eternities-daedalus",
+      "intent": "Apply a strict red-green-refactor loop whose failing test names the behavior and whose final evidence guards regression.",
+      "triggerKeywords": [
+        "behavior",
+        "green",
+        "red",
+        "refactor",
+        "test"
+      ],
+      "negativeKeywords": [
+        "external",
+        "unauthorized",
+        "unresolved"
+      ],
+      "requiredEvidence": [
+        "settled behavior contract",
+        "practical automated test surface"
+      ],
+      "outputs": [
+        "tested behavior change",
+        "red and green evidence"
+      ],
+      "allowedEffects": [
+        "read",
+        "write"
+      ],
+      "requiredEffects": [
+        "read",
+        "write"
+      ],
+      "requiredAuthority": [
+        "local-read",
+        "repository-write"
+      ],
+      "forbiddenEffects": [
+        "credential-use",
+        "external-write",
+        "production-mutation"
+      ],
+      "handoffOwnerIds": [
+        "eternities-aegis",
+        "eternities-forge"
+      ],
+      "terminationCondition": "Stop when tested behavior change and red and green evidence satisfy the declared evidence and authority gates.",
+      "capabilityDoesNotGrantAuthority": true,
+      "sourceBinding": {
+        "targetId": "implementation-engineering::red-green-refactor-behavior-proof",
+        "clusterDigest": "4f9d197b051fa7830ad82db88687498b5adace62caeab82dfc6cc68442d9f5ee",
+        "overlapDigest": "5afe6b617c76cf718f69491a117273f8df9d6e0abb58db28cb669271aa354c90",
+        "reviewDigests": [
+          "0039c10b9cf7a38b078fd3b601877803a1bcea17b57868befec247e25e3c0d04",
+          "8284b9718844e8daf42580964c389e1a8713d764aa9d94958cd31f5310d282a1"
+        ],
+        "comparisonDigests": [
+          "238584921303ad9b9e0946a5b5222c2b380a715ee38d716a3accfd07cc9d54d2",
+          "2ad7de870271ee4467077a9d181ca23100a93329fea8b6d57759db5ec1801ae6",
+          "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557",
+          "eae3b6d08ff56a5013843f7d0a17f7ae9d4990d41f4e308f97b860f58b88a72b",
+          "ece2ad091fdadc04dea33012614a204a6f79e9dc4eba2038c54f49e813b92ac7",
+          "f3d04dacbaf6937f30af3b2fb158ebb875f96b3a92fa23d4c599667ff33ef02d"
+        ]
+      },
+      "sourceProvenance": {
+        "sourceProseCopied": false,
+        "sourceInstructionsExecuted": false,
+        "independentlyWritten": true
+      }
+    }
+  ]
+}

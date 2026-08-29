@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 1,
+  "registryId": "eternities-atlas-wave2-extensions-v1",
+  "ownerId": "eternities-atlas",
+  "maximumSelection": 3,
+  "extensions": [
+    {
+      "schemaVersion": 1,
+      "id": "consent-gated-decision-linked-telemetry",
+      "targetId": "data-infrastructure::consent-gated-decision-linked-telemetry",
+      "categoricalOwnerId": "eternities-atlas",
+      "delegateId": "eternities-atlas",
+      "intent": "Design telemetry whose collection is consent-gated and traceable to an explicit decision question.",
+      "triggerKeywords": [
+        "consent",
+        "decision",
+        "measurement",
+        "privacy",
+        "telemetry"
+      ],
+      "negativeKeywords": [
+        "external",
+        "unauthorized",
+        "unresolved"
+      ],
+      "requiredEvidence": [
+        "decision question",
+        "consent and retention policy"
+      ],
+      "outputs": [
+        "telemetry plan",
+        "consent and decision linkage ledger"
+      ],
+      "allowedEffects": [
+        "read",
+        "write"
+      ],
+      "requiredEffects": [
+        "read",
+        "write"
+      ],
+      "requiredAuthority": [
+        "local-read",
+        "repository-write"
+      ],
+      "forbiddenEffects": [
+        "credential-use",
+        "external-write",
+        "production-mutation"
+      ],
+      "handoffOwnerIds": [
+        "eternities-aegis",
+        "eternities-prometheus"
+      ],
+      "terminationCondition": "Stop when telemetry plan and consent and decision linkage ledger satisfy the declared evidence and authority gates.",
+      "capabilityDoesNotGrantAuthority": true,
+      "sourceBinding": {
+        "targetId": "data-infrastructure::consent-gated-decision-linked-telemetry",
+        "clusterDigest": "db44b7d005deb45d39659db7d6dcf5d066acb97710e0c20dcb9ec891aeb56437",
+        "overlapDigest": "9fba35b81ae0847d2670bd4914858b909ebb661ec4fa3ac615de7210403fea85",
+        "reviewDigests": [
+          "3ac2a3df19d1c8373fb32fd8c2e5f64136dd7963e0e8678459f52f9247ed6d88",
+          "82ef240f7e1e3d7154e92887611487b6ea7aff8bba48f5f9260078ae8dee6e78"
+        ],
+        "comparisonDigests": [
+          "5b51f6c100f02ab5069de67a8f87fc239ba108a13ed9b952cbf0fd3919a64044",
+          "7a9b88ac24a979cb605a0a7e4da96c2827b84658373718b568365b2dac1c783d",
+          "afb8a2afb0886265f00b3884b68ede1f79f75a8d3b476dfdee8c631b40c7784a",
+          "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"
+        ]
+      },
+      "sourceProvenance": {
+        "sourceProseCopied": false,
+        "sourceInstructionsExecuted": false,
+        "independentlyWritten": true
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "evidence-bound-data-modeling-schema-change-and-inspection",
+      "targetId": "data-infrastructure::evidence-bound-data-modeling-schema-change-and-inspection",
+      "categoricalOwnerId": "eternities-atlas",
+      "delegateId": "eternities-atlas",
+      "intent": "Reconcile data modeling and schema change against observed workloads, invariants, compatibility, and inspection evidence.",
+      "triggerKeywords": [
+        "compatibility",
+        "data",
+        "inspection",
+        "model",
+        "schema"
+      ],
+      "negativeKeywords": [
+        "external",
+        "unauthorized",
+        "unresolved"
+      ],
+      "requiredEvidence": [
+        "schema and workload evidence",
+        "invariants and migration constraints"
+      ],
+      "outputs": [
+        "data model decision",
+        "schema change and inspection proof"
+      ],
+      "allowedEffects": [
+        "read",
+        "write"
+      ],
+      "requiredEffects": [
+        "read",
+        "write"
+      ],
+      "requiredAuthority": [
+        "local-read",
+        "repository-write"
+      ],
+      "forbiddenEffects": [
+        "credential-use",
+        "external-write",
+        "production-mutation"
+      ],
+      "handoffOwnerIds": [
+        "eternities-aegis",
+        "eternities-architect"
+      ],
+      "terminationCondition": "Stop when data model decision and schema change and inspection proof satisfy the declared evidence and authority gates.",
+      "capabilityDoesNotGrantAuthority": true,
+      "sourceBinding": {
+        "targetId": "data-infrastructure::evidence-bound-data-modeling-schema-change-and-inspection",
+        "clusterDigest": "bb0d32aff5bf4024868c50b5dbccde0568fd82cf6dbe59a1b24cb1384e334bcd",
+        "overlapDigest": "d3605e1819179ac6ca6a77c63c2e13a236ca44745c78d18892943458bba46159",
+        "reviewDigests": [
+          "3a32fdae5113a50febb32543293e162a3a581eb32a0362165a409cf42f591171",
+          "3e6d48f0e8d567ed7f1255ffe0c5120c0b6d9ba0fc861bcb1b662c9a4d37b838",
+          "d1e43154800714a5e9a1f33c99cbc33986f09937fe48adbc9f4306c797787d04",
+          "d509492795353a8813f2042a675fdabf5a22309b0a97695f7a459230251f0f14",
+          "d9d84dc4e23e3ea7969d212f4f416fee41397132f7dcdd4f53df25806916690d",
+          "df3e9c12c5f8ecc6e619df8a0c52d6b0f3a21ca04819ec6bde753f56d55f8910",
+          "ef1d3432932b7a70fd2385302a4369cabb9dc9621fb039b38327cc6d01019b52"
+        ],
+        "comparisonDigests": [
+          "57913f642ccaba20866e267a3546ecfde98bc34ce1b0abf0127a5779619bcea4",
+          "a0cf0d64c41e7396cbd58267df8b3fcdc001f3da9ffd9a0240a7a990dc1456a2",
+          "afb8a2afb0886265f00b3884b68ede1f79f75a8d3b476dfdee8c631b40c7784a",
+          "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557",
+          "ce799252e7049eb740691c15ba24a14fa6abc115d9b5f8f11f94b8140af30605"
+        ]
+      },
+      "sourceProvenance": {
+        "sourceProseCopied": false,
+        "sourceInstructionsExecuted": false,
+        "independentlyWritten": true
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "precommitted-product-experimentation-gate",
+      "targetId": "product-operations::precommitted-product-experimentation-gate",
+      "categoricalOwnerId": "eternities-atlas",
+      "delegateId": "eternities-atlas",
+      "intent": "Precommit a product experiment's hypothesis, population, metrics, guardrails, stopping rule, and decision before observation.",
+      "triggerKeywords": [
+        "experiment",
+        "guardrail",
+        "hypothesis",
+        "metric",
+        "precommit"
+      ],
+      "negativeKeywords": [
+        "external",
+        "unauthorized",
+        "unresolved"
+      ],
+      "requiredEvidence": [
+        "falsifiable hypothesis",
+        "population metric and risk policy"
+      ],
+      "outputs": [
+        "experiment contract",
+        "analysis and decision template"
+      ],
+      "allowedEffects": [
+        "read",
+        "write"
+      ],
+      "requiredEffects": [
+        "read",
+        "write"
+      ],
+      "requiredAuthority": [
+        "local-read",
+        "repository-write"
+      ],
+      "forbiddenEffects": [
+        "credential-use",
+        "external-write",
+        "production-mutation"
+      ],
+      "handoffOwnerIds": [
+        "eternities-aegis",
+        "eternities-prometheus"
+      ],
+      "terminationCondition": "Stop when experiment contract and analysis and decision template satisfy the declared evidence and authority gates.",
+      "capabilityDoesNotGrantAuthority": true,
+      "sourceBinding": {
+        "targetId": "product-operations::precommitted-product-experimentation-gate",
+        "clusterDigest": "d481c1b398b97082ffa00bc949a1b85be5047592588b98413b0d9cb98d3dc80f",
+        "overlapDigest": "6600568d5b28260fcc703e074cf4cdf4d85afb90a0cb60a8fa3649b4940af0e1",
+        "reviewDigests": [
+          "f6a25eb73aea8521070b27bc33be8844d70255eec4d6a154c718c35837fb8f4a"
+        ],
+        "comparisonDigests": [
+          "495120473d14f8390e4b1ffc67156bc5fe76d5da4087256eed80bc9e8b874bb3",
+          "4b1e00edd147576117eaa7d6d77c1e47111d23a87f0214f70fc477ede665701d",
+          "6bcf48f84e7d7c6b8416474bc1f72b6b7e137bcb8837ea23b81638b55be9e935",
+          "7d65005a642381cbdb8996c71295ddd728eb1f57eaf91b08850e98e9257f4479",
+          "89ddb6047490e05fe6bf0acf2267be482dedce9eac9a647fa00655c021632197",
+          "97031241006f58e8217061f938bfcf53b772903b09e86898f35f494edb5a5585",
+          "afb8a2afb0886265f00b3884b68ede1f79f75a8d3b476dfdee8c631b40c7784a",
+          "c40f5494c27840e2df7a5f3271d70bb18ba9a70fe3bbd740d26a39d3ae6e3f8b"
+        ]
+      },
+      "sourceProvenance": {
+        "sourceProseCopied": false,
+        "sourceInstructionsExecuted": false,
+        "independentlyWritten": true
+      }
+    }
+  ]
+}

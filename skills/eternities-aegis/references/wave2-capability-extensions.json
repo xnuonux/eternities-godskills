@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "registryId": "eternities-aegis-wave2-extensions-v1",
+  "ownerId": "eternities-aegis",
+  "maximumSelection": 3,
+  "extensions": [
+    {
+      "schemaVersion": 1,
+      "id": "audit-remediation-root-cause-and-regression-review",
+      "targetId": "verification-evidence::audit-remediation-root-cause-and-regression-review",
+      "categoricalOwnerId": "eternities-aegis",
+      "delegateId": "eternities-aegis",
+      "intent": "Convert an audit finding into root cause, bounded remediation, regression proof, and residual-risk decision.",
+      "triggerKeywords": [
+        "audit",
+        "cause",
+        "regression",
+        "remediation",
+        "root"
+      ],
+      "negativeKeywords": [
+        "external",
+        "unauthorized",
+        "unresolved"
+      ],
+      "requiredEvidence": [
+        "exact finding and evidence",
+        "authority and acceptance criteria"
+      ],
+      "outputs": [
+        "remediation decision",
+        "regression and residual-risk receipt"
+      ],
+      "allowedEffects": [
+        "read",
+        "write"
+      ],
+      "requiredEffects": [
+        "read",
+        "write"
+      ],
+      "requiredAuthority": [
+        "local-read",
+        "repository-write"
+      ],
+      "forbiddenEffects": [
+        "credential-use",
+        "external-write",
+        "production-mutation"
+      ],
+      "handoffOwnerIds": [
+        "eternities-daedalus",
+        "eternities-oracle"
+      ],
+      "terminationCondition": "Stop when remediation decision and regression and residual-risk receipt satisfy the declared evidence and authority gates.",
+      "capabilityDoesNotGrantAuthority": true,
+      "sourceBinding": {
+        "targetId": "verification-evidence::audit-remediation-root-cause-and-regression-review",
+        "clusterDigest": "fce155f46ceb8c7e7a4ac25e194736421f251897a9b9d3c2f9ca7985f387c87a",
+        "overlapDigest": "229b8bfaf0481b6fe4fcef8ff608b7f45db7329ac6e3f6cf54786cea66fc2b1d",
+        "reviewDigests": [
+          "e8755903d8dfb0cd22c5e45bed21f695e40ec1c4c83dbbdac042e180bbe0d517"
+        ],
+        "comparisonDigests": [
+          "238584921303ad9b9e0946a5b5222c2b380a715ee38d716a3accfd07cc9d54d2",
+          "27950b4f8999f630b20c54ae32ecd4b79b018f08bbffc13c0ae918941f582327",
+          "3819dce56f9357d2ff3e7326dccd19783d1c98dc562c96551372ce7f358d6cf5",
+          "4f6ae484eeb4efa838fb52a5817ba49da4ecc9d413b42b38ec510bbb9e9e8f7f",
+          "4f9d197b051fa7830ad82db88687498b5adace62caeab82dfc6cc68442d9f5ee",
+          "5b51f6c100f02ab5069de67a8f87fc239ba108a13ed9b952cbf0fd3919a64044",
+          "bbcdfff7d94207067d38c96346a1deaf37a8f1bd665f8d5b1010ee6ff516727e"
+        ]
+      },
+      "sourceProvenance": {
+        "sourceProseCopied": false,
+        "sourceInstructionsExecuted": false,
+        "independentlyWritten": true
+      }
+    }
+  ]
+}

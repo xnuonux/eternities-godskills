@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "registryId": "eternities-chorus-wave2-extensions-v1",
+  "ownerId": "eternities-chorus",
+  "maximumSelection": 3,
+  "extensions": [
+    {
+      "schemaVersion": 1,
+      "id": "share-preview-metadata-validation",
+      "targetId": "social-media-community::share-preview-metadata-validation",
+      "categoricalOwnerId": "eternities-chorus",
+      "delegateId": "eternities-chorus",
+      "intent": "Validate share-preview metadata and assets across declared parsers without publishing or scraping accounts.",
+      "triggerKeywords": [
+        "card",
+        "metadata",
+        "opengraph",
+        "preview",
+        "share"
+      ],
+      "negativeKeywords": [
+        "external",
+        "unauthorized",
+        "unresolved"
+      ],
+      "requiredEvidence": [
+        "canonical page metadata",
+        "declared parser and asset requirements"
+      ],
+      "outputs": [
+        "validated preview metadata",
+        "parser and image evidence"
+      ],
+      "allowedEffects": [
+        "read",
+        "write"
+      ],
+      "requiredEffects": [
+        "read",
+        "write"
+      ],
+      "requiredAuthority": [
+        "local-read",
+        "repository-write"
+      ],
+      "forbiddenEffects": [
+        "credential-use",
+        "external-write",
+        "production-mutation"
+      ],
+      "handoffOwnerIds": [
+        "eternities-aegis",
+        "eternities-muse"
+      ],
+      "terminationCondition": "Stop when validated preview metadata and parser and image evidence satisfy the declared evidence and authority gates.",
+      "capabilityDoesNotGrantAuthority": true,
+      "sourceBinding": {
+        "targetId": "social-media-community::share-preview-metadata-validation",
+        "clusterDigest": "6699ab36a5227e7d70b189354909488f0b715094f22b25383c2258cd1c0b38d0",
+        "overlapDigest": "ed0f259412e6faaece4fba5e9eddea5e2b6b68ef71e9bac4ea9853d17ac546f4",
+        "reviewDigests": [
+          "3fbfc1a967ad59e60bb9fd63dcd8ebfb6f2d07af76176bca75b5f4c026394388"
+        ],
+        "comparisonDigests": [
+          "57ee7f233d531d5f99b6b4891c0ade597e6ca4c9faf8247586c694bfd7a45f6a",
+          "f5db23132cba7f87993749d417b5e5ba48f45caf545d440d689167edbf1176a5"
+        ]
+      },
+      "sourceProvenance": {
+        "sourceProseCopied": false,
+        "sourceInstructionsExecuted": false,
+        "independentlyWritten": true
+      }
+    }
+  ]
+}

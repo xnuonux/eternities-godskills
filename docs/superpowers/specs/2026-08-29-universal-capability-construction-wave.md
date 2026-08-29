@@ -68,7 +68,7 @@ Operational skills may be invoked directly by compatible agents or delegated to 
 
 ### Godskill extensions
 
-Each extension adds a bounded route specialization to one existing owner. Extensions live in exact owner reference registries rather than inflating top-level descriptions. The owner entrypoint receives one compact disclosure rule that loads the registry only after the owner has been selected and the request matches an extension trigger.
+Each extension adds a bounded route specialization to one existing owner. Extensions live in exact owner reference registries rather than inflating or mutating receipt-bound top-level entrypoints. The portable router manifest loads an owner registry only after the immutable owner has been selected and the request matches an extension trigger.
 
 Every extension records its cluster digest, review digests, intended owner, required evidence, allowed outputs, forbidden effects, handoff owners, and termination condition. An extension cannot widen the owner's authority or convert a read-only route into mutation authority.
 

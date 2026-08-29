@@ -141,7 +141,7 @@
 - Create: `scripts/build-godskill-extension-registries.mjs`
 - Create: `data/godskill-extensions.v1.json`
 - Create: `skills/<owner>/references/wave2-capability-extensions.json` for every affected owner
-- Modify: affected owner `SKILL.md` files with one compact progressive-disclosure rule
+- Preserve: affected owner `SKILL.md` files as immutable receipt-bound routing identities
 - Test: `tests/godskill-extension-registry.test.mjs`
 
 **Interfaces:**
@@ -151,7 +151,7 @@
 - [ ] **Step 1: Write failing tests** requiring all 26 targets exactly once, current owner existence, exact evidence, deterministic selection, no description inflation, no authority expansion, and no cross-owner recursion.
 - [ ] **Step 2: Implement the registry validator and deterministic selector** with at most three returned extensions.
 - [ ] **Step 3: Author all 26 extension contracts** from the neutral target intents and mechanism-specific rationales.
-- [ ] **Step 4: Add one compact reference-loading rule to every affected owner** and rerun every owner-specific regression suite.
+- [ ] **Step 4: Bind every owner registry through the portable router manifest without mutating owner entrypoint bytes** and rerun every owner-specific regression suite.
 - [ ] **Step 5: Commit** the registries, owner changes, and tests.
 
 ### Task 7: Portable hierarchical capability manifest

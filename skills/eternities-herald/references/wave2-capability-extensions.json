@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "registryId": "eternities-herald-wave2-extensions-v1",
+  "ownerId": "eternities-herald",
+  "maximumSelection": 3,
+  "extensions": [
+    {
+      "schemaVersion": 1,
+      "id": "monorepo-release-graph-cache-correctness",
+      "targetId": "release-publishing::monorepo-release-graph-cache-correctness",
+      "categoricalOwnerId": "eternities-herald",
+      "delegateId": "eternities-herald",
+      "intent": "Verify monorepo release ordering and cache keys against the actual dependency and artifact graph.",
+      "triggerKeywords": [
+        "artifact",
+        "cache",
+        "graph",
+        "monorepo",
+        "release"
+      ],
+      "negativeKeywords": [
+        "external",
+        "unauthorized",
+        "unresolved"
+      ],
+      "requiredEvidence": [
+        "workspace dependency graph",
+        "build and release contracts"
+      ],
+      "outputs": [
+        "release graph and cache policy",
+        "ordering and invalidation proof"
+      ],
+      "allowedEffects": [
+        "read",
+        "write"
+      ],
+      "requiredEffects": [
+        "read",
+        "write"
+      ],
+      "requiredAuthority": [
+        "local-read",
+        "repository-write"
+      ],
+      "forbiddenEffects": [
+        "credential-use",
+        "external-write",
+        "production-mutation"
+      ],
+      "handoffOwnerIds": [
+        "eternities-aegis",
+        "eternities-daedalus"
+      ],
+      "terminationCondition": "Stop when release graph and cache policy and ordering and invalidation proof satisfy the declared evidence and authority gates.",
+      "capabilityDoesNotGrantAuthority": true,
+      "sourceBinding": {
+        "targetId": "release-publishing::monorepo-release-graph-cache-correctness",
+        "clusterDigest": "02fd95136eb86c9134cc034b2916e8c9a2481cbdbbf85ec846b365702abf67a1",
+        "overlapDigest": "9341605528dace914a779d729b707ba9d90a18fde2067a3e0ac3f0502b9950c0",
+        "reviewDigests": [
+          "365870e9c9986c42649fa853e71e8df5e74045950afc6a8f5ea462781531edd4"
+        ],
+        "comparisonDigests": [
+          "a417817bc6496099f1276bc6fd43116c27229a55d8399f78025fa8404ad2efeb",
+          "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557",
+          "d17e2bd96b8689989fb20227f4ebaf671e912c19d069445b7194ea6595662c45"
+        ]
+      },
+      "sourceProvenance": {
+        "sourceProseCopied": false,
+        "sourceInstructionsExecuted": false,
+        "independentlyWritten": true
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "node-package-release-reproducibility",
+      "targetId": "release-publishing::node-package-release-reproducibility",
+      "categoricalOwnerId": "eternities-herald",
+      "delegateId": "eternities-herald",
+      "intent": "Prove a Node package tarball's contents, metadata, dependency surface, build, and install behavior before publication.",
+      "triggerKeywords": [
+        "node",
+        "package",
+        "release",
+        "reproducible",
+        "tarball"
+      ],
+      "negativeKeywords": [
+        "external",
+        "unauthorized",
+        "unresolved"
+      ],
+      "requiredEvidence": [
+        "package source and manifest",
+        "clean build and install fixture"
+      ],
+      "outputs": [
+        "reproducible package artifact",
+        "content and install evidence"
+      ],
+      "allowedEffects": [
+        "read",
+        "write"
+      ],
+      "requiredEffects": [
+        "read",
+        "write"
+      ],
+      "requiredAuthority": [
+        "local-read",
+        "repository-write"
+      ],
+      "forbiddenEffects": [
+        "credential-use",
+        "external-write",
+        "production-mutation"
+      ],
+      "handoffOwnerIds": [
+        "eternities-aegis",
+        "eternities-daedalus"
+      ],
+      "terminationCondition": "Stop when reproducible package artifact and content and install evidence satisfy the declared evidence and authority gates.",
+      "capabilityDoesNotGrantAuthority": true,
+      "sourceBinding": {
+        "targetId": "release-publishing::node-package-release-reproducibility",
+        "clusterDigest": "613f231b055f250eded9c06b3b4017681543e6aa7055f8d400152ab50b768da5",
+        "overlapDigest": "ba0d7eee815804b1503bd0d95285ea3a6660ed5c4ed05f6f75d1cf2cb0100835",
+        "reviewDigests": [
+          "1c89fc8f0d74aae9541da6d449c3f70a68b5fcca76f0564cbafa7f7dfcedc48b"
+        ],
+        "comparisonDigests": [
+          "3510757d0a00289cefdb013d6c459233602775d2bbb70d8633c769e668a88bef",
+          "5052e13bfbef9ac688d1ba67c58d86f7e9385f256f26d69056b7e88c74b71dff",
+          "a417817bc6496099f1276bc6fd43116c27229a55d8399f78025fa8404ad2efeb",
+          "d17e2bd96b8689989fb20227f4ebaf671e912c19d069445b7194ea6595662c45"
+        ]
+      },
+      "sourceProvenance": {
+        "sourceProseCopied": false,
+        "sourceInstructionsExecuted": false,
+        "independentlyWritten": true
+      }
+    }
+  ]
+}
