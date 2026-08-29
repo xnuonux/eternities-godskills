@@ -1,0 +1,582 @@
+{
+  "schemaVersion": 1,
+  "waveId": "wave2-repository-source-research-002",
+  "familyId": "repository-source-research",
+  "reviewer": "codex:wave2-repository-source-research-002",
+  "reviewMethod": "exact-inert-body-semantic-review-v1",
+  "reviews": [
+    {
+      "facetId": "facet-d3b844c8dab8fdee",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/resolving-merge-conflicts/SKILL.md",
+      "bodySha256": "d3b844c8dab8fdee6ea290a31dd8caf17d514ec10c8679c0c0671560551d0028",
+      "neutralCapabilitySummary": "Reconstructs the intent behind both sides of a Git merge or rebase conflict, resolves hunks against the integration goal, and checks the resulting repository before completing the operation.",
+      "neutralIntentExamples": [
+        "determine which behavior each side of a conflicted hunk was intended to preserve",
+        "verify that a conflict resolution satisfies the merge goal without introducing unrelated behavior"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "the active merge or rebase state, conflicting files, relevant commits, and the stated integration goal",
+        "available commit messages, pull request or issue evidence, project checks, and repository cleanliness constraints"
+      ],
+      "operations": [
+        "trace each conflict side to its originating change and distinguish compatible intent from mutually exclusive behavior",
+        "choose a hunk resolution that preserves compatible intent or records why the integration goal requires one side",
+        "run the repository's discovered type, test, and format checks before deciding whether the merge or rebase can continue"
+      ],
+      "outputs": [
+        "a hunk-level resolution rationale tied to source changes and the integration objective",
+        "a verification record and an explicit unresolved or continuation state for the Git operation"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "halts when source intent, repository state, or the correct integration objective cannot be established",
+        "rejects the body's unconditional requirement to resolve and finish when aborting is the safer authorized outcome"
+      ],
+      "exclusions": [
+        "does not invent behavior merely to make conflict markers disappear",
+        "does not stage, commit, continue, or abort a merge or rebase without separate authority and a cleanly verified target"
+      ],
+      "usefulInvariants": [
+        "every material hunk decision remains traceable to both source changes and the merge objective",
+        "repository checks evaluate the integrated result rather than either side in isolation"
+      ],
+      "materialRisks": [
+        "the source assumes pull request and issue evidence exists and is trustworthy",
+        "automatic completion can commit an incorrect resolution or absorb unrelated working-tree changes"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "git-conflict-intent-reconstruction-and-verification",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-d3f997e9f327e8de",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/logic-fix-all/SKILL.md",
+      "bodySha256": "d3f997e9f327e8dec5178de6bec29a447273f3ba95d58e6f1478bc553a3dcd3c",
+      "neutralCapabilitySummary": "Defines a consent-gated repository logic audit that inventories runtime-bearing files, scores module health, traces premise-to-outcome divergences, queues remedies, compares behavioral deltas, and records iterative repair results.",
+      "neutralIntentExamples": [
+        "audit a bounded repository area for contradictions between code, configuration, constraints, and documentation",
+        "separate an effective bug correction from a no-op change or a change that introduces new execution paths"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "an authorized repository or subpath, language, ignored paths, severity threshold, focus, custom risks, and iteration limit",
+        "runtime source, configuration, constraints, documentation, concrete failures, consumers, and the original versus proposed code"
+      ],
+      "operations": [
+        "enumerate runtime-affecting artifacts by role and risk after a cost and scope consent gate",
+        "map module health findings into premise, execution trace, and divergence evidence, escalating deep call or asynchronous paths for clarification",
+        "order remedies by severity and compare original with modified behavior so no-op fixes are reverted and out-of-scope divergences are rejected",
+        "rescan modified files plus consumers and retain round-by-round fixed, clarified, reverted, and unresolved findings"
+      ],
+      "outputs": [
+        "before and after logic scores with scoped file counts and invoked analysis methods",
+        "a remedy queue, fix log, iteration history, clarified false positives, and unresolved findings with reasons"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "requires consent for repository scope and escalates when warning or suggestion rounds reach the configured ceiling",
+        "defers the full workflow because its scoring rules, risk codes, report contract, and phase methods live in uninspected companion files",
+        "rejects uncapped autonomous repair of critical findings and the snippet exception to consent as unsafe authority expansion"
+      ],
+      "exclusions": [
+        "does not treat a numeric logic score as proof that all defects were found",
+        "does not apply repository-wide fixes, alter constraints, or iterate without bounded scope and explicit write authority"
+      ],
+      "usefulInvariants": [
+        "every proposed repair is linked to a concrete divergence and the artifact that owns the contradiction",
+        "verification distinguishes unchanged behavior, intended bug-path change, and unintended new divergence"
+      ],
+      "materialRisks": [
+        "missing referenced methods prevent independent reproduction of scoring and severity decisions from this body",
+        "an exhaustive framing can create large speculative diffs and reward repeated analysis until a subjective clean state"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "repository-logic-divergence-audit-and-repair-ledger",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-d6430a60546c9621",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/deep-research/SKILL.md",
+      "bodySha256": "d6430a60546c9621266f8a886aa97aa9026993f8f4f2357fad767bdefb85d037",
+      "neutralCapabilitySummary": "Wraps a Gemini-specific asynchronous research script with start, stream, status, wait, continuation, listing, and output-format modes, but does not expose how evidence is selected or citations are verified.",
+      "neutralIntentExamples": [
+        "track the lifecycle states exposed by a long-running provider research interaction",
+        "identify what evidence is missing before trusting a generated market or literature report"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a research query, optional output outline, desired response representation, and prior interaction identifier",
+        "a Gemini API credential, Python environment, dependency set, cost tolerance, and wait or streaming preference"
+      ],
+      "operations": [
+        "map a query to synchronous, streamed, detached, status, wait, continuation, or recent-interaction script modes",
+        "preserve the interaction identifier across monitoring and follow-up requests and classify script exit as success, error, or cancellation",
+        "audit returned reports for source identity, retrieval coverage, citation support, and reproducibility that the wrapper itself does not establish"
+      ],
+      "outputs": [
+        "human-readable, structured JSON, or raw provider output",
+        "an interaction lifecycle record with cost, duration, status, and evidence-verification gaps"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "reports provider, configuration, timeout, and cancellation failures without treating a completed interaction as validated research",
+        "rejects independent implementation because the exact body contains no search plan, source-quality rule, citation-check method, or inspected script behavior"
+      ],
+      "exclusions": [
+        "does not execute the bundled script, install dependencies, load credentials, or spend against the external API",
+        "does not accept stated time, cost, token, or report-quality estimates as current verified facts"
+      ],
+      "usefulInvariants": [
+        "continuations remain bound to an explicit prior interaction identifier",
+        "provider completion remains distinct from source and citation verification"
+      ],
+      "materialRisks": [
+        "the provider may return polished synthesis with incomplete, stale, or fabricated support",
+        "large stated token and monetary ranges make accidental dispatch costly"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "provider-research-job-lifecycle-wrapper",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-d723469de5e01c5f",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/push-skill-to-github/SKILL.md",
+      "bodySha256": "d723469de5e01c5fc804c92a26620a34c24e6f00414c173b0b7aeec067f33d55",
+      "neutralCapabilitySummary": "Describes committing a canonical skills checkout and verifying a remote push through an account-specific terminal multiplexer and publication mirror arrangement.",
+      "neutralIntentExamples": [
+        "identify the authority and repository checks required before publishing reviewed skill changes",
+        "separate a local skill commit from a push that triggers a public mirror"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "reviewed skill changes, exact canonical repository root, intended remote and branch, commit message, and explicit publication authority",
+        "working-tree status, staged path set, remote configuration, authentication, multiplexer availability, and mirror behavior"
+      ],
+      "operations": [
+        "resolve the canonical checkout and inspect the exact diff, staged paths, remote destination, branch, and downstream mirror before mutation",
+        "separate local staging and commit from remote push so each effect has its own approval and verification boundary",
+        "verify the resulting commit identifier and remote branch state from Git rather than relying on terminal-screen text"
+      ],
+      "outputs": [
+        "a local commit record or an explicit no-change state",
+        "a remote publication receipt identifying repository, branch, commit, mirror consequence, and verification result"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "halts when the canonical root, staged set, destination, authentication, or public-mirror consequence is unresolved",
+        "rejects the broad stage-all sequence because it can capture unrelated files and combines commit with push without an intervening review"
+      ],
+      "exclusions": [
+        "does not assume the source author's home-directory layout, symlinks, multiplexer, private remote, or sanitizing mirror exists elsewhere",
+        "does not push, publish, close terminals, or expose credentials during semantic review"
+      ],
+      "usefulInvariants": [
+        "the pushed commit contains only reviewed intended paths",
+        "local persistence and external publication remain separately observable effects"
+      ],
+      "materialRisks": [
+        "a private push may automatically publish content through the stated mirror",
+        "screen scraping can misidentify success while a broad stage operation includes secrets or unrelated work"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "skill-repository-publication-authority-gate",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-d781dd6a7d25bb96",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/hugging-face-papers/SKILL.md",
+      "bodySha256": "d781dd6a7d25bb960b306a8ff309e96ec56a7259455e02b6855c214447260251",
+      "neutralCapabilitySummary": "Normalizes arXiv identifiers, retrieves paper text or structured metadata from Hugging Face, discovers linked models, datasets, and spaces, and falls back to primary arXiv pages when the indexed representation is absent.",
+      "neutralIntentExamples": [
+        "resolve several paper URL forms to one version-aware arXiv identifier",
+        "compare a paper's text with structured authorship and linked artifact metadata while preserving source provenance"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a Hugging Face paper URL, markdown URL, arXiv abstract or PDF URL, or explicit arXiv identifier",
+        "desired text, metadata, linked-artifact, daily-feed, listing, or search fields plus pagination and date constraints where relevant"
+      ],
+      "operations": [
+        "extract and retain the arXiv identifier and optional version suffix across supported URL forms",
+        "choose markdown retrieval for readable paper content, structured paper metadata for typed fields, or artifact filters for linked models, datasets, and spaces",
+        "interpret missing indexed pages as an indexing gap and retry against the arXiv abstract or PDF rather than fabricating paper content",
+        "separate public read endpoints from authenticated authorship, indexing, and link-update mutations with role and identifier checks"
+      ],
+      "outputs": [
+        "paper markdown or structured metadata with the resolved identifier and retrieval source",
+        "linked artifact lists, pagination state, or an explicit not-indexed fallback record"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "rechecks malformed identifiers and records 404 responses as absent index evidence rather than absent scholarship",
+        "defers every write endpoint until current official API behavior, authenticated identity, resource ownership, and explicit mutation authority are verified"
+      ],
+      "exclusions": [
+        "does not claim authorship, index a paper, alter links, or submit to a feed during a read-only research request",
+        "does not treat generated summaries, upvotes, or linked repositories as proof of a paper's claims or peer-review status"
+      ],
+      "usefulInvariants": [
+        "the original paper identifier and version remain attached to every fetched representation",
+        "primary paper content, platform metadata, generated summaries, and community engagement remain distinguishable evidence classes"
+      ],
+      "materialRisks": [
+        "provider endpoints, authorization rules, pagination limits, and indexing windows may change",
+        "write examples expose account and publication mutations beside ordinary read operations"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "portable",
+      "disposition": "pattern-reference",
+      "proposedCluster": "paper-identifier-resolution-and-linked-artifact-retrieval",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-e343c183967e9604",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/context7-auto-research/SKILL.md",
+      "bodySha256": "e343c183967e96048c19fe437dc08c60e31897277f97e2930e65d81d157b5473",
+      "neutralCapabilitySummary": "Advertises automatic current-library documentation retrieval through Context7 but supplies only installation, credential, auto-trigger, and external-reference directions rather than a retrieval or evidence contract.",
+      "neutralIntentExamples": [
+        "assess whether a documentation helper explains how it selects version-matched sources",
+        "identify missing citation and freshness evidence before relying on automatically injected library guidance"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a library or framework question, required package version, and desired documentation scope",
+        "the advertised Context7 installation, optional credential, and unavailable external repository guidance"
+      ],
+      "operations": [
+        "inventory the promised latest-documentation behavior against the exact body's installation and configuration details",
+        "check for absent package resolution, version binding, query construction, source selection, citation, cache, rate-limit, and error-recovery rules",
+        "retain the wrapper as insufficient evidence rather than inferring mechanisms from named related tools"
+      ],
+      "outputs": [
+        "a thin-wrapper finding listing the unestablished retrieval guarantees",
+        "a rejection record bound to the provider and exact source digest"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "rejects capability extraction because the body redirects examples and troubleshooting elsewhere and never defines returned evidence",
+        "does not install the package or enable an automatic trigger to discover undocumented behavior"
+      ],
+      "exclusions": [
+        "does not infer that advertised documentation is current, complete, version-compatible, or authoritative",
+        "does not treat installation and API-key advice as a research method"
+      ],
+      "usefulInvariants": [
+        "version claims require a resolvable package and documentation version",
+        "automatic context injection cannot replace visible source identity and retrieval timing"
+      ],
+      "materialRisks": [
+        "an auto-trigger can silently add provider-selected text and consume credentials or quota",
+        "the absent retrieval contract makes stale or mismatched documentation difficult to detect"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "automatic-documentation-wrapper-without-evidence-contract",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-e396970c91fd7e6c",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/conductor-revert/SKILL.md",
+      "bodySha256": "e396970c91fd7e6cc588446f6c21cce2cf8a167e1fb32890386821585348b803",
+      "neutralCapabilitySummary": "Plans history-preserving rollback of a Conductor track, phase, or task by discovering associated commits, previewing file and plan impact, requiring exact confirmation, reverting newest first, and stopping on conflicts.",
+      "neutralIntentExamples": [
+        "enumerate every commit and task-state change involved in undoing one logical work unit",
+        "preview a phase rollback and preserve partial progress if a revert conflict occurs"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a track identifier optionally narrowed to a phase or task, Conductor track files, Git history, and current operation state",
+        "working-tree changes, matching task and plan commits, affected paths, remote publication state, and explicit confirmation"
+      ],
+      "operations": [
+        "verify Conductor metadata, repository identity, working-tree cleanliness, and absence of merge or rebase operations",
+        "discover candidate commits using track, phase, task, plan-update, and path evidence, then order them for reverse-chronological reversion",
+        "present commits, affected files, task markers, and remote consequences before accepting an exact confirmation token",
+        "apply history-preserving revert commits one at a time, halt on the first conflict, and reconcile plan plus track state only after successful Git changes"
+      ],
+      "outputs": [
+        "a rollback execution plan with target, commits, files, task-state changes, and hazard disclosure",
+        "a per-commit result ledger and final repository, plan, and verification state"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "halts for dirty state, active Git operations, absent target commits, any command error, or merge conflict",
+        "requires human choice when commits are already reverted, remotely published, ambiguously named, or the track was never committed"
+      ],
+      "exclusions": [
+        "does not rewrite shared history, force-push, automatically resolve conflicts, or silently delete an uncommitted track",
+        "does not execute source slash commands or assume source-specific Conductor metadata exists in another project"
+      ],
+      "usefulInvariants": [
+        "rollback order is the reverse of the selected logical unit's commit order",
+        "completed reverts remain visible and recoverable even when a later revert stops"
+      ],
+      "materialRisks": [
+        "commit-message searches can omit work or capture unrelated commits with similar labels",
+        "the body suggests uncommitted metadata edits after reverts, which can leave Git and task state inconsistent"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "logical-work-unit-revert-planning-and-conflict-stop",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-e4dd161cd109dae2",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/scientific-writing/SKILL.md",
+      "bodySha256": "e4dd161cd109dae229142e83c85e0a2f231c9b7c16fd2dc9333f32d0f30b720f",
+      "neutralCapabilitySummary": "Organizes scientific manuscripts around study design, target venue, reporting guideline, figures and tables, section-specific evidence duties, field nomenclature, citation verification, and staged revision.",
+      "neutralIntentExamples": [
+        "audit whether a manuscript reports enough methods and effect evidence for its study design",
+        "reconcile a journal's abstract and figure rules with a general IMRAD drafting workflow"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "study question, design, methods, analyzed results, uncertainty, limitations, target audience, and original literature",
+        "target journal instructions, applicable reporting checklist, citation style, field nomenclature, word limits, figures, tables, and required declarations"
+      ],
+      "operations": [
+        "bind the study type to a reporting checklist and map each required claim, method, result, limitation, and declaration to manuscript sections",
+        "build figures and tables around measured outcomes, units, sample sizes, uncertainty, and nonduplicative captions before drafting connected prose",
+        "verify citations against primary sources and distinguish observations, statistical estimates, interpretation, and implications",
+        "revise for terminology consistency, logical transitions, venue compliance, reproducibility, unsupported conclusions, and self-contained display items"
+      ],
+      "outputs": [
+        "a venue-qualified manuscript structure with evidence and reporting-checklist coverage",
+        "a citation, terminology, figure, table, limitation, declaration, and submission-readiness audit"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "defers manuscript-readiness when original evidence, statistical justification, reporting requirements, or journal instructions are unavailable",
+        "rejects mandatory graphical abstracts, fixed figure quotas, universal prose-only sections, and style-package requirements when the venue does not require them",
+        "resolves the body's conflicting abstract rules in favor of verified journal instructions"
+      ],
+      "exclusions": [
+        "does not generate decorative figures merely to satisfy the source's numeric quotas",
+        "does not fabricate citations, methods, statistics, ethics statements, funding, conflicts, data availability, or peer-review status",
+        "does not assume named companion skills, LaTeX assets, style files, or image generators were inspected"
+      ],
+      "usefulInvariants": [
+        "claims remain proportionate to the reported design, sample, analysis, uncertainty, and limitations",
+        "journal rules override generic formatting preferences and every citation remains traceable to an original source"
+      ],
+      "materialRisks": [
+        "many field and venue conventions are time-sensitive or context-dependent and require authoritative verification",
+        "the body mixes sound reporting practice with aggressive image-generation mandates and unsupported publication-quality claims"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "pattern-reference",
+      "proposedCluster": "scientific-manuscript-evidence-and-venue-compliance",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-f2089a5b44d34e37",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-oss-maintainer/skills/create-branch/SKILL.md",
+      "bodySha256": "f2089a5b44d34e3789019bc14c6a49800c50f647f0710da696fea85607f5e461",
+      "neutralCapabilitySummary": "Derives a proposed branch name from authenticated identity and work intent, classifies the change, validates repository base and name collisions, and requires confirmation before branch creation.",
+      "neutralIntentExamples": [
+        "propose a repository-compliant branch name from a task description or current diff",
+        "detect whether new work would branch from a detached or nondefault starting point"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "task description or exact local diff, repository branch policy, preferred identity prefix, and intended base",
+        "current branch, remote default branch, detached state, uncommitted changes, existing local and remote refs, and user confirmation"
+      ],
+      "operations": [
+        "derive a concise change description and classify it as feature, fix, refactor, maintenance, performance, style, documentation, test, integration, build, metadata, or license work",
+        "render the repository's required lowercase naming structure and validate characters, length, clarity, and collisions",
+        "resolve the default branch and detached or nondefault starting state, then present base and proposed name before any checkout mutation",
+        "preserve or explicitly manage working-tree changes and verify the newly created branch points at the intended commit"
+      ],
+      "outputs": [
+        "a proposed branch name with identity, type, description, and base rationale",
+        "a confirmed branch-creation result or an explicit collision, ambiguity, or cancellation state"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "asks for identity or base selection when provider lookup, remote-head discovery, or detached-state interpretation is unresolved",
+        "halts on name collision, checkout failure, or unsafe handling of uncommitted changes"
+      ],
+      "exclusions": [
+        "does not impose Sentry's taxonomy or a GitHub username on repositories with different branch policies",
+        "does not create, switch, stash, or restore branches without explicit confirmation and exact repository checks"
+      ],
+      "usefulInvariants": [
+        "the branch base and naming policy are known before creation",
+        "the proposed name describes the change rather than merely naming edited files"
+      ],
+      "materialRisks": [
+        "classifying from an existing diff can misrepresent work that has not started",
+        "stash and restore handling can disturb unrelated changes or fail after branch creation"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "branch-name-policy-and-base-preflight",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-f2422efc005aaff9",
+      "canonicalSourceId": "K-Dense-AI/scientific-agent-skills@36d8f13a1e754618794bf42f417884940077b4ae:skills/exa-search/SKILL.md",
+      "bodySha256": "f2422efc005aaff9be39cabbbf4a538553c94d00183bcb9477c269353dfb12ee",
+      "neutralCapabilitySummary": "Routes topic discovery and specific-URL extraction through Exa, with optional scholarly-category and domain restrictions plus an evidence preference for primary academic and institutional sources.",
+      "neutralIntentExamples": [
+        "choose between discovery search and direct extraction for a technical evidence request",
+        "constrain a scientific search to primary papers and authoritative institutional domains"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a topic query or one or more exact URLs, current-information requirement, and desired content fields",
+        "scientific scope, acceptable publication classes, domain allowlist, provider credential, cost limits, and citation requirements"
+      ],
+      "operations": [
+        "route open-ended questions to search and supplied URLs to extraction, retaining the distinction in the evidence record",
+        "bias scientific discovery toward research papers and, when strict provenance is required, constrain retrieval to declared academic or institutional domains",
+        "rank primary peer-reviewed, preprint, government, and institutional evidence above commercial summaries while preserving review status and publication year",
+        "record provider integration attribution and defer exact search, extraction, pagination, and error behavior to the uninspected reference files"
+      ],
+      "outputs": [
+        "ranked search results or extracted page and PDF content with source URLs",
+        "an evidence table identifying authorship, year, publication class, DOI when available, and provider limitations"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "defers operational adoption because exact command parameters, returned schemas, filtering semantics, and recovery rules are outside this body",
+        "falls back to an unresolved evidence state when authentication, allowed domains, or source quality cannot be established"
+      ],
+      "exclusions": [
+        "does not install dependencies, load environment files, transmit credentials, or preserve a vendor tracking header without separate authorization",
+        "does not equate semantic ranking, an academic domain, or a DOI with claim validity"
+      ],
+      "usefulInvariants": [
+        "direct URL extraction and query-based discovery retain different provenance",
+        "source class, review status, publication year, and original URL remain visible in scientific synthesis"
+      ],
+      "materialRisks": [
+        "provider ranking and category filters can omit relevant contrary evidence",
+        "the mandatory attribution header and credential workflow create provider and account coupling"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "scholarly-search-routing-and-source-priority",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-f558906c5775a303",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/git-advanced-workflows/SKILL.md",
+      "bodySha256": "f558906c5775a303ebc2d82b3fbaa4088ca7234c4db4efe13e400763d44741f1",
+      "neutralCapabilitySummary": "Catalogs history editing, commit transfer, regression search, parallel worktrees, reflog recovery, and branch synchronization with operation-specific safety checks.",
+      "neutralIntentExamples": [
+        "select bisect, cherry-pick, rebase, merge, worktree, or reflog recovery for a specific repository objective",
+        "design a recoverable history cleanup without overwriting collaborators' published work"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "repository objective, current and target refs, collaboration status, publication state, working-tree cleanliness, and known good or bad revisions",
+        "selected commits or files, test command, backup ref, worktree path, remote policy, and acceptable history mutation"
+      ],
+      "operations": [
+        "choose interactive rebase for authorized local history edits, cherry-pick for selected commit transfer, bisect for monotonic regression search, and worktrees for concurrent branch isolation",
+        "establish clean state and recovery anchors through backup refs or reflog before destructive history manipulation",
+        "run a deterministic good-or-bad test across bisect revisions and restore the original checkout after identifying the introducing commit",
+        "verify rewritten or transferred history with repository tests and protect remote updates with collaboration-aware lease checks"
+      ],
+      "outputs": [
+        "an operation plan identifying refs, commits, paths, mutation type, recovery point, and collaboration constraints",
+        "a verified rewritten history, transferred patch, regression-introducing commit, isolated worktree, or recovered ref"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "halts history editing when commits are shared, the worktree is dirty, the test is nondeterministic, refs are ambiguous, or a recovery anchor is missing",
+        "rejects destructive reset examples and remote force updates as defaults even when reflog or lease protection may reduce risk"
+      ],
+      "exclusions": [
+        "does not run arbitrary bisect scripts, rewrite public branches, discard changes, remove worktrees, or push without exact authorization",
+        "does not treat reflog retention duration or remote force-with-lease semantics as universal guarantees"
+      ],
+      "usefulInvariants": [
+        "the chosen Git mechanism matches whether the goal concerns history shape, patch transfer, fault localization, isolation, or recovery",
+        "every risky mutation has an identified pre-operation ref and a post-operation verification path"
+      ],
+      "materialRisks": [
+        "interactive history edits and partial commit transfer can silently alter dependency ordering",
+        "automated bisect executes a test command against untrusted historical revisions and requires sandboxing"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "pattern-reference",
+      "proposedCluster": "git-history-transfer-regression-and-recovery-selection",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    }
+  ]
+}
