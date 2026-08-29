@@ -1,0 +1,1331 @@
+{
+  "schemaVersion": 1,
+  "waveId": "wave2-web-interface-accessibility-002",
+  "familyId": "web-interface-accessibility",
+  "reviewer": "codex:wave2-web-interface-accessibility-002",
+  "reviewMethod": "exact-inert-body-semantic-review-v1",
+  "reviews": [
+    {
+      "facetId": "facet-723e6b37d1af33f0",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/ui-score/SKILL.md",
+      "bodySha256": "723e6b37d1af33f00bcf6dde57fad061450efe98b38f8d7957e7eb1675edc855",
+      "neutralCapabilitySummary": "Scores source-level UI evidence against a fixed StyleSeed rubric, subtracting weighted penalties for color, hierarchy, rhythm, elevation, states, accessibility, motion, and coherence before ranking the highest-gain corrections.",
+      "neutralIntentExamples": [
+        "quantify design-system violations in a mobile interface file",
+        "rank the edits most likely to raise a fixed UI quality score"
+      ],
+      "legacyAliases": ["ss-score"],
+      "inputs": [
+        "one UI source file or a directory of UI files",
+        "the StyleSeed design-language and visual-craft references named by section",
+        "line-addressable evidence for states, tokens, layout, controls, and motion"
+      ],
+      "operations": [
+        "start each of seven weighted categories at its maximum and subtract the rubric's capped line-cited penalties",
+        "clamp category results at zero, sum them to 100, and map the total to the stated letter bands",
+        "order proposed corrections by recoverable score gain and rescore after at most three gate iterations when the result is below 80"
+      ],
+      "outputs": [
+        "a per-category score breakdown with cited offenders",
+        "a total score, letter band, and highest-gain fix order",
+        "a final gate score plus a short account of applied corrections"
+      ],
+      "effects": ["read", "write"],
+      "failureBehavior": [
+        "forbids guessing and requires real source lines as evidence",
+        "does not edit in plain scoring mode but permits bounded fix-and-rescore changes in gate mode",
+        "stops score chasing once the fixed floor is reached"
+      ],
+      "exclusions": [
+        "does not inspect rendered pixels, assistive-technology behavior, keyboard flow, or runtime state transitions",
+        "does not establish general design quality outside the referenced StyleSeed language",
+        "does not justify the internally inconsistent category labels whose prose maxima differ from the weight table"
+      ],
+      "usefulInvariants": [
+        "every deduction is attached to a concrete source location",
+        "category penalties never reduce a category below zero",
+        "the correction order is based on stated score recovery rather than prose severity alone"
+      ],
+      "materialRisks": [
+        "arbitrary thresholds and penalty arithmetic can turn local taste into false measurement precision",
+        "source-only scoring can miss computed contrast, actual target dimensions, and dynamic accessibility failures",
+        "gate-mode editing can optimize toward the rubric while degrading product intent"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "styleseed-source-rubric-score-gate",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-72dab3e3f13dafe2",
+      "canonicalSourceId": "nexu-io/html-anything@c31204544230578ac814026fecc153c6e36587ae:next/src/lib/templates/skills/deck-open-slide-canvas/SKILL.md",
+      "bodySha256": "72dab3e3f13dafe2a8695ecf62ee5c6a1043ccc763fe3e3534351f8313721aa3",
+      "neutralCapabilitySummary": "Defines a single-file React-oriented slide-deck canvas with fixed 1920 by 1080 geometry, one chosen palette, constrained typography and margins, one dominant visual focus per slide, keyboard navigation, hash synchronization, and strict overflow avoidance.",
+      "neutralIntentExamples": [
+        "compose a freeform 16:9 presentation without a slide template",
+        "keep a visual lecture deck within one typography and palette system"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "the user's real presentation content",
+        "one of four enumerated palettes and one compatible font pairing",
+        "a slide sequence whose content fits fixed 1920 by 1080 canvases"
+      ],
+      "operations": [
+        "assign every slide a numbered section element and scale the fixed canvas into the viewport",
+        "select each layout from content shape while preserving exactly one visual center of gravity",
+        "bind left and right keyboard navigation to the slide index and mirror that index in the URL hash"
+      ],
+      "outputs": [
+        "a single-file HTML presentation",
+        "fixed-size slides with corner numbering and deck-title furniture",
+        "a keyboard-navigable hash-addressed slide sequence"
+      ],
+      "effects": ["write"],
+      "failureBehavior": [
+        "rejects slide content that overflows instead of introducing scrollbars",
+        "disallows placeholder copy, external images, mixed type genres, and multiple decorative accents",
+        "requires equal-column treatment rather than two equally emphasized prose blocks"
+      ],
+      "exclusions": [
+        "does not define responsive web-page behavior outside a scaled presentation canvas",
+        "does not specify screen-reader semantics, focus order, reduced motion, or contrast verification",
+        "does not provide a rendering or visual-regression test"
+      ],
+      "usefulInvariants": [
+        "all slides retain the same canvas dimensions and palette",
+        "each slide has one dominant hierarchy target",
+        "navigation state and URL hash remain synchronized"
+      ],
+      "materialRisks": [
+        "fixed-pixel scaling can produce illegible content on small displays",
+        "forbidding external imagery and established icon libraries can reduce fidelity and accessibility",
+        "presentation-specific constraints are misclassified as a general web-interface mechanism"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "misclassified-fixed-canvas-presentation-template",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-74f2ccbcab8dbaa7",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-expo-react-native/skills/expo-tailwind-setup/SKILL.md",
+      "bodySha256": "74f2ccbcab8dbaa7a843fc27cd7b910cf5a08e7d8d5c5fb0eef540e6548fe271",
+      "neutralCapabilitySummary": "Wires Tailwind CSS v4 into an Expo application through preview NativeWind and a nightly React Native CSS runtime, explicit Metro and PostCSS configuration, CSS-enabled component wrappers, platform media queries, semantic color variables, and targeted troubleshooting checks.",
+      "neutralIntentExamples": [
+        "map Tailwind class names onto Expo View and Text components",
+        "preserve native platform colors while sharing a universal CSS theme"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "an Expo project compatible with the cited preview and nightly packages",
+        "Metro, PostCSS, global CSS, and package resolution configuration",
+        "React Native, Expo Router, Expo Image, and Reanimated component surfaces"
+      ],
+      "operations": [
+        "wrap native and router components with useCssElement while mapping className to the correct style prop",
+        "disable inline variables and the global class-name polyfill in the NativeWind Metro transformer",
+        "register platform-specific fonts and semantic Apple colors through media-scoped CSS variables and Tailwind theme aliases",
+        "remap image object-fit values and TouchableHighlight underlay color outside flattened style objects"
+      ],
+      "outputs": [
+        "Metro, PostCSS, and global stylesheet configuration",
+        "typed CSS-aware wrappers for layout, text, input, links, scrolling, images, and animation",
+        "a cross-platform semantic theme surface"
+      ],
+      "effects": ["write", "external-write"],
+      "failureBehavior": [
+        "checks stylesheet import, wrapper use, and Metro wrapping when classes do not apply",
+        "falls back from native platformColor values to light-dark values on non-iOS targets",
+        "requires a native rebuild after dependency changes even though no executable verification is supplied"
+      ],
+      "exclusions": [
+        "does not verify package compatibility with the current Expo SDK or React Native version",
+        "does not test accessibility, rendering parity, dark-mode contrast, or bundle impact",
+        "does not provide migration safety for projects with non-NativeWind Babel configuration"
+      ],
+      "usefulInvariants": [
+        "CSS-enabled components expose className without enabling a global polyfill",
+        "native color variables remain unresolved until the target platform can supply them",
+        "component-specific style remapping occurs before props reach the native component"
+      ],
+      "materialRisks": [
+        "preview and nightly dependencies can drift or break without a lockfile-backed compatibility proof",
+        "removing a Babel file can destroy unrelated transforms if the operator misidentifies its contents",
+        "wrapper types and prop mappings can silently diverge from upstream package APIs"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "expo-preview-tailwind-css-runtime-wiring",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-754694e18fe7aa05",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/frontend-data-contracts/SKILL.md",
+      "bodySha256": "754694e18fe7aa0580c87c28d8c196decc66a9dc740014f6ebd17f3ebc2c722b",
+      "neutralCapabilitySummary": "Centralizes a frontend network boundary that parses unknown response bodies into trusted domain values, unwraps a single success-or-error envelope, brands identifiers, normalizes transport and contract failures, propagates cancellation, and keeps user-facing side effects above the client.",
+      "neutralIntentExamples": [
+        "stop malformed invoice data at the network edge",
+        "map server field failures into a typed form error surface"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "the backend's exact response envelope and stable error codes",
+        "runtime schemas for each domain entity and nominal identifier constructors",
+        "request configuration including headers, base URL, and AbortSignal"
+      ],
+      "operations": [
+        "route every HTTP verb through one framework-free client and lint against competing fetch boundaries",
+        "parse unknown payloads with an entity schema, brand identifiers during that transform, and reject malformed successful responses",
+        "collapse server envelopes, non-success statuses, network faults, and aborts into one ApiError shape",
+        "translate stable error keys and field maps only in query or form layers outside the transport client"
+      ],
+      "outputs": [
+        "typed domain values or a normalized typed exception",
+        "an enforceable single-client directory and import restriction",
+        "localized error keys and per-field error records for interface layers"
+      ],
+      "effects": ["read", "write"],
+      "failureBehavior": [
+        "throws a contract-violation code when a successful response cannot be parsed",
+        "uses status zero to distinguish failures without an HTTP response",
+        "prevents raw server messages and untyped exceptions from crossing into user-facing components"
+      ],
+      "exclusions": [
+        "does not define authentication, retry, cache, offline, pagination, or schema-version policy",
+        "does not prove that the backend actually follows the proposed envelope",
+        "belongs primarily to frontend data architecture rather than visual interface or accessibility review"
+      ],
+      "usefulInvariants": [
+        "untyped wire data never leaves the boundary",
+        "components receive neither raw Response objects nor response envelopes",
+        "transport code contains no toast, routing, or React side effect"
+      ],
+      "materialRisks": [
+        "a caller-supplied generic can create false type confidence if parsing is omitted",
+        "one envelope assumption can erase legitimate endpoint differences",
+        "branding constructors shown as casts do not validate identifier semantics at runtime"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "misclassified-typed-network-contract-boundary",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-75ec953f769ab66d",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/expo-ui-swift-ui/SKILL.md",
+      "bodySha256": "75ec953f769ab66df91c02b30742dc1bf248d11d5ef53d533e44fd6eac2e93b1",
+      "neutralCapabilitySummary": "Maps Expo SDK 55 React code onto provider-specific SwiftUI views and modifiers, requiring a Host around each native tree, RNHostView around embedded React Native content, live component documentation checks, and confirmation before extending missing APIs with a local module.",
+      "neutralIntentExamples": [
+        "embed a React Native control inside an Expo SwiftUI hierarchy",
+        "choose an SDK 55 SwiftUI modifier after checking its provider contract"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "an Expo SDK 55 iOS project",
+        "the current component and modifier documentation for the exact SDK",
+        "a native SwiftUI tree and any React Native subtree that must be embedded"
+      ],
+      "operations": [
+        "import native views and modifiers from their separate Expo UI entry points",
+        "wrap the complete SwiftUI hierarchy in Host and isolate React Native descendants inside RNHostView",
+        "seek user confirmation before creating a local Expo module for a missing native view or modifier"
+      ],
+      "outputs": [
+        "an SDK-specific SwiftUI-backed Expo component tree",
+        "an explicitly bounded bridge between SwiftUI and React Native views",
+        "a rebuild requirement after package installation"
+      ],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": [
+        "defers API details to versioned provider documentation when a view or modifier is uncertain",
+        "stops local native extension work until the user approves it",
+        "requires native regeneration before integration can be observed"
+      ],
+      "exclusions": [
+        "does not cover Expo SDK versions other than 55",
+        "does not define accessibility semantics, state synchronization, lifecycle, testing, or fallback behavior",
+        "does not establish that mirrored SwiftUI knowledge matches the wrapper's implemented surface"
+      ],
+      "usefulInvariants": [
+        "every SwiftUI subtree has a Host boundary",
+        "React Native descendants cross the boundary only through RNHostView",
+        "provider docs are checked at the same SDK version as the project"
+      ],
+      "materialRisks": [
+        "the wrapper API and SDK-specific documentation can drift",
+        "native rebuilding changes generated platform projects and toolchain state",
+        "missing bridge details can produce layout or interaction failures"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "expo-sdk55-swiftui-host-bridge",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-779daf6d658a6b41",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-web-wizard/skills/react-patterns/SKILL.md",
+      "bodySha256": "779daf6d658a6b41271a98ae719d83a2e0451c50e9c54c4bb891ded2abf61e8f",
+      "neutralCapabilitySummary": "Provides a compact React topic matrix covering component roles, hook extraction, state placement, React 19 hooks, composition forms, profile-before-optimize choices, error-boundary scope, TypeScript prop shapes, and test levels.",
+      "neutralIntentExamples": [
+        "choose where shared subtree state should live in a React application",
+        "select an error-boundary scope for a risky feature component"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a React component, state, performance, error, typing, or testing question",
+        "the application's actual framework version and rendering model",
+        "profiling or failure evidence when optimization or recovery is requested"
+      ],
+      "operations": [
+        "classify the component as server, client, presentational, or container by responsibility and state",
+        "place state at component, ancestor, subtree-context, server-cache, or global-store scope",
+        "profile a reported slowdown before selecting virtualization, memoization, or stable callbacks",
+        "match root, feature, or component error boundaries to the blast radius of the risky render"
+      ],
+      "outputs": [
+        "a topic-level React pattern selection",
+        "a state-placement or recovery recommendation",
+        "a coarse unit, integration, or end-to-end test focus"
+      ],
+      "effects": ["read"],
+      "failureBehavior": [
+        "advises cleanup on unmount and retry-capable fallback UI but supplies no concrete enforcement",
+        "requires profiling evidence before performance changes",
+        "contains no resolution rule when multiple table categories apply"
+      ],
+      "exclusions": [
+        "does not provide implementation contracts, version checks, runnable examples, or acceptance tests",
+        "does not address semantic HTML, keyboard behavior, ARIA, contrast, or responsive layout",
+        "does not add a mechanism beyond its duplicate body later in the same packet"
+      ],
+      "usefulInvariants": [
+        "hook call order remains stable across renders",
+        "state is kept at the narrowest scope matching its consumers",
+        "optimization follows measurement rather than anticipation"
+      ],
+      "materialRisks": [
+        "table-level advice can be mistaken for an architecture decision without project evidence",
+        "the remote file-structure image is not inspectable in this exact body",
+        "retaining both copies would double-count one generic mechanism"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "duplicate-generic-react-pattern-matrix",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-7c1497a0838f289f",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-aas-localization-international-growth/skills/i18n-localization/SKILL.md",
+      "bodySha256": "7c1497a0838f289f11a60cf20a2a56775e6460507d4391203bc645b5e1d65772",
+      "neutralCapabilitySummary": "Structures localized interfaces around namespaced translation keys, locale-separated catalogs, ICU plural and message rules, locale-aware date and number formatting, fallback language behavior, logical CSS properties, and an explicit RTL shipping check.",
+      "neutralIntentExamples": [
+        "remove hardcoded user-facing strings from a multilingual interface",
+        "verify that an Arabic layout uses direction-safe spacing and icon treatment"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "the supported locale and fallback-locale set",
+        "user-facing strings grouped by feature namespace",
+        "date, number, plural, text-expansion, and right-to-left layout requirements"
+      ],
+      "operations": [
+        "replace component literals with feature-scoped translation keys and prohibit sentence construction by concatenation",
+        "format dates and numbers through locale APIs and express complex plurals with ICU messages",
+        "convert directional spacing to logical CSS properties and mirror only direction-sensitive icons",
+        "scan for hardcoded strings and missing catalog entries before shipping"
+      ],
+      "outputs": [
+        "locale catalogs partitioned by language and feature",
+        "translation-key calls in application code",
+        "a shipping checklist for catalog coverage, formatting, fallback, and RTL behavior"
+      ],
+      "effects": ["read", "write"],
+      "failureBehavior": [
+        "falls back to a configured default language when a translation is absent",
+        "flags literal strings and missing translations through a referenced checker",
+        "requires RTL layout testing when a supported locale uses right-to-left direction"
+      ],
+      "exclusions": [
+        "does not include the referenced checker implementation or a false-positive policy",
+        "does not define translation review, extraction, synchronization, or locale negotiation",
+        "does not test screen-reader pronunciation, bidirectional text isolation, or focus order"
+      ],
+      "usefulInvariants": [
+        "user-visible copy is addressed through stable keys",
+        "formatting follows the active locale rather than a hardcoded presentation",
+        "layout spacing is direction-neutral wherever possible"
+      ],
+      "materialRisks": [
+        "blanket icon mirroring can reverse symbols that should remain invariant",
+        "fallbacks can hide incomplete locale coverage",
+        "the unavailable checker cannot be independently assessed from this body"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "pattern-reference",
+      "proposedCluster": "localized-interface-catalog-and-rtl-discipline",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-8bc27790f6e6dfc2",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:webapp-testing/SKILL.md",
+      "bodySha256": "8bc27790f6e6dfc2bfa6692326d4518baacf6a31dcc646d963c729adad2f7e34",
+      "neutralCapabilitySummary": "Tests a local web application with synchronous Playwright by distinguishing static from dynamic pages, managing optional server lifecycles through an external helper, waiting for rendered network quiescence, inspecting the live DOM or screenshot, and acting through selectors discovered from that state.",
+      "neutralIntentExamples": [
+        "discover the rendered selector for a dynamic form before submitting it",
+        "capture browser-visible evidence while a local frontend and backend are running"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a static HTML file or local application URL",
+        "the startup commands and ports for any required local servers",
+        "a browser interaction or assertion to verify after reconnaissance"
+      ],
+      "operations": [
+        "read static markup directly when it is sufficient to identify stable selectors",
+        "for a dynamic page, navigate, wait for network-idle state, capture DOM or screenshot evidence, then choose selectors",
+        "separate server lifecycle management from the Playwright script and always close the Chromium instance"
+      ],
+      "outputs": [
+        "a focused Python Playwright automation script",
+        "rendered DOM, screenshot, or console evidence",
+        "an observed interaction result against a local web application"
+      ],
+      "effects": ["read", "write"],
+      "failureBehavior": [
+        "reclassifies static markup as dynamic when direct selector discovery is incomplete",
+        "delays DOM inspection until the page's JavaScript and network work reach the requested state",
+        "provides no fallback when network-idle never occurs or the referenced helper is unavailable"
+      ],
+      "exclusions": [
+        "does not include the server helper or referenced example scripts in the exact body",
+        "does not define assertions, accessibility-tree inspection, deterministic waiting, or test cleanup beyond closing the browser",
+        "does not authorize running embedded startup commands from an untrusted source"
+      ],
+      "usefulInvariants": [
+        "selectors for dynamic pages come from the rendered state under test",
+        "local servers and browser automation have separate lifecycle responsibilities",
+        "the browser is closed after each bounded run"
+      ],
+      "materialRisks": [
+        "network-idle is unreliable for applications with polling, streaming, or persistent connections",
+        "black-box helper execution hides lifecycle and command-injection behavior from review",
+        "text and CSS selectors can be brittle under localization or layout changes"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "rendered-webapp-reconnaissance-before-action",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-8e7f6e7f366b9329",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/react-patterns/SKILL.md",
+      "bodySha256": "8e7f6e7f366b9329a697120be830484bc5aa4008e8afe7dcf667fc007b190ac7",
+      "neutralCapabilitySummary": "Replicates the packet's earlier React pattern matrix for component categories, hook rules, state scope, composition, profiling-led optimization, boundary placement, typing, and test levels, with only packaging metadata differences.",
+      "neutralIntentExamples": [
+        "detect repeated React guidance within one semantic packet",
+        "avoid assigning independent weight to frontmatter-only variation"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "both React pattern bodies and their exact digests",
+        "their component, hook, state, performance, error, type, and testing tables"
+      ],
+      "operations": [
+        "compare section order, decision tables, anti-patterns, remote image reference, and closing constraints",
+        "separate frontmatter representation from substantive workflow content",
+        "record one duplicate relationship without treating either body as independent implementation evidence"
+      ],
+      "outputs": [
+        "an exact semantic-duplication finding",
+        "a rejection that preserves both provenance records"
+      ],
+      "effects": ["read"],
+      "failureBehavior": [
+        "requires a fresh comparison if either body gains a distinct decision rule, implementation contract, or verification method"
+      ],
+      "exclusions": [
+        "does not remove either source record",
+        "does not rehabilitate the retained text's generic and misclassified character"
+      ],
+      "usefulInvariants": [
+        "duplicate status is based on body semantics rather than the shared title",
+        "one mechanism contributes at most one unit of evidence"
+      ],
+      "materialRisks": [
+        "counting both copies would exaggerate support for broad React advice",
+        "future source drift could invalidate the current duplicate judgment"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "duplicate-generic-react-pattern-matrix",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-96a7927527410ee2",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/firecrawl-scraper/SKILL.md",
+      "bodySha256": "96a7927527410ee2ff90b7ec008f72aef22dcc358520257676e6265829932d8a",
+      "neutralCapabilitySummary": "Names a Firecrawl-backed scraping, crawling, screenshot, interaction, and PDF-extraction capability but delegates installation, examples, troubleshooting, request structure, and result handling to an external repository.",
+      "neutralIntentExamples": [
+        "identify whether a provider claims screenshot and PDF extraction",
+        "locate the upstream repository for undocumented Firecrawl examples"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a web extraction or crawl request",
+        "a Firecrawl API credential",
+        "external repository documentation not contained in this body"
+      ],
+      "operations": [
+        "install a third-party skill package and configure its API key through environment state",
+        "delegate all scrape, crawl, interaction, screenshot, and PDF procedures to linked material"
+      ],
+      "outputs": [
+        "a provider capability pointer",
+        "links to external examples and troubleshooting"
+      ],
+      "effects": ["external-write"],
+      "failureBehavior": [
+        "offers no local error taxonomy, retry rule, crawl bound, robots policy, or credential diagnostic"
+      ],
+      "exclusions": [
+        "does not contain request schemas, selectors, pagination logic, output contracts, or verification steps",
+        "does not constrain data sensitivity, crawling scope, rate, cost, or site authorization",
+        "does not contribute a body-specific web-interface review mechanism"
+      ],
+      "usefulInvariants": [
+        "credentials are expected to remain in environment configuration rather than prose"
+      ],
+      "materialRisks": [
+        "installation executes an unpinned third-party package",
+        "provider calls can transmit sensitive URLs or documents and incur cost",
+        "thin marketing coverage can be mistaken for reviewed implementation"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "thin-firecrawl-provider-pointer",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-9e85e036238e3c53",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/makepad-skills/SKILL.md",
+      "bodySha256": "9e85e036238e3c53a4ea9cb18be0f893a3997364498d14f1b5038f03921f90d4",
+      "neutralCapabilitySummary": "States that an external Makepad repository covers Rust UI setup, patterns, shaders, packaging, and troubleshooting, without carrying any of those mechanisms into the reviewed body.",
+      "neutralIntentExamples": [
+        "find the upstream location of claimed Makepad guidance",
+        "determine whether this body contains an actionable Rust UI method"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a Makepad UI development question",
+        "the separately hosted source repository"
+      ],
+      "operations": [
+        "route the reader to an external repository for every substantive setup, shader, packaging, pattern, or troubleshooting detail"
+      ],
+      "outputs": [
+        "a broad capability label and source link"
+      ],
+      "effects": ["read"],
+      "failureBehavior": [
+        "stops when required scope, permission, or success criteria are absent but defines no Makepad-specific failure path"
+      ],
+      "exclusions": [
+        "does not specify APIs, project layout, shader contracts, package commands, diagnostic decisions, or tests",
+        "does not provide web accessibility or browser-interface evidence",
+        "does not make the linked repository part of this digest"
+      ],
+      "usefulInvariants": [
+        "no implementation claim can be supported without separately reviewing the linked repository"
+      ],
+      "materialRisks": [
+        "a heading-level catalogue can be misread as an implemented workflow",
+        "external content can change independently of this exact body"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "thin-makepad-repository-pointer",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-a41f3ae4b6c8d62e",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/ui-page/SKILL.md",
+      "bodySha256": "a41f3ae4b6c8d62e68bdc682b07bd2d4254b3e520684635d1d11a433bfc96f0d",
+      "neutralCapabilitySummary": "Scaffolds a StyleSeed-bound mobile page from existing shell, top-bar, content, and bottom-navigation patterns, then checks fixed spacing, token, card, accent, hierarchy, safe-area, and 44-pixel target rules before presenting it.",
+      "neutralIntentExamples": [
+        "assemble a new mobile screen from an existing StyleSeed component library",
+        "check generated page controls against the source's minimum target size"
+      ],
+      "legacyAliases": ["ss-page"],
+      "inputs": [
+        "a page name and real screen requirements",
+        "the project's CLAUDE file and named page-shell, top-bar, bottom-nav, UI, and pattern components",
+        "the project's semantic color and shadow tokens"
+      ],
+      "operations": [
+        "compose the page shell from existing project patterns instead of recreating primitives",
+        "apply the fixed mobile width, section padding, vertical rhythm, bottom-navigation clearance, and safe-area insets",
+        "audit generated markup for card containment, one accent, semantic colors, alternating section forms, numeric hierarchy, six-pixel spacing, and target size",
+        "repair any checklist violation before exposing the page result"
+      ],
+      "outputs": [
+        "a new project-specific mobile page component",
+        "a post-generation checklist result",
+        "edits resolving detected StyleSeed rule violations"
+      ],
+      "effects": ["read", "write"],
+      "failureBehavior": [
+        "redirects single patterns, full flows, desktop screens, and existing-page tweaks to other paths",
+        "requires checklist failures to be corrected before presentation",
+        "cannot operate when the named project components or conventions are absent"
+      ],
+      "exclusions": [
+        "does not define semantic structure, focus order, form labeling, keyboard operation, contrast measurement, or screen-reader checks",
+        "does not prove that every content section belongs inside a card",
+        "does not generalize beyond the StyleSeed file layout and class vocabulary"
+      ],
+      "usefulInvariants": [
+        "new pages reuse existing primitives and navigation patterns",
+        "visual values come from project tokens rather than literal colors",
+        "interactive targets meet the body's stated minimum before handoff"
+      ],
+      "materialRisks": [
+        "forcing all content into cards can flatten information hierarchy and product semantics",
+        "a source-level checklist cannot confirm rendered target size or safe-area behavior",
+        "project-local class rules may be applied to incompatible component implementations"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "project-bound-mobile-page-composition-check",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-ae7deeb2b07d9467",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/react-state-management/SKILL.md",
+      "bodySha256": "ae7deeb2b07d9467c8c8e928bc9997197eac61021488146f753bfc4f17bdfdef",
+      "neutralCapabilitySummary": "Separates React state by locality and ownership, maps client, server, URL, form, and atomic needs to distinct tools, demonstrates typed store slices and selectors, and specifies optimistic server updates with cancellation, snapshots, rollback, and invalidation.",
+      "neutralIntentExamples": [
+        "choose between a global store and a server-state cache for a React feature",
+        "roll back an optimistic user update after a failed mutation"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "the state category, consumer scope, update granularity, and persistence needs",
+        "typed domain models and store actions",
+        "server query keys, mutation variables, and a rollback-capable cache client"
+      ],
+      "operations": [
+        "classify state as local, shared client, remote server, URL, form, or derived data before selecting a library",
+        "split larger Zustand stores into typed slices and expose selector hooks that subscribe only to needed fields",
+        "construct hierarchical query-key factories so list and detail caches can be targeted precisely",
+        "cancel competing refetches, snapshot cached data, write the optimistic value, restore it on error, and invalidate after settlement"
+      ],
+      "outputs": [
+        "a state-ownership and library choice",
+        "typed store, atom, or query-hook structures",
+        "a reversible optimistic mutation lifecycle"
+      ],
+      "effects": ["read", "write"],
+      "failureBehavior": [
+        "restores the previous cached entity when an optimistic mutation fails",
+        "disables a detail query when its identifier is absent",
+        "provides no conflict strategy when concurrent optimistic writes overlap"
+      ],
+      "exclusions": [
+        "does not validate API responses, authentication state, persistence security, offline queues, or cache hydration",
+        "does not define accessibility or visual-interface behavior",
+        "does not include the referenced implementation playbook"
+      ],
+      "usefulInvariants": [
+        "server-owned data is not duplicated into a client global store",
+        "derived values are computed instead of persisted",
+        "optimistic writes retain a recoverable pre-mutation snapshot"
+      ],
+      "materialRisks": [
+        "the examples persist user and theme state without a privacy or schema-migration policy",
+        "sample fetches accept unparsed JSON and reduce failures to strings",
+        "library choice tables can obscure consistency, concurrency, and lifecycle requirements"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "misclassified-react-state-ownership-and-rollback",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-b0b330138575ed53",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/odoo-qweb-templates/SKILL.md",
+      "bodySha256": "b0b330138575ed53ce21983a80435b4377d35c15659757a4332d9e8196f42e42",
+      "neutralCapabilitySummary": "Builds server-side Odoo QWeb report records and XML templates using report bindings, document iteration, conditional rendering, field-aware formatting, external layout wrappers, and version-sensitive escaping and translation choices.",
+      "neutralIntentExamples": [
+        "bind a custom Odoo model to a PDF report template",
+        "debug why a QWeb loop cannot access its current record"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "an Odoo model, report identifier, template identifier, and target version",
+        "document fields, loop variables, visibility conditions, and translation needs",
+        "the distinction between report, email, website, and client-side QWeb scope"
+      ],
+      "operations": [
+        "bind an ir.actions.report record to the model and matching template name",
+        "iterate docs with an explicit alias inside the HTML container and external report layout",
+        "render model fields through t-field, safe non-field strings through the version-appropriate directive, and conditional blocks through t-if",
+        "move complex Python calculations into model or report-helper code rather than embedding them in XML"
+      ],
+      "outputs": [
+        "an Odoo report action record",
+        "a server-side QWeb XML template",
+        "a diagnosis of common loop, escaping, and scope errors"
+      ],
+      "effects": ["write"],
+      "failureBehavior": [
+        "uses field rendering so Odoo supplies type-aware date, money, and boolean formatting",
+        "requires t-as for iterable access and warns when escaping semantics do not match the intended content",
+        "does not address PDF engine failures or controller routing"
+      ],
+      "exclusions": [
+        "does not cover client-side QWeb, dynamic website controllers, or wkhtmltopdf configuration",
+        "does not establish accessibility semantics or browser interaction behavior",
+        "does not reconcile the different variable scope of email templates"
+      ],
+      "usefulInvariants": [
+        "report identifiers and template names remain aligned",
+        "model fields use Odoo's typed rendering path",
+        "server-side calculations stay outside presentation XML"
+      ],
+      "materialRisks": [
+        "version-sensitive directives can produce escaped markup or unsafe output when applied incorrectly",
+        "example medical fields could normalize copying sensitive domain examples without access controls",
+        "the provider-specific report mechanism is misclassified as general web-interface evidence"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "misclassified-odoo-server-qweb-report-template",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-b2c0baa185497c3e",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/expo-observe/SKILL.md",
+      "bodySha256": "b2c0baa185497c3e79a309ac0bb69610ee98035490403704695a2cba97a91de8",
+      "neutralCapabilitySummary": "Routes Expo performance work to three absent reference files covering version-dependent root instrumentation, interactive markers, navigation metrics, five EAS query commands, metric thresholds, and dashboard diagnosis, while naming canonical provider documentation as the source of truth.",
+      "neutralIntentExamples": [
+        "locate the provider reference for route-level Expo performance metrics",
+        "distinguish setup, terminal queries, and metric interpretation material"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "an Expo SDK version and EAS Observe task category",
+        "the separately stored setup, query, or metric reference",
+        "current provider documentation and authenticated EAS project context"
+      ],
+      "operations": [
+        "route installation questions to setup material, CLI questions to query material, and diagnostic questions to metric material",
+        "select AppMetricsRoot or ObserveRoot and the corresponding interactive marker path by SDK generation",
+        "defer evolving command and metric details to canonical provider documentation"
+      ],
+      "outputs": [
+        "a reference-file route",
+        "a set of provider documentation links",
+        "a version distinction for instrumentation entry points"
+      ],
+      "effects": ["read", "external-write"],
+      "failureBehavior": [
+        "warns that local references may lag the live service",
+        "requires external verification of commands, pricing, quotas, credentials, and deployment effects",
+        "contains no local behavior when its three companion files are missing"
+      ],
+      "exclusions": [
+        "does not include configuration, command flags, JSON contracts, threshold values, or diagnostic rules in this body",
+        "does not prove instrumentation correctness or data completeness",
+        "does not provide a provider-neutral performance method"
+      ],
+      "usefulInvariants": [
+        "SDK version is resolved before choosing the root wrapper and interactive marker API",
+        "setup, querying, and interpretation remain separate concerns"
+      ],
+      "materialRisks": [
+        "authenticated production metrics can expose sensitive route and user-experience data",
+        "provider evolution can stale every linked detail",
+        "a thin index can be mistaken for reviewed observability machinery"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "thin-eas-observe-reference-router",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-b8173e308ad2ce02",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/frontend-dev-guidelines/SKILL.md",
+      "bodySha256": "b8173e308ad2ce02585943cb3653c9b7d08c2defa324e5d1b6dd9c7dd349263b",
+      "neutralCapabilitySummary": "Imposes a specific React, TanStack Query and Router, MUI v7, Suspense, feature-directory, alias, TypeScript, memoization, snackbar, and lazy-loading doctrine, preceded by a five-factor feasibility score and followed by source-level conformance checklists.",
+      "neutralIntentExamples": [
+        "assess whether a proposed React feature fits one prescribed frontend architecture",
+        "audit a component for this source's Suspense and feature-boundary conventions"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a React feature proposal or source change",
+        "the project's rendering, routing, data, styling, alias, and feedback stack",
+        "scores for fit, complexity, performance risk, reusability, and maintenance cost"
+      ],
+      "operations": [
+        "compute the stated feasibility index and redesign proposals scoring two or below",
+        "partition domain code under features while reserving reusable primitives for components and route entries for routes",
+        "replace component loading branches with feature-level Suspense boundaries and isolate API calls in feature API modules",
+        "check aliases, explicit types, lazy loading, MUI v7 grid syntax, callback wrapping, and snackbar use before finalization"
+      ],
+      "outputs": [
+        "a feasibility score and proceed, simplify, or redesign decision",
+        "a project-specific file and component structure",
+        "a doctrine-conformance checklist result"
+      ],
+      "effects": ["read", "write"],
+      "failureBehavior": [
+        "immediately rejects early loaders, inline API calls, untyped responses, cross-feature coupling, and multi-purpose components",
+        "requires a feasibility score of at least six for the final checklist",
+        "provides no exception process when product requirements conflict with the doctrine"
+      ],
+      "exclusions": [
+        "does not measure runtime performance, bundle size, layout shift, or accessibility",
+        "does not justify universal memoization, React.FC, or lazy loading for every nontrivial component",
+        "does not generalize beyond its exact library stack and local component names"
+      ],
+      "usefulInvariants": [
+        "feature API calls remain outside rendering components",
+        "route and feature entry points own suspense boundaries",
+        "project aliases and type imports follow one consistent convention"
+      ],
+      "materialRisks": [
+        "mandatory memoization and lazy boundaries can add complexity and regress performance without measurements",
+        "the feasibility arithmetic treats ordinal judgments as commensurate values",
+        "rigid framework doctrine can overwrite established repository architecture"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "rigid-stack-specific-frontend-doctrine",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-b84c8aa285548a4e",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/code-showcase-core-components/SKILL.md",
+      "bodySha256": "b84c8aa285548a4ef68c095eba3379adf1e5fe0e0264a4b302f259916f33403f",
+      "neutralCapabilitySummary": "Duplicates the packet's other core-component body by mapping spacing, color, and typography tokens onto Box, stack, text, button, input, card, screen, form, and list-item compositions, with upstream metadata and wrapper text added.",
+      "neutralIntentExamples": [
+        "detect duplicate token-based component guidance",
+        "keep one semantic record for equivalent component examples"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "this body and the packet's core-components body",
+        "their token tables, component examples, anti-patterns, and Card prop contract"
+      ],
+      "operations": [
+        "compare token names and values, primitive substitutions, layout examples, and component prop unions",
+        "identify the extra source metadata and introductory wrapper as non-mechanistic variation",
+        "reject duplicate evidentiary weight while retaining the exact provenance and digest"
+      ],
+      "outputs": [
+        "a duplicate-component-system finding",
+        "a provenance-preserving rejection"
+      ],
+      "effects": ["read"],
+      "failureBehavior": [
+        "reopens separate review if either body adds different tokens, accessibility contracts, runtime behavior, or verification"
+      ],
+      "exclusions": [
+        "does not delete or merge source records",
+        "does not independently validate the invented component API"
+      ],
+      "usefulInvariants": [
+        "semantic equivalence is determined from the complete body rather than title identity",
+        "equivalent component examples count once"
+      ],
+      "materialRisks": [
+        "retaining both copies would overstate independent design-system support",
+        "minor future divergence could make the duplicate relationship stale"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "duplicate-tokenized-core-component-guide",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-bada73291deff39c",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/code-showcase-react-ui-patterns/SKILL.md",
+      "bodySha256": "bada73291deff39ca8c2b428a306b2277848317c46530f7407110b0670d4553b",
+      "neutralCapabilitySummary": "Selects loading, empty, error, cached-data, button, and mutation states for React interfaces, preserving visible data during refetch, escalating errors by scope, disabling repeated actions, and requiring explicit user feedback for asynchronous outcomes.",
+      "neutralIntentExamples": [
+        "prevent a cached list from flashing to a spinner during refetch",
+        "choose between an inline error and a full error screen"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "loading, data, error, empty, validation, and submission state",
+        "the recoverability and scope of each failure",
+        "retry, success, and action callbacks for the interface"
+      ],
+      "operations": [
+        "resolve errors before loading, show an initial indicator only when no displayable data exists, and render a distinct empty collection state",
+        "select skeletons for known content geometry and spinners for indeterminate inline operations",
+        "escalate field, recoverable, partial-page, and unrecoverable failures through progressively broader UI surfaces",
+        "disable an initiating control while its asynchronous operation is active and surface both success and failure feedback"
+      ],
+      "outputs": [
+        "explicit loading, cached, empty, error, and success render branches",
+        "retry-capable error UI",
+        "submission controls resistant to duplicate activation"
+      ],
+      "effects": ["read", "write"],
+      "failureBehavior": [
+        "keeps stale-but-useful data visible during refetch instead of replacing it with a loader",
+        "surfaces mutation failures to the user rather than logging them alone",
+        "blocks repeated submission until the active operation settles"
+      ],
+      "exclusions": [
+        "does not define cancellation, timeout, partial-data provenance, optimistic rollback, or concurrent mutation rules",
+        "does not sanitize error content before the example renders error.message",
+        "does not specify ARIA live regions, focus movement, reduced motion, or test assertions"
+      ],
+      "usefulInvariants": [
+        "a collection has an explicit empty state",
+        "cached content is not discarded solely because background work begins",
+        "every user-triggered mutation has visible terminal feedback"
+      ],
+      "materialRisks": [
+        "rendering raw exception messages can expose internal or sensitive details",
+        "toast-only errors may be inaccessible or disappear before they are understood",
+        "preserving partial data without freshness labeling can mislead users"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "pattern-reference",
+      "proposedCluster": "async-interface-state-and-feedback-selection",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-bc62633692d77347",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/core-components/SKILL.md",
+      "bodySha256": "bc62633692d773479211bb387ddab8509040284d2201025e3897d78110389fc9",
+      "neutralCapabilitySummary": "Defines a project-local component vocabulary in which spacing, color, typography, layout, controls, validation, and card variants are expressed through bounded token props instead of raw platform elements, literal values, or inline style objects.",
+      "neutralIntentExamples": [
+        "compose a form from token-aware stack, input, and button primitives",
+        "replace hardcoded list-item styling with semantic component props"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "an existing core component library implementing the named props",
+        "spacing, semantic color, typography, border, and radius token definitions",
+        "content and interaction callbacks for screen, form, card, or list compositions"
+      ],
+      "operations": [
+        "replace raw View and Text imports with token-aware Box, stack, and Text primitives",
+        "encode spacing, colors, and type scale through named token props rather than numeric or literal style values",
+        "assemble screen, form, and list layouts from existing primitives and expose only bounded Card padding and variant unions",
+        "carry loading, disabled, validation, and visual variant state through component contracts"
+      ],
+      "outputs": [
+        "token-driven component compositions",
+        "a narrow typed prop surface for reusable cards",
+        "consistent screen, form, and list-item structures"
+      ],
+      "effects": ["write"],
+      "failureBehavior": [
+        "marks literal values, raw platform imports, and inline visual styles as anti-patterns",
+        "provides no runtime fallback when a named token or component does not exist",
+        "does not define a migration path for legitimate one-off values"
+      ],
+      "exclusions": [
+        "does not implement the primitives, token resolver, theme switching, or component tests",
+        "does not specify focus, keyboard, semantic role, target size, contrast, or error-announcement contracts",
+        "does not establish that every product need fits the enumerated tokens"
+      ],
+      "usefulInvariants": [
+        "visual values pass through a centrally named token vocabulary",
+        "layout composition uses the same primitives as reusable components",
+        "component variants are constrained by TypeScript unions"
+      ],
+      "materialRisks": [
+        "invented token names and component props are project-bound and may not exist",
+        "blanket prohibition of inline styles can obstruct computed or platform-specific values",
+        "visual consistency can be achieved while semantic accessibility remains absent"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "token-prop-core-component-composition",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-bcdbcfacc6d83c82",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/expo-ui-jetpack-compose/SKILL.md",
+      "bodySha256": "bcdbcfacc6d83c82cc977675ec40aca7a2a0a70c24bd6520bd358a0b363c2eec",
+      "neutralCapabilitySummary": "Maps Expo SDK 55 React code onto Jetpack Compose and Material 3 wrappers, requiring Host sizing choices, versioned provider documentation checks, Compose-native LazyColumn for lists, and Android vector resources for icons.",
+      "neutralIntentExamples": [
+        "render a Compose list inside an Expo screen with explicit host sizing",
+        "check an SDK 55 Compose modifier before adding it to a native tree"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "an Expo SDK 55 Android project",
+        "the current versioned component and modifier documentation",
+        "a Compose view hierarchy, desired host sizing, and vector icon resources"
+      ],
+      "operations": [
+        "import views and modifier factories from their separate Expo Compose modules",
+        "choose intrinsic Host sizing for bounded content or flex sizing for a scrolling LazyColumn parent",
+        "represent scrollable lists with the Compose-native lazy container and load icons from Android XML vectors"
+      ],
+      "outputs": [
+        "an SDK-specific Jetpack Compose-backed Expo hierarchy",
+        "an explicit Host sizing contract",
+        "native list and icon resource choices"
+      ],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": [
+        "defers uncertain view and modifier signatures to same-version provider docs",
+        "requires a native Android rebuild after installing the package",
+        "contains no alternate path when a Compose API is absent"
+      ],
+      "exclusions": [
+        "does not apply to SDK versions other than 55",
+        "does not define state bridging, lifecycle, accessibility semantics, testing, or React Native embedding",
+        "does not verify that Material 3 knowledge matches the wrapper's actual implementation"
+      ],
+      "usefulInvariants": [
+        "every Compose tree is bounded by a Host",
+        "scrolling container choice agrees with Host sizing",
+        "API checks target the project's exact SDK version"
+      ],
+      "materialRisks": [
+        "SDK-bound wrapper signatures can drift",
+        "incorrect Host sizing can collapse content or break scrolling",
+        "native regeneration and vector resources introduce platform-specific maintenance"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "expo-sdk55-compose-host-and-list-bridge",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-bde22da3e49a6bdc",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/odoo-migration-helper/SKILL.md",
+      "bodySha256": "bde22da3e49a6bdcf276c1c4f93200b955ee8fd73a25da4a7ccc56faf61e050f",
+      "neutralCapabilitySummary": "Guides sequential Odoo 14 through 17 module migration by comparing source and target versions, translating known view, chatter, publication, mail, report, and JavaScript changes, updating manifests, and validating each intermediate version before proceeding.",
+      "neutralIntentExamples": [
+        "translate an Odoo 16 attrs expression into version 17 view syntax",
+        "check a custom module at every intermediate major upgrade"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "the source and target Odoo versions between 14 and 17",
+        "the custom module's Python, XML, JavaScript, manifest, and feature inventory",
+        "official upgrade analysis, OCA notes, and target branches where applicable"
+      ],
+      "operations": [
+        "inventory version-specific breaking changes before rewriting module code",
+        "convert attrs visibility and required rules to inline expressions and replace legacy chatter markup on version 17",
+        "update renamed publication and mail fields, report signatures, JavaScript module syntax, and manifest version metadata",
+        "install or update the module and inspect deprecation and validation results at each major version boundary"
+      ],
+      "outputs": [
+        "a module-specific migration checklist",
+        "before-and-after code changes for known breaking surfaces",
+        "per-version validation evidence"
+      ],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": [
+        "forbids skipping intermediate versions",
+        "requires staging tests for enterprise-only or undocumented changes",
+        "defers complex legacy-to-OWL migration and Odoo.sh specifics to separate expertise"
+      ],
+      "exclusions": [
+        "does not cover releases older than 14 or newer than 17",
+        "does not include complete data migration, rollback, backup, or production cutover procedures",
+        "is repository migration guidance rather than web-interface or accessibility machinery"
+      ],
+      "usefulInvariants": [
+        "the module is validated on every traversed major version",
+        "manifest version tracks the target Odoo generation",
+        "community-module readiness is checked against the target branch rather than assumed"
+      ],
+      "materialRisks": [
+        "the version table is incomplete and can stale against provider changes",
+        "running module updates without backup and rollback controls can mutate business data",
+        "the suggested unrelated validation command may not apply to Odoo modules"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "misclassified-sequential-odoo-module-migration",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-c8667f8b4c436877",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/screen-reader-testing/SKILL.md",
+      "bodySha256": "c8667f8b4c436877061bcda1acecddeaddd96143c68d791af218aba1d6c4eb28",
+      "neutralCapabilitySummary": "Names screen-reader compatibility, ARIA, forms, dynamic announcements, and navigation as review targets but delegates every concrete test sequence, assistive-technology matrix, expected announcement, and remediation rule to a missing implementation playbook.",
+      "neutralIntentExamples": [
+        "decide whether a task belongs to screen-reader testing",
+        "locate the absent playbook claimed to contain detailed examples"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a web interface and a screen-reader-related question",
+        "goals, constraints, expected behavior, and success criteria",
+        "the separately referenced implementation playbook"
+      ],
+      "operations": [
+        "classify the request as compatibility, ARIA, form, live-region, or navigation testing",
+        "defer concrete interaction and verification steps to resources/implementation-playbook.md"
+      ],
+      "outputs": [
+        "a scope classification",
+        "a pointer to missing detailed guidance"
+      ],
+      "effects": ["read"],
+      "failureBehavior": [
+        "stops when goals, permissions, boundaries, or success criteria are missing",
+        "provides no screen-reader-specific fallback when the companion resource is unavailable"
+      ],
+      "exclusions": [
+        "does not identify screen readers, browsers, keyboard sequences, reading-order expectations, announcement text, or pass criteria",
+        "does not include the named implementation playbook",
+        "does not produce reproducible accessibility evidence"
+      ],
+      "usefulInvariants": [
+        "screen-reader tasks are bounded by explicit expected outcomes before testing begins"
+      ],
+      "materialRisks": [
+        "a domain label can be mistaken for completed assistive-technology review",
+        "missing platform and browser coverage can hide substantial behavior differences"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "thin-screen-reader-playbook-router",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-ca69f84d77051117",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/avalonia-zafiro-development/SKILL.md",
+      "bodySha256": "ca69f84d770511171e44ff5e12fe5ce0586057e08d134ef6a60ff0bfd93b9c17",
+      "neutralCapabilitySummary": "Sets four high-level Avalonia and Zafiro architectural constraints and routes all concrete naming, reactive, DynamicData, validation, shortcut, and reusable-helper behavior to five companion documents absent from the reviewed body.",
+      "neutralIntentExamples": [
+        "check whether an Avalonia view model remains framework-independent",
+        "locate the companion guide for a Zafiro reactive pattern"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "an Avalonia and Zafiro code task",
+        "the existing repository's helpers and comparable implementations",
+        "five separately linked architecture and convention guides"
+      ],
+      "operations": [
+        "search the codebase for a matching Zafiro helper before writing a new abstraction",
+        "propose a reusable extension instead of embedding missing complex behavior inline",
+        "prefer DynamicData operators within functional-reactive MVVM pipelines"
+      ],
+      "outputs": [
+        "a route to one of five companion guides",
+        "a preliminary reuse or extension recommendation"
+      ],
+      "effects": ["read", "write"],
+      "failureBehavior": [
+        "stops when permissions, scope, or success criteria are missing",
+        "contains no concrete recovery rule for missing Zafiro abstractions or reactive errors"
+      ],
+      "exclusions": [
+        "does not include the linked technical rules, names, shortcuts, or patterns",
+        "does not define UI accessibility, layout, rendering, tests, or verification",
+        "targets cross-platform native Avalonia rather than web interfaces"
+      ],
+      "usefulInvariants": [
+        "view models remain independent of Avalonia UI types",
+        "existing Zafiro abstractions are searched before new helpers are proposed"
+      ],
+      "materialRisks": [
+        "missing companion bodies make mandatory rules unauditable",
+        "Zafiro-first preference can produce unnecessary framework lock-in",
+        "misclassification obscures the absence of web and accessibility mechanisms"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "thin-misclassified-avalonia-zafiro-router",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-ce4c42bfa40b3d53",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-aas-observability-ir/skills/performance-engineer/SKILL.md",
+      "bodySha256": "ce4c42bfa40b3d534187e1ad0d30b356e876e2379650c2cfe8164b2752e8724c",
+      "neutralCapabilitySummary": "Frames performance work as baseline measurement, trace and profile collection, bottleneck prioritization, bounded optimization, result validation, and regression guardrails, surrounded by a broad catalogue of observability, load, caching, frontend, backend, cloud, data, and mobile techniques.",
+      "neutralIntentExamples": [
+        "require baseline traces before proposing a latency optimization",
+        "attach a regression budget after validating a performance change"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a measurable performance goal, user impact, and baseline",
+        "traces, profiles, resource metrics, load scenarios, and system topology",
+        "approval boundaries for load, rollout, and production observation"
+      ],
+      "operations": [
+        "correlate traces, profiles, load results, and user journeys to isolate the highest-impact bottleneck",
+        "rank candidate changes by user benefit, business value, effort, cost, and maintainability",
+        "stage the selected optimization behind rollback controls and compare post-change metrics to the baseline",
+        "encode the accepted result as a budget, alert, or continuous regression check"
+      ],
+      "outputs": [
+        "a baseline and bottleneck diagnosis",
+        "a prioritized optimization proposal with tradeoffs",
+        "before-and-after evidence plus a regression guardrail"
+      ],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": [
+        "rejects performance work when no metrics, traces, profiles, or stated goal are available",
+        "prohibits unapproved production load tests",
+        "requires staged rollout and rollback planning for high-risk changes"
+      ],
+      "exclusions": [
+        "does not specify metric formulas, experiment design, statistical acceptance, commands, or tool configurations",
+        "does not distinguish causal improvement from correlated production changes",
+        "is a general performance role catalogue rather than a web-interface or accessibility mechanism"
+      ],
+      "usefulInvariants": [
+        "optimization follows an observed baseline",
+        "the largest user-impact bottleneck is considered before lower-value tuning",
+        "accepted improvements receive a future regression boundary"
+      ],
+      "materialRisks": [
+        "the tool inventory can imply expertise without an executable method",
+        "production profiling and load generation can expose data or destabilize services",
+        "generic budgets can optimize synthetic metrics while missing perceived quality"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "misclassified-general-performance-role-catalogue",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-d19c71bb12558371",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/ui-pattern/SKILL.md",
+      "bodySha256": "d19c71bb12558371e3d4480bbce7fe822ff9a7680b107cd5f5bfcf67f92f387b",
+      "neutralCapabilitySummary": "Generates one reusable StyleSeed composition by selecting a named card, grid, scrolling, list, form, statistics, data, or interaction pattern, inspecting existing primitives, and applying fixed card, section, title, list, grid, and semantic-token rules.",
+      "neutralIntentExamples": [
+        "compose a two-column statistics grid from project primitives",
+        "build a reusable filter bar without recreating controls"
+      ],
+      "legacyAliases": ["ss-pattern"],
+      "inputs": [
+        "one enumerated pattern type and its dynamic content requirements",
+        "the project's CLAUDE conventions and existing ui and patterns directories",
+        "the project's semantic tokens and available primitive component contracts"
+      ],
+      "operations": [
+        "classify the request as a layout, data-display, or interactive composition rather than a primitive, page, flow, or token task",
+        "inspect existing project components and assemble the requested pattern without cloning a primitive",
+        "apply the source's card surface, section margin, heading, list, and grid spacing conventions",
+        "expose content and behavior as props so the composition can be reused"
+      ],
+      "outputs": [
+        "a reusable project-specific pattern component",
+        "a composition of existing primitives with semantic visual values"
+      ],
+      "effects": ["read", "write"],
+      "failureBehavior": [
+        "redirects primitive, full-page, multi-page-flow, and token-design requests to separate mechanisms",
+        "cannot proceed faithfully when the named project conventions or primitives are missing",
+        "provides no verification beyond source-level conformance to fixed class recipes"
+      ],
+      "exclusions": [
+        "does not define behavior for pattern types outside the enumerated catalogue",
+        "does not verify semantics, focus behavior, responsive overflow, contrast, target size, loading, or errors",
+        "does not generalize beyond the StyleSeed project vocabulary"
+      ],
+      "usefulInvariants": [
+        "composed patterns reuse existing primitives",
+        "visual values resolve through semantic tokens",
+        "dynamic content enters through an explicit prop contract"
+      ],
+      "materialRisks": [
+        "fixed class recipes can be applied without checking actual content density or responsive behavior",
+        "a limited pattern catalogue can force product requirements into unsuitable shapes",
+        "reusable props can expose unstable primitive details as public API"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "project-bound-ui-pattern-composition",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    }
+  ]
+}
