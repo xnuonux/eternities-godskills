@@ -1,6 +1,6 @@
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { lstat, mkdir, readFile, readdir, rename, rm, stat, writeFile } from "node:fs/promises";
+import { mkdir, readFile, readdir, rename, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -56,60 +56,54 @@ function parseHeadTree(value) {
   return records;
 }
 
-async function presentFileRows(sourceRoot, paths, excludedRoot) {
+async function walkPhysicalSource(sourceRoot, excludedRoot) {
   const rows = new Map();
-  const ordered = [...paths].sort((left, right) => left.localeCompare(right));
-  for (let offset = 0; offset < ordered.length; offset += 128) {
-    const batch = ordered.slice(offset, offset + 128);
-    const results = await Promise.all(batch.map(async (relativePath) => {
-      const absolutePath = path.resolve(sourceRoot, relativePath);
-      if (excludedRoot && (absolutePath === excludedRoot || absolutePath.startsWith(`${excludedRoot}${path.sep}`))) {
-        return null;
+  const prunedDirectories = new Set([".git", "node_modules", "_repos", "vendor", "third_party"]);
+  const pending = [path.resolve(sourceRoot)];
+  while (pending.length) {
+    const directory = pending.pop();
+    const entries = await readdir(directory, { withFileTypes: true });
+    entries.sort((left, right) => right.name.localeCompare(left.name));
+    for (const entry of entries) {
+      const absolutePath = path.join(directory, entry.name);
+      if (excludedRoot && (absolutePath === excludedRoot || absolutePath.startsWith(`${excludedRoot}${path.sep}`))) continue;
+      const relativePath = path.relative(sourceRoot, absolutePath).replaceAll("\\", "/");
+      if (entry.isDirectory()) {
+        if (!prunedDirectories.has(entry.name.toLowerCase())) pending.push(absolutePath);
+        continue;
       }
-      try {
-        const metadata = await lstat(absolutePath);
-        if (metadata.isSymbolicLink()) {
-          return { relativePath, absolutePath, byteSize: metadata.size, forceExcludeReason: "symbolic-link" };
-        }
-        if (!metadata.isFile()) return null;
-        return { relativePath, absolutePath, byteSize: metadata.size, forceExcludeReason: null };
-      } catch (error) {
-        if (error?.code === "ENOENT") return null;
-        throw error;
+      if (entry.isSymbolicLink()) {
+        rows.set(relativePath, { relativePath, absolutePath, byteSize: null, forceExcludeReason: "symbolic-link" });
+      } else if (entry.isFile()) {
+        rows.set(relativePath, { relativePath, absolutePath, byteSize: null, forceExcludeReason: null });
       }
-    }));
-    for (const row of results) if (row) rows.set(row.relativePath, row);
+    }
   }
   return rows;
 }
 
 async function inventorySource(sourceRoot, outputRoot, onProgress) {
   onProgress({ phase: "git-inventory", completed: 0, total: 1 });
-  const [head, treeText, untrackedText, modifiedText, deletedText] = await Promise.all([
+  const [head, treeText, modifiedText] = await Promise.all([
     runGit(sourceRoot, ["rev-parse", "HEAD"]),
     runGit(sourceRoot, ["ls-tree", "-r", "-l", "-z", "--full-tree", "HEAD"]),
-    runGit(sourceRoot, ["ls-files", "-o", "--exclude-standard", "-z"]),
     runGit(sourceRoot, ["ls-files", "-m", "-z"]),
-    runGit(sourceRoot, ["ls-files", "-d", "-z"]),
   ]);
   const headTree = parseHeadTree(treeText);
-  const untracked = new Set(splitNull(untrackedText).map((value) => value.replaceAll("\\", "/")));
   const modified = new Set(splitNull(modifiedText).map((value) => value.replaceAll("\\", "/")));
-  const deleted = new Set(splitNull(deletedText).map((value) => value.replaceAll("\\", "/")));
-  const mutablePaths = new Set([...untracked, ...modified].filter((value) => !deleted.has(value)));
   const absoluteOutput = path.resolve(outputRoot);
   const outputInsideSource = path.relative(path.resolve(sourceRoot), absoluteOutput);
   const excludedRoot = outputInsideSource === "" || (!outputInsideSource.startsWith("..") && !path.isAbsolute(outputInsideSource))
     ? absoluteOutput
     : null;
-  const present = await presentFileRows(sourceRoot, mutablePaths, excludedRoot);
+  const present = await walkPhysicalSource(sourceRoot, excludedRoot);
   onProgress({ phase: "git-inventory", completed: 1, total: 1 });
   const union = [...new Set([...headTree.keys(), ...present.keys()])].sort((left, right) => left.localeCompare(right));
 
   const records = union.map((relativePath) => {
     const headRow = headTree.get(relativePath);
     const workingRow = present.get(relativePath);
-    const state = headRow && deleted.has(relativePath)
+    const state = headRow && !workingRow
       ? "head-only"
       : !headRow && workingRow
         ? "working-only"

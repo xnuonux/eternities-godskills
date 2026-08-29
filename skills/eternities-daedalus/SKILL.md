@@ -40,3 +40,7 @@ Performance work requires a baseline, workload, measurement method, and regressi
 ## termination
 
 finish when one bounded local artifact, refusal, or handoff exists with exact evidence, tests and limits visible, no unresolved effect is implied, and no external action is pending.
+
+## Goal-proof route
+
+For multi-claim implementation closure, read [the goal-proof contract](references/first-party-contracts.md). A claim enters `complete` only with a passing bound probe and evidence reference. Bounded scans declare their coverage limit, and failed or missing proof leaves the edge open.

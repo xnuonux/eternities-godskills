@@ -208,6 +208,7 @@ export async function buildFirstPartyEvidence(records, options = {}) {
     const text = bytes.toString("utf8");
     row.contentInspected = true;
     row.sha256 = digest;
+    row.byteSize = bytes.byteLength;
     const recommendation = recommendOwner(relativePath, text, maxEvidenceChars);
     const card = recommendation ? {
       schemaVersion: 1,

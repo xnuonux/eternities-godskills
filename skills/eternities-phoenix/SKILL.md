@@ -27,3 +27,7 @@ refuse or hand off on production mutation, destructive repair, credentials or se
 ## output
 
 return route, scope, evidence and locators, impact, claim classes, hypothesis matrix, checks and results, uncertainty, proposed effect, rollback, authority, handoff owner, acceptance checks, and termination state. keep secrets out of the artifact.
+
+## durable elimination route
+
+For an investigation that may cross turns or agents, read [the durable diagnostic-state contract](references/first-party-contracts.md). Preserve verified foundations and disconfirming evidence in an append-only elimination ledger, declare exactly one current check, and never silently recycle an eliminated hypothesis.

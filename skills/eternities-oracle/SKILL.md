@@ -31,6 +31,10 @@ Research permission authorizes reading and synthesis, not installation, executio
 
 The Oracle succeeds when a later agent can reproduce the source path, distinguish fact from inference, see unresolved conflict, and refresh only the evidence that can drift.
 
+## Prior-art falsification route
+
+For novelty, overlap, or prior-art questions, read [the bounded falsification contract](references/first-party-contracts.md). A positive overlap requires an exact retrieved record and locator. A negative search must meet its declared independent-retrieval floor and final corpus review, and may conclude only `not-yet-refuted`, never novelty proved.
+
 ## Bounded repository and source mining
 
 When the question names repositories, source candidates, or a comparison set, add only the smallest source-specific operation justified by the inspected candidate evidence:

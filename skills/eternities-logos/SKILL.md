@@ -38,3 +38,7 @@ Logos makes a bounded local writing artifact or structural reading from supplied
 ## termination
 
 Finish when one bounded local artifact or structural representation exists, its provenance and uncertainty are visible, voice and canon are preserved, unsupported claims and effects are refused or handed off, and no publication or external action is implied.
+
+## Structured writing-work route
+
+For a substantial sourced document, read [the writing-packet contract](references/first-party-contracts.md). Bind the source ledger, voice constraints, structural blueprint, and ordered structure, support, voice, and provenance revision receipts before calling the artifact complete.

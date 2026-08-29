@@ -61,3 +61,7 @@ Do not hide uncertainty inside polished prose. A design is complete when a downs
 - **reliability**: define measurable reliability controls, observability, abort conditions, recovery, and review.
 - **security-architecture**: model trust boundaries and security controls without claiming authorization or provider facts.
 - **verification**: define acceptance evidence, fixture limits, exact digests, and commandless verification cases.
+
+## Runtime truth invariant
+
+For architecture that supervises agent runs, read [the runtime-state contract](references/first-party-contracts.md). Independent verification outranks an agent completion report, and a configured tool-velocity breach transitions the run to a visible paused state with an escalation reason rather than allowing silent overload.

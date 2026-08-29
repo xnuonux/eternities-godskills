@@ -26,3 +26,7 @@ Herald turns verified release evidence into one local artifact or a typed handof
 ## termination
 
 Finish with one route-owned local artifact, refusal, or typed handoff. Record proposed effects separately from performed local effects, then stop.
+
+## Release-unit manifest route
+
+For a release containing multiple components, read [the release-manifest contract](references/first-party-contracts.md). Every item binds version, verification, rollback, and dependency closure. Missing evidence or an unsatisfied prerequisite keeps the release unready.

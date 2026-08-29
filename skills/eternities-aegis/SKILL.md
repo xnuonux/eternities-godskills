@@ -56,3 +56,7 @@ Return:
 - explicit actions performed, deferred, refused, or still requiring authority.
 
 Terminate when the decision owner can distinguish proven exposure from suspicion, the smallest mitigations and proof obligations are clear, and no route invokes Eternities Aegis recursively.
+
+## Static-rule proof route
+
+Before accepting a new deterministic scanner rule, read [the static-rule fixture contract](references/first-party-contracts.md). Require a planted positive, a clean and comment-only negative control, an out-of-scope rejection, tamper detection, and isolated output. A pattern match without this fixture proof remains a lead.

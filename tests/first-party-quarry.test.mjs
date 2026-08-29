@@ -222,12 +222,16 @@ test("archive builder unions head and working files without reading excluded bod
     execFileSync("git", ["config", "user.email", "fixture@example.invalid"], { cwd: root });
     execFileSync("git", ["config", "user.name", "fixture"], { cwd: root });
     await mkdir(path.join(root, "_repos"), { recursive: true });
+    await mkdir(path.join(root, "nested-agent", ".git"), { recursive: true });
     await writeFile(path.join(root, "tracked.md"), "# Goal proof\nobservable truth and wiring\n");
     await writeFile(path.join(root, "head-only.md"), "# Debug\nmeasurement before hypothesis\n");
     await writeFile(path.join(root, ".env"), "SECRET_VALUE=must-not-enter-evidence\n");
     await writeFile(path.join(root, "session.jsonl"), "private session material\n");
     await writeFile(path.join(root, "_repos", "vendor.md"), "# vendor instructions\n");
-    execFileSync("git", ["add", "--", "tracked.md", "head-only.md", ".env", "session.jsonl", "_repos/vendor.md"], { cwd: root });
+    await writeFile(path.join(root, ".gitignore"), "nested-agent/\n");
+    await writeFile(path.join(root, "nested-agent", "SKILL.md"), "# Nested first party\nrefine overlapping skills and evaluate promotion\n");
+    await writeFile(path.join(root, "nested-agent", ".git", "config"), "must not inventory git internals\n");
+    execFileSync("git", ["add", "--", "tracked.md", "head-only.md", ".env", "session.jsonl", "_repos/vendor.md", ".gitignore"], { cwd: root });
     execFileSync("git", ["commit", "-qm", "fixture"], { cwd: root });
 
     await unlink(path.join(root, "head-only.md"));
@@ -248,6 +252,8 @@ test("archive builder unions head and working files without reading excluded bod
     assert.equal(byPath.get(".env").sha256, null);
     assert.equal(byPath.get("session.jsonl").contentInspected, false);
     assert.equal(byPath.get("_repos/vendor.md").contentInspected, false);
+    assert.equal(byPath.get("nested-agent/SKILL.md").contentInspected, true);
+    assert.equal(byPath.has("nested-agent/.git/config"), false);
     assert.equal([...byPath.keys()].some((value) => value.includes(".git/")), false);
     assert.equal(first.coverage.unresolvedCount, 0);
 
