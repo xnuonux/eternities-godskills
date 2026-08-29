@@ -52,11 +52,11 @@
 - Consumes: `artifacts/quarry-infusion/facets.jsonl`, body structures, source records, and security ledger.
 - Produces: exactly-once primary-family queues and deterministic packets of at most 25 cards containing exact source paths, digests, bounded structural extracts, and an inspected-data notice.
 
-- [ ] **Step 1: Write failing queue tests** requiring 3,448 unique facets, 21 owner families, no security-rejected body, no duplicate membership, packet size at most 25, stable ordering, and exact reconstruction from packet union.
-- [ ] **Step 2: Run the focused test** and observe the missing builder failure.
-- [ ] **Step 3: Implement the queue builder** without reading or executing source instructions during packet generation.
-- [ ] **Step 4: Generate queues and packets twice** and require byte-identical artifact digests.
-- [ ] **Step 5: Commit** the builder, tests, and deterministic packet manifests.
+- [x] **Step 1: Write failing queue tests** requiring 3,448 unique facets, 21 owner families, no security-rejected body, no duplicate membership, packet size at most 25, stable ordering, and exact reconstruction from packet union.
+- [x] **Step 2: Run the focused test** and observe the missing builder failure.
+- [x] **Step 3: Implement the queue builder** without reading or executing source instructions during packet generation.
+- [x] **Step 4: Generate queues and packets twice** and require byte-identical artifact digests.
+- [x] **Step 5: Commit** the builder, tests, and deterministic packet manifests.
 
 ### Task 3: Complete all semantic review packets
 
