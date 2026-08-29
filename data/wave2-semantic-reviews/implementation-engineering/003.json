@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "waveId": "wave2-implementation-engineering-003",
+  "familyId": "implementation-engineering",
+  "reviewer": "codex:wave2-implementation-engineering-003",
+  "reviewMethod": "bounded-source-review-v2",
+  "reviews": [
+    {
+      "facetId": "facet-fa7cd608e04c6634",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/andrej-karpathy/SKILL.md",
+      "bodySha256": "fa7cd608e04c663477c452689eab11207e9ccda92ab3f689f780539910330fe8",
+      "neutralCapabilitySummary": "Constrains LLM-assisted coding by surfacing ambiguity before implementation, rejecting speculative abstractions, tracing every changed line to the request, cleaning only newly orphaned code, and turning work into explicit verification loops.",
+      "neutralIntentExamples": [
+        "keep a bug fix limited to the failing behavior and its regression test",
+        "simplify an overbuilt change without refactoring unrelated neighboring code"
+      ],
+      "legacyAliases": [
+        "andrej-karpathy",
+        "Karpathy Guidelines"
+      ],
+      "inputs": [
+        "a coding, review, or refactoring request",
+        "explicit assumptions, unresolved interpretations, and project-local style",
+        "changed-code scope plus tests or other observable success criteria"
+      ],
+      "operations": [
+        "state uncertain assumptions and competing interpretations before selecting an implementation",
+        "remove unrequested flexibility and single-use abstractions while matching the existing code style",
+        "audit each changed line against the request, delete only orphans introduced by the change, and repeat the named verification until it passes"
+      ],
+      "outputs": [
+        "brief assumption and tradeoff record",
+        "surgical code diff with no unrelated cleanup",
+        "task-specific success criteria and fresh verification result"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "material ambiguity pauses implementation for clarification instead of being resolved silently",
+        "an overlong or speculative solution is reduced to the minimum requested behavior",
+        "failed verification keeps the task open and drives another bounded correction"
+      ],
+      "exclusions": [
+        "does not delete pre-existing dead code, reformat adjacent files, or refactor unrelated components",
+        "does not replace repository architecture, style rules, or domain-specific verification",
+        "trivial tasks may use a lighter version of the planning controls"
+      ],
+      "usefulInvariants": [
+        "every modified line traces to the user's request or to an orphan created by that modification",
+        "success is expressed as an observable check rather than make-it-work language",
+        "project-local style wins over the reviewer's preferred style"
+      ],
+      "materialRisks": [
+        "a rigid minimum-diff bias can preserve a flawed local abstraction when broader change is actually required",
+        "the two-hundred-versus-fifty-line heuristic is illustrative rather than a reliable complexity measure",
+        "excessive clarification can slow low-risk work if the caution tradeoff is not scaled"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "portable",
+      "disposition": "independent-implementation",
+      "proposedCluster": "surgical goal-driven coding",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    }
+  ]
+}
