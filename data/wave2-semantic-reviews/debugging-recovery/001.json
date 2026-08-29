@@ -1,0 +1,1405 @@
+{
+  "schemaVersion": 1,
+  "waveId": "wave2-debugging-recovery-001",
+  "familyId": "debugging-recovery",
+  "reviewer": "codex:wave2-debugging-recovery-001",
+  "reviewMethod": "exact-inert-body-semantic-review-v1",
+  "reviews": [
+    {
+      "facetId": "facet-00ca4c57ee636243",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/clean-code-guard/SKILL.md",
+      "bodySha256": "00ca4c57ee636243d0702ae14544388923e28b05a82f6793af306aac46abea3a",
+      "neutralCapabilitySummary": "Reviews changed production code for behavioral preservation, boundary validation, explicit error propagation, verified dependencies, meaningful tests, restrained abstraction, and consistency with neighboring files, while separating an audit-only mode from edit-authorized passes.",
+      "neutralIntentExamples": [
+        "Review a generated implementation for hardcoded success paths, swallowed errors, and unverified library calls",
+        "Check whether a refactor preserves outputs, exceptions, side effects, and ordering"
+      ],
+      "legacyAliases": ["clean-code guard pass", "generated-code quality audit"],
+      "inputs": [
+        "the exact diff or production files under review",
+        "neighboring code and repository conventions",
+        "tests, lockfiles, and installed dependency versions relevant to the change"
+      ],
+      "operations": [
+        "separate review-only work from edit-authorized guard passes before inspecting the target",
+        "trace broad catches, canned success values, speculative switches, dead exports, and invented API calls to concrete lines",
+        "distinguish validation required at untrusted boundaries from redundant guards inside a typed contract",
+        "compare a refactor's observable outputs, failures, side effects, and ordering with the pre-change behavior",
+        "confirm every reported correction or unresolved finding against the resulting diff and project verification"
+      ],
+      "outputs": [
+        "prioritized code-quality findings with exact evidence",
+        "an edit list when correction was authorized",
+        "a final count of corrected and author-owned findings"
+      ],
+      "effects": ["read", "write"],
+      "failureBehavior": [
+        "leave code unchanged when the request is review-only",
+        "surface a project convention conflict instead of mechanically enforcing the source's numeric thresholds",
+        "withhold a clean result when tests, dependency APIs, or behavioral equivalence were not verified"
+      ],
+      "exclusions": [
+        "does not substitute subjective size limits for measured complexity or repository rules",
+        "does not accept the body's research statistics or absolute quality claims without provenance checking",
+        "does not run linters, tests, or package inspection unless separately authorized"
+      ],
+      "usefulInvariants": [
+        "a refactor and a bug fix remain separate changes unless the user authorizes both",
+        "production code never returns fixture success in place of required work",
+        "a reported guard-pass fix must correspond to an actual changed line"
+      ],
+      "materialRisks": [
+        "rigid function-size and parameter ceilings can damage a locally coherent design",
+        "silent edit behavior in guard mode could exceed a review-only request",
+        "unverified citations can lend false authority to subjective rules"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-adjacent",
+      "disposition": "pattern-reference",
+      "proposedCluster": "behavior-preserving-code-guard",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-02b83bca8d6078ee",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/seo-forensic-incident-response/SKILL.md",
+      "bodySha256": "02b83bca8d6078ee3a3565c2f4f349e2a74df3b11a324ee60920c42e3e763eb4",
+      "neutralCapabilitySummary": "Investigates an abrupt organic-search loss by reconstructing its onset, segmenting impact by device, region, query and page type, correlating deployment and indexing changes, and ranking falsifiable technical, policy, quality, or demand hypotheses by impact and validation cost.",
+      "neutralIntentExamples": [
+        "Determine whether a step-like search traffic loss follows a migration, noindex regression, outage, or policy action",
+        "Build a recovery plan from page-level click, impression, indexation, redirect, and server evidence"
+      ],
+      "legacyAliases": ["SEO incident forensics", "organic traffic drop investigation"],
+      "inputs": [
+        "dated click, impression, position, conversion, and analytics series",
+        "index coverage, robots, canonical, redirect, server, CDN, and deployment evidence",
+        "site ownership scope, affected markets, seasonality, and known manual actions"
+      ],
+      "operations": [
+        "locate the change point and distinguish a step failure from a gradual decline",
+        "partition impact across devices, countries, branded queries, templates, and individual URLs",
+        "correlate affected pages with redirects, canonicals, noindex directives, availability errors, and recent releases",
+        "record each candidate cause with supporting evidence, blast radius, a confirming or refuting check, and a reversible remedy",
+        "stage crawl or availability restoration before longer content-quality work and define closure metrics"
+      ],
+      "outputs": [
+        "a dated incident classification and confidence statement",
+        "evidence-linked findings with scoped impact",
+        "an immediate, stabilization, hardening, and monitoring plan"
+      ],
+      "effects": ["read"],
+      "failureBehavior": [
+        "stop causal attribution when required timeline or segment data is missing",
+        "retain competing explanations when algorithm timing and technical changes overlap",
+        "mark recovery as unverified until the affected metrics and index state improve"
+      ],
+      "exclusions": [
+        "does not perform a routine opportunity audit",
+        "does not treat coincidence with a search update as proof of causation",
+        "does not alter robots, redirects, canonicals, content, or hosting during review"
+      ],
+      "usefulInvariants": [
+        "every proposed cause has a falsifiable validation step",
+        "reported scope remains segmented rather than inflated to the whole site",
+        "critical crawl and availability failures precede speculative content rewrites"
+      ],
+      "materialRisks": [
+        "search-platform metrics and update dates are provider-controlled and can be delayed",
+        "content-quality judgments can become unsupported explanations after technical checks look clean",
+        "remediation can further damage indexing if deployed without URL-level validation"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "pattern-reference",
+      "proposedCluster": "search-visibility-incident-analysis",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-06f1f4f1db60bff6",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/devops-troubleshooter/SKILL.md",
+      "bodySha256": "06f1f4f1db60bff6b4ce39360bafbd1de4a4dec6342d1ddd8f3130373f57e5f4",
+      "neutralCapabilitySummary": "Catalogs observability, container, network, database, CI, cloud, security, and infrastructure troubleshooting surfaces and recommends evidence gathering, low-impact hypothesis tests, restoration, documentation, monitoring, and post-incident learning, but supplies no executable diagnostic decision tree.",
+      "neutralIntentExamples": [
+        "Identify which telemetry families could distinguish an OOM restart from a deployment or dependency failure",
+        "Outline the evidence needed to investigate a service discovery or connection-pool incident"
+      ],
+      "legacyAliases": ["broad DevOps troubleshooting inventory", "observability troubleshooting checklist"],
+      "inputs": [
+        "incident impact and affected infrastructure surface",
+        "available logs, metrics, traces, deployment state, and system configuration",
+        "authorization boundaries for production diagnostics and mitigation"
+      ],
+      "operations": [
+        "map the symptom to candidate telemetry across runtime, network, storage, database, pipeline, and cloud layers",
+        "form low-impact hypotheses from correlated logs, metrics, traces, and recent changes",
+        "separate immediate restoration from permanent correction and recurrence monitoring",
+        "defer tool syntax and environment mutation because the body only enumerates products and topics"
+      ],
+      "outputs": [
+        "a troubleshooting-surface inventory",
+        "a high-level evidence and hypothesis sequence",
+        "a list of missing implementation details"
+      ],
+      "effects": ["read"],
+      "failureBehavior": [
+        "reject direct operational use when no service-specific thresholds, commands, or rollback contract is supplied",
+        "escalate when permissions, impact, or success criteria are absent",
+        "avoid interpreting a named tool as proof that its telemetry is configured or trustworthy"
+      ],
+      "exclusions": [
+        "does not open the absent implementation playbook",
+        "does not execute Kubernetes, cloud, network, database, or pipeline actions",
+        "does not infer provider-specific procedures from a product-name list"
+      ],
+      "usefulInvariants": [
+        "facts precede hypotheses",
+        "hypothesis tests minimize disruption",
+        "restoration and long-term correction are tracked separately"
+      ],
+      "materialRisks": [
+        "a broad tool catalog can create confidence without a runnable investigation method",
+        "production diagnostics may expose secrets or increase load",
+        "generic remediation can worsen a distributed failure"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "thin-devops-troubleshooting-catalog",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-081dccd98cacfce5",
+      "canonicalSourceId": "OthmanAdi/planning-with-files@9e94390e5912b1ff296556505cd999ff84838160:.cursor/skills/planning-with-files/SKILL.md",
+      "bodySha256": "081dccd98cacfce580f7fde3d1105aff2c8be91c36e0cef616981da4336a6d29",
+      "neutralCapabilitySummary": "Persists phases, discoveries, errors, and session history in three project files, injects plan state through Cursor lifecycle hooks, changes method after failed attempts, and reconstructs work after context loss, but duplicates the same planning model reviewed elsewhere and embeds automatic shell dispatch.",
+      "neutralIntentExamples": [
+        "Recover a complex Cursor task from its plan, findings, progress, and current diff",
+        "Record a failed approach and select a materially different retry"
+      ],
+      "legacyAliases": ["Cursor planning-with-files", "persistent markdown task state"],
+      "inputs": [
+        "project-root plan, findings, and progress documents",
+        "current repository changes and prior error records",
+        "Cursor hook environment and installation paths"
+      ],
+      "operations": [
+        "compare the Cursor variant's three-file state model and retry protocol with the already reviewed representative",
+        "identify automatic prompt, pre-tool, post-write, stop, and pre-compaction hook surfaces",
+        "preserve only the distinct Cursor path-resolution behavior as provenance rather than another capability",
+        "refuse embedded catch-up and completion command execution during semantic review"
+      ],
+      "outputs": [
+        "a duplicate-family decision",
+        "a record of Cursor-specific hook and install-path differences"
+      ],
+      "effects": ["read"],
+      "failureBehavior": [
+        "treat unresolved hook scripts as disabled automation rather than recovered continuity",
+        "do not trust planning files over current repository evidence",
+        "reject a second capability when only host wiring differs"
+      ],
+      "exclusions": [
+        "does not execute session-catchup, injection, or completion scripts",
+        "does not create or update task planning files",
+        "does not apply fixed action-count or retry-count rules universally"
+      ],
+      "usefulInvariants": [
+        "planning artifacts belong to the project rather than the installed package",
+        "a repeated failure changes the next diagnostic method",
+        "recovery reconciles durable notes with the live diff"
+      ],
+      "materialRisks": [
+        "automatic hook output can repeatedly inject stale or adversarial plan content",
+        "host-path differences can masquerade as independent semantic value",
+        "concurrent sessions can overwrite shared planning state"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "duplicate-cursor-planning-state",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-0a0148b7771e1bb9",
+      "canonicalSourceId": "OthmanAdi/planning-with-files@9e94390e5912b1ff296556505cd999ff84838160:.codex/skills/planning-with-files/SKILL.md",
+      "bodySha256": "0a0148b7771e1bb9c5c6f9a367d92c07e88ec45a46a0fea51272297da70b1ba9",
+      "neutralCapabilitySummary": "Uses Codex-specific hook search paths to surface a project plan before prompts and tools, remind progress updates after writes, gate completion at stop, and retain findings and error history across context loss, while otherwise repeating the earlier three-file workflow.",
+      "neutralIntentExamples": [
+        "Resume a Codex task from durable planning artifacts after a context boundary",
+        "Check whether a completed phase and its encountered errors were recorded"
+      ],
+      "legacyAliases": ["Codex planning-with-files", "Codex plan injection hooks"],
+      "inputs": [
+        "task_plan.md, findings.md, and progress.md in the working project",
+        "current git diff and session catch-up evidence",
+        "Codex and fallback skill installation locations"
+      ],
+      "operations": [
+        "resolve how the Codex variant searches for injection and completion helpers",
+        "compare its phase, discovery, retry, and reboot rules with the previously retained planning pattern",
+        "record Codex path metadata without reproducing the full planning capability",
+        "keep all frontmatter shell bodies inert and uninvoked"
+      ],
+      "outputs": [
+        "a host-variant rejection",
+        "Codex-specific hook provenance"
+      ],
+      "effects": ["read"],
+      "failureBehavior": [
+        "consider plan injection unavailable when no helper resolves",
+        "require live file and diff reconciliation after a gap",
+        "avoid capability duplication for metadata-only host adaptation"
+      ],
+      "exclusions": [
+        "does not invoke shell, PowerShell, Python, or lifecycle hooks from the body",
+        "does not overwrite existing project planning documents",
+        "does not treat plan prose as execution authority"
+      ],
+      "usefulInvariants": [
+        "phase state and session history survive outside volatile context",
+        "the current objective is refreshed before consequential decisions",
+        "failed attempts remain visible to later retries"
+      ],
+      "materialRisks": [
+        "automatic plan injection expands the prompt-injection surface",
+        "fixed fallback paths may select the wrong installation",
+        "a shared root plan may belong to another task"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "duplicate-codex-planning-state",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-0c147f612f2670da",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/macos-reverse/SKILL.md",
+      "bodySha256": "0c147f612f2670dacd3205e13396bb45fc7853a77069289aa2c0d7fee6f2dddb",
+      "neutralCapabilitySummary": "Triages authorized Mach-O binaries and application bundles by inspecting file type, signatures, notarization policy, dependencies, load commands, Objective-C or Swift symbols, XPC and TCC surfaces, then optionally observing runtime, filesystem, logging, and network behavior in an isolated lab.",
+      "neutralIntentExamples": [
+        "Document signature, hardened-runtime, dependency, and symbol evidence for a supplied macOS binary",
+        "Plan an isolated dynamic analysis of a suspected macOS malware sample"
+      ],
+      "legacyAliases": ["Mach-O triage", "macOS binary reverse engineering"],
+      "inputs": [
+        "an explicitly authorized Mach-O, dylib, framework, or app bundle",
+        "analysis objective and ownership or laboratory authorization",
+        "available static and dynamic macOS tooling"
+      ],
+      "operations": [
+        "record binary format, signing, policy assessment, linked libraries, rpaths, and load-command evidence",
+        "recover symbol, class, string, XPC, entitlement, and sensitive API indicators without executing the sample",
+        "design dynamic observation only inside a dedicated environment with filesystem, log, debugger, and network controls",
+        "bind every behavioral conclusion to address-level, symbol-level, or captured runtime evidence"
+      ],
+      "outputs": [
+        "a static Mach-O triage record",
+        "an authorized lab observation plan",
+        "signature, hardened-runtime, symbol, and behavior findings"
+      ],
+      "effects": ["read"],
+      "failureBehavior": [
+        "defer dynamic analysis when authorization or isolation is absent",
+        "report symbols stripped, encrypted, packed, or inaccessible rather than inferring behavior",
+        "stop before any host security reduction such as SIP changes"
+      ],
+      "exclusions": [
+        "does not disable System Integrity Protection",
+        "does not execute, attach to, or instrument the supplied binary during review",
+        "does not fit ordinary application debugging without a reverse-engineering need"
+      ],
+      "usefulInvariants": [
+        "sample identity and authorization are recorded before analysis",
+        "static and dynamic conclusions remain distinguishable",
+        "runtime claims require captured observations"
+      ],
+      "materialRisks": [
+        "malware execution can compromise the analysis host",
+        "debugging or signature changes can bypass platform protections",
+        "reverse engineering may be legally or contractually restricted"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-adjacent",
+      "disposition": "deferred",
+      "proposedCluster": "authorized-macos-binary-analysis",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-0f9fa14e2e7a99fd",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/fp-async/SKILL.md",
+      "bodySha256": "0f9fa14e2e7a99fd1b66f81ddd5f277950ab7a168164bd8a2982f09042be850a",
+      "neutralCapabilitySummary": "Models asynchronous TypeScript work as lazy TaskEither computations with typed success and failure channels, composes dependent work sequentially and independent work in parallel, and supplies selective fallback, retry, fold, API, database, and file-operation examples.",
+      "neutralIntentExamples": [
+        "Wrap a promise boundary so thrown values become a declared application error union",
+        "Choose sequential composition, parallel traversal, or bounded batches based on data dependency and failure semantics"
+      ],
+      "legacyAliases": ["fp-ts async recovery", "TaskEither pipelines"],
+      "inputs": [
+        "TypeScript asynchronous operations and their declared success values",
+        "a complete typed error taxonomy and recovery policy",
+        "ordering, concurrency, idempotency, retry, and fallback constraints"
+      ],
+      "operations": [
+        "convert promise rejection and thrown unknown values into explicit domain error variants",
+        "use mapping for synchronous success transformation and flat composition for fallible asynchronous dependencies",
+        "select serial, unrestricted parallel, or batch-limited traversal from ordering and capacity requirements",
+        "recover only designated error variants and preserve authentication, authorization, and other nonrecoverable failures",
+        "fold the two channels only at a boundary that owns final response or display behavior"
+      ],
+      "outputs": [
+        "typed asynchronous pipelines",
+        "explicit retry and fallback contracts",
+        "boundary handlers for success and failure channels"
+      ],
+      "effects": ["write", "external-write"],
+      "failureBehavior": [
+        "preserve the left channel when no declared recovery applies",
+        "stop retrying after a bounded policy and return the last typed failure",
+        "reject examples whose captured variables, status mapping, or error conversion does not type-check"
+      ],
+      "exclusions": [
+        "does not install or assume a compatible fp-ts release",
+        "does not adopt defaults that erase an error channel without a domain decision",
+        "does not execute the network, database, or filesystem examples"
+      ],
+      "usefulInvariants": [
+        "dependent operations are not launched concurrently",
+        "every thrown value crosses through one explicit error conversion",
+        "fallback success is distinguishable from primary success when the domain requires it"
+      ],
+      "materialRisks": [
+        "several body examples contain scope or status-mapping defects and need compilation tests",
+        "unbounded parallel traversal can overload dependencies",
+        "broad fallbacks can hide outages, authorization failures, or stale cached data"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-adjacent",
+      "disposition": "deferred",
+      "proposedCluster": "typed-task-either-recovery",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-1742bc58ca712e28",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/shopify-review-triage/SKILL.md",
+      "bodySha256": "1742bc58ca712e28426d49292aeb8123b025923e28aa6559b9de246b8eb4fa2e",
+      "neutralCapabilitySummary": "Classifies supplied public app-review rows into incident candidate, repeated friction, pricing confusion, feature request, human review, or competitor watch, preserving ownership, source gaps, unverified status, one-primary-bucket counting, recency, and privacy limits.",
+      "neutralIntentExamples": [
+        "Sort pasted low-star app reviews into a draft owner queue without claiming confirmed defects",
+        "Escalate a repeated recent friction theme while keeping competitor reports outside the owned incident queue"
+      ],
+      "legacyAliases": ["Shopify review brief", "low-star feedback triage"],
+      "inputs": [
+        "explicit owned and competitor app-name lists",
+        "public review rating, app, date, URL, and text rows",
+        "human reproduction outcomes for any proposed incident candidate"
+      ],
+      "operations": [
+        "reject rows containing support tickets, contact details, order data, or internal telemetry",
+        "normalize review text and assign the first matching primary bucket while retaining secondary signals",
+        "apply ownership, repetition, recency, and uncertainty tie-breaks without inventing missing metadata",
+        "keep every machine-classified item unverified until a person reads the source and checks the relevant system",
+        "render a draft brief with source, owner, next action, supplied-row scope, and explicit human-review status"
+      ],
+      "outputs": [
+        "a public-review-only draft triage brief",
+        "a separate competitor-watch section",
+        "a human-verification queue for ambiguous or unowned rows"
+      ],
+      "effects": ["none"],
+      "failureBehavior": [
+        "stop processing affected rows when private data appears",
+        "route unknown ownership or uncertain keyword matches to human review",
+        "retain source-not-captured when no URL was supplied"
+      ],
+      "exclusions": [
+        "does not gather reviews, contact reviewers, open tickets, or publish replies",
+        "does not verify a reported defect or promise business outcomes",
+        "does not belong to debugging-recovery because its primary artifact is product-support prioritization"
+      ],
+      "usefulInvariants": [
+        "one supplied review produces at most one primary brief item",
+        "a competitor report never becomes the owner's critical incident",
+        "customer wording remains a report rather than a system fact"
+      ],
+      "materialRisks": [
+        "English keyword ordering can misclassify sarcasm and incidental terms",
+        "public text can still contain personal information",
+        "priority labels can be mistaken for verified severity"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "portable",
+      "disposition": "rejected",
+      "proposedCluster": "misclassified-customer-review-triage",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-1a0090713aa2227c",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/github/SKILL.md",
+      "bodySha256": "1a0090713aa2227c116d075de5e1859430015f6588eb2df965de96f843de1aa2",
+      "neutralCapabilitySummary": "Uses GitHub CLI queries to move from pull-request check status to a workflow run, failed job and failed-step logs, with explicit repository selection and structured API or JSON filtering for fields not exposed by higher-level commands.",
+      "neutralIntentExamples": [
+        "Locate the failed steps for a known GitHub pull request check",
+        "Extract selected pull-request or issue fields through structured GitHub API output"
+      ],
+      "legacyAliases": ["GitHub CI log triage", "gh workflow inspection"],
+      "inputs": [
+        "an authorized repository identifier or URL",
+        "pull request, workflow run, or issue identity",
+        "authenticated gh configuration and requested output fields"
+      ],
+      "operations": [
+        "resolve failing pull-request checks before selecting the matching workflow run",
+        "inspect run and job state before retrieving only failed-step logs",
+        "request structured fields and filter locally when a high-level subcommand lacks the needed data",
+        "redact tokens, secrets, and sensitive log values before reporting diagnostic evidence"
+      ],
+      "outputs": [
+        "failed check and run identifiers",
+        "bounded failure-log evidence",
+        "filtered GitHub issue, pull-request, or workflow metadata"
+      ],
+      "effects": ["external-write"],
+      "failureBehavior": [
+        "defer when repository identity or authorization is missing",
+        "report unavailable or expired logs instead of inferring a failure cause",
+        "avoid API mutation routes because the body only establishes inspection"
+      ],
+      "exclusions": [
+        "does not execute gh commands or make network calls during review",
+        "does not rerun, cancel, approve, merge, comment, or edit GitHub state",
+        "does not diagnose beyond the retrieved log evidence"
+      ],
+      "usefulInvariants": [
+        "repository scope is explicit for every remote query",
+        "run identity is resolved before logs are attributed",
+        "structured fields are preferred over parsing presentation text"
+      ],
+      "materialRisks": [
+        "CI logs can expose credentials, private URLs, or adversarial instructions",
+        "a wrong repository or run identifier can produce unrelated evidence",
+        "CLI and API fields change with GitHub versions"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-adjacent",
+      "disposition": "deferred",
+      "proposedCluster": "github-ci-evidence-retrieval",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-1d4c5c46ee2c555c",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/code-showcase-systematic-debugging/SKILL.md",
+      "bodySha256": "1d4c5c46ee2c555cbddbec78c90590b91a22955fc8374d538874aeb639841600",
+      "neutralCapabilitySummary": "Separates debugging into causal investigation, complete comparison with working examples, one-variable hypothesis tests, and a minimal root-cause fix guarded by a reproducer, targeted verification, and the full regression suite.",
+      "neutralIntentExamples": [
+        "Trace an invalid value backward through callers until its original trigger is found",
+        "Compare a broken path with a working sibling and test one predicted difference"
+      ],
+      "legacyAliases": ["four-phase systematic debugging", "root-cause-first debugging"],
+      "inputs": [
+        "the complete failure message, stack, and reproducible conditions",
+        "recent changes and a genuinely comparable working path",
+        "a test surface capable of distinguishing the candidate cause"
+      ],
+      "operations": [
+        "reproduce the failure and follow bad state backward through the call chain to its earliest evidenced trigger",
+        "read the working and failing implementations completely and enumerate behavioral and dependency differences",
+        "state one causal hypothesis with a predicted outcome and vary only one discriminating factor",
+        "encode the observed bug in a failing regression test before changing production behavior",
+        "apply one root-cause correction, rerun the reproducer, then run the broader relevant suite"
+      ],
+      "outputs": [
+        "a documented causal chain",
+        "a hypothesis-test record",
+        "a minimal fix and regression evidence when implementation is authorized"
+      ],
+      "effects": ["read", "write"],
+      "failureBehavior": [
+        "return to evidence gathering when a prediction fails",
+        "stop patching and raise architectural concerns after multiple distinct fixes expose new failures",
+        "withhold fixed status until both the reproducer and broader tests pass"
+      ],
+      "exclusions": [
+        "does not use the body's unsupported success-rate statistic",
+        "does not apply symptom masking before cause analysis",
+        "does not run git bisection or tests without task authorization"
+      ],
+      "usefulInvariants": [
+        "one experiment changes one causal variable",
+        "the correction is located at the trigger rather than merely the crash site",
+        "the regression test fails without the fix and passes with it"
+      ],
+      "materialRisks": [
+        "an unsuitable working example can anchor investigation on a false pattern",
+        "diagnostic changes can perturb intermittent timing",
+        "a narrow test can miss system-level regressions"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-adjacent",
+      "disposition": "pattern-reference",
+      "proposedCluster": "causal-hypothesis-debugging",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-1f24bc13932cdd25",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/phase-gated-debugging/SKILL.md",
+      "bodySha256": "1f24bc13932cdd25774a4db9d56459324cd80ef9f23ab364b362e1e1cb4fa3b1",
+      "neutralCapabilitySummary": "Gates source edits behind repeated reproduction, diagnostic localization, an explicit root-cause statement, and an approval checkpoint, then confines the fix to causal files and sends failed verification back to investigation.",
+      "neutralIntentExamples": [
+        "Pause repeated patch attempts and require a confirmed causal explanation before another edit",
+        "Localize an intermittent failure with marked diagnostics and compare passing and failing runs"
+      ],
+      "legacyAliases": ["five-phase debugging gate", "root-cause approval checkpoint"],
+      "inputs": [
+        "the exact failing command or scenario",
+        "repeat-run evidence and temporary diagnostic observations",
+        "the user's decision on the stated root-cause analysis"
+      ],
+      "operations": [
+        "capture repeated reproductions without changing source behavior",
+        "narrow the failure through marked diagnostic instrumentation or a binary search of the path",
+        "remove temporary diagnostics and explain the causal chain before requesting an edit decision",
+        "limit an approved correction to files implicated by the confirmed cause",
+        "rerun the original failure, related checks, and repeated intermittent trials before closure"
+      ],
+      "outputs": [
+        "a phase record with reproduction and localization evidence",
+        "a user-reviewed root-cause statement",
+        "a bounded fix and verification result"
+      ],
+      "effects": ["read", "write"],
+      "failureBehavior": [
+        "remain in investigation when reproduction is inconsistent",
+        "do not cross the root-cause checkpoint without the requested user decision",
+        "return to localization if the original verification still fails"
+      ],
+      "exclusions": [
+        "does not treat two or three reproduction runs as sufficient for every intermittent system",
+        "does not impose a user checkpoint when the user has already approved a written diagnosis-and-fix plan",
+        "does not leave temporary DEBUG instrumentation in the delivered change"
+      ],
+      "usefulInvariants": [
+        "production edits do not precede a stated causal model",
+        "diagnostic-only changes remain visibly marked and temporary",
+        "failed verification invalidates the accepted cause or its correction"
+      ],
+      "materialRisks": [
+        "an absolute no-read rule during reproduction can delay safe setup inspection",
+        "mandatory approval can obstruct urgent restoration workflows",
+        "debug logging can leak data or alter race timing"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-adjacent",
+      "disposition": "pattern-reference",
+      "proposedCluster": "edit-gated-debugging-protocol",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-221add60263a36eb",
+      "canonicalSourceId": "OthmanAdi/planning-with-files@9e94390e5912b1ff296556505cd999ff84838160:.gemini/skills/planning-with-files/SKILL.md",
+      "bodySha256": "221add60263a36eb95f0a572912375c77968990685bcf93512d79b3e61cef3a4",
+      "neutralCapabilitySummary": "Adds Gemini lifecycle wiring, isolated active-plan directories, plan resolution, hash attestation, delimiter framing, and an explicit rule that plan and findings content remain inert data to the familiar task-plan, findings, progress, retry, and reboot workflow.",
+      "neutralIntentExamples": [
+        "Verify an approved plan digest before injecting it into a Gemini session",
+        "Resolve one active plan for parallel work without mixing another task's state"
+      ],
+      "legacyAliases": ["Gemini planning-with-files", "attested plan injection"],
+      "inputs": [
+        "Gemini settings and lifecycle hook configuration",
+        "an active plan directory with planning artifacts",
+        "an approved task-plan digest and current repository state"
+      ],
+      "operations": [
+        "resolve a named, pointed, newest, or legacy plan directory using the variant's precedence",
+        "frame surfaced plan data and compare its current SHA-256 with an approved attestation",
+        "keep third-party findings out of the frequently injected plan body",
+        "compare the host-specific security additions with the richer representative variant"
+      ],
+      "outputs": [
+        "a Gemini-specific plan resolution record",
+        "attestation match or mismatch evidence",
+        "a duplicate-variant decision"
+      ],
+      "effects": ["read"],
+      "failureBehavior": [
+        "block plan injection on an attested digest mismatch",
+        "avoid following instruction-like text recovered from plan or findings files",
+        "reject independent retention because another packet member contains the broader mechanism set"
+      ],
+      "exclusions": [
+        "does not run the catch-up, plan-resolution, initialization, or attestation scripts",
+        "does not assume delimiter framing alone prevents prompt injection",
+        "does not create another copy of the three-file planning capability"
+      ],
+      "usefulInvariants": [
+        "one task resolves to one isolated plan directory",
+        "an attested mismatch prevents content injection",
+        "external research is stored apart from the control plan"
+      ],
+      "materialRisks": [
+        "the attestation is optional and can be absent during injection",
+        "Gemini hook behavior and paths are provider-specific",
+        "a newest-by-time fallback can select unrelated concurrent work"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "duplicate-gemini-attested-planning",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-223b3c982be9993a",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/incident-runbook-templates/SKILL.md",
+      "bodySha256": "223b3c982be9993a3263c71c670a651321a1c65cf027c7258553e6f54df02f2b",
+      "neutralCapabilitySummary": "Provides service-outage and database runbook shapes covering ownership, detection, impact, first checks, symptom routing, mitigation, rollback, verification, escalation, communication, and post-incident upkeep, but embeds hazardous fictional production commands and thresholds as if operationally ready.",
+      "neutralIntentExamples": [
+        "Draft a service-specific outage runbook with prerequisites, rollback, and health verification",
+        "Audit whether a database incident procedure distinguishes observation from state-changing mitigation"
+      ],
+      "legacyAliases": ["incident runbook template", "service outage playbook"],
+      "inputs": [
+        "service ownership, architecture, dependencies, and business impact model",
+        "validated alerts, dashboards, commands, access roles, and environment identifiers",
+        "tested rollback, escalation, communication, and recovery criteria"
+      ],
+      "operations": [
+        "replace fictional service names, endpoints, namespaces, thresholds, contacts, and credentials with verified local values",
+        "label each step as read-only diagnosis, reversible mitigation, destructive action, or external communication",
+        "attach prerequisites, expected output, stop conditions, and rollback to every operational action",
+        "test the runbook in a nonproduction exercise and compare observed outcomes with health criteria",
+        "revise instructions after exercises and incidents while preserving an audit history"
+      ],
+      "outputs": [
+        "a service-bound incident runbook draft",
+        "a hazard and authorization matrix for its commands",
+        "exercise and recovery verification evidence"
+      ],
+      "effects": ["write", "external-write"],
+      "failureBehavior": [
+        "defer all operational use until placeholders and commands are locally validated",
+        "stop before rollback, query termination, scaling, feature-flag, firewall, or database mutation without explicit authority",
+        "withhold recovery status until application flows, dependencies, error rates, and latency meet declared criteria"
+      ],
+      "exclusions": [
+        "does not execute any embedded Kubernetes, SQL, curl, smoke-test, or rollback command",
+        "does not reuse the fixed severity times, financial thresholds, or communication claims as universal policy",
+        "does not send incident communications"
+      ],
+      "usefulInvariants": [
+        "every mitigation has a verification and escape path",
+        "the service owner and escalation authority are explicit",
+        "runbook commands are tested against the exact target environment"
+      ],
+      "materialRisks": [
+        "the body includes query termination, deployment rollback, scaling, network policy, and database rollback actions that can worsen an outage or lose data",
+        "fictional URLs and thresholds can be mistaken for production values",
+        "status templates contain invented impact and recovery claims"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "validated-incident-runbook-engineering",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-25a805e03a255129",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-aas-devops-cloud/skills/incident-responder/SKILL.md",
+      "bodySha256": "25a805e03a2551298f27cd3a8d919be85847b894d98f333378046934edd748c0",
+      "neutralCapabilitySummary": "Duplicates the incident-command, impact assessment, observability correlation, stabilization, staged recovery, communication, timeline, postmortem, and reliability-improvement body found in the adjacent incident-responder facet, with only package metadata and path differences.",
+      "neutralIntentExamples": [
+        "Compare duplicate incident-responder bodies before retaining one representative",
+        "Preserve the bundle path as provenance without creating a second response capability"
+      ],
+      "legacyAliases": ["bundled incident responder", "duplicate SRE response guide"],
+      "inputs": [
+        "both incident-responder bodies and their exact digests",
+        "frontmatter and repository path differences",
+        "the retained representative decision"
+      ],
+      "operations": [
+        "compare severity, command roles, stabilization options, telemetry, communications, recovery checks, and postmortem sections",
+        "confirm that the bundle copy introduces no distinct operational mechanism",
+        "retain canonical provenance while linking semantic use to the adjacent representative"
+      ],
+      "outputs": [
+        "a duplicate-body rejection",
+        "a provenance link to the retained incident-response pattern"
+      ],
+      "effects": ["none"],
+      "failureBehavior": [
+        "recompare bodies if either digest changes",
+        "do not collapse future variants solely by title",
+        "avoid double-weighting identical incident policy"
+      ],
+      "exclusions": [
+        "does not establish a second incident command workflow",
+        "does not open the absent implementation playbook",
+        "does not perform stabilization or communications"
+      ],
+      "usefulInvariants": [
+        "duplicate decisions remain digest-specific",
+        "frontmatter variation alone does not create semantic independence",
+        "the retained representative preserves shared mechanisms"
+      ],
+      "materialRisks": [
+        "duplicate retention would bias synthesis toward one source",
+        "path-based deduplication could miss later body divergence",
+        "the shared fixed response times may not match local policy"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "portable",
+      "disposition": "rejected",
+      "proposedCluster": "duplicate-incident-response-body",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-2b30e2c7f31610d9",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/incident-responder/SKILL.md",
+      "bodySha256": "2b30e2c7f31610d9071f289b3b98c09185831b4b0fa4e7714a1796cc36d3f55d",
+      "neutralCapabilitySummary": "Coordinates a service incident by measuring user and business impact, assigning decision, technical, and communication roles, choosing reversible stabilization, correlating telemetry with changes and dependencies, validating staged recovery, and converting the timeline into tracked systemic improvements.",
+      "neutralIntentExamples": [
+        "Establish incident command and a shared evidence timeline for a multi-service outage",
+        "Choose a reversible mitigation and validate user experience, dependencies, capacity, and service indicators during recovery"
+      ],
+      "legacyAliases": ["SRE incident command", "service restoration coordination"],
+      "inputs": [
+        "measured user impact, business impact, affected services, and dependency map",
+        "logs, traces, metrics, release, configuration, quota, and security evidence",
+        "local severity policy, authorized responders, rollback capability, and communication ownership"
+      ],
+      "operations": [
+        "classify impact using local policy and establish one incident commander plus technical and communication ownership",
+        "build a timestamped correlation across telemetry, releases, configuration, dependencies, retries, quotas, and capacity",
+        "select a reversible restoration action after assessing blast radius and rollback",
+        "stage the remedy while monitoring service indicators, real-user behavior, dependency health, and headroom",
+        "preserve decisions and evidence for a blameless review with owned prevention, detection, and response actions"
+      ],
+      "outputs": [
+        "an incident role and severity record",
+        "a live evidence and decision timeline",
+        "recovery validation and post-incident action items"
+      ],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": [
+        "escalate when impact exceeds authority or a security or regulatory condition is suspected",
+        "roll back or stop a staged remedy when health or user indicators regress",
+        "avoid declaring resolution while dependencies or capacity remain unstable"
+      ],
+      "exclusions": [
+        "does not adopt fixed P0 through P3 response times without local policy",
+        "does not send status, customer, executive, or regulatory communications without authorized ownership",
+        "does not equate fastest restoration with an unreviewed change"
+      ],
+      "usefulInvariants": [
+        "one role owns incident decisions at a time",
+        "restoration evidence includes the affected user path, not infrastructure health alone",
+        "post-incident actions have owners and effectiveness follow-up"
+      ],
+      "materialRisks": [
+        "generic stabilization choices can cause data loss or cascading failure",
+        "frequent communications can expose uncertain or sensitive incident details",
+        "the body's restore-first language can conflict with evidence preservation in security incidents"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "evidence-led-incident-command",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-2f15eea6ab651765",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/brendangregg-use-tsa/SKILL.md",
+      "bodySha256": "2f15eea6ab651765acb6971306f13193692d32288bd0b275183d4cd7c99411d2",
+      "neutralCapabilitySummary": "Diagnoses performance by sweeping utilization, saturation, and errors for every hardware, software, and imposed resource, decomposing thread time into execution and wait states, drilling into the dominant state, preserving exonerated hypotheses, and remeasuring the same instruments after correction.",
+      "neutralIntentExamples": [
+        "Distinguish host CPU headroom from application starvation caused by a cgroup quota",
+        "Investigate a slow Linux service by checking resource errors and queues before profiling code"
+      ],
+      "legacyAliases": ["USE and TSA performance analysis", "resource and thread-state triage"],
+      "inputs": [
+        "a quantified latency, runtime, throughput, or hang symptom",
+        "OS, container or VM limits, versions, load, and recent change context",
+        "authorized read-only resource and thread telemetry"
+      ],
+      "operations": [
+        "define the performance delta and environment before collecting measurements",
+        "check errors and saturation, then utilization, across CPU, memory, storage, network, locks, pools, descriptors, and imposed limits",
+        "partition selected thread time into executing, runnable, paging, sleeping, lock, and idle states",
+        "follow the dominant state into CPU profiles, off-CPU stacks, scheduling evidence, or request rate-error-duration data",
+        "state a trigger-to-mechanism-to-symptom chain and preserve measured exonerations",
+        "remeasure identical instruments after an authorized remedy and report absolute-time evidence"
+      ],
+      "outputs": [
+        "a quantified triage note with exonerated resources",
+        "an evidence table and causal performance chain",
+        "before-and-after verification or a known-unknown list"
+      ],
+      "effects": ["read"],
+      "failureBehavior": [
+        "record unavailable privileged instruments as known unknowns",
+        "start production traces at bounded duration and stop if observer overhead rises",
+        "reject root cause when removing the candidate does not explain or prevent the primary evidence"
+      ],
+      "exclusions": [
+        "does not execute the Linux commands embedded in the body",
+        "does not mutate tunables, restart services, or change resource limits without explicit approval",
+        "does not treat low average utilization as proof that bursts or quotas are absent"
+      ],
+      "usefulInvariants": [
+        "every resource receives utilization, saturation, and error consideration",
+        "ruled-out causes remain attached to their measurements",
+        "post-fix evidence uses the same instruments as diagnosis"
+      ],
+      "materialRisks": [
+        "performance tracing can add material production load or require elevated privilege",
+        "single snapshots can miss bursts and intermittent saturation",
+        "fixed thread-state percentages are heuristics rather than universal thresholds"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "pattern-reference",
+      "proposedCluster": "resource-thread-performance-rca",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-309e6750d507c3c3",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/fda-medtech-compliance-auditor/SKILL.md",
+      "bodySha256": "309e6750d507c3c37c8ab68666d863560f21b70aeae47cac1f273619fe1dcf0d",
+      "neutralCapabilitySummary": "Proposes severity-ranked audits of medical-device software lifecycle, quality, risk, electronic-record, validation, design-history, and corrective-action artifacts, using a five-whys example to move from individual blame toward requirements-process controls and measurable effectiveness checks.",
+      "neutralIntentExamples": [
+        "Review whether a software-defect corrective action reaches a process cause and defines an effectiveness measure",
+        "Trace a device software defect to requirements, validation, and clinical risk artifacts"
+      ],
+      "legacyAliases": ["SaMD compliance audit", "medical-device CAPA review"],
+      "inputs": [
+        "the exact regulated product classification and jurisdiction",
+        "current quality-system, software-lifecycle, risk, validation, and corrective-action records",
+        "current authoritative regulatory text and qualified reviewer scope"
+      ],
+      "operations": [
+        "separate the reported defect symptom from process and system contributing causes",
+        "trace proposed corrections into requirements, procedures, risk controls, verification, and effectiveness evidence",
+        "verify every cited obligation against the currently effective regulation and applicable standard edition",
+        "route legal and regulatory conclusions to qualified human review"
+      ],
+      "outputs": [
+        "a draft evidence-to-control gap list",
+        "candidate corrective and effectiveness-check questions",
+        "a regulatory verification and expert-review queue"
+      ],
+      "effects": ["none"],
+      "failureBehavior": [
+        "reject compliance conclusions when product class, jurisdiction, standard edition, or evidence is absent",
+        "do not assign major or minor findings from the template alone",
+        "stop before changing controlled quality records"
+      ],
+      "exclusions": [
+        "does not provide legal advice or inspector-equivalent findings",
+        "does not accept the body's 21 CFR Part 820 framing until current official regulatory text and transition status are verified",
+        "does not fit general debugging-recovery"
+      ],
+      "usefulInvariants": [
+        "corrective action addresses a demonstrated system cause rather than a blamed individual",
+        "effectiveness criteria are measurable and linked to the correction",
+        "software defects remain connected to risk-management evidence"
+      ],
+      "materialRisks": [
+        "stale regulatory citations can create false compliance findings",
+        "unqualified AI severity labels can affect patient-safety and regulatory decisions",
+        "controlled documents may contain sensitive health or proprietary information"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "stale-high-stakes-medtech-audit",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-33646fb0ac97aa10",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-aas-observability-ir/skills/postmortem-writing/SKILL.md",
+      "bodySha256": "33646fb0ac97aa10dd62b808eb7e11e82ee93b4fc703487b61040638ab59d057",
+      "neutralCapabilitySummary": "Turns preserved incident evidence into a blameless account with exact impact, chronology, proximate and contributing causes, detection and response gaps, explicit luck, and prevention, detection, and mitigation actions that have owners, dates, tickets, and follow-up.",
+      "neutralIntentExamples": [
+        "Write a postmortem from a verified incident timeline without inventing impact or root cause",
+        "Convert a five-whys chain into system improvements with accountable effectiveness checks"
+      ],
+      "legacyAliases": ["blameless postmortem", "incident learning review"],
+      "inputs": [
+        "preserved timeline, telemetry, changes, communications, and recovery evidence",
+        "measured customer, business, security, and technical impact",
+        "participant accounts and existing follow-up tickets"
+      ],
+      "operations": [
+        "reconcile timestamped evidence and participant accounts into one chronology with visible gaps",
+        "separate proximate cause, contributing conditions, detection gaps, response gaps, and fortunate conditions",
+        "test each why answer against cited evidence instead of stopping at an individual action",
+        "derive achievable prevention, detection, and mitigation work with owner, due date, and tracking identity",
+        "facilitate review around system conditions, dissent, and learning, then verify action completion and effectiveness"
+      ],
+      "outputs": [
+        "a draft, reviewed, or final postmortem with declared status",
+        "an evidence-bound timeline and causal analysis",
+        "owned follow-up actions and later effectiveness results"
+      ],
+      "effects": ["write"],
+      "failureBehavior": [
+        "mark disputed events and unknown impact rather than filling template values",
+        "reject root-cause chains that terminate in blame or lack supporting evidence",
+        "keep the document open when actions have no owners or tracking path"
+      ],
+      "exclusions": [
+        "does not reuse fictional dates, people, revenue, tickets, or incident metrics from the examples",
+        "does not publish or widely share sensitive incident material automatically",
+        "does not claim an action prevented recurrence without later measurement"
+      ],
+      "usefulInvariants": [
+        "all event times use a declared timezone and exact evidence where available",
+        "action items are concrete, owned, dated, and tracked",
+        "analysis focuses on conditions the system permitted rather than punishment"
+      ],
+      "materialRisks": [
+        "a polished narrative can overstate uncertain causality",
+        "broad sharing can expose security, customer, employee, or contractual details",
+        "five-whys can force a linear cause onto a complex incident"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "evidence-bound-postmortem-learning",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-34fe2102e3f101eb",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/threat-hunting/SKILL.md",
+      "bodySha256": "34fe2102e3f101eb6d3b2d15b4364f0ecc1daf449dac4a91f1270065275f85cb",
+      "neutralCapabilitySummary": "Builds a blue-team hunt from an adversary-behavior hypothesis, maps required endpoint and identity telemetry, establishes normal administrative baselines, correlates anomalies across accounts and hosts, converts evidence into Sigma or YARA detections, and validates recall by historical replay or authorized laboratory tests.",
+      "neutralIntentExamples": [
+        "Hunt for lateral movement by correlating rare accounts, parent processes, and short-window multi-host logons",
+        "Validate a detection rule against historical logs and document required fields and false positives"
+      ],
+      "legacyAliases": ["hypothesis-driven threat hunt", "detection engineering loop"],
+      "inputs": [
+        "an authorized hunt scope and adversary-technique hypothesis",
+        "documented telemetry sources, field mappings, retention, and known gaps",
+        "normal behavior baselines and approved validation environment"
+      ],
+      "operations": [
+        "translate the behavior hypothesis into observable events and explicit success or refutation criteria",
+        "build normal-time, host, account, and administrative baselines before ranking anomalies",
+        "correlate process, network, service, and authentication evidence across identities and endpoints",
+        "encode candidate logic with source-field requirements, expected false positives, and a linked response path",
+        "measure detection behavior through historical replay or an authorized isolated atomic test"
+      ],
+      "outputs": [
+        "a hunt hypothesis and conclusion",
+        "a field-mapped detection candidate",
+        "false-positive notes and validation evidence"
+      ],
+      "effects": ["read", "write"],
+      "failureBehavior": [
+        "report inconclusive when telemetry coverage cannot observe the hypothesized behavior",
+        "retain false-positive candidates until a justified tuning rule exists",
+        "defer active simulation outside an explicitly authorized lab"
+      ],
+      "exclusions": [
+        "does not execute Atomic Red Team, Sigma, YARA, SIEM, or endpoint commands during review",
+        "does not run attack simulation in production",
+        "does not convert a detection match directly into a confirmed compromise"
+      ],
+      "usefulInvariants": [
+        "every rule declares its required data source and field mapping",
+        "hunt conclusions remain tied to the initial falsifiable hypothesis",
+        "validation and operational response are separate stages"
+      ],
+      "materialRisks": [
+        "security telemetry contains sensitive employee and system data",
+        "poor tuning can create alert floods or blind spots",
+        "simulation tools can cause real operational or security impact"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "authorized-threat-hunt-validation",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-356a6cecd5ceb2ed",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/onboarding-psychologist/SKILL.md",
+      "bodySha256": "356a6cecd5ceb2ed914350ced46b0f77ea2a468d488ed8b79622743fd26627f6",
+      "neutralCapabilitySummary": "Designs first-use product flows around a smallest meaningful win, reduced setup, one ownership-producing action, a stable return cue, readiness-specific depth, and noncoercive identity reinforcement, with explicit avoidance of feature tours and addiction mechanics.",
+      "neutralIntentExamples": [
+        "Reduce a new user's path to a first meaningful product outcome",
+        "Design an occasional-use return cue without streak pressure"
+      ],
+      "legacyAliases": ["identity-to-habit onboarding", "behavioral first-use design"],
+      "inputs": [
+        "target user's job, emotional state, readiness, and genuine desired outcome",
+        "time-to-value, platform, usage cadence, and ethical constraints",
+        "observed onboarding behavior rather than inferred psychological labels"
+      ],
+      "operations": [
+        "define the smallest user-recognizable success before exposing secondary features",
+        "remove setup decisions that do not contribute to that success",
+        "retain one meaningful user action that creates product state or competence",
+        "adapt return cues and challenge depth to usage cadence, stakes, and readiness",
+        "audit the flow for coercive pressure, fabricated identity claims, and loss of autonomy"
+      ],
+      "outputs": [
+        "a first-use flow and rationale",
+        "a first-win definition and return-cue map",
+        "an ethical-risk check"
+      ],
+      "effects": ["none"],
+      "failureBehavior": [
+        "ask for the first meaningful win when it is not established",
+        "avoid identity reinforcement that is unsupported by the user's actions",
+        "reject habit mechanics detached from user benefit"
+      ],
+      "exclusions": [
+        "does not fit debugging-recovery",
+        "does not infer clinical psychological traits or diagnose users",
+        "does not execute the named upstream or downstream skills"
+      ],
+      "usefulInvariants": [
+        "value is experienced before habit pressure",
+        "at least one meaningful action remains under user control",
+        "high-stakes onboarding favors confidence and safety over streaks"
+      ],
+      "materialRisks": [
+        "behavioral framing can manipulate vulnerable users",
+        "identity assumptions can stereotype or exclude people",
+        "claimed research mechanisms may not generalize to the product context"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "portable",
+      "disposition": "rejected",
+      "proposedCluster": "misclassified-ethical-onboarding-design",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-3696da57ddd11343",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/before-you-build/SKILL.md",
+      "bodySha256": "3696da57ddd1134330f6ab19e699fdf5c0827e1e0307ee01c97f8401baae0e2e",
+      "neutralCapabilitySummary": "Challenges a proposed build by naming the intended user, job, current alternative, switching reason, distribution path, pricing, data, and operational burden, then chooses the smallest demand test before authorizing a full implementation bet.",
+      "neutralIntentExamples": [
+        "Test whether a manual report proves repeat demand before building an analytics dashboard",
+        "Identify the riskiest workflow or switching assumption behind an internal tool request"
+      ],
+      "legacyAliases": ["pre-build product risk review", "build-bet validation"],
+      "inputs": [
+        "a proposed product or feature and intended user",
+        "current workaround, buyer or operator workflow, and switching trigger",
+        "available demand evidence, distribution path, data access, and operational constraints"
+      ],
+      "operations": [
+        "restate the build bet as user, job, current alternative, and expected behavior change",
+        "rank demand, workflow, switching, distribution, price, data, and operations uncertainty",
+        "select one small buyer conversation, concierge flow, prototype, waitlist, pilot, or internal trial that discriminates the highest risk",
+        "record the evidence threshold for continuing, narrowing, or stopping the build"
+      ],
+      "outputs": [
+        "a product-risk register",
+        "a smallest validation experiment",
+        "a continue, narrow, or stop recommendation"
+      ],
+      "effects": ["none"],
+      "failureBehavior": [
+        "do not call the idea validated from checklist completion",
+        "avoid fabricating market size, revenue, traction, or customer statements",
+        "shorten the review when strong evidence and a settled specification already exist"
+      ],
+      "exclusions": [
+        "does not fit debugging-recovery",
+        "does not perform customer research or a financial or legal review",
+        "does not run the advertised installer or fetch its repository"
+      ],
+      "usefulInvariants": [
+        "the experiment targets the single riskiest assumption",
+        "product risk remains distinct from implementation risk",
+        "a proceed decision records its still-unproven assumptions"
+      ],
+      "materialRisks": [
+        "excessive validation can delay a low-cost reversible build",
+        "weak experiments can be mistaken for demand",
+        "switching and pricing questions may expose confidential strategy"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "portable",
+      "disposition": "rejected",
+      "proposedCluster": "misclassified-product-bet-validation",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-37fb378db7ebde3b",
+      "canonicalSourceId": "OthmanAdi/planning-with-files@9e94390e5912b1ff296556505cd999ff84838160:.pi/skills/planning-with-files/SKILL.md",
+      "bodySha256": "37fb378db7ebde3bc37a766328ee10e22ec31c6223f8a46cceb499934ef19a16",
+      "neutralCapabilitySummary": "Extends persistent planning with pinned or isolated plan resolution, smart active-phase injection, attestation and nonce checks, structured per-agent ledgers, monotonic-progress loss detection, host-tiered stop gates, bounded block counters, and stall escape, but couples these claims to unverified multi-host scripts and Claude primitives.",
+      "neutralIntentExamples": [
+        "Detect lost checked items or completed phases between turn-start plan reads",
+        "Allow a completion gate to continue only while an in-progress phase and fresh ledger movement both exist"
+      ],
+      "legacyAliases": ["Pi autonomous planning mode", "attested ledger completion gate"],
+      "inputs": [
+        "an explicit plan root or isolated plan identifier",
+        "task plan, approved digest, mode, nonce, and per-agent append-only ledgers",
+        "host stop-hook capabilities, block cap, and prior progress counters"
+      ],
+      "operations": [
+        "resolve a pinned project plan and refuse ambiguous parent-versus-child state instead of falling back",
+        "compare approved plan bytes with attestation before injecting any free-form body in unattended modes",
+        "summarize machine ledgers without injecting raw progress prose and count monotonic phase or checklist movement",
+        "warn when checked or completed markers decrease between turn-start observations",
+        "block termination only when gated mode, an active phase, host capability, cap headroom, and new ledger progress all hold",
+        "release the gate on recursion, cap exhaustion, or stalled ledger movement"
+      ],
+      "outputs": [
+        "an active-plan resolution or ambiguity refusal",
+        "attestation, progress-loss, ledger, and gate-decision evidence",
+        "a host-capability classification"
+      ],
+      "effects": ["read", "write"],
+      "failureBehavior": [
+        "refuse unattended plan-body injection when required attestation is absent or mismatched",
+        "allow termination rather than loop when the ledger stalls or the bounded block cap is reached",
+        "degrade unsupported host gates to notification rather than claiming enforcement",
+        "defer adoption until all scripts, claimed host tiers, native primitives, locking, and cache behavior are independently tested"
+      ],
+      "exclusions": [
+        "does not execute hooks, scripts, slash commands, loops, goals, or initialization examples",
+        "does not accept the body's future-version and host-capability claims as current fact",
+        "does not rely on nonce delimiters as protection against an actor who can also read the nonce",
+        "does not treat append-only ledger summaries as proof that task work is correct"
+      ],
+      "usefulInvariants": [
+        "ambiguous plan ownership fails closed",
+        "an unattended mode does not inject unattested free-form plan content",
+        "a completion gate has deterministic cap and stall exits",
+        "workers append to separate ledgers while one orchestrator owns the control plan"
+      ],
+      "materialRisks": [
+        "provider and host behavior claims may be fabricated, stale, or unsupported",
+        "lifecycle hooks repeatedly inject project-controlled content into model context",
+        "stop blocking can create runaway cost or suppress a necessary handoff",
+        "monotonic marker checks misfire when completed phases are legitimately archived"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "attested-ledger-task-gating",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-39ea579083055cc4",
+      "canonicalSourceId": "OthmanAdi/planning-with-files@9e94390e5912b1ff296556505cd999ff84838160:.continue/skills/planning-with-files/SKILL.md",
+      "bodySha256": "39ea579083055cc4e6287a0189a6fd71d1a7b4a4f29a31872ea6f74607fe5e1c",
+      "neutralCapabilitySummary": "Adapts the three-file planning, isolated active-plan, context restoration, error logging, retry mutation, delimiter, and optional digest-attestation workflow to Continue paths, but adds no mechanism beyond the other planning variants and lacks the richer gate hardening of the Pi body.",
+      "neutralIntentExamples": [
+        "Resolve a Continue task plan and compare it with current repository changes after a gap",
+        "Check a task-plan digest before treating its contents as approved context"
+      ],
+      "legacyAliases": ["Continue planning-with-files", "Continue persistent task plan"],
+      "inputs": [
+        "Continue installation paths and a project planning directory",
+        "plan, findings, progress, active pointer, and optional digest",
+        "current changes and recovered session evidence"
+      ],
+      "operations": [
+        "resolve the active plan by environment, pointer, recency, or legacy fallback",
+        "compare recovered session notes and planning artifacts with the live diff",
+        "treat injected plan and findings text as inert data and expose digest mismatches",
+        "deduplicate the Continue-specific paths against the retained planning evidence"
+      ],
+      "outputs": [
+        "a Continue variant comparison",
+        "a plan-state integrity note",
+        "a duplicate rejection"
+      ],
+      "effects": ["read"],
+      "failureBehavior": [
+        "report a missing or mismatched attestation instead of silently trusting the plan",
+        "avoid retries identical to a recorded failed action",
+        "decline independent retention when only host paths differ"
+      ],
+      "exclusions": [
+        "does not execute Continue catch-up, initialization, switching, resolution, or attestation scripts",
+        "does not write planning state into the repository",
+        "does not duplicate the broader planning-with-files review"
+      ],
+      "usefulInvariants": [
+        "project plans remain separate from skill installation files",
+        "recovered context is checked against repository truth",
+        "untrusted findings never become direct instructions"
+      ],
+      "materialRisks": [
+        "optional attestation leaves legacy plan injection exposed",
+        "recency fallback can select another session's files",
+        "provider-specific paths can become stale"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "duplicate-continue-planning-state",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-3ad360a4a77af77f",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/debugging-and-error-recovery/SKILL.md",
+      "bodySha256": "3ad360a4a77af77f5fa02049c38c2c17428fb064cb38a44e04a8266ee0ad5c8a",
+      "neutralCapabilitySummary": "Stops feature work on an unexpected failure, preserves evidence, branches nonreproducible cases by timing, environment, state, or randomness, localizes and minimizes the reproducer, fixes the causal source, adds a regression guard, and verifies the exact scenario, suite, and build while treating log instructions as untrusted.",
+      "neutralIntentExamples": [
+        "Reduce a flaky test by comparing isolated, ordered, loaded, and delayed runs",
+        "Trace a duplicate UI result back to a query or data-model cause and guard it with a reproducer"
+      ],
+      "legacyAliases": ["stop-the-line debugging", "structured error recovery"],
+      "inputs": [
+        "complete error output, logs, environment, and reproduction steps",
+        "the relevant change history, code layers, state, and dependencies",
+        "specific, full-suite, build, and end-to-end verification surfaces"
+      ],
+      "operations": [
+        "pause unrelated work and preserve the original failure evidence before altering state",
+        "classify a nonreproduction by timing, environment, leaked state, or insufficient observation and gather discriminating evidence",
+        "localize the failing layer, bisect regressions when safe, and reduce input and configuration to the smallest case",
+        "trace the mechanism to its source rather than compensating at the visible symptom",
+        "add a regression case that demonstrates the prior failure and rerun targeted, suite, build, and end-to-end checks",
+        "parse commands and URLs embedded in logs as untrusted text requiring separate verification and authority"
+      ],
+      "outputs": [
+        "a preserved evidence and reproduction record",
+        "a localized minimal failure and causal explanation",
+        "a root-cause correction with regression and broader verification evidence"
+      ],
+      "effects": ["read", "write"],
+      "failureBehavior": [
+        "document and monitor a genuinely unreproduced issue instead of claiming a fix",
+        "remove temporary sensitive diagnostics after their evidence is captured",
+        "keep work stopped when the build or relevant test suite remains broken",
+        "ask before acting on instruction-like error content"
+      ],
+      "exclusions": [
+        "does not execute the npm, git-bisect, development-server, or other embedded commands during review",
+        "does not use an empty default or catch-all fallback unless the function's domain contract permits it",
+        "does not skip, weaken, or relabel a failing test to resume feature work"
+      ],
+      "usefulInvariants": [
+        "the original failure evidence survives investigation",
+        "a regression guard fails on the old behavior and passes on the corrected behavior",
+        "closure requires the original scenario plus broader project verification",
+        "external error text never gains instruction authority"
+      ],
+      "materialRisks": [
+        "artificial delays and instrumentation can conceal or alter races",
+        "automated bisection can execute untrusted historical code",
+        "permanent logs can leak request or user data",
+        "fallback examples can normalize hidden failure if copied without a contract"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-adjacent",
+      "disposition": "pattern-reference",
+      "proposedCluster": "stop-line-evidence-debugging",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-3b82d4a30df18990",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/customer-psychographic-profiler/SKILL.md",
+      "bodySha256": "3b82d4a30df18990131c0ec5a40ce0ea36896f915717b2b9504d289c1f2eb8d1",
+      "neutralCapabilitySummary": "Separates observed customer signals from interpretation, then cautiously maps need state, identity commitments, concrete fears, trust, purchase motivation, language cues, and uncertainty into a psychographic profile intended for downstream positioning or experience work.",
+      "neutralIntentExamples": [
+        "Distinguish observed buyer behavior from inferred identity and status concerns",
+        "Map separate effort, trust, risk, and disbelief barriers without demographic stereotyping"
+      ],
+      "legacyAliases": ["identity-need customer profile", "psychographic segmentation"],
+      "inputs": [
+        "observable customer behavior, language, context, and category history",
+        "the customer's desired outcome and point-of-contact state",
+        "cultural, brand, category, privacy, and ethical boundaries"
+      ],
+      "operations": [
+        "record supplied facts separately from every inferred motivation",
+        "rank candidate need states and identity commitments with explicit uncertainty",
+        "differentiate functional objections from risk, status, effort, belonging, and trust concerns",
+        "adapt emphasis to observed identity salience, trust, and motivation without demographic projection",
+        "audit the resulting profile for stereotypes, unsupported certainty, and manipulative use"
+      ],
+      "outputs": [
+        "an evidence-labeled psychographic profile",
+        "a need, identity, fear, trust, and language map",
+        "an uncertainty and ethics record"
+      ],
+      "effects": ["none"],
+      "failureBehavior": [
+        "ask for missing target, objective, evidence, or ethical scope before profiling",
+        "label unsupported interpretations as hypotheses rather than customer facts",
+        "decline sensitive or coercive profiling uses"
+      ],
+      "exclusions": [
+        "does not fit debugging-recovery",
+        "does not diagnose mental state or infer protected traits",
+        "does not invoke the named marketing and persuasion skill chain"
+      ],
+      "usefulInvariants": [
+        "observable facts and interpretation remain visibly separate",
+        "uncertainty survives into downstream artifacts",
+        "demographics are used only when evidence shows a material behavior difference"
+      ],
+      "materialRisks": [
+        "psychographic inference can stereotype, discriminate, or manipulate",
+        "downstream systems may drop uncertainty labels",
+        "customer evidence may contain personal or sensitive data"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "portable",
+      "disposition": "rejected",
+      "proposedCluster": "misclassified-psychographic-research",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    }
+  ]
+}
