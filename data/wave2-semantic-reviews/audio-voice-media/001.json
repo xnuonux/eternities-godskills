@@ -9,49 +9,21 @@
       "facetId": "facet-0043f435dc2ebfba",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/azure-ai-transcription-py/SKILL.md",
       "bodySha256": "0043f435dc2ebfba90cd58118ea733b421a36b839590bc339dbf627749ff455a",
-      "neutralCapabilitySummary": "transcribes batch or streaming audio with optional timestamps and speaker separation",
-      "neutralIntentExamples": [
-        "transcribe a stored recording",
-        "caption a live audio stream"
-      ],
+      "neutralCapabilitySummary": "selects blob-backed batch transcription with speaker diarization for long recordings or an event stream with backpressure control for live audio, while carrying locale and timestamp requirements",
+      "neutralIntentExamples": ["transcribe a meeting with speakers and timestamps"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "speech transcription",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["service endpoint and subscription key", "audio URL, file, or stream plus locale and speaker requirements"],
+      "operations": ["choose a batch job for long remotely stored audio or a stream session for live input", "submit content URLs with diarization or feed audio while consuming events, controlling backpressure, and closing the session"],
+      "outputs": ["batch job status and transcript", "live text events with requested timing and speaker metadata"],
+      "effects": ["read", "external-write"],
+      "failureBehavior": ["rejects missing key authentication and surfaces inaccessible URLs, stream pressure, or service errors without inventing text"],
+      "exclusions": ["does not translate, synthesize speech, or establish recognition accuracy against a human reference"],
+      "usefulInvariants": ["locale, timing, and speaker settings remain bound to the selected mode, and live sessions are closed"],
+      "materialRisks": ["remote processing exposes conversation audio, while wrong locale or dropped stream chunks reduce accuracy"],
       "providerCoupling": "provider-bound",
       "projectCoupling": "project-adjacent",
       "disposition": "pattern-reference",
-      "proposedCluster": "speech transcription",
+      "proposedCluster": "batch-and-stream speech transcription",
       "confidence": "medium",
       "copiedSourceProse": false,
       "promotionClaim": false
@@ -60,50 +32,22 @@
       "facetId": "facet-049b31af8c091595",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-indie-game-dev/skills/game-audio/SKILL.md",
       "bodySha256": "049b31af8c09159513aefcad92314c3643be35c44974021c003176c8faa278a6",
-      "neutralCapabilitySummary": "organizes interactive sound by category, priority, layering, transition, spatialization, and budget",
-      "neutralIntentExamples": [
-        "design a prioritized game mix",
-        "choose adaptive music transitions"
-      ],
+      "neutralCapabilitySummary": "builds an interactive mix from category priorities and voice-triggered ducking, then maps game states to crossfades, stingers, stems, or segments with spatial falloff and platform budgets",
+      "neutralIntentExamples": ["design adaptive combat music and gameplay cue priorities"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "adaptive audio design",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["game states, events, and sound inventory", "platform channel, memory, format, and spatial constraints"],
+      "operations": ["rank voice and gameplay feedback above music and ambience, then layer effects from attack, body, tail, and optional sweetener", "map state changes to transition techniques and set three-dimensional placement, distance filtering, mix levels, and ducking"],
+      "outputs": ["category, priority, and mix matrix", "adaptive state, transition, spatialization, and budget specification"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["leaves the design unresolved when game states or platform limits are absent and flags mixes that mask dialogue or player feedback"],
+      "exclusions": ["does not integrate an audio engine, record licensed assets, or master final files"],
+      "usefulInvariants": ["gameplay-critical cues outrank mood layers and transition choice follows the urgency of the state change"],
+      "materialRisks": ["an overfilled mix hides directional threats, while wrong formats or budgets can fail target platforms"],
       "providerCoupling": "none",
       "projectCoupling": "portable",
       "disposition": "independent-implementation",
-      "proposedCluster": "interactive audio",
-      "confidence": "medium",
+      "proposedCluster": "adaptive game audio and mix design",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -111,51 +55,22 @@
       "facetId": "facet-0f8548e97be96082",
       "canonicalSourceId": "AgriciDaniel/claude-ads@669c7608ecb50dd95c941a71fa3ca0a1c0e40512:skills/ads-optimize/SKILL.md",
       "bodySha256": "0f8548e97be960827e14a06c6fff3fb3a40f84ec303ceb99c36706d3bda473d6",
-      "neutralCapabilitySummary": "frames paid-media changes as evidence-backed drafts with gated reversible mutation and deletion refusal",
-      "neutralIntentExamples": [
-        "compare campaign change options",
-        "draft a bid change with rollback conditions"
-      ],
+      "neutralCapabilitySummary": "compares no-change, experiment, and account-mutation options against causal and economic evidence, then permits only reversible changes whose approval gate and remote-state precondition still hold",
+      "neutralIntentExamples": ["rank evidence-backed bid changes and safe rollback conditions"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "decision gating",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read",
-        "external-write"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["normalized snapshot, prior decisions, monitoring, experiments, lag, and economics", "capability manifest, remote precondition, and explicit approval"],
+      "operations": ["compare hold, experiment, and mutation across learning, policy, tracking, inventory, and opportunity cost", "rank recommendations with success measures, then apply only approved reversible operations whose remote state still matches the draft"],
+      "outputs": ["ranked recommendations with confidence", "gated mutation plan with verification and rollback or a precise refusal"],
+      "effects": ["read", "external-write"],
+      "failureBehavior": ["stays in draft mode without causal evidence or gate approval, refuses permanent deletion, and withholds negative keywords without a search-terms report and overblocking review"],
+      "exclusions": ["does not treat fixed CPA multiples, budget ratios, benchmarks, or novelty as authority"],
+      "usefulInvariants": ["evidence and remote preconditions remain bound to every proposed mutation, which retains audit and rollback"],
+      "materialRisks": ["conversion lag, stale state, or overbroad negative keywords can make a plausible optimization harmful"],
       "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
+      "projectCoupling": "project-bound",
       "disposition": "pattern-reference",
-      "proposedCluster": "paid-media decisions",
-      "confidence": "medium",
+      "proposedCluster": "evidence-gated paid-media mutation",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -163,50 +78,22 @@
       "facetId": "facet-0f90d9d08718be0e",
       "canonicalSourceId": "AgriciDaniel/claude-ads@669c7608ecb50dd95c941a71fa3ca0a1c0e40512:skills/ads-monitor/SKILL.md",
       "bodySha256": "0f90d9d08718be0e5340a6301949976b87838fa1bafdaa06c7994790035b5972",
-      "neutralCapabilitySummary": "compares compatible finalized advertising snapshots to distinguish anomalies from noise without mutation",
-      "neutralIntentExamples": [
-        "review weekly pacing",
-        "investigate a conversion change"
-      ],
+      "neutralCapabilitySummary": "tests snapshot comparability and data-finalization windows before separating learning, seasonality, latency, and planned edits from anomalies, then persists a versioned non-mutating monitoring bundle",
+      "neutralIntentExamples": ["distinguish a real campaign anomaly from reporting delay"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "monitoring",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["two normalized snapshots with compatible scope, currency, timezone, metrics, and attribution", "freshness, finalization, experiment, and planned-change context"],
+      "operations": ["reject incomparable periods and verify data freshness before calculating movement", "partition expected causes from unexplained change, assess pacing, economics, creative, tracking, and policy, then version the findings"],
+      "outputs": ["anomaly assessment with confidence and likely causes", "investigation thresholds and linked monitoring bundle"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["declares evidence inconclusive instead of alerting on trivial denominators, incompatible windows, or unfinalized data"],
+      "exclusions": ["does not mutate campaigns, bids, budgets, creative, or policy state"],
+      "usefulInvariants": ["comparisons use compatible definitions, while observations remain distinct from causal claims and action thresholds"],
+      "materialRisks": ["attribution lag and small denominators can create false deterioration or improvement"],
       "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
+      "projectCoupling": "project-bound",
       "disposition": "pattern-reference",
-      "proposedCluster": "evidence monitoring",
-      "confidence": "medium",
+      "proposedCluster": "comparable-window advertising monitoring",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -214,49 +101,21 @@
       "facetId": "facet-10282f111a787d6b",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/azure-ai-voicelive-ts/SKILL.md",
       "bodySha256": "10282f111a787d6b8083ec1d6d764f6ecc4c35526c01523959e5e0e6c9125475",
-      "neutralCapabilitySummary": "manages a bidirectional real-time audio session with turn detection, subscriptions, streamed responses, and tool outputs",
-      "neutralIntentExamples": [
-        "stream microphone audio",
-        "handle assistant audio events"
-      ],
+      "neutralCapabilitySummary": "configures a bidirectional WebSocket with explicit audio formats and voice-activity detection, then multiplexes audio, text, transcript, lifecycle, and function-call events through a closeable subscription",
+      "neutralIntentExamples": ["build a realtime voice assistant with semantic turn detection"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "real-time voice",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["endpoint, credential, model, voice, modalities, and audio encodings", "VAD thresholds, tool schemas, handlers, and microphone or telephony chunks"],
+      "operations": ["open and configure the session, then subscribe connection, speech-boundary, transcript, response, and error handlers", "stream audio, consume text and audio deltas, validate completed function arguments, return call-linked results, and close the subscription"],
+      "outputs": ["streamed assistant audio and text with transcripts", "function requests, call-linked results, and connection diagnostics"],
+      "effects": ["read", "external-write"],
+      "failureBehavior": ["classifies connection, authentication, protocol, and server failures and stops on incompatible formats or missing microphone permission"],
+      "exclusions": ["does not define tool authorization, browser consent UX, or production reconnection policy"],
+      "usefulInvariants": ["producer and consumer encodings match, function results retain call identifiers, and subscriptions close at session end"],
+      "materialRisks": ["live audio leaves the application boundary and unvalidated tool arguments can trigger unsafe actions"],
       "providerCoupling": "provider-bound",
       "projectCoupling": "project-adjacent",
       "disposition": "pattern-reference",
-      "proposedCluster": "real-time voice",
+      "proposedCluster": "event-driven realtime voice sessions",
       "confidence": "medium",
       "copiedSourceProse": false,
       "promotionClaim": false
@@ -265,50 +124,21 @@
       "facetId": "facet-15f5d0d2a71d2808",
       "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/cloudinary-automation/SKILL.md",
       "bodySha256": "15f5d0d2a71d280893f514d36910d52aa7142c949b576f11e133f5bc6b51e4c2",
-      "neutralCapabilitySummary": "organizes remote media, upload behavior, transformations, lookup, usage observation, and webhook events",
-      "neutralIntentExamples": [
-        "find and transform an asset",
-        "configure an upload policy"
-      ],
+      "neutralCapabilitySummary": "centralizes upload constraints in presets and resolves assets by public identifier, resource kind, and delivery type, while pre-generating transformations, watching quota, and emitting webhooks",
+      "neutralIntentExamples": ["create a constrained upload preset and pre-generate derivatives"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "media management",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read",
-        "external-write"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["connected Cloudinary account, folder, asset identifiers, and delivery type", "format, tag, transform, overwrite, moderation, and webhook rules"],
+      "operations": ["create or search folders and encode upload behavior while preventing unsigned overwrite conflicts", "fully resolve an asset before metadata or derivative changes, inspect quota, and delete only named derivatives or create the requested callback"],
+      "outputs": ["folder, preset, asset, transform, usage, and configuration records", "bounded remote mutation or webhook result"],
+      "effects": ["read", "external-write"],
+      "failureBehavior": ["reports idempotent folder cases, strict lookup mismatches, quota exhaustion, preset conflicts, and delayed CDN invalidation"],
+      "exclusions": ["does not upload source bytes, infer deletion targets, or claim immediate cache propagation"],
+      "usefulInvariants": ["preset rules match the upload method and remote mutations stay bound to fully resolved identifiers"],
+      "materialRisks": ["derived deletion alters remote state, public URLs expose media, and quota ceilings can halt uploads"],
       "providerCoupling": "provider-bound",
       "projectCoupling": "project-adjacent",
       "disposition": "pattern-reference",
-      "proposedCluster": "media assets",
+      "proposedCluster": "hosted media asset lifecycle",
       "confidence": "medium",
       "copiedSourceProse": false,
       "promotionClaim": false
@@ -317,49 +147,21 @@
       "facetId": "facet-16a4f256921f8cd1",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-azure-ai-cloud/skills/azure-ai-openai-dotnet/SKILL.md",
       "bodySha256": "16a4f256921f8cd175242ee198944017e340b8c0047d430cba7e3fb98870e093",
-      "neutralCapabilitySummary": "uses a .NET client abstraction for hosted language, embedding, image, audio, and assistant operations",
-      "neutralIntentExamples": [
-        "send a chat request",
-        "transcribe audio through a client"
-      ],
+      "neutralCapabilitySummary": "derives chat, embedding, image, and audio clients from one Azure endpoint, with strict JSON schemas and streaming completions providing typed alternatives to unconstrained responses",
+      "neutralIntentExamples": ["stream .NET chat and transcribe or synthesize audio"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "hosted model client",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["endpoint, deployment, Entra or key credential, and modality payload", "chat options, response schema, reasoning effort, or tool declaration"],
+      "operations": ["derive a deployment-specific modality client from one reusable top-level client and choose sync, async, or streaming consumption", "bind structured output to a schema, inspect usage or citations, validate tool arguments, and classify bad requests and throttling"],
+      "outputs": ["chat deltas, usage, citations, vectors, or image location", "audio transcript, synthesized bytes, or typed tool request"],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": ["distinguishes malformed requests from rate limits and backs off throttled work without executing unvalidated tool calls"],
+      "exclusions": ["does not verify current model availability, pricing, policy, or deployment quota"],
+      "usefulInvariants": ["modality clients use the intended deployment, strict output is parsed after constrained generation, and usage stays observable"],
+      "materialRisks": ["SDK and model names drift, sensitive inputs cross a provider boundary, and large limits increase cost"],
       "providerCoupling": "provider-bound",
       "projectCoupling": "project-adjacent",
       "disposition": "pattern-reference",
-      "proposedCluster": "model clients",
+      "proposedCluster": "multimodal .NET model clients",
       "confidence": "medium",
       "copiedSourceProse": false,
       "promotionClaim": false
@@ -368,50 +170,22 @@
       "facetId": "facet-1b41b66f62acdda1",
       "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:image-enhancer/SKILL.md",
       "bodySha256": "1b41b66f62acdda197e2cf4d2f9e38e366a552122351907833f35851c6491b3c",
-      "neutralCapabilitySummary": "improves supplied raster assets through bounded resolution, sharpness, and clarity processing",
-      "neutralIntentExamples": [
-        "prepare a screenshot",
-        "batch improve images"
-      ],
+      "neutralCapabilitySummary": "profiles resolution, blur, noise, and compression damage before choosing upscaling, sharpening, or cleanup, then preserves the original beside a use-case-sized derivative",
+      "neutralIntentExamples": ["improve text clarity in a documentation screenshot"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "image processing",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
-      "providerCoupling": "conditional",
+      "inputs": ["one image or bounded batch", "destination, dimensions, format, and requested correction"],
+      "operations": ["inspect dimensions and visible blur, noise, and artifacts, then select only the correction stages needed by the destination", "save a separately named derivative, retain the source, and compare dimensions, format, edge clarity, and size"],
+      "outputs": ["enhanced derivative and preserved source", "before-and-after specifications with applied-stage record"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["defers when destination or source is absent and never claims interpolation recovered missing detail"],
+      "exclusions": ["does not provide an algorithm, executable implementation, perceptual metric, or restoration guarantee"],
+      "usefulInvariants": ["the original remains recoverable and output sizing follows the declared destination"],
+      "materialRisks": ["aggressive sharpening creates halos, while batch work can multiply storage or overwrite assets"],
+      "providerCoupling": "none",
       "projectCoupling": "portable",
-      "disposition": "pattern-reference",
-      "proposedCluster": "media preparation",
-      "confidence": "medium",
+      "disposition": "deferred",
+      "proposedCluster": "non-destructive raster enhancement",
+      "confidence": "low",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -419,50 +193,21 @@
       "facetId": "facet-2027b2ee4941b8a6",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/twitter-automation/SKILL.md",
       "bodySha256": "2027b2ee4941b8a69d096fe414ea54c6d18808c32c8be0b2b63ab47ea0889b18",
-      "neutralCapabilitySummary": "coordinates social reads and media-aware mutations through an external account tool layer",
-      "neutralIntentExamples": [
-        "inspect recent posts",
-        "publish an approved media post"
-      ],
+      "neutralCapabilitySummary": "discovers current tool schemas and resolves the authenticated numeric user before posting or managing private objects, while separating seven-day search, archive search, and cursor-specific collection flows",
+      "neutralIntentExamples": ["publish media without duplicating a timed-out post"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "social publishing",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read",
-        "external-write"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["active Rube Twitter connection and current schemas", "text, media, query, identifiers, time range, and access tier"],
+      "operations": ["resolve the authenticated user, upload media, preserve numeric-string identifiers, and deduplicate uncertain non-idempotent creation", "route search by age and access tier, follow endpoint-specific cursors, and use the resolved identity for bookmarks, likes, and lists"],
+      "outputs": ["post and uploaded-media records", "paged search, user, bookmark, like, and list results"],
+      "effects": ["read", "external-write"],
+      "failureBehavior": ["stops on inactive OAuth or missing tier, reports empty or suspended results, and never blindly retries timed-out post creation"],
+      "exclusions": ["does not infer permission to publish, delete, bookmark, unlike, or alter lists from a read request"],
+      "usefulInvariants": ["writes stay bound to the authenticated account, media completes before posting, and each endpoint keeps its own cursor type"],
+      "materialRisks": ["ambiguous retries duplicate public posts and provider limits or schemas can change"],
       "providerCoupling": "provider-bound",
       "projectCoupling": "project-adjacent",
       "disposition": "deferred",
-      "proposedCluster": "social publishing",
+      "proposedCluster": "identity-resolved social account operations",
       "confidence": "medium",
       "copiedSourceProse": false,
       "promotionClaim": false
@@ -471,50 +216,22 @@
       "facetId": "facet-2e8070166165d53e",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:skills/macos-screen-recorder/SKILL.md",
       "bodySha256": "2e8070166165d53e14e632fef32bec3ee172395601360e0e007049285570b088",
-      "neutralCapabilitySummary": "captures a macOS display with system audio subject to operating-system permission",
-      "neutralIntentExamples": [
-        "record a desktop demonstration",
-        "capture a visual and audio test artifact"
-      ],
+      "neutralCapabilitySummary": "uses ScreenCaptureKit to record the main display and system sound into a timed MP4 without a loopback driver, while separating raw capture from cursor, zoom, caption, and input-event overlays",
+      "neutralIntentExamples": ["record a command-line demo with system audio"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "desktop capture",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
-      "providerCoupling": "conditional",
+      "inputs": ["macOS host with Screen Recording permission", "output path, duration, cursor choice, and input-event logging decision"],
+      "operations": ["confirm ScreenCaptureKit and permission, then capture synchronized display and system audio for the requested duration", "verify duration and audio before post-production and require concurrent event logging for keystroke or precise click overlays"],
+      "outputs": ["raw display-and-system-audio MP4", "statement of editing effects requiring another pass or event log"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["stops on non-macOS, denied permission, or unwritable output and does not promise overlays from pixels alone"],
+      "exclusions": ["does not edit footage or reconstruct input metadata that was never captured"],
+      "usefulInvariants": ["capture uses the main display and system audio, and event evidence is planned before recording when required"],
+      "materialRisks": ["screen and audio capture can record secrets or private notifications, and long files consume storage"],
+      "providerCoupling": "none",
       "projectCoupling": "project-adjacent",
       "disposition": "deferred",
-      "proposedCluster": "desktop capture",
-      "confidence": "medium",
+      "proposedCluster": "macOS display and system-audio capture",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -522,51 +239,22 @@
       "facetId": "facet-30b5d788ba2e11d9",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:skills/sendblue/textme/SKILL.md",
       "bodySha256": "30b5d788ba2e11d9aedda6bacaea86c32c51d285e52154afc9caf05654305d38",
-      "neutralCapabilitySummary": "supports text-message sending and delivery management with recipient and content context",
-      "neutralIntentExamples": [
-        "send an opted-in status message",
-        "inspect delivery state"
-      ],
+      "neutralCapabilitySummary": "polls inbound Sendblue messages from a phone-number allowlist into a local Claude session with directory, queue, stop, and approval controls, and optionally transcribes voice notes before host exposure",
+      "neutralIntentExamples": ["verify phone control of a sandboxed coding session before auto-start"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "messaging",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read",
-        "external-write"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["always-on host, Node, authenticated Claude, and sandbox directory", "Sendblue credentials, one-number allowlist, poll interval, and optional transcription key"],
+      "operations": ["store credentials outside synced repositories and start the poller as an unprivileged user in a sandbox", "separate control messages from prompts, then prove trusted status, benign filesystem access, unlisted-sender rejection, and shutdown before persistence"],
+      "outputs": ["phone-visible status, queue, history, task, and approval responses", "verification evidence and local actions executed with daemon-user privileges"],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": ["refuses auto-start if an unlisted sender is processed or shutdown fails, and selects outbound-only messaging when inbound control is not requested"],
+      "exclusions": ["does not run as root, accept shared numbers, expose credentials, or substitute for simple completion notifications"],
+      "usefulInvariants": ["the allowlist is the sole inbound authentication boundary, negative testing precedes persistence, and messages remain untrusted input"],
+      "materialRisks": ["number takeover grants remote code execution, lock-screen replies leak data, and duplicate daemons execute messages twice"],
       "providerCoupling": "provider-bound",
-      "projectCoupling": "project-adjacent",
+      "projectCoupling": "project-bound",
       "disposition": "deferred",
-      "proposedCluster": "messaging",
-      "confidence": "medium",
+      "proposedCluster": "allowlisted phone-to-agent remote control",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -574,50 +262,22 @@
       "facetId": "facet-3174b83b076cd549",
       "canonicalSourceId": "AgriciDaniel/claude-ads@669c7608ecb50dd95c941a71fa3ca0a1c0e40512:skills/ads-report/SKILL.md",
       "bodySha256": "3174b83b076cd5490f2ad5b9e731fc44f9b41b134ce689207162f4719ff9627d",
-      "neutralCapabilitySummary": "assembles scoped paid-media reports from normalized metrics and explicit comparison context",
-      "neutralIntentExamples": [
-        "summarize a campaign period",
-        "separate spend conversions and return"
-      ],
+      "neutralCapabilitySummary": "renders Markdown, HTML, and PDF from one validated run bundle through deterministic templates, then combines structural assertions with visual layout checks before atomically updating the manifest",
+      "neutralIntentExamples": ["render and verify an executive advertising report"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "reporting",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
-      "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
+      "inputs": ["validated versioned bundle with completeness and evidence status", "privacy class, branding choice, audience, and formats"],
+      "operations": ["reject loose prose and render every format from identical canonical data while preserving confidence, evidence, contradictions, actions, and windows", "run structural and visual checks, then atomically write inside the run directory and update its manifest"],
+      "outputs": ["consistent Markdown, HTML, or PDF reports", "verification result and updated artifact manifest"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["withholds final artifacts when the bundle, privacy class, layout checks, or atomic write fail and never hides partial status"],
+      "exclusions": ["does not include credentials, customer lists, private paths, raw research, transcripts, or unapproved branding"],
+      "usefulInvariants": ["all formats express the same uncertainty and the manifest changes only with atomically written reports"],
+      "materialRisks": ["layout truncation can hide evidence, while wrong privacy or branding settings disclose restricted material"],
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
       "disposition": "pattern-reference",
-      "proposedCluster": "reporting",
-      "confidence": "medium",
+      "proposedCluster": "canonical-data multi-format reporting",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -625,50 +285,21 @@
       "facetId": "facet-320535089a1330a4",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/azure-communication-callautomation-java/SKILL.md",
       "bodySha256": "320535089a1330a47f98c2b290304a6d78103181c7cdb13f2108b514698fe174",
-      "neutralCapabilitySummary": "controls programmable call flows from Java including prompts, recognition, routing, recording, and callbacks",
-      "neutralIntentExamples": [
-        "route an inbound call",
-        "collect a spoken response"
-      ],
+      "neutralCapabilitySummary": "maintains call-connection and recording identifiers across created or answered calls, then drives playback, DTMF or speech recognition, participant transfer, recording state, and parsed callback events",
+      "neutralIntentExamples": ["build a Java IVR that records and routes callers"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "telephony",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read",
-        "external-write"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["communication credential, caller, callee, callback, and user identifiers", "prompts, recognition timeouts, recording settings, and destination"],
+      "operations": ["create or answer a call, retain its connection identifier, and play prompts while collecting bounded digits or speech", "add or transfer participants, manage recording by its identifier, download after readiness, and parse lifecycle callbacks"],
+      "outputs": ["call, participant, recognition, and transfer results", "recording identifier, downloaded media, and callback-derived state"],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": ["reports ended calls and malformed requests and never downloads recording before its ready event or acts after disconnect"],
+      "exclusions": ["does not specify recording consent, retention, callback signature validation, or retry policy"],
+      "usefulInvariants": ["actions use the current call and recording identifiers and callback events, not assumed timing, drive state"],
+      "materialRisks": ["calls and recordings expose sensitive data, while missing consent or callback authentication creates legal and security risk"],
       "providerCoupling": "provider-bound",
       "projectCoupling": "project-adjacent",
       "disposition": "deferred",
-      "proposedCluster": "telephony",
+      "proposedCluster": "event-driven programmable call control",
       "confidence": "medium",
       "copiedSourceProse": false,
       "promotionClaim": false
@@ -677,50 +308,22 @@
       "facetId": "facet-327dc5c63e7eb999",
       "canonicalSourceId": "nexu-io/html-anything@c31204544230578ac814026fecc153c6e36587ae:next/src/lib/templates/skills/social-media-matrix/SKILL.md",
       "bodySha256": "327dc5c63e7eb9994433b790fe779dc3899dc60fdda2e03a98826c773a5814e3",
-      "neutralCapabilitySummary": "maps content ideas into channel-specific variants while tracking formats and platform constraints",
-      "neutralIntentExamples": [
-        "adapt an announcement for channels",
-        "review a publishing matrix"
-      ],
+      "neutralCapabilitySummary": "lays out a desktop analytics page around a platform-by-metric KPI matrix and hoverable range-comparison charts, complemented by an insight drawer, top-post grid, and theme switch",
+      "neutralIntentExamples": ["sketch a multi-platform social analytics dashboard"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "content adaptation",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
-      "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "content adaptation",
-      "confidence": "medium",
+      "inputs": ["brand, time window, platform metrics, and comparison ranges", "written insights, ranked posts, and optional seed data"],
+      "operations": ["place brand, time, and theme controls above a horizontal-platform by vertical-metric matrix", "wire chart hover and range comparison to the active window, then show narrative insights and top posts while labeling seed values"],
+      "outputs": ["desktop-long-page dashboard layout", "KPI, chart, insight, and top-post interaction specification"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["defers when metric semantics or live-versus-seed provenance are undefined and does not infer missing schemas, formulas, responsiveness, accessibility, or tests"],
+      "exclusions": ["does not provide data ingestion, calculation logic, or an executable component"],
+      "usefulInvariants": ["every value retains platform, metric, and time context, theme changes preserve data, and seeds remain visibly synthetic"],
+      "materialRisks": ["seed data may look real and the dense desktop layout may be inaccessible on small screens"],
+      "providerCoupling": "none",
+      "projectCoupling": "portable",
+      "disposition": "deferred",
+      "proposedCluster": "multi-platform analytics dashboard layout",
+      "confidence": "low",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -728,50 +331,22 @@
       "facetId": "facet-3438ddc3e7c45e23",
       "canonicalSourceId": "AgriciDaniel/claude-ads@669c7608ecb50dd95c941a71fa3ca0a1c0e40512:skills/ads-research/SKILL.md",
       "bodySha256": "3438ddc3e7c45e23c93222328f97f0a0b319c4c39c195873d989b62b50286fe5",
-      "neutralCapabilitySummary": "structures paid-media research with explicit evidence, source checks, comparisons, and testable hypotheses",
-      "neutralIntentExamples": [
-        "compare competitor positioning",
-        "identify audience hypotheses"
-      ],
+      "neutralCapabilitySummary": "binds paid-media claims to dated source records and a separate load-bearing verifier, then demotes expired or contradicted claims and blocks release-current assertions when reverification is unavailable",
+      "neutralIntentExamples": ["refresh an expired advertising API claim"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "research",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["claim, capability, publishing contracts, and refresh date", "eligible official or primary sources and access constraints"],
+      "operations": ["partition research by platform or topic and record publisher, dates, geography, availability, confidence, license, redistribution, and next refresh", "use a separate verifier, reconcile contradictions, map affected controls and tests, and block current-release language when evidence cannot be refreshed"],
+      "outputs": ["source-labeled evidence and verification records", "reverified or demoted claim plus bounded update proposal and recovery path"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["marks inaccessible expired claims provisional or unsupported and blocks every dependent current assertion instead of leaving status undecided"],
+      "exclusions": ["does not copy restricted prompts, large passages, unlicensed code, issue text, or private account material"],
+      "usefulInvariants": ["discovery is not canon, load-bearing verification stays independent, and current claims require unexpired eligible evidence"],
+      "materialRisks": ["stale policy claims authorize invalid advice and untrusted fetched content can inject instructions or restricted material"],
       "providerCoupling": "conditional",
-      "projectCoupling": "project-adjacent",
+      "projectCoupling": "project-bound",
       "disposition": "pattern-reference",
-      "proposedCluster": "research",
-      "confidence": "medium",
+      "proposedCluster": "dated claim reverification and demotion",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -779,50 +354,22 @@
       "facetId": "facet-3b2a761563b4e349",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/brand-guidelines/SKILL.md",
       "bodySha256": "3b2a761563b4e349dc17db343743780c5c016c4c7ba24e85fe7bbf703f5f149f",
-      "neutralCapabilitySummary": "constrains user-facing copy by audience, clarity, terminology, tone, and context",
-      "neutralIntentExamples": [
-        "rewrite an interface error",
-        "review terminology in help text"
-      ],
+      "neutralCapabilitySummary": "defaults interfaces, documentation, errors, and billing to concise plain speech, reserving a self-aware branded voice for empty states and onboarding without obscuring the next action",
+      "neutralIntentExamples": ["rewrite a product error with a clear recovery step"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "editorial constraints",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["copy, interface context, audience, and intended action", "destructive consequences and Sentry terminology"],
+      "operations": ["classify the surface and default to plain speech unless it is an earned personality moment", "rewrite passive or vague language, name button actions, structure errors as event, useful cause, and recovery, and review case and punctuation"],
+      "outputs": ["revised user-facing copy", "tone classification and rule-specific review findings"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["uses plain speech when context is unclear and withholds specifics when the action or consequence is unknown"],
+      "exclusions": ["does not use branded snark in errors, settings, documentation, billing, or payments"],
+      "usefulInvariants": ["personality targets the situation, meaning outranks character, and labels name actions rather than narrating success"],
+      "materialRisks": ["humor damages trust in stressful flows and over-shortening can remove cause or recovery details"],
       "providerCoupling": "none",
-      "projectCoupling": "portable",
+      "projectCoupling": "project-bound",
       "disposition": "pattern-reference",
-      "proposedCluster": "editorial",
-      "confidence": "medium",
+      "proposedCluster": "context-selected product voice",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -830,50 +377,22 @@
       "facetId": "facet-3e45ddc8e71df5d5",
       "canonicalSourceId": "AgriciDaniel/claude-ads@669c7608ecb50dd95c941a71fa3ca0a1c0e40512:skills/ads-amazon/SKILL.md",
       "bodySha256": "3e45ddc8e71df5d5b76c387aab31d935ad95a58cbaa4ec3524d529f93a0c42f2",
-      "neutralCapabilitySummary": "organizes an advertising audit across account entities, targeting, spend, retail readiness, creative, and policy",
-      "neutralIntentExamples": [
-        "review sponsored-product delivery",
-        "compare efficiency with retail evidence"
-      ],
+      "neutralCapabilitySummary": "normalizes Amazon advertising exports with source lineage before assessing sponsored and DSP formats, targeting, retail readiness, ACOS or TACOS, and policy under shared evidence and mutation contracts",
+      "neutralIntentExamples": ["audit Amazon Sponsored Products with traceable evidence"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "advertising audit",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["objective, conversion, account age, geography, window, currency, spend, and targets", "exports, screenshots, API results, manual values, and relevant shared contracts"],
+      "operations": ["load only needed Amazon and cross-cutting references, normalize every value, and retain its evidence origin", "assess profiles, formats, targeting, search terms, readiness, creative, budgets, economics, and policy while separating observations, diagnoses, recommendations, opportunities, and draft mutations"],
+      "outputs": ["platform health, evidence coverage, and regulatory findings", "prioritized recommendations, unscored opportunities, contradictions, and recovery hints"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["marks missing evidence, leaves ineligible features unscored, rejects unmatched benchmarks, and keeps changes behind the common gate"],
+      "exclusions": ["does not calculate final scores in prose or issue universal pause, bid, budget, learning, or attribution rules"],
+      "usefulInvariants": ["values retain lineage, audit judgment stays distinct from mutation authority, and reports derive from validated JSON"],
+      "materialRisks": ["blended economics conceal product differences and regional readiness or policy can invalidate recommendations"],
       "providerCoupling": "provider-bound",
-      "projectCoupling": "project-adjacent",
+      "projectCoupling": "project-bound",
       "disposition": "deferred",
-      "proposedCluster": "advertising audit",
-      "confidence": "medium",
+      "proposedCluster": "lineage-preserving Amazon advertising audit",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -881,51 +400,22 @@
       "facetId": "facet-3f8e5d330a878311",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/twilio-communications/SKILL.md",
       "bodySha256": "3f8e5d330a8783117766ac1e5127af9315020284fae62eb2dc2bc5e88e31c101",
-      "neutralCapabilitySummary": "models SMS, verification, voice, and IVR workflows with identity inputs and callback handling",
-      "neutralIntentExamples": [
-        "design an OTP flow",
-        "route a caller through a menu"
-      ],
+      "neutralCapabilitySummary": "validates E.164 recipients, opt-out state, delivery callbacks, and signed webhooks for messaging, while delegating OTP lifecycle to Verify and expressing IVR through TwiML gather, route, and record transitions",
+      "neutralIntentExamples": ["send compliant SMS and build a signed-webhook IVR"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "communications",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read",
-        "external-write"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["server-side credentials, sending identity, recipient, consent, body, and callbacks", "Verify service, call routes, WhatsApp window, templates, and rate constraints"],
+      "operations": ["validate format and consent, count segments, send, retain identifiers, and map signed delivery and opt events into local state", "use provider-managed OTP with application limits, return TwiML for gather and routing, enforce WhatsApp templates outside the session window, and retry only transient failures with jitter"],
+      "outputs": ["message, call, recording, and verification identifiers with status", "TwiML, callback-derived state, verification decision, and fallback classification"],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": ["blocks opted-out recipients, rejects invalid signatures, and distinguishes handset, carrier, throttle, window, and verification-attempt failures"],
+      "exclusions": ["does not store OTPs, expose browser credentials, retry permanent failures, or bypass consent and template rules"],
+      "usefulInvariants": ["credentials stay server-side, validated callbacks establish state, opt-out is checked before send, and WhatsApp windows are recorded"],
+      "materialRisks": ["forged callbacks, consent failures, recordings, duplicate retries, and carrier filtering create security, legal, cost, and delivery risk"],
       "providerCoupling": "provider-bound",
       "projectCoupling": "project-adjacent",
       "disposition": "deferred",
-      "proposedCluster": "communications",
-      "confidence": "medium",
+      "proposedCluster": "compliant programmable communications",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -933,50 +423,22 @@
       "facetId": "facet-400e513012a6c0e1",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-aas-localization-international-growth/skills/content-creator/SKILL.md",
       "bodySha256": "400e513012a6c0e16f7abad9910c7be1bcf0e609a0343b116d6d3f992965ae6b",
-      "neutralCapabilitySummary": "combines audience context, search considerations, editorial structure, and channel planning",
-      "neutralIntentExamples": [
-        "plan an audience-focused article",
-        "adapt approved content to a calendar"
-      ],
+      "neutralCapabilitySummary": "derives a voice profile from existing copy and scores keyword density, headings, and metadata for search, then repurposes a core message through platform templates and a scheduled calendar",
+      "neutralIntentExamples": ["establish brand voice and adapt one article across platforms"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "content planning",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["audience need, brand samples, voice attributes, topic, and keywords", "content framework, target platforms, dimensions, cadence, and goals"],
+      "operations": ["profile tone and readability, choose a framework, draft from audience need, and measure keyword, heading, link, and metadata signals", "fact-check and voice-edit the draft, adapt its message to platform constraints, schedule themes, and define traffic, engagement, lead, and revenue indicators"],
+      "outputs": ["voice profile and search recommendations", "platform content set, calendar, and measurement plan"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["defers analyzer and score claims when referenced scripts are unavailable and rejects keyword stuffing or scheduling without audience research"],
+      "exclusions": ["does not establish search volume or optimal posting times from the body and does not publish"],
+      "usefulInvariants": ["audience need precedes optimization, factual review precedes voice polish, and variants retain the core message"],
+      "materialRisks": ["fixed density heuristics may be stale and uninspected helpers prevent reproduction of claimed scores"],
       "providerCoupling": "conditional",
       "projectCoupling": "project-adjacent",
-      "disposition": "pattern-reference",
-      "proposedCluster": "content planning",
-      "confidence": "medium",
+      "disposition": "deferred",
+      "proposedCluster": "voice-aware content repurposing and measurement",
+      "confidence": "low",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -984,49 +446,21 @@
       "facetId": "facet-4033e925e6bcbe1d",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/gemini-api-dev/SKILL.md",
       "bodySha256": "4033e925e6bcbe1db088d25ede7dacb840f9a28c2ba3e8efbbc6a27b4697c154",
-      "neutralCapabilitySummary": "guides multimodal hosted-model integration with SDK selection, structured responses, function calls, and documentation checks",
-      "neutralIntentExamples": [
-        "send an image-and-text request",
-        "define a structured function response"
-      ],
+      "neutralCapabilitySummary": "selects the current GenAI SDK by language and revalidates model or API claims through official documentation, while separating ordinary multimodal generation from the dedicated live-streaming interface",
+      "neutralIntentExamples": ["build a verified structured-output Gemini client"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "multimodal models",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["language, modality, current official docs, and provider credential", "model behavior, function schema, response schema, quota, and deployment constraints"],
+      "operations": ["classify generation, embedding, function, structured-output, or live-streaming needs and select the documented first-party SDK", "reverify model identifiers and signatures, bind functions or responses to explicit schemas, and route bidirectional media to the separate live interface"],
+      "outputs": ["language-specific integration and verified SDK or model record", "function or response contract and realtime handoff when required"],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": ["defers current-model claims without official evidence, rejects deprecated SDKs, and does not treat examples as environment tests"],
+      "exclusions": ["does not establish pricing, quotas, credentials, deployment, or live-session behavior from the static body"],
+      "usefulInvariants": ["SDK choices use current evidence, function shapes are explicit, and live sessions remain a distinct path"],
+      "materialRisks": ["model lists are time-sensitive and multimodal inputs, function results, cost, and compatibility cross a provider boundary"],
       "providerCoupling": "provider-bound",
       "projectCoupling": "project-adjacent",
       "disposition": "deferred",
-      "proposedCluster": "model integration",
+      "proposedCluster": "documentation-verified multimodal model integration",
       "confidence": "medium",
       "copiedSourceProse": false,
       "promotionClaim": false
@@ -1035,50 +469,22 @@
       "facetId": "facet-4d5db971dee2dcf8",
       "canonicalSourceId": "AgriciDaniel/claude-ads@669c7608ecb50dd95c941a71fa3ca0a1c0e40512:skills/ads-budget/SKILL.md",
       "bodySha256": "4d5db971dee2dcf8fb37dc1e3d238d31c65d2dd83bf9ab6fd8640f77aa9bb80e",
-      "neutralCapabilitySummary": "frames advertising allocation and bidding as constrained economic planning using forecasts and business metrics",
-      "neutralIntentExamples": [
-        "compare allocations under a ceiling",
-        "review a bid strategy"
-      ],
+      "neutralCapabilitySummary": "calculates visible break-even and sensitivity boundaries from margin, cash, capacity, and attribution uncertainty, then allocates baseline, experiments, and reserve using marginal rather than blended return",
+      "neutralIntentExamples": ["compare hold, scale, and reallocation under a cash ceiling"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "budget planning",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["objective, conversion value, margin, cash, capacity, seasonality, and attribution uncertainty", "comparable spend and outcome windows plus platform evidence minimums"],
+      "operations": ["normalize windows and derive break-even formulas with named inputs, uncertainty ranges, and sensitivity cases", "partition baseline, experiments, and reserve, compare marginal hold or change options, and assign amount, timing, owner, guardrails, measure, and rollback"],
+      "outputs": ["break-even and sensitivity analysis", "decision-complete scenario and allocation plan"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["withholds allocation without core economics or comparable windows and labels fixed splits or scaling ratios as optional heuristics"],
+      "exclusions": ["does not apply bids or budgets or universalize fixed allocation and CPA rules"],
+      "usefulInvariants": ["formulas expose uncertainty, marginal evidence stays separate from blended averages, and allocations have rollback triggers"],
+      "materialRisks": ["wrong margin or attribution distorts break-even and scaling beyond capacity makes efficient media harmful"],
       "providerCoupling": "conditional",
       "projectCoupling": "project-adjacent",
       "disposition": "pattern-reference",
-      "proposedCluster": "budget planning",
-      "confidence": "medium",
+      "proposedCluster": "constraint-based media allocation",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -1086,50 +492,21 @@
       "facetId": "facet-530f933f7fdda3a2",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/instagram-automation/SKILL.md",
       "bodySha256": "530f933f7fdda3a25e384d045e165743a35e2a14f8eab981dc639d618967b147",
-      "neutralCapabilitySummary": "coordinates media retrieval, insight reads, carousel preparation, publishing, and limit checks through an external platform",
-      "neutralIntentExamples": [
-        "inspect media insights",
-        "prepare a multi-item post"
-      ],
+      "neutralCapabilitySummary": "implements two-phase publishing by creating publicly fetchable media containers and polling them to completion, with carousel child readiness and rolling quota checked before final mutation",
+      "neutralIntentExamples": ["publish a carousel after every child container is ready"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "social publishing",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read",
-        "external-write"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["active Business or Creator connection, current schemas, and resolved user ID", "public media URLs, caption, child order, insight metrics, periods, and cursors"],
+      "operations": ["confirm account type and quota, create one container per item, and poll each to finished state", "assemble two to ten ready children, publish to the resolved account, and page through media, comments, children, and delayed insights"],
+      "outputs": ["container identifiers and processing states", "published media, quota, and paged insight or comment records"],
+      "effects": ["read", "external-write"],
+      "failureBehavior": ["stops for personal accounts, private or expired URLs, unfinished children, exhausted quota, or unavailable metrics"],
+      "exclusions": ["does not host source media, infer publication consent, or exceed the rolling limit"],
+      "usefulInvariants": ["publication uses finished containers owned by the resolved account, child order stays stable, and metric period remains compatible"],
+      "materialRisks": ["public posting exposes unintended content, temporary URLs expire during processing, and rolling quotas invalidate schedules"],
       "providerCoupling": "provider-bound",
       "projectCoupling": "project-adjacent",
       "disposition": "deferred",
-      "proposedCluster": "media publishing",
+      "proposedCluster": "container-gated social media publishing",
       "confidence": "medium",
       "copiedSourceProse": false,
       "promotionClaim": false
@@ -1138,50 +515,22 @@
       "facetId": "facet-54ead7bf65816446",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/blog-writing-guide/SKILL.md",
       "bodySha256": "54ead7bf658164467b7f710a3da0291042b64686ccb55ea1cdcf91f0faeed41d",
-      "neutralCapabilitySummary": "provides editorial checks for informative structure, headings, openings, technical quality, and conclusions",
-      "neutralIntentExamples": [
-        "outline a technical article",
-        "edit headings for clarity"
-      ],
+      "neutralCapabilitySummary": "opens with a problem or conclusion and structures the body around reader questions, while requiring numerical evidence, tested code, system diagrams, trade-offs, limitations, and a real-person byline",
+      "neutralIntentExamples": ["review a technical launch post for depth and credibility"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "editorial review",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["draft, reader, post type, named author, and concrete closing destination", "claims, benchmarks, code, diagrams, alternatives, failures, and limitations"],
+      "operations": ["replace background or hype with the problem or conclusion and order sections by mechanism, trade-offs, use, failed attempts, and limits", "rewrite headings as claims, verify numbers and code, require diagrams for multi-component systems, and run technical, editorial, byline, link, and usefulness checks"],
+      "outputs": ["restructured technical draft", "specific findings, example rewrites, and publication blockers"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["blocks untested code, adjective-only performance, missing diagrams or bylines, and routes thin release recaps to the changelog"],
+      "exclusions": ["does not replace technical review with voice polish or end with generic promotional recap"],
+      "usefulInvariants": ["claims stay falsifiable, alternatives and limits remain visible, and the closing provides a concrete next step"],
+      "materialRisks": ["broken examples teach faulty work and omitted trade-offs or forced branding undermine technical trust"],
       "providerCoupling": "none",
-      "projectCoupling": "portable",
+      "projectCoupling": "project-bound",
       "disposition": "pattern-reference",
-      "proposedCluster": "editorial review",
-      "confidence": "medium",
+      "proposedCluster": "evidence-backed technical editorial review",
+      "confidence": "high",
       "copiedSourceProse": false,
       "promotionClaim": false
     },
@@ -1189,49 +538,21 @@
       "facetId": "facet-5a26c5e3730cb2ab",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/voice-ai-development/SKILL.md",
       "bodySha256": "5a26c5e3730cb2ab52236153fe2e2b7b7dedc20fda6d35f10b65b9ec63866f68",
-      "neutralCapabilitySummary": "describes a modular voice-agent pipeline spanning recognition, response generation, synthesis, transport, interruption handling, and latency",
-      "neutralIntentExamples": [
-        "design a voice agent",
-        "connect recognition and synthesis"
-      ],
+      "neutralCapabilitySummary": "chooses integrated speech-to-speech or a streamed recognition-model-synthesis pipeline, then reduces latency through partial transcripts, token-buffered audio generation, persistent transports, VAD, and barge-in cancellation",
+      "neutralIntentExamples": ["design a low-latency voice agent with interruption handling"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "voice architecture",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["use case, transport, latency budget, network, sample rates, codecs, and channels", "provider stack, tools, VAD, interruption policy, and credentials"],
+      "operations": ["choose native realtime, hosted phone agent, or custom stack and align every transport and provider on explicit audio formats", "stream final transcripts into conversation state, start synthesis from buffered tokens, cancel and clear playback on barge-in, reconnect transports, and measure stage latency"],
+      "outputs": ["provider architecture and latency allocation", "streaming pipeline, interruption behavior, and stage measurements"],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": ["flags non-streaming synthesis, format mismatch, blocking audio, absent reconnection, untuned VAD, and missing cancellation"],
+      "exclusions": ["does not establish current APIs, prices, consent, or production security from static examples"],
+      "usefulInvariants": ["audio formats are explicit, only final recognition becomes a durable turn, barge-in clears playback, and latency is measured per stage"],
+      "materialRisks": ["voice data is sensitive, stale provider examples expose keys or fail, and chaining compounds outage, latency, and cost"],
       "providerCoupling": "conditional",
       "projectCoupling": "project-adjacent",
       "disposition": "deferred",
-      "proposedCluster": "voice architecture",
+      "proposedCluster": "interruptible low-latency voice pipelines",
       "confidence": "medium",
       "copiedSourceProse": false,
       "promotionClaim": false
@@ -1240,49 +561,21 @@
       "facetId": "facet-5ce98db9167d9228",
       "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/public-relations/SKILL.md",
       "bodySha256": "5ce98db9167d9228eaa52aaa24e70d4106d13bb5142e6a9a46cbbfe8dd73544d",
-      "neutralCapabilitySummary": "organizes earned-media work around a newsworthy angle, suitable contacts, owned assets, measurement, and a decision not to pitch weak stories",
-      "neutralIntentExamples": [
-        "evaluate a product milestone",
-        "prepare a media asset checklist"
-      ],
+      "neutralCapabilitySummary": "gates earned media on a defensible story, available spokesperson, clear audience, and owned destination, then combines reactive, proactive, inbound, and press-kit modes with a seven-question send threshold",
+      "neutralIntentExamples": ["decide whether a milestone is pitchable and prepare its press assets"],
       "legacyAliases": [],
-      "inputs": [
-        "user task and acceptance criteria",
-        "relevant media or campaign context",
-        "permissions and provider capability state"
-      ],
-      "operations": [
-        "interpret the bounded request",
-        "media planning",
-        "check prerequisites and result boundaries"
-      ],
-      "outputs": [
-        "structured guidance or findings",
-        "explicit uncertainty and follow-up conditions"
-      ],
-      "effects": [
-        "read"
-      ],
-      "failureBehavior": [
-        "reports missing inputs, permission failures, provider errors, or insufficient evidence instead of fabricating a result"
-      ],
-      "exclusions": [
-        "does not authorize execution, publication, deletion, or unrelated external changes without an explicit gate"
-      ],
-      "usefulInvariants": [
-        "preserve requested scope",
-        "make provider and permission assumptions explicit",
-        "retain context needed to verify the result"
-      ],
-      "materialRisks": [
-        "provider behavior, quotas, formats, or policies may change",
-        "media or communication data may contain sensitive content",
-        "partial operations may leave state requiring reconciliation"
-      ],
+      "inputs": ["product context, audience, story evidence, spokesperson capacity, and destination", "journalist beat, recent articles, timing, quotes, assets, and explicit ask"],
+      "operations": ["decline publicity when the only story is existence or audience and sustained spokesperson time are missing, then choose at least three fitting media modes", "assemble copy-ready press assets, score beat fit, hook, completeness, subject, brevity, language, and ask, and track coverage through sales impact rather than advertising-value equivalence"],
+      "outputs": ["go, wait, or skip decision plus story angles and pitch", "press-kit requirements and coverage-impact measurement plan"],
+      "effects": ["read", "write"],
+      "failureBehavior": ["returns skip or wait for missing story foundations and does not send when any pitch-quality check fails"],
+      "exclusions": ["does not promise direct conversions, use advertising-value equivalence, or confuse public relations with pull requests"],
+      "usefulInvariants": ["the story centers on evidence or people, targeting uses recent beat evidence, and attention has an owned destination and responder"],
+      "materialRisks": ["poor targeting damages relationships, reactive value decays quickly, and unsupported claims create legal or reputational exposure"],
       "providerCoupling": "conditional",
       "projectCoupling": "project-adjacent",
-      "disposition": "deferred",
-      "proposedCluster": "media planning",
+      "disposition": "pattern-reference",
+      "proposedCluster": "story-gated earned media planning",
       "confidence": "medium",
       "copiedSourceProse": false,
       "promotionClaim": false
