@@ -4,11 +4,28 @@ import { pathToFileURL } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 
 import { buildAttestedContinuityReceipt } from "./build-attested-continuity-receipt.mjs";
+import { auditQuarryWave } from "./audit-quarry-wave.mjs";
 import { buildAthena } from "./build-athena-receipt.mjs";
 import { buildCompilerGeneralizationV2Receipt } from "./build-compiler-generalization-v2-receipt.mjs";
 import { buildIntentCompilerReceipt } from "./build-intent-compiler-receipt.mjs";
 import { buildUsageEvolutionEvidence } from "./build-usage-evolution-evaluation.mjs";
-import { canonicalText, sha256, writeJsonAtomic } from "../src/io.mjs";
+import { sha256, writeJsonAtomic } from "../src/io.mjs";
+
+const CONTINUITY_GATES = {
+  exactInertSource: true,
+  trustedSignatureRequired: true,
+  parentBoundAppendOnlyChain: true,
+  taskIsolation: true,
+  latestPacketOnly: true,
+  authorityCannotExpand: true,
+  futureTimeRejected: true,
+  immutableAtomicRevisionCommit: true,
+  concurrentForkHasSingleWinner: true,
+  lowerEstimatedContextCostThanDeclaredPerToolBaseline: true,
+  perToolPromptInjectionInstalled: false,
+  slashCommandRequired: false,
+  hostActivationPerformed: false,
+};
 
 const RECEIPTS = {
   completion: "receipts/eternities-godskills-completion.json",
@@ -39,15 +56,13 @@ function everyTrue(value) {
   return Object.values(value).every((entry) => entry === true);
 }
 
-function exactBooleanGateProfile(value, falseKeys = []) {
-  const expectedFalse = new Set(falseKeys);
-  return Object.entries(value).every(([key, entry]) => entry === !expectedFalse.has(key));
+function exactBooleanGateProfile(value, expected) {
+  return isDeepStrictEqual(value, expected);
 }
 
 async function exactDigest(root, relativePath, expected) {
   const bytes = await readFile(path.join(root, relativePath));
-  if (sha256(bytes) === expected) return true;
-  return sha256(canonicalText(bytes.toString("utf8"))) === expected;
+  return sha256(bytes) === expected;
 }
 
 function collectPathDigests(value, found = []) {
@@ -105,6 +120,10 @@ export function certificationStatus({ gates, reconciliation }) {
     ? "certified" : "failed";
 }
 
+export function quarryAuditMatches(live, frozen) {
+  return isDeepStrictEqual(live, frozen);
+}
+
 export async function buildGodskillsSystemCertification({ root = path.resolve("."), write = true } = {}) {
   const entries = await Promise.all(Object.entries(RECEIPTS).map(async ([name, relativePath]) => [name, await json(root, relativePath)]));
   const proofs = Object.fromEntries(entries);
@@ -122,12 +141,13 @@ export async function buildGodskillsSystemCertification({ root = path.resolve(".
     const actual = sha256(await readFile(path.join(root, "skills", cardPath)));
     return id === path.basename(path.dirname(path.dirname(cardPath))) && actual === expected;
   }));
-  const [rebuiltV1, rebuiltV2, rebuiltContinuity, rebuiltUsage, rebuiltAthena] = await Promise.all([
+  const [rebuiltV1, rebuiltV2, rebuiltContinuity, rebuiltUsage, rebuiltAthena, liveQuarryAudit] = await Promise.all([
     buildIntentCompilerReceipt({ root, write: false }),
     buildCompilerGeneralizationV2Receipt({ root, write: false }),
     buildAttestedContinuityReceipt({ root, write: false }),
     buildUsageEvolutionEvidence(root),
     buildAthena(root, { write: false }),
+    auditQuarryWave({ root }),
   ]);
   const boundArtifacts = await verifyBoundArtifacts(root, proofs.usageEvolution, proofs.athena, proofs.continuity, aegisSynthesis);
   const routingArtifactsExact = proofs.router.artifacts.cardsSha256 === sha256(cardsText) &&
@@ -155,7 +175,7 @@ export async function buildGodskillsSystemCertification({ root = path.resolve(".
     supplyChainGatePromoted: proofs.supplyChain.decision.status === "promoted" && aegisSynthesis.status === "promoted",
     usageEvolutionPromotedButNotAdopted: proofs.usageEvolution.decision.status === "promoted" && proofs.usageEvolution.evolutionDecision.status === "eligible" && proofs.usageEvolution.evolutionDecision.adopted === false && proofs.usageEvolution.evolutionDecision.requiresExplicitAdoption === true,
     athenaPromoted: proofs.athena.decision.status === "promoted" && proofs.athena.candidate.criticalPassed === proofs.athena.candidate.criticalTotal,
-    attestedContinuityCertified: proofs.continuity.status === "certified" && exactBooleanGateProfile(proofs.continuity.gates, ["perToolPromptInjectionInstalled", "slashCommandRequired", "hostActivationPerformed"]),
+    attestedContinuityCertified: proofs.continuity.status === "certified" && exactBooleanGateProfile(proofs.continuity.gates, CONTINUITY_GATES),
     externalActionExecution: [proofs.supplyChain.evidence.externalMutation, proofs.athena.evidence.externalMutation].some(Boolean),
     hostActivationPerformed: [proofs.supplyChain.evidence.hostActivation, proofs.usageEvolution.activation.hostActivation, proofs.continuity.gates.hostActivationPerformed].some(Boolean),
     pantheonEnabled: proofs.completion.prohibitedExternalActions.pantheonEnablement,
@@ -168,6 +188,7 @@ export async function buildGodskillsSystemCertification({ root = path.resolve(".
     isDeepStrictEqual(rebuiltAthena.receipt, proofs.athena) &&
     isDeepStrictEqual(rebuiltAthena.synthesis, athenaSynthesis);
   const quarryExact = proofs.quarry.complete === true && proofs.quarry.rows.every(({ verified }) => verified === true) &&
+    quarryAuditMatches(liveQuarryAudit, proofs.quarryAudit) &&
     proofs.quarryAudit.status === "verified" && proofs.quarryAudit.receiptSha256 === sha256(await readFile(path.join(root, RECEIPTS.quarry))) &&
     proofs.quarryAudit.manifestSha256 === proofs.quarry.manifestSha256 &&
     proofs.quarryAudit.repositoryFileManifestsSha256 === proofs.quarry.repositoryFileManifests.sha256;
@@ -199,7 +220,7 @@ export async function buildGodskillsSystemCertification({ root = path.resolve(".
     },
     artifacts,
     verification: {
-      focusedCommand: "node --test tests/godskills-final-certification.test.mjs tests/attested-continuity-certification.test.mjs tests/athena-godskill.test.mjs tests/usage-evolution-certification.test.mjs tests/compiler-generalization-v2-certification.test.mjs",
+      focusedCommand: "node --test tests/godskills-final-certification.test.mjs tests/attested-continuity-certification.test.mjs tests/athena-godskill.test.mjs tests/usage-evolution-certification.test.mjs tests/compiler-generalization-v2-certification.test.mjs tests/skill-supply-chain-promotion.test.mjs tests/quarry-wave.test.mjs",
       fullCommand: "npm test",
     },
     proofLimits: {

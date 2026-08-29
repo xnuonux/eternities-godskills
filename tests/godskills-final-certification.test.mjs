@@ -4,7 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-import { buildGodskillsSystemCertification, certificationStatus, verifyBoundArtifacts } from "../scripts/build-godskills-system-certification.mjs";
+import { buildGodskillsSystemCertification, certificationStatus, quarryAuditMatches, verifyBoundArtifacts } from "../scripts/build-godskills-system-certification.mjs";
 import { sha256 } from "../src/io.mjs";
 
 const root = path.resolve(new URL("../", import.meta.url).pathname.slice(1));
@@ -63,6 +63,12 @@ test("final certification fails closed for router and prohibited-action evidence
   assert.equal(certificationStatus(baseline), "certified");
   assert.equal(certificationStatus({ ...baseline, reconciliation: { ...baseline.reconciliation, routerExact: false } }), "failed");
   assert.equal(certificationStatus({ ...baseline, reconciliation: { ...baseline.reconciliation, allCompletionExternalActionsProhibited: false } }), "failed");
+});
+
+test("a stale live quarry audit cannot equal the frozen certification evidence", async () => {
+  const frozen = JSON.parse(await readFile(path.join(root, "receipts/github-skill-quarry-wave-2-audit.json"), "utf8"));
+  assert.equal(quarryAuditMatches(frozen, frozen), true);
+  assert.equal(quarryAuditMatches({ ...frozen, receiptSha256: "0".repeat(64) }, frozen), false);
 });
 
 test("bound artifact verification rejects stale Athena or quarry-style evidence", async () => {

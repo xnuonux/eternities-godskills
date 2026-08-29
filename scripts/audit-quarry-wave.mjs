@@ -10,8 +10,6 @@ import {
   resolveQuarryChild,
 } from "../src/quarry-wave.mjs";
 
-const auditCache = new Map();
-
 function git(repository, ...args) {
   return execFileSync("git", ["-C", repository, ...args], {
     encoding: "utf8",
@@ -29,8 +27,6 @@ function canonicalIdentity(remote) {
 }
 
 export async function auditQuarryWave({ root = path.resolve(".") } = {}) {
-  const cacheKey = path.resolve(root);
-  if (auditCache.has(cacheKey)) return auditCache.get(cacheKey);
   const receiptPath = path.join(root, "receipts/github-skill-quarry-wave-2.json");
   const receipt = await readJson(receiptPath);
   const manifestBytes = await readFile(path.join(root, "data/github-skill-quarry-wave-2.json"));
@@ -90,7 +86,6 @@ export async function auditQuarryWave({ root = path.resolve(".") } = {}) {
     manifestSha256: sha256(manifestBytes),
     repositoryFileManifestsSha256: sha256(frozenBytes),
   };
-  auditCache.set(cacheKey, result);
   return result;
 }
 
