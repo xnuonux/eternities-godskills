@@ -25,7 +25,7 @@ function parseArgs(argv) {
   return options;
 }
 
-async function runGit(sourceRoot, args, { encoding = "utf8", timeout = 30_000 } = {}) {
+async function runGit(sourceRoot, args, { encoding = "utf8", timeout = 120_000 } = {}) {
   const safeRoot = path.resolve(sourceRoot).replaceAll("\\", "/");
   const { stdout } = await execFileAsync(
     "git",
