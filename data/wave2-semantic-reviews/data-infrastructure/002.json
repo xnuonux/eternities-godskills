@@ -1,0 +1,1365 @@
+{
+  "schemaVersion": 1,
+  "waveId": "wave2-data-infrastructure-002",
+  "familyId": "data-infrastructure",
+  "reviewer": "codex:wave2-data-infrastructure-002",
+  "reviewMethod": "exact-inert-body-semantic-review-v1",
+  "reviews": [
+    {
+      "facetId": "facet-44884508ff5c9ff4",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/schema-markup/SKILL.md",
+      "bodySha256": "44884508ff5c9ff40c10ead182f783a1f56a400e44c054eccbeb0b33edeb41e1",
+      "neutralCapabilitySummary": "Audits page content against JSON-LD entities and properties, chooses among article, product, local-business, event, FAQ, breadcrumb, and organization shapes, and validates rendered structured data while keeping claimed values aligned with visible page facts.",
+      "neutralIntentExamples": [
+        "map an existing page's visible facts to an applicable structured-data type",
+        "inspect rendered markup for missing required fields, mismatched claims, and invalid nesting"
+      ],
+      "legacyAliases": [
+        "schema-markup"
+      ],
+      "inputs": [
+        "page type, canonical URL, visible entity facts, current JSON-LD blocks, and the intended search surface",
+        "current schema vocabulary and search-engine eligibility rules from authoritative documentation"
+      ],
+      "operations": [
+        "inventory the page's real entities before selecting one or more JSON-LD types",
+        "cross-check names, prices, availability, dates, ratings, addresses, and breadcrumbs against visible content rather than inventing fields",
+        "parse the rendered document and test each structured-data block for syntax, required properties, type compatibility, and duplicate entities",
+        "record validation errors separately from optional enrichment opportunities and arbitrary scoring claims"
+      ],
+      "outputs": [
+        "a page-to-entity map with evidence-backed properties and omitted unsupported claims",
+        "a rendered-markup validation report containing parser failures, eligibility gaps, and content mismatches"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "rejects properties that cannot be traced to current visible page content or an authoritative source",
+        "halts publication advice when current vocabulary or platform eligibility has not been verified"
+      ],
+      "exclusions": [
+        "does not accept the body's invented zero-to-one-hundred quality score as a verification standard",
+        "does not treat search appearance, ranking, or rich-result eligibility as guaranteed"
+      ],
+      "usefulInvariants": [
+        "structured claims remain consistent with the rendered page",
+        "validation is performed against deployed output rather than source templates alone"
+      ],
+      "materialRisks": [
+        "the body is an SEO markup workflow rather than a data-infrastructure capability",
+        "its platform-specific requirements can change and its scoring rubric has no supplied provenance"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "rendered-structured-data-content-alignment",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-4d51d482fecd47ba",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/privacy-by-design/SKILL.md",
+      "bodySha256": "4d51d482fecd47ba2bac8d7ffe3b9152b4da5b2581aee8168e4d7bffdf1d91a1",
+      "neutralCapabilitySummary": "Builds a data inventory and flow map, assigns purpose and lawful basis, limits collection and retention, separates identity from operational data, and places consent, access, deletion, export, logging, and breach controls at data-lifecycle boundaries.",
+      "neutralIntentExamples": [
+        "trace personal and sensitive fields from collection through storage, processing, sharing, and deletion",
+        "turn retention, consent, subject-rights, and incident obligations into testable system controls"
+      ],
+      "legacyAliases": [
+        "privacy-by-design"
+      ],
+      "inputs": [
+        "field-level data inventory, purposes, actors, systems, jurisdictions, recipients, retention needs, and sensitivity classification",
+        "applicable legal basis and organizational policy confirmed by qualified owners rather than inferred from the body"
+      ],
+      "operations": [
+        "draw collection-to-deletion flows and mark every transfer, processor, store, and re-identification boundary",
+        "challenge each field against purpose necessity and record why less identifying or aggregated data is insufficient",
+        "bind retention expiry to deletion or anonymization jobs and preserve only separately justified legal holds",
+        "exercise consent withdrawal, access, correction, portability, and erasure across primary stores, replicas, queues, exports, and downstream processors",
+        "review authorization, encryption, key access, audit events, data-loss paths, and breach escalation around sensitive records"
+      ],
+      "outputs": [
+        "a purpose-linked processing inventory with owners, lawful-basis decisions, recipients, retention windows, and deletion routes",
+        "privacy control tests and residual-risk records for lifecycle stages that cannot yet satisfy the intended policy"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "defers legal conclusions, cross-border transfer decisions, and risk acceptance to authorized privacy or legal owners",
+        "fails a lifecycle control when one copy, processor, backup path, or identity link remains outside the exercised request"
+      ],
+      "exclusions": [
+        "does not declare regulatory compliance from a checklist or replace a data-protection impact assessment",
+        "does not collect consent, delete production data, contact processors, or notify authorities during semantic review"
+      ],
+      "usefulInvariants": [
+        "every retained personal field has a recorded purpose, owner, and expiry rule",
+        "pseudonymous records remain linkable to identity only through separately controlled mapping material"
+      ],
+      "materialRisks": [
+        "privacy requirements vary by jurisdiction and processing context",
+        "nominal deletion can be false if replicas, analytical copies, exports, or vendors are omitted from the flow map"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "personal-data-lifecycle-control-model",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-4e69a468d18976ee",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/thick-client/SKILL.md",
+      "bodySha256": "4e69a468d18976ee3851446feffc6ab5369dd7c79aed7899232acfc7ea184e1f",
+      "neutralCapabilitySummary": "Scopes an authorized desktop-client security assessment across local storage, interprocess communication, embedded browsers, update channels, binary trust boundaries, and client-to-server authorization assumptions, with explicit approval before any test commands.",
+      "neutralIntentExamples": [
+        "define the exact desktop application, accounts, hosts, binaries, and techniques authorized for an assessment",
+        "review whether local artifacts, IPC endpoints, or update metadata expose credentials or trust decisions"
+      ],
+      "legacyAliases": [
+        "thick-client"
+      ],
+      "inputs": [
+        "written authorization, named application and version, owned test environment, allowed accounts, hosts, binaries, and prohibited techniques",
+        "confirmed handling rules for captured credentials, local databases, traffic, crash dumps, and test evidence"
+      ],
+      "operations": [
+        "establish authorization and scope before inventorying executables, configuration, storage locations, IPC surfaces, embedded web views, and updater components",
+        "form one bounded hypothesis per trust boundary and request confirmation before any active interception, mutation, injection, or bypass attempt",
+        "distinguish locally enforced UI restrictions from server-side authorization and integrity controls",
+        "document evidence, impact, reproducibility, and cleanup without retaining unrelated personal or secret material"
+      ],
+      "outputs": [
+        "an authorization-bound client attack-surface inventory",
+        "a finding record tied to an exact version, trust boundary, evidence location, and remediation control"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "stops when ownership, scope, test account, data handling, or approval for an active technique is absent",
+        "rejects evidence obtained outside the named application version or authorized environment"
+      ],
+      "exclusions": [
+        "does not run the body's reconnaissance, interception, reverse-engineering, injection, or exploitation commands",
+        "does not belong in a data-infrastructure cluster merely because local databases are one assessment surface"
+      ],
+      "usefulInvariants": [
+        "active techniques require explicit authorization beyond passive inspection",
+        "server-side authorization must not depend on client-side concealment or validation"
+      ],
+      "materialRisks": [
+        "the body is dual-use offensive security material",
+        "testing can expose credentials, alter a client, violate terms, or affect external services"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "authorized-desktop-client-trust-boundary-review",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-4fc8d1bfc5443d51",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/django-perf-review/SKILL.md",
+      "bodySha256": "4fc8d1bfc5443d51b928fd4bc72d75a5f75e03c770602540c7a5329c8b9438e5",
+      "neutralCapabilitySummary": "Traces a Django request through view, queryset, serializer or template, and loops to find repeated relationship access, unbounded retrieval, missing access-path indexes, per-row writes, excess columns, and application work that should be measured against real hot-path volumes.",
+      "neutralIntentExamples": [
+        "explain why a list endpoint's query count grows with result size",
+        "review whether an index and queryset shape match a frequent filter-and-order access path"
+      ],
+      "legacyAliases": [
+        "django-perf-review"
+      ],
+      "inputs": [
+        "named Django request path, view and queryset code, serializer or template access, expected row cardinality, latency target, and observed query evidence",
+        "database engine, schema and indexes, representative data shape, cache behavior, and production-like measurement constraints"
+      ],
+      "operations": [
+        "trace relationship access from queryset construction through every serializer, property, template, and loop consumer",
+        "measure query count and query plans at several result sizes to distinguish constant work from N-plus-one growth",
+        "match select-related access to single-valued relations and prefetch-related access to collections only where consumers actually use them",
+        "bound result sets, project required columns, and compare composite index order with the endpoint's filters, joins, and ordering",
+        "move safe bulk writes out of per-row save loops while preserving signals, validation, and transaction semantics explicitly required by the project"
+      ],
+      "outputs": [
+        "a request-level performance trace linking each query or write to its code consumer",
+        "ranked changes with before-and-after query counts, plans, latency, memory, and correctness checks"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "does not recommend an eager-load, cache, index, or bulk-write change without reproducing the hot path and its cardinality",
+        "rolls back a candidate optimization when query savings alter ordering, filtering, permissions, signals, validation, or returned data"
+      ],
+      "exclusions": [
+        "does not optimize every queryset preemptively or treat fewer queries as sufficient proof",
+        "does not run schema or cache changes against production during review"
+      ],
+      "usefulInvariants": [
+        "query growth remains bounded as the page size increases",
+        "performance evidence is attached to an exact endpoint and representative dataset"
+      ],
+      "materialRisks": [
+        "eager loading can trade query count for excessive memory or join amplification",
+        "bulk operations can bypass model hooks and application invariants"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "django-request-query-growth-audit",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-56f1d7707d1150cf",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/pubmed-database/SKILL.md",
+      "bodySha256": "56f1d7707d1150cf0f6dad266e85a332e5793f14ea8af4384a573328f206614b",
+      "neutralCapabilitySummary": "Translates a biomedical question into Boolean, field-tagged, MeSH-aware PubMed retrieval, uses ESearch and history identifiers to page or chain EFetch, ESummary, and ELink requests, and records exact query text, dates, identifiers, and screening decisions for reproducibility.",
+      "neutralIntentExamples": [
+        "retrieve stable PubMed identifiers for a documented PICO-shaped evidence search",
+        "page a large result set through an NCBI history context before fetching structured records"
+      ],
+      "legacyAliases": [
+        "pubmed-database"
+      ],
+      "inputs": [
+        "biomedical question, population, intervention or exposure, comparator, outcomes, study-design constraints, date range, language, and desired record fields",
+        "NCBI identity and API-key status, current E-utilities rules, result-size estimate, and an approved screening protocol"
+      ],
+      "operations": [
+        "expand concepts into synonyms and controlled vocabulary while preserving the exact field tags and Boolean grouping used",
+        "run an identifier search first, inspect count and translation, then choose direct paging or a history-server workflow",
+        "fetch summaries or full structured records in bounded batches and retain PMIDs as the stable join key",
+        "use posted history identifiers for linked-record or multi-step retrieval instead of replaying unstable ad hoc searches",
+        "record retrieval date, database, query string, counts, exclusions, and deduplication rules alongside the resulting corpus"
+      ],
+      "outputs": [
+        "a reproducible search receipt with exact PubMed query, retrieval timestamp, count, paging method, and request identifiers",
+        "a structured PMID-indexed corpus or linkage table with screening and deduplication provenance"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "backs off and resumes from recorded page or history state on throttling, transient response failure, or incomplete batches",
+        "defers medical interpretation and current rate-limit values until authoritative NCBI guidance and domain review are available"
+      ],
+      "exclusions": [
+        "does not treat PubMed retrieval as a complete systematic review or clinical recommendation",
+        "does not scrape result pages, exceed provider limits, or silently broaden a failed query"
+      ],
+      "usefulInvariants": [
+        "every fetched record remains traceable to a PMID and exact search receipt",
+        "batch retries do not duplicate or omit identifiers"
+      ],
+      "materialRisks": [
+        "provider endpoints, quotas, syntax translation, and controlled vocabulary change over time",
+        "poor concept expansion or field grouping can bias the evidence corpus"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "pubmed-history-backed-literature-retrieval",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-58c485e8a3a01938",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/azure-monitor-ingestion-py/SKILL.md",
+      "bodySha256": "58c485e8a3a019387aeb95fc5c4d4420d60780fdc9469d143a8dbd1da048f280",
+      "neutralCapabilitySummary": "Sends JSON log batches through an Azure Monitor data-collection endpoint and immutable data-collection-rule stream, requiring payload fields to match the destination table schema and tracking per-upload or partial failures without exposing credentials.",
+      "neutralIntentExamples": [
+        "map application records to a custom-log stream and verify destination-table arrival",
+        "bound ingestion batches and capture record-level failures for replay"
+      ],
+      "legacyAliases": [
+        "azure-monitor-ingestion-py"
+      ],
+      "inputs": [
+        "authorized data-collection endpoint, immutable rule identifier, stream name, destination table schema, credential source, and JSON records",
+        "current SDK version, provider limits, timestamp semantics, retry policy, privacy classification, and replay key"
+      ],
+      "operations": [
+        "verify that endpoint, rule, stream, and custom-table columns belong to the same intended ingestion path",
+        "transform records to the declared stream schema and reject unknown, mistyped, oversized, or privacy-prohibited fields before upload",
+        "split serialized payloads by current provider limits while assigning stable batch and record identifiers",
+        "capture success, partial rejection, and transport failure separately, then replay only unaccepted records",
+        "query the destination for the batch identifiers and expected event timestamps before closing the receipt"
+      ],
+      "outputs": [
+        "a redacted ingestion receipt with rule, stream, schema version, batch identifiers, accepted and rejected counts, and query verification",
+        "a replay set containing only records not confirmed at the destination"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "halts on schema drift, ambiguous destination, missing credentials, forbidden data, or unverifiable partial-failure semantics",
+        "defers the body's package snippets and one-megabyte batching claim until current Azure documentation and a test resource confirm them"
+      ],
+      "exclusions": [
+        "does not create endpoints, rules, tables, identities, or permissions",
+        "does not log access tokens or replay an entire batch after partial acceptance"
+      ],
+      "usefulInvariants": [
+        "each record is either destination-confirmed or present once in the replay set",
+        "the stream schema version used for serialization is recorded with the upload"
+      ],
+      "materialRisks": [
+        "provider contracts, package APIs, quotas, and failure callbacks are version-sensitive",
+        "blind retries can duplicate telemetry or conceal partial data loss"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "schema-bound-monitor-log-ingestion",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-5ec4d1fd24785658",
+      "canonicalSourceId": "K-Dense-AI/scientific-agent-skills@36d8f13a1e754618794bf42f417884940077b4ae:skills/tiledbvcf/SKILL.md",
+      "bodySha256": "5ec4d1fd24785658f423f6253de7c2d01279ae9f6db6de4bad8859b4052e6368",
+      "neutralCapabilitySummary": "Organizes indexed single-sample VCF or BCF inputs into an incrementally ingested sparse variant dataset, then performs bounded region, sample, and attribute projections with streaming reads, coordinate normalization, memory budgets, and exclusive-writer controls.",
+      "neutralIntentExamples": [
+        "ingest indexed genomic variant files while preserving sample provenance and resumable receipts",
+        "query selected samples and genomic intervals without materializing the full cohort"
+      ],
+      "legacyAliases": [
+        "tiledbvcf"
+      ],
+      "inputs": [
+        "dataset URI, indexed VCF or BCF files, unique sample identities, reference build, interval convention, selected attributes, and memory budget",
+        "local or cloud runtime version, storage permissions, encryption and sensitive-genomic-data policy, and writer ownership"
+      ],
+      "operations": [
+        "validate file indexes, sample uniqueness, reference assembly, contig names, and one-based inclusive source coordinates before ingestion",
+        "serialize writers or otherwise prove supported concurrency, ingest bounded batches, and record committed samples after each batch",
+        "translate external interval conventions explicitly and project only required samples, regions, and INFO or FORMAT attributes",
+        "stream result chunks under a declared memory budget and verify row counts, sample coverage, and coordinate boundaries",
+        "consolidate or vacuum only under a measured maintenance plan with a recoverable dataset snapshot"
+      ],
+      "outputs": [
+        "an ingestion manifest linking source digest, sample name, index, reference build, batch, and committed dataset state",
+        "a bounded variant result with interval convention, projected attributes, chunk counts, and completeness checks"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "quarantines malformed, unindexed, duplicate-sample, reference-mismatched, or partially committed inputs",
+        "defers the body's cloud API examples and tuning claims because they are unverified, provider-sensitive, and partly placeholder-like"
+      ],
+      "exclusions": [
+        "does not upload genomic data, create cloud resources, or accept invented TileDB Cloud calls from the source",
+        "does not infer biological significance or silently mix reference assemblies"
+      ],
+      "usefulInvariants": [
+        "sample identity and reference build remain stable across incremental batches",
+        "query coordinates have one declared convention at every boundary"
+      ],
+      "materialRisks": [
+        "genomic records are sensitive and re-identifiable",
+        "writer races, coordinate drift, or sample collisions can corrupt cohort-level results"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "incremental-indexed-variant-dataset-operations",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-5fd2b31da613e514",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-aas-secure-app-builder/skills/backend-security-coder/SKILL.md",
+      "bodySha256": "5fd2b31da613e514702259273cbeae4739402b91e423d2c33beafacd1efb7388",
+      "neutralCapabilitySummary": "Enumerates backend security topics spanning authentication, authorization, validation, sessions, secrets, cryptography, transport, API controls, dependency review, logging, and framework-specific hardening, but supplies mostly capability headings and generic checklists rather than implementable contracts.",
+      "neutralIntentExamples": [
+        "identify which backend trust boundaries need a dedicated security review",
+        "route a framework-specific authentication or authorization question to a narrower control owner"
+      ],
+      "legacyAliases": [
+        "backend-security-coder"
+      ],
+      "inputs": [
+        "application architecture, framework and versions, data classes, principals, trust boundaries, threat model, and deployment environment",
+        "specific control objective and evidence required for the selected security domain"
+      ],
+      "operations": [
+        "use the body's topic inventory only to enumerate missing review domains",
+        "replace each selected heading with project-specific assets, adversary paths, control contracts, and executable verification before implementation",
+        "separate authentication, authorization, validation, secrets, cryptography, transport, observability, and dependency findings rather than issuing one aggregate score"
+      ],
+      "outputs": [
+        "a scoped backend security review map with named owners and evidence gaps",
+        "a rejection record explaining which claimed controls lack body-level mechanisms or verification"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "rejects a security recommendation when it cannot be tied to a concrete asset, threat, control, and test",
+        "escalates cryptographic, identity, or compliance decisions to qualified domain review"
+      ],
+      "exclusions": [
+        "does not generate production security code from the body's heading catalog",
+        "does not classify the catalog as data infrastructure"
+      ],
+      "usefulInvariants": [
+        "security conclusions remain evidence-based and control-specific",
+        "framework and dependency versions are explicit before advice is applied"
+      ],
+      "materialRisks": [
+        "generic breadth can create false assurance while omitting system-specific attack paths",
+        "security guidance becomes unsafe when version and threat context are absent"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "backend-security-domain-routing-catalog",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-615c575d1cbfcef2",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/fp-backend/SKILL.md",
+      "bodySha256": "615c575d1cbfcef2fab9ee65cd786f97a6138cdc07375c3f57dd3912d46dc9ef",
+      "neutralCapabilitySummary": "Models backend work as ReaderTaskEither computations over explicit dependencies, typed domain and infrastructure errors, repositories, transactions, middleware, retries, fallbacks, resource lifecycles, and tests, but its long TypeScript examples contain syntax, transactional, state, and error-handling defects that prevent direct reuse.",
+      "neutralIntentExamples": [
+        "make service dependencies and recoverable failure variants explicit in a functional TypeScript boundary",
+        "test a repository-backed use case with injected dependencies and deterministic error values"
+      ],
+      "legacyAliases": [
+        "fp-backend"
+      ],
+      "inputs": [
+        "domain operation, dependency environment, typed error algebra, transaction boundary, resource lifecycle, retry eligibility, and observability requirements",
+        "exact fp-ts, web framework, ORM, and TypeScript versions plus tests for cancellation, concurrency, cleanup, and error redaction"
+      ],
+      "operations": [
+        "define success and failure values before composing dependency-reading asynchronous effects",
+        "wrap repositories at infrastructure boundaries and translate driver exceptions into narrow typed errors without leaking internals",
+        "construct and release dependencies through a bracketed lifecycle that is tested on success, failure, cancellation, and partial startup",
+        "ensure every operation inside a transaction receives the transaction-scoped repository rather than the ambient database dependency",
+        "bound retries to idempotent transient failures, keep breaker state concurrency-safe and scoped, and emit redacted correlation-aware telemetry",
+        "compile and behavior-test each composition instead of trusting the source snippets"
+      ],
+      "outputs": [
+        "a dependency and error contract for one backend use case",
+        "compiled tests proving repository translation, transaction atomicity, cleanup, retry limits, breaker behavior, and response redaction"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "defers implementation when package APIs, cancellation semantics, transaction injection, or resource release are not proven by tests",
+        "rejects the body's snippets that reference ambient repositories inside transactions, mutate unsafe global breaker state, check balances after mutation, or fail to parse"
+      ],
+      "exclusions": [
+        "does not copy the sample code or assume typed effects make business invariants correct",
+        "does not retry non-idempotent domain actions or expose serialized internal errors to clients"
+      ],
+      "usefulInvariants": [
+        "declared effects receive all dependencies through an explicit environment",
+        "transactional work uses one transaction-scoped dependency set from validation through commit"
+      ],
+      "materialRisks": [
+        "the source's apparent sophistication can hide compile failures and incorrect transaction behavior",
+        "retry and fallback composition can duplicate writes or mask persistent faults"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "typed-functional-backend-effect-contracts",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-644c9ef195a5b741",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/laravel-security-audit/SKILL.md",
+      "bodySha256": "644c9ef195a5b741c738203b0de816d79f0bab3fb8f1f93587f2d25db6c736aa",
+      "neutralCapabilitySummary": "Frames a Laravel security review around routes, roles, request validation, authentication, authorization, mass assignment, uploads, APIs, output encoding, configuration, and dependencies, and asks findings to include evidence, impact, reproduction, and remediation without inventing vulnerabilities.",
+      "neutralIntentExamples": [
+        "map Laravel routes and principals to authorization checks before reviewing controllers",
+        "record a mass-assignment or upload finding with direct code evidence and a bounded reproduction"
+      ],
+      "legacyAliases": [
+        "laravel-security-audit"
+      ],
+      "inputs": [
+        "Laravel and PHP versions, route table, middleware, guards, policies, models, request classes, upload paths, API consumers, and deployment configuration",
+        "authorized test scope, roles and test accounts, threat model, sensitive-data classes, and dependency inventory"
+      ],
+      "operations": [
+        "trace each route through middleware, authentication guard, policy or gate, validation object, model assignment, storage, and response encoding",
+        "compare role and ownership assumptions against direct controller and query constraints",
+        "inspect fillable or guarded fields, file type and path controls, rate limits, secret handling, debug state, and dependency advisories",
+        "attach every finding to an exact code location, exploit precondition, impact, bounded reproduction, and regression test"
+      ],
+      "outputs": [
+        "a Laravel route-to-control matrix",
+        "risk-ranked findings with code evidence and proposed regression checks"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "drops speculative findings that lack a reachable route, affected principal, and direct evidence",
+        "stops active testing outside written authorization"
+      ],
+      "exclusions": [
+        "does not execute exploit payloads, alter application configuration, or patch findings during semantic review",
+        "does not treat a framework security audit as a data-infrastructure packet"
+      ],
+      "usefulInvariants": [
+        "authorization is checked at the server boundary for the affected resource",
+        "each accepted finding can be reproduced and then converted into a regression test"
+      ],
+      "materialRisks": [
+        "the source offers a useful audit frame but limited framework-version-specific control detail",
+        "active validation can affect data or accounts if scope is not isolated"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "laravel-route-and-resource-security-review",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-677a40b24f33d44d",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/azure-storage-file-datalake-py/SKILL.md",
+      "bodySha256": "677a40b24f33d44d1733107e59bc044e9b33230eb8cc30c37cac026923173c07",
+      "neutralCapabilitySummary": "Uses Azure Data Lake Storage Gen2 service, filesystem, directory, and file clients to create hierarchical paths, append bytes at explicit offsets, flush a committed length, read byte ranges, enumerate paths, manage ACLs, and rename or delete objects.",
+      "neutralIntentExamples": [
+        "write a file through offset-checked append and flush operations",
+        "enumerate a directory tree and verify a rename without listing unrelated filesystems"
+      ],
+      "legacyAliases": [
+        "azure-storage-file-datalake-py"
+      ],
+      "inputs": [
+        "authorized storage account endpoint, filesystem, directory and file paths, credential source, payload digest, expected prior state, and ACL intent",
+        "current SDK version, lease or concurrency policy, overwrite semantics, range requirements, and retention controls"
+      ],
+      "operations": [
+        "resolve the client hierarchy from account to filesystem to directory to file and verify every path remains inside the authorized prefix",
+        "create or open the target under explicit existence conditions, append byte ranges at tracked offsets, and flush only the final expected length",
+        "download bounded ranges and compare bytes or digest with the committed manifest",
+        "page directory listings without escaping the approved filesystem and record continuation state",
+        "apply ACL, rename, or delete changes only with current etag or lease preconditions and a recoverable change plan"
+      ],
+      "outputs": [
+        "a redacted file-operation receipt containing account alias, filesystem, path, byte length, digest, offsets, and committed length",
+        "a listing or mutation verification tied to path, version precondition, and observed final state"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "aborts on offset mismatch, path escape, unexpected existing state, stale concurrency token, partial flush, or unverifiable ACL inheritance",
+        "defers SDK calls until current Azure contracts and an isolated account confirm rename, delete, retry, and authentication behavior"
+      ],
+      "exclusions": [
+        "does not create or delete filesystems, broaden ACLs, or overwrite files from the source examples",
+        "does not expose account keys or assume default credentials are authorized for every target"
+      ],
+      "usefulInvariants": [
+        "flushed length equals the sum of accepted non-overlapping byte ranges",
+        "all hierarchical operations stay beneath the approved filesystem and prefix"
+      ],
+      "materialRisks": [
+        "provider semantics and SDK signatures are version-bound",
+        "incorrect offsets, ACLs, or recursive operations can corrupt or expose data"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "hierarchical-object-file-commit-protocol",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-67fac8d89db5d343",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/schema-markup-generator/SKILL.md",
+      "bodySha256": "67fac8d89db5d3433473bac8a4f444b372165493e2810fffdf805d2ac770b78a",
+      "neutralCapabilitySummary": "Generates type-specific JSON-LD from supplied page facts, serializes script content with less-than characters escaped to reduce HTML script-breakout risk, supports multiple blocks, and validates the deployed document rather than relying only on a template preview.",
+      "neutralIntentExamples": [
+        "serialize an evidence-backed JSON-LD object without permitting embedded content to terminate the script element",
+        "check that multiple deployed schema blocks remain valid and describe the same visible entities"
+      ],
+      "legacyAliases": [
+        "schema-markup-generator"
+      ],
+      "inputs": [
+        "page URL, visible entity attributes, chosen vocabulary types, existing JSON-LD, and untrusted string fields",
+        "current schema definitions and search-platform requirements verified from primary documentation"
+      ],
+      "operations": [
+        "build type-specific objects only from provided page facts and omit unsupported optional properties",
+        "serialize JSON and escape less-than characters before embedding the result in an HTML script element",
+        "parse every generated block, inspect duplicate identifiers and cross-block references, and compare values with rendered content",
+        "test the deployed HTML because build systems, escaping layers, and client rendering can change the final markup"
+      ],
+      "outputs": [
+        "safely serialized JSON-LD blocks with source-field provenance",
+        "deployed-document parser and content-alignment results"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "rejects generation when required facts are absent, conflicting, or not visible on the page",
+        "fails closed on invalid JSON, unsafe script embedding, mismatched entities, or unverified current vocabulary"
+      ],
+      "exclusions": [
+        "does not copy vendor examples, fabricate ratings, or guarantee enhanced search presentation",
+        "does not fit the data-infrastructure family despite its useful serialization control"
+      ],
+      "usefulInvariants": [
+        "untrusted field content cannot close the JSON-LD script element",
+        "generated properties remain traceable to supplied visible facts"
+      ],
+      "materialRisks": [
+        "unsafe HTML embedding can turn metadata generation into script injection",
+        "vocabulary and eligibility rules drift independently of the generator"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "safe-jsonld-serialization-and-deployed-validation",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-69c4bbb48e0d3f8c",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-aas-privacy-compliance-engineering/skills/privacy-by-design/SKILL.md",
+      "bodySha256": "69c4bbb48e0d3f8c2f119d569d0ad32c78fc010f6a4de7aee3c51361272618d7",
+      "neutralCapabilitySummary": "Repeats the packet's earlier privacy-by-design lifecycle almost verbatim: inventory and map personal data, minimize collection, constrain retention, separate identifiers, support consent and subject rights, and review encryption, access, logging, and incidents.",
+      "neutralIntentExamples": [
+        "detect duplicate privacy lifecycle guidance before cluster synthesis",
+        "retain provenance for a repeated source while selecting only one semantic representative"
+      ],
+      "legacyAliases": [
+        "privacy-by-design-duplicate"
+      ],
+      "inputs": [
+        "the exact body digest and normalized comparison against facet-4d51d482fecd47ba",
+        "frontmatter differences that do not alter the substantive lifecycle guidance"
+      ],
+      "operations": [
+        "compare the two privacy bodies section by section after separating source metadata from substantive instructions",
+        "confirm that data mapping, minimization, retention, pseudonymization, rights, security, breach, and compliance sections add no distinct mechanism",
+        "retain this facet only as duplicate provenance and route semantic use to the earlier reviewed representative"
+      ],
+      "outputs": [
+        "a duplicate-body decision linked to the retained privacy lifecycle facet",
+        "a provenance record preserving this canonical source and digest without duplicating operations"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "reopens independent review if a future byte-level version contains a substantive control not present in the retained body",
+        "does not collapse sources solely because their names match"
+      ],
+      "exclusions": [
+        "does not create a second privacy capability from frontmatter and packaging differences",
+        "does not imply that either source has been promoted"
+      ],
+      "usefulInvariants": [
+        "one semantic representative carries the shared lifecycle mechanics",
+        "both canonical source identities remain auditable"
+      ],
+      "materialRisks": [
+        "duplicate retention would inflate evidence and repeated operation counts",
+        "over-aggressive deduplication could hide a later substantive divergence"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "portable",
+      "disposition": "rejected",
+      "proposedCluster": "duplicate-privacy-lifecycle-source",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-703ae6c30caf3e69",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/azure-storage-blob-java/SKILL.md",
+      "bodySha256": "703ae6c30caf3e69c8b1b8888568f404e0eeb729612952d91097bb5a4f651f23",
+      "neutralCapabilitySummary": "Uses Azure Java service, container, and blob clients for conditional upload, ranged download, flat or hierarchical listing, snapshot-aware deletion, asynchronous copy polling, metadata, delegated access signatures, and exclusive leases.",
+      "neutralIntentExamples": [
+        "upload a blob only when an expected version or absence precondition holds",
+        "poll a server-side copy to a terminal state and verify the destination digest before release"
+      ],
+      "legacyAliases": [
+        "azure-storage-blob-java"
+      ],
+      "inputs": [
+        "authorized account endpoint, container and blob names, credential mode, source bytes or URI, metadata, conditions, and expected final digest",
+        "current Java SDK version, snapshot policy, copy timeout, SAS scope and expiry, lease ownership, retry budget, and proxy requirements"
+      ],
+      "operations": [
+        "construct the narrowest service-to-container-to-blob client and confirm the target namespace before mutation",
+        "attach overwrite, etag, existence, lease, and metadata conditions that express the expected prior state",
+        "stream uploads or downloads with bounded memory and verify content length plus digest",
+        "page listings by prefix or hierarchy without substituting account-wide enumeration",
+        "poll copy status to success or failure, then compare destination properties and content before acknowledging completion",
+        "mint delegated access only for the minimum resource, permissions, protocol, and lifetime, and keep the token out of logs"
+      ],
+      "outputs": [
+        "a redacted blob-operation receipt with namespace, version conditions, lengths, digest, copy state, and lease state",
+        "a narrowly scoped access grant descriptor without the secret signature value"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "stops on stale etag, lease conflict, unexpected snapshot state, copy timeout, digest mismatch, or excessive access scope",
+        "defers source snippets until current SDK behavior and provider documentation are confirmed in an isolated account"
+      ],
+      "exclusions": [
+        "does not perform unconditional overwrite, container deletion, snapshot deletion, or public token issuance",
+        "does not log credentials, signatures, connection strings, or sensitive blob metadata"
+      ],
+      "usefulInvariants": [
+        "a mutation is tied to an explicit prior-state condition",
+        "copy completion requires terminal provider state and independent destination verification"
+      ],
+      "materialRisks": [
+        "provider-bound APIs and security defaults change across SDK versions",
+        "overbroad signatures or destructive snapshot handling can expose or erase retained data"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "conditional-object-storage-transfer-and-access",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-70a4bfb23f305715",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/seo-competitor-pages/SKILL.md",
+      "bodySha256": "70a4bfb23f3057158839a0c6840fd88c7ba59ea4b9890f2a79f72708efc7f050",
+      "neutralCapabilitySummary": "Structures competitor, alternative, versus, and comparison pages around sourced product claims, comparison criteria, balanced limitations, disclosure, evidence dates, and explicit missing-data markers rather than unsupported superiority language.",
+      "neutralIntentExamples": [
+        "build a dated evidence matrix for a product comparison page",
+        "mark an unavailable competitor attribute as unknown instead of inferring it"
+      ],
+      "legacyAliases": [
+        "seo-competitor-pages"
+      ],
+      "inputs": [
+        "named products, comparison audience, decision criteria, first-party product facts, competitor primary sources, retrieval dates, and disclosure obligations",
+        "current pricing, packaging, feature, policy, and regional context for every material claim"
+      ],
+      "operations": [
+        "classify the intended page as alternative, versus, or multi-product comparison before selecting evidence fields",
+        "attach source and retrieval date to each competitor claim and keep first-party assertions distinguishable from external facts",
+        "record unknown or incomparable values explicitly and present material limitations on both sides",
+        "recheck volatile price and feature claims before publication and schedule evidence expiry"
+      ],
+      "outputs": [
+        "a dated comparison evidence matrix with missing-data markers and claim ownership",
+        "a balanced page brief containing audience, criteria, disclosures, limitations, and refresh dates"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "rejects unsourced, stale, incomparable, or misleading competitor claims",
+        "defers publication when live product facts cannot be verified from authoritative sources"
+      ],
+      "exclusions": [
+        "does not browse competitors, publish marketing copy, or make legal comparative-advertising judgments during review",
+        "does not belong to the data-infrastructure family"
+      ],
+      "usefulInvariants": [
+        "every external product assertion retains source and observation date",
+        "missing evidence remains visible rather than converted into a favorable estimate"
+      ],
+      "materialRisks": [
+        "competitor facts and commercial terms drift rapidly",
+        "selective criteria can create misleading comparisons even when individual facts are sourced"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "dated-competitor-claim-evidence-matrix",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-713be7372cff6eb3",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/analytics-tracking/SKILL.md",
+      "bodySha256": "713be7372cff6eb393decd27edccf87f0d311fb5b02b98b5c380d953555b8306",
+      "neutralCapabilitySummary": "Starts from product decisions and key performance indicators, defines object-action events with stable properties and conversion-counting rules, carries campaign attribution, and verifies trigger uniqueness, payloads, consent behavior, and cross-device or browser coverage.",
+      "neutralIntentExamples": [
+        "turn a product decision into a versioned event and property contract",
+        "verify that a conversion event fires once with consent-appropriate attribution fields"
+      ],
+      "legacyAliases": [
+        "analytics-tracking"
+      ],
+      "inputs": [
+        "business decision, KPI formula, user journey, event owner, object-action taxonomy, property definitions, conversion rule, and consent policy",
+        "identity model, UTM handling, client and server emission paths, schema version, test environments, and retention requirements"
+      ],
+      "operations": [
+        "work backward from a named decision to the minimum events and properties required to compute it",
+        "define trigger, actor or anonymous identity, timestamp source, object, action, properties, units, nullability, and schema version for each event",
+        "specify whether a conversion counts once per user, session, order, or occurrence and bind it to a stable deduplication key",
+        "preserve campaign parameters through the intended journey without attaching prohibited personal data",
+        "exercise happy, duplicate, reload, retry, mobile, desktop, blocked-consent, withdrawn-consent, and malformed-payload cases",
+        "compare emitted, accepted, and queryable event counts before approving the instrumentation"
+      ],
+      "outputs": [
+        "a versioned measurement plan linking decisions, KPIs, events, properties, owners, and counting semantics",
+        "an instrumentation verification receipt with expected, emitted, deduplicated, rejected, and queryable counts"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "rejects events with no decision owner, ambiguous trigger, unstable naming, unbounded properties, or undefined counting semantics",
+        "blocks release when consent state, duplicate behavior, identity transitions, or end-to-end queryability is unverified"
+      ],
+      "exclusions": [
+        "does not accept the body's arbitrary analytics score as proof of measurement quality",
+        "does not send production events or select a vendor during semantic review"
+      ],
+      "usefulInvariants": [
+        "an event has one stable meaning across producers and consumers for a schema version",
+        "conversion totals remain reproducible from documented counting and deduplication rules"
+      ],
+      "materialRisks": [
+        "ambiguous or duplicate events can drive incorrect product decisions",
+        "campaign and identity properties can become personal data or violate consent expectations"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "decision-linked-event-contract-and-verification",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-73415b2aff11efce",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-aas-data-analytics/skills/analytics-tracking/SKILL.md",
+      "bodySha256": "73415b2aff11efceaca1ef4b09f02e1437c555c1954271d4fb22fe59cb92fd9a",
+      "neutralCapabilitySummary": "Duplicates the earlier analytics-tracking body: decision-led measurement planning, object-action event naming, property contracts, conversion semantics, campaign attribution, implementation checks, and privacy constraints appear without a distinct mechanism.",
+      "neutralIntentExamples": [
+        "identify a repackaged analytics measurement body before synthesis",
+        "preserve the duplicate source identity while preventing a second copy of its event operations"
+      ],
+      "legacyAliases": [
+        "analytics-tracking-duplicate"
+      ],
+      "inputs": [
+        "normalized substantive-body comparison with facet-713be7372cff6eb3",
+        "packaging metadata differences and both immutable source digests"
+      ],
+      "operations": [
+        "compare the decision, KPI, event taxonomy, properties, conversion, attribution, quality-assurance, privacy, and scoring sections with the retained source",
+        "verify that no distinct trigger contract, data artifact, failure control, or test method is added by this package copy",
+        "link duplicate provenance to the retained measurement-plan representative"
+      ],
+      "outputs": [
+        "a semantic-duplicate record naming the retained analytics facet",
+        "source provenance without a repeated event-operation contract"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "restores separate review if later revisions introduce a substantive analytics mechanism",
+        "does not infer duplication from the shared skill name alone"
+      ],
+      "exclusions": [
+        "does not count frontmatter variation as a new data capability",
+        "does not claim promotion of the retained or rejected copy"
+      ],
+      "usefulInvariants": [
+        "the packet contains one semantic analytics representative",
+        "duplicate lineage remains recoverable from canonical ids and digests"
+      ],
+      "materialRisks": [
+        "keeping both would overweight one source in downstream synthesis",
+        "discarding provenance would make later divergence difficult to audit"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "portable",
+      "disposition": "rejected",
+      "proposedCluster": "duplicate-analytics-measurement-source",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-756e6e4898801054",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/database-security/SKILL.md",
+      "bodySha256": "756e6e4898801054372cec8292199d29be85509819f95d4a31c903417a3df07d",
+      "neutralCapabilitySummary": "Outlines an authorized database security assessment covering discovery, authentication, privileges, injection, configuration, transport, encryption, auditing, backup exposure, and denial-of-service concerns, with an explicit scope and confirmation gate before testing.",
+      "neutralIntentExamples": [
+        "define database hosts, accounts, techniques, and evidence handling authorized for a security assessment",
+        "review whether application roles and database grants exceed their documented duties"
+      ],
+      "legacyAliases": [
+        "database-security"
+      ],
+      "inputs": [
+        "written authorization, exact hosts and instances, database engines and versions, approved accounts, allowed techniques, time window, and prohibited actions",
+        "data sensitivity, backup locations, logging destinations, availability limits, and evidence retention policy"
+      ],
+      "operations": [
+        "confirm scope before mapping network exposure, authentication routes, roles, grants, application connections, encryption, audit configuration, and backup paths",
+        "separate passive configuration review from active injection, credential, privilege, or availability testing",
+        "compare effective grants with least-privilege duties and identify direct, inherited, and public access",
+        "record findings with exact instance, version, principal, evidence, impact, and non-destructive verification"
+      ],
+      "outputs": [
+        "an authorization-bound database security surface map",
+        "evidence-backed findings with affected principal, object, control gap, and remediation test"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "stops when scope, ownership, credentials, data handling, or availability constraints are unclear",
+        "rejects active proof that could corrupt records, expose unrelated data, or degrade service"
+      ],
+      "exclusions": [
+        "does not execute discovery, injection, credential, privilege-escalation, or denial-of-service commands",
+        "does not classify an offensive assessment workflow as reusable data infrastructure"
+      ],
+      "usefulInvariants": [
+        "assessment activity never exceeds the written technique and target scope",
+        "effective privilege remains attributable to a principal and grant path"
+      ],
+      "materialRisks": [
+        "the body is dual-use and active tests can expose or alter sensitive databases",
+        "security posture is engine-, version-, and deployment-specific"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "authorized-database-security-scope-and-evidence",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-7fcf831e31f66b8a",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/biopython/SKILL.md",
+      "bodySha256": "7fcf831e31f66b8a063c4d63b44704173c5789b921f1668257ff1feec3e36795",
+      "neutralCapabilitySummary": "Routes biological sequence, alignment, Entrez, BLAST, motif, structure, phylogeny, and population-genetics work to Biopython modules while emphasizing iterators for large files, stable identifiers, remote-service rate limits, caching, exact parameters, and reproducible output provenance.",
+      "neutralIntentExamples": [
+        "stream a large sequence file through the matching SeqIO parser and writer",
+        "record remote database identifiers, request parameters, and retrieval dates for a reproducible biological-data workflow"
+      ],
+      "legacyAliases": [
+        "biopython"
+      ],
+      "inputs": [
+        "biological question, file formats, reference database and release, stable identifiers, sequence alphabet or molecule type, expected scale, and desired output",
+        "Biopython version, local executable versions where applicable, remote-service identity and quota rules, and provenance destination"
+      ],
+      "operations": [
+        "route the task to the narrow module matching sequence I/O, alignments, remote records, similarity search, structures, motifs, phylogeny, or population data",
+        "parse large collections as iterators and materialize only bounded subsets required by the computation",
+        "validate identifiers, formats, molecule assumptions, coordinate conventions, and record counts before transformation",
+        "cache remote responses under request and database-version keys while respecting current service limits",
+        "record package, executable, database, parameters, timestamps, source digests, and output checksums"
+      ],
+      "outputs": [
+        "a typed biological-data artifact in an explicit format with record counts and checksums",
+        "a provenance manifest covering local and remote inputs, versions, parameters, and retrieval state"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "fails on format mismatch, invalid identifiers, incompatible molecule assumptions, truncated remote responses, or unbounded materialization",
+        "defers deep algorithms whose real mechanics are only referenced in files outside the exact reviewed body"
+      ],
+      "exclusions": [
+        "does not infer scientific conclusions from successful parsing or tool exit status",
+        "does not send unpublished or sensitive biological data to remote services without explicit authority"
+      ],
+      "usefulInvariants": [
+        "record identity and coordinate conventions survive every format boundary",
+        "remote-derived outputs retain request and database-version provenance"
+      ],
+      "materialRisks": [
+        "the body is a broad router and leaves many implementation details to unreviewed references",
+        "remote databases and algorithms change, affecting reproducibility and interpretation"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "reproducible-biological-data-module-routing",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-8369b9a593fe126c",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/azure-monitor-query-java/SKILL.md",
+      "bodySha256": "8369b9a593fe126cb93400b51c1119206a105d6a55bafbbd189d59affd3c1b1f",
+      "neutralCapabilitySummary": "Describes Azure Monitor Java queries that distinguish workspace-scoped logs from resource-scoped metrics, apply time intervals and projections, and inspect per-item results in batches, but the exact package documented by the body is deprecated and redirects users to newer libraries.",
+      "neutralIntentExamples": [
+        "preserve the distinction between log workspace queries and resource metric queries",
+        "model batch query results so one failed item does not erase successful siblings"
+      ],
+      "legacyAliases": [
+        "azure-monitor-query-java-deprecated"
+      ],
+      "inputs": [
+        "workspace or resource identifiers, query text or metric names, time interval, aggregation, projection, batch correlation keys, and credential scope",
+        "current replacement package, service API version, limits, result schema, and authoritative migration guidance"
+      ],
+      "operations": [
+        "classify the request as log or metric retrieval and bind it to the appropriate workspace or resource scope",
+        "make time bounds, selected columns, aggregation, ordering, and top limits explicit before dispatch",
+        "correlate every batch result with its original request and preserve success, partial data, and failure independently",
+        "translate the conceptual contract to a supported package only after official migration verification and replacement tests"
+      ],
+      "outputs": [
+        "a deprecated-source rejection with preserved log-versus-metric and batch-result concepts",
+        "a replacement-validation checklist for supported Azure Monitor Java libraries"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "rejects direct implementation from an explicitly deprecated package",
+        "halts migration when replacement authentication, pagination, partial-result, or schema behavior has not been tested"
+      ],
+      "exclusions": [
+        "does not install or execute the deprecated library examples",
+        "does not assume old query classes, limits, or error types map one-for-one to a current SDK"
+      ],
+      "usefulInvariants": [
+        "query scope and time interval are always explicit",
+        "batch item identity survives partial provider failure"
+      ],
+      "materialRisks": [
+        "deprecated APIs can carry obsolete authentication, transport, and result semantics",
+        "partial results may be mistaken for complete telemetry if status is flattened"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "deprecated-monitor-query-contract-migration",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-8476d72ffc2a0c2a",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/prisma-expert/SKILL.md",
+      "bodySha256": "8476d72ffc2a0c2aec3b4f5b7b68c6ae49efdd81a442b36dc0ecf1e12f39b372",
+      "neutralCapabilitySummary": "Connects Prisma schema design, migration state, relation loading, selection shape, indexes, transactions, raw SQL, connection-pool pressure, and query logging to application access paths, with destructive migration and sensitive-observability operations requiring explicit controls.",
+      "neutralIntentExamples": [
+        "review whether a Prisma query selects only needed fields and avoids repeated relation retrieval",
+        "plan an expand-and-contract schema change with migration-state and rollback evidence"
+      ],
+      "legacyAliases": [
+        "prisma-expert"
+      ],
+      "inputs": [
+        "Prisma and database versions, schema, migration history, generated client state, access patterns, expected cardinality, transaction needs, and deployment topology",
+        "backup and rollback capability, connection limits, query evidence, sensitive-field policy, and approved raw-SQL boundary"
+      ],
+      "operations": [
+        "map application reads and writes to models, relations, selected fields, uniqueness constraints, and indexes",
+        "inspect generated query behavior and plans for relation fan-out, overfetching, pagination, and missing composite access paths",
+        "separate migration generation, review, deployment, reconciliation, and destructive recovery into independently authorized states",
+        "use expand-and-contract steps for compatibility across concurrently deployed application versions",
+        "bound interactive transactions and connection use, then test contention, rollback, retry, and pool exhaustion",
+        "isolate raw queries behind parameterization, typed result checks, authorization, and engine-specific tests",
+        "redact or disable query parameters in logs when they can contain personal data or secrets"
+      ],
+      "outputs": [
+        "a schema-and-access-path review with query evidence and index rationale",
+        "a migration receipt covering prior state, generated SQL review, compatibility window, backup, deployment checks, and rollback decision"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "blocks migration on drift, destructive SQL, absent backup, untested compatibility, or ambiguous production state",
+        "rejects the body's reset, migration-resolve, squash, raw-query, and verbose-query-log examples unless their exact context is authorized and verified"
+      ],
+      "exclusions": [
+        "does not reset a database, mark migrations applied, squash history, or execute raw SQL during review",
+        "does not add redundant indexes or select an isolation level without engine and workload evidence"
+      ],
+      "usefulInvariants": [
+        "migration history and deployed schema describe the same reviewed state",
+        "application transactions either commit all declared effects or expose a tested rollback result"
+      ],
+      "materialRisks": [
+        "destructive migration commands can erase data or falsify migration history",
+        "ORM abstractions can hide expensive query shapes and connection contention"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "prisma-schema-access-and-migration-state-control",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-873a1eb431ab8c9e",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-aas-mobile-app-builder/skills/app-store-optimization/SKILL.md",
+      "bodySha256": "873a1eb431ab8c9e969bc20ad9088da56f1ecd81b30248b33c70ad76e7a6313d",
+      "neutralCapabilitySummary": "Defines app-store keyword, competitor, metadata, visual-asset, review, localization, launch, and experiment reports with character-count checks and dated third-party estimates, but its store limits, indexing delays, rankings, scripts, and score weights are time-sensitive, unevidenced marketing claims.",
+      "neutralIntentExamples": [
+        "validate app-listing field lengths against current platform rules",
+        "design a traffic-aware metadata experiment with a stated hypothesis and success metric"
+      ],
+      "legacyAliases": [
+        "app-store-optimization"
+      ],
+      "inputs": [
+        "app and platform identifiers, locale, audience, current listing, verified product facts, candidate keywords, traffic, conversion baseline, and experiment objective",
+        "current first-party store policies, independently retrieved market data with dates, consent-safe review data, and statistical assumptions"
+      ],
+      "operations": [
+        "verify each platform field and asset limit from current primary documentation rather than the November 2025 snapshot",
+        "separate official store data from approximate third-party volume, revenue, competition, and ranking estimates",
+        "check metadata claims against shipped features and count characters using the platform's actual normalization rules",
+        "define experiment unit, variants, allocation, sample-size assumptions, duration, guardrails, and stopping rule before exposure",
+        "analyze public reviews with locale and date boundaries while withholding personal details from derived themes"
+      ],
+      "outputs": [
+        "a dated listing-compliance and evidence report",
+        "an experiment plan or review-theme dataset with provenance, uncertainty, and privacy controls"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "rejects stale field limits, untraceable market estimates, arbitrary health-score weights, and unsupported ranking promises",
+        "defers live store edits, review responses, and experiments until current platform access and approval are established"
+      ],
+      "exclusions": [
+        "does not run the named but unavailable scripts or use optional third-party tools from the body",
+        "does not classify app-store marketing optimization as data infrastructure"
+      ],
+      "usefulInvariants": [
+        "every volatile market or platform fact carries a source and retrieval date",
+        "experiment conclusions remain tied to declared units and stopping rules"
+      ],
+      "materialRisks": [
+        "store rules and opaque ranking algorithms change without notice",
+        "weak experiments and approximate competitor data can create false causal claims"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "dated-app-store-metadata-and-experiment-evidence",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-88189753eb89c6e5",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/nosql-expert/SKILL.md",
+      "bodySha256": "88189753eb89c6e54d9e2b2aa1064e1bf6e02e09a44f38b0eb10517eb8d546ef",
+      "neutralCapabilitySummary": "Models Cassandra, ScyllaDB, and DynamoDB data from enumerated access patterns, choosing partition and clustering or sort keys for bounded single-partition reads, duplicating projections deliberately, and testing hot-key, unbounded-partition, consistency, index, scan, and tombstone risks.",
+      "neutralIntentExamples": [
+        "derive a partition and sort-key design from a fixed set of read and write patterns",
+        "test whether one tenant, status value, or time bucket will concentrate storage or throughput"
+      ],
+      "legacyAliases": [
+        "nosql-expert"
+      ],
+      "inputs": [
+        "complete access-pattern inventory, read and write rates, item sizes, cardinality and skew, ordering and range needs, retention, consistency tolerance, and growth horizon",
+        "chosen engine and version, partition limits, capacity mode, index semantics, failure model, and synchronization owner for duplicated views"
+      ],
+      "operations": [
+        "express every required query with key predicates, ordering, page size, consistency, and latency target before drawing tables",
+        "select high-cardinality partition keys and clustering or sort keys that localize the intended range without concentrating hot traffic",
+        "estimate bytes and operations per partition over time, then introduce evidence-based time or hash buckets where a key can grow without bound",
+        "create denormalized projections only with an explicit write fan-out, reconciliation, and stale-read policy",
+        "reject scans, scatter-gather retrieval, filtering without a serving access path, and relational joins reconstructed across unbounded reads",
+        "load-test realistic skew and failure conditions while measuring per-key throughput, latency, throttling, stale reads, and repair behavior"
+      ],
+      "outputs": [
+        "an access-pattern-to-table or index matrix with key shapes and consistency contracts",
+        "a partition-risk model and workload test receipt covering skew, growth, throughput, latency, and reconciliation"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "returns to access-pattern design when a required query needs a scan, unbounded fan-out, or unsupported filter",
+        "rejects the body's fixed ten-gigabyte threshold and broad write-cost claims until verified for the chosen engine and workload"
+      ],
+      "exclusions": [
+        "does not force single-table design across engines or services that do not share DynamoDB semantics",
+        "does not assume eventual consistency, secondary-index behavior, TTL deletion, or tombstone cost is interchangeable among providers"
+      ],
+      "usefulInvariants": [
+        "every production query maps to a declared bounded access path",
+        "duplicated records have a named consistency and repair mechanism"
+      ],
+      "materialRisks": [
+        "hot partitions can cap system throughput despite ample aggregate capacity",
+        "denormalized writes can diverge and return contradictory views"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "query-first-partitioned-nosql-modeling",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-8e60344ade1e05b0",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-aas-data-analytics/skills/dbt-transformation-patterns/SKILL.md",
+      "bodySha256": "8e60344ade1e05b0191e4643a343bde255a40e08080166071148013050570244",
+      "neutralCapabilitySummary": "Names dbt staging, intermediate, and mart layers, tests, documentation, freshness, materializations, incremental strategies, selectors, and continuous integration, but leaves the promised implementation mechanics and examples in an external playbook not included in the exact reviewed body.",
+      "neutralIntentExamples": [
+        "identify the dbt model layers and ownership decisions a project must settle",
+        "list the missing evidence needed before accepting an incremental transformation design"
+      ],
+      "legacyAliases": [
+        "dbt-transformation-patterns"
+      ],
+      "inputs": [
+        "warehouse platform, source schemas, model dependency graph, owners, freshness objectives, data-quality rules, row volumes, unique keys, and update semantics",
+        "the referenced implementation playbook or equivalent body-level SQL, tests, state transitions, and recovery evidence"
+      ],
+      "operations": [
+        "map named source relations through proposed staging, intermediate, and mart ownership boundaries",
+        "require concrete test definitions, freshness thresholds, materialization rationale, and incremental merge or append semantics",
+        "define how selectors and continuous-integration runs isolate changed models and their affected descendants",
+        "defer implementation until late-arriving data, schema drift, full refresh, idempotence, backfill, and failure recovery are specified"
+      ],
+      "outputs": [
+        "a dbt design-gap record tied to the missing body-level playbook",
+        "a required-evidence checklist for models, tests, freshness, incremental state, lineage, and recovery"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "defers the card because headings alone do not establish executable dbt contracts",
+        "rejects incremental processing when unique keys, source update semantics, or backfill behavior are unknown"
+      ],
+      "exclusions": [
+        "does not read the unlisted playbook as part of this exact-source review",
+        "does not generate model SQL, choose materializations, or claim production readiness from the thin body"
+      ],
+      "usefulInvariants": [
+        "each transformed relation has a layer, owner, lineage, and quality contract",
+        "incremental and full-refresh results converge for the same source snapshot"
+      ],
+      "materialRisks": [
+        "unspecified incremental state can omit updates or duplicate facts",
+        "a heading-only skill can hide warehouse-specific correctness and cost constraints"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "thin-dbt-transformation-contract-router",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-9063ff09d68aaf0c",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/database-migrations-sql-migrations/SKILL.md",
+      "bodySha256": "9063ff09d68aaf0c66d55e683f8fffc41149c7aed85ab19cd73b3adc3c0ca98e",
+      "neutralCapabilitySummary": "Requests migration analysis, expand-and-contract or blue-green planning, versioned SQL, validation, rollback, batching, progress monitoring, and alerts for PostgreSQL, MySQL, or SQL Server, but provides no engine-specific state machine, SQL mechanism, lock analysis, or verification procedure.",
+      "neutralIntentExamples": [
+        "enumerate the artifacts required for a controlled relational schema migration",
+        "identify which engine-specific locking and rollback evidence is absent from a zero-downtime claim"
+      ],
+      "legacyAliases": [
+        "database-migrations-sql-migrations"
+      ],
+      "inputs": [
+        "current and target schema, database engine and version, table sizes, traffic and lock budget, deployed application versions, data backfill semantics, and recovery objective",
+        "actual forward and rollback SQL, plan evidence, backup restore proof, compatibility tests, observability queries, and operator ownership"
+      ],
+      "operations": [
+        "separate additive expansion, dual-compatible application deployment, bounded backfill, read or write cutover, validation, and later contraction into observable states",
+        "require engine-specific lock, rewrite, replication, transaction, online-index, and rollback behavior for each proposed statement",
+        "define preconditions, progress markers, resumability, batch keys, throttling, checksums, and stop thresholds for data movement",
+        "prove old and new application versions can coexist through the compatibility window",
+        "practice backup restoration or forward recovery before accepting a destructive contraction"
+      ],
+      "outputs": [
+        "a migration-artifact gap analysis rather than generated SQL",
+        "a staged acceptance checklist for compatibility, locks, backfill, validation, cutover, recovery, and monitoring"
+      ],
+      "effects": [
+        "read"
+      ],
+      "failureBehavior": [
+        "defers implementation because the exact body promises controls without supplying their engine-specific mechanisms",
+        "blocks contraction when compatibility, data parity, backup recovery, lock impact, or rollback direction is unproven"
+      ],
+      "exclusions": [
+        "does not generate or execute migration and rollback scripts from generic objectives",
+        "does not call a plan zero downtime without measured engine and workload evidence"
+      ],
+      "usefulInvariants": [
+        "every migration state is observable and safely resumable or explicitly terminal",
+        "destructive contraction occurs only after data parity and old-version retirement are proven"
+      ],
+      "materialRisks": [
+        "generic migration advice can trigger long locks, table rewrites, replication lag, or irreversible loss",
+        "rollback may be impossible after writes diverge even when a reverse script exists"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "engine-specific-expand-contract-migration-evidence",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    }
+  ]
+}
