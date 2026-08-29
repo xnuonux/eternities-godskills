@@ -1,0 +1,1237 @@
+{
+  "schemaVersion": 1,
+  "waveId": "wave2-agent-orchestration-003",
+  "familyId": "agent-orchestration",
+  "reviewer": "codex:wave2-agent-orchestration-003",
+  "reviewMethod": "bounded-source-review-v2",
+  "reviews": [
+    {
+      "facetId": "facet-085ca8e2436f290d",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills/skills/project-skill-audit/SKILL.md",
+      "bodySha256": "085ca8e2436f290d256d1152e83bb4811577720afa4aa7e8722a4e231f165a42",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Audits repository history, project guidance, local and global skill surfaces, and recurring validation or failure patterns before recommending a skill update or a new project capability.",
+      "neutralIntentExamples": [
+        "identify a repeated project workflow that existing local skills do not capture",
+        "prefer updating a near-fit local skill over creating a duplicate"
+      ],
+      "inputs": [
+        "repository root, project guidance, memory index, targeted rollout summaries, local skill bodies and metadata, global skill index, and current conventions",
+        "recurrence evidence, redaction boundary, repository evolution, maintenance owner, and recommendation scope"
+      ],
+      "operations": [
+        "maps the project and local skills, searches memory by repository identity, opens a small relevant rollout set, and uses raw sessions only for missing exact evidence",
+        "compares recurring procedures and failure shields against existing capabilities before ranking updates and genuinely distinct new skills"
+      ],
+      "outputs": [
+        "evidence-linked inventory of existing skills, update candidates, new-skill candidates, and priority order"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "does not infer recurrence from one note, one bug, or a thematic similarity",
+        "does not bulk-load private history or create a skill during the audit"
+      ],
+      "exclusions": [
+        "does not edit skills, install capabilities, harvest unrelated transcripts, or expose sensitive session content",
+        "does not treat a recommendation as approval to activate it"
+      ],
+      "usefulInvariants": [
+        "skill recommendations cite repeated procedures and exact project evidence",
+        "update-versus-create is decided after local and global overlap review"
+      ],
+      "materialRisks": [
+        "session evidence can contain secrets, personal data, or stale project assumptions",
+        "overfitting a skill to sparse history creates maintenance burden"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-adjacent",
+      "disposition": "pattern-reference",
+      "proposedCluster": "evidence-bound project skill gap audit",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-08789dbdf97bb8f7",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/azure-cosmos-rust/SKILL.md",
+      "bodySha256": "08789dbdf97bb8f7d51e71af706a86f41755ce7874acaa59808002b62d6113a0",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Shows Rust SDK calls that authenticate to Azure Cosmos DB and create, read, replace, patch, or delete NoSQL items by partition key.",
+      "neutralIntentExamples": [
+        "separate a point read from a durable item mutation",
+        "identify the database, container, partition key, and environment before access"
+      ],
+      "inputs": [
+        "Azure account endpoint, database, container, identity credential, item identifier, partition key, serialized document, patch operations, and SDK version",
+        "tenant authority, data classification, consistency needs, backup, concurrency policy, cost limit, and mutation approval"
+      ],
+      "operations": [
+        "constructs account, database, and container clients under ambient developer credentials",
+        "performs document creation, point reads, full replacement, patching, and deletion against a hosted database"
+      ],
+      "outputs": [
+        "deserialized documents, request responses, and durable provider data mutations"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "does not require explicit tenant verification, conditional writes, ETags, retry policy, idempotency, throughput controls, backup, or rollback",
+        "dated provider APIs and ambient credentials make direct execution unsafe"
+      ],
+      "exclusions": [
+        "does not install crates, authenticate, query databases, create, replace, patch, or delete documents",
+        "does not classify provider CRUD snippets as agent orchestration"
+      ],
+      "usefulInvariants": [
+        "database, container, partition key, item id, and environment identify one point operation",
+        "read, patch, replace, and delete require distinct authority"
+      ],
+      "materialRisks": [
+        "wrong partition or tenant selection can expose or corrupt data",
+        "provider writes can incur cost and create irreversible state"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unsafe hosted database CRUD cookbook",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-08802121c447e230",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/coinmarketcal-automation/SKILL.md",
+      "bodySha256": "08802121c447e230bc4b27d645992b7c334aa1fb23b67e0c0c6cf992d1e2e830",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Provides a dynamic broker path to CoinMarketCal without defining event sources, asset identifiers, temporal coverage, confidence, or any provider-side actions.",
+      "neutralIntentExamples": [
+        "record the asset, event type, and retrieval time for a market-calendar query",
+        "keep provider event listings separate from financial advice"
+      ],
+      "inputs": [
+        "CoinMarketCal connection, undefined market-calendar task, runtime schema, broker session, pagination, and unspecified arguments",
+        "asset scope, date window, source-verification rule, query privacy, cost approval, and decision-use boundary"
+      ],
+      "operations": [
+        "discovers CoinMarketCal tools through a remote broker, authenticates the account, and dispatches mutable-schema requests",
+        "allows batch execution without documenting event retrieval or mutation semantics"
+      ],
+      "outputs": [
+        "opaque market-event responses or account effects"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "does not define event provenance, update time, duplication, confidence, asset mapping, or completeness",
+        "external discovery cannot make market information suitable for trading decisions"
+      ],
+      "exclusions": [
+        "does not connect CoinMarketCal, request events, execute tools, or make investment recommendations",
+        "does not retain a finance-adjacent provider shell"
+      ],
+      "usefulInvariants": [
+        "market events need asset identity, source, event time, retrieval time, and uncertainty",
+        "provider data is not financial advice"
+      ],
+      "materialRisks": [
+        "incomplete or manipulated events can influence financial decisions",
+        "external queries may leak strategy or incur usage cost"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unreviewed crypto-event broker adapter",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-0988d034efe813c5",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/handoff/SKILL.md",
+      "bodySha256": "0988d034efe813c536c32581895287d45fe6e492d30b60c2bd039b407090b4b9",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Constructs a redacted temporary handoff that references durable artifacts instead of duplicating them and tailors remaining context to the next session's stated focus.",
+      "neutralIntentExamples": [
+        "prepare a fresh agent to continue from committed evidence and an explicit stopping point",
+        "summarize unresolved decisions without embedding credentials or duplicating an existing plan"
+      ],
+      "inputs": [
+        "current objective, completed work, exact artifact paths or links, verification evidence, pending steps, blockers, next-session focus, and sensitivity policy",
+        "temporary-directory target, recipient context, source freshness, access assumptions, and relevant skill suggestions"
+      ],
+      "operations": [
+        "selects only continuity-critical facts, links existing plans and diffs, redacts sensitive values, and writes a bounded temporary handoff",
+        "separates verified state, unresolved questions, next actions, and optional capability suggestions for a fresh reader"
+      ],
+      "outputs": [
+        "temporary redacted handoff document with source references and next-session orientation"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "does not treat conversation recollection as stronger than repository or artifact evidence",
+        "does not duplicate large durable documents or include secret and personal values"
+      ],
+      "exclusions": [
+        "does not modify the workspace, send the handoff externally, invoke suggested skills, or claim recipient access",
+        "does not make a handoff an authority grant"
+      ],
+      "usefulInvariants": [
+        "handoff claims point to exact durable evidence when available",
+        "completed, pending, blocked, and uncertain state remain distinguishable"
+      ],
+      "materialRisks": [
+        "a handoff can leak project or personal context",
+        "stale summaries can cause a successor to repeat or overwrite work"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-adjacent",
+      "disposition": "pattern-reference",
+      "proposedCluster": "redacted evidence-linked session handoff",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-099af012e8076df1",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/doppler-marketing-automation-automation/SKILL.md",
+      "bodySha256": "099af012e8076df138f538373debc88c941e917220e5a2c3622a11d8cebbd0c2",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Wraps a Doppler marketing account in runtime broker discovery and execution while omitting campaign, subscriber, content, consent, and delivery semantics.",
+      "neutralIntentExamples": [
+        "identify the exact audience and campaign operation before account access",
+        "require recipient consent and message approval for any outreach effect"
+      ],
+      "inputs": [
+        "Doppler Marketing Automation connection, unspecified task, discovered schema, broker session, pagination, and absent provider arguments",
+        "campaign owner, recipient consent, suppression policy, content approval, send authority, budget, and rollback"
+      ],
+      "operations": [
+        "looks up provider tools through a broker, establishes the marketing connection, and submits live-schema calls",
+        "permits batching without stating whether operations read contacts, alter campaigns, or send messages"
+      ],
+      "outputs": [
+        "opaque marketing-provider responses and possible audience or communication effects"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "does not define contact fields, consent, suppression, campaign state, send behavior, idempotency, or result verification",
+        "all consequential outreach behavior is external and mutable"
+      ],
+      "exclusions": [
+        "does not connect Doppler, access contacts, change campaigns, or send communications",
+        "does not retain a consent-unsafe marketing adapter"
+      ],
+      "usefulInvariants": [
+        "audience mutation and message delivery require separate approval",
+        "recipient consent and suppression state must precede outreach"
+      ],
+      "materialRisks": [
+        "opaque calls can send unwanted messages or expose contact data",
+        "marketing mutations can create legal and reputational harm"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unbounded marketing outreach broker stub",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-09b3dceeeba0577b",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/appdeploy/SKILL.md",
+      "bodySha256": "09b3dceeeba0577b42c01fc166466b72d92be8bd49ea1330f6ba560ef544d2b7",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Registers an API key, stores it in a project file, sends entire application files to AppDeploy, publishes or updates public apps, inspects remote source snapshots, applies versions, and permanently deletes apps.",
+      "neutralIntentExamples": [
+        "distinguish a local build from authorization to publish it publicly",
+        "identify the exact remote application before inspecting or changing its source"
+      ],
+      "inputs": [
+        "project files, app architecture, template, model label, deployment intent, API endpoint and credential, app identifier, version, deletion paths, and public-release request",
+        "secret-storage policy, source-disclosure approval, data and license review, cost boundary, production owner, rollback, and deletion confirmation"
+      ],
+      "operations": [
+        "creates a provider credential, persists it locally, retrieves provider instructions and templates, uploads source diffs, starts deployments, and polls logs",
+        "lists remote apps and versions, reads hosted source snapshots, reapplies versions, or performs irreversible app deletion"
+      ],
+      "outputs": [
+        "persistent credential file, uploaded source, public deployment, provider logs, remote source records, version changes, and deleted applications"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "auto-registration and local secret persistence occur without a separate credential-provisioning decision",
+        "provider instructions are mutable and the source lacks source-exfiltration, production, cost, privacy, and robust rollback gates"
+      ],
+      "exclusions": [
+        "does not register accounts, create or store keys, upload source, publish apps, inspect remote code, change versions, or delete applications",
+        "does not retain an external deployment control plane"
+      ],
+      "usefulInvariants": [
+        "build, upload, publish, version switch, and deletion are separate effects",
+        "public deployment requires explicit target, source boundary, verification, and rollback"
+      ],
+      "materialRisks": [
+        "source and secrets can leave the workspace through uploads",
+        "deployments or deletion can expose data, incur cost, or destroy production state"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unsafe public deployment and credential bootstrap",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-09f112c54b8da091",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/mailbluster-automation/SKILL.md",
+      "bodySha256": "09f112c54b8da0910ead6592730a71eb693c3fc1d761a8db111d506144c1304d",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Offers MailBluster through mutable broker lookup without documenting contact, campaign, template, suppression, send, or analytics operations.",
+      "neutralIntentExamples": [
+        "name the recipient set and approved campaign before provider access",
+        "separate previewing content from sending it"
+      ],
+      "inputs": [
+        "MailBluster connection, undefined email task, runtime schema, broker session, pagination, and unknown provider arguments",
+        "sender identity, consent evidence, suppression list, content approval, audience owner, delivery limit, and incident contact"
+      ],
+      "operations": [
+        "discovers MailBluster tools through an external catalogue, manages authentication, and dispatches selected calls",
+        "allows multi-tool execution while leaving email and audience effects unspecified"
+      ],
+      "outputs": [
+        "opaque campaign, contact, delivery, or account responses"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "does not define recipients, templates, campaign states, unsubscribes, test sends, rate limits, idempotency, or rollback",
+        "mutable schemas cannot supply an outreach approval boundary"
+      ],
+      "exclusions": [
+        "does not connect MailBluster, access contacts, change campaigns, or send email",
+        "does not preserve an effect-unknown email adapter"
+      ],
+      "usefulInvariants": [
+        "recipient, content, sender, timing, and consent must be approved together",
+        "drafting, testing, scheduling, and sending are distinct states"
+      ],
+      "materialRisks": [
+        "automation can spam recipients or disclose personal contact data",
+        "wrong campaign state can cause irreversible external communication"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unsafe email-campaign broker shell",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-09fa5fb481b7c602",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-aas-api-platform-builder/skills/api-documentation/SKILL.md",
+      "bodySha256": "09fa5fb481b7c602500cdc01cb3f79a0235253d3ebe86b417fbb73f0021116f9",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Sequences API inventory, OpenAPI drafting, developer guides, examples, interactive documentation, portal creation, and maintenance by invoking several absent supporting skills.",
+      "neutralIntentExamples": [
+        "compare an API specification against observed request and response behavior",
+        "verify that an authentication example contains no live credential"
+      ],
+      "inputs": [
+        "implemented endpoints, schemas, authentication, errors, rate limits, source code, deployed behavior, version policy, audience, and existing documentation",
+        "security redaction, example test environment, ownership, compatibility policy, publishing target, and referenced skills not present in the body"
+      ],
+      "operations": [
+        "delegates discovery, specification, guide writing, examples, interactive UI, site architecture, and maintenance to named external skills",
+        "uses checklist completion as a quality gate without defining contract extraction or behavioral verification"
+      ],
+      "outputs": [
+        "proposed OpenAPI document, developer guide, examples, interactive portal, documentation site, and maintenance tasks"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "does not specify source-of-truth reconciliation, schema validation, example execution, version drift detection, secret scrubbing, or publication review",
+        "missing invoked playbooks prevent reproducible execution"
+      ],
+      "exclusions": [
+        "does not invoke other skills, generate or publish documentation, deploy a portal, or claim API completeness",
+        "does not promote a shallow workflow bundle"
+      ],
+      "usefulInvariants": [
+        "documentation claims should trace to implemented and tested API behavior",
+        "examples need isolated credentials and executable verification"
+      ],
+      "materialRisks": [
+        "incorrect docs can cause unsafe client behavior or compatibility failures",
+        "interactive examples can expose credentials or invoke live services"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "missing-playbook API documentation bundle",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-0ad91baa7359005d",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/project-development/SKILL.md",
+      "bodySha256": "0ad91baa7359005d3b79bd981d04c79b1524e412ae903eeb75bbfbb9b8d9d79f",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Evaluates task-model fit, manually prototypes one representative item, separates an LLM batch into persistent stages, estimates cost, and introduces multi-agent context isolation only when evidence supports it.",
+      "neutralIntentExamples": [
+        "test one representative item before automating a large model batch",
+        "separate expensive model responses from deterministic parsing and rendering"
+      ],
+      "inputs": [
+        "task inputs and desired outputs, accuracy tolerance, representative example, target model, output contract, item count, token estimates, pricing, failure modes, and storage plan",
+        "privacy boundary, evaluation rubric, retry policy, concurrency limit, cache invalidation, model version, and acceptance threshold"
+      ],
+      "operations": [
+        "assesses whether language-model uncertainty fits the task and establishes a manual quality baseline",
+        "decomposes acquisition, preparation, model processing, parsing, and rendering into restartable stages with persisted evidence and measured cost"
+      ],
+      "outputs": [
+        "task-fit decision, prototype evidence, staged pipeline design, intermediate artifacts, cost estimate, parsing failures, and evaluation results"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "does not assume cited case-study numbers, fixed buffers, model prices, or filesystem state are universally valid",
+        "does not add subagents, specialized tools, or concurrency until measured need and isolation are established"
+      ],
+      "exclusions": [
+        "does not call models, fetch data, create pipeline files, delete stage outputs, spawn agents, or spend provider credits",
+        "does not make manual success proof of batch reliability"
+      ],
+      "usefulInvariants": [
+        "non-deterministic model work is isolated from deterministic preparation, parsing, and rendering",
+        "task fit and architecture complexity are justified by observed evidence"
+      ],
+      "materialRisks": [
+        "persistent intermediate files can leak source data and model outputs",
+        "weak prototype sampling can hide scale failures or understate cost"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "portable",
+      "disposition": "pattern-reference",
+      "proposedCluster": "evidence-gated staged model pipeline design",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-0b1bd6edbbfb6bae",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/dailybot-automation/SKILL.md",
+      "bodySha256": "0b1bd6edbbfb6bae99d3591c44dd9014c92614ce95a1685b0c5bf125b39a3a90",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Exposes DailyBot through generic broker connection and execution without defining check-in, survey, message, participant, schedule, or workspace behavior.",
+      "neutralIntentExamples": [
+        "identify the workspace and exact check-in operation before connection",
+        "require recipient and content review before any team message"
+      ],
+      "inputs": [
+        "DailyBot connection, unspecified team workflow, dynamic schema, broker session, pagination, and absent operation fields",
+        "workspace owner, participant scope, message content, schedule, consent, retention, and mutation approval"
+      ],
+      "operations": [
+        "searches an external catalogue for DailyBot tools, activates authentication, and dispatches live-schema calls",
+        "supports batch execution without describing team records or communication effects"
+      ],
+      "outputs": [
+        "opaque workspace, check-in, participant, or message responses"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "does not define recipients, schedules, visibility, reminders, record retention, or reversibility",
+        "provider discovery cannot authorize workplace communication or monitoring"
+      ],
+      "exclusions": [
+        "does not connect DailyBot, read team records, schedule check-ins, or send messages",
+        "does not retain a workplace automation stub"
+      ],
+      "usefulInvariants": [
+        "workplace messages require exact audience and content approval",
+        "participation data needs a stated visibility and retention policy"
+      ],
+      "materialRisks": [
+        "automation can expose employee information or send unwanted messages",
+        "monitoring workflows can create coercive or misleading records"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unbounded workplace check-in adapter",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-0b2a6ca9c187b991",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/unione-automation/SKILL.md",
+      "bodySha256": "0b2a6ca9c187b99114c80a34743ad7c8859244e8347af49e8ca354d5fddf92dd",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Provides UniOne only as a mutable broker target and omits sender, recipient, template, suppression, delivery, and account-operation contracts.",
+      "neutralIntentExamples": [
+        "state the exact sender and recipients before an email-provider call",
+        "keep content preparation separate from message delivery"
+      ],
+      "inputs": [
+        "UniOne account, undefined provider task, discovered schema, broker session, pagination, and unknown arguments",
+        "sender authority, recipient consent, suppression state, approved content, rate limit, idempotency key, and delivery verification"
+      ],
+      "operations": [
+        "discovers UniOne tools, establishes the brokered connection, and executes selected runtime calls",
+        "permits remote batching without exposing email semantics"
+      ],
+      "outputs": [
+        "opaque email-provider responses and possible delivery or account mutations"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "does not distinguish templates, contacts, drafts, tests, sends, bounces, unsubscribes, or destructive account actions",
+        "lacks recipient, content, and retry controls"
+      ],
+      "exclusions": [
+        "does not connect UniOne, access contacts, create templates, or send email",
+        "does not retain an unbounded delivery adapter"
+      ],
+      "usefulInvariants": [
+        "draft, test, send, and delivery confirmation are separate states",
+        "recipient consent and suppression must be checked at send time"
+      ],
+      "materialRisks": [
+        "provider calls can send irreversible communications or leak contacts",
+        "retry ambiguity can duplicate delivery"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "effect-opaque email delivery stub",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-0b8e4c052540f00e",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/gladia-automation/SKILL.md",
+      "bodySha256": "0b8e4c052540f00ee2f031b76a48c345947732a38dfbb9211cbfac983cc9a876",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Routes a Gladia account through live broker schemas without documenting audio sources, transcription options, language, retention, diarization, or result confidence.",
+      "neutralIntentExamples": [
+        "confirm rights to process an audio recording before upload",
+        "retain source time ranges and uncertainty with a transcript"
+      ],
+      "inputs": [
+        "Gladia connection, unspecified audio task, runtime schema, broker session, pagination, and absent media arguments",
+        "recording ownership, participant consent, language, privacy classification, retention, accuracy threshold, and cost limit"
+      ],
+      "operations": [
+        "looks up Gladia tools through a broker, authenticates the provider, and executes current-schema requests",
+        "allows bulk calls without defining upload, transcription, processing, or deletion behavior"
+      ],
+      "outputs": [
+        "opaque media-processing responses, transcripts, metadata, or provider state"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "does not define media transfer, consent, speaker identification, confidence, storage duration, correction, or deletion",
+        "live schemas cannot establish rights to process recordings"
+      ],
+      "exclusions": [
+        "does not connect Gladia, upload recordings, transcribe audio, identify speakers, or retain outputs",
+        "does not preserve an unreviewed media-processing route"
+      ],
+      "usefulInvariants": [
+        "recording rights, participant consent, purpose, and retention precede external processing",
+        "transcript text remains evidence with timing and confidence"
+      ],
+      "materialRisks": [
+        "audio can contain biometric, personal, and confidential information",
+        "transcription errors can misattribute speech or decisions"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "privacy-unsafe transcription broker stub",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-0bae34559536bcd0",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/procfu-automation/SKILL.md",
+      "bodySha256": "0bae34559536bcd03533c3c1a8babddaaca5b590771905bae14d0e776a71c894",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Names Procfu as an automation toolkit but supplies no domain description beyond dynamic broker discovery, account connection, and opaque execution.",
+      "neutralIntentExamples": [
+        "require Procfu resources and effects to be identified before authentication",
+        "reject a live tool whose rollback and verification are unspecified"
+      ],
+      "inputs": [
+        "Procfu connection, undefined use case, runtime schema, broker session, pagination, and operation arguments absent from the source",
+        "account owner, resource inventory, data sensitivity, effect classification, approval, recovery, and audit requirements"
+      ],
+      "operations": [
+        "searches a third-party broker for Procfu tool definitions, manages connection state, and dispatches selected calls",
+        "offers batch and remote execution without explaining the provider domain"
+      ],
+      "outputs": [
+        "uninterpretable Procfu responses and unknown external changes"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "cannot identify provider resources, scopes, side effects, cost, reversibility, or success criteria",
+        "transport instructions are not a domain contract"
+      ],
+      "exclusions": [
+        "does not connect Procfu, discover live tools, access records, or execute provider actions",
+        "does not promote a name-only integration"
+      ],
+      "usefulInvariants": [
+        "an integration declares resource types and effect classes before execution",
+        "provider response success must map to domain verification"
+      ],
+      "materialRisks": [
+        "unknown actions may expose data or mutate consequential state",
+        "external broker and provider dependencies are not reproducible"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unidentified Procfu provider route",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-0c08f2e4af109a53",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/supportbee-automation/SKILL.md",
+      "bodySha256": "0c08f2e4af109a53b6a0113d3275f2028ada63ca7e739123b79a01b02444bbf9",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Makes SupportBee reachable through mutable broker tools while omitting tickets, customers, agents, labels, assignment, reply, and deletion semantics.",
+      "neutralIntentExamples": [
+        "identify the exact support ticket and intended read or response",
+        "require message text and recipient approval before replying"
+      ],
+      "inputs": [
+        "SupportBee account, unspecified support task, discovered schema, broker session, pagination, and unknown provider fields",
+        "ticket owner, customer-data boundary, agent identity, response approval, assignment policy, retention, and escalation route"
+      ],
+      "operations": [
+        "discovers SupportBee tools through a remote catalogue, connects the account, and invokes selected operations",
+        "permits batching without documenting ticket or customer communication behavior"
+      ],
+      "outputs": [
+        "opaque support records, assignment changes, replies, or account mutations"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "does not define ticket states, recipient review, identity, attachments, duplicate replies, escalation, deletion, or rollback",
+        "all customer-facing effects remain outside reviewed evidence"
+      ],
+      "exclusions": [
+        "does not connect SupportBee, inspect tickets, assign agents, reply to customers, or alter records",
+        "does not retain a customer-communication adapter"
+      ],
+      "usefulInvariants": [
+        "ticket inspection, assignment, and external reply require distinct authority",
+        "customer messages need exact ticket, recipient, content, and sender identity"
+      ],
+      "materialRisks": [
+        "automation can disclose customer data or send incorrect replies",
+        "duplicate or misrouted actions can damage support relationships"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unsafe customer-support broker adapter",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-0c1058622208224e",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/adyntel-automation/SKILL.md",
+      "bodySha256": "0c1058622208224e232d8f6c81bcb03f2c020b0cbf071d4e2e77bcd921169223",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Exposes Adyntel as a live broker integration without documenting advertising data, query scope, evidence, mutation behavior, or decision constraints.",
+      "neutralIntentExamples": [
+        "state the advertising research question and market before provider access",
+        "record source coverage and retrieval time for competitive-advertising evidence"
+      ],
+      "inputs": [
+        "Adyntel connection, undefined advertising task, runtime schema, broker session, pagination, and absent provider arguments",
+        "research purpose, target scope, data rights, campaign owner, metric definition, cost limit, and mutation prohibition"
+      ],
+      "operations": [
+        "looks up Adyntel-labelled tools through a broker, authenticates, and submits mutable-schema calls",
+        "supports remote batching while leaving provider objects and effects unspecified"
+      ],
+      "outputs": [
+        "opaque advertising intelligence or account responses"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "does not define sources, coverage, freshness, metrics, profile boundaries, account actions, or verification",
+        "runtime schema discovery cannot establish advertising evidence quality"
+      ],
+      "exclusions": [
+        "does not connect Adyntel, retrieve advertising data, alter campaigns, or execute tools",
+        "does not treat opaque provider output as market fact"
+      ],
+      "usefulInvariants": [
+        "advertising evidence needs source coverage, retrieval time, market, and metric definition",
+        "research and campaign mutation have separate authority"
+      ],
+      "materialRisks": [
+        "opaque intelligence can mislead spending or competitive claims",
+        "external queries can expose strategy"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unreviewed advertising-intelligence adapter",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-0c346d2231eb6346",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/dungeon-fighter-online-automation/SKILL.md",
+      "bodySha256": "0c346d2231eb634674afe2f7621c0f4958937ccbb95233e36e2925668ec6ffd7",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Offers a Dungeon Fighter Online account integration through broker discovery while specifying no character, inventory, market, account, or game-operation semantics.",
+      "neutralIntentExamples": [
+        "identify the owned game account and read-only purpose before connection",
+        "reject actions that violate game rules or alter valuable account state"
+      ],
+      "inputs": [
+        "Dungeon Fighter Online connection, unspecified game task, live schema, broker session, pagination, and unknown operation arguments",
+        "account ownership, game terms, character and region scope, value-bearing inventory, mutation approval, and recovery"
+      ],
+      "operations": [
+        "discovers game-provider tools through a remote broker, activates the account connection, and dispatches selected calls",
+        "permits batch execution without defining game resources or effects"
+      ],
+      "outputs": [
+        "opaque game-account responses and possible character, inventory, or market changes"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "does not identify allowed actions, anti-cheat boundaries, valuable assets, irreversibility, rate limits, or provider verification",
+        "account connection provides no safe gameplay contract"
+      ],
+      "exclusions": [
+        "does not connect a game account, automate gameplay, alter characters, trade items, or execute tools",
+        "does not preserve a game automation stub"
+      ],
+      "usefulInvariants": [
+        "account ownership and provider terms precede automation",
+        "value-bearing game assets require explicit mutation approval"
+      ],
+      "materialRisks": [
+        "automation can violate terms, lose account assets, or trigger sanctions",
+        "broker access can compromise account credentials"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unbounded online-game account adapter",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-0c3f91bfdb6f82b2",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/telnyx-automation/SKILL.md",
+      "bodySha256": "0c3f91bfdb6f82b27ea0f52878a53ab1826bcd386052b7d1c568ffebe9375f9d",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Routes Telnyx through generic broker execution without defining phone numbers, messages, calls, recipients, billing, identity, or telecommunications effects.",
+      "neutralIntentExamples": [
+        "name the exact recipient and approved content before a telecommunications action",
+        "separate number inventory from sending a message or placing a call"
+      ],
+      "inputs": [
+        "Telnyx connection, undefined communications task, discovered schema, broker session, pagination, and absent provider arguments",
+        "account owner, sender identity, recipient consent, content approval, geographic rules, rate and cost limits, and incident contact"
+      ],
+      "operations": [
+        "searches a broker for Telnyx tools, establishes authentication, and executes current-schema operations",
+        "allows multi-call remote dispatch without documenting telephony behavior"
+      ],
+      "outputs": [
+        "opaque number, message, call, billing, or account responses"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "does not distinguish reads, number purchases, configuration, messages, calls, recording, deletion, or billing effects",
+        "lacks recipient, consent, retry, idempotency, fraud, and emergency-service boundaries"
+      ],
+      "exclusions": [
+        "does not connect Telnyx, provision numbers, send messages, place calls, record audio, or change account state",
+        "does not retain a telecommunications execution route"
+      ],
+      "usefulInvariants": [
+        "recipient, sender, content, channel, timing, and cost require explicit approval",
+        "inventory reads and external communication are different effects"
+      ],
+      "materialRisks": [
+        "telephony automation can contact people, incur charges, or enable abuse",
+        "provider records may contain sensitive communications metadata"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unsafe telecommunications broker stub",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-0c55d307dc258a23",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/cults-automation/SKILL.md",
+      "bodySha256": "0c55d307dc258a23c3d44f5ae8cd74fcdd67fa3b72d0ecb15057469f64901eb3",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Presents Cults as a broker target but defines no marketplace, model, creator, file, purchase, license, publication, or account operations.",
+      "neutralIntentExamples": [
+        "identify the exact digital model and rights question before marketplace access",
+        "require creator and financial approval before publishing or purchasing"
+      ],
+      "inputs": [
+        "Cults connection, unspecified marketplace task, runtime schema, broker session, pagination, and unknown arguments",
+        "account owner, model identifier, intellectual-property rights, purchase authority, publication review, file boundary, and value limit"
+      ],
+      "operations": [
+        "discovers Cults tools through an external broker, connects the account, and dispatches schema-derived calls",
+        "supports batch execution without documenting content or marketplace effects"
+      ],
+      "outputs": [
+        "opaque marketplace, model, file, creator, or account responses"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "does not distinguish public lookup, file retrieval, purchase, publication, edit, deletion, or messaging",
+        "lacks rights, content, financial, and irreversible-effect controls"
+      ],
+      "exclusions": [
+        "does not connect Cults, download files, buy models, publish content, contact creators, or mutate accounts",
+        "does not preserve an unbounded digital-model marketplace adapter"
+      ],
+      "usefulInvariants": [
+        "content rights and financial authority are separate prerequisites",
+        "public metadata reads and account mutations need distinct permissions"
+      ],
+      "materialRisks": [
+        "automation can infringe rights, spend money, or publish unwanted content",
+        "downloaded model files create content and supply-chain exposure"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unsafe digital-model marketplace stub",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-0c6d82842155eb3f",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/news-api-automation/SKILL.md",
+      "bodySha256": "0c6d82842155eb3f914ffc47be4b6f1339b5e42bda2ac6d484cc857f00fcd1f7",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Provides a broker transport to News API while omitting query syntax, corpus coverage, source identity, publication time, deduplication, rights, and freshness semantics.",
+      "neutralIntentExamples": [
+        "record a news query and retrieval window before external search",
+        "preserve article locator, publisher, publication time, and retrieval time"
+      ],
+      "inputs": [
+        "News API connection, unspecified research task, live tool schema, broker session, pagination, and absent query arguments",
+        "topic scope, date range, language, source policy, result cap, copyright limits, query privacy, and verification standard"
+      ],
+      "operations": [
+        "discovers News API tools through a remote catalogue, activates the connection, and submits mutable-schema requests",
+        "allows paginated batch retrieval without defining source or article evidence"
+      ],
+      "outputs": [
+        "opaque news search responses and account effects"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "does not define corpus completeness, source selection, duplicate handling, article rights, timestamps, or corroboration",
+        "provider results cannot establish truth or current-world completeness"
+      ],
+      "exclusions": [
+        "does not connect News API, issue queries, retrieve articles, reproduce content, or treat results as verified facts",
+        "does not retain a thin external retrieval adapter"
+      ],
+      "usefulInvariants": [
+        "news evidence needs query, publisher, article locator, publication time, and retrieval time",
+        "search coverage and factual corroboration are separate"
+      ],
+      "materialRisks": [
+        "queries reveal research intent and retrieved content may be copyrighted",
+        "incomplete or manipulated sources can distort conclusions"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "underspecified news retrieval broker shell",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-0ce08766dd971a4d",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/context-driven-development/SKILL.md",
+      "bodySha256": "0ce08766dd971a4d74329e0a8feeef2babe5711ee1180b29a97a2010075c5e87",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Defines a Conductor-specific hierarchy of product, communication, technology, workflow, work-registry, specification, and plan artifacts with synchronization and session-continuity rules.",
+      "neutralIntentExamples": [
+        "identify which canonical artifact owns a changed project decision",
+        "verify that an active work unit still agrees with product and technical context"
+      ],
+      "inputs": [
+        "product goals, communication standards, technology choices, workflow rules, work units, specifications, plans, repository evidence, and current implementation state",
+        "artifact ownership map, update authority, staleness evidence, dependency changes, review policy, and archival rules"
+      ],
+      "operations": [
+        "assigns each context concern to a canonical artifact and relates context, specification, planning, and implementation phases",
+        "checks cross-artifact consistency before work, records status through interruption and completion, and updates context alongside code"
+      ],
+      "outputs": [
+        "project context map, synchronized decision artifacts, work registry, track specifications and plans, and continuity state"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "does not assume named Conductor commands, fixed directory layout, hooks, or checklists fit every project",
+        "avoids adding new document types when ownership can be clarified in an existing artifact"
+      ],
+      "exclusions": [
+        "does not run setup commands, generate directories, alter project documents, install hooks, change CI, or commit status updates",
+        "does not make documentation override verified code behavior"
+      ],
+      "usefulInvariants": [
+        "each durable fact has one canonical owner and explicit dependent artifacts",
+        "context changes and implementation changes are reconciled at a reviewable checkpoint"
+      ],
+      "materialRisks": [
+        "over-maintained context can become costly and stale",
+        "incorrect canonical ownership can propagate a false decision across sessions"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-adjacent",
+      "disposition": "pattern-reference",
+      "proposedCluster": "canonical project context ownership and synchronization",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-0cea4c22b6ef17aa",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/borneo-automation/SKILL.md",
+      "bodySha256": "0cea4c22b6ef17aa587b51464e2b6e13cbef2665e557fb98d489b3bf3938c7ab",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Names Borneo as an automation provider but supplies no domain, resource, data, action, effect, or verification semantics beyond broker transport.",
+      "neutralIntentExamples": [
+        "require Borneo resource types to be documented before connection",
+        "decline execution when provider effects cannot be classified"
+      ],
+      "inputs": [
+        "Borneo account, undefined task, runtime schema, broker session, pagination, and operation fields absent from the body",
+        "account owner, domain description, resource inventory, data sensitivity, effect class, approval, and recovery"
+      ],
+      "operations": [
+        "searches a third-party catalogue for Borneo tools, manages authentication, and dispatches selected live-schema calls",
+        "offers remote batching without explaining the provider"
+      ],
+      "outputs": [
+        "uninterpretable Borneo responses and unknown external effects"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "cannot establish what data is read, what state can change, what scopes are requested, or how success is verified",
+        "provider name and transport are insufficient for semantic review"
+      ],
+      "exclusions": [
+        "does not connect Borneo, discover tools, access records, or execute operations",
+        "does not promote an unidentified integration"
+      ],
+      "usefulInvariants": [
+        "resource and effect declarations precede tool authorization",
+        "unknown provider semantics fail closed"
+      ],
+      "materialRisks": [
+        "unknown actions can expose confidential data or mutate systems",
+        "mutable broker schemas prevent reproducible controls"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unidentified Borneo integration stub",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-0d19c103be32c9d6",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/simla-com-automation/SKILL.md",
+      "bodySha256": "0d19c103be32c9d678ccbf657a06f65ad8b60b8de65553b1e2951aa3fd8b5232",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Exposes Simla.com through dynamic broker tools without documenting customers, orders, communications, inventory, payments, or CRM state changes.",
+      "neutralIntentExamples": [
+        "identify the exact customer or order record before provider access",
+        "require recipient and content approval before a CRM communication"
+      ],
+      "inputs": [
+        "Simla.com connection, unspecified CRM task, discovered schema, broker session, pagination, and absent provider arguments",
+        "record owner, customer-data purpose, order authority, communication approval, payment boundary, retention, and rollback"
+      ],
+      "operations": [
+        "looks up Simla.com tools through a broker, establishes account access, and executes current-schema calls",
+        "permits batches while omitting customer, order, and message semantics"
+      ],
+      "outputs": [
+        "opaque CRM, commerce, customer, or communication responses"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "does not define record states, recipient consent, order transitions, financial effects, idempotency, or recovery",
+        "all business behavior remains mutable and external"
+      ],
+      "exclusions": [
+        "does not connect Simla.com, inspect customers, change orders, send messages, or affect payments",
+        "does not retain an unbounded CRM adapter"
+      ],
+      "usefulInvariants": [
+        "customer reads, order mutations, communications, and payments need distinct authority",
+        "external messages require exact recipient and content review"
+      ],
+      "materialRisks": [
+        "automation can disclose customer data or corrupt order state",
+        "opaque calls can contact people or create financial effects"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unsafe CRM and order broker stub",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-0d2543f74edc3a08",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/labs64-netlicensing-automation/SKILL.md",
+      "bodySha256": "0d2543f74edc3a08f1ba313e3ef2e50fc0f69d45d734b51bc11aa365ef0c8b8c",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Routes Labs64 NetLicensing through a broker while omitting product, licensee, entitlement, validation, payment, revocation, and lifecycle semantics.",
+      "neutralIntentExamples": [
+        "identify the exact product and entitlement before license access",
+        "separate license validation from creation, revocation, or deletion"
+      ],
+      "inputs": [
+        "NetLicensing connection, undefined licensing task, live schema, broker session, pagination, and unknown provider arguments",
+        "product owner, licensee scope, entitlement policy, financial authority, lifecycle state, audit retention, and recovery"
+      ],
+      "operations": [
+        "discovers NetLicensing tools in an external catalogue, authenticates, and dispatches selected runtime requests",
+        "supports remote batching without documenting entitlement effects"
+      ],
+      "outputs": [
+        "opaque product, license, entitlement, customer, or account responses"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "does not distinguish validation, creation, transfer, revocation, deletion, payment, or customer mutations",
+        "lacks idempotency, reconciliation, appeal, and rollback controls"
+      ],
+      "exclusions": [
+        "does not connect NetLicensing, inspect customers, create or revoke entitlements, or execute tools",
+        "does not preserve an effect-unknown licensing adapter"
+      ],
+      "usefulInvariants": [
+        "license identity, product, licensee, entitlement, validity interval, and lifecycle state are separate facts",
+        "validation and mutation require distinct authority"
+      ],
+      "materialRisks": [
+        "opaque calls can deny access, grant unauthorized rights, or alter customer records",
+        "licensing changes can create financial and contractual consequences"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unsafe entitlement-management broker shell",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-0d2eef966ef68f04",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/placid-automation/SKILL.md",
+      "bodySha256": "0d2eef966ef68f0405f2ec31e836d63f876b0a83c19c6c299ad60b0bd9dcd07e",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Makes Placid available through broker discovery without documenting templates, assets, dynamic content, rendering, publication, deletion, or account effects.",
+      "neutralIntentExamples": [
+        "identify the exact template and approved content before external rendering",
+        "verify rights to every asset supplied to a generation provider"
+      ],
+      "inputs": [
+        "Placid connection, unspecified generation task, runtime schema, broker session, pagination, and absent rendering arguments",
+        "template owner, content approval, asset rights, personal-data boundary, output destination, cost limit, and deletion policy"
+      ],
+      "operations": [
+        "discovers Placid tools through a remote broker, establishes authentication, and submits current-schema calls",
+        "allows batch execution without defining content-generation or publishing behavior"
+      ],
+      "outputs": [
+        "opaque generated media, template records, asset responses, or account mutations"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "does not define template variables, asset transfer, rendering determinism, rights, moderation, publication, cost, or cleanup",
+        "dynamic schemas leave content effects unreviewed"
+      ],
+      "exclusions": [
+        "does not connect Placid, upload assets, render media, publish output, or alter templates",
+        "does not retain an external generation adapter"
+      ],
+      "usefulInvariants": [
+        "template, input assets, rights, approved content, and output destination must be bound together",
+        "generation and publication are separate effects"
+      ],
+      "materialRisks": [
+        "external rendering can leak data or infringe asset rights",
+        "automation can publish incorrect content or consume paid capacity"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unbounded media-generation provider stub",
+      "confidence": "high"
+    },
+    {
+      "facetId": "facet-0d2f0c3324134fc8",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/pdf-co-automation/SKILL.md",
+      "bodySha256": "0d2f0c3324134fc896f317686c1973d788c8ec3cc5ebf0b6077128483d4f2f17",
+      "legacyAliases": [],
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "neutralCapabilitySummary": "Routes PDF.co through mutable broker tools without documenting document inputs, transformations, OCR, extraction, signatures, storage, or deletion behavior.",
+      "neutralIntentExamples": [
+        "confirm document ownership and sensitivity before external processing",
+        "distinguish text extraction from a document mutation or signature effect"
+      ],
+      "inputs": [
+        "PDF.co connection, unspecified document task, discovered schema, broker session, pagination, and unknown provider arguments",
+        "document owner, data classification, transformation intent, retention, output destination, signature authority, cost, and deletion requirement"
+      ],
+      "operations": [
+        "looks up PDF.co tools through a broker, connects the account, and dispatches schema-derived calls",
+        "permits batched remote processing without defining document transfer or transformation semantics"
+      ],
+      "outputs": [
+        "opaque document-processing results, extracted content, transformed files, links, or provider state"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "does not define upload, encryption, OCR confidence, redaction, signature, retention, link exposure, deletion, or output verification",
+        "provider transport cannot establish permission to process sensitive documents"
+      ],
+      "exclusions": [
+        "does not connect PDF.co, upload files, extract text, transform, sign, store, or delete documents",
+        "does not retain a privacy-unsafe document processor route"
+      ],
+      "usefulInvariants": [
+        "document ownership, classification, operation, output destination, and retention must be explicit",
+        "extraction, transformation, signing, and sharing require distinct authority"
+      ],
+      "materialRisks": [
+        "documents can contain confidential, personal, or legally significant information",
+        "external processing or links can leak content and signatures can create legal effects"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "privacy-unsafe document-processing adapter",
+      "confidence": "high"
+    }
+  ]
+}
