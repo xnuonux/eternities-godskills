@@ -20,7 +20,7 @@ async function evidence(root, relativePath) {
   return { path: relativePath, sha256: sha256(bytes) };
 }
 
-export async function buildAthena(root = path.resolve(".")) {
+export async function buildAthena(root = path.resolve("."), { write = true } = {}) {
   const suite = JSON.parse(await readFile(path.join(root, files.evaluation), "utf8"));
   const policy = JSON.parse(await readFile(path.join(root, "policies/promotion.v1.json"), "utf8"));
   const skillBytes = await readFile(path.join(root, files.skill));
@@ -56,8 +56,10 @@ export async function buildAthena(root = path.resolve(".")) {
     decision
   };
   const receiptPath = "receipts/promotions/eternities-athena.json";
-  await writeJsonAtomic(path.join(root, receiptPath), receipt);
-  const receiptEvidence = await evidence(root, receiptPath);
+  if (write) await writeJsonAtomic(path.join(root, receiptPath), receipt);
+  const receiptEvidence = write
+    ? await evidence(root, receiptPath)
+    : { path: receiptPath, sha256: sha256(`${JSON.stringify(receipt, null, 2)}\n`) };
   const synthesis = {
     schemaVersion: 1,
     candidateId: "eternities-athena",
@@ -71,7 +73,7 @@ export async function buildAthena(root = path.resolve(".")) {
     externalMutation: false,
     synthesisMethod: "independent-first-party-scientific-epistemology-v1"
   };
-  await writeJsonAtomic(path.join(root, "artifacts/athena/synthesis.v1.json"), synthesis);
+  if (write) await writeJsonAtomic(path.join(root, "artifacts/athena/synthesis.v1.json"), synthesis);
   return { receipt, synthesis };
 }
 
