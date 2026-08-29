@@ -9,6 +9,10 @@ Deliver a consequential software change through the smallest sufficient engineer
 
 Read [references/operating-contract.md](references/operating-contract.md) before selecting a route. Forge coordinates installed process skills; it does not replace their detailed procedures.
 
+## Telos closure route
+
+When the user explicitly asks for a perfection, ideal-bar, or structural-closure pass on consequential work, read [the Telos closure contract](references/telos-closure.md). Telos is an opt-in adversarial closure route, not the default delivery loop. It seeks evidence that the named defect shape or unsupported claim has been structurally closed across its blast radius, within declared budgets. It returns `closed`, `saturated`, `blocked`, or `budget-exhausted`; it never claims literal perfection.
+
 ## v2 portable workflow extensions
 
 For consequential work needing coordinated planning, delegation, execution, review,
@@ -42,6 +46,7 @@ Yield when:
 - an unexplained failure needs diagnosis: use `systematic-debugging` first;
 - one small behavior change is adequately covered by `test-driven-development`;
 - implementation is already verified and only branch disposition remains: use `finishing-a-development-branch`.
+- ordinary proportional review is sufficient and no explicit ideal-bar closure was requested: use `requesting-code-review`.
 
 ## Forge loop
 

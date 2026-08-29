@@ -25,13 +25,15 @@
     "resolve ambiguity and conflicts",
     "bound delegation and handoff",
     "seal attested task continuity at real boundaries",
-    "block unsupported completion claims"
+    "block unsupported completion claims",
+    "run bounded adversarial structural closure when explicitly requested"
   ],
   "effects": ["read", "write"],
   "positiveTriggers": [
     "deliver a consequential feature across several engineering phases",
     "repair and prove a regression whose fix crosses components",
-    "perform a risky refactor or integration with review and rollback"
+    "perform a risky refactor or integration with review and rollback",
+    "run an explicit ideal-bar closure pass on consequential completed work"
   ],
   "negativeTriggers": [
     "routine one-file edit",
@@ -44,7 +46,8 @@
     "root cause is unknown",
     "required authority is absent",
     "verification or review finds a critical regression",
-    "integration target cannot be established safely"
+    "integration target cannot be established safely",
+    "closure oracle is invalid or a declared resource budget is exhausted"
   ],
   "dependencies": [
     "writing-plans",
@@ -65,6 +68,14 @@
   ],
   "explicitOnly": false,
   "routes": [
+    {
+      "id": "telos-closure",
+      "capabilities": ["bind-closure", "adversarial-probes", "defect-relocation", "structural-repair", "regression-proof", "convergence-ledger"],
+      "delegates": ["requesting-code-review", "verification-before-completion"],
+      "explicitIntentRequired": true,
+      "terminalStates": ["closed", "saturated", "blocked", "budget-exhausted"],
+      "failClosedOn": ["authority-loss", "invalid-oracle", "critical-regression", "destructive-uncertainty", "budget-exhausted"]
+    },
     {
       "id": "portable-workflow",
       "capabilities": ["bind", "plan", "delegate-bounded", "execute-slices", "handoff", "review", "verify", "integrate-or-defer"],
