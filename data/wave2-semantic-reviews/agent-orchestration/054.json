@@ -1,0 +1,196 @@
+{
+  "schemaVersion": 1,
+  "waveId": "wave2-agent-orchestration-054",
+  "familyId": "agent-orchestration",
+  "reviewer": "codex:wave2-agent-orchestration-054",
+  "reviewMethod": "exact-inert-body-semantic-review-v1",
+  "reviews": [
+    {
+      "facetId": "facet-fcfd1e6489435aa0", "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/entelligence-automation/SKILL.md", "bodySha256": "fcfd1e6489435aa0ca579a2883b87450324982a4e5d6d66a241107fb482cd4f4",
+      "neutralCapabilitySummary": "Provides a generic Composio MCP bootstrap for discovering an unspecified Entelligence tool schema, checking an OAuth connection, and invoking the returned slug, without documenting any Entelligence resource or operation.",
+      "neutralIntentExamples": ["discover which Entelligence tools are currently exposed", "inspect an Entelligence adapter schema before deciding whether a task is supported"], "legacyAliases": ["Rube Entelligence bootstrap"],
+      "inputs": ["specific Entelligence use case, active connection, generated session, current schema, and pagination token", "missing resource model, operation semantics, authority levels, effects, rollback, and domain validation"],
+      "operations": ["query the adapter registry for Entelligence metadata without executing a returned tool", "reject operational routing until the discovered Entelligence schema is semantically classified and authorized"],
+      "outputs": ["adapter metadata and schema", "unsupported-operation finding"], "effects": ["read", "external-write"],
+      "failureBehavior": ["mentions connection state, schema references, sessions, and pagination", "cannot bound effects because the body contains no actual tool contract"],
+      "exclusions": ["does not execute an unknown slug", "does not grant bulk remote workbench authority"], "usefulInvariants": ["discovery precedes execution", "unknown effects fail closed"],
+      "materialRisks": ["OAuth may expose account data", "an unspecified tool can mutate external state", "remote bulk execution expands blast radius"], "providerCoupling": "provider-bound", "projectCoupling": "project-bound", "disposition": "rejected", "proposedCluster": "generic-unbounded-rube-adapter-bootstrap", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
+    },
+    {
+      "facetId": "facet-fd5487388d5d0003", "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/timekit-automation/SKILL.md", "bodySha256": "fd5487388d5d00039f3d571bcd2abbf7501532a6779846c708cc3a0056a17f35",
+      "neutralCapabilitySummary": "Offers the same generic Rube discovery, connection, session, execution, and pagination shell for Timekit while omitting scheduling entities, time semantics, actions, and validation rules.",
+      "neutralIntentExamples": ["list the current Timekit adapter capabilities", "obtain a schema for a narrowly described Timekit request"], "legacyAliases": ["Rube Timekit bootstrap"],
+      "inputs": ["Timekit use case, current adapter schema, active account connection, session identity, and page state", "missing timezone, participant, availability, booking, cancellation, conflict, notification, and consent semantics"],
+      "operations": ["discover Timekit schema names while withholding participant or calendar data", "classify every Timekit result as read or external mutation before any follow-up call"],
+      "outputs": ["discovered Timekit adapter schema", "unresolved scheduling authority"], "effects": ["read", "external-write"],
+      "failureBehavior": ["warns that schemas and connections change", "provides no scheduling workflow or conflict behavior"],
+      "exclusions": ["does not create or cancel a booking", "does not infer timezone or participant consent"], "usefulInvariants": ["time context must be explicit", "external scheduling mutations need separate authority"],
+      "materialRisks": ["wrong time interpretation affects people", "OAuth can expose calendars", "unknown tools can send notifications"], "providerCoupling": "provider-bound", "projectCoupling": "project-bound", "disposition": "rejected", "proposedCluster": "generic-unbounded-rube-adapter-bootstrap", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
+    },
+    {
+      "facetId": "facet-fd92456ece6f2358", "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/odoo-ecommerce-configurator/SKILL.md", "bodySha256": "fd92456ece6f23586398e090c04bfb8f53989ade8145a11e32faa6bd667c6f2b",
+      "neutralCapabilitySummary": "Outlines Odoo storefront configuration for product publishing, payment providers, shipping rates, SEO fields, inventory linkage, fulfillment, webhooks, and abandoned-cart messaging through version-sensitive menu paths.",
+      "neutralIntentExamples": ["prepare an unpublished product record with inventory identity and SEO metadata", "configure a test payment provider and verify webhook state before considering production enablement"], "legacyAliases": ["Odoo online-store setup guide"],
+      "inputs": ["Odoo edition and version, website, catalog, currencies, taxes, inventory, payment and carrier accounts, fulfillment rules, SEO content, and environment", "legal terms, PCI scope, credentials, webhook verification, email consent, production approval, rollback, and current vendor documentation"],
+      "operations": ["inventory installed Odoo modules and current menu, data, payment, carrier, and fulfillment state before configuration", "stage product, checkout, shipping, payment, inventory, tax, and webhook changes in a test environment with no live credentials", "run end-to-end successful, failed, duplicate, refund, stock, shipping, and notification scenarios before a separately approved launch"],
+      "outputs": ["storefront configuration plan", "test-mode product and order workflow", "launch, rollback, and transaction evidence"], "effects": ["read", "external-write"],
+      "failureBehavior": ["warns about test versus live keys, SKUs, webhooks, carrier modules, and edition limits", "contains live-key-shaped examples and mutable version, menu, security, subscription, and edition claims without reconciliation"],
+      "exclusions": ["does not enable live payments", "does not send abandoned-cart messages without consent", "does not publish products or shipping rates from an unverified example"], "usefulInvariants": ["catalog identity links to inventory", "payment changes remain in test until verified", "orders reconcile across payment and fulfillment"],
+      "materialRisks": ["misconfiguration can charge customers", "keys and customer data are sensitive", "tax and shipping errors create legal and financial harm", "marketing automation can violate consent"], "providerCoupling": "provider-bound", "projectCoupling": "project-bound", "disposition": "deferred", "proposedCluster": "governed-odoo-storefront-configuration", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
+    },
+    {
+      "facetId": "facet-fdb29962398651f7", "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/ip2location-automation/SKILL.md", "bodySha256": "fdb29962398651f79ad3485f22bedccb46debf456dfe06d3cb227ee841a3e1ff",
+      "neutralCapabilitySummary": "Wraps unspecified IP2Location operations in a generic Composio schema-discovery and execution template without defining lookup inputs, output precision, privacy, provenance, or permitted decisions.",
+      "neutralIntentExamples": ["discover whether the adapter exposes a read-only IP lookup", "inspect the current IP2Location response schema"], "legacyAliases": ["Rube IP2Location bootstrap"],
+      "inputs": ["specific lookup purpose, current schema, active connection, session, pagination, and candidate IP value", "missing consent, legal basis, retention, precision, error radius, database freshness, and decision-use constraints"],
+      "operations": ["request IP2Location tool metadata without sending an address", "block the lookup until privacy purpose, retention, precision, and downstream use are documented"],
+      "outputs": ["adapter schema", "privacy and accuracy gap finding"], "effects": ["read", "external-write"],
+      "failureBehavior": ["requires current schema discovery", "omits every domain-specific behavior and limitation"],
+      "exclusions": ["does not identify a person from an IP", "does not use geolocation for consequential eligibility decisions"], "usefulInvariants": ["lookup purpose is explicit", "geolocation remains probabilistic"],
+      "materialRisks": ["IP addresses are personal data in many contexts", "location can be inaccurate", "third-party transmission creates a privacy boundary"], "providerCoupling": "provider-bound", "projectCoupling": "project-bound", "disposition": "rejected", "proposedCluster": "generic-unbounded-rube-adapter-bootstrap", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
+    },
+    {
+      "facetId": "facet-fdb757aa3013375b", "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/bugsnag-automation/SKILL.md", "bodySha256": "fdb757aa3013375be931f4011e6c93312f3d073fbc06702cf8a343b8ddeeb4f9",
+      "neutralCapabilitySummary": "Names Bugsnag as an automation target but supplies only a generic MCP adapter lifecycle, with no error, project, release, issue, or mutation semantics.",
+      "neutralIntentExamples": ["discover read-only Bugsnag tools for an authorized project", "load a returned Bugsnag schema before querying an error"], "legacyAliases": ["Rube Bugsnag bootstrap"],
+      "inputs": ["specific observability question, project scope, active connection, current schema, session, and pagination", "missing event sensitivity, release identity, issue state, assignee, mutation policy, rate limit, and audit contract"],
+      "operations": ["enumerate Bugsnag adapter capabilities without retrieving event payloads", "redact and authorize project, error, user, and stack evidence before a bounded read"],
+      "outputs": ["Bugsnag schema inventory", "unresolved observability operation"], "effects": ["read", "external-write"],
+      "failureBehavior": ["covers schema and connection drift generically", "does not describe any Bugsnag resource or safe action"],
+      "exclusions": ["does not expose user metadata or stack secrets", "does not change issue status or ownership"], "usefulInvariants": ["project scope is explicit", "event payloads are minimized"],
+      "materialRisks": ["error data can contain PII and credentials", "issue mutations affect incident response", "adapter scope may exceed the request"], "providerCoupling": "provider-bound", "projectCoupling": "project-bound", "disposition": "rejected", "proposedCluster": "generic-unbounded-rube-adapter-bootstrap", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
+    },
+    {
+      "facetId": "facet-fdcb7b426f5baba5", "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/hosted-agents-v2-py/SKILL.md", "bodySha256": "fdcb7b426f5baba506500c0cffee617f038028674b48e900e8959c85f317f1f9",
+      "neutralCapabilitySummary": "Creates, lists, and deletes container-hosted Azure AI agent versions using a beta Python SDK, managed identity, ACR images, protocol declarations, resource settings, tools, and environment configuration.",
+      "neutralIntentExamples": ["prepare a pinned container definition for a hosted agent version", "inspect hosted-agent versions and deployment states without changing them"], "legacyAliases": ["Azure AI hosted container agent"],
+      "inputs": ["Azure project endpoint, managed identity, immutable image digest, protocol, CPU and memory, tools, environment, SDK version, and capability host", "current official API, image provenance and scan, secret injection, network policy, model and tool authority, cost, tenancy, rollback, and deployment approval"],
+      "operations": ["verify the live beta SDK and service contract, project identity, registry permissions, and capability-host policy", "scan and pin the container by digest, minimize tools and environment, and produce a dry deployment specification with cost and network boundaries", "create or delete a version only under explicit cloud authority, then capture provider state, health, logs, and rollback evidence"],
+      "outputs": ["hosted-agent version definition", "version inventory or provider mutation receipt", "security, health, and rollback evidence"], "effects": ["read", "external-write"],
+      "failureBehavior": ["names image, identity, protocol, resources, versioning, and common provider errors", "uses beta APIs, mutable tags, hardcoded model and tool examples, unverified limits, and no container security, network, cost, or readiness gate"],
+      "exclusions": ["does not deploy a latest tag", "does not place secrets in environment values", "does not attach code execution or MCP tools implicitly", "does not delete a version without confirmation"], "usefulInvariants": ["image identity is immutable", "cloud mutation is separately authorized", "tool and network scope are least privilege"],
+      "materialRisks": ["hosted agents execute untrusted workloads", "cloud resources incur cost", "beta APIs drift", "broad tools can exfiltrate data"], "providerCoupling": "provider-bound", "projectCoupling": "project-bound", "disposition": "deferred", "proposedCluster": "governed-hosted-agent-container-lifecycle", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
+    },
+    {
+      "facetId": "facet-fdcfacafa91b0833", "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/-2chat-automation/SKILL.md", "bodySha256": "fdcfacafa91b08331476dfdc69fb8278a81d21dd4145c7b6031aa6de4b74014f",
+      "neutralCapabilitySummary": "Provides a generic Composio connection and schema-discovery shell for 2Chat with no documented message, contact, channel, or account operations.",
+      "neutralIntentExamples": ["enumerate the current 2Chat adapter tools", "inspect a 2Chat tool schema without sending a message"], "legacyAliases": ["Rube 2Chat bootstrap"],
+      "inputs": ["specific 2Chat use case, active OAuth connection, current schema, session, and page state", "missing sender, recipient, message, media, consent, opt-out, rate, retention, and delivery semantics"],
+      "operations": ["discover 2Chat adapter metadata without including contact or message content", "deny any messaging slug until recipient consent, content, sender identity, and delivery effect are explicit"],
+      "outputs": ["2Chat schema metadata", "unresolved messaging authority"], "effects": ["read", "external-write"],
+      "failureBehavior": ["handles adapter schema drift only", "contains no messaging behavior or safeguards"],
+      "exclusions": ["does not send messages", "does not upload contact lists", "does not infer opt-in"], "usefulInvariants": ["recipient authority precedes communication", "message effects are auditable"],
+      "materialRisks": ["unauthorized messaging harms people", "contact data is sensitive", "bulk calls can become spam"], "providerCoupling": "provider-bound", "projectCoupling": "project-bound", "disposition": "rejected", "proposedCluster": "generic-unbounded-rube-adapter-bootstrap", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
+    },
+    {
+      "facetId": "facet-fdd1e8c788b731cf", "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/game-development/SKILL.md", "bodySha256": "fdd1e8c788b731cf89fc8bb964ce9e3b39743ed87805f90b596bb3ffd75ca7b7",
+      "neutralCapabilitySummary": "Routes game work by platform, dimension, engine fit, design discipline, networking, art, and audio while providing baseline loop, timestep, input, collision, entity, AI, and performance-selection principles.",
+      "neutralIntentExamples": ["choose an engine path for a UI-heavy web game with isolated arcade scenes", "separate fixed simulation updates from interpolated rendering in a prototype"], "legacyAliases": ["game development orchestrator"],
+      "inputs": ["player experience, platforms, dimensions, genre, team skills, distribution, input, simulation, content, multiplayer, accessibility, asset pipeline, and budget", "missing specialized sub-skill bodies, engine versions, licensing, target hardware, test plan, retention policy, and production constraints"],
+      "operations": ["derive engine and architecture candidates from player loop, delivery target, team fit, content workflow, and performance evidence", "select the simplest state, entity, collision, input, and AI patterns that satisfy a playable vertical slice", "profile simulation and rendering separately, playtest the slice, and revisit routing before scaling systems"],
+      "outputs": ["game technology and architecture route", "prototype loop and pattern choices", "profile and playtest evidence"], "effects": ["read", "write"],
+      "failureBehavior": ["discourages hype-driven engines, premature ECS, mixed input, and unprofiled optimization", "depends heavily on absent sub-skills and offers generic fixed budgets without platform evidence"],
+      "exclusions": ["does not choose an engine by popularity", "does not add networking or ECS before need", "does not treat a prototype as production-ready"], "usefulInvariants": ["player experience drives technical routing", "simulation timing is explicit", "performance decisions use profiles"],
+      "materialRisks": ["wrong engine choice creates migration cost", "fixed budgets can mislead", "missing platform and multiplayer detail can hide major risks"], "providerCoupling": "conditional", "projectCoupling": "project-bound", "disposition": "pattern-reference", "proposedCluster": "evidence-routed-game-development-architecture", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
+    },
+    {
+      "facetId": "facet-fde507623230dfa4", "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/metaphor-automation/SKILL.md", "bodySha256": "fde507623230dfa483201be998ad6f15ce49e140a3ba84c4a2b672974523646e",
+      "neutralCapabilitySummary": "Names Metaphor as a Composio automation target but contains only a universal tool-discovery and connection template with no search, retrieval, citation, or mutation contract.",
+      "neutralIntentExamples": ["discover whether a Metaphor read tool exists", "inspect the adapter's current input schema"], "legacyAliases": ["Rube Metaphor bootstrap"],
+      "inputs": ["specific Metaphor question, active connection, current schema, session, and pagination", "missing query semantics, source scope, freshness, ranking, citation, copyright, privacy, and cost policy"],
+      "operations": ["retrieve Metaphor adapter descriptions without dispatching a web query", "require source, recency, citation, and data-boundary controls before authorizing search"],
+      "outputs": ["adapter capability metadata", "unresolved research contract"], "effects": ["read", "external-write"],
+      "failureBehavior": ["acknowledges mutable schemas", "defines no provider-specific operation or evidence standard"],
+      "exclusions": ["does not browse from a vague request", "does not present adapter output as sourced truth"], "usefulInvariants": ["research claims retain citations", "network scope is explicit"],
+      "materialRisks": ["queries leave the local environment", "results can be stale or copyrighted", "unknown pricing can create cost"], "providerCoupling": "provider-bound", "projectCoupling": "project-adjacent", "disposition": "rejected", "proposedCluster": "generic-unbounded-rube-adapter-bootstrap", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
+    },
+    {
+      "facetId": "facet-fe0019dc95055362", "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/swiftui-ui-patterns/SKILL.md", "bodySha256": "fe0019dc95055362d505a25064f06ab809356fbc6a1302bdb54e560b953ceb85",
+      "neutralCapabilitySummary": "Structures SwiftUI screens through explicit state ownership, composition, environment and initializer injection, enum-driven navigation and sheets, cancellable async state, previews, accessibility, deployment-target fallbacks, and build verification.",
+      "neutralIntentExamples": ["choose the narrowest state wrapper for a reusable screen", "model mutually exclusive sheets with selected-item state instead of booleans"], "legacyAliases": ["SwiftUI screen architecture patterns"],
+      "inputs": ["feature interactions, local repository conventions, deployment target, state ownership, dependencies, routes, presentation points, async behavior, previews, and accessibility requirements", "referenced component bodies, device matrix, localization, persistence, error semantics, performance evidence, and test surface"],
+      "operations": ["locate the nearest repository pattern and declare state ownership plus minimum OS before composing the view", "model navigation, sheets, async loading, cancellation, errors, and dependency injection with the narrowest native mechanisms", "build at each structural checkpoint and validate previews, accessibility, state propagation, identity, observation scope, and target devices"],
+      "outputs": ["composed SwiftUI screen architecture", "state and routing model", "build, preview, accessibility, and performance evidence"], "effects": ["read", "write"],
+      "failureBehavior": ["requires compiler and preview recovery and calls out deployment fallbacks", "full behavior depends on absent references and it offers no automated UI-test or concurrency-isolation contract"],
+      "exclusions": ["does not introduce a reference model for value state", "does not perform service calls from body evaluation", "does not force new APIs below the deployment target"], "usefulInvariants": ["state has one clear owner", "navigation derives from typed state", "every supported target builds"],
+      "materialRisks": ["observation mistakes cause stale or excessive rendering", "async work can outlive views", "API availability errors break older devices"], "providerCoupling": "provider-bound", "projectCoupling": "project-bound", "disposition": "pattern-reference", "proposedCluster": "verified-swiftui-state-navigation-and-async-ui", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
+    },
+    {
+      "facetId": "facet-fe0e06f9ea938db0", "canonicalSourceId": "K-Dense-AI/scientific-agent-skills@36d8f13a1e754618794bf42f417884940077b4ae:skills/flowio/SKILL.md", "bodySha256": "fe0e06f9ea938db0386dcf2ff5142f43d76a60966925d69578479a06d2c7525b",
+      "neutralCapabilitySummary": "Performs low-level FCS 2.0 through 3.1 metadata inspection, event extraction, legacy multi-dataset reading, selected metadata rewriting, and constrained FCS 3.1 creation with explicit preprocessing, indexing, memory, privacy, and round-trip semantics.",
+      "neutralIntentExamples": ["inventory FCS channels without loading event arrays", "write a deidentified FCS 3.1 copy and compare raw plus preprocessed round trips"], "legacyAliases": ["FlowIO FCS reader and writer"],
+      "inputs": ["authorized FCS path, operation, size bound, FlowIO and Python versions, preprocessing choice, channel labels, event array, selected metadata, and destination", "sample privacy classification, overwrite authority, memory budget, offset exception rationale, scientific interpretation boundary, and downstream tool needs"],
+      "operations": ["inspect HEADER and normalized TEXT with metadata-only loading before allocating events", "record raw-versus-preprocessed semantics, channel index conventions, memory cost, and any controlled offset relaxation", "write to a new path and reopen it to reconcile counts, labels, metadata, raw values, and preprocessed values"],
+      "outputs": ["FCS structure and channel inventory", "NumPy event matrix or rewritten FCS 3.1 file", "privacy, memory, and round-trip evidence"], "effects": ["read", "write"],
+      "failureBehavior": ["documents normalization, preprocessing, multi-dataset, memory, overwrite, handle, and writer sharp edges", "scientific interpretation, deidentification sufficiency, and missing bundled inspector or references still require independent review"],
+      "exclusions": ["does not perform compensation, gating, or clustering", "does not treat preprocessed values as raw acquisition", "does not overwrite an existing output implicitly"], "usefulInvariants": ["preprocessing choice is recorded", "event and channel shapes reconcile", "writes pass raw and processed round trips", "metadata export is minimized"],
+      "materialRisks": ["metadata can identify subjects", "large arrays exhaust memory", "rewriting changes numeric representation", "relaxed offsets can conceal corruption"], "providerCoupling": "provider-bound", "projectCoupling": "portable", "disposition": "independent-implementation", "proposedCluster": "privacy-aware-fcs-structure-and-event-io", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
+    },
+    {
+      "facetId": "facet-fe1c8617171a5dbd", "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/codereadr-automation/SKILL.md", "bodySha256": "fe1c8617171a5dbdd89e8f21f5e07dd5d49907589ca7345d622be66915683f6a",
+      "neutralCapabilitySummary": "Supplies a generic Composio adapter shell for Codereadr but no barcode, scanning, database, validation, device, or record-operation semantics.",
+      "neutralIntentExamples": ["enumerate exposed Codereadr adapter tools", "inspect a Codereadr schema without scanning or writing records"], "legacyAliases": ["Rube Codereadr bootstrap"],
+      "inputs": ["specific Codereadr use case, account connection, current schema, session, and pagination", "missing code format, scan source, record schema, device identity, validation, offline, duplicate, and mutation behavior"],
+      "operations": ["query Codereadr capability metadata without transmitting a code or record", "require scan, record, device, and duplicate semantics before considering an adapter call"],
+      "outputs": ["Codereadr schema metadata", "unresolved scan workflow"], "effects": ["read", "external-write"],
+      "failureBehavior": ["provides generic schema and connection checks", "offers no Codereadr-specific workflow"],
+      "exclusions": ["does not validate or register a code", "does not upload scan records"], "usefulInvariants": ["code and record formats are explicit", "duplicate handling is deterministic"],
+      "materialRisks": ["scan records can reveal attendance or inventory", "unknown mutations can corrupt records", "device identities are sensitive"], "providerCoupling": "provider-bound", "projectCoupling": "project-bound", "disposition": "rejected", "proposedCluster": "generic-unbounded-rube-adapter-bootstrap", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
+    },
+    {
+      "facetId": "facet-fe5ef3e48dc067c3", "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/gitops-workflow/SKILL.md", "bodySha256": "fe5ef3e48dc067c3631490fa64202a0ab3e705259f236e1a7b512b57e0359d78",
+      "neutralCapabilitySummary": "Designs pull-based Kubernetes delivery with versioned desired state, Argo CD or Flux reconciliation, environment promotion, pruning, self-healing, progressive rollout, externalized secrets, approvals, health checks, alerts, and Git-grounded rollback.",
+      "neutralIntentExamples": ["design a staged GitOps repository and promotion path for several clusters", "prepare a canary reconciliation plan with an explicit abort condition"], "legacyAliases": ["Argo CD and Flux GitOps workflow"],
+      "inputs": ["clusters, repositories, environments, manifests, controllers, tenancy, RBAC, secret provider, promotion policy, health signals, rollback, and deployment authority", "current official manifests and APIs, supply-chain trust, bootstrap ownership, drift policy, prune scope, disaster recovery, audit, and cost"],
+      "operations": ["map desired-state ownership, cluster and repository trust, environment separation, controller privileges, and secret boundaries before bootstrap", "pin and inspect controller artifacts, encode reconciliation and promotion with prune, health, retry, and production approval guards", "prove staging sync, drift, secret rotation, canary abort, rollback, controller outage, and disaster recovery before production enablement"],
+      "outputs": ["GitOps repository and controller architecture", "promotion and reconciliation policy", "security, rollout, rollback, and recovery evidence"], "effects": ["read", "write", "external-write"],
+      "failureBehavior": ["warns against production auto-sync and plaintext secrets and includes retries and progressive delivery", "uses mutable remote install paths and destructive prune or force examples without complete supply-chain, tenancy, bootstrap, recovery, or approval gates"],
+      "exclusions": ["does not apply remote stable manifests blindly", "does not enable production prune or self-heal without review", "does not store plaintext secrets in Git", "does not force-sync as routine recovery"], "usefulInvariants": ["Git contains reviewable desired state", "controllers pull under least privilege", "production promotion is gated", "rollback is rehearsed"],
+      "materialRisks": ["controller compromise reaches clusters", "prune can delete workloads", "secret mistakes expose credentials", "bad desired state propagates continuously"], "providerCoupling": "conditional", "projectCoupling": "project-bound", "disposition": "pattern-reference", "proposedCluster": "governed-gitops-reconciliation-and-promotion", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
+    },
+    {
+      "facetId": "facet-febc5efbeabfbefd", "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/givebutter-automation/SKILL.md", "bodySha256": "febc5efbeabfbefda0233b601962f75b91ff528371e98d57539503e6dc85a5d7",
+      "neutralCapabilitySummary": "Offers only a generic Composio discovery and execution wrapper for Givebutter, with no campaign, donation, supporter, transaction, receipt, refund, or communication contract.",
+      "neutralIntentExamples": ["discover read-only Givebutter adapter capabilities", "inspect a current Givebutter schema without accessing donor records"], "legacyAliases": ["Rube Givebutter bootstrap"],
+      "inputs": ["specific Givebutter use case, current schema, account connection, session, and pagination", "missing donor consent, financial authority, campaign scope, refund, receipt, tax, communication, retention, and audit policy"],
+      "operations": ["enumerate Givebutter tool metadata without retrieving supporter or payment data", "block campaign, donor, transaction, refund, or messaging actions until their authority and audit rules are explicit"],
+      "outputs": ["Givebutter adapter metadata", "unresolved fundraising authority"], "effects": ["read", "external-write"],
+      "failureBehavior": ["covers only generic adapter drift", "contains no fundraising-specific guardrails"],
+      "exclusions": ["does not charge, refund, or message anyone", "does not expose donor data"], "usefulInvariants": ["financial effects are separately authorized", "donor data is minimized"],
+      "materialRisks": ["financial actions create legal consequences", "donor data is sensitive", "messages require consent"], "providerCoupling": "provider-bound", "projectCoupling": "project-bound", "disposition": "rejected", "proposedCluster": "generic-unbounded-rube-adapter-bootstrap", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
+    },
+    {
+      "facetId": "facet-fefbfaa3e2a82d47", "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/chmeetings-automation/SKILL.md", "bodySha256": "fefbfaa3e2a82d475f9a7fc592f022dee9d4d35e2e5ebe84aed24584d2f27b15",
+      "neutralCapabilitySummary": "Provides a universal Rube connection shell for ChMeetings while leaving member, attendance, event, contribution, communication, and privacy operations unspecified.",
+      "neutralIntentExamples": ["list currently exposed ChMeetings tools", "review a ChMeetings schema before accessing congregation records"], "legacyAliases": ["Rube ChMeetings bootstrap"],
+      "inputs": ["specific ChMeetings use case, active connection, schema, session, and page token", "missing member consent, role, event, attendance, donation, minor, pastoral, communication, retention, and audit boundaries"],
+      "operations": ["discover ChMeetings metadata without retrieving member or attendance information", "require role, consent, sensitive-field, communication, and mutation policies before any domain call"],
+      "outputs": ["ChMeetings adapter schema", "unresolved community-record authority"], "effects": ["read", "external-write"],
+      "failureBehavior": ["mentions generic connection and pagination handling", "defines no ChMeetings resource behavior"],
+      "exclusions": ["does not alter membership or attendance", "does not send communications", "does not access pastoral or minor records"], "usefulInvariants": ["member scope follows role", "sensitive records stay minimized"],
+      "materialRisks": ["community records can be highly sensitive", "minors may be involved", "bulk communication can cause harm"], "providerCoupling": "provider-bound", "projectCoupling": "project-bound", "disposition": "rejected", "proposedCluster": "generic-unbounded-rube-adapter-bootstrap", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
+    },
+    {
+      "facetId": "facet-ff4dc0c7458d32f8", "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/userlist-automation/SKILL.md", "bodySha256": "ff4dc0c7458d32f8ebf222b3b65f6821c283a74fd2ee1c0a20802197dd3e5c20",
+      "neutralCapabilitySummary": "Names Userlist as a target for the generic Rube schema, connection, session, and execution template but specifies no user, company, event, segment, campaign, message, or deletion semantics.",
+      "neutralIntentExamples": ["discover Userlist adapter capabilities", "inspect a Userlist tool schema without uploading customer data"], "legacyAliases": ["Rube Userlist bootstrap"],
+      "inputs": ["specific Userlist use case, current schema, active connection, session, and pagination", "missing identity model, event taxonomy, consent, segmentation, campaign, suppression, deletion, retention, and communication authority"],
+      "operations": ["request Userlist tool descriptions without including profiles or events", "deny profile, event, segment, or message operations until consent and lifecycle rules are bound"],
+      "outputs": ["Userlist schema metadata", "unresolved customer-data workflow"], "effects": ["read", "external-write"],
+      "failureBehavior": ["handles only adapter mechanics", "offers no customer-data or messaging safety"],
+      "exclusions": ["does not upload profiles or events", "does not send campaigns", "does not infer consent"], "usefulInvariants": ["identity and consent are explicit", "suppression and deletion propagate"],
+      "materialRisks": ["customer data can be personal", "event uploads can enable profiling", "messages can violate consent"], "providerCoupling": "provider-bound", "projectCoupling": "project-bound", "disposition": "rejected", "proposedCluster": "generic-unbounded-rube-adapter-bootstrap", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
+    },
+    {
+      "facetId": "facet-ffbb2ed04ff0053a", "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/nasdaq-automation/SKILL.md", "bodySha256": "ffbb2ed04ff0053a57bbe3a68263bb91d3cf11299e35a456d93a2961e1dcaefc",
+      "neutralCapabilitySummary": "Provides an unspecified Nasdaq adapter behind the generic Rube tool-discovery lifecycle, without defining market datasets, timestamps, licenses, adjustments, symbols, delayed data, or any trading boundary.",
+      "neutralIntentExamples": ["discover whether the Nasdaq adapter offers a read-only dataset", "inspect a returned Nasdaq schema before requesting market data"], "legacyAliases": ["Rube Nasdaq bootstrap"],
+      "inputs": ["specific Nasdaq data question, active connection, current schema, session, and pagination", "missing dataset identity, license, timestamp, market calendar, symbol, adjustment, delay, currency, redistribution, and financial-use constraints"],
+      "operations": ["enumerate Nasdaq adapter metadata without requesting securities data", "require dataset provenance, license, timestamp, adjustment, delay, and non-trading use before any read"],
+      "outputs": ["Nasdaq adapter schema", "unresolved market-data contract"], "effects": ["read", "external-write"],
+      "failureBehavior": ["acknowledges mutable schemas", "contains no market-data semantics or financial safeguards"],
+      "exclusions": ["does not place or recommend trades", "does not present delayed data as live", "does not redistribute licensed data"], "usefulInvariants": ["market data retains timestamp and provenance", "financial actions remain outside scope"],
+      "materialRisks": ["stale data can mislead decisions", "licenses may restrict use", "financial interpretation is high stakes"], "providerCoupling": "provider-bound", "projectCoupling": "project-adjacent", "disposition": "rejected", "proposedCluster": "generic-unbounded-rube-adapter-bootstrap", "confidence": "high", "copiedSourceProse": false, "promotionClaim": false
+    }
+  ]
+}
