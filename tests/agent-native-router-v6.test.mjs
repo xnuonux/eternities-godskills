@@ -14,7 +14,7 @@ async function json(relative) {
 }
 
 async function cards() {
-  return (await readFile(new URL("artifacts/routing/cards.jsonl", root), "utf8"))
+  return (await readFile(new URL("artifacts/checkpoints/godskills-system-v1-routing/cards.jsonl", root), "utf8"))
     .trim().split(/\r?\n/).map(JSON.parse).map(validateRoutingCard);
 }
 
@@ -118,9 +118,9 @@ test("router v6 preserves Beacon authority effect and risk boundaries", async ()
 test("router v6 receipt reconciles exact live artifacts", async () => {
   const receipt = await json("receipts/agent-native-router-v6.json");
   const [manifestText, cardsText, familyText] = await Promise.all([
-    readFile(new URL("artifacts/routing/manifest.json", root), "utf8"),
-    readFile(new URL("artifacts/routing/cards.jsonl", root), "utf8"),
-    readFile(new URL("artifacts/routing/family-map.json", root), "utf8"),
+    readFile(new URL("artifacts/checkpoints/godskills-system-v1-routing/manifest.json", root), "utf8"),
+    readFile(new URL("artifacts/checkpoints/godskills-system-v1-routing/cards.jsonl", root), "utf8"),
+    readFile(new URL("artifacts/checkpoints/godskills-system-v1-routing/family-map.json", root), "utf8"),
   ]);
   const manifest = JSON.parse(manifestText);
   assert.equal(receipt.id, "agent-native-router-v6");

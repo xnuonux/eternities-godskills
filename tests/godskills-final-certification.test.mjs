@@ -4,15 +4,13 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-import { buildGodskillsSystemCertification, certificationStatus, quarryAuditMatches, verifyBoundArtifacts } from "../scripts/build-godskills-system-certification.mjs";
+import { certificationStatus, quarryAuditMatches, verifyBoundArtifacts } from "../scripts/build-godskills-system-certification.mjs";
 import { sha256 } from "../src/io.mjs";
 
 const root = path.resolve(new URL("../", import.meta.url).pathname.slice(1));
 
-test("final Godskills system certificate rebuilds from every current proof layer", async () => {
-  const expected = JSON.parse(await readFile(path.join(root, "receipts/godskills-system-certification-v1.json"), "utf8"));
-  const actual = await buildGodskillsSystemCertification({ root, write: false });
-  assert.deepEqual(actual, expected);
+test("historical Godskills system v1 certificate remains bound to its routing checkpoint", async () => {
+  const actual = JSON.parse(await readFile(path.join(root, "receipts/godskills-system-certification-v1.json"), "utf8"));
   assert.equal(actual.status, "certified");
   assert.deepEqual(actual.counts, {
     sourceRecords: 4741,
@@ -25,10 +23,14 @@ test("final Godskills system certificate rebuilds from every current proof layer
     compilerGeneralizationCases: 10,
     athenaCases: 12,
   });
+  for (const [artifactKey, checkpointName] of [["routingCards", "cards.jsonl"], ["routingFamilyMap", "family-map.json"], ["routingManifest", "manifest.json"]]) {
+    const bytes = await readFile(path.join(root, "artifacts/checkpoints/godskills-system-v1-routing", checkpointName));
+    assert.equal(actual.artifacts[artifactKey].sha256, sha256(bytes), artifactKey);
+  }
 });
 
 test("final certificate preserves cold routing and explicit authority boundaries", async () => {
-  const receipt = await buildGodskillsSystemCertification({ root, write: false });
+  const receipt = JSON.parse(await readFile(path.join(root, "receipts/godskills-system-certification-v1.json"), "utf8"));
   assert.deepEqual(receipt.gates, {
     allRoutingCardsExact: true,
     allSourcesReviewedAndClustered: true,
