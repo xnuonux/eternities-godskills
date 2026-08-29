@@ -1,0 +1,335 @@
+{
+  "schemaVersion": 1,
+  "clusterSetId": "wave2-data-infrastructure-clusters-v1",
+  "familyId": "data-infrastructure",
+  "clusters": [
+    {
+      "id": "evidence-bound-data-modeling-schema-change-and-inspection",
+      "intent": "Design query-shaped relational or partitioned data structures and move them through inspected, reversible changes with explicit access paths, bounded inspection, and post-change evidence.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The members start with observed access patterns and invariants, select data-model and transaction constraints, then preserve versioned migration, conflict-recovery, query, and read-only inspection evidence. PostgreSQL, Prisma, Drizzle, and NoSQL syntax remains implementation-specific, but the contract is broader than any one adapter.",
+      "members": [
+        {"facetId":"facet-05bc40b862cf4c7b","reviewDigest":"ef1d3432932b7a70fd2385302a4369cabb9dc9621fb039b38327cc6d01019b52","role":"canonical"},
+        {"facetId":"facet-43ef6c809725de06","reviewDigest":"d1e43154800714a5e9a1f33c99cbc33986f09937fe48adbc9f4306c797787d04","role":"component"},
+        {"facetId":"facet-8476d72ffc2a0c2a","reviewDigest":"3a32fdae5113a50febb32543293e162a3a581eb32a0362165a409cf42f591171","role":"variant"},
+        {"facetId":"facet-88189753eb89c6e5","reviewDigest":"3e6d48f0e8d567ed7f1255ffe0c5120c0b6d9ba0fc861bcb1b662c9a4d37b838","role":"variant"},
+        {"facetId":"facet-9637b7c35cbaa040","reviewDigest":"d9d84dc4e23e3ea7969d212f4f416fee41397132f7dcdd4f53df25806916690d","role":"component"},
+        {"facetId":"facet-9a1d59484253caab","reviewDigest":"d509492795353a8813f2042a675fdabf5a22309b0a97695f7a459230251f0f14","role":"component"},
+        {"facetId":"facet-ca839cdbf4ddc125","reviewDigest":"df3e9c12c5f8ecc6e619df8a0c52d6b0f3a21ca04819ec6bde753f56d55f8910","role":"component"}
+      ]
+    },
+    {
+      "id": "configuration-schema-environment-and-migration-validation",
+      "intent": "Advance configuration only when strict schemas, cross-environment rules, reversible migrations, fixtures, and last-known-valid reload state agree.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "This body defines a portable state transition: discover bounded config, validate structural and environment constraints, prove accepted and rejected fixtures, migrate a copy, then activate only the validated state. Its secret scanning and runtime reload cautions remain implementation and authority boundaries.",
+      "members": [
+        {"facetId":"facet-09a116e2c58ffdd5","reviewDigest":"4a1b3c2463f2fba02539d33999bb15c4d4e55d03aade7305839492b4d72d066b","role":"canonical"}
+      ]
+    },
+    {
+      "id": "columnar-ingestion-rollup-and-query-layout-design",
+      "intent": "Design columnar analytical ingestion, ordering, partitioning, aggregate rollups, and system-table evidence from declared analytical query and retention behavior.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The reviewed ClickHouse mechanism couples MergeTree layout choices with batched ingestion, materialized rollups, merge behavior, and system-table evidence. It has a distinct columnar ingestion and aggregation contract that general schema design does not spell out.",
+      "members": [
+        {"facetId":"facet-12683e9f5afbf6f8","reviewDigest":"dff58f15b998624ec6f0235c35f88c2e028fc78354b6fd0a29e86c4c7c6b795a","role":"canonical"}
+      ]
+    },
+    {
+      "id": "lazy-tabular-transformation-and-validation",
+      "intent": "Build typed lazy tabular transformations whose access, projection, aggregation, join, reshape, and materialization decisions are proved against representative inputs and outputs.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "candidate",
+      "rationale": "The current Polars body provides composable expressions, lazy planning, pushdown, streaming, and output validation. The older near-duplicate is retained only as a variant boundary because its guidance is superseded rather than additional evidence.",
+      "members": [
+        {"facetId":"facet-0c60b4ff3116b6ef","reviewDigest":"6ef7318bd688c320c12848680ebe093b0d8e1266ae6b0b2b1d653bf89db5b389","role":"variant"},
+        {"facetId":"facet-2c74528fd335b4c5","reviewDigest":"e458aa63b9a2137a66e8983d74de199945ba4b5bdd24c871826ba98d01a0f426","role":"canonical"}
+      ]
+    },
+    {
+      "id": "consent-gated-decision-linked-telemetry",
+      "intent": "Define a decision-linked event contract, enforce consent and typed properties at one dispatch boundary, isolate telemetry adapter failures, and prove emitted signals against approved scenarios.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "One member supplies client consent, provider isolation, field-performance normalization, and scrubbing mechanics; the other supplies decision, KPI, attribution, conversion, and trigger-verification semantics. Together they form a portable telemetry contract without granting provider initialization or event transmission authority.",
+      "members": [
+        {"facetId":"facet-3e70e08d18fba238","reviewDigest":"82ef240f7e1e3d7154e92887611487b6ea7aff8bba48f5f9260078ae8dee6e78","role":"canonical"},
+        {"facetId":"facet-713be7372cff6eb3","reviewDigest":"3ac2a3df19d1c8373fb32fd8c2e5f64136dd7963e0e8678459f52f9247ed6d88","role":"component"}
+      ]
+    },
+    {
+      "id": "evidence-first-data-path-performance-reduction",
+      "intent": "Reduce an observed data-path bottleneck by linking one measured dominant cost to a narrowly scoped projection, query, serialization, batching, or caching change and a matched remeasurement.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The members connect Django request tracing, SQL static hazard screening, PostgreSQL result-transfer analysis, and a measure-profile-change-remeasure loop. They reject catalog-driven optimization and require a causal baseline, bounded change, and remeasurement.",
+      "members": [
+        {"facetId":"facet-4fc8d1bfc5443d51","reviewDigest":"f8af040568ae353f9aa7ffcac8b13f4f798a8dd97d6d63786a2a91f9b4d939ed","role":"component"},
+        {"facetId":"facet-ace3685320a14c71","reviewDigest":"6ee86e321b7f40291d847a8c2be313fe0d68e3ba87db12b9299bc3613ddc0bc9","role":"canonical"},
+        {"facetId":"facet-d61eb5bdd53129c7","reviewDigest":"04117c62e050fc8de0cc9b2a81d9aaca9360cbce76bdd894a1829722cd1cff56","role":"component"},
+        {"facetId":"facet-ea8c6092b570783b","reviewDigest":"8f9c607292c472d605907808d083ce9ee1cde6b17a4819f20cb777c88ed2113d","role":"component"}
+      ]
+    },
+    {
+      "id": "personal-data-lifecycle-control-model",
+      "intent": "Map personal-data flow and purpose, constrain collection and retention, and govern consent, access, deletion, export, logging, and incident controls at lifecycle boundaries.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The reviewed lifecycle sequence is complete enough for ownership comparison, but it is a governance and trust-boundary capability rather than a new data-infrastructure authority.",
+      "members": [
+        {"facetId":"facet-4d51d482fecd47ba","reviewDigest":"53092ad25657448f9510d755f3fc3bafa16ac4e4c5893e6896dcdb07e5ea0fcc","role":"canonical"}
+      ]
+    },
+    {
+      "id": "bounded-verified-object-ingestion",
+      "intent": "Accept a bounded file object only after server-side type and size evidence, generated object identity, streaming-safe transport, short-lived access, and cache-policy controls are inspectable.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The exact source has a coherent input-validation and storage-access pipeline: magic bytes versus names, size caps, non-user-controlled keys, streaming, short-lived signed access, and no-cache delivery. It is portable but every actual object write remains external authority.",
+      "members": [
+        {"facetId":"facet-a2ffe7af7e843380","reviewDigest":"304162c1411547b9bf9af69fde68d7c129ecea8dc1f6bee6589d5c4ec9ec39a1","role":"canonical"}
+      ]
+    },
+    {
+      "id": "bounded-typed-graphql-contract-and-execution",
+      "intent": "Design GraphQL schemas and generated operations with intentional nullability, bounded connections, typed expected failures, request-scoped batching, query-cost controls, field authorization, and explicit client mutation states.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The server contract supplies nullability, pagination, errors-as-data, batching, query-depth and cost controls, authorization, and subscription cleanup. The project UI contract supplies generated operations and visible mutation state. Neither alone carries the entire interface-to-execution safety contract.",
+      "members": [
+        {"facetId":"facet-9ffd618ae006da43","reviewDigest":"b537b9ee171038296e8024990c3bd283934dfadd5b2de28b5332b197f31eff42","role":"component"},
+        {"facetId":"facet-b3d671b0a5db3aad","reviewDigest":"991fab508a95345e11510ae9fd92d86826e224ea27a51b03e7e3af965329ee5a","role":"canonical"}
+      ]
+    },
+    {
+      "id": "reasoned-persistent-code-dependency-graph",
+      "intent": "Maintain a reviewable code dependency graph with stable artifact identities, reason-bearing edges, and reverse indexes for navigation and impact analysis.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The mechanism separates a durable plain-text graph and reasons from the code it describes, making later retrieval and impact analysis inspectable without treating inferred relationships as current truth.",
+      "members": [
+        {"facetId":"facet-ad4c0c83edd84b42","reviewDigest":"c59e30803cd60e8602df9f3c21694148f3da68fc79ae6235717a9c67480f8f05","role":"canonical"}
+      ]
+    },
+    {
+      "id": "cross-boundary-semantic-contract-propagation-audit",
+      "intent": "Audit whether a field, enum, flag, or API contract retains one declared meaning across storage, domain, transport, jobs, caches, clients, analytics, tests, and rollout controls.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "This is a focused consistency audit across layers rather than generic architecture advice. Its output is an evidence map of divergent meanings, boundaries, and rollout obligations, suitable for existing architecture ownership comparison.",
+      "members": [
+        {"facetId":"facet-eeca23d5cc381ed3","reviewDigest":"0da8acf10a251832435ec7f266503bdb35d48a6e0873039c19e206b7350aeeb8","role":"canonical"}
+      ]
+    },
+    {
+      "id": "temporary-neon-postgres-allocation-and-claim-boundary",
+      "intent": "Keep expiring provider-created PostgreSQL allocations, credentials, seeding, and claim transitions behind explicit account and external-write authorization.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The temporary lifetime, provider quotas, env-file mutation, credential handling, and later account transition are inseparable from a current provider contract.",
+      "members": [{"facetId":"facet-03e32186a17d6450","reviewDigest":"52e9ef7dfb65fb9bb288c4fd14f70a7f29993ca671dca3ef4d9fa7966856b404","role":"boundary"}]
+    },
+    {
+      "id": "versioned-vault-material-and-resource-control-planes",
+      "intent": "Keep authenticated Azure secret, key, certificate, database-server, and MySQL-server lifecycle operations behind verified identities, service policy, and external mutation authority.",
+      "relationship": "specialized-alternative",
+      "synthesisDecision": "deferred",
+      "rationale": "These bodies expose provider clients for versioned protected material or consequential control-plane operations. They share identity and lifecycle risk but do not form a portable local capability.",
+      "members": [
+        {"facetId":"facet-093334dbe60f4784","reviewDigest":"2dd98e4cf2d1be66073b0389d00e19ae1b409261b0e79de5886c887e89d1294e","role":"boundary"},
+        {"facetId":"facet-bee43dca77f1bfe3","reviewDigest":"b1c8aeb3786575f53fbb52f5843ef23982f4f65654c189a4360ab64755cfa954","role":"boundary"},
+        {"facetId":"facet-fc66233c5d6b5806","reviewDigest":"ca442dec4723a886cf7d3bbdd007808c17e6ea23421d8d2812e0b2fcbe36d05c","role":"boundary"}
+      ]
+    },
+    {
+      "id": "odoo-database-filestore-recovery-and-upgrade-boundary",
+      "intent": "Keep Odoo database, filestore, module, and business-reconciliation recovery workflows behind current deployment evidence and separately authorized restore or upgrade actions.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "deferred",
+      "rationale": "The backup and migration bodies pair platform-specific persistence state with destructive restoration, version compatibility, and business acceptance checks. Their recovery invariants are useful evidence but the operations require a current Odoo topology.",
+      "members": [
+        {"facetId":"facet-0a4c739ed7dbec82","reviewDigest":"016b485556107f0c63049a9db2e279ae4c78dd146185fc46e1f0e2f5678412e6","role":"canonical"},
+        {"facetId":"facet-104a29993c1d8141","reviewDigest":"ec10e331fe566622a1cea268989ad09ae9d8cb16c61214f166ab107d34808167","role":"component"}
+      ]
+    },
+    {
+      "id": "provider-data-transport-and-storage-adapter-boundary",
+      "intent": "Defer authenticated Azure queue, table, log, file, blob, event, and document data transfers until the exact service, identity, schema, retention, and mutation contract is verified.",
+      "relationship": "specialized-alternative",
+      "synthesisDecision": "deferred",
+      "rationale": "These adapters use concrete provider clients, permission models, endpoints, payload contracts, leases, offsets, or storage paths. Their mechanisms are not interchangeable and each can create or mutate remote state.",
+      "members": [
+        {"facetId":"facet-201ccc31c54a2788","reviewDigest":"1d0661ffb72900381f83debefd7b5182d7225fadcd88f8c5b837162fb3811089","role":"boundary"},
+        {"facetId":"facet-2137acac5d9281f5","reviewDigest":"07b0839906bf4836b30861ff1c6a66485636647bd5f95d0a6ec5352b4e943738","role":"boundary"},
+        {"facetId":"facet-3325bf4aa10d3105","reviewDigest":"78334c434ed1d6f33022aa6097ab6c27666df9904973bb212b7606e35ce949fd","role":"boundary"},
+        {"facetId":"facet-58c485e8a3a01938","reviewDigest":"7749f1646cf2fb0a3f0fa958e038870a721f9b0e76a0bdd3a4b026dc56468324","role":"boundary"},
+        {"facetId":"facet-677a40b24f33d44d","reviewDigest":"b40a9cd36725de19aefead826f6ffd55fdb6ebb7fe3195b2a96a007eb4c2a096","role":"boundary"},
+        {"facetId":"facet-703ae6c30caf3e69","reviewDigest":"5c5c53bfa0c4a4a45cac003022294887ed6301043625742df84d733ad2516544","role":"boundary"},
+        {"facetId":"facet-ac6c81db3f32f317","reviewDigest":"89a46ce01ae3cd259d66182ce7e3a2e80d375055d63a2db165e275c882114a27","role":"boundary"},
+        {"facetId":"facet-b2a0fe3db8b52eb0","reviewDigest":"fbff1d71c642c490c201027eb351ee018557cf55a76f9ab3f506a60e0eaa3598","role":"boundary"},
+        {"facetId":"facet-b41e90254b0b84e2","reviewDigest":"7fe93e34b00c9521780317cd96e5a3e61fcde460140581c33de70ffd9ddad8b4","role":"boundary"},
+        {"facetId":"facet-d4b24fb673385fe7","reviewDigest":"a6d18c0e74a24ede1d3d435dcd10d0f622c1cfe1338e328a054cdefc038112d2","role":"boundary"},
+        {"facetId":"facet-d511b7dc00fc9146","reviewDigest":"627c44f951f6dad94beb91ab5412e409dedaac6817c41675219f7896c0699d19","role":"boundary"},
+        {"facetId":"facet-dedad10e54e0620f","reviewDigest":"0f9e8aaf15eb7fb2d7921d8665a483ac9aae3ed857c6e12c97d320704d6447ef","role":"boundary"},
+        {"facetId":"facet-f64d8aad29d1821b","reviewDigest":"5c4b93b847749ea0aa3373d9685c5d7ae9a7f0ea42ee346db5d63324d2bba03b","role":"boundary"},
+        {"facetId":"facet-f78ffc48263f9b90","reviewDigest":"9674ecacd0207d4aa9c5e26ed2f5fd3b21ec6b2160928dd5892dc9f60d4994fa","role":"boundary"},
+        {"facetId":"facet-f80a1a5a6e3240b6","reviewDigest":"249201fa1f964f4f41be1d78cf2b3be30528e3007f593c6812e7989ad0b54e1e","role":"boundary"}
+      ]
+    },
+    {
+      "id": "scientific-dataset-and-bibliographic-adapter-boundary",
+      "intent": "Keep scientific array, genomic variant, protein, bibliographic, and bioinformatics library operations behind domain, version, coordinate, reproducibility, and remote-service evidence.",
+      "relationship": "specialized-alternative",
+      "synthesisDecision": "deferred",
+      "rationale": "The bodies use specialist formats, identifiers, reference universes, remote services, and scientific assumptions. Their range from indexed variants to PubMed history and Zarr storage is not one portable data-infrastructure mechanism.",
+      "members": [
+        {"facetId":"facet-193f55341662feec","reviewDigest":"bb4b0ceac893bbb9ea3c564cf915a4eba532db337b5f6a5466111e8cd8578e31","role":"boundary"},
+        {"facetId":"facet-41d99daf7863e390","reviewDigest":"96208c99f3d7f7e429cd6c1301be71b70b34dbb2d7e62bfcf8aca00757402f06","role":"boundary"},
+        {"facetId":"facet-56f1d7707d1150cf","reviewDigest":"29ec38430979838501b0424d1c44af6bd049f718129677f20be6137a97c54dfb","role":"boundary"},
+        {"facetId":"facet-5ec4d1fd24785658","reviewDigest":"bed72db2ec9ac5adadca8824bf86c7a43350e6e7de29271128a343e530c47ed1","role":"boundary"},
+        {"facetId":"facet-7fcf831e31f66b8a","reviewDigest":"8a2502e76c2c15f8b00bdbc2c83077c507500045d77da52cac2ee218acbdbee0","role":"boundary"},
+        {"facetId":"facet-9113ab5e2abe1393","reviewDigest":"08242c947d2ed56deef61967b3c4adbcd80c91a03d6bd6b5d78df3e5d4fd4e93","role":"boundary"},
+        {"facetId":"facet-9808bd59dd13544a","reviewDigest":"cae70e73db70dfd6fc70a9b416bdc68d65f8d0a177b478d991003b817ca03349","role":"boundary"}
+      ]
+    },
+    {
+      "id": "thin-or-absent-data-reference-catalogs",
+      "intent": "Reject data and infrastructure indexes that name categories, playbooks, or companion files but do not supply an independently inspectable operation and verification contract.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "rejected",
+      "rationale": "These rows provide headings, prioritization, or routing only. Without the referenced rules, examples, state machines, or tests, extracting a reusable behavior would fabricate evidence.",
+      "members": [
+        {"facetId":"facet-13f2227aa82c84d1","reviewDigest":"085abf27ea58e8819417bcba2deae8a4dbfa3c515acecd988dbcdefc0c2c6062","role":"boundary"},
+        {"facetId":"facet-2eaad5048a1bfbf0","reviewDigest":"cdc64637c1dffd9cf0ec786fa2710491116195b1f15e77ddc3131bdcd3548a51","role":"boundary"},
+        {"facetId":"facet-8e60344ade1e05b0","reviewDigest":"b9140ec5501416ff2ef88f028019cddfe306e310388d47105807dfae16754628","role":"boundary"},
+        {"facetId":"facet-9063ff09d68aaf0c","reviewDigest":"ee8bba5be216872adbf1c74fdede6f1802a19e9c508d75cc93ecfe9b59dabb6e","role":"boundary"},
+        {"facetId":"facet-9dbc4d4eed4c8056","reviewDigest":"69fd419e4f8034fc1596a883ac893a6791c07a36d48a5c45a05e2e0c1339f97a","role":"boundary"},
+        {"facetId":"facet-a6e060423803ca97","reviewDigest":"bfff1c5b6236642aae5c2dd681edfea19a4c16484bdd6235d866b24377b39966","role":"boundary"},
+        {"facetId":"facet-c894c0c43c61ea8a","reviewDigest":"8992c0d10761eabf41035c7a5739985ab79e08fe83cc393821508dd28389efff","role":"boundary"},
+        {"facetId":"facet-dc7ce296b98920c4","reviewDigest":"461a89180886d7e1f473f7befbc2744b0a4b3ac29ee22c12371ff92592c82d1d","role":"boundary"},
+        {"facetId":"facet-e3c13e7880f2feb6","reviewDigest":"a9e2a24b9461840644d624313ccf0c72ee3f691506e9895b88478b2e77afdbae","role":"boundary"},
+        {"facetId":"facet-f83a7429c8998f67","reviewDigest":"4ecf962935d4836a8515818b10a8fdaecf0504543a1db1210c7b0912acb80bc0","role":"boundary"}
+      ]
+    },
+    {
+      "id": "search-visibility-and-structured-data-family-misroute",
+      "intent": "Keep SEO, rich-result, competitor-page, and JSON-LD drafting work in dated content and search-evidence workflows rather than data-infrastructure synthesis.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "The sources deal with rendered content, search policy, markup eligibility, rankings, or editorial claims. They do not establish storage, transformation, synchronization, or data-operation ownership.",
+      "members": [
+        {"facetId":"facet-06da7488a4478f1e","reviewDigest":"d1482a7386ad2ccda22b0f4bb88b5d98aeeee9e9bbcf9a254987e38a59ec3c03","role":"boundary"},
+        {"facetId":"facet-44884508ff5c9ff4","reviewDigest":"3d34b389e67d9fb91b8762b5c16cb24383a4b109b53e5da9bb1aa252c13ee2b2","role":"boundary"},
+        {"facetId":"facet-67fac8d89db5d343","reviewDigest":"78dd9329054da656c2ba2220783d90b33171ec8d63875bed922a60e86e0679e1","role":"boundary"},
+        {"facetId":"facet-70a4bfb23f305715","reviewDigest":"90cf67cf321d0ccf089e9bda86d805451669bedb750d18e93bb9d9a2573430f8","role":"boundary"},
+        {"facetId":"facet-934e1f90eb3e61be","reviewDigest":"2a71cc649e4837a755d324b49723e93bebfc7ad216155e616370589e4b747d9c","role":"boundary"},
+        {"facetId":"facet-9f1831b7757eb4c9","reviewDigest":"d27be3647dd0d57561dd182f33b2c2cfa00c18a501dbb56118f150b9a8a64968","role":"boundary"},
+        {"facetId":"facet-ad9b76e8856bc59d","reviewDigest":"477f1c0586328f3d4a8319ef9ef07a3ba9acc1417ab53d35b40a3cb055cccc78","role":"boundary"},
+        {"facetId":"facet-b8bbb50fdb941c95","reviewDigest":"9658636236bd02e3ded6bdd277de779cee078dd61307ddcc58de9392fc66c6ce","role":"boundary"},
+        {"facetId":"facet-d9325023532a90eb","reviewDigest":"1003219f5163bd742b114708d32d904c7e2ac2bf318d79c69cb94fe41b50ff4f","role":"boundary"},
+        {"facetId":"facet-dbcf2276c5cf933e","reviewDigest":"d0b68924750ebe910294a2091db7420f80008c1d716b4b63024a8624b3f840e1","role":"boundary"},
+        {"facetId":"facet-f8c06cb8f051f2a7","reviewDigest":"d81ea89125bb669aa78d5774eb5f35d78e5a05e0c922819703128ad631c4003f","role":"boundary"}
+      ]
+    },
+    {
+      "id": "generic-security-assessment-and-exploitation-boundary",
+      "intent": "Keep generic security checklists, authorized assessment outlines, and exploit precondition material under security governance rather than data-infrastructure synthesis.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "The rows either enumerate security domains without an implementation contract or concern adversarial assessment and exploitation. They do not carry data-infrastructure ownership and require Aegis-governed authority where applicable.",
+      "members": [
+        {"facetId":"facet-4e69a468d18976ee","reviewDigest":"015a53ea9b8500eafa0aee1d6302224e4ef7a0f5a79cd9336bd3b3c8e1d110ea","role":"boundary"},
+        {"facetId":"facet-5fd2b31da613e514","reviewDigest":"ac6f7c3e88b11cbcf494e8df282d06ad9c79cbc9905094fbb45f7fcc83c67f88","role":"boundary"},
+        {"facetId":"facet-644c9ef195a5b741","reviewDigest":"5f7cf6a1bce1b107189b0c96306d9c5a3b33d51ad7a50c785923ce60bcd99fbe","role":"boundary"},
+        {"facetId":"facet-756e6e4898801054","reviewDigest":"750ef1c25d3078ec8468c66b8565e069f4532e53920d1cecbfe15c7b0f709a83","role":"boundary"},
+        {"facetId":"facet-9fb32fb3f683eeb4","reviewDigest":"ebf0e393d9528fc7b6c0424442d56e456c21fdd2de85146ac3231be41212187b","role":"boundary"},
+        {"facetId":"facet-a1cd5b2ef117a7af","reviewDigest":"28fa18e41b9f5de966506572ac73107db5b5f509f70a3ba4c949569b71f8f9ba","role":"boundary"},
+        {"facetId":"facet-bcea9fe1ba317cf5","reviewDigest":"a78687b1176f6bed054f596f9d9f12cfa0f65a5ee6431df7bd56871e2eb1ee80","role":"boundary"},
+        {"facetId":"facet-cfec38bdf636275d","reviewDigest":"711dc4cfff36aef354edb3734cf49e9e9bb4e9a706ea4c1af0650891596ceea2","role":"boundary"}
+      ]
+    },
+    {
+      "id": "generic-performance-and-capacity-catalogs",
+      "intent": "Reject catalog-style optimization, technology-selection, and capacity-estimation material that supplies targets or topic lists without a baseline-bound causal change and verification contract.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "rejected",
+      "rationale": "These rows name broad performance surfaces or ungrounded scale thresholds but leave the real system, bottleneck, safe effect boundary, and acceptance evidence unspecified.",
+      "members": [
+        {"facetId":"facet-2f33cd917a7d2edf","reviewDigest":"e69d876396ee29a6e1a8aba23e4ba62f1c9d695ea5f517deae1f3d688185d46d","role":"boundary"},
+        {"facetId":"facet-9ff4b8c8d4726f9a","reviewDigest":"8807405eda3de094ae71b3093ec80ce36b8adbdbd95b928cf3bfa1f85b23dcdc","role":"boundary"},
+        {"facetId":"facet-b87bdd53f931ee6c","reviewDigest":"d38ee34da07bac6fffbb55f1b701c63ac7dd82f2ee81a78c1825a47563a6360f","role":"boundary"},
+        {"facetId":"facet-c36cd9bca37c76d7","reviewDigest":"95de17bc787fa90d6557276af5c9f1d4062f3d7b029dec47e410227698bb98c1","role":"boundary"}
+      ]
+    },
+    {
+      "id": "analytics-and-business-template-family-misroute",
+      "intent": "Keep brand, food, storytelling, project-specific analytics, trading, business, time-ledger, data-science, and teaching templates outside data-infrastructure synthesis.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "The rows create narrative, advisory, personal-record, or generic analysis artifacts without a portable storage, transformation, or data-operation contract. Several also rely on project-local datasets or provider-specific state.",
+      "members": [
+        {"facetId":"facet-11eaacb174652d65","reviewDigest":"c9d384fc8587ae15493191f16aae120c847c147395eeb5ff5a0409be27ef1f7c","role":"boundary"},
+        {"facetId":"facet-1e65f483d50a5e3f","reviewDigest":"6f6817f296737c75301222b5ce1a2dc658f9032f5a2f7b07f68c5562cbb3faa6","role":"boundary"},
+        {"facetId":"facet-251053977118b295","reviewDigest":"55d090dbd3b2e17bd9401059042bd57f12b5b2c05af572f3f6cac9a7b9f932dc","role":"boundary"},
+        {"facetId":"facet-953f8cfa36b8639a","reviewDigest":"158d5d3820f4fe946a7b9108abc10e9ab621bd285567d59ab6be5f9684cbcdb6","role":"boundary"},
+        {"facetId":"facet-a6956f7c241006fd","reviewDigest":"c9f003213fced4b71999a6fa9b9eafb74240df640e32ed7828bd834b074a8b37","role":"boundary"},
+        {"facetId":"facet-bff300108dc275f3","reviewDigest":"f21ac08107b322d1b03c8763c79f4b3ce146d1a69b2b0945065e31bc035b65a6","role":"boundary"},
+        {"facetId":"facet-d4526a24386808cc","reviewDigest":"2100126a69d44fc078b6e518c682ac1bad6c42134c9a599b85d1ec85978600ba","role":"boundary"},
+        {"facetId":"facet-d8707163d0212fdd","reviewDigest":"8152c42fb5d45bb92ebee5617d5b9c24050193eb0a808a20ae5bc45f404383dd","role":"boundary"},
+        {"facetId":"facet-efb6d04d12744a44","reviewDigest":"93696274f42a0cdeeb5acc414a15b6f9a09d92549b9de56f624359dcd0f63a36","role":"boundary"},
+        {"facetId":"facet-ff6f1ddcb9407068","reviewDigest":"0e168bdf0f2f3373f3f11b706347191c69bfa22bd1b316e9eae037635e2dbd53","role":"boundary"},
+        {"facetId":"facet-fff50a7582999b8c","reviewDigest":"cf4e2388dce18cc71ff22ac0dfbb57b98c4764247f325d11d42b203dbcf98553","role":"boundary"}
+      ]
+    },
+    {
+      "id": "project-or-framework-specific-application-recipes",
+      "intent": "Reject fixed application stacks, dashboards, Firebase, JSP, spreadsheet, and visual recipes whose implementation, runtime, or product context is essential to their behavior.",
+      "relationship": "specialized-alternative",
+      "synthesisDecision": "rejected",
+      "rationale": "These are framework, platform, or product recipes rather than a portable data-infrastructure mechanism. Their verification depends on an exact project runtime and deployment context.",
+      "members": [
+        {"facetId":"facet-19ecf7a0fcdfe020","reviewDigest":"66d0c92e9a9b29d818bb01cd3019a9c2c18c460aeca248d760ea2779839a3552","role":"boundary"},
+        {"facetId":"facet-873a1eb431ab8c9e","reviewDigest":"27122d0992455d5c4805c34d6b47a9d37de50a4d39e942ff99b37b36fcdd6cb5","role":"boundary"},
+        {"facetId":"facet-ad2924c8d0038e32","reviewDigest":"796143ab5c87f4a09d8c8b0bd7fbbd510a8e14cf0f14efc09182bee830da3009","role":"boundary"},
+        {"facetId":"facet-b1b8011a0ad04a56","reviewDigest":"faf42a8dc4a8fe1bc8af393c5fc10b4f061a2ae032786665c2fc730f278404ad","role":"boundary"},
+        {"facetId":"facet-cf277d11d4d73ab1","reviewDigest":"01ea2579ca37834650f8d2ec9c33e70c78b30d6ee59412d732ae4e4644ac419f","role":"boundary"},
+        {"facetId":"facet-d319ec5cf8e090e2","reviewDigest":"243aa43ad4ce5b94f2939c9f07e3011700873368358eb7b67ae83bc9e15b6193","role":"boundary"},
+        {"facetId":"facet-e3570f8e031ae590","reviewDigest":"8c89079a86a61ef230df5850431da5d295854e07bd592293e4c3d77c7710d154","role":"boundary"},
+        {"facetId":"facet-f5e03b70a6bfe335","reviewDigest":"4fb047961d7e4ba7bebe2bd0361d9f3afca710a147f8739bc9e734eb374cddb0","role":"boundary"},
+        {"facetId":"facet-f935b1d998bacf5d","reviewDigest":"4d245e5deb37d3f3fe88a825a46517830ca052c068087a0c384e85f0f5f5996e","role":"boundary"},
+        {"facetId":"facet-fd3ee464c7542e59","reviewDigest":"7b63ec3935afbb2508b0f2e8754d99047c731d133cb843afd7aced4de9fc8d4d","role":"boundary"}
+      ]
+    },
+    {
+      "id": "external-vector-functional-and-cloud-cost-boundaries",
+      "intent": "Defer vector-collection, typed functional backend, Nitro, and cloud-cost workflows that depend on a current provider, runtime, account, or project state.",
+      "relationship": "specialized-alternative",
+      "synthesisDecision": "deferred",
+      "rationale": "Each body contains useful constraints but execution depends on provider APIs, application dependency injection, runtime topology, credentials, billing state, or missing reference details. They do not share a safe portable terminal artifact.",
+      "members": [
+        {"facetId":"facet-26d8e26bedc42ecc","reviewDigest":"8fa8a3231d1d4f0f1cce3ee2da68836b3f2581e054e2abe69fdd4d803e8c5233","role":"boundary"},
+        {"facetId":"facet-615c575d1cbfcef2","reviewDigest":"2f94f2a4377ec5de590668144511056eb564659e24803a889918d8a6ac57bdd2","role":"boundary"},
+        {"facetId":"facet-fef35a1102d50109","reviewDigest":"436c6ef7091ab6f8e35c76f0e3483b3a6b7210e01206b336da4e137978376586","role":"boundary"}
+      ]
+    },
+    {
+      "id": "duplicate-or-dated-analytics-and-provider-references",
+      "intent": "Reject duplicated analytics bodies and dated or deprecated provider reference material that does not add a current independently verifiable mechanism.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "rejected",
+      "rationale": "The analytics copies repeat existing event-planning content, while the provider and Cloudflare rows are either deprecated, documentation routing, or too thin to establish an operational contract.",
+      "members": [
+        {"facetId":"facet-69c4bbb48e0d3f8c","reviewDigest":"5feb35d4a9157be1502d7c3f73fc328f4b4a6a34626c73713a39c5aa301ade4c","role":"boundary"},
+        {"facetId":"facet-73415b2aff11efce","reviewDigest":"1590f12c0ff1f2d624cee759c00fc20a8b1d85423517cb20497609b6fc0e7509","role":"boundary"},
+        {"facetId":"facet-8369b9a593fe126c","reviewDigest":"fafc40f5c6d57a099a0e2751ac41c9882bc483b831e8c06a1f959515f5b78899","role":"boundary"},
+        {"facetId":"facet-9b79e8a83841dd8d","reviewDigest":"d0dd6cd06f400c92f1e417e4144a957b20e3b2f8216b79e49e30920fab3c24cf","role":"boundary"},
+        {"facetId":"facet-b9c5a731a337330d","reviewDigest":"99eaf52c05a8edcccf8a8a97975554aceee564e0283a7ec74ba064f45e3a4e35","role":"boundary"},
+        {"facetId":"facet-bc9bafa507bed0c9","reviewDigest":"be77339aac901ef97a49662a9c00a331a8088fa250eacb2c98c87f5377d62137","role":"boundary"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "schemaVersion": 1,
+  "overlapSetId": "wave2-data-infrastructure-overlaps-v1",
+  "familyId": "data-infrastructure",
+  "decisions": [
+    {
+      "schemaVersion": 1,
+      "familyId": "data-infrastructure",
+      "clusterId": "evidence-bound-data-modeling-schema-change-and-inspection",
+      "targetSkillId": "eternities-atlas",
+      "disposition": "extend-existing",
+      "comparedAgainst": [
+        {"kind":"godskill","id":"eternities-atlas","digest":"afb8a2afb0886265f00b3884b68ede1f79f75a8d3b476dfdee8c631b40c7784a"},
+        {"kind":"godskill","id":"eternities-daedalus","digest":"b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind":"legacy-cluster","id":"data-database-query-and-performance","digest":"ce799252e7049eb740691c15ba24a14fa6abc115d9b5f8f11f94b8140af30605"},
+        {"kind":"legacy-cluster","id":"data-schema-design","digest":"a0cf0d64c41e7396cbd58267df8b3fcdc001f3da9ffd9a0240a7a990dc1456a2"},
+        {"kind":"legacy-cluster","id":"data-schema-migration-and-compatibility","digest":"57913f642ccaba20866e267a3546ecfde98bc34ce1b0abf0127a5779619bcea4"}
+      ],
+      "mechanismComparison": "Atlas and the legacy data clusters already own evidence-labeled data questions, dialect-aware schema design, migration, compatibility, query plans, and local readiness packets. Daedalus owns repository-scoped implementation and test proof. The Wave 2 group adds an explicit chain from observed query shapes and invariants through constraint and index choices to generated migration-history repair, read-only target confirmation, bounded script receipts, and a separate direct-versus-pooled access boundary.",
+      "rationale": "Extend Atlas's data route with the stronger access-path, target-confirmation, migration-history, and post-change inspection checklist. Delegate code changes and tests to Daedalus. Do not connect, mutate schemas, run scripts, move data, or use credentials without separate authority.",
+      "intendedTier": "godskill-extension"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "data-infrastructure",
+      "clusterId": "configuration-schema-environment-and-migration-validation",
+      "targetSkillId": "eternities-daedalus",
+      "disposition": "extend-existing",
+      "comparedAgainst": [
+        {"kind":"godskill","id":"eternities-aegis","digest":"5b51f6c100f02ab5069de67a8f87fc239ba108a13ed9b952cbf0fd3919a64044"},
+        {"kind":"godskill","id":"eternities-daedalus","digest":"b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind":"legacy-cluster","id":"architecture-reliability-controls","digest":"43fc6411b9aba41a1a0b2b4f04d3bd8e3f336a5a620b4f6e4088d846d313304b"},
+        {"kind":"legacy-cluster","id":"data-reconciliation-and-quality-gates","digest":"04d21c4cf4e89eab2ce3bb238bbd659984de2a52968bc12847b73cb13882d429"}
+      ],
+      "mechanismComparison": "Daedalus already accepts repository configuration, fixtures, effects, rollback, tests, and verification. Aegis owns secret and trust boundaries. The legacy clusters supply reliability controls and data-quality gates. The candidate's distinct contribution is a last-known-valid configuration state machine with bounded discovery, structural and cross-environment validation, invalid-fixture proof, copy-first reversible migrations, and refused unsafe secret scanning.",
+      "rationale": "Add the state-transition and fixture contract to Daedalus's configuration route, with Aegis governance whenever secrets or trust controls are implicated. It must not scan unrestricted environments, print secrets, mutate live configuration, or accept a reload without validation evidence.",
+      "intendedTier": "godskill-extension"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "data-infrastructure",
+      "clusterId": "columnar-ingestion-rollup-and-query-layout-design",
+      "targetSkillId": "columnar-ingestion-rollup-and-query-layout-design",
+      "disposition": "new-operational-skill",
+      "comparedAgainst": [
+        {"kind":"godskill","id":"eternities-atlas","digest":"afb8a2afb0886265f00b3884b68ede1f79f75a8d3b476dfdee8c631b40c7784a"},
+        {"kind":"legacy-cluster","id":"data-database-query-and-performance","digest":"ce799252e7049eb740691c15ba24a14fa6abc115d9b5f8f11f94b8140af30605"},
+        {"kind":"legacy-cluster","id":"data-schema-design","digest":"a0cf0d64c41e7396cbd58267df8b3fcdc001f3da9ffd9a0240a7a990dc1456a2"}
+      ],
+      "mechanismComparison": "Atlas and the two legacy data clusters cover generic schema, query, plan, and performance evidence. None names a columnar contract that derives MergeTree ordering and partitions from analytical filters and retention, binds batched ingestion to merge-state aggregates and materialized views, then proves decisions with system-table evidence rather than generic query plans alone.",
+      "rationale": "Retain a cold operational candidate for columnar analytical layout and rollup planning. It can consume Atlas evidence but must not install a database, create tables or views, ingest data, query a live system, or assert vendor behavior without current documentation and project measurements.",
+      "intendedTier": "operational-skill"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "data-infrastructure",
+      "clusterId": "lazy-tabular-transformation-and-validation",
+      "targetSkillId": "lazy-tabular-transformation-and-validation",
+      "disposition": "new-operational-skill",
+      "comparedAgainst": [
+        {"kind":"godskill","id":"eternities-atlas","digest":"afb8a2afb0886265f00b3884b68ede1f79f75a8d3b476dfdee8c631b40c7784a"},
+        {"kind":"legacy-cluster","id":"data-analytics-and-experimentation","digest":"7d65005a642381cbdb8996c71295ddd728eb1f57eaf91b08850e98e9257f4479"},
+        {"kind":"legacy-cluster","id":"data-reconciliation-and-quality-gates","digest":"04d21c4cf4e89eab2ce3bb238bbd659984de2a52968bc12847b73cb13882d429"}
+      ],
+      "mechanismComparison": "Atlas and the legacy clusters establish bounded transformation, assumptions, reconciliation, and reproducible outputs, but not this sequence of typed expressions, lazy scan and pushdown decisions, join and reshape behavior, streaming materialization, and representative-output validation. The duplicate older Polars source supplies no additional verified behavior.",
+      "rationale": "Keep this as a cold operational candidate for a local lazy-tabular route. Package, version, input format, resource limits, and actual execution remain project-specific, and neither arbitrary files nor remote stores may be read or written by the skill itself.",
+      "intendedTier": "operational-skill"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "data-infrastructure",
+      "clusterId": "consent-gated-decision-linked-telemetry",
+      "targetSkillId": "eternities-atlas",
+      "disposition": "extend-existing",
+      "comparedAgainst": [
+        {"kind":"godskill","id":"eternities-aegis","digest":"5b51f6c100f02ab5069de67a8f87fc239ba108a13ed9b952cbf0fd3919a64044"},
+        {"kind":"godskill","id":"eternities-atlas","digest":"afb8a2afb0886265f00b3884b68ede1f79f75a8d3b476dfdee8c631b40c7784a"},
+        {"kind":"godskill","id":"eternities-daedalus","digest":"b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind":"legacy-cluster","id":"implementation-integrations-observability","digest":"7a9b88ac24a979cb605a0a7e4da96c2827b84658373718b568365b2dac1c783d"}
+      ],
+      "mechanismComparison": "Atlas owns data evidence packets, Aegis owns privacy and trust controls, Daedalus owns application implementation, and the legacy integration cluster establishes observability. The candidate uniquely binds decisions and KPIs to typed events, consent-gated dispatch, isolated adapter failures, field-performance and error scrubbing semantics, and recorded-sink verification.",
+      "rationale": "Extend Atlas's route with the telemetry design and evidence packet, delegating implementation to Daedalus and consent, PII, retention, and regional questions to Aegis. No SDK initialization, account provisioning, event transmission, or raw-error export is authorized.",
+      "intendedTier": "godskill-extension"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "data-infrastructure",
+      "clusterId": "evidence-first-data-path-performance-reduction",
+      "targetSkillId": "eternities-daedalus",
+      "disposition": "extend-existing",
+      "comparedAgainst": [
+        {"kind":"godskill","id":"eternities-atlas","digest":"afb8a2afb0886265f00b3884b68ede1f79f75a8d3b476dfdee8c631b40c7784a"},
+        {"kind":"godskill","id":"eternities-daedalus","digest":"b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind":"legacy-cluster","id":"data-database-query-and-performance","digest":"ce799252e7049eb740691c15ba24a14fa6abc115d9b5f8f11f94b8140af30605"},
+        {"kind":"legacy-cluster","id":"implementation-integrations-observability","digest":"7a9b88ac24a979cb605a0a7e4da96c2827b84658373718b568365b2dac1c783d"}
+      ],
+      "mechanismComparison": "Daedalus already owns measured implementation performance work and Atlas owns data query evidence. The legacy clusters cover plans and instrumentation. This group adds a more discriminating data-transfer sequence: request-path and statement statistics, schema width and actual application-use inspection, projection or aggregation reduction, and a one-change remeasurement that rejects unmeasured tuning and static-rule cost claims.",
+      "rationale": "Extend Daedalus's performance route with this evidence chain, consuming Atlas query evidence as needed. Benchmarks, tracing, deployments, caching, database changes, and production traffic remain separately authorized effects.",
+      "intendedTier": "godskill-extension"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "data-infrastructure",
+      "clusterId": "personal-data-lifecycle-control-model",
+      "targetSkillId": "eternities-aegis",
+      "disposition": "covered-stronger",
+      "comparedAgainst": [
+        {"kind":"godskill","id":"eternities-aegis","digest":"5b51f6c100f02ab5069de67a8f87fc239ba108a13ed9b952cbf0fd3919a64044"},
+        {"kind":"legacy-cluster","id":"governance-policy-lifecycle","digest":"1c4a0e6f5911f93d08819147b8e1793d7e42416bf1549e06a86b13303c1621ac"},
+        {"kind":"legacy-cluster","id":"governance-security-assurance","digest":"4f6ae484eeb4efa838fb52a5817ba49da4ecc9d413b42b38ec510bbb9e9e8f7f"}
+      ],
+      "mechanismComparison": "Aegis and the governance clusters already own authorization, data and identity trust relationships, lifecycle evidence, risk ranking, defensive controls, and residual-risk decisions. The candidate's inventory, minimization, retention, consent, subject-rights, and incident sequence is a useful pattern but does not provide stronger authority, verification, or lifecycle governance.",
+      "rationale": "Retain the lifecycle sequence inside Aegis, with no parallel data-privacy owner. Legal conclusions, consent changes, deletion, export, notifications, and production-policy mutations remain outside this evidence-only routing result.",
+      "intendedTier": "none"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "data-infrastructure",
+      "clusterId": "bounded-verified-object-ingestion",
+      "targetSkillId": "bounded-verified-object-ingestion",
+      "disposition": "new-operational-skill",
+      "comparedAgainst": [
+        {"kind":"godskill","id":"eternities-aegis","digest":"5b51f6c100f02ab5069de67a8f87fc239ba108a13ed9b952cbf0fd3919a64044"},
+        {"kind":"godskill","id":"eternities-daedalus","digest":"b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind":"godskill","id":"eternities-hermes","digest":"aa130c1cf91a16f5a26f19ecd1b95747a20890b28d4411c4850f241fcf602478"},
+        {"kind":"legacy-cluster","id":"data-provider-operations-boundary","digest":"5b4dd5838854734ebddda0f1a8edb63912ccb80c3b842d06ec4c7e5136c6524c"}
+      ],
+      "mechanismComparison": "Aegis owns trust controls, Daedalus implementation proof, Hermes external integration boundaries, and the legacy data boundary defers provider operations. None provides this full application-level object-ingestion contract joining server-side signature validation, bounded size, generated identity, streaming, signed-access expiry, and cache-distribution controls.",
+      "rationale": "Keep a cold operational candidate that produces a local ingestion contract and test plan. It must not generate a live signed URL, upload or delete an object, inspect private uploads, choose provider policy, or enable a storage integration without the separate relevant authority.",
+      "intendedTier": "operational-skill"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "data-infrastructure",
+      "clusterId": "bounded-typed-graphql-contract-and-execution",
+      "targetSkillId": "eternities-daedalus",
+      "disposition": "extend-existing",
+      "comparedAgainst": [
+        {"kind":"godskill","id":"eternities-aegis","digest":"5b51f6c100f02ab5069de67a8f87fc239ba108a13ed9b952cbf0fd3919a64044"},
+        {"kind":"godskill","id":"eternities-architect","digest":"1011c45e7350d9bedc8ffeb0bddd0e88e26a8a79c12244e61af3ff703331fe90"},
+        {"kind":"godskill","id":"eternities-daedalus","digest":"b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind":"legacy-cluster","id":"architecture-interface-and-api-design","digest":"713ebcaf5784f70ed2b201cb5258eb74e218cd775deef2c71c0d7200f083191f"}
+      ],
+      "mechanismComparison": "Architect and the legacy architecture cluster own interfaces and failure contracts, Aegis owns trust and authorization, and Daedalus owns implementation and tests. The candidate adds GraphQL-specific proof obligations: nullability propagation, connection bounds, generated operation surfaces, request-scoped batching, depth and complexity limits, per-field authorization, and subscription cleanup.",
+      "rationale": "Extend Daedalus's integration route with these GraphQL-specific safety and verification conditions while preserving Architect as the contract owner and Aegis as the authorization owner. It cannot introspect, expose a schema, issue live queries, alter resolvers, or enable subscriptions without scoped authority.",
+      "intendedTier": "godskill-extension"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "data-infrastructure",
+      "clusterId": "reasoned-persistent-code-dependency-graph",
+      "targetSkillId": "eternities-mnemosyne",
+      "disposition": "extend-existing",
+      "comparedAgainst": [
+        {"kind":"godskill","id":"eternities-architect","digest":"1011c45e7350d9bedc8ffeb0bddd0e88e26a8a79c12244e61af3ff703331fe90"},
+        {"kind":"godskill","id":"eternities-mnemosyne","digest":"69bbed128a0955fae85849d100079a16b3efa13162e7e9c1ed0bab93e8bd522d"},
+        {"kind":"legacy-cluster","id":"architecture-interface-and-api-design","digest":"713ebcaf5784f70ed2b201cb5258eb74e218cd775deef2c71c0d7200f083191f"}
+      ],
+      "mechanismComparison": "Architect already maps system boundaries and interfaces, while Mnemosyne owns source-grounded continuity, durable state, retrieval, freshness, and recovery. The candidate's durable graph supplies a narrow bridge: stable code-artifact identities, evidence-qualified dependency reasons, and reverse navigation for impact questions. It does not supplant architecture decisions or memory authority.",
+      "rationale": "Extend Mnemosyne with a code-dependency-graph reference packet that explicitly labels observed versus inferred edges and freshness. It must not automatically parse arbitrary repositories, persist sensitive code indexes, or treat a graph as an authoritative architecture decision.",
+      "intendedTier": "godskill-extension"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "data-infrastructure",
+      "clusterId": "cross-boundary-semantic-contract-propagation-audit",
+      "targetSkillId": "eternities-architect",
+      "disposition": "extend-existing",
+      "comparedAgainst": [
+        {"kind":"godskill","id":"eternities-architect","digest":"1011c45e7350d9bedc8ffeb0bddd0e88e26a8a79c12244e61af3ff703331fe90"},
+        {"kind":"godskill","id":"eternities-atlas","digest":"afb8a2afb0886265f00b3884b68ede1f79f75a8d3b476dfdee8c631b40c7784a"},
+        {"kind":"godskill","id":"eternities-daedalus","digest":"b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557"},
+        {"kind":"legacy-cluster","id":"architecture-interface-and-api-design","digest":"713ebcaf5784f70ed2b201cb5258eb74e218cd775deef2c71c0d7200f083191f"},
+        {"kind":"legacy-cluster","id":"data-reconciliation-and-quality-gates","digest":"04d21c4cf4e89eab2ce3bb238bbd659984de2a52968bc12847b73cb13882d429"}
+      ],
+      "mechanismComparison": "Architect maps boundaries and contracts, Atlas compares data structures and discrepancies, and Daedalus changes verified implementations. The candidate adds a cross-layer propagation matrix that follows one field, enum, flag, or API meaning through persistence, domain, transport, cache, job, UI, analytics, test, and rollout layers, classifying drift rather than assuming every differently named field is an error.",
+      "rationale": "Extend Architect's interface and acceptance route with the propagation audit. Atlas can supply data-reconciliation evidence and Daedalus can perform approved fixes. The audit cannot itself change schemas, APIs, caches, event payloads, rollout flags, or analytics.",
+      "intendedTier": "godskill-extension"
+    }
+  ]
+}
