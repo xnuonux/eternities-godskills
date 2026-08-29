@@ -1,0 +1,1378 @@
+{
+  "schemaVersion": 1,
+  "waveId": "wave2-repository-source-research-001",
+  "familyId": "repository-source-research",
+  "reviewer": "codex:wave2-repository-source-research-001",
+  "reviewMethod": "exact-inert-body-semantic-review-v1",
+  "reviews": [
+    {
+      "facetId": "facet-003a1ce787bc7da7",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/competitor-profiling/SKILL.md",
+      "bodySha256": "003a1ce787bc7da7e76f60fa08f060ab7d2da7df21a65dc663b35b2eb3882e69",
+      "neutralCapabilitySummary": "Builds date-stamped competitor snapshots from mapped and scraped site pages, review sources, and SEO metrics, preserves every raw response before synthesis, applies one comparable profile schema, cross-checks promotional claims against external signals, and summarizes multiple competitors only after individual profiles are complete.",
+      "neutralIntentExamples": [
+        "compare three competitors using the same pricing and organic-search fields",
+        "refresh a competitor profile without overwriting the prior snapshot"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "competitor URLs, the user's product context, desired depth, and focus dimensions",
+        "mapped homepage, pricing, feature, company, customer, integration, changelog, and review pages",
+        "provider SEO responses for backlinks, keywords, traffic, competitors, and relevant pages"
+      ],
+      "operations": [
+        "read existing product-marketing context before asking only for unresolved product, depth, and focus inputs",
+        "create a fresh competitor-and-date raw folder, persist each scrape or API response, and never overwrite an older snapshot",
+        "extract the same page and SEO fields for each competitor, trace assertions to raw evidence, and label analytical inference",
+        "cross-check scale and positioning claims against review, traffic, backlink, customer, and release signals before drafting strengths or implications",
+        "generate individual profiles first and only then derive a side-by-side landscape summary"
+      ],
+      "outputs": [
+        "auditable raw scrape, review, and SEO snapshot folders",
+        "one dated markdown profile per competitor with raw-source references",
+        "a cross-competitor comparison, positioning map, observations, and market gaps"
+      ],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": [
+        "marks stale pages and analytical inference instead of presenting them as current fact",
+        "defaults to a lower-cost quick scan and narrows very large competitor lists before deep collection",
+        "retains missing or unavailable metrics rather than substituting incomparable values"
+      ],
+      "exclusions": [
+        "does not verify provider legality, robots policy, review-site terms, personal-data handling, or metric methodology",
+        "does not include the referenced endpoint guide or full profile templates",
+        "does not prove that estimated traffic, authority, funding, or team-size fields are accurate"
+      ],
+      "usefulInvariants": [
+        "every synthesized profile identifies the exact dated raw snapshot used",
+        "competitors are compared through the same field and provider set",
+        "prior dated raw evidence remains immutable",
+        "facts and inference remain distinguishable"
+      ],
+      "materialRisks": [
+        "scraping and SEO providers can transmit URLs, incur cost, or violate site terms",
+        "review quotes and profile data can include personal or copyrighted content",
+        "third-party SEO estimates can create false precision",
+        "strategic weaknesses can be over-inferred from public evidence"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "dated-raw-evidence-competitor-profiling",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-0312cf3090658ae7",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/unslop/SKILL.md",
+      "bodySha256": "0312cf3090658ae70b83243f1fe6c88d3d987e7e4981b764ab4a7494342db37b",
+      "neutralCapabilitySummary": "Wraps an external prose-rewriting CLI as a final publishing filter, contrasting reproducible local stdin transformation with a default mode that may vary or invoke a model, and compares original versus transformed text in commit hooks or CI.",
+      "neutralIntentExamples": [
+        "check whether a changelog would be rewritten by a deterministic prose filter",
+        "produce a separate cleaned draft for human review"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a final prose draft rather than source code or structured data",
+        "an installed and trusted unslop executable",
+        "a choice between deterministic local mode and potentially remote default mode"
+      ],
+      "operations": [
+        "pipe prose through stdin and capture transformed stdout without direct file effects",
+        "select deterministic mode for reproducible automation and sensitive local content",
+        "compare original and transformed text in a pre-commit or CI gate, then require human semantic review"
+      ],
+      "outputs": [
+        "rewritten prose or a changed-versus-unchanged gate result",
+        "a separately reviewable cleaned file when shell redirection is used"
+      ],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": [
+        "limits processing to prose and warns that automated replacement can change meaning",
+        "provides no rollback when an example overwrites the intended destination after manual file movement",
+        "does not describe executable version pinning or transformation diagnostics"
+      ],
+      "exclusions": [
+        "does not find factual errors or substantive writing defects",
+        "does not provide the CLI implementation or rewrite rules",
+        "does not perform repository or source research"
+      ],
+      "usefulInvariants": [
+        "deterministic automation uses identical input-to-output behavior",
+        "rewritten text is reviewed before publication",
+        "sensitive content avoids the model-backed default mode"
+      ],
+      "materialRisks": [
+        "installing an unpinned third-party executable creates supply-chain exposure",
+        "default mode may send private text through a provider credential",
+        "stylistic normalization can erase authorial voice or alter technical meaning"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "misclassified-external-prose-rewrite-gate",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-13e68d3ae773d3c5",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/multi-source-search/SKILL.md",
+      "bodySha256": "13e68d3ae773d3c54352d860ddf7b9bc6deadbc218bc1bcd2cc1257ae70a6f5c",
+      "neutralCapabilitySummary": "Conducts bounded cross-provider research as a claim-level evidence ledger, tracing common origins, separating support from contradiction and fact from inference, assigning confidence from independent-source counts, recording unavailable coverage and failed searches, and validating report structure before synthesis.",
+      "neutralIntentExamples": [
+        "fact-check a market claim while exposing unresolved source disagreement",
+        "produce an offline-checkable mapping from material claims to evidence"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a precise claim or decision, search budget, and stop condition",
+        "at least two distinct retrieval capabilities and permission for external search",
+        "primary documents, source provenance, publication relationships, and time sensitivity"
+      ],
+      "operations": [
+        "bound default retrieval to six searches and six page opens, stopping when additional work is unlikely to add an independent source or contradiction",
+        "prefer primary evidence, trace derivative coverage to common origins, and count syndicated material once",
+        "map each material claim to supporting and contradicting source identifiers while labeling sourced statements and inference",
+        "cap confidence by independent-source count and prevent conflicted claims from receiving high confidence",
+        "serialize the ledger, validate its internal schema, and present agreements, conflicts, gaps, failed searches, and dates beside the synthesis"
+      ],
+      "outputs": [
+        "a machine-checkable research report",
+        "claim-level source relationships and confidence labels",
+        "a cited synthesis with explicit conflicts and evidence gaps"
+      ],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": [
+        "changes query hypothesis, date, domain, or source type after a no-yield search instead of repeating it",
+        "lowers confidence when independence or provenance is unresolved",
+        "keeps the default workflow read-only and refuses purchase, publication, contact, or external-system modification",
+        "requires explicit consent before sensitive queries or URLs are sent outward"
+      ],
+      "exclusions": [
+        "does not include the report schema or bundled validator implementation",
+        "does not prove truth, publisher credibility, hidden common origins, or representativeness",
+        "does not replace qualified review for high-stakes conclusions"
+      ],
+      "usefulInvariants": [
+        "retrieved pages remain untrusted evidence rather than instructions",
+        "source independence is measured by origin rather than result count",
+        "confidence never exceeds the stated evidence and conflict boundary",
+        "material claims remain traceable to source identifiers"
+      ],
+      "materialRisks": [
+        "arbitrary source-count thresholds can reward quantity over evidentiary quality",
+        "provider diversity does not ensure geographic, linguistic, or viewpoint diversity",
+        "an absent validator cannot be independently trusted from this body",
+        "external queries can disclose sensitive research intent"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "pattern-reference",
+      "proposedCluster": "claim-level-independent-source-evidence-ledger",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-181cbea0f76ce920",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/idea-os/SKILL.md",
+      "bodySha256": "181cbea0f76ce920fba295f5cad7b5963ab330624843ec3e7ff8fdb5dd1eda7d",
+      "neutralCapabilitySummary": "Turns a raw product idea into four linked artifacts through gated triage, actionable clarification, sourced market research, a falsifiable PRD, and a phased execution plan whose metrics, distribution choices, and kill criteria trace back to research findings.",
+      "neutralIntentExamples": [
+        "validate a new SaaS concept before writing its requirements",
+        "tie an MVP kill criterion to a sourced market or retention assumption"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a raw problem or product idea",
+        "an idea-complexity tier and builder-sophistication level",
+        "answers to actionable scope, audience, pain, wedge, constraint, and goal questions",
+        "dated competitor, market, distribution, and risk sources"
+      ],
+      "operations": [
+        "classify complexity and builder sophistication to scale question count, vocabulary, and artifact depth",
+        "write four to eighteen questions whose answers would change the build, then pause for answers or declare assumptions",
+        "research problem evidence, jobs, market sizing from two directions, competitors, distribution, risks, and non-obvious findings with dated citations",
+        "derive a PRD with falsifiable problem, named personas, ranked jobs, mandatory non-goals, and leading plus lagging metrics",
+        "derive a platform and stack matrix, user journey, phased build, distribution path, metrics, immediate actions, and per-phase kill criteria"
+      ],
+      "outputs": [
+        "questions.md, research.md, PRD.md, and plan.md",
+        "a text and Mermaid user journey",
+        "a phased MVP-to-target plan with explicit stop conditions"
+      ],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": [
+        "refuses to research before clarification unless assumptions are explicitly declared",
+        "refuses to write the PRD before research or the plan before the PRD stabilizes",
+        "marks unsourced research content as assumption",
+        "does not execute build or deployment work"
+      ],
+      "exclusions": [
+        "does not include the eleven references, four templates, or worked example in this exact body",
+        "does not validate market-sizing methodology, source independence, or user-interview evidence",
+        "does not fit quick idea feedback or late-stage product optimization"
+      ],
+      "usefulInvariants": [
+        "each downstream artifact consumes a settled upstream artifact",
+        "questions are retained only when their answer can alter scope or decisions",
+        "non-goals and kill criteria remain explicit",
+        "recommendations point back to research evidence or declared assumptions"
+      ],
+      "materialRisks": [
+        "minimum search counts can encourage procedural quantity instead of evidence quality",
+        "TAM arithmetic and competitor signals can create unsupported precision",
+        "classification by builder sophistication can stereotype the user",
+        "planning artifacts can create false readiness without customer or technical validation"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "pattern-reference",
+      "proposedCluster": "gated-idea-research-prd-plan-chain",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-216104c1750e268d",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/browser-extension-reverse/SKILL.md",
+      "bodySha256": "216104c1750e268dec6f69b3028704927cf473142fa984a997d4996142d8d824",
+      "neutralCapabilitySummary": "Scopes authorized browser-extension reverse engineering around package and manifest inspection, background and content-script entry points, permissions, storage, message and network data flows, isolated dynamic loading, worker debugging, and a final permissions-entry-flow checklist.",
+      "neutralIntentExamples": [
+        "defensively inventory an owned extension's requested host permissions",
+        "trace how an authorized extension moves sensitive page data between content and background contexts"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "an exact extension target, written authorization, and permitted assessment scope",
+        "the extension package, manifest, background workers, content scripts, and storage surfaces",
+        "an isolated browser profile or disposable analysis environment"
+      ],
+      "operations": [
+        "remain read-only until the target, written authority, scope, exact commands, and expected effects are confirmed in the current conversation",
+        "inventory manifest permissions, host access, worker and content-script entry points, and high-risk capabilities",
+        "trace storage, runtime messages, injected contexts, network behavior, and sensitive-data movement",
+        "use an isolated profile for dynamic loading and inspect extension and worker errors"
+      ],
+      "outputs": [
+        "an authorized permission and entry-point inventory",
+        "a key data-flow reconstruction",
+        "defensive indicators or an assessment checklist"
+      ],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": [
+        "blocks probing, exploitation, persistence, extraction, or credential access without fresh explicit authorization",
+        "falls back to defensive read-only guidance",
+        "requires isolation from personal browser accounts for dynamic analysis"
+      ],
+      "exclusions": [
+        "does not authorize analysis of third-party extensions or accounts",
+        "does not include the detailed extension-analysis, JavaScript reverse, malware, or field-journal bodies",
+        "does not belong in a general repository and source-research candidate set"
+      ],
+      "usefulInvariants": [
+        "target and authority are fixed before active analysis",
+        "permissions, execution entry points, and sensitive data paths are all accounted for",
+        "dynamic work stays separate from personal browser state"
+      ],
+      "materialRisks": [
+        "credential and sensitive-data inspection can expose private information",
+        "developer-mode loading and dynamic tooling can alter browser state",
+        "findings age as extension stores update packages",
+        "offensive reverse-engineering content is unsafe and misclassified for this family"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "authorized-security-extension-analysis-out-of-family",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-3554ac607eb00b80",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/wiki-qa/SKILL.md",
+      "bodySha256": "3554ac607eb00b806ea72180ffa209dbe8000bbf4511f64869e06ff9b981664d",
+      "neutralCapabilitySummary": "Answers bounded repository questions by searching for relevant files, reading actual source, citing line-addressed evidence inline, mapping key files to roles, matching the question's language, and explicitly reporting when local evidence is insufficient.",
+      "neutralIntentExamples": [
+        "show where a repository function is defined and invoked",
+        "explain one component using only the source files that implement it"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a specific repository question",
+        "the local source tree and line-addressable file contents",
+        "the language used by the question"
+      ],
+      "operations": [
+        "detect the response language, search the repository for candidate definitions and uses, and read the relevant implementations",
+        "synthesize only claims supported by those files and attach file-plus-line citations",
+        "list the key files and their roles, then name further files when current evidence cannot answer the question"
+      ],
+      "outputs": [
+        "a source-grounded repository answer",
+        "inline local file citations",
+        "a key-file role map and explicit evidence gaps"
+      ],
+      "effects": ["read"],
+      "failureBehavior": [
+        "refuses external knowledge, guessing, and invented architecture",
+        "reports insufficient evidence and suggests the next source files to inspect",
+        "does not define a path for generated, vendored, unavailable, or runtime-only evidence"
+      ],
+      "exclusions": [
+        "does not trace complex multi-file execution chains to completion",
+        "does not run code, inspect history, test behavior, or consult external documentation",
+        "does not define how to resolve contradictory source and runtime evidence"
+      ],
+      "usefulInvariants": [
+        "every answer claim derives from an actually read repository file",
+        "citations identify both path and line",
+        "unknowns remain visible instead of being filled from convention"
+      ],
+      "materialRisks": [
+        "source files alone can misrepresent generated, configured, or runtime behavior",
+        "line citations can become stale after edits",
+        "the required formatting can overstructure a simple answer"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "portable",
+      "disposition": "pattern-reference",
+      "proposedCluster": "line-cited-local-repository-question-answering",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-36a3a0c725a6a107",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/wiki-researcher/SKILL.md",
+      "bodySha256": "36a3a0c725a6a1075f7fc1098fa6ce903f1d16fa92a5153217c0a84d6acbfbd5",
+      "neutralCapabilitySummary": "Investigates a repository through five cumulative lenses, tracing real entry points, call chains, transformations, dependencies, patterns, risks, and recommendations while requiring each significant finding to carry evidence, implication, confidence, open questions, and an explicit unexamined boundary.",
+      "neutralIntentExamples": [
+        "trace data from a route registration through every transformation to storage",
+        "verify whether two modules are coupled through an actual dependency chain"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a focused architectural, data-flow, integration, or pattern question",
+        "the repository's source, configuration, registrations, imports, and call sites",
+        "line-addressable evidence for every traversed hop"
+      ],
+      "operations": [
+        "map components and prove entry points from their invocation or registration rather than names",
+        "trace state and data through every called layer from origin to destination",
+        "reconstruct external contracts and module coupling from imports, calls, and configuration",
+        "evaluate patterns, anti-patterns, tradeoffs, debt, and risk without repeating earlier findings",
+        "synthesize recommendations with per-finding evidence, implication, confidence, and next unanswered trace"
+      ],
+      "outputs": [
+        "an evidence-backed architecture and flow analysis",
+        "real-code diagrams where a visual clarifies the chain",
+        "confidence-rated findings, recommendations, and untraced boundaries"
+      ],
+      "effects": ["read"],
+      "failureBehavior": [
+        "labels partially traced claims as inference and unread paths as unexplored",
+        "rejects dead-code, entry-point, pattern, or coupling claims without the prescribed evidence",
+        "prevents repeated findings across the five passes"
+      ],
+      "exclusions": [
+        "does not execute the system, inspect production traces, or prove runtime behavior",
+        "does not define stopping criteria for very large dependency graphs",
+        "does not resolve conflicts between source, generated artifacts, configuration, and deployed state"
+      ],
+      "usefulInvariants": [
+        "every diagram edge maps to a read code relationship",
+        "entry points are supported by invocation evidence",
+        "facts, inference, confidence, and unknowns remain distinct",
+        "recommendations follow a completed evidence chain"
+      ],
+      "materialRisks": [
+        "five mandatory iterations can consume excessive time without adding decision value",
+        "line-level citations and call graphs can stale quickly",
+        "static tracing can miss reflection, dependency injection, code generation, and runtime routing"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "portable",
+      "disposition": "pattern-reference",
+      "proposedCluster": "multi-lens-source-trace-repository-research",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-496720b7aa5be123",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/papers-skill/SKILL.md",
+      "bodySha256": "496720b7aa5be123488efe832e26624a373791bdf67fb12ba00318ff7a2207d5",
+      "neutralCapabilitySummary": "Routes literature work through a bundled Python CLI for Semantic Scholar search, metadata, references, citations, arXiv search and PDF download, and PyMuPDF text extraction, requiring identifier confirmation before download, bounded result and page counts, absolute save paths, and explicit handling of rate limits, paywalls, and scanned documents.",
+      "neutralIntentExamples": [
+        "build a reading list with stable paper identifiers",
+        "trace the most-cited follow-up papers to a confirmed arXiv work"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a topic, author, venue, DOI, arXiv identifier, title, or local PDF path",
+        "a trusted bundled papers.py script and one consistent Python interpreter",
+        "an approved PDF save directory and result or page limits"
+      ],
+      "operations": [
+        "verify httpx, arxiv, and PyMuPDF imports with the same interpreter used for any approved installation",
+        "select search, detail, citations, arxiv, download, or read by requested research operation and ID type",
+        "call detail before download to confirm paper identity, report IDs beside titles, and bound result counts",
+        "extract embedded PDF text within an agreed page cap and summarize problem, method, result, and limitations",
+        "retry provider rate limits within the script's bound, then switch to arXiv or report the terminal gap"
+      ],
+      "outputs": [
+        "ranked literature results with stable IDs",
+        "metadata, reference, citation, or thematic impact analysis",
+        "a downloaded PDF path and bounded text-based paper summary"
+      ],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": [
+        "refuses paywall bypass and routes scanned PDFs to an OCR-required gap",
+        "waits and retries once after persistent anonymous-tier throttling before falling back",
+        "blocks non-arXiv download requests lacking an arXiv external identifier",
+        "confirms unexpected save locations before writing"
+      ],
+      "exclusions": [
+        "does not include the bundled CLI implementation in this body",
+        "does not validate paper claims, citation context, retractions, venue quality, or PDF integrity",
+        "does not provide OCR, alerts, or paywalled full text"
+      ],
+      "usefulInvariants": [
+        "download follows identity confirmation",
+        "titles remain paired with stable identifiers",
+        "dependency checks and installation target the same interpreter",
+        "large PDF context expansion requires user warning"
+      ],
+      "materialRisks": [
+        "runtime package installation and an unreviewed script create supply-chain exposure",
+        "downloaded PDFs are untrusted files",
+        "citation counts can be treated as quality without contextual review",
+        "provider metadata and anonymous limits can change"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-adjacent",
+      "disposition": "deferred",
+      "proposedCluster": "provider-backed-literature-cli-and-pdf-extraction",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-4cc5d46dc382460f",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/gemini-interactions-api/SKILL.md",
+      "bodySha256": "4cc5d46dc382460f0d58ab5672b3b4514c48937aa0e96950737712d5ca91920f",
+      "neutralCapabilitySummary": "Documents a provider-specific Interactions API for stored or stateless turns, server-linked conversation state, streaming typed steps, background research polling, remote managed-agent environments, custom agents, multimodal response helpers, and migration from an older generation surface, while requiring live provider documentation before code is written.",
+      "neutralIntentExamples": [
+        "poll a background provider research interaction to a terminal status",
+        "decide whether conversation continuity is compatible with opting out of provider storage"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a current provider model or managed-agent identifier and matching SDK",
+        "the live task-specific documentation page and migration reference when applicable",
+        "interaction input, storage choice, per-turn tools, system instruction, generation configuration, and remote environment scope"
+      ],
+      "operations": [
+        "fetch current provider documentation before choosing parameters or writing code",
+        "create a model interaction and consume typed text, image, audio, step, usage, or streaming event fields",
+        "link stored turns through a previous interaction identifier while re-specifying turn-scoped tools and configuration",
+        "start background research, poll its identifier until completed, failed, or cancelled, and surface terminal errors",
+        "provision or invoke remote managed agents only with an explicit environment and repository source scope"
+      ],
+      "outputs": [
+        "typed interaction responses or incremental events",
+        "background research text and terminal status",
+        "remote environment identifiers and managed-agent results",
+        "migration-oriented code changes tied to current docs"
+      ],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": [
+        "stops background polling on failed or cancelled status",
+        "requires scope confirmation before migration edits",
+        "treats hosted documentation as authoritative when embedded examples disagree or age",
+        "does not define timeout, cancellation, retry, or cost controls for the polling loops"
+      ],
+      "exclusions": [
+        "does not prove the listed future-dated models, SDKs, agents, retention periods, or breaking changes are current",
+        "does not authorize repository upload, remote code execution, file management, or paid inference",
+        "does not define privacy review for stored inputs, thought signatures, files, or remote environments"
+      ],
+      "usefulInvariants": [
+        "API code is based on live documentation rather than this snapshot alone",
+        "turn-scoped tools and instructions are sent again on every interaction",
+        "storage opt-out disables provider-linked prior-turn and background features",
+        "remote managed agents declare their execution environment"
+      ],
+      "materialRisks": [
+        "the body contains temporally unstable and potentially unverifiable future API claims",
+        "provider storage and remote agents can expose prompts, files, repositories, and generated artifacts",
+        "unbounded polling can waste time and money",
+        "managed tools can execute code and mutate remote files"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "volatile-gemini-interactions-and-managed-agents",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-4e48974449b2eb30",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/commit/SKILL.md",
+      "bodySha256": "4e48974449b2eb30b47ee2ab8e1a999f288a30afca54bf7ee294b5adff2c502a",
+      "neutralCapabilitySummary": "Enforces a Sentry-specific commit-message schema, branch guard, issue footer grammar, single-change principle, and Claude co-author trailer, while delegating feature-branch creation to another skill when the current branch is main or master.",
+      "neutralIntentExamples": [
+        "format a Sentry refactor commit with an optional scope",
+        "stop a commit when branch creation did not move away from the default branch"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "the current branch, repository protection policy, change purpose, and issue references",
+        "the separately reviewed branch-creation workflow",
+        "whether the change was primarily generated by Claude"
+      ],
+      "operations": [
+        "inspect the current branch and require a verified non-default branch unless direct main work was explicitly permitted and accepted by the server",
+        "classify the change into one of twelve Sentry commit types and construct a short imperative header",
+        "explain what and why in bounded body lines, attach closing or non-closing issue references, and add the prescribed Claude trailer when applicable"
+      ],
+      "outputs": [
+        "a Sentry-convention commit message",
+        "a branch-safety stop or an independently reviewable commit"
+      ],
+      "effects": ["read", "write"],
+      "failureBehavior": [
+        "stops when the branch remains main or master after delegated branch creation",
+        "defers to remote branch protection when direct updates are rejected",
+        "does not define verification of staged-file scope or test evidence before committing"
+      ],
+      "exclusions": [
+        "does not apply as a universal commit convention outside Sentry projects",
+        "does not include the branch-creation implementation",
+        "does not perform source or repository research beyond branch and message metadata"
+      ],
+      "usefulInvariants": [
+        "the header is imperative, bounded, and typed",
+        "one commit represents one stable reviewable change",
+        "issue-closing and issue-linking semantics remain distinct"
+      ],
+      "materialRisks": [
+        "mandatory Claude attribution can misattribute authorship or violate repository policy",
+        "automatic branch creation broadens a message-format task into repository mutation",
+        "Sentry rules can overwrite local conventions"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "misclassified-sentry-commit-message-policy",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-654a3c9365fcc026",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:skills/using-git-worktrees/SKILL.md",
+      "bodySha256": "654a3c9365fcc026967871ef96b53a1b8a832d0da8e70629219f7595f838eca9",
+      "neutralCapabilitySummary": "Creates an isolated Git worktree by selecting an existing project directory or configured external location, checking ignore coverage for project-local storage, creating a branch-backed checkout, auto-detecting dependency setup, and requiring a clean baseline test result before implementation.",
+      "neutralIntentExamples": [
+        "verify that a project-local worktree directory cannot enter version control",
+        "establish whether failures existed before isolated feature work began"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "repository root, preferred worktree directory, project name, and exact branch name",
+        "gitignore state and any repository-specific directory convention",
+        "detected package manifests and the project-appropriate baseline test command"
+      ],
+      "operations": [
+        "prefer an existing hidden worktree directory, then an existing visible directory, then a documented preference, and ask only when none exists",
+        "verify a project-local directory is ignored before placing another checkout beneath it",
+        "create a branch-backed worktree at the resolved path and switch the working context into it",
+        "detect ecosystem manifests, run dependency setup, execute baseline tests, and report the absolute location and result"
+      ],
+      "outputs": [
+        "an isolated branch checkout",
+        "a verified ignore decision and resolved path",
+        "dependency setup and baseline test evidence"
+      ],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": [
+        "blocks project-local creation when ignore coverage is absent",
+        "stops for user direction when baseline tests fail",
+        "skips setup only when no recognized ecosystem manifest exists"
+      ],
+      "exclusions": [
+        "does not verify available disk space, branch-name collisions, submodules, LFS, secrets, or concurrent worktree state",
+        "does not obtain approval before dependency installation or before committing an ignore-file change",
+        "does not perform repository research and is unsafe as an automatic general workflow"
+      ],
+      "usefulInvariants": [
+        "project-local worktree storage remains ignored",
+        "feature work occurs away from the original checkout",
+        "baseline failures are separated from later implementation failures"
+      ],
+      "materialRisks": [
+        "automatic package installation executes repository-controlled lifecycle scripts",
+        "auto-committing an ignore change exceeds isolation setup",
+        "worktree creation and cleanup alter shared Git metadata",
+        "fixed Unix shell examples are not portable"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unsafe-automatic-worktree-bootstrap",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-658034b7000606c9",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/crossframe-suite/SKILL.md",
+      "bodySha256": "658034b7000606c9c9ff2953804581442bbe4bf1feaa853fbb158cf5708eb6f5",
+      "neutralCapabilitySummary": "Acts as an explicit-invocation router for a Chinese CrossFrame analysis suite, selecting mode and role, ordering core and specialist skills, preserving versioned reading continuity, defaulting open content tasks into a visible long-form draft and article chain, and ending important outputs with a review gate.",
+      "neutralIntentExamples": [
+        "route an explicitly requested CrossFrame public-issue essay through its specialist and review chain",
+        "close the default article layer when the user requests only a diagnostic table"
+      ],
+      "legacyAliases": ["crossframe-suite"],
+      "inputs": [
+        "an explicit CrossFrame Suite invocation",
+        "output mode, role, topic sensitivity, requested deliverable, and article-layer choice",
+        "multiple required references, protocols, templates, sibling skills, and v5 reading-state artifacts"
+      ],
+      "operations": [
+        "confirm mode and role before routing while delaying article-type selection until after a structural insight draft",
+        "invoke the core framework first, then only the public, organization, dialogue, casebook, teaching, debate, or notebook specialists needed by the task",
+        "carry selection, workflow, voice, continuity bundle, and article-layer state across the chosen chain",
+        "default unresolved content work to a visible long-form draft and article, then apply a review gate without replacing the article",
+        "disable the article layer only when the user explicitly requests a bounded non-article artifact"
+      ],
+      "outputs": [
+        "a short routing outline",
+        "specialist analysis artifacts",
+        "a visible structural draft, long-form article, and quality-gate result when the article layer remains open"
+      ],
+      "effects": ["read", "write"],
+      "failureBehavior": [
+        "does not activate without explicit suite naming",
+        "prevents the review stage from swallowing an accepted article unless a hard failure blocks release",
+        "requires sourced research for current public institutions, policies, people, companies, and platforms",
+        "contains no operational fallback when its many companion files are missing"
+      ],
+      "exclusions": [
+        "does not contain the CrossFrame reasoning, essay, review, specialist, selector, protocol, or continuity bodies",
+        "does not independently verify sources or replace domain expertise",
+        "does not belong to general repository or source research"
+      ],
+      "usefulInvariants": [
+        "suite invocation remains explicit",
+        "only task-relevant sibling skills are loaded",
+        "structural analysis precedes article-form selection",
+        "quality review cannot silently replace the promised visible deliverable"
+      ],
+      "materialRisks": [
+        "the large absent dependency graph makes the exact workflow unauditable",
+        "default long-form output can override user economy and consume excessive context",
+        "versioned continuity rules create deep project lock-in",
+        "a proprietary reasoning suite is misclassified as source research"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "explicit-crossframe-suite-router-out-of-family",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-68edfa213689275b",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/tavily-web/SKILL.md",
+      "bodySha256": "68edfa213689275b2e70db9507605493dd438254bf72721421b3f67d907815fc",
+      "neutralCapabilitySummary": "Names Tavily search, extraction, crawling, and research capabilities but delegates installation behavior, request schemas, examples, result contracts, limits, and troubleshooting to an external skill package and repository.",
+      "neutralIntentExamples": [
+        "identify whether a provider advertises URL extraction",
+        "locate the external Tavily skill repository"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a search, extraction, or crawl request",
+        "a Tavily API credential",
+        "an unreviewed third-party skill package and external documentation"
+      ],
+      "operations": [
+        "install a global third-party skill package, configure its API key through environment state, and delegate all provider interaction to material outside this body"
+      ],
+      "outputs": [
+        "a provider capability label and repository link"
+      ],
+      "effects": ["external-write"],
+      "failureBehavior": [
+        "provides no local authentication, request, retry, crawl-bound, cost, robots, or result-validation behavior"
+      ],
+      "exclusions": [
+        "does not contain executable search or extraction machinery",
+        "does not constrain sensitive data, site authorization, rate, or spending",
+        "does not make external examples part of this exact digest"
+      ],
+      "usefulInvariants": [
+        "the API key is expected to remain in environment configuration"
+      ],
+      "materialRisks": [
+        "unpinned global installation creates supply-chain risk",
+        "provider requests can disclose queries and incur cost",
+        "thin marketing text can be mistaken for reviewed research logic"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "thin-tavily-provider-installer",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-73fd24fbae5a8f38",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/create-branch/SKILL.md",
+      "bodySha256": "73fd24fbae5a8f3829cccbb4929990dd78023b500fc022c0c2a8098400c37232",
+      "neutralCapabilitySummary": "Derives a Sentry-style branch name from an explicit task or current diffs, classifies the change, requests confirmation, resolves current and default branch state, detects local or remote name collisions, and gates checkout or stash behavior before branch creation.",
+      "neutralIntentExamples": [
+        "propose a branch name from the current unstaged and staged change set",
+        "detect that a requested branch would start from a non-default parent"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a work description or the current diff and status",
+        "a GitHub login or user-supplied branch prefix",
+        "current branch, default branch, remote, local changes, and candidate name"
+      ],
+      "operations": [
+        "resolve a username prefix, derive work meaning from arguments or local diffs, and classify it into the Sentry branch taxonomy",
+        "form a lowercase ASCII three-to-six-word branch name and ask the user to accept or revise it",
+        "resolve detached, current, and remote-default branch state before choosing the parent checkout",
+        "check local and remote references for a name collision, then create only the confirmed branch and restore any approved temporary stash"
+      ],
+      "outputs": [
+        "a confirmed Sentry-style branch name",
+        "a branch-parent decision",
+        "a newly created local branch"
+      ],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": [
+        "asks for a prefix when authenticated identity lookup fails",
+        "requires a parent decision for detached or non-default starting state",
+        "stops and restores approved stashed changes when checkout fails",
+        "blocks creation when the candidate reference already exists"
+      ],
+      "exclusions": [
+        "does not verify repository-specific naming rules beyond Sentry conventions",
+        "does not create a remote branch or pull request",
+        "does not prove that stash restoration is conflict-free",
+        "is repository mutation rather than source research"
+      ],
+      "usefulInvariants": [
+        "the user confirms the exact branch name before creation",
+        "the branch parent is explicit when current state is ambiguous",
+        "existing local and remote names are checked first"
+      ],
+      "materialRisks": [
+        "authenticated identity lookup discloses account context",
+        "checkout and stash operations can disrupt uncommitted work",
+        "remote-default detection can be stale",
+        "Sentry taxonomy may conflict with the local repository"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "confirmed-branch-name-and-parent-resolution",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-781ceba929784d00",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/varlock-claude-skill/SKILL.md",
+      "bodySha256": "781ceba929784d00d5b8bf4e301a4077ceb3fee8cf851a5b8968470c33be96b2",
+      "neutralCapabilitySummary": "Claims secure environment-variable handling that prevents secret exposure in agent sessions, terminals, logs, and commits, but supplies no storage model, command, redaction mechanism, policy, failure path, or verification evidence.",
+      "neutralIntentExamples": [
+        "find the upstream repository for the claimed secret-management tool",
+        "determine whether this exact body explains how redaction is enforced"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a secret-handling question",
+        "the external Varlock repository"
+      ],
+      "operations": [
+        "delegate every secret storage, loading, redaction, commit, and logging behavior to an external repository"
+      ],
+      "outputs": [
+        "a security claim and source link"
+      ],
+      "effects": ["read"],
+      "failureBehavior": [
+        "stops for missing scope or permissions but defines no secret-specific fail-closed behavior"
+      ],
+      "exclusions": [
+        "does not identify supported shells, files, providers, encryption, process boundaries, or leak scanners",
+        "does not provide a test that a secret stays out of output or Git history",
+        "does not contribute repository-research machinery"
+      ],
+      "usefulInvariants": [
+        "the security claim remains unverified until the linked implementation is separately reviewed"
+      ],
+      "materialRisks": [
+        "trusting an unsupported secret-safety slogan can cause credential exposure",
+        "the external repository can change independently of this body"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "thin-varlock-security-claim",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-89b0463692ee902b",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/technical-change-tracker/SKILL.md",
+      "bodySha256": "89b0463692ee902b31a2cc9562e96ef6f62bd94c9d533635f699ad1ed3e7cdaa",
+      "neutralCapabilitySummary": "Describes append-only JSON change records moving through planned, active, implemented, tested, deployed, or blocked states, with handoff context, test-log snippets, an accessible HTML dashboard, and retrospective reconstruction from Git history, while omitting the command implementation and schemas.",
+      "neutralIntentExamples": [
+        "record blockers and files in progress for a later coding session",
+        "reconstruct a high-level change ledger from repository history"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a code change, current lifecycle state, progress, blockers, next steps, and files in progress",
+        "test cases and log snippets",
+        "the absent command suite, JSON schema, and repository implementation"
+      ],
+      "operations": [
+        "advance a change record through the stated state machine or branch it to blocked",
+        "append revisions containing handoff context and test evidence",
+        "render the records into a status-filterable accessible HTML view",
+        "derive retrospective records from Git history through an unspecified bulk operation"
+      ],
+      "outputs": [
+        "append-only structured change history",
+        "session handoff state",
+        "an HTML dashboard and retrospective ledger"
+      ],
+      "effects": ["read", "write"],
+      "failureBehavior": [
+        "represents work that cannot advance as blocked",
+        "claims background bookkeeping will not interrupt development but supplies no conflict or completion control",
+        "does not define invalid transition, corruption, concurrency, or partial-write recovery"
+      ],
+      "exclusions": [
+        "does not include command behavior, JSON contracts, dashboard templates, accessibility proof, or Git-history mapping rules",
+        "does not establish that append-only files cannot be rewritten",
+        "does not provide source-research analysis beyond change metadata"
+      ],
+      "usefulInvariants": [
+        "handoff records retain progress, next steps, blockers, context, and active files",
+        "test claims are intended to carry log evidence",
+        "deployment follows tested state"
+      ],
+      "materialRisks": [
+        "background writers can race with repository changes or each other",
+        "retrospective generation can invent intent from commit messages",
+        "WCAG claims are unsupported in this body",
+        "the thin wrapper can be mistaken for an implemented continuity system"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "thin-technical-change-ledger-wrapper",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-8f184628cef58524",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/edr-bypass-re/SKILL.md",
+      "bodySha256": "8f184628cef58524916e4bbb1e1f0dbc12f2aea30dc8c00597507877eee20a40",
+      "neutralCapabilitySummary": "Presents an authorized-lab workflow for identifying endpoint defenses, comparing in-memory and clean system libraries, selecting combinations that impair user-mode, telemetry, script-scanning, and kernel-observation surfaces, implementing an implant, validating alerts in a sandbox, and delivering it with concealment techniques.",
+      "neutralIntentExamples": [
+        "defensively catalogue the telemetry surfaces an owned EDR lab should detect",
+        "audit whether an authorized purple-team plan has an exact target and written scope"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "an exact target, written authorization, permitted scope, and current explicit confirmation",
+        "an isolated Windows lab, EDR telemetry, clean and monitored library images, and alert sources",
+        "offensive implant and bypass references not reproduced in this review"
+      ],
+      "operations": [
+        "block active commands until target, authority, scope, command text, expected effect, and current approval are established",
+        "inventory endpoint products, drivers, callbacks, injected components, and monitored telemetry surfaces",
+        "compare monitored process code with clean system images to identify interception points",
+        "combine defense-impairment techniques and test whether the lab's script, trace, process, module, memory, and console alerts fire",
+        "record reproducible evidence and map results to defense-impairment and injection technique identifiers"
+      ],
+      "outputs": [
+        "an EDR surface and hook inventory",
+        "a bypass-oriented implant design",
+        "sandbox alert evidence and an authorized assessment report"
+      ],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": [
+        "remains defensive and read-only without fresh written authorization and exact command approval",
+        "requires a disposable lab rather than monitored production",
+        "requires immediate responsible reporting and redaction of real target identifiers",
+        "does not provide a technical fail-safe preventing misuse after prose confirmation"
+      ],
+      "exclusions": [
+        "does not belong in repository or source research",
+        "does not authorize deployment against third-party or production systems",
+        "does not include the referenced bypass code, survey, telemetry, tooling, or rules bodies"
+      ],
+      "usefulInvariants": [
+        "active work is target-bound, scope-bound, and explicitly authorized",
+        "validation occurs in an isolated monitored lab",
+        "assessment evidence covers each claimed telemetry surface"
+      ],
+      "materialRisks": [
+        "the body contains actionable defense-evasion and persistence guidance",
+        "bootstrap and implant steps can disable protections or execute malware-like behavior",
+        "authorization claims can be false or exceed the actual scope",
+        "the content is offensive, unsafe, and materially misclassified"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "offensive-edr-defense-impairment-out-of-family",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-95f6a989fc209526",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/efficient-web-research/SKILL.md",
+      "bodySha256": "95f6a989fc20952689a3606b58c44426c6344f322426448019c865a809237028",
+      "neutralCapabilitySummary": "Routes repository URLs, pages, topic searches, URL sets, and files through progressively deeper retrieval, preferring metadata and README inspection, heading skims, targeted sections, and a small number of selected sources before full-page or browser rendering, with explicit token caps and early stop decisions.",
+      "neutralIntentExamples": [
+        "inspect repository metadata and README before selecting implementation files",
+        "escalate a JavaScript-rendered documentation page to browser retrieval only after direct reading fails"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a GitHub URL, specific page, topic query, URL list, or direct file URL",
+        "the exact question and required evidence depth",
+        "available API, direct-content, search, browser, and file-extraction capabilities"
+      ],
+      "operations": [
+        "classify the input and begin with the cheapest retrieval form appropriate to that type",
+        "for repositories, inspect metadata and README, then tree structure, then at most three question-relevant files",
+        "for pages, skim structure, extract the relevant anchored section, strip boilerplate, and escalate to browser rendering only when direct content is unusable",
+        "for search, sharpen the query, inspect result metadata, choose one or two stronger sources, and stop when the evidence answers the question",
+        "for multiple sources, skim all, deepen only the most relevant set, and summarize each before synthesis"
+      ],
+      "outputs": [
+        "a bounded source summary with URL and confidence",
+        "a direct answer based on the selected evidence",
+        "an explicit escalation or stop decision"
+      ],
+      "effects": ["read", "external-write"],
+      "failureBehavior": [
+        "switches to browser retrieval when direct page content is empty, garbled, or only a JavaScript placeholder",
+        "does not bypass paywalls, bot protections, or CAPTCHAs",
+        "stops rather than fetching additional material once the question is answerable"
+      ],
+      "exclusions": [
+        "does not ensure source independence, primary-source use, claim-level citations, or contradiction analysis",
+        "does not justify answering factual questions from snippets without opening the source",
+        "does not preserve full source evidence when it truncates large files to signatures or selected lines"
+      ],
+      "usefulInvariants": [
+        "retrieval depth increases only after a cheaper layer proves insufficient",
+        "repository files are selected from the question rather than fetched wholesale",
+        "combined research retains per-source summaries"
+      ],
+      "materialRisks": [
+        "snippet-only answers can repeat stale, misleading, or decontextualized text",
+        "reading only file headers can miss the implementation body needed for correctness",
+        "hard source and token caps can terminate before contradictory evidence appears",
+        "query rewriting can shift user intent"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "portable",
+      "disposition": "pattern-reference",
+      "proposedCluster": "layered-cost-aware-source-retrieval",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-9d2c9c165827e0dc",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/deepapi/SKILL.md",
+      "bodySha256": "9d2c9c165827e0dc89fe96cd6a3232e5972ebad8e66264e5989cbf31faff4de2",
+      "neutralCapabilitySummary": "Defines a version-pinned paid API client contract for bounded web and social scraping, deep research, search, image generation, and draft-or-send email, requiring environment credentials, per-request idempotency, explicit scrape spending caps, terminal-status polling, same-key credit retries, draft-first email approval, and final debit reporting.",
+      "neutralIntentExamples": [
+        "run a capped public GitHub profile scrape and report its final debit",
+        "create an email draft while preventing an unapproved send"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a matching pinned skill version, API base URL, bearer key, endpoint scope, and target data",
+        "a unique idempotency key, result bound, and explicit cost cap for paid research or scrape operations",
+        "an approved email identity and reviewed draft for any send operation"
+      ],
+      "operations": [
+        "fail on skill-version mismatch or missing credentials without printing or persisting the bearer key",
+        "choose the narrowest endpoint, add authorization and JSON headers, and attach a unique idempotency key to each mutation",
+        "bound paid scrape or research work by cost and result count, then follow server-provided polling method, path, and delay to terminal status",
+        "retry retryable or credit-restored requests with the same idempotency key so the logical action is not duplicated",
+        "keep outbound email in draft mode until the user approves that exact draft, then report request identity, status, final cost, debit, and useful output"
+      ],
+      "outputs": [
+        "provider scrape, search, research, image, or email results",
+        "request identifiers and terminal statuses",
+        "final debit and cost records",
+        "reviewable drafts or explicitly approved sent messages"
+      ],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": [
+        "stops on missing setup, version drift, terminal failure, or insufficient credits",
+        "honors server retry delays and reuses idempotency identity after credit top-up",
+        "blocks direct email send, risky content, and unreviewed stored-draft sending without explicit approval",
+        "uses status polling that does not create a second debit"
+      ],
+      "exclusions": [
+        "does not establish provider trust, endpoint legality, scraped-data rights, or result accuracy",
+        "does not define a global task budget, polling timeout, cancellation, or reconciliation for uncertain responses",
+        "does not authorize social-profile collection, paid requests, image generation, or external messages merely because endpoints exist"
+      ],
+      "usefulInvariants": [
+        "credential material never enters logs, commits, or reports",
+        "each mutation has one reusable logical idempotency identity",
+        "paid scrape and research work has an explicit maximum debit",
+        "email remains a draft until the exact content is approved"
+      ],
+      "materialRisks": [
+        "the provider receives research queries, public-profile targets, email content, and potentially sensitive context",
+        "paid endpoints and long polling can consume credits",
+        "social scraping may violate platform terms or privacy expectations",
+        "email sending is an irreversible external action"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "paid-idempotent-deepapi-action-contract",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-9e1e392af6ff3a91",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/claude-scientific-skills/SKILL.md",
+      "bodySha256": "9e1e392af6ff3a919ad68fd0948362ca6a3a61a8d70035e38403190ef9bc162c",
+      "neutralCapabilitySummary": "Labels an external repository as scientific research and analysis guidance without including a scientific method, domain route, source standard, statistical rule, artifact, failure control, or verification procedure.",
+      "neutralIntentExamples": [
+        "locate the claimed scientific-skills repository",
+        "check whether this body contains an auditable research workflow"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a scientific research question",
+        "the external source repository"
+      ],
+      "operations": [
+        "redirect all substantive scientific analysis behavior to an external repository"
+      ],
+      "outputs": [
+        "a capability label and repository link"
+      ],
+      "effects": ["read"],
+      "failureBehavior": [
+        "stops for unspecified missing inputs or permissions but defines no scientific failure behavior"
+      ],
+      "exclusions": [
+        "does not define literature search, experimental design, computation, statistics, reproducibility, peer review, or citation handling",
+        "does not make the linked repository part of this digest",
+        "does not support any promotion or implementation inference"
+      ],
+      "usefulInvariants": [
+        "no scientific-method claim is accepted without separate review of the upstream body"
+      ],
+      "materialRisks": [
+        "a broad label can be mistaken for validated scientific capability",
+        "upstream content can drift independently"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "thin-scientific-repository-pointer",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-aa70f0806337b78c",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-oss-maintainer/skills/commit/SKILL.md",
+      "bodySha256": "aa70f0806337b78c473878aa2b7d91cd51b42651ef8810e690cd5a394e85f580",
+      "neutralCapabilitySummary": "Duplicates the packet's earlier Sentry commit policy, including default-branch checks, delegated branch creation, conventional types, header and line limits, issue footers, Claude attribution, revert shape, and atomic reviewability rules.",
+      "neutralIntentExamples": [
+        "identify repeated Sentry commit guidance in one packet",
+        "avoid treating metadata packaging as an independent repository mechanism"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "both commit-policy bodies and their exact digests",
+        "their branch guard, message grammar, issue references, attribution, examples, and limitations"
+      ],
+      "operations": [
+        "compare every commit type, formatting bound, branch prerequisite, footer rule, example, and stopping condition",
+        "separate frontmatter representation from substantive commit policy",
+        "record duplicate equivalence without adding semantic weight"
+      ],
+      "outputs": [
+        "a duplicate relationship to the earlier commit body",
+        "a provenance-preserving rejection"
+      ],
+      "effects": ["read"],
+      "failureBehavior": [
+        "requires new review if the branch guard, attribution, type system, or verification contract later differs"
+      ],
+      "exclusions": [
+        "does not remove either canonical source",
+        "does not correct the earlier body's Sentry lock-in or family mismatch"
+      ],
+      "usefulInvariants": [
+        "duplicate status is based on complete operational equivalence",
+        "one commit policy contributes once"
+      ],
+      "materialRisks": [
+        "double counting would exaggerate independent support",
+        "future divergence could stale the equivalence"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "duplicate-sentry-commit-policy",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-bb2b9c6e080830df",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-oss-maintainer/skills/git-advanced-workflows/SKILL.md",
+      "bodySha256": "bb2b9c6e080830dfd09215a2cb7c1c211099bed8b43249a6f24b000146998968",
+      "neutralCapabilitySummary": "Catalogues Git history rewriting, selective commit transfer, regression bisection, worktrees, reflog recovery, autosquash, commit splitting, partial file extraction, force-with-lease, backups, and abort commands through executable examples that include destructive resets and shared-history mutation.",
+      "neutralIntentExamples": [
+        "identify which Git mechanism can locate a regression-introducing commit",
+        "list recovery references after a local history rewrite"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "repository state, collaboration model, target refs, known good and bad revisions, and desired history outcome",
+        "a clean or deliberately preserved working tree",
+        "explicit authority for history rewriting, branch switching, force pushing, or destructive reset"
+      ],
+      "operations": [
+        "select rebase, merge, cherry-pick, bisect, worktree, or reflog recovery by the desired history relation",
+        "rewrite local commit order or content through interactive rebase and autosquash",
+        "binary-search a regression with manual or automated test exit codes",
+        "create backup references before risky operations and use reflog to locate moved or deleted commits",
+        "abort an in-progress rebase, merge, cherry-pick, or bisect when recovery is required"
+      ],
+      "outputs": [
+        "rewritten or selectively transferred history",
+        "a regression-introducing commit",
+        "parallel worktrees or recovered references",
+        "a set of abort and recovery paths"
+      ],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": [
+        "prefers force-with-lease over unconditional force and local-only rebase over shared-history rewrite",
+        "creates a backup branch before complex rebases",
+        "lists abort commands for interrupted operations",
+        "still presents hard resets, file checkout, branch switching, and force push as copyable recipes without target verification"
+      ],
+      "exclusions": [
+        "does not inspect exact refs, dirty state, protected branches, collaborator activity, or remote policy before examples",
+        "does not define safe Windows path handling or recovery after reflog expiry",
+        "does not perform repository-source research"
+      ],
+      "usefulInvariants": [
+        "shared public history is not rebased by default",
+        "regression bisection uses a reproducible good-or-bad test",
+        "risky history editing retains a backup reference"
+      ],
+      "materialRisks": [
+        "hard reset and historical file checkout can discard uncommitted work",
+        "force pushing and rebase can overwrite collaborator history",
+        "generic copyable commands omit exact-target and clean-state gates",
+        "automatic test scripts can execute untrusted repository code"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "unsafe-git-history-mutation-catalogue",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-c63cbd655daacb6f",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/wiki-changelog/SKILL.md",
+      "bodySha256": "c63cbd655daacb6fd5a8e2422904f5c32f0af313deb7305254531d27663522d9",
+      "neutralCapabilitySummary": "Converts repository history into a user-facing changelog by reading commit metadata, grouping recent work daily and older work weekly, classifying changes into seven categories, merging related commits, borrowing project terminology from the README, and elevating breaking changes with migration notes.",
+      "neutralIntentExamples": [
+        "summarize the last week of repository activity for users",
+        "merge several implementation commits into one coherent feature description"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "Git commits, dates, authors, and messages",
+        "the project README terminology",
+        "a time range and evidence of user-facing or breaking effects"
+      ],
+      "operations": [
+        "read history metadata and partition the most recent seven days by day with older activity grouped by week",
+        "classify commits as feature, fix, refactor, documentation, configuration, dependency, or breaking work",
+        "merge related commits into concise descriptions using repository terminology",
+        "highlight breaking behavior and attach migration guidance"
+      ],
+      "outputs": [
+        "a time-grouped structured changelog",
+        "category-labeled user-facing change descriptions",
+        "prominent breaking-change notes"
+      ],
+      "effects": ["read", "write"],
+      "failureBehavior": [
+        "contains no rule for ambiguous commits, reverts, merges, missing README terminology, or misleading messages",
+        "does not inspect diffs before inferring user-visible behavior"
+      ],
+      "exclusions": [
+        "does not prove change behavior from source or test evidence",
+        "does not identify version tags, compare ranges, deduplicate cherry-picks, or attribute co-authors",
+        "does not validate migration notes against implemented compatibility"
+      ],
+      "usefulInvariants": [
+        "breaking changes remain visually distinct",
+        "related low-level commits are represented as one coherent user change",
+        "wording follows the project's own terminology"
+      ],
+      "materialRisks": [
+        "commit messages can be incomplete or inaccurate",
+        "merging commits can hide partial reverts and dependencies",
+        "author and date interpretation can change under rebases or cherry-picks"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-adjacent",
+      "disposition": "pattern-reference",
+      "proposedCluster": "history-to-user-changelog-synthesis",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-c74d5f78d25c8668",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/vexor-cli/SKILL.md",
+      "bodySha256": "c74d5f78d25c86681d43603f3cbe8bb6026b763465675208aa305257f513e760",
+      "neutralCapabilitySummary": "Uses a semantic indexing CLI to rank repository files and line snippets by intent, choosing name, header, summary, code-chunk, document-outline, or full-content modes by file type and cost, with extension, ignore, hidden-file, cache, result-count, and machine-readable-output controls.",
+      "neutralIntentExamples": [
+        "locate configuration loading logic when its filename is unknown",
+        "search documentation headings for an authentication flow"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "an intent query and bounded repository root",
+        "file-type, extension, exclusion, hidden-file, ignore, cache, result-count, and output-format choices",
+        "an installed and configured Vexor executable"
+      ],
+      "operations": [
+        "choose the cheapest indexing mode that preserves the needed semantic evidence",
+        "bound discovery by root, extension, exclude patterns, recursion, ignore policy, hidden-file policy, and top-result count",
+        "return ranked locations, line numbers, and snippets in human or script-safe delimited form",
+        "diagnose missing configuration, API, cache, or connectivity through help, doctor, and config inspection"
+      ],
+      "outputs": [
+        "similarity-ranked repository paths and line references",
+        "snippet previews in rich, tabular, or NUL-delimited form",
+        "index or connectivity diagnostics"
+      ],
+      "effects": ["read", "write", "external-write"],
+      "failureBehavior": [
+        "falls back to a referenced installation guide when the executable is absent",
+        "uses a no-cache mode when persistent indexing is undesired",
+        "provides no verification that semantic ranking found the actual implementation"
+      ],
+      "exclusions": [
+        "does not include the CLI implementation, installation guide, embedding provider, privacy model, or ranking algorithm",
+        "does not replace exact text search, full source reading, call tracing, or manual verification",
+        "does not explain what repository content leaves the machine"
+      ],
+      "usefulInvariants": [
+        "search scope is an explicit path and result bound",
+        "machine-readable output preserves exact path and delimiter boundaries",
+        "semantic hits are candidates for subsequent source inspection"
+      ],
+      "materialRisks": [
+        "indexing may persist proprietary source or send embeddings to an external service",
+        "semantic rank can miss exact but low-similarity implementations",
+        "including ignored or hidden files can expose secrets",
+        "the missing installer and provider contract prevent trust assessment"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "semantic-repository-file-discovery-index",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-d1edd66f551297f4",
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/exa-search/SKILL.md",
+      "bodySha256": "d1edd66f551297f4ea95858dadb12c2ee1811c708d515a7200b2ae534a939253",
+      "neutralCapabilitySummary": "Names Exa semantic search, similar-content discovery, and category filtering but delegates installation, API requests, ranking behavior, examples, output contracts, and troubleshooting to an external package and repository.",
+      "neutralIntentExamples": [
+        "identify whether a provider advertises similar-content search",
+        "locate the external Exa skill repository"
+      ],
+      "legacyAliases": [],
+      "inputs": [
+        "a semantic or category search request",
+        "an Exa API credential",
+        "an unpinned third-party skill and external examples"
+      ],
+      "operations": [
+        "install a global skill package, configure a provider key in environment state, and delegate search behavior to content outside the reviewed body"
+      ],
+      "outputs": [
+        "a provider capability label and upstream link"
+      ],
+      "effects": ["external-write"],
+      "failureBehavior": [
+        "provides no local request, retry, ranking, cost, privacy, or result-validation mechanism"
+      ],
+      "exclusions": [
+        "does not contain semantic-search schemas or executable logic",
+        "does not constrain sensitive queries, category bias, spending, or provider retention",
+        "does not make linked examples part of this exact body"
+      ],
+      "usefulInvariants": [
+        "credential material is expected to remain outside prose in environment configuration"
+      ],
+      "materialRisks": [
+        "unpinned global installation creates supply-chain exposure",
+        "provider requests can leak research intent and incur cost",
+        "thin vendor text can be mistaken for an audited research method"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-adjacent",
+      "disposition": "rejected",
+      "proposedCluster": "thin-exa-provider-installer",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    }
+  ]
+}
