@@ -155,4 +155,4 @@
 - [x] **Step 3: Run focused tests and `npm test`** and require zero failures.
 - [x] **Step 4: Request independent adversarial review** of evidence coverage, review quality, clustering, overlap, promotion claims, routing authority, determinism, and proof language.
 - [x] **Step 5: Fix every confirmed critical or important finding** and rerun complete verification.
-- [ ] **Step 6: Merge to `main` only after review closure**, rerun the full suite from merged `main`, and remove only the owned worktree and merged feature branch.
+- [x] **Step 6: Merge to `main` only after review closure**, rerun the full suite from merged `main`, and remove only the owned worktree and merged feature branch.
