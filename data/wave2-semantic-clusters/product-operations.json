@@ -1,0 +1,440 @@
+{
+  "schemaVersion": 1,
+  "clusterSetId": "wave2-product-operations-clusters-v1",
+  "familyId": "product-operations",
+  "clusters": [
+    {
+      "id": "angular-performance-engineering-family-misroute",
+      "intent": "Keep Angular change-detection, loading, rendering, hydration, and subscription engineering outside product operations.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "The reviewed mechanism is framework implementation guidance with runtime and version-sensitive proof requirements, not a product-operations artifact or decision loop.",
+      "members": [
+        {"facetId": "facet-5ea2edb2fa7ea73d", "reviewDigest": "3f3c26d7f368afa73222f35f2e423550323914fdadb67750e8f552bff57f7c76", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "azure-app-configuration-sdk-variants",
+      "intent": "Administer labeled Azure configuration values, locks, revisions, secret references, feature flags, refresh behavior, and release snapshots through language-specific clients.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "deferred",
+      "rationale": "The TypeScript and Java bodies expose the same provider mechanism with different client surfaces. Credentials, optimistic concurrency, remote mutation, Key Vault resolution, and current SDK behavior keep both as one deferred adapter boundary.",
+      "members": [
+        {"facetId": "facet-46391b21734dff8c", "reviewDigest": "b54c80614286aa732db260f661f859711dbac929388031ae650bfcc5ee81f618", "role": "canonical"},
+        {"facetId": "facet-a0da1ce7439d2224", "reviewDigest": "ff66558e61c4090ff499fd7a6e77ba16c0c56df189402df009cbffedb0ee4816", "role": "variant"}
+      ]
+    },
+    {
+      "id": "azure-communications-sdk-adapters",
+      "intent": "Operate Azure chat-thread or SMS communication lifecycles through authenticated Java clients while preserving participant, recipient, delivery, privacy, and external-write boundaries.",
+      "relationship": "specialized-alternative",
+      "synthesisDecision": "deferred",
+      "rationale": "Chat state and SMS delivery are distinct communication mechanisms, but both require live Azure identities, credentials, service state, and consequential external actions. They remain separate variants inside one provider boundary rather than a portable product capability.",
+      "members": [
+        {"facetId": "facet-9205be2d29e033b0", "reviewDigest": "79dcf69df9924f6f0e966d4fb1fbd1162790972e09623ecebe4f141ae135c561", "role": "boundary"},
+        {"facetId": "facet-a58e51eaae4e1cfc", "reviewDigest": "930a1a36cf8f415abc88ee83706a1523f34237e69208eb5171be4fe069702796", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "azure-custom-log-ingestion-adapter",
+      "intent": "Submit schema-compatible custom log batches through Azure collection endpoints with bounded concurrency, partial-failure callbacks, and status diagnostics.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The exact body is a provider telemetry adapter whose endpoint, rule, credentials, schema, network effects, and partial-failure semantics require current implementation evidence and authority outside product operations.",
+      "members": [
+        {"facetId": "facet-978ff3b1bd82295e", "reviewDigest": "850ce91bb48b15f56190e88deac47b2ce1e41eb007e0267b277a421617775707", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "azure-resource-lifecycle-adapters",
+      "intent": "Use service-specific Azure SDKs to create, inspect, resize, lock, back up, restore, terminate, or delete compute, registry, key, bot, and AI-project resources.",
+      "relationship": "specialized-alternative",
+      "synthesisDecision": "deferred",
+      "rationale": "The members share authenticated remote resource lifecycle effects but have incompatible service objects, languages, failure states, billing surfaces, and destructive operations. Their boundaries remain explicit and no generic Azure product-operations authority is inferred.",
+      "members": [
+        {"facetId": "facet-1ef98ae132c1a363", "reviewDigest": "3c94b7761cb5fcebd9aacd1801f17389a414638d8184bc12bd07ff6e787a8e94", "role": "boundary"},
+        {"facetId": "facet-3c71e316685bccd6", "reviewDigest": "6dff818e6789b24e6cbabbbc58f1f9f41cb42f7ac5877148e503c3b8b672b661", "role": "boundary"},
+        {"facetId": "facet-424d53b274d002c4", "reviewDigest": "1acf5338584939dbf3d9ec05e4f24741daf90e47f3236eacdf8b9fa409845fb5", "role": "boundary"},
+        {"facetId": "facet-4dc66c79be490ff5", "reviewDigest": "61ca81ae18bbd59c8cfbd3324ec8dbdff60fd47322cd9375a122f929e877be31", "role": "boundary"},
+        {"facetId": "facet-f4733760e8f5c570", "reviewDigest": "8f679398794fb9d1fc5f86586d0078c7466d44d04a07e2d093cab1da9c95c241", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "bounded-requirements-elicitation-family-misroute",
+      "intent": "Resolve several dimensions of ambiguity through bounded grouped question rounds before proceeding with a task.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "The provider-shaped conversational protocol is not product-operations behavior, and its fixed round limit and checklist do not establish a stronger requirements contract than current architecture workflows.",
+      "members": [
+        {"facetId": "facet-6eb8ae971c29d818", "reviewDigest": "e7bb41c899e9866719aec767044764aab41ee51323e8fd616d0a52df93402b69", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "domain-boundary-and-ownership-design",
+      "intent": "Turn business capabilities, language, consistency needs, and ownership evidence into subdomains, bounded contexts, a canonical glossary, and rationale-bearing boundary decisions before implementation.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The source defines a coherent evidence-to-architecture sequence with inspectable artifacts and explicit stopping behavior. It is portable enough for overlap adjudication, but its architecture ownership must be compared rather than assumed to belong to product operations.",
+      "members": [
+        {"facetId": "facet-1854470472e1eb02", "reviewDigest": "1dfdf004d7fb70a93f5138b16d172c5ceb6c62876ecbf46b07a0fd121b09395b", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "entry-point-input-validation",
+      "intent": "Inventory application entry points, classify input trust, place typed validation and filtering before application logic, and trace the resulting boundary map before completion.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The review exposes a concrete defensive sequence across HTTP, UI, environment, SDK, webhook, filesystem, CLI, database, and socket inputs. Its broad trust taxonomy and missing executable tests require comparison with existing security and implementation owners.",
+      "members": [
+        {"facetId": "facet-12574cf5cc9a4dc4", "reviewDigest": "085dea382d72a23d3a389d273d6cf84137200831e48a03ecdd14cbd54dbda151", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "evidence-bound-sales-enablement-assets",
+      "intent": "Derive stage- and persona-specific sales decks, briefs, objection responses, demos, calculators, cases, proposals, playbooks, and buyer cards from verified positioning, proof, deal context, and next-step commitments.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The mechanism selects artifacts from funnel stage and operator needs, binds claims to evidence, and fails closed on unsupported proof. It is a coherent local-write workflow that warrants comparison with existing growth, commercial, and narrative owners.",
+      "members": [
+        {"facetId": "facet-c4c988c07c25b19a", "reviewDigest": "a5aea19c66fb1db3971514bcdacaed52e95800ba76a6c5b7182eb806605b01b6", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "evidence-governed-durable-project-state",
+      "intent": "Maintain the smallest durable project state by ranking authority, classifying lifecycle intent, separating completion levels, verifying semantic deltas, and preserving provenance, uncertainty, blockers, and negative evidence.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The source defines an inspectable state-reconciliation and persistence mechanism with strong negative-evidence and no-op behavior. Its primary behavior is continuity and memory governance, so overlap with current memory ownership must be resolved explicitly.",
+      "members": [
+        {"facetId": "facet-da4e1893e58f0600", "reviewDigest": "3ee737f5976d23c5cac580a9612a289b5408cbff98ab6d6b90f670b291d3fbe0", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "evidence-led-product-discovery-and-prioritization",
+      "intent": "Turn permissioned discovery evidence into ranked feature portfolios, capacity-aware roadmaps, opportunity maps, and versioned product requirements with explicit success measures.",
+      "relationship": "exact-duplicate",
+      "synthesisDecision": "candidate",
+      "rationale": "The two bodies contain the same RICE, interview synthesis, dependency, roadmap, and PRD mechanism with only wrapper-level drift. One canonical member preserves behavior and one variant preserves duplicate provenance.",
+      "members": [
+        {"facetId": "facet-47fe13020fec708e", "reviewDigest": "f3da0b0cd78b1907d8d5293094afb2185cae064f402e52e20b79ecce69614002", "role": "canonical"},
+        {"facetId": "facet-8b5862939ccbcb99", "reviewDigest": "b9a46ba2b339c13ad804c5c84ee49bc74a5ddb5f77991042a3bf0e8f4bbc6fc9", "role": "variant"}
+      ]
+    },
+    {
+      "id": "evidence-to-decision-storytelling",
+      "intent": "Transform validated analysis into an audience-specific decision narrative whose sequence, visual evidence, uncertainty, recommendation, and requested decision remain traceable.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The source defines a complete evidence-to-narrative transformation and fails closed on causal overreach or unknown decisions. Its output is a writing and visual decision artifact adjacent to, but not inherently owned by, product operations.",
+      "members": [
+        {"facetId": "facet-25b3d4b6538627b8", "reviewDigest": "97a2d8256c83d253ce98753238650c3954d010ea0365be26eee41be948e5d2de", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "fp-ts-composition-and-error-modeling-misroute",
+      "intent": "Compose synchronous and asynchronous TypeScript transformations and typed failures with fp-ts while preserving readable escape hatches and adjacent type compatibility.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "rejected",
+      "rationale": "The pipe, pragmatic, Either, TaskEither, and error-as-data bodies are code-level implementation references, including two near-duplicate pairs and narrower quick-reference components. They form no product-operations behavior and remain outside this owner.",
+      "members": [
+        {"facetId": "facet-00b28dad1f8daf9f", "reviewDigest": "c22e7406d58a0f4a5f2ee7b7b5cf47b4f9e1a06f207fad82d014975c5f26936f", "role": "component"},
+        {"facetId": "facet-19f3dced0155edd2", "reviewDigest": "7e0a3c51fe6b0dc185f7b9d1b97d416b85eb3a7bf3a731ab251dacf0a19f38db", "role": "canonical"},
+        {"facetId": "facet-67c423e589e10d8b", "reviewDigest": "2ffb61fac4d84e71579789b7f8486cc413dbb2a8b950f44528772e6400c8373b", "role": "variant"},
+        {"facetId": "facet-8da3eba41a7fb5a2", "reviewDigest": "ec9d0547467e3e167454e0fe64aa3dd808a79f5e7176f985fde0c5bd63df4d91", "role": "component"},
+        {"facetId": "facet-9e58581b5d3b90a1", "reviewDigest": "88b58bb3517b3a10b380723b47c1b7d7c3532499ed21432ecbd03b60cec11e9f", "role": "variant"},
+        {"facetId": "facet-f34bd1b334f426c7", "reviewDigest": "5cc557321b172f49e4d27fdb310998756a6621c1a848da0d48315e5bb8feb14b", "role": "component"},
+        {"facetId": "facet-f87898e303abf9fd", "reviewDigest": "895bab0c25825157bcbfb71e341968edcf56b5d4950c21a60d86c0e1f9d1ae26", "role": "variant"}
+      ]
+    },
+    {
+      "id": "governed-advertising-media-provider-boundaries",
+      "intent": "Generate or transform advertising images and short video through provider-specific media systems while preserving rights, product fidelity, brand claims, cost confirmation, manifests, and human review.",
+      "relationship": "specialized-alternative",
+      "synthesisDecision": "deferred",
+      "rationale": "Riffkit rendering, Gemini image transport, and the thin product-photography recipe have different provider and artifact mechanics but share rights, billing, external-write, and mandatory-review risks. They remain explicit production adapters rather than one product capability.",
+      "members": [
+        {"facetId": "facet-14a4c3df83ecb049", "reviewDigest": "dc1f7556cfc57e81e0c780443ddfb569ce385e2efdd7ceb2aef001aa100272b6", "role": "boundary"},
+        {"facetId": "facet-a8add410a60fd8d5", "reviewDigest": "d88bdf5cfd602c48a4369bb747e83f5649cd020308f22973c0e9dfcd28f2cfd4", "role": "boundary"},
+        {"facetId": "facet-ac42a9c63510e3ba", "reviewDigest": "45b1b466cb7a74b88e2b8e3428a1faf28944e6d873665fdfd7390f376f957645", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "insufficient-conductor-track-semantics",
+      "intent": "Define track, specification, plan, registry, status, and lifecycle semantics only when their transition and verification rules are present in exact evidence.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "The exact body names the objects but delegates their creation, transitions, status markers, and proof to an absent playbook, so it cannot support clustering by executable behavior.",
+      "members": [
+        {"facetId": "facet-f576838c3fca87f8", "reviewDigest": "5175467fa7ae65d5fe803c180615ae69942574325b85d1251d001290fddc9622", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "longbridge-financial-data-routing",
+      "intent": "Route securities and company-analysis questions to Longbridge fundamentals commands and companion files without treating provider output as verified financial analysis.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The body is a command router bound to one live financial-data provider and does not contain the formulas for several promised analyses. Current data, regulated interpretation, credentials, and CLI-to-MCP behavior remain unresolved.",
+      "members": [
+        {"facetId": "facet-1671d1113e23bd36", "reviewDigest": "8787c5be14e40b6048beacabec889f7595dc5f855b522ac2f25bbbf85b5e3f75", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "measured-paid-creative-iteration",
+      "intent": "Create placement-valid paid-copy variants from distinct motivational angles, then use declared performance measures and dated change logs to select one next bounded creative test without operating an advertising account.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The source combines claim and platform constraints, independent asset combinations, exact field counts, exposure-aware interpretation, and a one-variable learning loop. This is more than generic copywriting or campaign analysis and merits separate overlap adjudication.",
+      "members": [
+        {"facetId": "facet-34603d55ffe26eb7", "reviewDigest": "4abbe05d436418eb75d8800f80246cbe34aeea9627799aae20ac684dbf9fe02f", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "mobile-interface-and-release-family-misroute",
+      "intent": "Apply platform-specific touch, storage, performance, accessibility, offline, and release constraints to a mobile interface only within a verified implementation and distribution context.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "The source mixes mobile design, implementation, storage, performance, and store-release rules under one fixed scoring doctrine. It is neither product operations nor independently safe to generalize across platforms.",
+      "members": [
+        {"facetId": "facet-d7117dcc45275098", "reviewDigest": "add84a8a026dd7e5887aff78e5dc49a8ea0756b07cd62ec9fa1813cc539a120e", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "odoo-orm-query-and-mutation-duplicates",
+      "intent": "Query and mutate Odoo recordsets with domain filters, stored computed fields, bulk writes, count optimization, context propagation, and N-plus-one avoidance.",
+      "relationship": "exact-duplicate",
+      "synthesisDecision": "rejected",
+      "rationale": "The two bodies are wrapper variants of the same Odoo ORM implementation guidance. Their database mutation, sudo, context, date serialization, and provider-version semantics belong to an Odoo engineering adapter, not product operations.",
+      "members": [
+        {"facetId": "facet-98174d7315982f4e", "reviewDigest": "ffeff1ad294638fab3b1d692bfcf8cc73722bb877ba5d247d0f8c1b7c2d858a7", "role": "canonical"},
+        {"facetId": "facet-eb01c53a1313b43f", "reviewDigest": "d0a8e8251c8337670734db09b7f77202d780d155aa53cde2df7ee6e07ec01559", "role": "variant"}
+      ]
+    },
+    {
+      "id": "odoo-sales-pipeline-and-quotation-adapter-duplicates",
+      "intent": "Configure Odoo opportunity stages, lost reasons, team targets, quotation templates, optional lines, deposits, and customer pricelists while retaining a forecastable opportunity path.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "deferred",
+      "rationale": "The two near-identical bodies encode useful CRM and quotation operations but remain inseparable from Odoo configuration, permissions, records, pricing, deposits, and account mutation. One canonical member and one variant preserve the duplicate provider evidence.",
+      "members": [
+        {"facetId": "facet-11afb0345fc0d309", "reviewDigest": "2510e30c2554ec26d81cce5f0c73ffa87b99de26787c53aa2fc5c3fd9943a337", "role": "canonical"},
+        {"facetId": "facet-5459b5b92ca0e6f9", "reviewDigest": "529845038c9f1fcb3a7c44744bcd8437609509a03dce9af0fc86fe83fddd9810", "role": "variant"}
+      ]
+    },
+    {
+      "id": "paid-youtube-transcript-provider-boundary",
+      "intent": "Retrieve transcripts, search results, channels, playlists, and upload records through a metered provider while preserving credit, cache, caption, and missing-result behavior.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "The operation is a paid TranscriptAPI adapter and monitoring route, not product operations. Provider availability, credits, terms, caching, and external retrieval prevent portable synthesis from this body.",
+      "members": [
+        {"facetId": "facet-f8076304077d02a5", "reviewDigest": "7acc66e51b69c7de95d133ef684ce232bba69ed3bbccf8e4d72c4146ff01d2b9", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "pdf-processing-guide-duplicates",
+      "intent": "Extract, assemble, rotate, OCR, watermark, encrypt, and generate local PDFs only with explicit preservation and rendered verification controls.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "rejected",
+      "rationale": "The four bodies repeat the same library and command recipes, with one glyph-positioning addition, but omit a reliable render-and-inspect loop and preservation controls for forms, links, tags, signatures, and accessibility. Duplicate snippets do not establish product behavior.",
+      "members": [
+        {"facetId": "facet-3e31330bdf9c1ee2", "reviewDigest": "163b0ae65b03022d7ccf3a3930bf8c910f3c6f2745ac43056f08bd6160a76d0c", "role": "canonical"},
+        {"facetId": "facet-5153af1c832ef5b7", "reviewDigest": "2d1c5a9783ee327700dd90852caca44919c5399e3929b64082bcdfb3aa222dd2", "role": "variant"},
+        {"facetId": "facet-8bc1a9286e0b3eac", "reviewDigest": "d7a1f252131dc4f93cf2441c445f06b86fae909fcf2ba3555569bdd597b62b33", "role": "variant"},
+        {"facetId": "facet-8e3831e2cbb810d7", "reviewDigest": "cd2048e1b98bc42bc7197dcf828c65540f54ea9cb0c2c144326b376f870bafd6", "role": "variant"}
+      ]
+    },
+    {
+      "id": "precommitted-product-experimentation-gate",
+      "intent": "Refuse experiment launch until a single-change hypothesis, frozen primary outcome, powered sample, verified assignment telemetry, harm guardrails, fixed duration, and predeclared decision rules are inspectable.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The source supplies a concrete pre-launch gate, telemetry probes, assignment checks, stopping rules, and a searchable result record. Its statistical and data authority belongs under existing experimentation owners and requires mechanism-level overlap review.",
+      "members": [
+        {"facetId": "facet-75ada5497143668a", "reviewDigest": "f6a25eb73aea8521070b27bc33be8844d70255eec4d6a154c718c35837fb8f4a", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "product-concept-design-systems-and-flows",
+      "intent": "Move from product-friction evidence through divergent concepts and a selected experience thesis into tokenized components, complete interaction states, critical UX flows, critique, prototype evidence, and an accessible implementation handoff.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The members contribute compatible concept, design-system, flow, critique, and handoff stages. Brand-specific examples, dogmatic defaults, and unverified code claims remain excluded, leaving a portable visual-product mechanism for overlap adjudication.",
+      "members": [
+        {"facetId": "facet-1f06d642bd0eefcc", "reviewDigest": "ed4b1a0443a2c13cb872c6bf82ef1c4224afe56e97bbfe6aec46921caaedacd1", "role": "canonical"},
+        {"facetId": "facet-6af0ea956866baec", "reviewDigest": "cb2c6696cc679dee36f4c74bbb2cea8ed247601a8fcf8d05d9f23f556bb3dfb3", "role": "variant"},
+        {"facetId": "facet-cafb5846ca9d3b3b", "reviewDigest": "5b6c8c8eefe9e52f7663ed7a51dab619325e86c0fcd51d52b03ca3de9be36f05", "role": "component"}
+      ]
+    },
+    {
+      "id": "professional-contact-data-provider-boundary",
+      "intent": "Retrieve professional-profile, contact, people-search, or public business-email records only through an authorized data provider with identity, consent, privacy, and missing-result controls.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "The source is a provider router for personal and professional data acquisition. Its privacy, consent, terms, identity resolution, and private-data risks are explicitly outside Prometheus and cannot become a generic product-operations capability.",
+      "members": [
+        {"facetId": "facet-dc68c1671131a5f5", "reviewDigest": "b787b88a229c22c8c2bc745c41b5531478e8acf09d53803f2ff58fd72f5535b2", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "project-specific-voice-product-operating-model",
+      "intent": "Preserve one voice-assistant product's tier entitlements, launch phases, weekly engagement metric, operating alarms, fallbacks, language, and retention rules without generalizing its identity or thresholds.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The exact body interleaves one Portuguese brand and product identity with useful launch and metric patterns. Those project facts, provider assumptions, thresholds, and retention policy cannot be separated reliably enough for portable synthesis here.",
+      "members": [
+        {"facetId": "facet-6168efb0be32a6eb", "reviewDigest": "e49bbc3357b5633bd8549fb4de5edaf4b67b9acb13c6a6a013e02b946b4d9a79", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "purpose-led-interface-motion-and-scroll",
+      "intent": "Select, implement, and verify interface motion from interaction frequency and user purpose while preserving readable static content, trigger geometry, interruptibility, reduced motion, keyboard access, touch behavior, and measured device performance.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The motion-review body supplies purpose, frequency, timing, and device verification; the scroll body adds narrative staging, progressive enhancement, and static fallbacks. Together they form compatible authored-motion stages, not product operations by name.",
+      "members": [
+        {"facetId": "facet-3c814f76ec49ab13", "reviewDigest": "6a1fcb30f7371e6d5866b79f2f433cebc6eda78d3e01a49e43ae986eab1444dd", "role": "canonical"},
+        {"facetId": "facet-fb62bcc3c65ad723", "reviewDigest": "bca8e7662f206edc454690a1e904239e6077d356968d58fdf73af9bc06c65c52", "role": "component"}
+      ]
+    },
+    {
+      "id": "question-driven-disposable-prototyping",
+      "intent": "Build one inspectable throwaway probe around one behavior or appearance uncertainty, record the observed decision, and remove or absorb the disposable code without crossing production, persistence, service, or paid-call boundaries.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The source has a discriminating input, two bounded implementation branches, observable terminal artifacts, a learning-only output, and explicit cleanup behavior. It warrants overlap review with implementation and delivery mechanisms rather than product clustering by label.",
+      "members": [
+        {"facetId": "facet-a5e2aa52ebd574d9", "reviewDigest": "2661f4be32e874688a7da9bcf00a8f1f0b98878a54636b0b17b45801bd9b8648", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "release-impact-and-lifecycle-communication",
+      "intent": "Transform verified release deltas into audience-specific changelogs, migration notices, deprecation timelines, lifecycle guidance, and channel adaptations without publishing or inferring facts from commit labels alone.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "candidate",
+      "rationale": "The broad lifecycle body is the complete mechanism; the commit-derived generator is a thinner variant of the same evidence-to-release-note transformation and contributes no independent authority. Both remain bound to verified change facts and separate publication.",
+      "members": [
+        {"facetId": "facet-69d09b6f2fa69a00", "reviewDigest": "e20499f0e9f446a9c98a878655f2c47504f9a002a4a30f048632208cecd17012", "role": "canonical"},
+        {"facetId": "facet-c85a6b80742101d9", "reviewDigest": "0adeb20a548fe0b1986e2cde0d5726f4b7a819d0d80cc0ff8670ac3bfb488a7d", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "scientific-bioinformatics-library-misroutes",
+      "intent": "Keep sequence analysis, genomic interval processing, and annotated scientific matrix storage as separate specialist workflows with explicit coordinate, taxa, sparse-data, index, reference, and reproducibility assumptions.",
+      "relationship": "incompatible",
+      "synthesisDecision": "rejected",
+      "rationale": "scikit-bio, Polars-Bio, and AnnData operate on different scientific objects and failure semantics. Their shared Python packaging and family placement do not make them behaviorally compatible product operations.",
+      "members": [
+        {"facetId": "facet-3e9198557e70facf", "reviewDigest": "94e0d946ac845bb8751f974f84361b8d453f3c6a81a23c1d57ad392c39c7c144", "role": "boundary"},
+        {"facetId": "facet-4738355c56dfac9b", "reviewDigest": "dcac0915f8030b8da8adb40b2bbc46362bb37776c381d5598720ff2dc4287441", "role": "boundary"},
+        {"facetId": "facet-c8a5f444e40afb0c", "reviewDigest": "3328f31eccaf8d814bb0bd5503eee6a9f3ba9bf5cba5a6a035a4e58dd4d3f1f1", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "scripted-presentation-and-launch-deck-misroutes",
+      "intent": "Keep presentation scripting and a thin launch-deck visual card outside product operations until content derivation, rendering, and acceptance contracts are independently complete.",
+      "relationship": "specialized-alternative",
+      "synthesisDecision": "rejected",
+      "rationale": "The launch-deck card contains only a sequence and palette, while the python-pptx body generates a script without rendered verification. They share an artifact type but not enough compatible, proven behavior for synthesis.",
+      "members": [
+        {"facetId": "facet-8fbfa891f04c2707", "reviewDigest": "096eb65a3c6bb0ac05b283da502b9f7846867261a42ea6cd3ae7f69de4bc0a5c", "role": "boundary"},
+        {"facetId": "facet-94f87e23c3055dd6", "reviewDigest": "a902d9e12c1210ec08f5665d1a15937de494b9daff8135b798ce4a8764fb293c", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "snapchat-ad-account-audit-boundary",
+      "intent": "Normalize Snapchat advertising account evidence, score only applicable controls, preserve validated findings separately from rendering, and keep all account mutations in draft.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The audit envelope is thin and provider-bound. Live account evidence, scoring definitions, credentials, platform behavior, and mutation authority are absent, so it remains an advertising adapter boundary.",
+      "members": [
+        {"facetId": "facet-6720862c9d0a2c7d", "reviewDigest": "fbc6855b387617f710fd1f330d69a0fda084e30f26c613e396eceddaa13f5238", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "stage-aware-venture-falsification-and-planning",
+      "intent": "Falsify an early venture, define and triangulate its market, model cohort economics and cash scenarios, and produce a stage-aware strategic decision with dated evidence, sensitivity, risks, and the cheapest next test.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "Market sizing, cohort finance, venture falsification, and broad stage-aware synthesis are compatible ordered components. The projection body is a duplicate reporting variant, while the broad analyst contributes only its evidenced integration and not absent delegated playbooks.",
+      "members": [
+        {"facetId": "facet-40f30bc98b87add0", "reviewDigest": "741e067edbbce8dc4ed0c6f1e203bc5f7cedf43722e09aafe153a42c45d31f76", "role": "canonical"},
+        {"facetId": "facet-49911e72998ba083", "reviewDigest": "dc12ba305f9a42c730a3515f1687cd123402aca7d38b0e4c2fcea6d2062646b5", "role": "component"},
+        {"facetId": "facet-85818084d1330d70", "reviewDigest": "87cb22221e8065054024bf61306d7aad2b3b2f788a1bded347004bac79cb1701", "role": "variant"},
+        {"facetId": "facet-f58fb7596927096d", "reviewDigest": "8a32d664cf64533d9144856cb48ad899ab4c35dad0937c1b417c729bf937362b", "role": "component"},
+        {"facetId": "facet-fee64b86ae7a8688", "reviewDigest": "c15b218b3b1431b607714d0cfa60ac1cef8b0848d9c1801f858622ceae8fc52b", "role": "component"}
+      ]
+    },
+    {
+      "id": "startup-metrics-thin-duplicates",
+      "intent": "Define startup metric names, formulas, event and period semantics, business-model branches, thresholds, artifacts, and validation before claiming a seed-to-Series-A measurement framework.",
+      "relationship": "exact-duplicate",
+      "synthesisDecision": "rejected",
+      "rationale": "Both bodies only point to an absent playbook and contain none of the promised metric mechanics. Their near-identical wrappers are retained as duplicate negative evidence, not synthesized capability.",
+      "members": [
+        {"facetId": "facet-3e9c702d8a999ac5", "reviewDigest": "355f210fce80b7f536bf5d9a29ee27d37ea5cb65ce7864747deec61cda8229a4", "role": "boundary"},
+        {"facetId": "facet-cadaed3810a13cf9", "reviewDigest": "2095c853e4712c1598cd8e19afb1496b9ca9e31f9f01c5e45a3336b1d4f57701", "role": "variant"}
+      ]
+    },
+    {
+      "id": "subscription-retention-and-payment-recovery",
+      "intent": "Separate voluntary cancellation from payment failure, then design accessible reason-matched save, reactivation, risk, retry, dunning, cohort, and one-variable experiment paths without hiding cancellation or mutating subscriptions without authority.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The source preserves separate denominators and failure paths for cancellation and payment recovery, combines them only at the lifecycle decision layer, and exposes legal, contract, message, discount, and provider effects. The mechanism is coherent but consequential.",
+      "members": [
+        {"facetId": "facet-3181f4883a7d6353", "reviewDigest": "8a2fad3c6b294ef262265c8066a35470946f8f09a789764bb76857c66177bdd8", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "typescript-data-and-idiom-refactoring-misroute",
+      "intent": "Reshape TypeScript collections and objects and review concise JavaScript, React, promise, narrowing, derived-state, and identity idioms within implementation-specific tests.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "rejected",
+      "rationale": "Both bodies are implementation refactoring references. Their array, object, null-safe, async, type, and React mechanics overlap substantially and have no product-operations input, output, or authority contract.",
+      "members": [
+        {"facetId": "facet-8e7993b956d4173e", "reviewDigest": "799017743576550f1e6cf71cb08602958976f2491bc28002d8544d6f19e89963", "role": "canonical"},
+        {"facetId": "facet-d5155aa06d344876", "reviewDigest": "ca12edec9d885b6a12254f0b827ceb770db540904f210bc3f753cad06983c8b9", "role": "variant"}
+      ]
+    },
+    {
+      "id": "unocss-interface-token-adapter",
+      "intent": "Encode semantic light and dark interface tokens, stack layers, literal extractable utilities, technical-value formatting, and role-based borders or shadows as UnoCSS shortcuts after design intent is settled.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The mechanism is project- and framework-bound styling implementation. It depends on UnoCSS extraction and an upstream design decision, so it remains a named adapter rather than product design ownership.",
+      "members": [
+        {"facetId": "facet-0462687c2f1cbe1a", "reviewDigest": "faa68e53f484746db41ad2b2eeba4972b344b9b15d6c13cbee04d2bc40c185d4", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "unsupported-tech-debt-assessment",
+      "intent": "Assess technical debt only when decay-risk definitions, Pain and Spread scales, intent classes, scope rules, report fields, and health-score calculations are present in exact evidence.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "The body names the assessment and formula shape but omits every operative definition needed to reproduce the score or report. It is thin implementation-quality evidence, not a clusterable product mechanism.",
+      "members": [
+        {"facetId": "facet-23908fbcd2ba73e0", "reviewDigest": "661669165e64197d2417fc02267b96e812604fbee9f0741a0768418a762de8b0", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "web-3d-stack-and-asset-pipeline",
+      "intent": "Choose a browser 3D stack from framework and control needs, prepare bounded GLB assets, integrate loading and scroll behavior, and verify frame rate, pixel ratio, fallbacks, compression, and control interference.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The source joins stack selection, asset preparation, runtime integration, and measured verification into a coherent specialist workflow. Its named libraries and implementation effects require comparison with current visual and engineering owners.",
+      "members": [
+        {"facetId": "facet-40f1aac5765b21f0", "reviewDigest": "6bf8b9d325f45729256fca64805b513f140c0aa94093ae96f3446a1539d4c123", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "woocommerce-commerce-engineering-boundary",
+      "intent": "Audit WooCommerce changes for storage-safe CRUD, save semantics, checkout validation, money formatting, runtime guards, hooks, idempotent scheduling, and WordPress security controls.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The body is a substantial but provider- and version-bound commerce engineering guard. Order and checkout mutation, payment correctness, storage compatibility, scheduling, and security require a current WooCommerce implementation context.",
+      "members": [
+        {"facetId": "facet-3d93146be787c028", "reviewDigest": "c9641a5378f1474cdeb5aad776e37b2e0b295ca5b1a58228e79edfd7b98cac44", "role": "boundary"}
+      ]
+    }
+  ]
+}
