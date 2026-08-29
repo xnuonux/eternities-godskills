@@ -1,0 +1,377 @@
+{
+  "schemaVersion": 1,
+  "clusterSetId": "wave2-release-publishing-clusters-v1",
+  "familyId": "release-publishing",
+  "clusters": [
+    {
+      "id": "agent-instruction-generation-family-misroute",
+      "intent": "Generate repository-specific agent instruction files from detected manifests, lockfiles, scripts, and managed-block boundaries without treating those files as release artifacts.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "The reviewed behavior writes persistent agent configuration and validates repository commands, but it neither packages nor verifies a release. Its overwrite and instruction-authority risks must remain outside the release owner.",
+      "members": [
+        {"facetId": "facet-0ed65199f8751438", "reviewDigest": "367c9ca366ff2f080292fc1f2a23702294e2c97a78a71495bd997af9b6f5c525", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "airflow-pipeline-handoff-thin-duplicates",
+      "intent": "Structure an Airflow data pipeline around idempotent task ownership, retries, observability, staging evidence, runbooks, and approval before schedule or backfill mutation.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "deferred",
+      "rationale": "The two near-duplicate bodies expose the same data-orchestration handoff but omit concrete operators, fixtures, deployment topology, rollback, and mechanical idempotence proof. The mechanism remains a thin Airflow boundary rather than release behavior.",
+      "members": [
+        {"facetId": "facet-266f9b77dd2fe6b2", "reviewDigest": "9417a125bd27cb201520a69f695187fd42e29d476973e0bc8081a9a75fdcedc5", "role": "canonical"},
+        {"facetId": "facet-d3b6292b95df1544", "reviewDigest": "d1ed75f952ff1520519132c105bb661f0bb1ee665bb7f41441597ca2d50bca16", "role": "variant"}
+      ]
+    },
+    {
+      "id": "android-sdk-device-deployment-adapter",
+      "intent": "Prepare Android SDK and emulator state, create or inspect a project, deploy named APKs to an explicit device, and return structured layout or screenshot diagnostics.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The useful diagnostics are inseparable from mutable SDK installation, emulator and device selection, APK deployment, network documentation, and external device writes. Signing and store publication are absent, so this remains a platform adapter.",
+      "members": [
+        {"facetId": "facet-033dc94650bfe73f", "reviewDigest": "3cf382a2ba5d941870f63ee79f9be583e62f6386bdcf4f2a106411193153f6d9", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "apify-actor-publication-adapter",
+      "intent": "Convert a program into a schema-declared Apify Actor, verify its local lifecycle and container, and hand off an authenticated cloud build upload.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "Actor metadata, SDK lifecycle, platform storage, authenticated upload, billable builds, code exposure, and monetization are provider-bound. Missing referenced wrappers and schemas prevent a portable publication contract.",
+      "members": [
+        {"facetId": "facet-bbd873502f9a68eb", "reviewDigest": "9e4de7894361c227b9a7384bdbc09b826b267f370cafcbd3ba0111a22707b6ab", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "apple-app-clip-release-adapter",
+      "intent": "Bind an Expo App Clip target and parent application through Apple identifiers, entitlements, a live association document, TestFlight artifacts, and invocation metadata.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The behavior depends on Apple identities, credentials, profiles, TestFlight, App Store metadata, hosted association state, and permission mirroring. Those provider mutations and silent identifier failure modes cannot become a portable Herald route.",
+      "members": [
+        {"facetId": "facet-059a73131475a84d", "reviewDigest": "753f8ec4e2500c3717450a283447845202215a2099c6964158bcd77cd9004f38", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "astronomy-analysis-family-misroute",
+      "intent": "Perform unit-aware astronomical coordinate, time, FITS, WCS, table, and cosmology analysis while preserving scientific metadata.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "This is a scientific-analysis capability with plausible-error risks around units, frames, and calibration. It has no release artifact, gate, deployment, or publication mechanism and must not be inherited by the release family.",
+      "members": [
+        {"facetId": "facet-5d878d3f63503afd", "reviewDigest": "892967a15d13e9afdbbc1bb874493b6209d5774aa31d7dd9c89fa7fe5fd68cc5", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "aws-serverless-release-pipeline-adapter",
+      "intent": "Compose a Python container topology, AWS SAM and DynamoDB resources, CI test and security gates, health checks, notifications, and CloudWatch alarm evidence.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The body mixes local container design with provider-bound AWS resources, credentials, unconfirmed deployment, alarms, and destructive stack deletion while naming but not implementing rollback. It remains an unsafe project-specific adapter.",
+      "members": [
+        {"facetId": "facet-7944c88220e09c1e", "reviewDigest": "90fea7a42863d31402ff46d4c1477f4c70f1d78f40a66acc6ebbb237ea0af46e", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "azure-event-grid-messaging-family-misroute",
+      "intent": "Publish typed Azure Event Grid envelopes and, where supported, receive and settle locked messages through acknowledge, reject, or delayed release.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "rejected",
+      "rationale": "The Python publisher is an ordered subset of the broader Java publish-and-settle lifecycle, but both operate provider messaging rather than software releases. Downstream triggers, credentials, idempotency, and dead-letter gaps remain explicit external-action risks.",
+      "members": [
+        {"facetId": "facet-2d79913af9d35542", "reviewDigest": "27451c55bf9d8c8329ab3835ace1a4a8c19b36edce6a7993622cfefc15d53a20", "role": "component"},
+        {"facetId": "facet-ea447eba5c73ba76", "reviewDigest": "659d0f4411e08d91a242f746dd1659d0436292be751c559cd46c8e614e244de0", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "azure-marketplace-organization-administration-misroute",
+      "intent": "Create, inspect, update, tag, and delete MongoDB Atlas organizations represented through Azure marketplace resources.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "Organization administration, marketplace billing, RBAC, long-running ARM operations, and deletion are provider account effects with no release artifact or readiness gate. The release family must not acquire this authority.",
+      "members": [
+        {"facetId": "facet-b3d68fd62553a5fc", "reviewDigest": "9e4a2e9b6483d559d56254ac305af01bc8708b404247106fd51ced5b85b3c29d", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "c4-architecture-documentation-misroute",
+      "intent": "Describe deployed system boundaries through C4 container relationships, linked components, protocols, infrastructure attributes, and OpenAPI interface stubs.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "The reviewed template documents architecture but neither builds nor verifies a container or release. Placeholder drift and diagram-as-health risks belong to architecture and documentation owners, not Herald.",
+      "members": [
+        {"facetId": "facet-b7d864998b4b01b5", "reviewDigest": "b7af3dc32bb965897ad1935798d7e80cbcd5e2d80e517340bb6f6b3816a78152", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "canonical-technical-content-syndication",
+      "intent": "Prepare a canonical technical article and platform-adapted editions with canonical metadata, bounded tag and topic choices, mobile readability, and evidence-led engagement review without publishing them.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "Canonical selection, indexing evidence, destination adaptation, metadata, and measured review form a coherent local editorial sequence. Account access and publication remain separate external effects owned by a human or provider adapter.",
+      "members": [
+        {"facetId": "facet-3fee8faa3041775e", "reviewDigest": "edd14b6f5493ffcc37849b20d4a578b737700aaa6f396f9b97f29d061c256dc7", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "computer-vision-family-misroute",
+      "intent": "Design computer-vision inference and spatial-reconstruction pipelines across detection, segmentation, grounding, depth, calibration, and edge-export constraints.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "The body is model and implementation guidance with time-sensitive claims and calibration risks, not release packaging or verification. Its deployment-first wording does not create release semantics.",
+      "members": [
+        {"facetId": "facet-b6834c2193bce40c", "reviewDigest": "5a77688a0b27a785a575052c95363c38f57f93579d2b16e6b41cd0c09ef69c08", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "defensive-release-script-engineering",
+      "intent": "Build Bash release utilities with strict input, path, error, logging, privilege, dry-run, and destructive-action controls, then verify status, streams, and filesystem effects with isolated Bats fixtures and CI.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "Defensive Bash construction and Bats side-effect verification are compatible ordered stages with one local artifact and fail-closed test boundary. The pair is portable when shell dialect and teardown scope remain explicit.",
+      "members": [
+        {"facetId": "facet-6c39d939dd4fca8e", "reviewDigest": "5fa07bfad9f277903161e9ad46c6e3a938a5d0f1b3c4134cd91cc9f10d7b30e5", "role": "component"},
+        {"facetId": "facet-fa50610e94fa34c5", "reviewDigest": "51982a345d971a58b992d59bdec56ff1814921948e4a97d6c8120d2f38d7c25b", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "expo-multiplatform-release-adapters",
+      "intent": "Bind Expo EAS profiles, remote versions, platform credentials, mobile store submissions, staged tracks, web exports, hosting, and remote status evidence.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "deferred",
+      "rationale": "The two source variants expose the same EAS build, submit, track, web-deploy, and status mechanism. Credentials, quotas, paid builds, store state, and production hosting make it a provider-bound adapter rather than portable release behavior.",
+      "members": [
+        {"facetId": "facet-1dcef7216c4b3dbb", "reviewDigest": "b3ad5753795fa2329b8417f5d75f475d935cc7a70a1f3b08c93feaf109d42ab3", "role": "canonical"},
+        {"facetId": "facet-c246c51d8584980f", "reviewDigest": "6606801878c6ad69be3b9e22bc5ef630d00c40b6cfa5b36b11b73fc1182ceef4", "role": "variant"}
+      ]
+    },
+    {
+      "id": "expo-ui-family-misroute",
+      "intent": "Select universal Expo UI components or isolated SwiftUI and Jetpack Compose trees while preserving Host wrapping and platform-file boundaries.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "This is provider-bound interface implementation whose outputs are component trees, not release artifacts. SDK drift and cross-platform import crashes belong to implementation ownership.",
+      "members": [
+        {"facetId": "facet-04538419e4475442", "reviewDigest": "672997dbd76d0f997cda2952c55a37ba91989c7eb7ce46a04f8de528c3673e6e", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "exported-web-application-release-cleanup",
+      "intent": "Remove generator-owned tagging and branding paths from an exported web application, preserve useful generated notes, prune dependencies against imports, and rebuild after bounded removal batches.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "Evidence-led scaffold removal, artifact replacement, dependency pruning, reversible batches, and repeated builds form a coherent local pre-release cleanup. Replacement design and hosted-backend policy remain explicit handoffs.",
+      "members": [
+        {"facetId": "facet-8505efbe2c79393f", "reviewDigest": "ced6aa71a0860a5bf873045863b0a694a244953d014d14944014f7f7dd7cd095", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "external-production-audit-adapter",
+      "intent": "Run or reuse a pinned third-party production audit, preserve JSON, Markdown, and stderr sidecars, interpret score trajectory, and source-check a selected concern before any fix.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The useful sidecar and source-confirmation discipline is coupled to provider scoring, rate limits, remote processing, and local execution of an npx package. Cached or empty findings cannot prove readiness, so it remains an unsafe audit adapter.",
+      "members": [
+        {"facetId": "facet-d1a10716b54818c0", "reviewDigest": "fe3da5add71de899fb8ff0f3ef013d0c05cd95c2db90175cf6e74e8525d86ab1", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "genomic-analysis-family-misroute",
+      "intent": "Audit genomic intervals, biological data partitions, checksummed universes, tokenizers, and checkpoints before bounded local learning or model inspection.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "The reviewed behavior governs sensitive genomic data and model compatibility, not release publication. Its privacy, untrusted-checkpoint, assembly, and leakage risks require scientific and security ownership.",
+      "members": [
+        {"facetId": "facet-757ee818ab21e6ae", "reviewDigest": "d77d2b87c6b0d7ff3432f830ccb212fac651224964fef325a34ebdd40cf9e5a3", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "incremental-dependency-and-framework-upgrades",
+      "intent": "Advance dependencies or a framework through compatibility mapping, reversible baselines, ordered increments, source and configuration updates, focused and full tests, staging evidence, and retained rollback.",
+      "relationship": "specialized-alternative",
+      "synthesisDecision": "candidate",
+      "rationale": "The general dependency workflow and Rails-specific selective-merge workflow share compatibility, incremental change, regression gates, and rollback invariants while preserving framework-specific defaults, migrations, and remote evidence as a variant.",
+      "members": [
+        {"facetId": "facet-4c246dc4534a8d65", "reviewDigest": "7d57254f79d504adda03a0cd28a21586aaa435efff7ce0d9019553c3d2169145", "role": "canonical"},
+        {"facetId": "facet-5bbf57da9642566b", "reviewDigest": "4b3ff9814440f233a9813b8923e24a485f5cb52b937d9d81b39e43ec0cb7ee0f", "role": "variant"}
+      ]
+    },
+    {
+      "id": "istio-canary-traffic-adapter",
+      "intent": "Control a service-mesh canary through weighted routes, retries, timeouts, mirrors, faults, subsets, outlier ejection, and effective proxy-state verification.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The mechanism mutates provider-specific production traffic and depends on current Istio resources, labels, hosts, metrics, and workload state. Retry storms, mirroring, and misrouting keep it outside local release governance.",
+      "members": [
+        {"facetId": "facet-1f3ffdccf7261149", "reviewDigest": "1d7be1deefcdacea244227aa938bad946e0f937ce53e072d7fcde902585791cb", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "k6-performance-release-gate-duplicates",
+      "intent": "Define authorized HTTP, browser, or WebSocket load scenarios with representative shared data, objective thresholds, tagged metrics, and CI artifacts that survive a failing performance gate.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "candidate",
+      "rationale": "The two copies contribute no distinct mechanism and must count once. The retained behavior coherently binds workload shape, objective thresholds, custom and built-in metrics, failure evidence, and explicit target authority.",
+      "members": [
+        {"facetId": "facet-c253f7482b80a2da", "reviewDigest": "5cb60e8ef73247a8e60963348c17c9db4424b570886435d2ab2a91f26f08c397", "role": "canonical"},
+        {"facetId": "facet-e1b2455f7b427ecb", "reviewDigest": "9821edaace76670af911a801f02be859084310f8b3cdb06a098f3d405e60226c", "role": "variant"}
+      ]
+    },
+    {
+      "id": "makepad-artifact-packaging-duplicates",
+      "intent": "Package Makepad resources and binaries into desktop, mobile, and browser artifacts through OS-matched cargo toolchains and an optional release-asset handoff.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "deferred",
+      "rationale": "The two bodies differ only in packaging metadata and expose the same Makepad-specific resource hooks, cargo-packager, cargo-makepad, IPA wrapping, and CI matrix. Mutable dependencies, provisioning, signing, and missing notarization or store semantics keep it a framework adapter.",
+      "members": [
+        {"facetId": "facet-697d71100cd5d4ea", "reviewDigest": "5852d5b7b35c4237dc73b2c5cce17cabe94fd29fb71dc462a62b476f663a6454", "role": "canonical"},
+        {"facetId": "facet-b4c158bacdcd5367", "reviewDigest": "e1fd4544d94971a4c86b8450ec4c942f411204aea77776de18bab84883d4bdf7", "role": "variant"}
+      ]
+    },
+    {
+      "id": "monorepo-release-graph-cache-correctness",
+      "intent": "Design a monorepo release task graph from package ownership and workspace dependencies, with declared cache inputs and outputs, environment hashing, affected-package selection, overrides, and transit nodes.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "Task ownership, dependency ordering, cache correctness, change filtering, and invalidation form one local delivery-design mechanism. Registry authentication, signing, publication, and rollback remain separate release effects.",
+      "members": [
+        {"facetId": "facet-a840cdbdc524d008", "reviewDigest": "365870e9c9986c42649fa853e71e8df5e74045950afc6a8f5ea462781531edd4", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "network-analysis-family-misroute",
+      "intent": "Construct typed graphs, run path, centrality, connectivity, and community analysis, convert representations, and render deterministic layouts.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "This is data analysis and visualization with no release artifact, registry, deployment, signing, or readiness gate. Saving a graph or image does not make the mechanism release publishing.",
+      "members": [
+        {"facetId": "facet-8ced220fda11bb6f", "reviewDigest": "9d53d11514fd533414caf05feba6971e4389ab5298029aad3d982c49b77a8f1f", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "node-package-release-reproducibility",
+      "intent": "Prepare a Node package or workspace release through strict dependency resolution, frozen lockfiles, centralized version and override policy, install-script approval, SBOM evidence, and a bounded staging or registry handoff.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "Workspace topology, deterministic resolution, peer and patch policy, frozen CI, build approval, versioning, and artifact evidence form a coherent local release gate. Installation and registry publication remain external effects rather than implied completion.",
+      "members": [
+        {"facetId": "facet-0bcab5c711f8b67b", "reviewDigest": "1c89fc8f0d74aae9541da6d449c3f70a68b5fcca76f0564cbafa7f7dfcedc48b", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "offline-pwa-release-readiness",
+      "intent": "Prepare an installable offline web release with a manifest, maskable icons, versioned service-worker lifecycle, resource-specific cache strategies, offline fallback, and Lighthouse plus device evidence.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "Manifest and installability metadata, service-worker registration, versioned cache activation, fetch strategies, failure fallbacks, and deterministic device checks form one local implementation and readiness contract without hosting authority.",
+      "members": [
+        {"facetId": "facet-5a6c4c78cf47190e", "reviewDigest": "ac84344731fc7f8a696f1d676a23cd9e4c677b0e938104d0f3bddae7a024a0f3", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "odoo-single-host-deployment-duplicates",
+      "intent": "Operate a single-host Odoo and PostgreSQL Compose topology with private database networking, durable volumes, health-gated startup, resource limits, application-only restart, and SQL backup.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "deferred",
+      "rationale": "The two copies expose the same Odoo deployment mechanism and must not be counted independently. Odoo image and addon paths, database mutation, TLS proxy details, secrets, and unsupported shared storage keep it project-bound.",
+      "members": [
+        {"facetId": "facet-18302418895bf790", "reviewDigest": "cf4d804c8b26507d09510111e136760bc998318024bd459d37e61dc7d2d6591d", "role": "canonical"},
+        {"facetId": "facet-7474ef9eb96b0469", "reviewDigest": "a94076304b5aa741d92e0ab4b358362649538fb025d97c42ea66746d688106ef", "role": "variant"}
+      ]
+    },
+    {
+      "id": "product-requirements-issue-publication-misroute",
+      "intent": "Reconcile conversation and repository context into a product requirements document, agree a behavioral test seam, and hand off an authorized tracker issue.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "The artifact is product planning and issue-tracker mutation, not release publication. Synthesis risk, readiness signaling, and external issue creation require product and authority ownership.",
+      "members": [
+        {"facetId": "facet-322a2fbe313f4d7d", "reviewDigest": "110a57bd159cefeaa7bdae8b1a3b177f7fe9498368d9b281a5f4db1f53224ddb", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "python-engineering-family-misroutes",
+      "intent": "Apply modern Python typing, dependency, testing, profiling, service, container, and observability practices within explicit runtime and project constraints.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "rejected",
+      "rationale": "The two near-duplicate Python bodies emphasize different slices of the same broad engineering mechanism but neither supplies a release artifact, version boundary, registry transaction, or deployment gate. Their implementation behavior remains outside release ownership.",
+      "members": [
+        {"facetId": "facet-2fdd9874e585634e", "reviewDigest": "2ef03a3f57a8c8f5ec08ef251f3c232e69e15299ad0ede1d724aed3905258b10", "role": "canonical"},
+        {"facetId": "facet-39a9ba4088924718", "reviewDigest": "9d166d100549dc78135d6eb8f267fce0a5472585f0255ce5624d49fca7a8a276", "role": "variant"}
+      ]
+    },
+    {
+      "id": "release-agent-readonly-permission-baseline",
+      "intent": "Derive a least-privilege read-only agent permission baseline from repository and lockfile evidence while separating command allowlists, documentation domains, and MCP configuration.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "Stack detection, existing-permission inspection, bounded allowlist derivation, MCP separation, and rejection of writes form a coherent local governance artifact. It grants no deployment or publication authority.",
+      "members": [
+        {"facetId": "facet-843857f83758d72f", "reviewDigest": "128041c07d25c29d11da07e456e742853770b58ef8a1186918341e6c7bd43367", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "repository-derived-release-documentation",
+      "intent": "Build a repository-derived README from observed entry points, schemas, scripts, environment placeholders, deployment markers, setup paths, architecture, tests, and symptom-specific troubleshooting.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "Repository mapping, deployment-target detection, audience-aware document construction, and fact-bounded troubleshooting form one local documentation artifact. Documented commands remain examples rather than authorized execution.",
+      "members": [
+        {"facetId": "facet-0d4c6f521f3780c5", "reviewDigest": "9bc9692e6858e4a67df611640e2efc8bd7500ad3c63bc42ae8493a9b39a2a9b0", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "staging-service-deployment-thin-fixture",
+      "intent": "Expose a generated staging deployment script for review and confirmation before a service restart that may create downtime.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The fixture omits artifact source, host identity, commands, service manager, credentials, health checks, rollback, and terminal success evidence. Confirmation cannot make an unspecified external script safe.",
+      "members": [
+        {"facetId": "facet-fa17b4acea349615", "reviewDigest": "4c1d94515159f56ad1ea05b86ee4e80b92cf960f0fac2d6842526f0dced04c27", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "terraform-command-dispatch-thin-fixture",
+      "intent": "Recognize Terraform-specific plan, apply, or destroy requests and collect a workspace plus command without executing infrastructure mutation.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The fixture supplies activation phrases but no initialization, state, variable, plan-review, identity, approval, output, lock, recovery, or destroy-confirmation contract. A workspace name does not establish authority.",
+      "members": [
+        {"facetId": "facet-933281b8ad731dd1", "reviewDigest": "bb0c3694097d85d67c1fda1a4b608cf5a7e173a0a8459ea5c670e58dcbf785db", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "vercel-preview-and-project-operations-adapters",
+      "intent": "Resolve Vercel repository, link, identity, team, project, and token state before preview-first deployment, inspection, or a separately approved project configuration mutation.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "deferred",
+      "rationale": "State discovery and token-safe binding are ordered prerequisites to preview deployment, but both reviews retain provider credentials, remote linking, uploads, environment and domain mutation, billing, and production-push boundaries. They remain one provider adapter family.",
+      "members": [
+        {"facetId": "facet-7d35e341366de063", "reviewDigest": "d9bb9aa1b106f62f47a40d04a3dfa493dbb577e329bf742a1fb5471be5145c7f", "role": "component"},
+        {"facetId": "facet-a4d1f1bd76517d96", "reviewDigest": "6511a88a81f0a440d9ae9aeada1830fa5b0c0d2c7e95f9479eb1a0fbcd1034f4", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "vitepress-documentation-packaging-adapter",
+      "intent": "Package wiki Markdown as a VitePress static site with generated navigation, Mermaid theme repair, post-mount DOM handling, zoom behavior, compatibility rewrites, and a local dist tree.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The coherent local build is tightly coupled to VitePress, Vue, Mermaid, unpinned packages, and brittle inline-style mutation while omitting hosting, accessibility acceptance, and CDN behavior. It remains a framework-specific packaging adapter.",
+      "members": [
+        {"facetId": "facet-1e337041f2755189", "reviewDigest": "feefbfd6b261f8574528d9928b31b704b94566141a0e374707cfaf4368bb57e8", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "x-article-publication-thin-fixture",
+      "intent": "Record that naming X article publication without an editor, API, authentication, artifact, submission sequence, or confirmation supplies no publication capability.",
+      "relationship": "boundary",
+      "synthesisDecision": "rejected",
+      "rationale": "The 904-byte body provides only a destination name and upstream pointer. Inventing account, draft, media, scheduling, or success mechanics would create unsupported publication authority.",
+      "members": [
+        {"facetId": "facet-0795f4d99301851b", "reviewDigest": "92ae516faedceaeadb76c148f37f3bd5c4a25f8840a5f7f37d6f8d37ca2f4147", "role": "boundary"}
+      ]
+    }
+  ]
+}
