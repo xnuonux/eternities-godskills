@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "clusterSetId": "wave2-game-design-development-clusters-v1",
+  "familyId": "game-design-development",
+  "clusters": [
+    {
+      "id": "realtime-3d-performance-and-spatial-systems",
+      "intent": "Design real-time 3D scenes through rendering stages, shader and lighting choices, collision abstractions, camera behavior, and distance-based detail budgets.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "candidate",
+      "rationale": "The two engine-neutral reviews cover the same 3D scene, rendering, collision, camera, lighting, and LOD mechanism; one canonical member and one variant preserve the evidence without duplicate ownership.",
+      "members": [
+        {"facetId": "facet-1502ae7a8117a5f6", "reviewDigest": "03b2b81f9c391b307e65ba4697c3b770140dd1073dcd4ff18516f783cc35c21f", "role": "canonical"},
+        {"facetId": "facet-95bf4c73556222cb", "reviewDigest": "ff5276c58fd6afa55a76808f65a5c277686070de7805d430f39e11e2d5cba4f8", "role": "variant"}
+      ]
+    },
+    {
+      "id": "mobile-platform-constraints-and-lifecycle",
+      "intent": "Adapt game controls, rendering, lifecycle, thermal degradation, and release planning to constrained touch devices and mobile distribution boundaries.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "Touch interaction, pause and lifecycle handling, thermal degradation, device performance, and store readiness form one mobile specialization with explicit shipping authority boundaries.",
+      "members": [
+        {"facetId": "facet-193805498286d495", "reviewDigest": "e2baec6d8208ecb783896de22d4cb4dfdbfb52c40883d70d59c9bde1209cfe59", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "immersive-comfort-and-spatial-interaction",
+      "intent": "Design immersive interaction around comfort, stable frame timing, scale and depth cues, locomotion, and controller or hand-tracking affordances.",
+      "relationship": "ordered-composition",
+      "synthesisDecision": "candidate",
+      "rationale": "The review binds player comfort, movement choice, spatial perception, tracked input, and frame-time consistency into a distinct immersive-experience acceptance surface.",
+      "members": [
+        {"facetId": "facet-35b2521f7def4459", "reviewDigest": "5bb762e22b9d1a74b1153a5ad864e51c9f38d2c6c2e5f18be5a86b189bfa3b47", "role": "canonical"}
+      ]
+    },
+    {
+      "id": "2d-runtime-structure-and-guest-lifecycle",
+      "intent": "Structure engine-neutral 2D scenes with atlases, tile layers, simplified collision, genre movement, camera response, and deterministic teardown of embedded guests.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "candidate",
+      "rationale": "Both reviews describe the same 2D runtime responsibilities and cleanup boundaries with complementary wording, so they form one canonical mechanism and one variant.",
+      "members": [
+        {"facetId": "facet-55662c25caf4ed67", "reviewDigest": "9493169e19ecceb2d075b33fbd078503781b683168f2c1d51ef4c3d20400b641", "role": "canonical"},
+        {"facetId": "facet-7fd194a27a513300", "reviewDigest": "14cde4ed61dcb80cc8fdb615925783a58efdf88a464f406f2ffd45b0cb865378", "role": "variant"}
+      ]
+    },
+    {
+      "id": "game-loop-prototyping-and-balance",
+      "intent": "Turn a game concept into a testable player loop, compact design brief, progression model, pacing hypothesis, and evidence-led playtest balancing cycle.",
+      "relationship": "behavioral-equivalent",
+      "synthesisDecision": "candidate",
+      "rationale": "The two reviews share the same core-loop, mechanics, progression, motivation, pacing, and playtest feedback contract and should not become parallel direction skills.",
+      "members": [
+        {"facetId": "facet-625d8d8ae154520a", "reviewDigest": "d123c44561e258e0651dca450758abfbf559284c752eb794a896e0fc6ea05311", "role": "canonical"},
+        {"facetId": "facet-ab48f061a45f73f8", "reviewDigest": "679aa69af8308f739787c51cf0412ed2fd75dbd1d074cfc3083976598ff923b2", "role": "variant"}
+      ]
+    },
+    {
+      "id": "engine-specific-godot-architecture",
+      "intent": "Apply version-matched Godot project, scene, signal, GDScript, optimization, and reference-lookup practices.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The useful architecture patterns are coupled to one engine version, language, documentation surface, and dependency environment, so they remain a specialist adapter rather than portable Arcadia behavior.",
+      "members": [
+        {"facetId": "facet-d47e035c87f359af", "reviewDigest": "f0fa32bac97726f9b5b837f3acef4dea82c1b66656f579548e6eaa64f02b65c0", "role": "boundary"}
+      ]
+    },
+    {
+      "id": "browser-game-runtime-and-lifecycle",
+      "intent": "Select a browser rendering stack and coordinate progressive assets, visibility lifecycle, audio activation, offline packaging, hybrid interfaces, and teardown.",
+      "relationship": "boundary",
+      "synthesisDecision": "deferred",
+      "rationale": "The reviewed mechanism is coherent but spans changing browser APIs, framework guests, offline packaging, audio policies, and deployment choices that require a separate current web-runtime contract.",
+      "members": [
+        {"facetId": "facet-e0958c30ccaf4786", "reviewDigest": "4e363d9693ee48ea2d640086f9ee2e236d505560bb585c3a42f61dd13c098d0b", "role": "boundary"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "overlapSetId": "wave2-game-design-development-overlaps-v1",
+  "familyId": "game-design-development",
+  "decisions": [
+    {
+      "schemaVersion": 1,
+      "familyId": "game-design-development",
+      "clusterId": "realtime-3d-performance-and-spatial-systems",
+      "targetSkillId": "eternities-arcadia",
+      "disposition": "extend-existing",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-arcadia", "digest": "863050a6c041efa98f9a4bd93f77e06c8049ce3b6a008007ecca3685b694f5e2"},
+        {"kind": "legacy-cluster", "id": "game-runtime-systems", "digest": "81df935d359841e53bd1ae00cdcf2302db6e9a36231dd8dacb79818dd789effe"},
+        {"kind": "godskill", "id": "eternities-muse", "digest": "b8fb2a01a595b2b03133a9732e352e07f3d884ad5210684b19b98a72ee5f5134"}
+      ],
+      "mechanismComparison": "Arcadia owns engine boundaries and performance budgets and Muse owns 3D scene budgets and visual acceptance, but neither contract explicitly binds rendering stages, collision abstraction, camera behavior, lighting, shaders, and LOD into one game-scene specialization.",
+      "rationale": "Extend Arcadia's runtime route with the missing engine-neutral 3D scene contract while continuing to delegate visual acceptance to Muse.",
+      "intendedTier": "godskill-extension"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "game-design-development",
+      "clusterId": "mobile-platform-constraints-and-lifecycle",
+      "targetSkillId": "eternities-arcadia",
+      "disposition": "covered-stronger",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-arcadia", "digest": "863050a6c041efa98f9a4bd93f77e06c8049ce3b6a008007ecca3685b694f5e2"},
+        {"kind": "legacy-cluster", "id": "game-shipping-boundary", "digest": "1b7b8214140bd0dbca8fe6bf87f9fd05ff2c7759720d105328358a6bbfc8286b"}
+      ],
+      "mechanismComparison": "Arcadia already reconciles target platform, input intents, performance budgets, device degradation, and shipping refusal boundaries, while the legacy cluster keeps signing, store policy, and publication outside local authority.",
+      "rationale": "Retain the mobile review as supporting pattern evidence without duplicating Arcadia's platform and shipping boundary.",
+      "intendedTier": "none"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "game-design-development",
+      "clusterId": "immersive-comfort-and-spatial-interaction",
+      "targetSkillId": "eternities-arcadia",
+      "disposition": "extend-existing",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-arcadia", "digest": "863050a6c041efa98f9a4bd93f77e06c8049ce3b6a008007ecca3685b694f5e2"},
+        {"kind": "legacy-cluster", "id": "game-player-experience", "digest": "2d41d06b1e097ebc953d05bf7b49ecd31558a6e13d22e5f499aaac6302304fb3"},
+        {"kind": "godskill", "id": "eternities-muse", "digest": "b8fb2a01a595b2b03133a9732e352e07f3d884ad5210684b19b98a72ee5f5134"}
+      ],
+      "mechanismComparison": "Arcadia and Muse cover player experience, accessibility, device budgets, scale, and visual acceptance, but they do not explicitly own immersive locomotion comfort, depth cues, tracked-hand affordances, or headset frame-time acceptance.",
+      "rationale": "Add one immersive-experience specialization to Arcadia with Muse as the spatial and visual acceptance delegate.",
+      "intendedTier": "godskill-extension"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "game-design-development",
+      "clusterId": "2d-runtime-structure-and-guest-lifecycle",
+      "targetSkillId": "eternities-arcadia",
+      "disposition": "covered-stronger",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-arcadia", "digest": "863050a6c041efa98f9a4bd93f77e06c8049ce3b6a008007ecca3685b694f5e2"},
+        {"kind": "legacy-cluster", "id": "game-runtime-systems", "digest": "81df935d359841e53bd1ae00cdcf2302db6e9a36231dd8dacb79818dd789effe"}
+      ],
+      "mechanismComparison": "Arcadia's runtime route already owns simulation loops, engine boundaries, input intents, performance budgets, and verified local changes, which subsume the narrower 2D sprite, tile, movement, camera, and teardown patterns.",
+      "rationale": "Keep the pair as implementation evidence for Arcadia rather than introducing a parallel 2D runtime owner.",
+      "intendedTier": "none"
+    },
+    {
+      "schemaVersion": 1,
+      "familyId": "game-design-development",
+      "clusterId": "game-loop-prototyping-and-balance",
+      "targetSkillId": "eternities-arcadia",
+      "disposition": "covered-stronger",
+      "comparedAgainst": [
+        {"kind": "godskill", "id": "eternities-arcadia", "digest": "863050a6c041efa98f9a4bd93f77e06c8049ce3b6a008007ecca3685b694f5e2"},
+        {"kind": "legacy-cluster", "id": "game-direction-contract", "digest": "efa42bb782e6e48929b724272d6cae334dd070353e84c942a24811d129468beb"}
+      ],
+      "mechanismComparison": "Arcadia's game-direction route already owns player promise, game brief, balance and pacing, narrative state, ethical economy, evidence gaps, and human play verdict boundaries.",
+      "rationale": "The Wave 2 pair reinforces the existing direction contract and does not add a distinct terminal artifact or authority boundary.",
+      "intendedTier": "none"
+    }
+  ]
+}
