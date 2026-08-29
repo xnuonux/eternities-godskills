@@ -25,13 +25,21 @@ Text evidence is capped per file. Cards retain path, digest, byte count, heading
 
 ## Capability disposition
 
-The first review wave promotes only recurring mechanisms that close confirmed gaps:
+The initial three-owner hypothesis was revised after the physical nested-repository scan and four independent read-only owner reviews. Promotion remains limited to recurring mechanisms that close a demonstrated portable gap:
 
-1. Forge gains evidence-weighted independent-lens synthesis, goal-backward wiring proof, and collision-safe shared-tree coordination.
-2. Phoenix gains measurement-before-hypothesis diagnosis, an append-only eliminated-hypothesis ledger, and bounded stall termination.
-3. Atlas gains schema-first verification, coverage-before-ranking, additive migration proof, and post-change structural checks.
+1. Forge gains contended-key leases, fresh integration-state checks, and versioned delegation envelopes.
+2. Phoenix gains an append-only eliminated-hypothesis ledger and exactly one declared next check.
+3. Aegis gains a five-boundary static-rule fixture gate.
+4. Oracle gains bounded prior-art falsification that cannot overclaim a negative search.
+5. Athena gains evaluator-first falsification and independently observed criterion calibration.
+6. Architect gains verifier-over-self-report runtime truth and explicit tool-velocity pause transitions.
+7. Logos gains source, voice, blueprint, and ordered revision packet closure.
+8. Daedalus gains a claim-to-probe goal-proof ledger with declared coverage.
+9. Herald gains per-component verification, rollback, version, and dependency closure.
 
-Existing owners remain authoritative for continuity, release planning, writing, visual design, and project-specific deployment. The archive's `keel-wake`, frontend ship, backend deploy, voice, and local project conventions remain provenance evidence or project-specific references rather than duplicate universal skills.
+Atlas was investigated as an initial target but was not expanded: its existing schema discovery, migration compatibility, reconciliation, and acceptance-evidence contract already covers the reviewed schema material. Agora, Arcadia, Beacon, Chorus, Hermes, Mnemosyne, Muse, Omnibus, Orpheus, Prometheus, and Sovereign Skill Refinery likewise had no confirmed portable gap. The reviewed selection manifest records source digest, discovery owner, final owner, overlap analysis, duplicate status, project-coupling verdict, and disposition for every promoted or supporting source.
+
+The archive's `keel-wake`, frontend ship, backend deploy, voice, provider execution, and local project conventions remain provenance evidence or project-specific references rather than duplicate universal skills.
 
 ## Safety and proof limits
 
@@ -44,4 +52,4 @@ Existing owners remain authoritative for continuity, release planning, writing, 
 
 ## Acceptance
 
-The work is complete when the archive union is inventoried with zero unresolved paths, secret and transcript fixtures remain unread, exact duplicates are grouped, every candidate has one bounded owner disposition, the three owner extensions pass focused tests, the promotion receipt binds exact current bytes, and the full project suite passes.
+The work is complete when the archive union is inventoried with zero unresolved paths, generated deployment output, oversized files, secrets, and transcripts remain unread, exact duplicates are grouped, the reviewed selection manifest reconciles every selected source, the nine bounded owner extensions pass focused tests, the promotion receipt binds exact current bytes, and the full project suite passes.

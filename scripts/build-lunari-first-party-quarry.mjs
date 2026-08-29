@@ -1,6 +1,6 @@
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { mkdir, readFile, readdir, rename, rm, writeFile } from "node:fs/promises";
+import { lstat, mkdir, readFile, readdir, rename, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -75,7 +75,8 @@ async function walkPhysicalSource(sourceRoot, excludedRoot) {
       if (entry.isSymbolicLink()) {
         rows.set(relativePath, { relativePath, absolutePath, byteSize: null, forceExcludeReason: "symbolic-link" });
       } else if (entry.isFile()) {
-        rows.set(relativePath, { relativePath, absolutePath, byteSize: null, forceExcludeReason: null });
+        const metadata = await lstat(absolutePath);
+        rows.set(relativePath, { relativePath, absolutePath, byteSize: metadata.size, forceExcludeReason: null });
       }
     }
   }
@@ -87,7 +88,7 @@ async function inventorySource(sourceRoot, outputRoot, onProgress) {
   const [head, treeText, modifiedText] = await Promise.all([
     runGit(sourceRoot, ["rev-parse", "HEAD"]),
     runGit(sourceRoot, ["ls-tree", "-r", "-l", "-z", "--full-tree", "HEAD"]),
-    runGit(sourceRoot, ["ls-files", "-m", "-z"]),
+    runGit(sourceRoot, ["diff", "--name-only", "-z", "HEAD", "--"]),
   ]);
   const headTree = parseHeadTree(treeText);
   const modified = new Set(splitNull(modifiedText).map((value) => value.replaceAll("\\", "/")));
@@ -211,13 +212,13 @@ function countBy(rows, field) {
   return Object.fromEntries(Object.entries(counts).sort(([left], [right]) => left.localeCompare(right)));
 }
 
-export async function buildArchiveArtifacts({ sourceRoot, outputRoot, existingRoot, onProgress = () => {} }) {
+export async function buildArchiveArtifacts({ sourceRoot, outputRoot, existingRoot, maxInspectableBytes = 2_000_000, onProgress = () => {} }) {
   const resolvedSource = path.resolve(sourceRoot);
   const resolvedOutput = path.resolve(outputRoot);
   const { gitHead, records } = await inventorySource(resolvedSource, resolvedOutput, onProgress);
   const sourceIdentity = `lunari-claude-archive@${gitHead}+working-snapshot`;
   const existing = await loadExistingEvidence(path.resolve(existingRoot));
-  const evidence = await buildFirstPartyEvidence(records, { sourceIdentity, ...existing, onProgress });
+  const evidence = await buildFirstPartyEvidence(records, { sourceIdentity, ...existing, maxInspectableBytes, onProgress });
 
   const ledgerText = jsonLines(evidence.ledger);
   const cardsText = jsonLines(evidence.cards);

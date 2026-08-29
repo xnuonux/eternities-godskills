@@ -132,7 +132,7 @@ export function validateGoalProofLedger(ledger = []) {
     if (claim?.state === "complete" && (claim?.probe?.passed !== true || !nonEmpty(claim?.probe?.evidenceRef))) {
       reasons.push(`unproved-completion:${claim?.claimId ?? "unknown"}`);
     }
-    if (claim?.coverage?.bounded === true && !nonEmpty(claim?.coverage?.limit)) {
+    if (claim?.state === "complete" && (claim?.coverage?.bounded !== true || !nonEmpty(claim?.coverage?.limit))) {
       reasons.push(`undeclared-coverage-limit:${claim?.claimId ?? "unknown"}`);
     }
   }

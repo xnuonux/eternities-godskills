@@ -4,7 +4,7 @@ import { pathToFileURL } from "node:url";
 
 import { sha256, writeJsonAtomic } from "../src/io.mjs";
 
-const selectedSources = [
+const expectedSources = [
   [".claude/skills/cc-coordination.md", "68ec043822936c741c6e1a5f928ec44250bc0aec410f3db524e24f5b73c75578", "eternities-forge"],
   [".claude/skills/diagnostic-playbook.md", "92f97dd2468e65a124ab27631c096f2ec8e6f078fb8c69e2aa486e094bad0ded", "eternities-phoenix"],
   [".claude/skills/verify-goal.md", "64d29c115d558587a59f1f034dbc23af3033ea01d45f4886a7a8dd75b3c650f4", "eternities-daedalus"],
@@ -32,7 +32,10 @@ const artifactPaths = [
   "artifacts/lunari-first-party-quarry/coverage.json",
   "artifacts/lunari-first-party-quarry/duplicate-groups.json",
   "artifacts/lunari-first-party-quarry/owner-map.json",
+  "data/lunari-first-party-reviewed-selection.v1.json",
   "docs/lunari-first-party-quarry-report.md",
+  "docs/specs/lunari-first-party-quarry.md",
+  "docs/superpowers/plans/2026-08-28-lunari-first-party-quarry.md",
   "scripts/build-lunari-first-party-infusion-receipt.mjs",
   "scripts/build-lunari-first-party-quarry.mjs",
   "src/first-party-quarry.mjs",
@@ -45,16 +48,63 @@ const artifactPaths = [
   ]),
 ].sort((left, right) => left.localeCompare(right));
 
+export function validateReviewedSelection({
+  expected,
+  selection,
+  sourceIdentity,
+  ledger,
+  ownerMap,
+  duplicateGroups,
+  enhancedOwnerIds,
+}) {
+  if (selection.schemaVersion !== 1 || selection.sourceIdentity !== sourceIdentity) throw new Error("reviewed selection identity is absent or stale");
+  const selectedSources = selection.selections ?? [];
+  const selectedByPath = new Map(selectedSources.map((source) => [source.path, source]));
+  if (selectedByPath.size !== selectedSources.length || selectedSources.length !== expected.length) throw new Error("reviewed selection is duplicate or incomplete");
+  const ownerByPath = new Map(ownerMap.candidates.map((candidate) => [candidate.relativePath, candidate]));
+  const duplicatePaths = new Set([
+    ...duplicateGroups.internal.flatMap((group) => group.paths ?? []),
+    ...duplicateGroups.corpusMatches.flatMap((group) => [group.relativePath, ...(group.paths ?? [])]),
+    ...duplicateGroups.godskillMatches.flatMap((group) => [group.relativePath, ...(group.paths ?? [])]),
+  ].filter(Boolean));
+  for (const expectedSource of expected) {
+    const source = selectedByPath.get(expectedSource.path);
+    if (!source || source.sha256 !== expectedSource.sha256 || source.owner !== expectedSource.owner) throw new Error(`reviewed source selection is absent or stale: ${expectedSource.path}`);
+    const row = ledger.get(source.path);
+    if (!row || row.sha256 !== source.sha256 || row.contentInspected !== true) throw new Error(`selected source is absent or stale: ${source.path}`);
+    const discoveryOwner = ownerByPath.get(source.path)?.owner ?? null;
+    if (source.discoveryOwner !== discoveryOwner) throw new Error(`reviewed source discovery owner drift: ${source.path}`);
+    if (!enhancedOwnerIds.has(source.owner)) throw new Error(`reviewed source has unknown owner: ${source.path}`);
+    if (!["promote", "supporting-only"].includes(source.disposition)) throw new Error(`reviewed source has invalid disposition: ${source.path}`);
+    if (!["reviewed-promoted-source", "reviewed-supporting-source"].includes(source.reviewState)) throw new Error(`selected source is unreviewed: ${source.path}`);
+    if (!source.mechanism || !source.rationale || !source.overlapAnalysis) throw new Error(`selected source lacks review rationale: ${source.path}`);
+    const duplicateStatus = duplicatePaths.has(source.path) ? "duplicate" : "unique";
+    if (source.duplicateStatus !== duplicateStatus) throw new Error(`selected source duplicate disposition drift: ${source.path}`);
+    if (!["portable", "project-specific-supporting-only"].includes(source.projectCouplingVerdict)) throw new Error(`selected source lacks coupling verdict: ${source.path}`);
+    if (source.projectCouplingVerdict !== "portable" && source.disposition !== "supporting-only") throw new Error(`project-specific source cannot be promoted: ${source.path}`);
+  }
+  return selectedSources;
+}
+
 export async function buildLunariFirstPartyInfusionReceipt(root = path.resolve("."), { write = true } = {}) {
   const quarryRoot = path.join(root, "artifacts/lunari-first-party-quarry");
   const coverage = JSON.parse(await readFile(path.join(quarryRoot, "coverage.json"), "utf8"));
   const ledger = new Map((await readFile(path.join(quarryRoot, "coverage-ledger.jsonl"), "utf8"))
     .trim().split(/\r?\n/).map(JSON.parse).map((row) => [row.relativePath, row]));
+  const ownerMap = JSON.parse(await readFile(path.join(quarryRoot, "owner-map.json"), "utf8"));
+  const duplicateGroups = JSON.parse(await readFile(path.join(quarryRoot, "duplicate-groups.json"), "utf8"));
+  const selection = JSON.parse(await readFile(path.join(root, "data/lunari-first-party-reviewed-selection.v1.json"), "utf8"));
   if (coverage.pathCount !== 5438 || coverage.unresolvedCount !== 0) throw new Error("quarry coverage is incomplete or stale");
-  for (const source of selectedSources) {
-    const row = ledger.get(source.path);
-    if (!row || row.sha256 !== source.sha256 || row.contentInspected !== true) throw new Error(`selected source is absent or stale: ${source.path}`);
-  }
+  const enhancedOwnerIds = new Set(owners.map((owner) => `eternities-${owner}`));
+  const selectedSources = validateReviewedSelection({
+    expected: expectedSources,
+    selection,
+    sourceIdentity: coverage.sourceIdentity,
+    ledger,
+    ownerMap,
+    duplicateGroups,
+    enhancedOwnerIds,
+  });
   const artifacts = await Promise.all(artifactPaths.map(async (relativePath) => ({
     path: relativePath,
     sha256: sha256(await readFile(path.join(root, relativePath))),

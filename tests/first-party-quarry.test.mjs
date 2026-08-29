@@ -36,6 +36,7 @@ test("archive classification keeps secrets sessions vendors and binaries content
   });
   assert.equal(classifyArchivePath("history/session-export.jsonl").reason, "raw-session-or-log");
   assert.equal(classifyArchivePath("_repos/vendor/SKILL.md").reason, "vendor-or-dependency");
+  assert.equal(classifyArchivePath(".lunari-deploy/lunaripro/assets/chunk.js").reason, "generated-or-build-output");
   assert.equal(classifyArchivePath("assets/sigil.png").reason, "binary-or-media");
   assert.equal(classifyArchivePath(".claude/skills/diagnostic-playbook.md").inspectContent, true);
 });
@@ -222,23 +223,31 @@ test("archive builder unions head and working files without reading excluded bod
     execFileSync("git", ["config", "user.email", "fixture@example.invalid"], { cwd: root });
     execFileSync("git", ["config", "user.name", "fixture"], { cwd: root });
     await mkdir(path.join(root, "_repos"), { recursive: true });
+    await mkdir(path.join(root, ".lunari-deploy", "lunaripro", "assets"), { recursive: true });
     await mkdir(path.join(root, "nested-agent", ".git"), { recursive: true });
     await writeFile(path.join(root, "tracked.md"), "# Goal proof\nobservable truth and wiring\n");
+    await writeFile(path.join(root, "tracked-large.md"), "small at head\n");
+    await writeFile(path.join(root, "staged-only.md"), "head version\n");
     await writeFile(path.join(root, "head-only.md"), "# Debug\nmeasurement before hypothesis\n");
     await writeFile(path.join(root, ".env"), "SECRET_VALUE=must-not-enter-evidence\n");
     await writeFile(path.join(root, "session.jsonl"), "private session material\n");
     await writeFile(path.join(root, "_repos", "vendor.md"), "# vendor instructions\n");
+    await writeFile(path.join(root, ".lunari-deploy", "lunaripro", "assets", "chunk.js"), "generated deploy bundle must remain unread\n");
     await writeFile(path.join(root, ".gitignore"), "nested-agent/\n");
     await writeFile(path.join(root, "nested-agent", "SKILL.md"), "# Nested first party\nrefine overlapping skills and evaluate promotion\n");
     await writeFile(path.join(root, "nested-agent", ".git", "config"), "must not inventory git internals\n");
-    execFileSync("git", ["add", "--", "tracked.md", "head-only.md", ".env", "session.jsonl", "_repos/vendor.md", ".gitignore"], { cwd: root });
+    execFileSync("git", ["add", "--", "tracked.md", "tracked-large.md", "staged-only.md", "head-only.md", ".env", "session.jsonl", "_repos/vendor.md", ".gitignore"], { cwd: root });
     execFileSync("git", ["commit", "-qm", "fixture"], { cwd: root });
 
     await unlink(path.join(root, "head-only.md"));
     await writeFile(path.join(root, "tracked.md"), "# Goal proof\nobservable truth, wiring, claim ledger\n");
+    await writeFile(path.join(root, "tracked-large.md"), "x".repeat(512));
+    await writeFile(path.join(root, "staged-only.md"), "staged version\n");
+    execFileSync("git", ["add", "--", "staged-only.md"], { cwd: root });
     await writeFile(path.join(root, "working-only.md"), "# Schema\ninformation_schema migration rollback\n");
+    await writeFile(path.join(root, "working-large.md"), "x".repeat(512));
 
-    const first = await buildArchiveArtifacts({ sourceRoot: root, outputRoot: output, existingRoot: root });
+    const first = await buildArchiveArtifacts({ sourceRoot: root, outputRoot: output, existingRoot: root, maxInspectableBytes: 128 });
     const ledger = (await readFile(path.join(output, "coverage-ledger.jsonl"), "utf8"))
       .trim()
       .split("\n")
@@ -248,10 +257,16 @@ test("archive builder unions head and working files without reading excluded bod
     assert.equal(byPath.get("head-only.md").state, "head-only");
     assert.equal(byPath.get("working-only.md").state, "working-only");
     assert.equal(byPath.get("tracked.md").state, "modified");
+    assert.equal(byPath.get("staged-only.md").state, "modified");
+    assert.equal(byPath.get("tracked-large.md").reason, "inspectable-size-budget");
+    assert.equal(byPath.get("tracked-large.md").contentInspected, false);
+    assert.equal(byPath.get("working-large.md").reason, "inspectable-size-budget");
+    assert.equal(byPath.get("working-large.md").contentInspected, false);
     assert.equal(byPath.get(".env").contentInspected, false);
     assert.equal(byPath.get(".env").sha256, null);
     assert.equal(byPath.get("session.jsonl").contentInspected, false);
     assert.equal(byPath.get("_repos/vendor.md").contentInspected, false);
+    assert.equal(byPath.get(".lunari-deploy/lunaripro/assets/chunk.js").contentInspected, false);
     assert.equal(byPath.get("nested-agent/SKILL.md").contentInspected, true);
     assert.equal(byPath.has("nested-agent/.git/config"), false);
     assert.equal([...byPath.keys()].some((value) => value.includes(".git/")), false);
@@ -260,7 +275,7 @@ test("archive builder unions head and working files without reading excluded bod
     const firstBytes = await Promise.all(
       first.artifactPaths.map((artifactPath) => readFile(artifactPath)),
     );
-    const second = await buildArchiveArtifacts({ sourceRoot: root, outputRoot: output, existingRoot: root });
+    const second = await buildArchiveArtifacts({ sourceRoot: root, outputRoot: output, existingRoot: root, maxInspectableBytes: 128 });
     const secondBytes = await Promise.all(
       second.artifactPaths.map((artifactPath) => readFile(artifactPath)),
     );

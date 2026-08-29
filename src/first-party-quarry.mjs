@@ -73,7 +73,7 @@ export function classifyArchivePath(input) {
   }
 
   if (
-    hasSegment(lower, new Set(["dist", "coverage", ".cache", ".next"])) ||
+    hasSegment(lower, new Set(["dist", "coverage", ".cache", ".next", ".lunari-deploy"])) ||
     /(?:^|\/)(?:package-lock|pnpm-lock|yarn\.lock)(?:\.json|\.yaml)?$/i.test(lower) ||
     /(?:^|\/)_shots?(?:\/|$)/i.test(lower)
   ) {

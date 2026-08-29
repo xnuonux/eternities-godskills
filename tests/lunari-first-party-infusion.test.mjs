@@ -17,6 +17,7 @@ import {
   validateReleaseManifest,
 } from "../src/lunari-first-party-contracts.mjs";
 import { sha256 } from "../src/io.mjs";
+import { validateReviewedSelection } from "../scripts/build-lunari-first-party-infusion-receipt.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -99,6 +100,7 @@ test("daedalus completion claims require passing probes and declared coverage", 
   assert.equal(validateGoalProofLedger(ledger).valid, true);
   assert.equal(validateGoalProofLedger([{ ...ledger[0], probe: { passed: false, evidenceRef: "test:1" } }]).valid, false);
   assert.equal(validateGoalProofLedger([{ ...ledger[0], coverage: { bounded: true } }]).valid, false);
+  assert.equal(validateGoalProofLedger([{ claimId: "c2", state: "complete", probe: { passed: true, evidenceRef: "test:2" } }]).valid, false);
 });
 
 test("herald release manifests require verified rollback-safe dependency closure", () => {
@@ -125,10 +127,45 @@ test("infusion receipt binds the deterministic quarry, exact selected sources, a
   for (const source of receipt.selectedSources) {
     assert.equal(source.sha256, ledger.get(source.path)?.sha256, source.path);
     assert.equal(ledger.get(source.path)?.contentInspected, true, source.path);
+    assert.ok(["reviewed-promoted-source", "reviewed-supporting-source"].includes(source.reviewState), source.path);
+    assert.equal(source.duplicateStatus, "unique", source.path);
+    assert.ok(["portable", "project-specific-supporting-only"].includes(source.projectCouplingVerdict), source.path);
   }
   for (const artifact of receipt.artifacts) {
     assert.equal(artifact.sha256, sha256(await readFile(path.join(root, artifact.path))), artifact.path);
   }
   assert.equal(receipt.copiedSourceProse, false);
   assert.equal(receipt.archivedCodeExecuted, false);
+});
+
+test("reviewed selection rejects unreviewed and duplicate-disposition drift", () => {
+  const source = {
+    path: "source.md",
+    sha256: "a".repeat(64),
+    discoveryOwner: "eternities-forge",
+    owner: "eternities-forge",
+    mechanism: "lease",
+    disposition: "promote",
+    reviewState: "unreviewed-first-party",
+    duplicateStatus: "unique",
+    projectCouplingVerdict: "portable",
+    overlapAnalysis: "gap",
+    rationale: "portable mechanism",
+  };
+  const input = {
+    expected: [{ path: source.path, sha256: source.sha256, owner: source.owner }],
+    selection: { schemaVersion: 1, sourceIdentity: "archive@test", selections: [source] },
+    sourceIdentity: "archive@test",
+    ledger: new Map([[source.path, { sha256: source.sha256, contentInspected: true }]]),
+    ownerMap: { candidates: [{ relativePath: source.path, owner: source.discoveryOwner }] },
+    duplicateGroups: { internal: [], corpusMatches: [], godskillMatches: [] },
+    enhancedOwnerIds: new Set([source.owner]),
+  };
+  assert.throws(() => validateReviewedSelection(input), /unreviewed/);
+  const reviewed = { ...source, reviewState: "reviewed-promoted-source" };
+  assert.throws(() => validateReviewedSelection({
+    ...input,
+    selection: { ...input.selection, selections: [reviewed] },
+    duplicateGroups: { internal: [{ sha256: source.sha256, paths: [source.path, "copy.md"] }], corpusMatches: [], godskillMatches: [] },
+  }), /duplicate disposition drift/);
 });

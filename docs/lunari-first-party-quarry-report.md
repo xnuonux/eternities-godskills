@@ -9,22 +9,27 @@ The physical inventory includes tracked, modified, deleted-at-working-tree, igno
 ## Deterministic coverage
 
 - paths inventoried: 5,438
-- inspectable text bodies read: 3,963
-- content-inert exclusions: 1,475
-- bounded candidate cards: 1,332
-- exact internal duplicate groups: 452
+- inspectable text bodies read: 2,971
+- content-inert exclusions: 2,467
+- generated deployment and build paths excluded before read: 1,164
+- bounded candidate cards: 1,090
+- exact internal duplicate groups: 144
 - unresolved reads: 0
 - exact matches to the existing cold corpus: 0
 - exact matches to current Godskill files: 0
 
 Two complete builds produced identical artifact digests:
 
-- coverage ledger: `a13162a921af68759ab344a496e2f8b53bcb5080296810582c423ed97d3b06da`
-- candidate cards: `5ea5d6363f007c276d4fd1b39df8b4d8de427fa8e031762918d7c7964c134f98`
-- duplicate groups: `2286c711f64c70c3b893ab33e0ba8602179d33847ca963a2da836e0f9e4f35ad`
-- owner map: `85bb619cf60d05df4887c5036f4adf2e52bbfb75b971154c451b38aec3d41b7c`
+- coverage ledger: `d6f69676080880d912c137081b5f3239b746ffc4fc59bbbf57e05d6581ab8a4c`
+- candidate cards: `fd5b01dad96a05ce62ffe4982d998b1145ca14d42c9b1c61cd9839b26b712d4b`
+- duplicate groups: `af4c170b41c57d875bf975790cb9b727abce5b22a3648e5b2f096202602d03f0`
+- owner map: `8e907c7adfec2af7039d75e17f694b6fa69cbddaae613d033bb880292a2f3827`
+
+The regenerated ledger excludes every `.lunari-deploy` body as generated deployment output. Physical sizes are captured before reading, so the five oversized text paths are also content-inert. Staged and unstaged changes are classified against `HEAD`.
 
 ## Promoted portable mechanisms
+
+The initial three-owner plan was a pre-review hypothesis. The full physical scan and four independent owner reviews found Atlas already complete for the proposed schema material, while nine other owners had narrower demonstrable gaps. The specification and implementation plan now record this evidence-driven scope change.
 
 Nine owner skills gained narrowly routed, independently written contracts:
 
@@ -41,6 +46,8 @@ Nine owner skills gained narrowly routed, independently written contracts:
 | Eternities Herald | release-unit manifest | every component binds verification, rollback, version, and dependency closure |
 
 The executable reference is `src/lunari-first-party-contracts.mjs`; `tests/lunari-first-party-infusion.test.mjs` exercises ten independent behavior contracts. The skill-local reference files preserve the same rules when a skill is distributed without repository internals.
+
+`data/lunari-first-party-reviewed-selection.v1.json` binds all 18 selected sources to exact digests, lexical discovery owner, reviewed owner, mechanism, disposition, review state, duplicate status, project-coupling verdict, overlap analysis, and rationale. Project-specific implementation sources may support a neutral contract but cannot carry a `promote` disposition.
 
 ## Reaffirmed without expansion
 
