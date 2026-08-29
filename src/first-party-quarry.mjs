@@ -178,7 +178,9 @@ export async function buildFirstPartyEvidence(records, options = {}) {
 
   for (const record of ordered) {
     const relativePath = portablePath(record.relativePath);
-    let classification = classifyArchivePath(relativePath);
+    let classification = record.forceExcludeReason
+      ? { disposition: "excluded", reason: record.forceExcludeReason, inspectContent: false }
+      : classifyArchivePath(relativePath);
     if (classification.inspectContent && record.byteSize > maxInspectableBytes) {
       classification = { disposition: "excluded", reason: "inspectable-size-budget", inspectContent: false };
     }
