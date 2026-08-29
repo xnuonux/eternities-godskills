@@ -20,6 +20,7 @@ const GENERIC_REVIEW_PATTERNS = [
   "identify applicable mechanisms and boundaries apply the mechanism within requested scope check assumptions outputs and failure boundaries",
   "inspect configuration and constraints apply or describe the relevant mechanism check boundaries and verification conditions",
   "identify applicable structures or mechanisms apply bounded domain guidance check the result against stated constraints",
+  "workflow and its documented configuration and execution steps",
 ].map(normalizeText);
 
 function nonEmptyString(value, field) {
@@ -66,6 +67,7 @@ export function validateWave2ReviewBatch(batch, facets, bodyEvidence) {
   const seen = new Set();
   const rows = [];
   const operationScaffolds = new Map();
+  const operationFragments = new Map();
 
   for (const review of batch.reviews) {
     nonEmptyString(review?.facetId, "review.facetId");
@@ -125,6 +127,10 @@ export function validateWave2ReviewBatch(batch, facets, bodyEvidence) {
     }
     const operationScaffold = normalizeText(review.operations.join(" "));
     operationScaffolds.set(operationScaffold, (operationScaffolds.get(operationScaffold) ?? 0) + 1);
+    for (const operation of review.operations) {
+      const fragment = normalizeText(operation);
+      operationFragments.set(fragment, (operationFragments.get(fragment) ?? 0) + 1);
+    }
     if (review.effects.some((effect) => !EFFECTS.has(effect))) {
       throw new Error(`review contains an unknown effect for ${review.facetId}`);
     }
@@ -184,6 +190,12 @@ export function validateWave2ReviewBatch(batch, facets, bodyEvidence) {
       (count) => count >= 5 && count / batch.reviews.length >= 0.2,
     );
     if (repeated) throw new Error(`repeated operation scaffold appears in ${repeated} semantic reviews`);
+    const repeatedFragment = [...operationFragments.values()].find(
+      (count) => count >= 5 && count / batch.reviews.length >= 0.2,
+    );
+    if (repeatedFragment) {
+      throw new Error(`repeated operation fragment appears in ${repeatedFragment} semantic reviews`);
+    }
   }
 
   return rows.sort((left, right) => left.facetId.localeCompare(right.facetId));

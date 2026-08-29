@@ -211,3 +211,33 @@ test("mass-repeated operation scaffolds fail batch quality review", () => {
     /repeated operation scaffold/,
   );
 });
+
+test("repeated generic operation fragments cannot hide behind a varied first operation", () => {
+  const facets = [];
+  const bodies = [];
+  const reviews = [];
+  for (let index = 0; index < 5; index += 1) {
+    const suffix = String(index + 1);
+    const bodySha256 = suffix.repeat(64);
+    const facetId = `facet-${suffix}`;
+    const canonicalSourceId = `owner/repo@head:skills/beta-${suffix}/SKILL.md`;
+    facets.push(facet({ id: facetId, bodySha256, canonicalSourceId, name: `beta-${suffix}` }));
+    bodies.push(bodyEvidence({ bodySha256, canonicalSourceId }));
+    reviews.push(review({
+      facetId,
+      bodySha256,
+      canonicalSourceId,
+      neutralCapabilitySummary: `Coordinates beta mechanism ${suffix} through a distinct artifact and decision boundary.`,
+      operations: [
+        `inspect beta artifact ${suffix}`,
+        "trace the documented configuration mechanism",
+        "verify prerequisites and side-effect boundaries",
+      ],
+    }));
+  }
+
+  assert.throws(
+    () => validateWave2ReviewBatch(batch(reviews), facets, bodies),
+    /repeated operation fragment/,
+  );
+});
