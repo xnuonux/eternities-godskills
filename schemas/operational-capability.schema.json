@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eternities.ai/schemas/operational-capability.v1.json",
+  "title": "Universal operational capability record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "title",
+    "description",
+    "intent",
+    "ownerGodskillId",
+    "supportingGodskillIds",
+    "sourceBinding",
+    "useWhen",
+    "doNotUseWhen",
+    "inputs",
+    "operations",
+    "outputs",
+    "allowedEffects",
+    "requiredAuthority",
+    "forbiddenEffects",
+    "preconditions",
+    "failureBehavior",
+    "exclusions",
+    "terminationCondition",
+    "measurableImprovement",
+    "evaluationCases"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "title": { "type": "string", "minLength": 1 },
+    "description": { "type": "string", "minLength": 1, "maxLength": 420 },
+    "intent": { "type": "string", "minLength": 1 },
+    "ownerGodskillId": { "type": "string", "pattern": "^eternities-[a-z0-9-]+$" },
+    "supportingGodskillIds": { "$ref": "#/$defs/nonEmptyUniqueStrings" },
+    "sourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["targetId", "clusterDigest", "overlapDigest", "reviewDigests", "comparisonDigests"],
+      "properties": {
+        "targetId": { "type": "string", "minLength": 1 },
+        "clusterDigest": { "$ref": "#/$defs/digest" },
+        "overlapDigest": { "$ref": "#/$defs/digest" },
+        "reviewDigests": { "$ref": "#/$defs/nonEmptyUniqueDigests" },
+        "comparisonDigests": { "$ref": "#/$defs/nonEmptyUniqueDigests" }
+      }
+    },
+    "useWhen": { "$ref": "#/$defs/nonEmptyUniqueStrings" },
+    "doNotUseWhen": { "$ref": "#/$defs/nonEmptyUniqueStrings" },
+    "inputs": { "$ref": "#/$defs/nonEmptyUniqueStrings" },
+    "operations": { "$ref": "#/$defs/nonEmptyUniqueStrings" },
+    "outputs": { "$ref": "#/$defs/nonEmptyUniqueStrings" },
+    "allowedEffects": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "enum": ["none", "read", "write", "external-write"] }
+    },
+    "requiredAuthority": { "$ref": "#/$defs/nonEmptyUniqueStrings" },
+    "forbiddenEffects": { "$ref": "#/$defs/nonEmptyUniqueStrings" },
+    "preconditions": { "$ref": "#/$defs/nonEmptyUniqueStrings" },
+    "failureBehavior": { "$ref": "#/$defs/nonEmptyUniqueStrings" },
+    "exclusions": { "$ref": "#/$defs/nonEmptyUniqueStrings" },
+    "terminationCondition": { "type": "string", "minLength": 1 },
+    "measurableImprovement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["baseline", "metric", "threshold"],
+      "properties": {
+        "baseline": { "type": "string", "minLength": 1 },
+        "metric": { "type": "string", "minLength": 1 },
+        "threshold": { "type": "string", "minLength": 1 }
+      }
+    },
+    "evaluationCases": {
+      "type": "array",
+      "minItems": 9,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind", "critical", "prompt", "expected"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "kind": { "enum": ["direct", "paraphrase", "contextual", "exclusion", "conflict", "authority", "effect", "failure", "termination"] },
+          "critical": { "const": true },
+          "prompt": { "type": "string", "minLength": 1 },
+          "expected": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "nonEmptyUniqueStrings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "nonEmptyUniqueDigests": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/digest" }
+    }
+  }
+}
