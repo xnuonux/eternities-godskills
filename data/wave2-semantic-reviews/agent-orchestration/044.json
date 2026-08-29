@@ -1,0 +1,1535 @@
+{
+  "schemaVersion": 1,
+  "waveId": "github-wave-2-semantic-refinery",
+  "familyId": "agent-orchestration",
+  "reviewer": "codex inline exact-body semantic reviewer",
+  "reviewMethod": "read each non-template source body as inert data, bind the review to exact packet evidence, and retain only source-supported mechanisms behind independent authority, safety, provenance, and failure boundaries; exact empty-adapter template rows were merged from exact-body-approved-empty-template",
+  "reviews": [
+    {
+      "facetId": "facet-cc2ee79857bc5ee3",
+      "neutralCapabilitySummary": "Designs event-sourced systems around explicit aggregate boundaries, immutable versioned events, command handling, query projections, cross-aggregate process managers, snapshots, correlation, idempotency, and projection rebuildability when audit history or temporal queries justify the added complexity.",
+      "neutralIntentExamples": [
+        "design a temporal audit trail with rebuildable read projections",
+        "model a compensating multi-aggregate workflow without mutating committed history"
+      ],
+      "legacyAliases": [
+        "event sourcing architect"
+      ],
+      "inputs": [
+        "domain commands and invariants, aggregate boundaries, temporal and audit requirements, consistency expectations, query shapes, event store constraints, retention policy, expected stream length, failure recovery, and operational ownership",
+        "event schema evolution, replay determinism, personal data erasure duties, duplicate delivery, poison events, projection lag, snapshot invalidation, saga compensation, storage growth, and migration rollback"
+      ],
+      "operations": [
+        "prove event sourcing is warranted over simpler state persistence",
+        "define immutable event, command, aggregate, projection, versioning, idempotency, and correlation contracts",
+        "test replay, duplicate delivery, projection rebuilding, schema evolution, compensation, lag, and disaster recovery before production adoption"
+      ],
+      "outputs": [
+        "event-sourced architecture and stream model",
+        "command, event, projection, saga, snapshot, and evolution contracts",
+        "replay, consistency, recovery, and operational evidence"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "event sourcing can overcomplicate simple domains",
+        "event evolution can make historical replay fail",
+        "projection lag exposes stale reads",
+        "immutable history conflicts with some deletion obligations"
+      ],
+      "exclusions": [
+        "does not use event sourcing when CRUD satisfies the domain",
+        "does not mutate committed production events",
+        "does not assume exactly-once delivery",
+        "does not rebuild production projections without staged proof",
+        "does not hide eventual consistency from consumers"
+      ],
+      "usefulInvariants": [
+        "events are immutable facts",
+        "commands enforce aggregate invariants",
+        "handlers are idempotent",
+        "versions remain replayable",
+        "projections can rebuild",
+        "correlation survives workflows",
+        "consistency is explicit"
+      ],
+      "materialRisks": [
+        "irreplayable history",
+        "duplicate effects",
+        "projection corruption",
+        "privacy conflict",
+        "unbounded storage",
+        "compensation failure",
+        "operational complexity"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-bound",
+      "disposition": "independent-implementation",
+      "proposedCluster": "replay-safe-event-sourced-architecture",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-architecture-design/skills/event-sourcing-architect/SKILL.md",
+      "bodySha256": "cc2ee79857bc5ee30f852355ad13b14e2623e5558e4da5ba5021191a203f2028"
+    },
+    {
+      "facetId": "facet-cc61b87ee1c79c28",
+      "neutralCapabilitySummary": "Maps an Odoo purchasing lifecycle from quotation through approved purchase order, receipt, vendor billing, quantity-based vendor pricing, lead times, and three-way matching while preserving stock and accounting trails and qualifying version-specific menu guidance.",
+      "neutralIntentExamples": [
+        "configure receipt-based vendor billing with a purchase approval threshold",
+        "diagnose a purchase order, receipt, and vendor bill quantity mismatch"
+      ],
+      "legacyAliases": [
+        "Odoo purchase workflow"
+      ],
+      "inputs": [
+        "exact Odoo edition and version, installed modules, company and currency, purchasing roles, approval threshold, products and vendors, price breaks, lead times, receipt policy, bill-control policy, accounting localization, and test database",
+        "partial receipts, returns, taxes, exchange rates, permissions, existing custom modules, multi-company boundaries, landed costs, audit retention, posted documents, and production mutation authority"
+      ],
+      "operations": [
+        "verify current Odoo fields, menus, permissions, and module behavior against the target instance",
+        "model quotation, approval, ordering, receiving, matching, billing, exception, and archive paths",
+        "test the flow with non-production records and reconcile stock, payable, currency, and audit outcomes before rollout"
+      ],
+      "outputs": [
+        "version-bound Odoo purchase configuration",
+        "approval, pricing, receipt, billing, and mismatch runbook",
+        "test transaction and reconciliation evidence"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "menu paths and field behavior vary by Odoo version and modules",
+        "currency rates can invalidate expected prices",
+        "posted accounting and stock records are not safely deleted",
+        "simple threshold approval does not model complex matrices"
+      ],
+      "exclusions": [
+        "does not alter production purchasing without authority",
+        "does not bypass receipt-based matching",
+        "does not delete posted or received documents",
+        "does not claim support for subcontracting or EDI",
+        "does not infer accounting localization"
+      ],
+      "usefulInvariants": [
+        "instance version is exact",
+        "roles and thresholds are explicit",
+        "vendor pricing is product-bound",
+        "received and billed quantities reconcile",
+        "posted trails remain intact",
+        "test records precede rollout"
+      ],
+      "materialRisks": [
+        "accounting discrepancy",
+        "stock mismatch",
+        "unauthorized purchase",
+        "currency error",
+        "audit-trail loss",
+        "version drift",
+        "production data mutation"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "auditable-procure-to-pay-configuration",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/odoo-purchase-workflow/SKILL.md",
+      "bodySha256": "cc61b87ee1c79c2883c5451908504d0b998b2a361a343e4f6fb4e760caa56b99"
+    },
+    {
+      "facetId": "facet-cca3b1c437e892fb",
+      "neutralCapabilitySummary": "Structures Python LLM applications around typed validated outputs, dependency-injected tools, bounded retries, provider abstraction, deterministic test doubles, streaming, and explicit conversation history, with consequential tool effects separately authorized and audited.",
+      "neutralIntentExamples": [
+        "build a typed support agent whose tools are testable without a live model",
+        "validate structured model output and retry only recoverable schema failures"
+      ],
+      "legacyAliases": [
+        "PydanticAI typed agents"
+      ],
+      "inputs": [
+        "current PydanticAI and Pydantic versions, model providers, output schemas, dependency interfaces, tool contracts, conversation policy, retry and token budgets, streaming needs, test corpus, secrets, effect authority, and deployment target",
+        "framework API drift, schema brittleness, tool prompt injection, provider differences, secret handling, async concurrency, duplicate effects, retained transcripts, model nondeterminism, and production observability"
+      ],
+      "operations": [
+        "verify current framework APIs and isolate provider configuration",
+        "define typed outputs, injected dependencies, narrowly described tools, validation, retry, history, and effect gates",
+        "exercise deterministic test models plus authorized live integration tests, inspect usage and traces, and verify failure and duplicate-effect handling"
+      ],
+      "outputs": [
+        "typed Python agent implementation",
+        "tool, schema, dependency, history, and authority contracts",
+        "deterministic and live integration evidence"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "embedded examples may use stale framework APIs",
+        "strict schemas can trigger repeated invalid responses",
+        "test doubles prove structure rather than model quality",
+        "provider abstraction does not erase behavioral differences"
+      ],
+      "exclusions": [
+        "does not hardcode credentials",
+        "does not let schemas substitute for business validation",
+        "does not execute mutating tools without authority",
+        "does not hit paid models in ordinary unit tests",
+        "does not assume framework retries make effects idempotent"
+      ],
+      "usefulInvariants": [
+        "outputs validate",
+        "dependencies are explicit",
+        "tools are typed and scoped",
+        "retries are bounded",
+        "tests are deterministic by default",
+        "provider and usage are recorded",
+        "effects remain authorized"
+      ],
+      "materialRisks": [
+        "unauthorized tool action",
+        "secret exposure",
+        "retry amplification",
+        "schema drift",
+        "provider lock-in",
+        "transcript privacy",
+        "false test confidence"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "typed-testable-agent-runtime",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/pydantic-ai/SKILL.md",
+      "bodySha256": "cca3b1c437e892fb0c32a06e3756026c58f8780a008815313dc8ee046ddcd9ce"
+    },
+    {
+      "facetId": "facet-ccaf37c7fda66dde",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/contentful-graphql-automation/SKILL.md",
+      "bodySha256": "ccaf37c7fda66ddee6ff4322bc53574e9031c81943e262bc26ca6de9a8270b21",
+      "neutralCapabilitySummary": "Names a Contentful Graphql adapter behind a common schema-discovery and connection shell but supplies no provider-specific objects, operations, field rules, authority boundaries, or verification contract.",
+      "neutralIntentExamples": [
+        "inspect available Contentful Graphql adapter metadata without submitting a domain payload",
+        "determine whether a requested Contentful Graphql action has a governed operation contract"
+      ],
+      "legacyAliases": [
+        "Rube Contentful Graphql bootstrap"
+      ],
+      "inputs": [
+        "a proposed Contentful Graphql outcome, adapter connection, current schema, and session identity",
+        "missing Contentful Graphql object semantics, authority, field validation, effects, privacy, cost, retry, and rollback rules"
+      ],
+      "operations": [
+        "inspect Contentful Graphql schema and connection metadata without transmitting a provider-domain payload",
+        "reject Contentful Graphql execution when only the generic transport shell is present and no operation-specific contract can be verified"
+      ],
+      "outputs": [
+        "Contentful Graphql adapter metadata",
+        "an unresolved Contentful Graphql authority and behavior contract"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "accounts for mutable Contentful Graphql tool schemas and connection state",
+        "does not define any Contentful Graphql operation, payload, success condition, domain error, or compensating action"
+      ],
+      "exclusions": [
+        "does not authenticate or connect Contentful Graphql",
+        "does not execute a discovered Contentful Graphql tool",
+        "does not infer provider authority from connection availability"
+      ],
+      "usefulInvariants": [
+        "Contentful Graphql schemas are inspected before use",
+        "Contentful Graphql effects remain blocked until a domain contract and authority are explicit"
+      ],
+      "materialRisks": [
+        "Contentful Graphql schemas can expose consequential write operations",
+        "Contentful Graphql authentication can grant broad account access",
+        "Contentful Graphql requests may disclose sensitive data or incur cost"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "generic-unbounded-rube-adapter-bootstrap",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-cccbcdb74732221f",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/thanks-io-automation/SKILL.md",
+      "bodySha256": "cccbcdb74732221f6f959a8c68fc90745d45b23b6a531746314a9535bb154ac8",
+      "neutralCapabilitySummary": "Names a Thanks IO adapter behind a common schema-discovery and connection shell but supplies no provider-specific objects, operations, field rules, authority boundaries, or verification contract.",
+      "neutralIntentExamples": [
+        "inspect available Thanks IO adapter metadata without submitting a domain payload",
+        "determine whether a requested Thanks IO action has a governed operation contract"
+      ],
+      "legacyAliases": [
+        "Rube Thanks IO bootstrap"
+      ],
+      "inputs": [
+        "a proposed Thanks IO outcome, adapter connection, current schema, and session identity",
+        "missing Thanks IO object semantics, authority, field validation, effects, privacy, cost, retry, and rollback rules"
+      ],
+      "operations": [
+        "inspect Thanks IO schema and connection metadata without transmitting a provider-domain payload",
+        "reject Thanks IO execution when only the generic transport shell is present and no operation-specific contract can be verified"
+      ],
+      "outputs": [
+        "Thanks IO adapter metadata",
+        "an unresolved Thanks IO authority and behavior contract"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "accounts for mutable Thanks IO tool schemas and connection state",
+        "does not define any Thanks IO operation, payload, success condition, domain error, or compensating action"
+      ],
+      "exclusions": [
+        "does not authenticate or connect Thanks IO",
+        "does not execute a discovered Thanks IO tool",
+        "does not infer provider authority from connection availability"
+      ],
+      "usefulInvariants": [
+        "Thanks IO schemas are inspected before use",
+        "Thanks IO effects remain blocked until a domain contract and authority are explicit"
+      ],
+      "materialRisks": [
+        "Thanks IO schemas can expose consequential write operations",
+        "Thanks IO authentication can grant broad account access",
+        "Thanks IO requests may disclose sensitive data or incur cost"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "generic-unbounded-rube-adapter-bootstrap",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-cd2adbb0dded8f23",
+      "neutralCapabilitySummary": "Queues narrowly approved scripts through an already installed and independently verified local file bridge, with owner-only queue state, fixed scripts, explicit machine paths, permission ceilings, idempotency, budgets, sensitive-output handling, and a separate approval boundary for any free-form local agent.",
+      "neutralIntentExamples": [
+        "run an approved read-only repository-status script on an owned machine",
+        "queue one explicitly approved bounded local edit after independent bridge verification"
+      ],
+      "legacyAliases": [
+        "cowork to code bridge"
+      ],
+      "inputs": [
+        "verified immutable bridge installation, owned machine, exact absolute target, reviewed fixed script, permission ceiling, owner-only queue and token state, stripped environment, idempotency key, timeout and budget, expected schema, and explicit authority",
+        "ambient credentials, mutable installers, symlinked queues, free-form agent settings and hooks, output secrets, cancellation races, unknown side effects, daemon crashes, retries, and machine-wide account reach"
+      ],
+      "operations": [
+        "require independent machine-side installation and configuration evidence rather than bootstrapping",
+        "prefer a fixed reviewed script and queue one exact bounded action with stable idempotency and limits",
+        "validate and redact results, inspect uncertain side effects before retry, and keep free-form planning and edits behind separate explicit approvals"
+      ],
+      "outputs": [
+        "bounded remote task receipt",
+        "validated and redacted result",
+        "configuration, authority, idempotency, failure, and side-effect record"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "the daemon runs with the local account's broad reach",
+        "the referenced installer is not transitively immutable",
+        "permission mappings may be widened by ambient settings",
+        "crash or cancellation leaves completed effects uncertain"
+      ],
+      "exclusions": [
+        "does not install or repair the bridge",
+        "does not execute mutable remote installers",
+        "does not queue arbitrary commands",
+        "does not infer approval from silence",
+        "does not retry uncertain mutations under a new idempotency key",
+        "does not expose raw sensitive output"
+      ],
+      "usefulInvariants": [
+        "machine ownership is explicit",
+        "installation is independently verified",
+        "target and script are exact",
+        "queue state is owner-only",
+        "authority is least privilege",
+        "idempotency is stable",
+        "uncertain effects are inspected"
+      ],
+      "materialRisks": [
+        "machine compromise",
+        "credential exposure",
+        "arbitrary local execution",
+        "duplicate mutation",
+        "supply-chain compromise",
+        "scope escape",
+        "sensitive output leakage"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "verified-least-authority-local-execution-bridge",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:skills/cowork-to-code-bridge/SKILL.md",
+      "bodySha256": "cd2adbb0dded8f23a3425fc286b1e100d831f338324537817efa2bf6dd2ed7f6"
+    },
+    {
+      "facetId": "facet-cdee520c8c9f7d1e",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/dovetail-automation/SKILL.md",
+      "bodySha256": "cdee520c8c9f7d1e5fb1648055a6b5ed6a054e8552d9bf3eb99f588158bde612",
+      "neutralCapabilitySummary": "Names a Dovetail adapter behind a common schema-discovery and connection shell but supplies no provider-specific objects, operations, field rules, authority boundaries, or verification contract.",
+      "neutralIntentExamples": [
+        "inspect available Dovetail adapter metadata without submitting a domain payload",
+        "determine whether a requested Dovetail action has a governed operation contract"
+      ],
+      "legacyAliases": [
+        "Rube Dovetail bootstrap"
+      ],
+      "inputs": [
+        "a proposed Dovetail outcome, adapter connection, current schema, and session identity",
+        "missing Dovetail object semantics, authority, field validation, effects, privacy, cost, retry, and rollback rules"
+      ],
+      "operations": [
+        "inspect Dovetail schema and connection metadata without transmitting a provider-domain payload",
+        "reject Dovetail execution when only the generic transport shell is present and no operation-specific contract can be verified"
+      ],
+      "outputs": [
+        "Dovetail adapter metadata",
+        "an unresolved Dovetail authority and behavior contract"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "accounts for mutable Dovetail tool schemas and connection state",
+        "does not define any Dovetail operation, payload, success condition, domain error, or compensating action"
+      ],
+      "exclusions": [
+        "does not authenticate or connect Dovetail",
+        "does not execute a discovered Dovetail tool",
+        "does not infer provider authority from connection availability"
+      ],
+      "usefulInvariants": [
+        "Dovetail schemas are inspected before use",
+        "Dovetail effects remain blocked until a domain contract and authority are explicit"
+      ],
+      "materialRisks": [
+        "Dovetail schemas can expose consequential write operations",
+        "Dovetail authentication can grant broad account access",
+        "Dovetail requests may disclose sensitive data or incur cost"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "generic-unbounded-rube-adapter-bootstrap",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-ce1a396d1c88cd21",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/timelink-automation/SKILL.md",
+      "bodySha256": "ce1a396d1c88cd21ba36c3c9a186cf79628cf24189ad222b8cb31fa2e8f5be75",
+      "neutralCapabilitySummary": "Names a Timelink adapter behind a common schema-discovery and connection shell but supplies no provider-specific objects, operations, field rules, authority boundaries, or verification contract.",
+      "neutralIntentExamples": [
+        "inspect available Timelink adapter metadata without submitting a domain payload",
+        "determine whether a requested Timelink action has a governed operation contract"
+      ],
+      "legacyAliases": [
+        "Rube Timelink bootstrap"
+      ],
+      "inputs": [
+        "a proposed Timelink outcome, adapter connection, current schema, and session identity",
+        "missing Timelink object semantics, authority, field validation, effects, privacy, cost, retry, and rollback rules"
+      ],
+      "operations": [
+        "inspect Timelink schema and connection metadata without transmitting a provider-domain payload",
+        "reject Timelink execution when only the generic transport shell is present and no operation-specific contract can be verified"
+      ],
+      "outputs": [
+        "Timelink adapter metadata",
+        "an unresolved Timelink authority and behavior contract"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "accounts for mutable Timelink tool schemas and connection state",
+        "does not define any Timelink operation, payload, success condition, domain error, or compensating action"
+      ],
+      "exclusions": [
+        "does not authenticate or connect Timelink",
+        "does not execute a discovered Timelink tool",
+        "does not infer provider authority from connection availability"
+      ],
+      "usefulInvariants": [
+        "Timelink schemas are inspected before use",
+        "Timelink effects remain blocked until a domain contract and authority are explicit"
+      ],
+      "materialRisks": [
+        "Timelink schemas can expose consequential write operations",
+        "Timelink authentication can grant broad account access",
+        "Timelink requests may disclose sensitive data or incur cost"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "generic-unbounded-rube-adapter-bootstrap",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-ce1db7d9a6421b46",
+      "neutralCapabilitySummary": "Frames an AI and machine-learning delivery lifecycle across use-case definition, model and architecture selection, LLM integration, retrieval, agent design, data and training pipelines, observability, evaluation, security, and deployment, while requiring each broad phase to resolve into evidence-backed specialist work.",
+      "neutralIntentExamples": [
+        "turn an AI product request into a staged architecture and evaluation program",
+        "identify whether a proposed AI feature needs retrieval, tools, training, or deterministic software"
+      ],
+      "legacyAliases": [
+        "AI ML workflow bundle"
+      ],
+      "inputs": [
+        "user outcome and baseline, data provenance and rights, deterministic alternatives, model and provider options, retrieval corpus, tool authority, training need, latency and cost budgets, privacy and abuse model, evaluation set, deployment environment, observability, and rollback",
+        "broad companion-skill assumptions, framework and provider drift, prompt injection, training leakage, retrieval quality, model bias, memory privacy, external effects, cost escalation, and shallow checklist completion"
+      ],
+      "operations": [
+        "define measurable value and test deterministic alternatives before selecting AI machinery",
+        "decompose the system into the smallest necessary model, retrieval, tool, memory, pipeline, and observability components",
+        "evaluate correctness, safety, cost, latency, drift, and fallback on representative data before controlled deployment"
+      ],
+      "outputs": [
+        "AI or ML system delivery map",
+        "data, model, retrieval, tool, evaluation, security, and deployment contracts",
+        "quality, safety, cost, latency, and rollback evidence"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "the source is an orchestration checklist rather than executable expertise",
+        "named companion skills may be absent or weak",
+        "framework-first routing can overbuild",
+        "checkboxes can hide poor model behavior"
+      ],
+      "exclusions": [
+        "does not assume an AI component is necessary",
+        "does not select providers before requirements",
+        "does not train on unlicensed or private data",
+        "does not grant agents broad effects",
+        "does not deploy from checklist completion",
+        "does not omit fallback and rollback"
+      ],
+      "usefulInvariants": [
+        "outcome and baseline lead",
+        "data provenance is known",
+        "architecture is minimal",
+        "effects are governed",
+        "evaluation is representative",
+        "cost and latency are measured",
+        "fallback exists"
+      ],
+      "materialRisks": [
+        "privacy breach",
+        "unsafe agent action",
+        "model failure",
+        "data-rights violation",
+        "cost explosion",
+        "provider lock-in",
+        "deployment regression"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "evidence-gated-ai-system-delivery",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/ai-ml/SKILL.md",
+      "bodySha256": "ce1db7d9a6421b46b7134f113665fa26e9b69de2260d93a68339e0191889ef6c"
+    },
+    {
+      "facetId": "facet-ce37a94779217241",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/expofp-automation/SKILL.md",
+      "bodySha256": "ce37a947792172418038aac9703479b6ba57e23a2f3900ef35f3a995313b59cf",
+      "neutralCapabilitySummary": "Names a Expofp adapter behind a common schema-discovery and connection shell but supplies no provider-specific objects, operations, field rules, authority boundaries, or verification contract.",
+      "neutralIntentExamples": [
+        "inspect available Expofp adapter metadata without submitting a domain payload",
+        "determine whether a requested Expofp action has a governed operation contract"
+      ],
+      "legacyAliases": [
+        "Rube Expofp bootstrap"
+      ],
+      "inputs": [
+        "a proposed Expofp outcome, adapter connection, current schema, and session identity",
+        "missing Expofp object semantics, authority, field validation, effects, privacy, cost, retry, and rollback rules"
+      ],
+      "operations": [
+        "inspect Expofp schema and connection metadata without transmitting a provider-domain payload",
+        "reject Expofp execution when only the generic transport shell is present and no operation-specific contract can be verified"
+      ],
+      "outputs": [
+        "Expofp adapter metadata",
+        "an unresolved Expofp authority and behavior contract"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "accounts for mutable Expofp tool schemas and connection state",
+        "does not define any Expofp operation, payload, success condition, domain error, or compensating action"
+      ],
+      "exclusions": [
+        "does not authenticate or connect Expofp",
+        "does not execute a discovered Expofp tool",
+        "does not infer provider authority from connection availability"
+      ],
+      "usefulInvariants": [
+        "Expofp schemas are inspected before use",
+        "Expofp effects remain blocked until a domain contract and authority are explicit"
+      ],
+      "materialRisks": [
+        "Expofp schemas can expose consequential write operations",
+        "Expofp authentication can grant broad account access",
+        "Expofp requests may disclose sensitive data or incur cost"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "generic-unbounded-rube-adapter-bootstrap",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-ced34b128fd2eea1",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/blackboard-automation/SKILL.md",
+      "bodySha256": "ced34b128fd2eea1ac1cf4845b42fd9e1375da8e1057273ce918050204167606",
+      "neutralCapabilitySummary": "Names a Blackboard adapter behind a common schema-discovery and connection shell but supplies no provider-specific objects, operations, field rules, authority boundaries, or verification contract.",
+      "neutralIntentExamples": [
+        "inspect available Blackboard adapter metadata without submitting a domain payload",
+        "determine whether a requested Blackboard action has a governed operation contract"
+      ],
+      "legacyAliases": [
+        "Rube Blackboard bootstrap"
+      ],
+      "inputs": [
+        "a proposed Blackboard outcome, adapter connection, current schema, and session identity",
+        "missing Blackboard object semantics, authority, field validation, effects, privacy, cost, retry, and rollback rules"
+      ],
+      "operations": [
+        "inspect Blackboard schema and connection metadata without transmitting a provider-domain payload",
+        "reject Blackboard execution when only the generic transport shell is present and no operation-specific contract can be verified"
+      ],
+      "outputs": [
+        "Blackboard adapter metadata",
+        "an unresolved Blackboard authority and behavior contract"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "accounts for mutable Blackboard tool schemas and connection state",
+        "does not define any Blackboard operation, payload, success condition, domain error, or compensating action"
+      ],
+      "exclusions": [
+        "does not authenticate or connect Blackboard",
+        "does not execute a discovered Blackboard tool",
+        "does not infer provider authority from connection availability"
+      ],
+      "usefulInvariants": [
+        "Blackboard schemas are inspected before use",
+        "Blackboard effects remain blocked until a domain contract and authority are explicit"
+      ],
+      "materialRisks": [
+        "Blackboard schemas can expose consequential write operations",
+        "Blackboard authentication can grant broad account access",
+        "Blackboard requests may disclose sensitive data or incur cost"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "generic-unbounded-rube-adapter-bootstrap",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-cf0709b8d62a11c2",
+      "neutralCapabilitySummary": "Inspects LaunchDarkly projects, environments, and code-reference repositories and manages webhook trigger workflows only through exact project, flag, environment, integration, instruction, and trigger identifiers with separate authority for creation and irreversible deletion.",
+      "neutralIntentExamples": [
+        "enumerate environments for an authorized LaunchDarkly project",
+        "design a reviewed feature-flag trigger without creating it"
+      ],
+      "legacyAliases": [
+        "LaunchDarkly automation via Composio"
+      ],
+      "inputs": [
+        "authorized LaunchDarkly account and connection, exact project, environment and flag keys, trigger purpose and integration, on or off instruction, comments, pagination, enterprise entitlements, API permissions, creation or deletion authority, and audit policy",
+        "production flag effects, webhook URL secrecy, API-key scope, wrong environment, irreversible trigger deletion, third-party MCP trust, pagination gaps, code-reference permissions, and provider API drift"
+      ],
+      "operations": [
+        "discover exact projects and environments with read-only calls",
+        "validate identifiers, permissions, environment, trigger behavior, secret handling, and rollback before proposing mutation",
+        "create or delete only the explicitly approved trigger and verify resulting provider state while redacting webhook secrets"
+      ],
+      "outputs": [
+        "project, environment, or code-reference inventory",
+        "reviewed trigger plan or exact mutation receipt",
+        "provider state, permissions, audit, and secret-handling evidence"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "the workflow depends on a third-party MCP and provider connection",
+        "a trigger can change a production feature flag",
+        "deletion is irreversible",
+        "returned webhook URLs are bearer-like secrets"
+      ],
+      "exclusions": [
+        "does not connect an account implicitly",
+        "does not create or delete triggers without exact authority",
+        "does not infer keys from display names",
+        "does not expose trigger URLs",
+        "does not assume enterprise code-reference access",
+        "does not treat listing authority as mutation authority"
+      ],
+      "usefulInvariants": [
+        "account and environment are exact",
+        "project and flag keys are discovered",
+        "permissions are least privilege",
+        "mutation authority is separate",
+        "webhook URLs remain secret",
+        "provider state is verified"
+      ],
+      "materialRisks": [
+        "production feature change",
+        "webhook compromise",
+        "wrong-environment mutation",
+        "irreversible deletion",
+        "credential exposure",
+        "third-party integration compromise",
+        "audit gap"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "deferred",
+      "proposedCluster": "authority-gated-feature-flag-trigger-management",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/launch-darkly-automation/SKILL.md",
+      "bodySha256": "cf0709b8d62a11c217063ea4d74b807c344b1903a73ef3a5305a5b3241d6f11f"
+    },
+    {
+      "facetId": "facet-cf219bcb592c1950",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/mailcheck-automation/SKILL.md",
+      "bodySha256": "cf219bcb592c1950726e6de07f02835a9aeb73d13f922a0991350b16650f7f63",
+      "neutralCapabilitySummary": "Names a Mailcheck adapter behind a common schema-discovery and connection shell but supplies no provider-specific objects, operations, field rules, authority boundaries, or verification contract.",
+      "neutralIntentExamples": [
+        "inspect available Mailcheck adapter metadata without submitting a domain payload",
+        "determine whether a requested Mailcheck action has a governed operation contract"
+      ],
+      "legacyAliases": [
+        "Rube Mailcheck bootstrap"
+      ],
+      "inputs": [
+        "a proposed Mailcheck outcome, adapter connection, current schema, and session identity",
+        "missing Mailcheck object semantics, authority, field validation, effects, privacy, cost, retry, and rollback rules"
+      ],
+      "operations": [
+        "inspect Mailcheck schema and connection metadata without transmitting a provider-domain payload",
+        "reject Mailcheck execution when only the generic transport shell is present and no operation-specific contract can be verified"
+      ],
+      "outputs": [
+        "Mailcheck adapter metadata",
+        "an unresolved Mailcheck authority and behavior contract"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "accounts for mutable Mailcheck tool schemas and connection state",
+        "does not define any Mailcheck operation, payload, success condition, domain error, or compensating action"
+      ],
+      "exclusions": [
+        "does not authenticate or connect Mailcheck",
+        "does not execute a discovered Mailcheck tool",
+        "does not infer provider authority from connection availability"
+      ],
+      "usefulInvariants": [
+        "Mailcheck schemas are inspected before use",
+        "Mailcheck effects remain blocked until a domain contract and authority are explicit"
+      ],
+      "materialRisks": [
+        "Mailcheck schemas can expose consequential write operations",
+        "Mailcheck authentication can grant broad account access",
+        "Mailcheck requests may disclose sensitive data or incur cost"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "generic-unbounded-rube-adapter-bootstrap",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-cf23fae471011be7",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/icypeas-automation/SKILL.md",
+      "bodySha256": "cf23fae471011be7b6d707ea31ea1f33e1cabca754ec3c4572f96cb01ea82886",
+      "neutralCapabilitySummary": "Names a Icypeas adapter behind a common schema-discovery and connection shell but supplies no provider-specific objects, operations, field rules, authority boundaries, or verification contract.",
+      "neutralIntentExamples": [
+        "inspect available Icypeas adapter metadata without submitting a domain payload",
+        "determine whether a requested Icypeas action has a governed operation contract"
+      ],
+      "legacyAliases": [
+        "Rube Icypeas bootstrap"
+      ],
+      "inputs": [
+        "a proposed Icypeas outcome, adapter connection, current schema, and session identity",
+        "missing Icypeas object semantics, authority, field validation, effects, privacy, cost, retry, and rollback rules"
+      ],
+      "operations": [
+        "inspect Icypeas schema and connection metadata without transmitting a provider-domain payload",
+        "reject Icypeas execution when only the generic transport shell is present and no operation-specific contract can be verified"
+      ],
+      "outputs": [
+        "Icypeas adapter metadata",
+        "an unresolved Icypeas authority and behavior contract"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "accounts for mutable Icypeas tool schemas and connection state",
+        "does not define any Icypeas operation, payload, success condition, domain error, or compensating action"
+      ],
+      "exclusions": [
+        "does not authenticate or connect Icypeas",
+        "does not execute a discovered Icypeas tool",
+        "does not infer provider authority from connection availability"
+      ],
+      "usefulInvariants": [
+        "Icypeas schemas are inspected before use",
+        "Icypeas effects remain blocked until a domain contract and authority are explicit"
+      ],
+      "materialRisks": [
+        "Icypeas schemas can expose consequential write operations",
+        "Icypeas authentication can grant broad account access",
+        "Icypeas requests may disclose sensitive data or incur cost"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "generic-unbounded-rube-adapter-bootstrap",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-cfedb16f7c70fcfc",
+      "neutralCapabilitySummary": "Designs durable sequential, parallel, event-driven, scheduled, and orchestrator-worker workflows from explicit effects and failure semantics, using checkpointed deterministic orchestration, idempotent external actions, bounded retries with backoff, timeouts and heartbeats, small persisted state, dead-letter handling, observability, and recovery tests.",
+      "neutralIntentExamples": [
+        "make a payment workflow replay-safe without duplicate charges",
+        "choose between a low-code and code-first durable workflow runtime from reliability requirements"
+      ],
+      "legacyAliases": [
+        "workflow automation and durable execution"
+      ],
+      "inputs": [
+        "workflow graph and triggers, state and effect inventory, ordering and parallelism constraints, durability target, runtime options, retry classes, idempotency keys, timeouts, cancellation, payload sizes, schedules, concurrency and cost budgets, observability, recovery ownership, and deployment authority",
+        "nondeterministic replay, duplicate external effects, retry storms, poison events, long activities, clock behavior, large persisted state, dead letters, worker restarts, partial compensation, provider limits, and schema evolution"
+      ],
+      "operations": [
+        "classify every step by determinism, effect, idempotency, timeout, retry, compensation, and checkpoint boundary",
+        "select the smallest runtime that meets durability and operational requirements and encode bounded workflow patterns",
+        "test replay, duplication, restart, timeout, cancellation, backoff, dead-letter recovery, payload limits, and observability before rollout"
+      ],
+      "outputs": [
+        "durable workflow design or implementation",
+        "step, retry, idempotency, timeout, checkpoint, and failure contracts",
+        "replay, recovery, load, observability, and operational evidence"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "provider examples may drift or contain syntax errors",
+        "durable runtimes replay orchestration and amplify non-idempotent effects",
+        "large state slows or exceeds provider limits",
+        "missing failure handlers strand work silently"
+      ],
+      "exclusions": [
+        "does not make external calls without idempotency strategy",
+        "does not place nondeterminism in replayed orchestration",
+        "does not omit timeouts or bounded retries",
+        "does not persist large payloads when references suffice",
+        "does not deploy without dead-letter ownership",
+        "does not select a platform from hype"
+      ],
+      "usefulInvariants": [
+        "steps checkpoint",
+        "orchestration is deterministic",
+        "effects are idempotent",
+        "retries back off",
+        "timeouts are finite",
+        "state stays bounded",
+        "terminal failures remain recoverable and visible"
+      ],
+      "materialRisks": [
+        "duplicate charge or message",
+        "workflow corruption",
+        "retry storm",
+        "stuck execution",
+        "state bloat",
+        "silent data loss",
+        "provider lock-in"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "independent-implementation",
+      "proposedCluster": "replay-safe-durable-workflow-orchestration",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-bundle-aas-automation-builder/skills/workflow-automation/SKILL.md",
+      "bodySha256": "cfedb16f7c70fcfcd6cf99d617fed046a7a28bbc4c51c0a3d03b4f92ba335ec2"
+    },
+    {
+      "facetId": "facet-d01bdd495721d87c",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/stack-exchange-automation/SKILL.md",
+      "bodySha256": "d01bdd495721d87c226d06165966e8ac7b929e7296a097c4d790187c1d4c6bf1",
+      "neutralCapabilitySummary": "Names a Stack Exchange adapter behind a common schema-discovery and connection shell but supplies no provider-specific objects, operations, field rules, authority boundaries, or verification contract.",
+      "neutralIntentExamples": [
+        "inspect available Stack Exchange adapter metadata without submitting a domain payload",
+        "determine whether a requested Stack Exchange action has a governed operation contract"
+      ],
+      "legacyAliases": [
+        "Rube Stack Exchange bootstrap"
+      ],
+      "inputs": [
+        "a proposed Stack Exchange outcome, adapter connection, current schema, and session identity",
+        "missing Stack Exchange object semantics, authority, field validation, effects, privacy, cost, retry, and rollback rules"
+      ],
+      "operations": [
+        "inspect Stack Exchange schema and connection metadata without transmitting a provider-domain payload",
+        "reject Stack Exchange execution when only the generic transport shell is present and no operation-specific contract can be verified"
+      ],
+      "outputs": [
+        "Stack Exchange adapter metadata",
+        "an unresolved Stack Exchange authority and behavior contract"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "accounts for mutable Stack Exchange tool schemas and connection state",
+        "does not define any Stack Exchange operation, payload, success condition, domain error, or compensating action"
+      ],
+      "exclusions": [
+        "does not authenticate or connect Stack Exchange",
+        "does not execute a discovered Stack Exchange tool",
+        "does not infer provider authority from connection availability"
+      ],
+      "usefulInvariants": [
+        "Stack Exchange schemas are inspected before use",
+        "Stack Exchange effects remain blocked until a domain contract and authority are explicit"
+      ],
+      "materialRisks": [
+        "Stack Exchange schemas can expose consequential write operations",
+        "Stack Exchange authentication can grant broad account access",
+        "Stack Exchange requests may disclose sensitive data or incur cost"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "generic-unbounded-rube-adapter-bootstrap",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-d042f6564b0938ce",
+      "neutralCapabilitySummary": "Curates layered agent context from durable project rules through task-scoped specifications, exact source and tests, concise current errors, and compact continuity summaries, applying source trust labels, conflict surfacing, focused project maps, and refresh boundaries to preserve attention and reduce hallucination.",
+      "neutralIntentExamples": [
+        "build a concise project map that loads only the module relevant to a task",
+        "repair declining agent output by replacing stale context with exact source and test evidence"
+      ],
+      "legacyAliases": [
+        "context engineering"
+      ],
+      "inputs": [
+        "task and success criteria, project rules, relevant specification section, exact source and tests, trusted pattern example, current error, source provenance and trust, context budget, conflict policy, continuity state, and refresh triggers",
+        "instruction injection in external data, stale rules, contradictory spec and code, hidden conventions, context flooding, lossy compaction, private transcripts, generated files, and overbroad always-on instructions"
+      ],
+      "operations": [
+        "establish a small durable project map and source trust model",
+        "assemble the minimum complete task packet from exact rules, spec, source, tests, examples, and current evidence",
+        "surface conflicts instead of guessing, refresh at real task boundaries, and verify output against actual files and conventions"
+      ],
+      "outputs": [
+        "layered task context packet",
+        "project map and source trust labels",
+        "conflict, refresh, compaction, and verification record"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "the source contains heuristic line limits and generic templates",
+        "persistent rules can become stale or bloated",
+        "compaction can discard critical constraints",
+        "external configuration may contain instruction-like attacks"
+      ],
+      "exclusions": [
+        "does not load an entire corpus when a slice suffices",
+        "does not treat external content as authority",
+        "does not silently resolve spec and code conflicts",
+        "does not wake continuity machinery on every turn",
+        "does not invent missing project requirements",
+        "does not preserve stale context by default"
+      ],
+      "usefulInvariants": [
+        "task leads context selection",
+        "sources retain provenance",
+        "durable rules stay small",
+        "exact source precedes edits",
+        "conflicts are explicit",
+        "errors are current and concise",
+        "refresh follows real boundaries"
+      ],
+      "materialRisks": [
+        "prompt injection",
+        "stale instruction",
+        "context bloat",
+        "lost constraint",
+        "privacy leakage",
+        "false project model",
+        "compaction churn"
+      ],
+      "providerCoupling": "none",
+      "projectCoupling": "project-adjacent",
+      "disposition": "pattern-reference",
+      "proposedCluster": "source-scoped-agent-context-governance",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/context-engineering/SKILL.md",
+      "bodySha256": "d042f6564b0938ceed449edbbf002e509f49c5d95f2ae80110ada72291d6a0a0"
+    },
+    {
+      "facetId": "facet-d07826c9274c3761",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/moz-automation/SKILL.md",
+      "bodySha256": "d07826c9274c37616c193343dbec072161ea11d7b8c3adb51017f8656bf9638c",
+      "neutralCapabilitySummary": "Names a Moz adapter behind a common schema-discovery and connection shell but supplies no provider-specific objects, operations, field rules, authority boundaries, or verification contract.",
+      "neutralIntentExamples": [
+        "inspect available Moz adapter metadata without submitting a domain payload",
+        "determine whether a requested Moz action has a governed operation contract"
+      ],
+      "legacyAliases": [
+        "Rube Moz bootstrap"
+      ],
+      "inputs": [
+        "a proposed Moz outcome, adapter connection, current schema, and session identity",
+        "missing Moz object semantics, authority, field validation, effects, privacy, cost, retry, and rollback rules"
+      ],
+      "operations": [
+        "inspect Moz schema and connection metadata without transmitting a provider-domain payload",
+        "reject Moz execution when only the generic transport shell is present and no operation-specific contract can be verified"
+      ],
+      "outputs": [
+        "Moz adapter metadata",
+        "an unresolved Moz authority and behavior contract"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "accounts for mutable Moz tool schemas and connection state",
+        "does not define any Moz operation, payload, success condition, domain error, or compensating action"
+      ],
+      "exclusions": [
+        "does not authenticate or connect Moz",
+        "does not execute a discovered Moz tool",
+        "does not infer provider authority from connection availability"
+      ],
+      "usefulInvariants": [
+        "Moz schemas are inspected before use",
+        "Moz effects remain blocked until a domain contract and authority are explicit"
+      ],
+      "materialRisks": [
+        "Moz schemas can expose consequential write operations",
+        "Moz authentication can grant broad account access",
+        "Moz requests may disclose sensitive data or incur cost"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "generic-unbounded-rube-adapter-bootstrap",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-d07be7ecc3e64139",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/veriphone-automation/SKILL.md",
+      "bodySha256": "d07be7ecc3e64139f9923475c4cb1b9154130630623b13a14c299bd187ea5d46",
+      "neutralCapabilitySummary": "Names a Veriphone adapter behind a common schema-discovery and connection shell but supplies no provider-specific objects, operations, field rules, authority boundaries, or verification contract.",
+      "neutralIntentExamples": [
+        "inspect available Veriphone adapter metadata without submitting a domain payload",
+        "determine whether a requested Veriphone action has a governed operation contract"
+      ],
+      "legacyAliases": [
+        "Rube Veriphone bootstrap"
+      ],
+      "inputs": [
+        "a proposed Veriphone outcome, adapter connection, current schema, and session identity",
+        "missing Veriphone object semantics, authority, field validation, effects, privacy, cost, retry, and rollback rules"
+      ],
+      "operations": [
+        "inspect Veriphone schema and connection metadata without transmitting a provider-domain payload",
+        "reject Veriphone execution when only the generic transport shell is present and no operation-specific contract can be verified"
+      ],
+      "outputs": [
+        "Veriphone adapter metadata",
+        "an unresolved Veriphone authority and behavior contract"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "accounts for mutable Veriphone tool schemas and connection state",
+        "does not define any Veriphone operation, payload, success condition, domain error, or compensating action"
+      ],
+      "exclusions": [
+        "does not authenticate or connect Veriphone",
+        "does not execute a discovered Veriphone tool",
+        "does not infer provider authority from connection availability"
+      ],
+      "usefulInvariants": [
+        "Veriphone schemas are inspected before use",
+        "Veriphone effects remain blocked until a domain contract and authority are explicit"
+      ],
+      "materialRisks": [
+        "Veriphone schemas can expose consequential write operations",
+        "Veriphone authentication can grant broad account access",
+        "Veriphone requests may disclose sensitive data or incur cost"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "generic-unbounded-rube-adapter-bootstrap",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-d07e2ab7b19b546f",
+      "neutralCapabilitySummary": "Selects and structures a monorepo from repository scale, team topology, project boundaries, dependency constraints, build graph, local and remote caching, affected-change analysis, shared-library discipline, ownership, and CI measurements rather than defaulting to a named tool.",
+      "neutralIntentExamples": [
+        "decide whether several repositories should migrate into one workspace",
+        "reduce monorepo CI work using an accurate affected graph and cache evidence"
+      ],
+      "legacyAliases": [
+        "monorepo architect"
+      ],
+      "inputs": [
+        "repositories and histories, products and deployment units, team ownership, dependency graph, language and build systems, CI baseline, cacheability, change frequency, security boundaries, release policy, migration tolerance, and candidate tools",
+        "hidden cross-project dependencies, cache poisoning, generated artifacts, environment-dependent tasks, remote cache credentials, ownership ambiguity, versioning policy, partial migration, CI concurrency, and tool lock-in"
+      ],
+      "operations": [
+        "measure current coupling, build cost, ownership, and release constraints before choosing a repository shape",
+        "design explicit project boundaries, dependency rules, task graph, affected detection, caching, ownership, and migration stages",
+        "pilot representative builds, verify cache correctness and isolation, measure CI improvement, and retain rollback"
+      ],
+      "outputs": [
+        "monorepo decision and architecture",
+        "workspace, dependency, task, cache, ownership, and migration contracts",
+        "correctness, security, build, and CI benchmark evidence"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "the source offers broad advice without tool-version details",
+        "remote caches can return stale or poisoned artifacts",
+        "poor boundaries create a coupled monolith",
+        "affected detection can miss implicit inputs"
+      ],
+      "exclusions": [
+        "does not migrate solely for fashion",
+        "does not select tooling before mapping constraints",
+        "does not cache undeclared nondeterministic tasks",
+        "does not flatten ownership boundaries",
+        "does not claim CI gains without representative measurement",
+        "does not remove rollback during migration"
+      ],
+      "usefulInvariants": [
+        "project boundaries are explicit",
+        "dependency direction is enforced",
+        "task inputs are declared",
+        "cache keys are reproducible",
+        "ownership is visible",
+        "affected analysis is tested",
+        "migration is staged"
+      ],
+      "materialRisks": [
+        "cache poisoning",
+        "dependency sprawl",
+        "CI regression",
+        "release coupling",
+        "credential leakage",
+        "migration disruption",
+        "tool lock-in"
+      ],
+      "providerCoupling": "conditional",
+      "projectCoupling": "project-bound",
+      "disposition": "independent-implementation",
+      "proposedCluster": "evidence-driven-monorepo-architecture",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/monorepo-architect/SKILL.md",
+      "bodySha256": "d07e2ab7b19b546f0617fa7c6bdaaf649df15af3a5659ddf85d6285dbc8ae5ed"
+    },
+    {
+      "facetId": "facet-d0a29658764caf64",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/apipie-ai-automation/SKILL.md",
+      "bodySha256": "d0a29658764caf64eedc29a69bc633c117775a24a0476e59aa3d70a3b707173c",
+      "neutralCapabilitySummary": "Names a Apipie AI adapter behind a common schema-discovery and connection shell but supplies no provider-specific objects, operations, field rules, authority boundaries, or verification contract.",
+      "neutralIntentExamples": [
+        "inspect available Apipie AI adapter metadata without submitting a domain payload",
+        "determine whether a requested Apipie AI action has a governed operation contract"
+      ],
+      "legacyAliases": [
+        "Rube Apipie AI bootstrap"
+      ],
+      "inputs": [
+        "a proposed Apipie AI outcome, adapter connection, current schema, and session identity",
+        "missing Apipie AI object semantics, authority, field validation, effects, privacy, cost, retry, and rollback rules"
+      ],
+      "operations": [
+        "inspect Apipie AI schema and connection metadata without transmitting a provider-domain payload",
+        "reject Apipie AI execution when only the generic transport shell is present and no operation-specific contract can be verified"
+      ],
+      "outputs": [
+        "Apipie AI adapter metadata",
+        "an unresolved Apipie AI authority and behavior contract"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "accounts for mutable Apipie AI tool schemas and connection state",
+        "does not define any Apipie AI operation, payload, success condition, domain error, or compensating action"
+      ],
+      "exclusions": [
+        "does not authenticate or connect Apipie AI",
+        "does not execute a discovered Apipie AI tool",
+        "does not infer provider authority from connection availability"
+      ],
+      "usefulInvariants": [
+        "Apipie AI schemas are inspected before use",
+        "Apipie AI effects remain blocked until a domain contract and authority are explicit"
+      ],
+      "materialRisks": [
+        "Apipie AI schemas can expose consequential write operations",
+        "Apipie AI authentication can grant broad account access",
+        "Apipie AI requests may disclose sensitive data or incur cost"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "generic-unbounded-rube-adapter-bootstrap",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-d0a59c348f8f3849",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/chatfai-automation/SKILL.md",
+      "bodySha256": "d0a59c348f8f3849667e4dfd4fa2e75d892c2e2d0a856076b5c090cbc1ec0515",
+      "neutralCapabilitySummary": "Names a Chatfai adapter behind a common schema-discovery and connection shell but supplies no provider-specific objects, operations, field rules, authority boundaries, or verification contract.",
+      "neutralIntentExamples": [
+        "inspect available Chatfai adapter metadata without submitting a domain payload",
+        "determine whether a requested Chatfai action has a governed operation contract"
+      ],
+      "legacyAliases": [
+        "Rube Chatfai bootstrap"
+      ],
+      "inputs": [
+        "a proposed Chatfai outcome, adapter connection, current schema, and session identity",
+        "missing Chatfai object semantics, authority, field validation, effects, privacy, cost, retry, and rollback rules"
+      ],
+      "operations": [
+        "inspect Chatfai schema and connection metadata without transmitting a provider-domain payload",
+        "reject Chatfai execution when only the generic transport shell is present and no operation-specific contract can be verified"
+      ],
+      "outputs": [
+        "Chatfai adapter metadata",
+        "an unresolved Chatfai authority and behavior contract"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "accounts for mutable Chatfai tool schemas and connection state",
+        "does not define any Chatfai operation, payload, success condition, domain error, or compensating action"
+      ],
+      "exclusions": [
+        "does not authenticate or connect Chatfai",
+        "does not execute a discovered Chatfai tool",
+        "does not infer provider authority from connection availability"
+      ],
+      "usefulInvariants": [
+        "Chatfai schemas are inspected before use",
+        "Chatfai effects remain blocked until a domain contract and authority are explicit"
+      ],
+      "materialRisks": [
+        "Chatfai schemas can expose consequential write operations",
+        "Chatfai authentication can grant broad account access",
+        "Chatfai requests may disclose sensitive data or incur cost"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "generic-unbounded-rube-adapter-bootstrap",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    },
+    {
+      "facetId": "facet-d0c925b3674aadeb",
+      "neutralCapabilitySummary": "Integrates a Vue 3 streaming Markdown renderer by selecting chat, document, or minimal modes, explicit code rendering and optional peers, stable streaming completion behavior, outer-list virtualization ownership, scoped components, and safe HTML and diagram policies with incremental and long-message verification.",
+      "neutralIntentExamples": [
+        "render incremental AI Markdown in Vue without layout instability",
+        "keep a transcript virtualizer authoritative while measuring logical Markdown height"
+      ],
+      "legacyAliases": [
+        "markstream Vue 3"
+      ],
+      "inputs": [
+        "Vue and renderer versions, package manager, existing resets and virtualizer, content trust, rendering mode, streaming lifecycle, code renderer and peers, HTML and diagram policy, long-message bounds, accessibility, performance budget, and dependency-change authority",
+        "untrusted HTML, Mermaid directives, optional peer supply chain, hydration expectations, worker parsing, code highlighting cost, virtualizer measurement, stream completion races, and package API drift"
+      ],
+      "operations": [
+        "verify plain Vue rather than SSR-specific integration and inspect current project conventions",
+        "configure the smallest rendering mode, streaming state, safe-content policy, peer set, and virtualization boundary",
+        "run build and type checks plus incremental stream, completion, untrusted content, accessibility, and long-message cases"
+      ],
+      "outputs": [
+        "scoped Vue streaming Markdown integration",
+        "rendering, trust, streaming, peer, and virtualization contracts",
+        "build, security, accessibility, and performance evidence"
+      ],
+      "effects": [
+        "read",
+        "write"
+      ],
+      "failureBehavior": [
+        "package APIs and peer names can drift",
+        "trusted HTML or loose diagrams can execute unsafe content",
+        "nested virtualizers produce unstable measurements",
+        "optional renderers add runtime and bundle cost"
+      ],
+      "exclusions": [
+        "does not install dependencies without authority",
+        "does not enable trusted HTML for model output",
+        "does not let nested renderers own the same virtualization boundary",
+        "does not assume Vue guidance applies to Nuxt SSR",
+        "does not add optional peers without measured need"
+      ],
+      "usefulInvariants": [
+        "framework mode is exact",
+        "content trust is explicit",
+        "stream completion is stable",
+        "HTML and diagrams stay constrained",
+        "one virtualizer owns measurement",
+        "peer cost is justified",
+        "long messages are tested"
+      ],
+      "materialRisks": [
+        "cross-site scripting",
+        "diagram injection",
+        "layout thrash",
+        "memory growth",
+        "dependency compromise",
+        "hydration mismatch",
+        "accessibility regression"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "independent-implementation",
+      "proposedCluster": "safe-streaming-markdown-rendering",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/markstream-vue/SKILL.md",
+      "bodySha256": "d0c925b3674aadebdb85cc786d2301a9a10f1855d8236dd37b5b4b45a599f2e4"
+    },
+    {
+      "facetId": "facet-d153e4fc8e68b04c",
+      "neutralCapabilitySummary": "Builds Python DBOS workflows with explicit startup configuration, deterministic workflow functions, external and complex operations isolated in durable steps, queues for concurrency, bounded communication, and tests for replay, restart, and framework constraints.",
+      "neutralIntentExamples": [
+        "move an external API call into a replay-safe DBOS step",
+        "use a DBOS queue to bound concurrent durable jobs"
+      ],
+      "legacyAliases": [
+        "DBOS Python best practices"
+      ],
+      "inputs": [
+        "current DBOS Python version and official docs, application lifecycle, workflow and step graph, system database, external services, queue and concurrency needs, messages or events, deterministic inputs, retry and idempotency policy, test database, deployment target, and secrets",
+        "framework API drift, database availability, replay nondeterminism, global mutation, nested workflow restrictions, duplicate effects, queue starvation, schema migration, connection limits, and external client authority"
+      ],
+      "operations": [
+        "verify current DBOS APIs and define application launch and database boundaries",
+        "separate deterministic workflow logic from durable external steps and bounded queues",
+        "test replay, restart, duplicate delivery, concurrency, communication, failure recovery, and configuration before deployment"
+      ],
+      "outputs": [
+        "DBOS Python workflow implementation",
+        "lifecycle, workflow, step, queue, communication, and idempotency contracts",
+        "replay, restart, concurrency, and deployment evidence"
+      ],
+      "effects": [
+        "read",
+        "write",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "the source omits referenced detailed rule files",
+        "embedded configuration can drift with DBOS releases",
+        "external steps still need idempotency",
+        "system-database failure blocks durability"
+      ],
+      "exclusions": [
+        "does not place external calls in replayed workflow logic",
+        "does not mutate globals from workflows or steps",
+        "does not start workflows from prohibited step contexts",
+        "does not use threads as a workflow launcher",
+        "does not deploy unverified configuration",
+        "does not assume durability means exactly-once effects"
+      ],
+      "usefulInvariants": [
+        "startup configuration is explicit",
+        "workflow logic is deterministic",
+        "external operations are steps",
+        "effects are idempotent",
+        "queues bound concurrency",
+        "system state persists",
+        "recovery is tested"
+      ],
+      "materialRisks": [
+        "duplicate external effect",
+        "database outage",
+        "workflow nondeterminism",
+        "queue starvation",
+        "configuration drift",
+        "secret exposure",
+        "recovery failure"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "pattern-reference",
+      "proposedCluster": "deterministic-python-durable-workflows",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false,
+      "canonicalSourceId": "sickn33/agentic-awesome-skills@693f6d5f430067c8df6f267f94caea8b643607db:plugins/agentic-awesome-skills-claude/skills/dbos-python/SKILL.md",
+      "bodySha256": "d153e4fc8e68b04c72e8fb18cee6c6fedf77646e022817b326b8ebb359393aec"
+    },
+    {
+      "facetId": "facet-d1aa543cfa5a651a",
+      "canonicalSourceId": "ComposioHQ/awesome-claude-skills@be2a406907dbc61b73e6827ded415c96139d13a2:composio-skills/beaconstac-automation/SKILL.md",
+      "bodySha256": "d1aa543cfa5a651ad494eb4bae1cf1cb67d63053211145ef06690e17fc40e5c4",
+      "neutralCapabilitySummary": "Names a Beaconstac adapter behind a common schema-discovery and connection shell but supplies no provider-specific objects, operations, field rules, authority boundaries, or verification contract.",
+      "neutralIntentExamples": [
+        "inspect available Beaconstac adapter metadata without submitting a domain payload",
+        "determine whether a requested Beaconstac action has a governed operation contract"
+      ],
+      "legacyAliases": [
+        "Rube Beaconstac bootstrap"
+      ],
+      "inputs": [
+        "a proposed Beaconstac outcome, adapter connection, current schema, and session identity",
+        "missing Beaconstac object semantics, authority, field validation, effects, privacy, cost, retry, and rollback rules"
+      ],
+      "operations": [
+        "inspect Beaconstac schema and connection metadata without transmitting a provider-domain payload",
+        "reject Beaconstac execution when only the generic transport shell is present and no operation-specific contract can be verified"
+      ],
+      "outputs": [
+        "Beaconstac adapter metadata",
+        "an unresolved Beaconstac authority and behavior contract"
+      ],
+      "effects": [
+        "read",
+        "external-write"
+      ],
+      "failureBehavior": [
+        "accounts for mutable Beaconstac tool schemas and connection state",
+        "does not define any Beaconstac operation, payload, success condition, domain error, or compensating action"
+      ],
+      "exclusions": [
+        "does not authenticate or connect Beaconstac",
+        "does not execute a discovered Beaconstac tool",
+        "does not infer provider authority from connection availability"
+      ],
+      "usefulInvariants": [
+        "Beaconstac schemas are inspected before use",
+        "Beaconstac effects remain blocked until a domain contract and authority are explicit"
+      ],
+      "materialRisks": [
+        "Beaconstac schemas can expose consequential write operations",
+        "Beaconstac authentication can grant broad account access",
+        "Beaconstac requests may disclose sensitive data or incur cost"
+      ],
+      "providerCoupling": "provider-bound",
+      "projectCoupling": "project-bound",
+      "disposition": "rejected",
+      "proposedCluster": "generic-unbounded-rube-adapter-bootstrap",
+      "confidence": "high",
+      "copiedSourceProse": false,
+      "promotionClaim": false
+    }
+  ]
+}
