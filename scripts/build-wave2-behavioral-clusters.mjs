@@ -3,7 +3,7 @@ import path from "node:path";
 
 import {
   buildBehavioralClusterSet,
-  buildCoveredOverlapSet,
+  buildConservativeOverlapSet,
   normalizeDraftCluster,
 } from "../src/wave2-behavioral-cluster-builder.mjs";
 import { certifyWave2SemanticClusters } from "../src/wave2-semantic-clusters.mjs";
@@ -11,6 +11,7 @@ import { sha256 } from "../src/io.mjs";
 
 const root = path.resolve(".");
 const write = process.argv.includes("--write");
+const refreshGenerated = process.argv.includes("--refresh-generated");
 const CLUSTER_ROOT = path.join(root, "data/wave2-semantic-clusters");
 const OVERLAP_ROOT = path.join(root, "data/wave2-overlap-decisions");
 const REVIEW_EVIDENCE = path.join(root, "artifacts/wave2-semantic/review-evidence.jsonl");
@@ -107,7 +108,8 @@ async function lunariContracts() {
 
 const reviews = jsonLines(await fs.readFile(REVIEW_EVIDENCE, "utf8"));
 const reviewByFacet = new Map(reviews.map((review) => [review.facetId, review]));
-const existingClusterSets = await readJsonSets(CLUSTER_ROOT);
+const existingClusterSets = (await readJsonSets(CLUSTER_ROOT))
+  .filter((set) => !(refreshGenerated && Object.hasOwn(TARGET_BY_FAMILY, set.familyId)));
 const existingFamilies = new Set(existingClusterSets.map((set) => set.familyId));
 const generatedClusterSets = [];
 for (const familyId of Object.keys(TARGET_BY_FAMILY).sort()) {
@@ -190,14 +192,15 @@ comparisonIndex.indexDigest = stableDigest({
   sectionDigests: comparisonIndex.sectionDigests,
 });
 
-const generatedOverlapSets = generatedClusterSets.map((set) => buildCoveredOverlapSet(
+const generatedOverlapSets = generatedClusterSets.map((set) => buildConservativeOverlapSet(
   set.familyId,
   normalizedClusters.filter((cluster) => cluster.familyId === set.familyId),
   comparisonIndex,
   TARGET_BY_FAMILY[set.familyId],
   reviewByFacet,
 ));
-const existingOverlapSets = await readJsonSets(OVERLAP_ROOT);
+const existingOverlapSets = (await readJsonSets(OVERLAP_ROOT))
+  .filter((set) => !(refreshGenerated && Object.hasOwn(TARGET_BY_FAMILY, set.familyId)));
 const allOverlapDecisions = [...existingOverlapSets, ...generatedOverlapSets].flatMap((set) => set.decisions);
 const certified = certifyWave2SemanticClusters({
   reviews,

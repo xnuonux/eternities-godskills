@@ -234,7 +234,7 @@ function dispositionFor({ malicious, providerCoupling, external, highRisk, domai
   if (["specialized-procedure", "product-and-business-operations", "creative-production", "defensive-security-assessment", "scientific-computation"].includes(domain.id)) {
     return "pattern-reference";
   }
-  return "independent-implementation";
+  return "pattern-reference";
 }
 
 export function inspectGroundedSemanticBody(card, body) {

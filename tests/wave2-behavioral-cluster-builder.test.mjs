@@ -3,7 +3,7 @@ import test from "node:test";
 
 import {
   buildBehavioralClusterSet,
-  buildCoveredOverlapSet,
+  buildConservativeOverlapSet,
   normalizeDraftCluster,
 } from "../src/wave2-behavioral-cluster-builder.mjs";
 
@@ -50,7 +50,7 @@ test("normalizes draft clusters to the exact certification digest contract", () 
   assert.equal(normalized.members[0].facetId, "facet-a");
 });
 
-test("covered overlap references all comparison indexes and exact target evidence", () => {
+test("conservative overlap references all indexes but defers without mechanism-level proof", () => {
   const set = buildBehavioralClusterSet("agent-orchestration", [
     review("facet-a", "independent-implementation"),
   ]);
@@ -72,9 +72,9 @@ test("covered overlap references all comparison indexes and exact target evidenc
       [`${cluster.familyId}::${cluster.id}`]: { id: "other-wave2-cluster", digest: digest("7") },
     },
   };
-  const overlaps = buildCoveredOverlapSet("agent-orchestration", [cluster], index, "eternities-forge");
+  const overlaps = buildConservativeOverlapSet("agent-orchestration", [cluster], index, "eternities-forge");
   assert.equal(overlaps.decisions.length, 1);
-  assert.equal(overlaps.decisions[0].disposition, "covered-stronger");
+  assert.equal(overlaps.decisions[0].disposition, "deferred");
   assert.deepEqual(new Set(overlaps.decisions[0].comparedAgainst.map((entry) => entry.kind)), new Set([
     "godskill",
     "legacy-cluster",

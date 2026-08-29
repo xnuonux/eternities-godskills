@@ -10,6 +10,7 @@ const MANUAL_ROOT = "data/wave2-semantic-manual-reviews";
 const REVIEW_ROOT = "data/wave2-semantic-reviews";
 const LEDGER_PATH = "artifacts/wave2-semantic/grounded-review-ledger.json";
 const write = process.argv.includes("--write");
+const refreshGrounded = process.argv.includes("--refresh-grounded");
 
 async function filesUnder(root) {
   const entries = await fs.readdir(root, { withFileTypes: true });
@@ -23,8 +24,10 @@ async function filesUnder(root) {
 const parseJsonLines = (text) => text.split("\n").filter(Boolean).map(JSON.parse);
 const packetFiles = (await filesUnder(PACKET_ROOT)).filter((file) => file.endsWith(".json")).sort();
 const existingReviewFiles = (await filesUnder(REVIEW_ROOT)).filter((file) => file.endsWith(".json"));
+const existingBatches = await Promise.all(existingReviewFiles.map(async (file) => JSON.parse(await fs.readFile(file, "utf8"))));
 const completedFacets = new Set(
-  (await Promise.all(existingReviewFiles.map(async (file) => JSON.parse(await fs.readFile(file, "utf8")))))
+  existingBatches
+    .filter((batch) => !(refreshGrounded && batch.reviewer === "codex exact-body grounded semantic reviewer"))
     .flatMap((batch) => batch.reviews)
     .map((review) => review.facetId),
 );

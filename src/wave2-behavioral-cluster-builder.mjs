@@ -101,7 +101,7 @@ function compactOperations(cluster, reviewByFacet) {
   return [...new Set(operations)].slice(0, 3);
 }
 
-export function buildCoveredOverlapSet(familyId, clusters, comparisonIndex, targetSkillId, reviewByFacet = new Map()) {
+export function buildConservativeOverlapSet(familyId, clusters, comparisonIndex, targetSkillId, reviewByFacet = new Map()) {
   const target = comparisonIndex.targetContracts[targetSkillId];
   if (!target) throw new Error(`missing exact target contract: ${targetSkillId}`);
   const decisions = clusters
@@ -125,10 +125,10 @@ export function buildCoveredOverlapSet(familyId, clusters, comparisonIndex, targ
         familyId,
         clusterId: cluster.id,
         targetSkillId,
-        disposition: "covered-stronger",
+        disposition: "deferred",
         comparedAgainst,
-        mechanismComparison: `${targetSkillId} and the complete promoted, original-corpus, Lunari, and Wave 2 indexes were checked against the candidate's ${operations.length ? operations.join("; ") : cluster.intent} mechanism. The existing owner already supplies the family authority boundary, effect gating, verification contract, and terminal failure behavior while the candidate adds no separately routable terminal artifact.`,
-        rationale: `Retain cluster ${cluster.id} as digest-bound supporting evidence for ${targetSkillId} without creating a parallel owner or expanding authority.`,
+        mechanismComparison: `${targetSkillId} and the complete promoted, original-corpus, Lunari, and Wave 2 indexes were checked against the candidate's ${operations.length ? operations.join("; ") : cluster.intent} mechanism. The deterministic comparison binds the evidence universe but does not independently prove that an existing owner subsumes every mechanism or that a new artifact improves the strongest baseline.`,
+        rationale: `Defer cluster ${cluster.id} as digest-bound cold evidence associated with ${targetSkillId}; a separate mechanism-level adjudication and measured candidate evaluation are required before coverage, extension, or promotion can be claimed.`,
         intendedTier: "none",
       };
     });

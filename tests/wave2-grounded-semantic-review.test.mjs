@@ -84,3 +84,11 @@ test("rejects malicious fixtures rather than converting them into capability", (
   assert.match(review.proposedCluster, /unsafe|malicious|fixture/);
   assert.ok(review.exclusions.some((entry) => /credential|instruction/i.test(entry)));
 });
+
+test("deterministic lexical derivation never claims independent implementation", () => {
+  const local = card(BODY, {
+    security: { dispositions: ["clear-for-semantic-review"], surfaces: [] },
+  });
+  const review = buildGroundedSemanticReview(local, BODY);
+  assert.equal(review.disposition, "pattern-reference");
+});

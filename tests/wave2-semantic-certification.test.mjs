@@ -50,6 +50,13 @@ function evidence(overrides = {}) {
       thirdPartyActivations: 0,
       hostProfileChanges: 0,
     },
+    independentReview: {
+      artifactSha256: DIGEST,
+      mode: "separate-adversarial-review-pass",
+      unresolvedCritical: 0,
+      unresolvedImportant: 0,
+      reviewerIndependenceProven: false,
+    },
     ...overrides,
   };
 }
@@ -65,6 +72,7 @@ test("complete terminal evidence produces one bounded semantic certificate", () 
     "deterministic-local-evidence-only",
     "no-third-party-source-execution",
     "no-universal-capability-claim",
+    "reviewer-independence-not-proven-beyond-recorded-pass",
   ]);
 });
 
@@ -142,5 +150,14 @@ test("source execution, third-party activation, host changes, and unproved promo
       },
     })),
     /unproved promotion receipt/,
+  );
+});
+
+test("unresolved critical or important adversarial findings block certification", () => {
+  assert.throws(
+    () => certifyWave2SemanticRefinery(evidence({
+      independentReview: { ...evidence().independentReview, unresolvedImportant: 1 },
+    })),
+    /adversarial review/i,
   );
 });

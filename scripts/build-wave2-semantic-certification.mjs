@@ -13,7 +13,7 @@ function exact(value, expected, label) {
 }
 
 export function certifyWave2SemanticRefinery(evidence) {
-  const { structural, reviews, clusters, synthesis, routing, activation } = evidence ?? {};
+  const { structural, reviews, clusters, synthesis, routing, activation, independentReview } = evidence ?? {};
   if (structural?.status !== "certified") throw new Error("historical structural receipt is not certified");
   digest(structural.receiptSha256, "structural receipt digest");
   exact(structural.sourceCount, 7776, "structural source count");
@@ -68,6 +68,14 @@ export function certifyWave2SemanticRefinery(evidence) {
   if (activation.thirdPartyActivations !== 0) throw new Error("third-party activation is forbidden");
   if (activation.hostProfileChanges !== 0) throw new Error("host profile change is forbidden");
 
+  digest(independentReview?.artifactSha256, "independent review artifact digest");
+  if (typeof independentReview.mode !== "string" || independentReview.mode === "") {
+    throw new Error("adversarial review mode is required");
+  }
+  if (independentReview.unresolvedCritical !== 0 || independentReview.unresolvedImportant !== 0) {
+    throw new Error("adversarial review has unresolved critical or important findings");
+  }
+
   const normalized = {
     schemaVersion: 1,
     certificateId: "wave2-semantic-refinery-v1",
@@ -90,6 +98,7 @@ export function certifyWave2SemanticRefinery(evidence) {
       clusters: clusters.artifactSha256,
       synthesis: synthesis.artifactSha256,
       routing: routing.artifactSha256,
+      independentReview: independentReview.artifactSha256,
     },
     gates: [
       "exact-structural-inheritance",
@@ -98,6 +107,7 @@ export function certifyWave2SemanticRefinery(evidence) {
       "terminal-overlap-adjudication",
       "terminal-synthesis-accounting",
       "bounded-automatic-gap-routing",
+      "adversarial-review-closure",
       "zero-source-execution",
       "zero-third-party-activation",
     ],
@@ -105,6 +115,7 @@ export function certifyWave2SemanticRefinery(evidence) {
       "deterministic-local-evidence-only",
       "no-third-party-source-execution",
       "no-universal-capability-claim",
+      "reviewer-independence-not-proven-beyond-recorded-pass",
     ],
   };
   return { ...normalized, certificateSha256: sha256(JSON.stringify(normalized)) };

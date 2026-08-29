@@ -89,7 +89,7 @@ test("the current repository atlas loads only from exact terminal evidence", asy
   const atlas = await loadWave2SemanticAtlas(new URL("../", import.meta.url).pathname.replace(/^\/(.:)/, "$1"));
   assert.equal(atlas.certificate.reviewedFacetCount, 3448);
   assert.equal(atlas.clusters.length, 1674);
-  assert.equal(atlas.certificate.candidateClusterCount, 285);
+  assert.equal(atlas.certificate.candidateClusterCount, 267);
 });
 
 test("covered ordinary work stays on promoted routing without atlas lookup", () => {
