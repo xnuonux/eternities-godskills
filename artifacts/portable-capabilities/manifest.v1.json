@@ -1,0 +1,3198 @@
+{
+  "schemaVersion": 1,
+  "manifestId": "portable-capabilities-v1",
+  "status": "certified-local-artifacts",
+  "capabilities": [
+    {
+      "schemaVersion": 1,
+      "id": "api-rate-limit-recovery",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-daedalus",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/api-rate-limit-recovery/SKILL.md",
+        "sha256": "8a165944ba00664472fea80bf2f35e1c5669a61cc5e3b577e6ffd9634fec7044",
+        "bytes": 1889
+      },
+      "contract": {
+        "path": "skills/api-rate-limit-recovery/references/capability-contract.json",
+        "sha256": "5418e248d971cfe79bccbf0a54aaf3c4ed753aa21a71ce65142f04494a5fb1b7",
+        "bytes": 3457
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/api-rate-limit-recovery.json",
+        "sha256": "7b961aea5ca6003b112175554cd0cf303980d816ca3b0885ce5ad259f9ee2f31",
+        "bytes": 5976
+      },
+      "capabilityVocabulary": [
+        "apply capped backoff and jitter",
+        "bind attempts to idempotency and cancellation",
+        "classify retryable responses and server delay hints",
+        "verify success exhaustion malformed-hint and concurrency cases"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Circumvent a provider quota or access policy.",
+        "Retry non-idempotent work without a deduplication contract.",
+        "stop at the attempt or elapsed-time ceiling",
+        "surface malformed delay guidance instead of retrying indefinitely"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "retry semantics are current and documented",
+        "the operation's idempotency class is known"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop when bounded success, cancellation, exhaustion, malformed guidance, and duplicate-prevention cases pass locally."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "approval-bound-private-session-mining",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-mnemosyne",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/approval-bound-private-session-mining/SKILL.md",
+        "sha256": "8f1f7517713f7b5d09f93415c5b7a03ab9b9c8e37eca01c6a780b0007754b419",
+        "bytes": 1940
+      },
+      "contract": {
+        "path": "skills/approval-bound-private-session-mining/references/capability-contract.json",
+        "sha256": "ce6a65eda48ae6850fde6333421842a76da8d03a301bc95b3cd5a5d877df7fd6",
+        "bytes": 3504
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/approval-bound-private-session-mining.json",
+        "sha256": "f00ed1ce5ffd94199fa06a916b084eff4a33be352a5c98d43fda6a55822f30b4",
+        "bytes": 6002
+      },
+      "capabilityVocabulary": [
+        "extract source-labeled findings with confidence",
+        "freeze approved file and date scope",
+        "minimize and redact content before analysis",
+        "record exclusions unresolved ambiguity and revocation handling"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Access private sessions without explicit scope and approval.",
+        "Infer identity secrets or unrelated personal traits.",
+        "exclude content unrelated to the named question",
+        "stop when approval scope or ownership is ambiguous"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "approval names the private scope purpose and retention",
+        "the transcript set belongs to the authorized user or project"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop when every finding is source-labeled within the approved scope and the minimization and retention receipt is complete."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "bounded-service-shutdown",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-daedalus",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/bounded-service-shutdown/SKILL.md",
+        "sha256": "6e4d0bc284a44fbe8a96008052007f476a9b94d1af6625c53f2574e31883eab7",
+        "bytes": 1892
+      },
+      "contract": {
+        "path": "skills/bounded-service-shutdown/references/capability-contract.json",
+        "sha256": "b718fd9bb80877089f85b9c3413f22fedddedb85a035ab51b18d6da0d2cbe3d6",
+        "bytes": 3583
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/bounded-service-shutdown.json",
+        "sha256": "29fbbb82ad8daa6cdcf54e93bda166dc3c472cd7d1099f882a1913470697fe01",
+        "bytes": 6116
+      },
+      "capabilityVocabulary": [
+        "close resources and classify clean versus forced exit",
+        "drain tracked work below the external deadline",
+        "lower readiness and refuse new work",
+        "map signal handling and idempotent state transition"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Choose a shutdown deadline without the platform grace-period evidence.",
+        "Terminate a production process without operational authority.",
+        "fail closed when cleanup exceeds the bounded deadline",
+        "stop when active-work accounting cannot be trusted"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "active work can be measured",
+        "the external kill deadline is known"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop when shutdown, duplicate-signal, clean-drain, and forced-timeout paths have local verification evidence."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "bounded-verified-object-ingestion",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-atlas",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/bounded-verified-object-ingestion/SKILL.md",
+        "sha256": "49b5256753b3454bcbb3e45343729ffff04e1e335fb67c9f704fd655eb0d7a3f",
+        "bytes": 1986
+      },
+      "contract": {
+        "path": "skills/bounded-verified-object-ingestion/references/capability-contract.json",
+        "sha256": "e5475ecddf108046282eb98cf6893d632b849adc49905831e1befa77dd5dd1e4",
+        "bytes": 3560
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/bounded-verified-object-ingestion.json",
+        "sha256": "f653afc869aa51a9248873767b17aacd3c08403493914bf8d8858d7a751f76bd",
+        "bytes": 5988
+      },
+      "capabilityVocabulary": [
+        "freeze exact source membership",
+        "quarantine malformed or conflicting objects",
+        "validate identity shape size and digest",
+        "write accepted objects and reconcile a replay ledger"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Crawl or read files outside the authorized manifest.",
+        "Mutate storage before identity integrity and rollback gates pass.",
+        "quarantine collisions instead of overwriting them",
+        "stop when source membership drifts"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "destination and rollback boundaries are writable and distinct",
+        "source membership is explicit"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop when every manifest object is accepted, quarantined, or rejected exactly once and replay verification is clean."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "columnar-ingestion-rollup-and-query-layout-design",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-atlas",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/columnar-ingestion-rollup-and-query-layout-design/SKILL.md",
+        "sha256": "bb733d96f158f8b3a735a2c5b035cbf98e02c31a86f01cfc1bb4dc2be1488f79",
+        "bytes": 2099
+      },
+      "contract": {
+        "path": "skills/columnar-ingestion-rollup-and-query-layout-design/references/capability-contract.json",
+        "sha256": "87d61189f0c0bdd7886e5489a68d3a2ae712b4fbef0d4ef8ae009c0d226590bd",
+        "bytes": 3628
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/columnar-ingestion-rollup-and-query-layout-design.json",
+        "sha256": "9541aaa882b24948d5ad61dcecc086bd1650746281e0f450f88eb9450d82dec0",
+        "bytes": 5962
+      },
+      "capabilityVocabulary": [
+        "compare partition sort compression and pruning behavior",
+        "design raw normalized and rollup layers",
+        "measure representative queries and record tradeoffs",
+        "profile fields cardinality skew and late arrival"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Choose partitions without cardinality retention and query evidence.",
+        "Install or migrate a production database.",
+        "retain alternative layouts when measurements are inconclusive",
+        "stop when workload samples are not representative"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "representative workload evidence exists",
+        "retention correctness and query goals are explicit"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop when the selected layout clears declared correctness and query budgets against representative local fixtures."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "confirmed-destructive-reconstruction",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-phoenix",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/confirmed-destructive-reconstruction/SKILL.md",
+        "sha256": "664ef8b6d36e67a6f2a978254a6e13197deadbdde3b330d9dc6ef89444eb4abc",
+        "bytes": 2024
+      },
+      "contract": {
+        "path": "skills/confirmed-destructive-reconstruction/references/capability-contract.json",
+        "sha256": "e6a8369744d5228d589f7050d0cc90c497897578db3df9fc313558b796ff4b58",
+        "bytes": 3791
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/confirmed-destructive-reconstruction.json",
+        "sha256": "5583c247328c3025c35448aa130bf11d2d67c5a18f27cee8bffde5142381db10",
+        "bytes": 6221
+      },
+      "capabilityVocabulary": [
+        "apply only the confirmed mutation and verify or roll back",
+        "resolve and display the exact target",
+        "stage a non-destructive reconstruction preview",
+        "verify backup completeness and restoration path"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Delete or overwrite an ambiguous path.",
+        "Proceed without a verified backup and explicit destructive confirmation.",
+        "roll back when post-reconstruction invariants fail",
+        "stop when target resolution or backup verification changes"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "a complete restorable backup exists outside the target",
+        "the destructive target is exact and user-confirmed"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop after verified reconstruction and rollback evidence, or before mutation with a precise failed gate."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "diagnostic-statistical-model-inference",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-athena",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/diagnostic-statistical-model-inference/SKILL.md",
+        "sha256": "c2329e49529ee7610932e6377a1a226880ec8f5d8cc40a724e2729de68d15004",
+        "bytes": 2022
+      },
+      "contract": {
+        "path": "skills/diagnostic-statistical-model-inference/references/capability-contract.json",
+        "sha256": "a7671e82dcaf7a4b228a9ae64591d159f743ba103800765b409f79092ecfb1b6",
+        "bytes": 3701
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/diagnostic-statistical-model-inference.json",
+        "sha256": "bb4c28a738bb76aed11d3f7389a58601b6f30f289a3c1ae443940778b5216881",
+        "bytes": 6153
+      },
+      "capabilityVocabulary": [
+        "compare plausible specifications and uncertainty",
+        "inspect residual calibration influence and collinearity",
+        "separate descriptive predictive and causal claims",
+        "state estimand design and assumptions"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Claim a causal effect without an identification design.",
+        "Issue medical financial or legal conclusions from a model.",
+        "report instability when plausible specifications reverse the conclusion",
+        "stop causal interpretation when identification assumptions are absent"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "diagnostic assumptions are falsifiable where possible",
+        "the dataset provenance and intended estimand are known"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop when diagnostics, sensitivity, uncertainty, and the strongest supportable claim class are explicit."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "docx-package-redline-and-render-verification",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-logos",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/docx-package-redline-and-render-verification/SKILL.md",
+        "sha256": "c8ef749b3d777592b68d8d080917ea979be03fad9ae3f9e0933aa78f1fccd2b6",
+        "bytes": 1961
+      },
+      "contract": {
+        "path": "skills/docx-package-redline-and-render-verification/references/capability-contract.json",
+        "sha256": "a5254e51183f8ad7a9d9065d825734a53210a970575de7b723cdf1ab073fdb3f",
+        "bytes": 3577
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/docx-package-redline-and-render-verification.json",
+        "sha256": "f1571d6a7a889c3199b961002eed40e6198cb97088d7f51ed01a4a1d6a5dbcb5",
+        "bytes": 6097
+      },
+      "capabilityVocabulary": [
+        "apply minimal tracked structural edits",
+        "inspect package parts relationships and external targets",
+        "render pages and compare layout pagination and visual defects",
+        "validate XML relationships comments and change markup"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Accept a text-only diff as proof of document layout.",
+        "Open or preserve unknown external links without inspection.",
+        "reject edits that corrupt tracked-change or rendering semantics",
+        "stop when package relationships escape the approved scope"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "external relationships and embedded content are inventoried",
+        "the original package is preserved"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop when package integrity, relationship safety, tracked changes, and rendered pages all pass review."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "eternities-aegis",
+      "tier": "godskill",
+      "ownerGodskillId": "eternities-aegis",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/eternities-aegis/SKILL.md",
+        "sha256": "8c98db6d28e232ff959275f2d41bc7f603ef25f32178534b88c8fea2d3f8e5cf",
+        "bytes": 6385
+      },
+      "contract": {
+        "path": "skills/eternities-aegis/references/capability-contract.json",
+        "sha256": "5b51f6c100f02ab5069de67a8f87fc239ba108a13ed9b952cbf0fd3919a64044",
+        "bytes": 4980
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [
+        "assets",
+        "assure defensive controls and evidence",
+        "authenticators",
+        "authority",
+        "authorization",
+        "command-boundaries",
+        "configuration",
+        "control-owner",
+        "controls",
+        "decision",
+        "dependency-trust",
+        "design and verify mitigations",
+        "detections",
+        "effects",
+        "establish authorization",
+        "evidence",
+        "evidence-handling",
+        "exact-body-digests",
+        "exceptions",
+        "expiry",
+        "federation",
+        "findings",
+        "govern identity and access lifecycle",
+        "govern policy lifecycle evidence",
+        "identity",
+        "inert-static-scan",
+        "inspect security-relevant evidence",
+        "least-privilege",
+        "lifecycle",
+        "mitigation",
+        "model abuse and failure paths",
+        "monitoring",
+        "permission-fit",
+        "policy-objective",
+        "principals",
+        "promotion-gate",
+        "purpose-fit",
+        "rank risk and confidence",
+        "reconcile inert skill supply-chain evidence",
+        "residual-risk",
+        "risk-communication",
+        "rollback",
+        "secrets",
+        "semantic-review",
+        "separation-of-duties",
+        "source-review",
+        "target",
+        "threats",
+        "trust-boundaries",
+        "verification"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "a finding cannot be separated from hypothesis",
+        "authorization is absent or ambiguous",
+        "credentialed or high-stakes assessment",
+        "credentials or unnecessary personal data would enter evidence",
+        "critical residual risk has no accountable owner",
+        "generic security checklist",
+        "legal or current-policy conclusion",
+        "mitigation validation would exceed authority",
+        "ordinary code review",
+        "provider behavior or current policy is assumed without evidence",
+        "simple security fact",
+        "target evidence is unavailable",
+        "unauthorized intrusion or adversary emulation"
+      ],
+      "evidenceVocabulary": [
+        "cluster-review-v1",
+        "contract-digest",
+        "promotion-receipt"
+      ],
+      "preconditionVocabulary": [
+        "assets, identities, and trust relationships",
+        "authorized target and effect boundary",
+        "system or configuration evidence"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "deferred specialist or current-policy boundaries are explicit",
+        "mitigations include verification and rollback",
+        "performed and prohibited effects are recorded",
+        "policy, identity, and assurance evidence has an owner and expiry",
+        "residual risk and required owners are named",
+        "scope and authority are explicit",
+        "skill evidence is exact and no acquired instruction or executable was invoked",
+        "verified findings are separated from hypotheses"
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "eternities-agora",
+      "tier": "godskill",
+      "ownerGodskillId": "eternities-agora",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/eternities-agora/SKILL.md",
+        "sha256": "f4399a65e90fae3a18e785ddc8a4c15efd052b01fd02cc9efb6c60dc8163d98f",
+        "bytes": 4631
+      },
+      "contract": {
+        "path": "skills/eternities-agora/references/capability-contract.json",
+        "sha256": "19a1c4d6716e6cf48d8900ce647aaf94bfc9538992a4d6ae47eef19ba55ccacf",
+        "bytes": 4436
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [
+        "apply disclosed scoring or commercial policy",
+        "client-account",
+        "client-report",
+        "commercial-policy",
+        "evidence-coverage",
+        "evidence-traceability",
+        "identity-reconciliation",
+        "multidimensional-assessment",
+        "operational-rollup",
+        "opportunity-bounds",
+        "portfolio-pipeline",
+        "produce one bounded artifact and verify its acceptance contract",
+        "rapid-screen",
+        "reconcile evidence and identity conservatively",
+        "rendering-handoff",
+        "scoring",
+        "select the smallest sufficient route",
+        "separate observed derived assumed and proposed claims",
+        "service-proposal",
+        "state-contract"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "KYC regulated identity screening or runtime administration",
+        "evidence is missing stale conflicting or malformed",
+        "external communication publication commitment purchase or account mutation without separate authority",
+        "identity remains ambiguous",
+        "legal drafting enforceability judgment financial planning or regulated advice",
+        "routine record lookup status edit or copy change",
+        "scoring service pricing or rendering policy is unresolved",
+        "the mission crosses a regulated or specialist boundary",
+        "the requested effect exceeds local read or local write authority"
+      ],
+      "evidenceVocabulary": [
+        "cluster-review-v1",
+        "contract-digest",
+        "promotion-receipt"
+      ],
+      "preconditionVocabulary": [
+        "authorized prospect, account, portfolio, or client evidence",
+        "evidence, identity, scoring, service, pricing, rendering, and authority policies when applicable",
+        "requested route scope or mode and desired artifact"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "no external regulated background or recursive operation remains implied",
+        "one dominant route has produced one scope-bound artifact",
+        "sources assumptions gaps conflicts score policy and performed effects are visible",
+        "unsupported actions are refused or represented by one bounded handoff"
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "eternities-arcadia",
+      "tier": "godskill",
+      "ownerGodskillId": "eternities-arcadia",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/eternities-arcadia/SKILL.md",
+        "sha256": "a5a726826cecd0f3d2b1789e30c00d296a0085f82c5227dc3f35b59194653559",
+        "bytes": 5667
+      },
+      "contract": {
+        "path": "skills/eternities-arcadia/references/capability-contract.json",
+        "sha256": "863050a6c041efa98f9a4bd93f77e06c8049ce3b6a008007ecca3685b694f5e2",
+        "bytes": 5642
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [
+        "accessibility",
+        "animation",
+        "apply local changes within explicit effects and verify representative behavior",
+        "art-coherence",
+        "audio",
+        "balance-and-pacing",
+        "device-degradation",
+        "engine-boundary",
+        "ethical-economy",
+        "freshness",
+        "game-ai",
+        "game-brief",
+        "game-feel",
+        "human-verdict",
+        "input-intents",
+        "narrative-state",
+        "network-authority",
+        "performance-budget",
+        "persistence",
+        "player-promise",
+        "preserve player promise and cross-layer contracts",
+        "produce one bounded artifact and terminate",
+        "reachability",
+        "release-readiness",
+        "runtime-probes",
+        "select the smallest sufficient route",
+        "separate deterministic gates measured observations and human judgments",
+        "simulation-loop",
+        "variance-evidence",
+        "visual-feedback"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "agent self-certification of fun fairness emotional effect or final release readiness",
+        "build evidence is stale unreachable unrepresentative or non-repeatable",
+        "dependency installation signing store upload publication purchase or account mutation",
+        "generated-content rights ratings or safety decision without current authority",
+        "rights policy access performance or human play evidence is missing",
+        "routine isolated code content or asset edit with settled acceptance",
+        "the mission crosses a generated-content shipping administration or external-action boundary",
+        "the player promise platform networking model or route owner remains unresolved",
+        "the requested effect exceeds local read or local write authority"
+      ],
+      "evidenceVocabulary": [
+        "cluster-review-v1",
+        "contract-digest",
+        "promotion-receipt"
+      ],
+      "preconditionVocabulary": [
+        "authorized game intent repository state and available build evidence",
+        "design runtime accessibility evidence authority and acceptance policies when applicable",
+        "target audience platform session shape multiplayer decision and desired outcome"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "no recursive background or implied release operation remains",
+        "one dominant route has produced one bounded artifact or verified change",
+        "player promise evidence assumptions gaps effects and human-verdict status are visible",
+        "unsupported generated external administrative and publication actions are refused or handed off"
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "eternities-architect",
+      "tier": "godskill",
+      "ownerGodskillId": "eternities-architect",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/eternities-architect/SKILL.md",
+        "sha256": "3edb67a8aa6ef6717cd1abb3aa0658215ab76ec9009895d29bd6068612ee7a05",
+        "bytes": 6186
+      },
+      "contract": {
+        "path": "skills/eternities-architect/references/capability-contract.json",
+        "sha256": "1011c45e7350d9bedc8ffeb0bddd0e88e26a8a79c12244e61af3ff703331fe90",
+        "bytes": 3528
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [
+        "acceptance",
+        "apis",
+        "assessment",
+        "assumptions",
+        "cloud-boundary",
+        "compare alternatives",
+        "compatibility",
+        "controls",
+        "decision",
+        "define acceptance evidence",
+        "design",
+        "diagrams",
+        "evidence",
+        "fail-closed",
+        "handoff",
+        "inspect implementation reality",
+        "interfaces",
+        "model boundaries and flows",
+        "observability",
+        "provider-evidence",
+        "record",
+        "recovery",
+        "reliability",
+        "repository-evidence",
+        "requirements",
+        "resolve requirements",
+        "schemas",
+        "security-boundary",
+        "tradeoff",
+        "trust-boundary",
+        "verification"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "a decision depends on missing owner authority",
+        "existing implementation evidence is unavailable",
+        "implementation of an already approved plan",
+        "no viable option meets a critical constraint",
+        "open-ended ideation without a system decision",
+        "requirements remain contradictory",
+        "routine code edit",
+        "simple factual lookup"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "receipt-bound-first-party"
+      ],
+      "preconditionVocabulary": [
+        "repository or product evidence",
+        "requirements and constraints",
+        "system outcome or decision"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "interfaces, failure behavior, and acceptance conditions are explicit",
+        "the chosen design traces to requirements and evidence",
+        "the implementation handoff does not require renewed architecture discovery",
+        "unresolved decisions and revisit triggers are named"
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "eternities-athena",
+      "tier": "godskill",
+      "ownerGodskillId": "eternities-athena",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/eternities-athena/SKILL.md",
+        "sha256": "68e961e8a658df393df64e4b14e5b770edce73f2531577edf985a7ec3946d56b",
+        "bytes": 4911
+      },
+      "contract": {
+        "path": "skills/eternities-athena/references/capability-contract.json",
+        "sha256": "825c26252f346b01ef07d14a3625a71e113f6755c666c402f7e75336f285cfde",
+        "bytes": 2417
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [
+        "appraise design and measurement validity",
+        "audit statistical and causal inference",
+        "calibrate conclusion strength",
+        "frame the claim and estimand",
+        "identify bias and confounding",
+        "synthesize evidence without hiding heterogeneity"
+      ],
+      "effectVocabulary": [
+        "read"
+      ],
+      "riskVocabulary": [
+        "legal regulatory or ethics certification",
+        "methods or provenance are missing",
+        "multiplicity or model flexibility is unresolved",
+        "ordinary current-source research",
+        "personalized medical advice",
+        "routine statistical computation from supplied data",
+        "studies are too heterogeneous or dependent to combine",
+        "the requested conclusion exceeds the design",
+        "unmeasured confounding or selection prevents causal identification"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "receipt-bound-first-party"
+      ],
+      "preconditionVocabulary": [
+        "a scientific claim, study design, study report, dataset description, or evidence set",
+        "the intended inference and decision context"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "The conclusion is proportionate to design, measurement, bias, confounding, statistical inference, causal assumptions, evidence quality, and stated unknowns."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "eternities-atlas",
+      "tier": "godskill",
+      "ownerGodskillId": "eternities-atlas",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/eternities-atlas/SKILL.md",
+        "sha256": "ef2cf619137f3a3ec3025b33390336659055cf5c95b9fa5f28687e691b36c341",
+        "bytes": 3997
+      },
+      "contract": {
+        "path": "skills/eternities-atlas/references/capability-contract.json",
+        "sha256": "afb8a2afb0886265f00b3884b68ede1f79f75a8d3b476dfdee8c631b40c7784a",
+        "bytes": 5017
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [
+        "bounded-dataset-analysis",
+        "compatibility-check",
+        "conflict-and-deployment-safeguards",
+        "constraints",
+        "cross-database-transform",
+        "derived-diagram",
+        "dialect-aware-sql",
+        "discrepancy-classification",
+        "entity-modeling",
+        "entity-streaming",
+        "experiment-design",
+        "fail closed and terminate",
+        "generated-artifact",
+        "inspect and label evidence",
+        "keyed-comparison",
+        "measured-tuning",
+        "offsets-and-retries",
+        "plan-inspection",
+        "produce local reviewable artifacts",
+        "readiness-gate",
+        "relational-sync",
+        "relationships",
+        "reproducibility",
+        "rollback-aware-review",
+        "schema-discovery",
+        "select the smallest sufficient route",
+        "staged-migration",
+        "uncertainty",
+        "verify gates before readiness claims"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "evidence is stale, partial, incomparable, or unverified",
+        "perform destructive migration or deletion",
+        "proceed without backup, reconciliation evidence, or authority",
+        "provider-specific execution is mistaken for portable capability",
+        "requested effect exceeds local read/write authority",
+        "retrieve or use credentials",
+        "run against production or an external system",
+        "scope, dialect, keys, baseline, backup, rollback, or owner missing"
+      ],
+      "evidenceVocabulary": [
+        "cluster-review-v1",
+        "contract-digest",
+        "promotion-receipt"
+      ],
+      "preconditionVocabulary": [
+        "authorized data or schema evidence and bounded intent",
+        "dialect/provider, keys, time window, baseline, acceptance and rollback requirements when applicable"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "evidence, uncertainty, checks, effects, and authority are visible",
+        "one route yields one bounded local artifact",
+        "unsupported production, credential, destructive, external, backup, reconciliation, and authority actions are refused or handed off"
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "eternities-beacon",
+      "tier": "godskill",
+      "ownerGodskillId": "eternities-beacon",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/eternities-beacon/SKILL.md",
+        "sha256": "4e534765f4be8c79b6302aa986c8c8944d89048e616129a36c2348e1969f3ac4",
+        "bytes": 7837
+      },
+      "contract": {
+        "path": "skills/eternities-beacon/references/capability-contract.json",
+        "sha256": "4b1e00edd147576117eaa7d6d77c1e47111d23a87f0214f70fc477ede665701d",
+        "bytes": 12936
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [
+        "activation-and-onboarding",
+        "attribution-and-causal-limits",
+        "capacity-and-budget-boundary",
+        "category-and-competitor-model",
+        "channel-portfolio",
+        "claim-and-message-hierarchy",
+        "classify claims preserve customer choice and bind data use to purpose consent and authority",
+        "cohort-and-channel-economics",
+        "commercial-authority-boundary",
+        "consent-and-accessibility-guardrails",
+        "content-and-product-led-demand",
+        "content-trust-and-answer-eligibility",
+        "crawl-render-and-index-diagnosis",
+        "customer-and-market-evidence",
+        "define metrics causal limits guardrails experiments and stopping logic before interpreting growth",
+        "demand-experiment-portfolio",
+        "differentiation-and-reasons-to-believe",
+        "discoverability-validation",
+        "evidence-gap-analysis",
+        "expansion-referral-and-recovery",
+        "experiment-analysis",
+        "external-effect-ledger",
+        "forecast-and-anomaly-handling",
+        "information-architecture",
+        "instrumentation-and-data-quality",
+        "journey-and-funnel-diagnosis",
+        "launch-sequencing",
+        "lifecycle-and-retention",
+        "local-and-marketplace-visibility",
+        "metric-dictionary",
+        "outcome-scope-and-mechanism",
+        "packaging-and-pricing-hypothesis",
+        "page-and-form-friction",
+        "partnership-system",
+        "positioning-falsification",
+        "prioritized-search-change-plan",
+        "produce one bounded artifact and terminate",
+        "proof-and-risk-treatment",
+        "proposal-and-decision-packet",
+        "qualification-and-objection-model",
+        "reversible-conversion-experiment",
+        "scale-stop-and-learning-decision",
+        "segmentation-and-jobs",
+        "select the smallest sufficient evidence-supported route",
+        "separate local analysis drafting and saving from every external market account financial or commercial effect",
+        "structured-data-and-entity-evidence",
+        "unit-economics-assumptions"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "consent purpose limitation privacy accessibility truthful choice or participant dignity is unresolved",
+        "consequential market platform competitor price policy legal or benchmark evidence is stale or unsourced",
+        "legal or regulated judgment unsupported current-market fact fabricated proof coercive persuasion or guaranteed growth",
+        "market audience product economic evidence route owner or acceptance condition remains unresolved",
+        "metric denominator cohort window instrumentation attribution uncertainty or causal basis is insufficient",
+        "publication account mutation media buying spending purchasing pricing mutation or commercial acceptance",
+        "routine isolated copy edit social post community operation or visual production request",
+        "scraping personal-data enrichment contact discovery direct outreach sales execution or provider administration",
+        "the requested operation exceeds local read or local write authority or crosses a specialist boundary"
+      ],
+      "evidenceVocabulary": [
+        "cluster-review-v1",
+        "contract-digest",
+        "promotion-receipt"
+      ],
+      "preconditionVocabulary": [
+        "authorized growth objective market audience product and available source evidence",
+        "commercial capacity channel journey discoverability and measurement context when applicable",
+        "customer-data basis consent accessibility authority budget risk and acceptance constraints"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "claims evidence dates consent privacy accessibility metrics uncertainty effects and human decisions are visible",
+        "no recursive background monitoring publication contact spending or implied external operation remains",
+        "one dominant route has produced one bounded local artifact or verified local change",
+        "unsupported provider specialist outreach account financial pricing and commercial actions are refused or handed off"
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "eternities-chorus",
+      "tier": "godskill",
+      "ownerGodskillId": "eternities-chorus",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/eternities-chorus/SKILL.md",
+        "sha256": "0054c131d94cc0f842ad2e5107135bc4379fbd0ba716ef00a4b1a98bab5b2d51",
+        "bytes": 6005
+      },
+      "contract": {
+        "path": "skills/eternities-chorus/references/capability-contract.json",
+        "sha256": "f5db23132cba7f87993749d417b5e5ba48f45caf545d440d689167edbf1176a5",
+        "bytes": 6740
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [
+        "accessible-media-brief",
+        "audience-hypothesis",
+        "bounded-experiment",
+        "capacity-and-cadence",
+        "channel-native-draft",
+        "channel-role",
+        "claim-provenance",
+        "community-charter",
+        "current-signal-research",
+        "editorial-architecture",
+        "editorial-brief",
+        "editorial-review",
+        "finding",
+        "format-selection",
+        "human-escalation",
+        "identity-and-voice",
+        "learning-cycle",
+        "listening-plan",
+        "metric-dictionary",
+        "moderation-readiness",
+        "participation-policy",
+        "preserve identity claim provenance participant dignity accessibility and channel role",
+        "produce one bounded artifact and terminate",
+        "public-profile",
+        "repurposing",
+        "response-triage",
+        "select the smallest sufficient route",
+        "separate local drafting and analysis from every public account or external effect",
+        "short-form-script",
+        "story-architecture",
+        "validate evidence metrics and experiments before deriving learning decisions",
+        "validated-analysis"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "autonomous crisis communication sensitive public commitment or final identity judgment",
+        "identity audience proof rights channel role or route owner remains unresolved",
+        "paid advertising prospect enrichment direct outreach or sales account operation",
+        "participant dignity accessibility privacy or sensitive human judgment is unresolved",
+        "platform policy trend metric or benchmark evidence is stale or non-comparable",
+        "routine isolated draft or formatting edit with settled evidence and acceptance",
+        "scraping scheduling publication reply moderation sanction profile mutation or account access",
+        "the mission crosses paid acquisition specialist generation enrichment or public account boundaries",
+        "the requested effect exceeds local read or local write authority"
+      ],
+      "evidenceVocabulary": [
+        "cluster-review-v1",
+        "contract-digest",
+        "promotion-receipt"
+      ],
+      "preconditionVocabulary": [
+        "audience hypothesis channel context capacity constraints and desired outcome",
+        "authorized communication intent identity evidence and available source material",
+        "community policy metric evidence rights authority and acceptance requirements when applicable"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "identity claims audience accessibility evidence gaps effects and human-sensitive decisions are visible",
+        "no recursive background monitoring publication or implied external operation remains",
+        "one dominant route has produced one bounded local artifact or verified local change",
+        "unsupported paid specialist enrichment account and public actions are refused or handed off"
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "eternities-daedalus",
+      "tier": "godskill",
+      "ownerGodskillId": "eternities-daedalus",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/eternities-daedalus/SKILL.md",
+        "sha256": "f37a505ea9a21657a7d2b3907475a467d48b835c023378252100ba3536bab601",
+        "bytes": 4307
+      },
+      "contract": {
+        "path": "skills/eternities-daedalus/references/capability-contract.json",
+        "sha256": "b7cf06d485ddc88747c1d463e5b37622cea27a157134002dfb17de0d92754557",
+        "bytes": 6037
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [
+        "assurance-mapping",
+        "bounded-change",
+        "code-model-evaluation",
+        "compatibility-check",
+        "defensive-controls",
+        "effect-classification",
+        "environment-boundary",
+        "framework-boundary",
+        "human-centered-method",
+        "implement or plan",
+        "inspect evidence",
+        "integration-boundary",
+        "ledger constraints",
+        "maintainability-review",
+        "named-language",
+        "refactoring",
+        "refuse or hand off",
+        "rollback-plan",
+        "runtime-compatibility",
+        "scope-sequence",
+        "select route",
+        "specialist-boundary",
+        "subtraction",
+        "telemetry",
+        "test-first",
+        "verification-handoff",
+        "verify",
+        "write failing test"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "ambiguous route",
+        "credential boundary",
+        "credentials or secrets",
+        "destructive migration",
+        "external deployment",
+        "incompatible environment",
+        "missing or failing acceptance test",
+        "missing repository evidence",
+        "missing rollback",
+        "missing tests",
+        "unknown dependency",
+        "unresolved authority",
+        "unresolved authority or effect",
+        "unresolved external effect",
+        "unsafe generated artifact",
+        "unsafe generated code",
+        "unverified dependency"
+      ],
+      "evidenceVocabulary": [
+        "cluster-review-v1",
+        "contract-digest",
+        "promotion-receipt"
+      ],
+      "preconditionVocabulary": [
+        "acceptance criteria, effect classification, rollback or handoff owner",
+        "authorized objective and repository scope",
+        "local source, configuration, dependency, fixture, and test evidence"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "exact evidence, tests, effects, and uncertainty are visible",
+        "no external deployment, credential use, destructive migration, or unsafe execution remains",
+        "one bounded local artifact, refusal, or typed handoff exists"
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "eternities-forge",
+      "tier": "godskill",
+      "ownerGodskillId": "eternities-forge",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/eternities-forge/SKILL.md",
+        "sha256": "0e5e5e876315bec35fde1c631cc6010b894b9af30cc59fdff8258f8ac580fcc7",
+        "bytes": 6797
+      },
+      "contract": {
+        "path": "skills/eternities-forge/references/capability-contract.json",
+        "sha256": "238584921303ad9b9e0946a5b5222c2b380a715ee38d716a3accfd07cc9d54d2",
+        "bytes": 5374
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [
+        "adversarial-probes",
+        "authority",
+        "baseline",
+        "bind",
+        "bind-closure",
+        "block unsupported completion claims",
+        "bound delegation and handoff",
+        "checkpoint-chain",
+        "classify engineering route",
+        "context-budget",
+        "convergence-ledger",
+        "defect-relocation",
+        "delegate-bounded",
+        "diagnosis",
+        "establish behavior baseline",
+        "evidence",
+        "execute-slices",
+        "freshness",
+        "handoff",
+        "implement bounded slices",
+        "implementation",
+        "integrate-or-defer",
+        "integration",
+        "isolation",
+        "next-action",
+        "plan",
+        "refactor",
+        "regression-proof",
+        "regression-test",
+        "repair",
+        "resolve ambiguity and conflicts",
+        "review",
+        "rollback",
+        "run bounded adversarial structural closure when explicitly requested",
+        "seal attested task continuity at real boundaries",
+        "select process skills",
+        "specification",
+        "structural-repair",
+        "task-scope",
+        "tests",
+        "verification",
+        "verify",
+        "verify claims and integration"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "acceptance behavior is unresolved",
+        "already verified branch awaiting only integration",
+        "architecture only",
+        "closure oracle is invalid or a declared resource budget is exhausted",
+        "integration target cannot be established safely",
+        "required authority is absent",
+        "root cause is unknown",
+        "routine one-file edit",
+        "unexplained bug requiring diagnosis",
+        "verification or review finds a critical regression"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "receipt-bound-first-party"
+      ],
+      "preconditionVocabulary": [
+        "acceptance evidence and risk boundary",
+        "repository and working-tree state",
+        "settled outcome or approved design"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "acceptance evidence covers every requested behavior",
+        "critical and important review findings are resolved",
+        "fresh relevant verification passes",
+        "integration and rollback state are explicit",
+        "remaining risks and authority gaps are named"
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "eternities-herald",
+      "tier": "godskill",
+      "ownerGodskillId": "eternities-herald",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/eternities-herald/SKILL.md",
+        "sha256": "7bf0df8857b68347dc14224f0e15ab5b47f4ebb972ac442f8ff34735eb609a8e",
+        "bytes": 2730
+      },
+      "contract": {
+        "path": "skills/eternities-herald/references/capability-contract.json",
+        "sha256": "d17e2bd96b8689989fb20227f4ebaf671e912c19d069445b7194ea6595662c45",
+        "bytes": 3895
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [
+        "approval-evidence",
+        "change-communication",
+        "change-selection",
+        "define gates and stopping conditions",
+        "environment-staging",
+        "fail closed and terminate",
+        "failure-feedback",
+        "health-and-rollback",
+        "lockfile-risk-report",
+        "migration-conditions",
+        "namespace-impersonation-screen",
+        "package-identity-comparison",
+        "preserve review and cluster lineage",
+        "quality-gates",
+        "release-checklist",
+        "select one route from exact evidence",
+        "separate local work from external effects",
+        "stack-discovery",
+        "tag-readiness",
+        "version-boundary"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "approval, authority, risk, migration, health, or rollback condition is unresolved",
+        "deploy or publish a release",
+        "evidence or source lineage is missing or stale",
+        "install a package or accept a lockfile",
+        "package identity remains ambiguous or resembles a protected namespace",
+        "provider-specific deployment administration",
+        "push a tag or mutate a repository or registry",
+        "requested effect is deployment, publication, tag push, installation, credential use, or external write",
+        "route ownership or specialist boundary is unclear",
+        "unresolved authority, risk, or current platform facts",
+        "use credentials or make an external write"
+      ],
+      "evidenceVocabulary": [
+        "cluster-review-v1",
+        "contract-digest",
+        "promotion-receipt"
+      ],
+      "preconditionVocabulary": [
+        "authorized release objective and repository evidence",
+        "change, pipeline, runtime, dependency, authority, risk, and acceptance context"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "One route produces a verified local release artifact or a bounded refusal or handoff with evidence, authority, risk, and effect boundaries explicit."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "eternities-hermes",
+      "tier": "godskill",
+      "ownerGodskillId": "eternities-hermes",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/eternities-hermes/SKILL.md",
+        "sha256": "ff15c0ff4b723f6fe3af2b0b0660a9e0a6a1c885be67e6933206d3d91fb816c1",
+        "bytes": 3230
+      },
+      "contract": {
+        "path": "skills/eternities-hermes/references/capability-contract.json",
+        "sha256": "aa130c1cf91a16f5a26f19ecd1b95747a20890b28d4411c4850f241fcf602478",
+        "bytes": 3700
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [
+        "auth-boundary",
+        "browser-lifecycle",
+        "cdp-control-plan",
+        "classify effects",
+        "cli-tool-handoff",
+        "cmd-workflow-analysis",
+        "control-flow",
+        "element-discovery",
+        "endpoint-inventory",
+        "error-boundary",
+        "fail closed and terminate",
+        "fixture-matrix",
+        "inspect and preserve evidence lineage",
+        "interaction-closeout",
+        "java-project-manifest",
+        "mcp-sdk-boundary",
+        "playwright-or-agent-browser-plan",
+        "prepare or verify a bounded artifact",
+        "recording-or-screenshot-evidence",
+        "remote-executor-readiness",
+        "select one route",
+        "skip-and-evidence-plan",
+        "test-layout"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "ambiguous route or browser mode",
+        "credentials or secrets",
+        "external writes",
+        "missing authority or credentials",
+        "missing or stale evidence",
+        "network access without authority",
+        "provider or remote state unavailable",
+        "remote mutation",
+        "unresolved effect or acceptance condition",
+        "unresolved effects",
+        "unsafe MCP tools",
+        "unsafe tool or executable payload",
+        "untrusted execution"
+      ],
+      "evidenceVocabulary": [
+        "cluster-review-v1",
+        "contract-digest",
+        "promotion-receipt"
+      ],
+      "preconditionVocabulary": [
+        "authorized objective and target scope",
+        "expected result, authority, risk, and acceptance criteria",
+        "relevant local source, configuration, fixtures, or service records"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "One selected route returns an inspectable local artifact, refusal, or typed handoff with exact lineage and unresolved effects surfaced."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "eternities-logos",
+      "tier": "godskill",
+      "ownerGodskillId": "eternities-logos",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/eternities-logos/SKILL.md",
+        "sha256": "bd94cdf5cdaec4534bd2f17bcf5006816c4f9e6f95dbf93f0ad3c670bdd762f2",
+        "bytes": 4611
+      },
+      "contract": {
+        "path": "skills/eternities-logos/references/capability-contract.json",
+        "sha256": "0e17c452b55bbdc72a4a484e5ca782ab1314c1acdbe9d17168f44d72ba35e19b",
+        "bytes": 5103
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [
+        "audience-fit",
+        "blast-radius",
+        "boundaries",
+        "bounded-claims",
+        "clarity",
+        "concision",
+        "decision-narrative",
+        "decision-points",
+        "document-draft",
+        "document-plan",
+        "document-update",
+        "draft",
+        "durable-lessons",
+        "extract",
+        "frame",
+        "handoff",
+        "intermediate-representation",
+        "invariants",
+        "ledger",
+        "maintenance-context",
+        "meaning-preservation",
+        "product-context",
+        "read-only-extraction",
+        "reasoning-in-structure",
+        "release-notes",
+        "review",
+        "review-notes",
+        "route",
+        "source-boundary",
+        "stakeholder-brief",
+        "status-report",
+        "technical-explanation",
+        "uncertainty",
+        "verified-facts",
+        "voice-preservation"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "ambiguous audience",
+        "canon conflict",
+        "fabrication",
+        "plagiarism or rights-sensitive reuse",
+        "provider-specific execution",
+        "publication or external write",
+        "silent canon mutation",
+        "unbounded reproduction",
+        "unresolved external effect",
+        "unresolved rights",
+        "unsupported claim",
+        "unsupported current claim",
+        "voice flattening"
+      ],
+      "evidenceVocabulary": [
+        "cluster-review-v1",
+        "contract-digest",
+        "promotion-receipt"
+      ],
+      "preconditionVocabulary": [
+        "audience and artifact brief",
+        "explicit canon",
+        "freshness requirement",
+        "supplied source material",
+        "voice evidence"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "no publication or external write remains",
+        "one bounded local artifact exists",
+        "provenance, canon, voice, and uncertainty are visible",
+        "unsupported effects are refused or handed off"
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "eternities-mnemosyne",
+      "tier": "godskill",
+      "ownerGodskillId": "eternities-mnemosyne",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/eternities-mnemosyne/SKILL.md",
+        "sha256": "69e1bae6e496f6bf5dac6492be32cf3b4d1504d8ce86a5c6f7da8a9a0fbe2078",
+        "bytes": 5497
+      },
+      "contract": {
+        "path": "skills/eternities-mnemosyne/references/capability-contract.json",
+        "sha256": "69bbed128a0955fae85849d100079a16b3efa13162e7e9c1ed0bab93e8bd522d",
+        "bytes": 3274
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [
+        "attest task-scoped checkpoints",
+        "authority",
+        "bind identity and scope",
+        "checkpoint",
+        "compression",
+        "conflict",
+        "context-budget",
+        "coverage",
+        "evidence-pointer",
+        "failure-preservation",
+        "freshness",
+        "identity",
+        "invalidation",
+        "inventory",
+        "leakage",
+        "measure context and verify recovery",
+        "measurement",
+        "next-action",
+        "precision",
+        "privacy",
+        "provenance",
+        "recoverability",
+        "resolve freshness and conflicts",
+        "retention",
+        "retrieval",
+        "retrieve smallest sufficient evidence",
+        "revision-chain",
+        "scope",
+        "separate active durable evidence and archive layers",
+        "signature",
+        "storage",
+        "task-scope",
+        "tiering",
+        "validate parent-bound continuity chains",
+        "verification"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "compression would discard an unresolved failure or authority limit",
+        "exact installed boundary or debugging workflow",
+        "fresh self-contained task",
+        "memory writes exceed granted scope",
+        "retrieval coverage or freshness is unknown",
+        "routine turn or ordinary status check",
+        "simple factual recall",
+        "sources conflict without an authority rule",
+        "task identity cannot be established"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "receipt-bound-first-party"
+      ],
+      "preconditionVocabulary": [
+        "available checkpoints, history, sources, or retrieval results",
+        "context budget and authority boundaries",
+        "task, session, or memory-system scope"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "conflicts unknowns and authority limits remain visible",
+        "consequential claims retain provenance and freshness state",
+        "task or memory identity and scope are explicit",
+        "the next consumer can proceed without replaying the raw archive",
+        "the result fits the stated context budget"
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "eternities-muse",
+      "tier": "godskill",
+      "ownerGodskillId": "eternities-muse",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/eternities-muse/SKILL.md",
+        "sha256": "e9af729ad561afb811971e4180512d4a46096f2ce245520b7db0f49c36dd79f8",
+        "bytes": 7254
+      },
+      "contract": {
+        "path": "skills/eternities-muse/references/capability-contract.json",
+        "sha256": "b8fb2a01a595b2b03133a9732e352e07f3d884ad5210684b19b98a72ee5f5134",
+        "bytes": 4647
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [
+        "3d-scene-budget",
+        "accessibility",
+        "asset-provenance",
+        "audience",
+        "baselines",
+        "bound geometry cameras lighting and render passes to device-aware budgets",
+        "bounded-repair",
+        "budgets",
+        "capture",
+        "carriers",
+        "causal-motion",
+        "chapters",
+        "components",
+        "confidence",
+        "contrast",
+        "derive one coherent visual law",
+        "determinism",
+        "device-coverage",
+        "diagnostics",
+        "emotional-arc",
+        "fixture-evidence",
+        "focus-visibility",
+        "frame-rate-independent-timing",
+        "handoff",
+        "hierarchy",
+        "identity",
+        "invariants",
+        "issue-ledger",
+        "keyboard-operability",
+        "layout",
+        "media-beats",
+        "model semantic motion states with frame-rate-independent timing",
+        "observation",
+        "performance-tier",
+        "proof-limits",
+        "reconstruction",
+        "reduced-motion",
+        "reflow-and-zoom",
+        "rejection",
+        "render-pass-verification",
+        "responsive",
+        "scroll-depth-choreography",
+        "select one dominant visual route",
+        "semantic-motion-state",
+        "semantic-structure",
+        "separate observation inference and proposal",
+        "shader-safety",
+        "signature-moment",
+        "state-coverage",
+        "status-messaging",
+        "temporal-coverage",
+        "tokens",
+        "translate intent into semantic contracts and budgets",
+        "unknowns",
+        "verify the mechanism across its operating envelope",
+        "visual-law"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "acceptance relies on one attractive frame",
+        "certify legal or universal accessibility conformance without named evidence",
+        "concrete renderer bug or ordinary graphics regression",
+        "direct final-image generation from an approved prompt",
+        "fixed-window narration or subtitle burning",
+        "generic frontend implementation after direction is already settled",
+        "motion or rendering cost has no narrative justification or fallback",
+        "observations and proposals are presented as the same evidence class",
+        "routine copy spacing or component edit",
+        "source capture is incomplete or unauthorized",
+        "the desired effect or audience remains materially ambiguous",
+        "the selected delegate lacks the required artifact or authority"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "receipt-bound-first-party"
+      ],
+      "preconditionVocabulary": [
+        "audience, platform, accessibility, performance, and authority constraints",
+        "available visual, interface, narrative, motion, and media specialists",
+        "visual sources, product intent, brand material, or an implemented artifact"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "acceptance can fail against stated rejection criteria",
+        "accessibility performance fallbacks and unknowns are explicit",
+        "observed extracted inferred and proposed claims remain distinguishable",
+        "one coherent visual law governs the system",
+        "one dominant route owns the current mission",
+        "the next specialist receives a bounded handoff"
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "eternities-omnibus",
+      "tier": "godskill",
+      "ownerGodskillId": "eternities-omnibus",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/eternities-omnibus/SKILL.md",
+        "sha256": "9d140beddc151810f560fdf06007cecd10dcabba9693ef047aca15525171a01a",
+        "bytes": 2432
+      },
+      "contract": {
+        "path": "skills/eternities-omnibus/references/capability-contract.json",
+        "sha256": "42f55f9d5c1d63d67c4b69dbcacaa23c9498fee313a928f08ae386aa843f465a",
+        "bytes": 809
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [],
+      "effectVocabulary": [],
+      "riskVocabulary": [],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "receipt-bound-first-party"
+      ],
+      "preconditionVocabulary": [
+        "compact capability query",
+        "explicit specialist-corpus discovery intent",
+        "optional ontology family"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "eternities-oracle",
+      "tier": "godskill",
+      "ownerGodskillId": "eternities-oracle",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/eternities-oracle/SKILL.md",
+        "sha256": "3c9851711492a276eaaac2672207774ea8da793d630a51b21623e2564a624d6c",
+        "bytes": 5469
+      },
+      "contract": {
+        "path": "skills/eternities-oracle/references/capability-contract.json",
+        "sha256": "6bcf48f84e7d7c6b8416474bc1f72b6b7e137bcb8837ea23b81638b55be9e935",
+        "bytes": 932
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [],
+      "effectVocabulary": [],
+      "riskVocabulary": [],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "receipt-bound-first-party"
+      ],
+      "preconditionVocabulary": [
+        "a consequential research question",
+        "authorized local repository roots",
+        "optional current official sources"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "eternities-orpheus",
+      "tier": "godskill",
+      "ownerGodskillId": "eternities-orpheus",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/eternities-orpheus/SKILL.md",
+        "sha256": "59df9f08bb022f21a31f8da64566ffdf7177440623cbb165f77bd57c7e46c1f3",
+        "bytes": 3647
+      },
+      "contract": {
+        "path": "skills/eternities-orpheus/references/capability-contract.json",
+        "sha256": "0fda1057703faa5cf4e3c6bf7cd90ef4c693028ce63fdf44df7b45fd245dbe06",
+        "bytes": 4637
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [
+        "audio-processing",
+        "authenticity-review",
+        "beat-alignment",
+        "caption-alignment",
+        "caption-handoff",
+        "handoff-validation",
+        "intent-classification",
+        "ledger sources, timing, metadata, uncertainty, rights, consent, and review state",
+        "metadata-review",
+        "music-generation",
+        "preserve exact supplied transcription and distinguish paraphrase from transcription",
+        "produce one bounded local artifact and terminate",
+        "provenance-ledger",
+        "realtime-capture",
+        "render-metadata",
+        "rights-and-consent-state",
+        "select the smallest sufficient route",
+        "separate local preparation from provider, network, live, publication, and identity effects",
+        "speaker-label-preservation",
+        "speech-synthesis",
+        "timeline-planning",
+        "timing",
+        "transcription",
+        "uncertainty",
+        "voice-production"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "a deferred route is flattened into transcription or generic audio processing",
+        "a score or fixture is treated as truth",
+        "biometric or speaker identity inference",
+        "impersonation, deceptive voice use, or rights-sensitive cloning",
+        "live capture without explicit consent and authority",
+        "provider credentials, network action, upload, publication, or external mutation",
+        "provider or specialist assumptions are treated as portable facts",
+        "requested effect exceeds local authority",
+        "source, timing, label, rights, consent, or authority is missing",
+        "unverified authenticity, provenance, ownership, consent, or media claims"
+      ],
+      "evidenceVocabulary": [
+        "cluster-review-v1",
+        "contract-digest",
+        "promotion-receipt"
+      ],
+      "preconditionVocabulary": [
+        "authorized audio or media intent and supplied source material",
+        "language, timing, speaker-label, metadata, rights, consent, and acceptance constraints when applicable",
+        "local artifact destination and handoff owner"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "exact text, claims, uncertainty, rights, consent, effects, and acceptance checks are visible",
+        "no provider, credential, network, live capture, biometric, deceptive, publication, or unverified claim remains implied",
+        "one bounded local artifact or explicit refusal/deferred handoff exists"
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "eternities-phoenix",
+      "tier": "godskill",
+      "ownerGodskillId": "eternities-phoenix",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/eternities-phoenix/SKILL.md",
+        "sha256": "8f7d4f0ace48604a9b556747404ac7efb3cd5f64dfabbc1c8add92c0b00a98f1",
+        "bytes": 3009
+      },
+      "contract": {
+        "path": "skills/eternities-phoenix/references/capability-contract.json",
+        "sha256": "bbcdfff7d94207067d38c96346a1deaf37a8f1bd665f8d5b1010ee6ff516727e",
+        "bytes": 4615
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [
+        "acceptance-checks",
+        "baseline",
+        "boundary-classification",
+        "containment-plan",
+        "establish scope and authority",
+        "evidence-packet",
+        "handoff",
+        "hypothesis-testing",
+        "impact-classification",
+        "logs",
+        "metrics",
+        "plan recovery with rollback",
+        "rank hypotheses and run reversible local checks",
+        "reproduce or document missing reproduction",
+        "reproduction",
+        "rollback-plan",
+        "route specialist boundaries and terminate",
+        "scope",
+        "timeline",
+        "traces",
+        "uncertainty",
+        "verification",
+        "workload-analysis"
+      ],
+      "effectVocabulary": [
+        "read"
+      ],
+      "riskVocabulary": [
+        "authority or identity gap",
+        "background monitoring or continued execution",
+        "credentials or secrets",
+        "destructive repair",
+        "external systems or network action",
+        "missing reproduction",
+        "missing rollback",
+        "missing, stale, conflicting, or non-reproducible evidence",
+        "production mutation",
+        "specialist, regulated, security, or provider boundary",
+        "unclear authority",
+        "unknown impact or baseline",
+        "unsafe or irreversible requested effect"
+      ],
+      "evidenceVocabulary": [
+        "cluster-review-v1",
+        "contract-digest",
+        "promotion-receipt"
+      ],
+      "preconditionVocabulary": [
+        "authorized objective and scope",
+        "impact, baseline, acceptance condition, authority, and rollback constraints",
+        "supplied logs, traces, metrics, fixtures, reproduction, or incident timeline"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "no production mutation, destructive repair, credential use, external action, or background loop remains implied",
+        "one route owns one bounded artifact, refusal, or handoff",
+        "reproduction, evidence, claims, uncertainty, authority, rollback, and acceptance remain visible"
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "eternities-prometheus",
+      "tier": "godskill",
+      "ownerGodskillId": "eternities-prometheus",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/eternities-prometheus/SKILL.md",
+        "sha256": "ed053d7799f4eef67d1095237b40aeda0643362fa5ffccdbb1a9fa86458c6a3b",
+        "bytes": 2693
+      },
+      "contract": {
+        "path": "skills/eternities-prometheus/references/capability-contract.json",
+        "sha256": "495120473d14f8390e4b1ffc67156bc5fe76d5da4087256eed80bc9e8b874bb3",
+        "bytes": 4755
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [
+        "account-signals",
+        "adaptation",
+        "capacity",
+        "checkpoint-routing",
+        "checkpoints",
+        "customer-sales-revenue-analysis",
+        "delivery-lens",
+        "demand",
+        "dependencies",
+        "efficiency-analysis",
+        "fail closed and terminate",
+        "feedback-analysis",
+        "forecasting",
+        "growth-classification",
+        "handoff",
+        "hypothesis-qualification",
+        "learner-goals",
+        "learning-decisions",
+        "pipeline-analysis",
+        "pricing-analysis",
+        "process-and-stakeholder-plan",
+        "produce one artifact",
+        "progression",
+        "proposal-routing",
+        "public-evidence-research",
+        "reconcile exact evidence",
+        "research-brief",
+        "roadmap",
+        "select the narrowest route",
+        "separate claim classes and effects",
+        "theme-synthesis",
+        "unit-and-funnel-metrics"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "account actions",
+        "ambiguous identity or route",
+        "commitments",
+        "external writes",
+        "missing authority or evidence",
+        "missing policy or authority",
+        "missing, stale, conflicting, or malformed evidence",
+        "outreach",
+        "pricing changes",
+        "private-data acquisition",
+        "procurement",
+        "requested effect exceeds local authority",
+        "specialist or regulated boundary"
+      ],
+      "evidenceVocabulary": [
+        "cluster-review-v1",
+        "contract-digest",
+        "promotion-receipt"
+      ],
+      "preconditionVocabulary": [
+        "authorized evidence and scope",
+        "current policies, identity, authority, and acceptance criteria",
+        "desired outcome or route"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "evidence and claim classes remain visible",
+        "no outreach, commitment, external write, or background loop remains implied",
+        "one route and scope own one artifact",
+        "unsupported effects are refused or handed off"
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "formula-preserving-workbook-engineering",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-daedalus",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/formula-preserving-workbook-engineering/SKILL.md",
+        "sha256": "57fe9f91a1e87fd435325ef4c6c9a1bc72711f6447cab26030553572690a13ed",
+        "bytes": 1967
+      },
+      "contract": {
+        "path": "skills/formula-preserving-workbook-engineering/references/capability-contract.json",
+        "sha256": "0ac421627081b3e5be670712b745cf90d7351ee32ddedcaae30d3c036bc41939",
+        "bytes": 3772
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/formula-preserving-workbook-engineering.json",
+        "sha256": "9fa63037b3d065dc1cb3593cab14048baa19f6992982a359d953f60873c6af0f",
+        "bytes": 6235
+      },
+      "capabilityVocabulary": [
+        "apply the smallest package-safe edit",
+        "compare formulas values references and rendered sheets",
+        "inventory formulas names links and calculation settings",
+        "recalculate through a compatible engine when available"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Overwrite formulas with cached values.",
+        "Trust a library round trip without package and visual verification.",
+        "retain the original when recalculation changes unexplained cells",
+        "stop when formula lineage or external links cannot be reconciled"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "formula-bearing regions are identified",
+        "the original workbook is preserved"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop after formula identity, recalculation deltas, package integrity, and rendered sheets are verified against the requested change."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fp-ts-functional-refactoring",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-daedalus",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/fp-ts-functional-refactoring/SKILL.md",
+        "sha256": "88feb9b199b31c0d92753c51e14335d3cc04d6e78e5dffaf49c39b01c45e07a9",
+        "bytes": 1978
+      },
+      "contract": {
+        "path": "skills/fp-ts-functional-refactoring/references/capability-contract.json",
+        "sha256": "3911212fbe01341ef1b0f485877e0fbef013823c298c18f46c33297bc7357e40",
+        "bytes": 3454
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/fp-ts-functional-refactoring.json",
+        "sha256": "f5bffe1d5cf5d0ac256ee435fb6fa9029e2c3d7daf36cd060072e451a20bd5ff",
+        "bytes": 5906
+      },
+      "capabilityVocabulary": [
+        "characterize current success error and effect paths",
+        "model domain values and failures explicitly",
+        "refactor one boundary at a time",
+        "verify runtime semantics type errors and effect ordering"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Erase a framework lifecycle behind an incompatible abstraction.",
+        "Introduce a functional library without dependency authority.",
+        "retain explicit imperative code where functional encoding obscures the contract",
+        "stop when abstraction changes observable ordering or cancellation"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "current behavior has executable characterization",
+        "dependency versions and runtime boundaries are known"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop when characterized behavior, type checks, tests, and declared effect ordering all pass for the bounded refactor."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "genomic-coordinate-assembly-and-variant-gates",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-athena",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/genomic-coordinate-assembly-and-variant-gates/SKILL.md",
+        "sha256": "c31327c833b4fead7de05dddd179b1ad593de95967e62533964127db5802f560",
+        "bytes": 2079
+      },
+      "contract": {
+        "path": "skills/genomic-coordinate-assembly-and-variant-gates/references/capability-contract.json",
+        "sha256": "428b76ac6f6bab90575cf2b72cf78a03d2af2e0f9e8843d77d0654fc54b274b9",
+        "bytes": 3866
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/genomic-coordinate-assembly-and-variant-gates.json",
+        "sha256": "baff25e4e4092323c28d7b9fa2b072c565e939b5116642f9079e653951579dcc",
+        "bytes": 6248
+      },
+      "capabilityVocabulary": [
+        "normalize equivalent variant representations",
+        "perform bounded assembly transformation with chain provenance",
+        "reject ambiguous failed or nonunique mappings",
+        "validate assembly contig coordinate system and allele orientation"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Combine coordinates whose reference build is unknown.",
+        "Provide clinical or personalized genomic conclusions.",
+        "quarantine nonunique or reference-inconsistent mappings",
+        "stop on unknown reference build or coordinate convention"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "every record has or can earn an explicit reference build",
+        "reference assets and coordinate conventions are exact"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop when every retained record has one validated assembly coordinate representation and every rejected mapping has a reason."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "interface-localization-and-bidirectionality",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-muse",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/interface-localization-and-bidirectionality/SKILL.md",
+        "sha256": "c783eba17d9def75e40c95a10533a3025fd71a9abf7632317b75ba8890726855",
+        "bytes": 2090
+      },
+      "contract": {
+        "path": "skills/interface-localization-and-bidirectionality/references/capability-contract.json",
+        "sha256": "bfea75895221f663388217b9fcdcd5e871c77546a4a80c3ddc378d87838095a4",
+        "bytes": 3815
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/interface-localization-and-bidirectionality.json",
+        "sha256": "e1c9041e01b87100e5dbc12e571db534545eedc557c9e6677c9c4fc34422e4c7",
+        "bytes": 6174
+      },
+      "capabilityVocabulary": [
+        "adapt layout navigation icons and mixed-direction text",
+        "bind locale formatting pluralization and direction",
+        "separate translatable content from code",
+        "test keyboard assistive semantics screenshots and human-reviewed language"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Mirror directional icons or data semantics indiscriminately.",
+        "Publish machine translation without human review.",
+        "retain logical order when visual mirroring would change meaning",
+        "stop publication when human translation review is absent"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "publication requires named human review",
+        "target locales and direction rules are explicit"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop when locale formatting, LTR and RTL layout, mixed text, controls, accessibility, screenshots, and human review gates pass."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "invariant-guard",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-daedalus",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/invariant-guard/SKILL.md",
+        "sha256": "662fbe7019395bbda3be470cba36b67b2e00a2a036fd40ab79b93a18fd06b8ff",
+        "bytes": 1888
+      },
+      "contract": {
+        "path": "skills/invariant-guard/references/capability-contract.json",
+        "sha256": "34621af17fa136ff364503f0928c8c4b443376236f2e19be813db5e15e068af5",
+        "bytes": 3412
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/invariant-guard.json",
+        "sha256": "f385ed90c788400a410ede465e2432ecbb54db239d31ffd7f3a77df5a2f85327",
+        "bytes": 5888
+      },
+      "capabilityVocabulary": [
+        "construct a small independent oracle",
+        "generate boundary and adversarial cases",
+        "minimize counterexamples and repair the violated branch",
+        "state preconditions postconditions and loop invariants"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Certify a theorem from a finite test suite.",
+        "Implement before the input and output contract is settled.",
+        "report unproved regions instead of generalizing from fixtures",
+        "stop when the expected behavior is circularly derived from the candidate"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "an independent expected result can be derived for bounded cases",
+        "the contract is falsifiable"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop when every declared invariant has a passing guard and every discovered counterexample has a regression case or an explicit unresolved status."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "lazy-tabular-transformation-and-validation",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-atlas",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/lazy-tabular-transformation-and-validation/SKILL.md",
+        "sha256": "2179e227170ff51dee0190ce53f50eb3e37a23c99a961a74443af9baeb9ca15f",
+        "bytes": 2023
+      },
+      "contract": {
+        "path": "skills/lazy-tabular-transformation-and-validation/references/capability-contract.json",
+        "sha256": "deda6f7e231f19d61878c11e7d66f6ebc2e1f018da5b0389666527643720257a",
+        "bytes": 3608
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/lazy-tabular-transformation-and-validation.json",
+        "sha256": "e06ee8a37e1f6f10e77db4cd6a8bdbd916e482bfe98f53f79ffdc7524b064492",
+        "bytes": 6015
+      },
+      "capabilityVocabulary": [
+        "compose lazy projections filters joins and aggregations",
+        "declare schema and row-level invariants",
+        "inspect and constrain the execution plan",
+        "materialize bounded results and validate counts nulls keys and types"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Collect an unbounded plan into memory.",
+        "Read arbitrary datasets outside the supplied scope.",
+        "reject schema drift before downstream materialization",
+        "stop when the plan crosses the memory or row budget"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "materialization has a declared resource ceiling",
+        "source scope and schema are explicit"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop when the logical plan and bounded materialized result both satisfy the declared schema and data invariants."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "measured-paid-creative-iteration",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-beacon",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/measured-paid-creative-iteration/SKILL.md",
+        "sha256": "ae6d17c5753770b5a9e82935ba1cd0b6620fb597c8e82d95246c7161aa8600ad",
+        "bytes": 2036
+      },
+      "contract": {
+        "path": "skills/measured-paid-creative-iteration/references/capability-contract.json",
+        "sha256": "bf97eeac49c0209db99ffe05905328eb85e16ab899de43ff310cb4970bb594bd",
+        "bytes": 3829
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/measured-paid-creative-iteration.json",
+        "sha256": "109b8c760ee1d04886bf08b26e2586da0cae66af468d516acb3006804e3fb6ec",
+        "bytes": 6206
+      },
+      "capabilityVocabulary": [
+        "design minimal creative contrasts",
+        "precommit metrics guardrails and stopping rules",
+        "prepare a no-launch experiment packet and analysis template",
+        "separate observed signals from hypotheses"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Launch ads or spend a budget.",
+        "Use private targeting data or unsupported audience claims.",
+        "reject a winning claim before the precommitted measurement window closes",
+        "stop when budget launch or audience authorization is absent"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "claims are supported by supplied evidence",
+        "spend and launch remain human-controlled"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop when the creative packet, metric definitions, guardrails, and explicit human launch gate are complete."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "performance-release-gating",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-herald",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/performance-release-gating/SKILL.md",
+        "sha256": "c0d534a563f4b9f065e108fbceba4d98e311093139a9abe2e4e8f4ae5493ea71",
+        "bytes": 2012
+      },
+      "contract": {
+        "path": "skills/performance-release-gating/references/capability-contract.json",
+        "sha256": "343284b882276c3aa82362d008ab2fbd73417f489be582e08d8e201666c06bda",
+        "bytes": 3651
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/performance-release-gating.json",
+        "sha256": "9b115f40859864efed59ecfec337a80057feab34927d36f498023e372df58b27",
+        "bytes": 6052
+      },
+      "capabilityVocabulary": [
+        "freeze workload environment and warmup policy",
+        "gate on predeclared latency throughput error and resource budgets",
+        "measure baseline distribution and variance",
+        "run the candidate under identical bounded conditions"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Deploy because one benchmark happened to pass.",
+        "Generate load against an external or production target.",
+        "fail the gate when variance or functional errors invalidate comparison",
+        "stop when the target or load authorization is unclear"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "budgets and run count are predeclared",
+        "the load target is local and authorized"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop when the bounded run set yields a reproducible pass or a failure receipt under the declared budgets."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "physics-constrained-numerical-validation",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-athena",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/physics-constrained-numerical-validation/SKILL.md",
+        "sha256": "5acc6fc0cb17c3c7778728f544e28c8812d717426b7e56f69f4fb9db0ad35b56",
+        "bytes": 2082
+      },
+      "contract": {
+        "path": "skills/physics-constrained-numerical-validation/references/capability-contract.json",
+        "sha256": "4bb25cf949539fd87d28c0884507e5201eeeca7dc536800473018bc7c85cdd75",
+        "bytes": 3867
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/physics-constrained-numerical-validation.json",
+        "sha256": "b6b40b770bbfee1c7ec4d6b2de9307b2813043036d50647e4c280561c5daed9b",
+        "bytes": 6233
+      },
+      "capabilityVocabulary": [
+        "check dimensional consistency and sign conventions",
+        "measure mesh timestep and solver convergence",
+        "separate discretization model and measurement uncertainty",
+        "test conservation bounds and limiting cases"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Claim hardware performance from simulation alone.",
+        "Run a model whose units boundary conditions or solver tolerances are undefined.",
+        "report model-form uncertainty instead of tuning it away",
+        "stop interpretation when conservation or convergence fails"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "at least one independent physical or analytic reference exists",
+        "units equations boundary conditions and tolerances are explicit"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop when units, invariants, limiting cases, convergence, stability, and proof limits are recorded with a pass or failure."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "release-script-safety",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-herald",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/release-script-safety/SKILL.md",
+        "sha256": "e9379597b00cbfe72bc0d40824aaab9ee9b333d9560e79595567769898fbb5fa",
+        "bytes": 1964
+      },
+      "contract": {
+        "path": "skills/release-script-safety/references/capability-contract.json",
+        "sha256": "0e5ff7b62e64b0663fdf2c9c8736e5542e08df84a3b722c9d104de7c51878d9f",
+        "bytes": 3635
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/release-script-safety.json",
+        "sha256": "fb43def7e921e2fbd3287914418869b40989548cf892dd3ac739a6dff05e87c6",
+        "bytes": 6040
+      },
+      "capabilityVocabulary": [
+        "add preflight dry-run idempotency and rollback guards",
+        "inventory commands effects and implicit state",
+        "separate pure preparation from external adapters",
+        "test interrupted repeated and malformed-state paths locally"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Publish or deploy a release.",
+        "Use secrets or mutate remote repositories and registries.",
+        "leave a typed recovery state after interruption",
+        "stop before the first external effect"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "external commands can be stubbed or disabled",
+        "the intended artifact and version rules are explicit"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop when dry-run, repeated-run, interruption, stale-state, and rollback fixtures pass without external mutation."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "semantic-implementation-diff",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-daedalus",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/semantic-implementation-diff/SKILL.md",
+        "sha256": "38fb8822b3cc9b8d18ab6101b8f6063272db5fe174afe008a6154bcd3b5f2bd8",
+        "bytes": 1986
+      },
+      "contract": {
+        "path": "skills/semantic-implementation-diff/references/capability-contract.json",
+        "sha256": "bfc2c22548c4a5c9a32b22993fa8f4854b4b606d920acf932ec3201476ce0294",
+        "bytes": 3571
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/semantic-implementation-diff.json",
+        "sha256": "8c7cd638775db9fb05b2cbec319daafa83fedb5ca09a693a1a8849b4b3f8ad87",
+        "bytes": 5995
+      },
+      "capabilityVocabulary": [
+        "classify equivalent divergent and unobserved regions",
+        "minimize each divergence into a regression fixture",
+        "normalize comparable inputs and environment",
+        "trace outputs errors state transitions and effects"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Declare arbitrary programs equivalent from matching source shape.",
+        "Ignore environment or dependency differences that affect behavior.",
+        "label unobserved behavior instead of inferring equivalence",
+        "stop when environments cannot be normalized"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "both implementations can run in a bounded comparable harness",
+        "the observable contract is explicit"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop when every observed semantic difference is classified and minimized, and every unobserved region is explicit."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "sovereign-skill-refinery",
+      "tier": "godskill",
+      "ownerGodskillId": "sovereign-skill-refinery",
+      "invocation": "direct-categorical-owner",
+      "entrypoint": {
+        "path": "skills/sovereign-skill-refinery/SKILL.md",
+        "sha256": "71b39ba6963e030018c7830539e0ebe06dd902ffb4239fcd0f768a90d1791a4c",
+        "bytes": 4844
+      },
+      "contract": {
+        "path": "skills/sovereign-skill-refinery/references/contract-template.json",
+        "sha256": "34f4f99f750b097b711091f614e3d603835d0511a245cdf877628249d7d8bba4",
+        "bytes": 672
+      },
+      "promotionReceipt": {
+        "path": "receipts/godskills-system-certification-v2.json",
+        "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+        "bytes": 4071
+      },
+      "capabilityVocabulary": [
+        "neutral operation"
+      ],
+      "effectVocabulary": [
+        "read"
+      ],
+      "riskVocabulary": [
+        "evidence is missing or contradictory",
+        "nearby request that must not route here"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "receipt-bound-first-party"
+      ],
+      "preconditionVocabulary": [
+        "required input"
+      ],
+      "composition": {
+        "maximumSelected": 3,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Name the observable evidence that proves the outcome"
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "symbolic-mathematics-python",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-daedalus",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/symbolic-mathematics-python/SKILL.md",
+        "sha256": "dcfa1c429927870d2e6a1f769428c71aa24c4cffffcedb5c059a2aa79f82838a",
+        "bytes": 1962
+      },
+      "contract": {
+        "path": "skills/symbolic-mathematics-python/references/capability-contract.json",
+        "sha256": "4373d78f468ab29fc392c3ecffcb8ba0780532128386a64c8e8993bc2efaee57",
+        "bytes": 3512
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/symbolic-mathematics-python.json",
+        "sha256": "792672095f0560194fcdbda60af591a619c0a5bc1c30978fb6bf9c4ec4a33d3f",
+        "bytes": 5985
+      },
+      "capabilityVocabulary": [
+        "cross-check symbolic results with independent numeric samples",
+        "derive simplify or solve while retaining conditions",
+        "encode symbols domains and assumptions",
+        "inspect singularities branches and dimensional consistency"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Ignore branch cuts domains units or singularities.",
+        "Present an unchecked expression as a proof.",
+        "preserve unevaluated forms when simplification changes the domain",
+        "stop when the solver discards conditions or returns ambiguous branches"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "an independent validation route exists",
+        "variable domains and assumptions are stated"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop when the symbolic result, assumptions, exceptional regions, and independent numeric checks are all recorded."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "venture-falsification-and-planning",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-prometheus",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/venture-falsification-and-planning/SKILL.md",
+        "sha256": "5102353487c367bbe99b0485c8669cf1269aed99fa3c829adffbea994f5caef9",
+        "bytes": 2104
+      },
+      "contract": {
+        "path": "skills/venture-falsification-and-planning/references/capability-contract.json",
+        "sha256": "7513e2180884e106dfd8a908adeef90a12f1da6a99e7c3947986b4223c099389",
+        "bytes": 4149
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/venture-falsification-and-planning.json",
+        "sha256": "59c04d35c4266ce1b6fd3b7cdccf723fd0b041ce7f561ed1b30c3bb857aa4f50",
+        "bytes": 6446
+      },
+      "capabilityVocabulary": [
+        "define decision thresholds resource caps and next-state plans",
+        "design staged falsification experiments",
+        "rank existential assumptions by cost and reversibility",
+        "separate facts assumptions and unknowns"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Commit funds or make regulated investment recommendations.",
+        "Treat forecasts or enthusiasm as validated demand.",
+        "stop when a decision depends on unavailable current evidence",
+        "surface irreducible uncertainty instead of manufacturing confidence"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "current claims can be source-labeled",
+        "the stage and resource ceiling are explicit"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop when every existential assumption has evidence status, a bounded test or an explicit accepted uncertainty and decision owner."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    },
+    {
+      "schemaVersion": 1,
+      "id": "web-performance-optimization",
+      "tier": "operational-skill",
+      "ownerGodskillId": "eternities-daedalus",
+      "invocation": "direct-or-owner-delegated",
+      "entrypoint": {
+        "path": "skills/web-performance-optimization/SKILL.md",
+        "sha256": "6420ad975cf47878da9bca50202864b7e896d86ca6fdd68896168fc8f571f6b4",
+        "bytes": 1906
+      },
+      "contract": {
+        "path": "skills/web-performance-optimization/references/capability-contract.json",
+        "sha256": "1045a2bcce9b91a9e5e12fdc0d3fe1578e31c1d01e18c65f4582e0d84cad7f11",
+        "bytes": 3624
+      },
+      "promotionReceipt": {
+        "path": "receipts/operational/web-performance-optimization.json",
+        "sha256": "d2d4e0f0679ec4708adcf97b7c0a2d7a63b1fc741cb79ead1ef99ca8c0f1a596",
+        "bytes": 6137
+      },
+      "capabilityVocabulary": [
+        "apply one bounded optimization",
+        "capture repeated baseline traces",
+        "isolate the dominant dependency or rendering cost",
+        "repeat measurements and verify behavior visual output and variance"
+      ],
+      "effectVocabulary": [
+        "read",
+        "write"
+      ],
+      "riskVocabulary": [
+        "Change production delivery without release authority.",
+        "Claim field improvement from one synthetic run.",
+        "revert when behavior or visual acceptance regresses",
+        "stop when variance overwhelms the measured effect"
+      ],
+      "evidenceVocabulary": [
+        "contract-digest",
+        "promotion-receipt",
+        "wave2-target-v1"
+      ],
+      "preconditionVocabulary": [
+        "a metric and acceptance budget are predeclared",
+        "the environment and workload are repeatable"
+      ],
+      "composition": {
+        "maximumSelected": 1,
+        "recursive": false
+      },
+      "terminationConditions": [
+        "Stop when repeated measurements clear the declared performance budget with functional and visual regression checks still passing."
+      ],
+      "capabilityDoesNotGrantAuthority": true
+    }
+  ],
+  "ownerRegistries": [
+    {
+      "ownerId": "eternities-aegis",
+      "extensionCount": 1,
+      "registry": {
+        "path": "skills/eternities-aegis/references/wave2-capability-extensions.json",
+        "sha256": "12bf0c6073bace8455dfdd29d92dd01215a0b83b07ddab440be391ee8f5cef17",
+        "bytes": 2846
+      },
+      "extensionReceiptDigest": "0513233e21d8d25bbc7f5ebfa26a7759884fb5825bc1b5b87eb2061662ef1ed8",
+      "maximumSelected": 3
+    },
+    {
+      "ownerId": "eternities-agora",
+      "extensionCount": 1,
+      "registry": {
+        "path": "skills/eternities-agora/references/wave2-capability-extensions.json",
+        "sha256": "a2a49f4d6aeff15b9e6a3e27e75a596b105018d4e59484ab8fe244d6a73c93b0",
+        "bytes": 2362
+      },
+      "extensionReceiptDigest": "0513233e21d8d25bbc7f5ebfa26a7759884fb5825bc1b5b87eb2061662ef1ed8",
+      "maximumSelected": 3
+    },
+    {
+      "ownerId": "eternities-arcadia",
+      "extensionCount": 2,
+      "registry": {
+        "path": "skills/eternities-arcadia/references/wave2-capability-extensions.json",
+        "sha256": "caeda7e08b22d42bb0318dfc40123324853627b3e47c444556482c9b12bed569",
+        "bytes": 4934
+      },
+      "extensionReceiptDigest": "0513233e21d8d25bbc7f5ebfa26a7759884fb5825bc1b5b87eb2061662ef1ed8",
+      "maximumSelected": 3
+    },
+    {
+      "ownerId": "eternities-architect",
+      "extensionCount": 1,
+      "registry": {
+        "path": "skills/eternities-architect/references/wave2-capability-extensions.json",
+        "sha256": "801fbd366e277564bf6d064e473316a6a77483afd4da5b1622401543f66458b9",
+        "bytes": 2665
+      },
+      "extensionReceiptDigest": "0513233e21d8d25bbc7f5ebfa26a7759884fb5825bc1b5b87eb2061662ef1ed8",
+      "maximumSelected": 3
+    },
+    {
+      "ownerId": "eternities-atlas",
+      "extensionCount": 3,
+      "registry": {
+        "path": "skills/eternities-atlas/references/wave2-capability-extensions.json",
+        "sha256": "28b35cc7cb8f3118ff2ac83e0e08cd9c4e966778f00213e4d70fee8b593ed003",
+        "bytes": 8391
+      },
+      "extensionReceiptDigest": "0513233e21d8d25bbc7f5ebfa26a7759884fb5825bc1b5b87eb2061662ef1ed8",
+      "maximumSelected": 3
+    },
+    {
+      "ownerId": "eternities-beacon",
+      "extensionCount": 1,
+      "registry": {
+        "path": "skills/eternities-beacon/references/wave2-capability-extensions.json",
+        "sha256": "527f86a533c346e63e8ee63cdd98be86ec3b5fdcca8c18555844d99ec987d051",
+        "bytes": 2695
+      },
+      "extensionReceiptDigest": "0513233e21d8d25bbc7f5ebfa26a7759884fb5825bc1b5b87eb2061662ef1ed8",
+      "maximumSelected": 3
+    },
+    {
+      "ownerId": "eternities-chorus",
+      "extensionCount": 1,
+      "registry": {
+        "path": "skills/eternities-chorus/references/wave2-capability-extensions.json",
+        "sha256": "f912b9de3acb1d84a128ae833c2d2e1a2f24d01ea1da90cff815c854be1d0ffb",
+        "bytes": 2395
+      },
+      "extensionReceiptDigest": "0513233e21d8d25bbc7f5ebfa26a7759884fb5825bc1b5b87eb2061662ef1ed8",
+      "maximumSelected": 3
+    },
+    {
+      "ownerId": "eternities-daedalus",
+      "extensionCount": 9,
+      "registry": {
+        "path": "skills/eternities-daedalus/references/wave2-capability-extensions.json",
+        "sha256": "bdd90c1c684e17b3e06ea78f20c289ee8037febcc638ae8da32694ffbf1477e3",
+        "bytes": 23269
+      },
+      "extensionReceiptDigest": "0513233e21d8d25bbc7f5ebfa26a7759884fb5825bc1b5b87eb2061662ef1ed8",
+      "maximumSelected": 3
+    },
+    {
+      "ownerId": "eternities-herald",
+      "extensionCount": 2,
+      "registry": {
+        "path": "skills/eternities-herald/references/wave2-capability-extensions.json",
+        "sha256": "72af7a4aeece9a5a3ba15010869facc2a646348cfda75d3d3cc0242eba87829d",
+        "bytes": 4909
+      },
+      "extensionReceiptDigest": "0513233e21d8d25bbc7f5ebfa26a7759884fb5825bc1b5b87eb2061662ef1ed8",
+      "maximumSelected": 3
+    },
+    {
+      "ownerId": "eternities-logos",
+      "extensionCount": 1,
+      "registry": {
+        "path": "skills/eternities-logos/references/wave2-capability-extensions.json",
+        "sha256": "63edddb2636fb24a3eedda3a0f0888a5a637b3a2a563f71643c505c29b63466b",
+        "bytes": 3019
+      },
+      "extensionReceiptDigest": "0513233e21d8d25bbc7f5ebfa26a7759884fb5825bc1b5b87eb2061662ef1ed8",
+      "maximumSelected": 3
+    },
+    {
+      "ownerId": "eternities-mnemosyne",
+      "extensionCount": 1,
+      "registry": {
+        "path": "skills/eternities-mnemosyne/references/wave2-capability-extensions.json",
+        "sha256": "e3d98dbd99e9f1b59c4d4264919049a1217c25bd630cabefc3b38f990189a1d0",
+        "bytes": 2513
+      },
+      "extensionReceiptDigest": "0513233e21d8d25bbc7f5ebfa26a7759884fb5825bc1b5b87eb2061662ef1ed8",
+      "maximumSelected": 3
+    },
+    {
+      "ownerId": "eternities-muse",
+      "extensionCount": 2,
+      "registry": {
+        "path": "skills/eternities-muse/references/wave2-capability-extensions.json",
+        "sha256": "c534dcd883f3f935335ce34e566bc16d2f89be375bf33e7771feec2c09d94080",
+        "bytes": 5541
+      },
+      "extensionReceiptDigest": "0513233e21d8d25bbc7f5ebfa26a7759884fb5825bc1b5b87eb2061662ef1ed8",
+      "maximumSelected": 3
+    },
+    {
+      "ownerId": "eternities-prometheus",
+      "extensionCount": 1,
+      "registry": {
+        "path": "skills/eternities-prometheus/references/wave2-capability-extensions.json",
+        "sha256": "8a2ee3f54fab35d0bdbd076c99b2a88d8ec1e6d82a9ade26f4d28424da800f41",
+        "bytes": 2622
+      },
+      "extensionReceiptDigest": "0513233e21d8d25bbc7f5ebfa26a7759884fb5825bc1b5b87eb2061662ef1ed8",
+      "maximumSelected": 3
+    }
+  ],
+  "releaseEvidence": {
+    "topLevelSystem": {
+      "path": "receipts/godskills-system-certification-v2.json",
+      "sha256": "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1",
+      "bytes": 4071
+    },
+    "operationalCapabilities": {
+      "path": "receipts/operational-capabilities-v1.json",
+      "sha256": "a1fe51201c6709d7e1820202c51d6e9ee9d3a8697e14af9574c3cd22685e9a49",
+      "bytes": 11506
+    },
+    "godskillExtensions": {
+      "path": "receipts/godskill-extensions-v1.json",
+      "sha256": "236c8d941b4056e81089b97a2ff4e804c6d34e4d37d677926e1755656c57ed91",
+      "bytes": 17982
+    }
+  },
+  "composition": {
+    "maximumSelectedEntrypoints": 3,
+    "recursiveComposition": false,
+    "capabilityGrantsAuthority": false,
+    "selectedEntrypointPattern": "skills/<id>/SKILL.md"
+  },
+  "activation": {
+    "sourceExecutions": 0,
+    "thirdPartyActivations": 0,
+    "hostProfileChanges": 0,
+    "externalMutations": 0
+  },
+  "proofLimits": [
+    "local-artifact-integrity-only",
+    "no-arbitrary-live-agent-routing-proof",
+    "no-external-execution-safety-proof",
+    "no-universal-domain-correctness-proof"
+  ],
+  "manifestDigest": "e1d5ea9a879818a908a7ad025df9b3f7498b862e9ff39c5a38d4fc4b5905bc89"
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eternities.ai/schemas/portable-capability-manifest.v1.json",
+  "title": "Portable hierarchical capability manifest",
+  "type": "object",
+  "required": ["schemaVersion", "manifestId", "status", "capabilities", "ownerRegistries", "releaseEvidence", "composition", "activation", "proofLimits", "manifestDigest"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "manifestId": { "const": "portable-capabilities-v1" },
+    "capabilities": { "type": "array", "minItems": 43, "maxItems": 43 },
+    "ownerRegistries": { "type": "array", "minItems": 13, "maxItems": 13 },
+    "manifestDigest": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  }
+}
