@@ -206,6 +206,53 @@ read `docs\universal-capability-construction-report.md` and
 `receipts\universal-capability-construction-v1.json` for the exact result,
 adversarial dispositions, digests, and proof limits.
 
+## universal skill quarry ... wave 3
+
+wave 3 adds 21 exact starred repository identities from the canonical D-drive
+warehouse. its snapshot accounts for 46,312 non-Git files, 622,637,311 bytes,
+and 9,100 inert `SKILL.md` bodies. all repositories are bound to exact clean
+heads. static inspection records 1,966 sources clear for semantic review,
+6,660 requiring manual review, 474 rejected before indexing, and 50 explicit
+scan errors. static clearance remains triage evidence, never trust or
+promotion.
+
+the combined cold atlas accounts for 16,876 raw records across waves 2 and 3.
+883 identical repeated source identities are provenance-aware coalesced into
+15,993 unique identities and 5,209 exact bodies. 283 bodies remain rejected,
+4,926 inert metadata facets are searchable, and every source identity has one
+terminal disposition. v1 evidence remains immutable and explicitly loadable;
+v2 is the verified default. retrieval returns at most five compact cards and
+never transports or executes source bodies.
+
+the mission skill stack compiles one bounded task receipt from the selected
+routing cards and exact entrypoint digests. it transports zero quarry bodies,
+preserves authority and effect ceilings, detects stale or forged routing, and
+allows any compatible agent host to load only the selected one-to-three
+Godskill entrypoints.
+
+`eternities-aegis` v4 adds an agentic-CI route that requires a complete
+attacker-controlled source, transport, AI or execution sink, authority, and
+consequence trace. weak configuration is recorded as an amplifier when no
+source-to-sink path is proven. it passes 10 of 10 new critical fixtures and all
+16 prior Aegis critical fixtures without running an inspected workflow.
+
+`eternities-hephaestus` is the promoted provider-neutral model, runtime, and
+compute governor. it reconciles workload quality, model capacity, precision,
+quantization, runtime and accelerator compatibility, memory overhead, latency,
+throughput, concurrency, reliability, energy, thermal limits, total cost,
+privacy, residency, provenance, and license constraints. it passes 13 of 13
+critical fixtures in a 1,212-token entrypoint and returns one qualified option
+or `no-qualified-option`. it cannot download, purchase, deploy, or change
+production routing.
+
+agent-native router v8 exposes 22 promoted Godskills across 21 families and
+preserves the exact v7 artifacts under its checkpoint. the terminal v3 system
+certificate rebuilds the combined atlas, Aegis v4, Hephaestus, router v8, and a
+mission-stack smoke receipt. no global host activation, source instruction,
+third-party code execution, deployment, purchase, or authority expansion was
+performed. see `receipts\godskills-system-certification-v3.json` for exact
+digests and proof limits.
+
 ## Godagents plus Godskills
 
 Godagents and Godskills are complementary, not interchangeable:

@@ -17,7 +17,7 @@ const PATHS = {
   evalSuite: "skills/eternities-aegis/evals/cases.json",
   synthesis: "artifacts/aegis/agentic-ci-synthesis.v1.json",
   priorReceipt: "receipts/promotions/eternities-aegis-v3.json",
-  priorSynthesis: "syntheses/eternities-aegis.v3.json",
+  priorSynthesis: "history/syntheses/eternities-aegis.v3.json",
   wave3Receipt: "receipts/github-skill-quarry-wave-3.json",
   wave3Sources: "artifacts/github-wave-3/source-records.jsonl",
   policy: "policies/promotion.v1.json",

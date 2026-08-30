@@ -85,7 +85,7 @@ test("Aegis v3 clears adversarial promotion policy without regressing earlier ca
 
 test("the v3 receipt remains immutable historical evidence after Aegis advances", async () => {
   const receipt = await json("receipts/promotions/eternities-aegis-v3.json");
-  const synthesis = await json("syntheses/eternities-aegis.v3.json");
+  const synthesis = await json("history/syntheses/eternities-aegis.v3.json");
   const current = await json("receipts/promotions/eternities-aegis-v4.json");
   const security = await json("receipts/github-wave-2-skill-security.json");
 

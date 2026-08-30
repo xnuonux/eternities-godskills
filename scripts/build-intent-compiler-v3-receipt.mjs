@@ -33,7 +33,7 @@ export async function buildIntentCompilerV3({ root = path.resolve("."), write = 
     schemaVersion: 1,
     id: "intent-compiler-v3",
     status: certified ? "certified" : "failed",
-    purpose: "twenty-one-card-commandless-routing-with-bounded-cold-quarry-discovery",
+    purpose: "twenty-two-card-commandless-routing-with-bounded-cold-quarry-discovery",
     checkpoints: {
       intentCompilerV1: { path: "receipts/intent-compiler-v1.json", sha256: sha256(historicalV1Bytes), bytes: historicalV1Bytes.length },
       compilerGeneralizationV2: { path: "receipts/compiler-generalization-v2.json", sha256: sha256(historicalV2Bytes), bytes: historicalV2Bytes.length },

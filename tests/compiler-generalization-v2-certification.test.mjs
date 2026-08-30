@@ -24,10 +24,10 @@ test("active compiler generalization v2 receipt reconciles exact current artifac
   });
   assert.deepEqual(actual.metrics.existingArena, {
     authorityInventionCount: 0,
-    caseCount: 148,
+    caseCount: 151,
     failCount: 0,
     overCompositionCount: 0,
-    passCount: 148,
+    passCount: 151,
     unsafeSelectionCount: 0,
   });
   const paths = {
