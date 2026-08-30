@@ -19,6 +19,7 @@ const PROOFS = {
   hephaestus: "receipts/promotions/eternities-hephaestus.json",
   routerV8: "receipts/agent-native-router-v8.json",
 };
+const HISTORICAL_SYSTEM_V2_SHA256 = "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1";
 
 const BINDINGS = {
   ...PROOFS,
@@ -88,9 +89,12 @@ export async function buildGodskillsSystemV3({ root = path.resolve("."), write =
     missionStack.sourceBodiesTransported === 0 &&
     proofs.routerV8.gates.authorityPreserved === true &&
     proofs.routerV8.gates.effectsPreserved === true;
+  const historicalSystemV2DigestExact =
+    sha256(await readFile(path.join(root, PROOFS.systemV2))) === HISTORICAL_SYSTEM_V2_SHA256;
   const gates = {
     exactReceiptRebuilds: rebuildsExact,
-    historicalSystemV2Preserved: proofs.systemV2.status === "certified",
+    historicalSystemV2Preserved: proofs.systemV2.status === "certified" && historicalSystemV2DigestExact,
+    historicalSystemV2DigestExact,
     allCombinedSourcesTerminal: terminalCoverage,
     aegisAgenticCiPromoted: proofs.aegisV4.decision?.status === "promoted",
     hephaestusPromoted: proofs.hephaestus.decision?.status === "promoted",
@@ -101,7 +105,7 @@ export async function buildGodskillsSystemV3({ root = path.resolve("."), write =
     thirdPartyCodeExecuted: false,
     hostActivationPerformed: false,
   };
-  const exact = rebuildsExact && proofs.systemV2.status === "certified" && routingManifest.cardCount === 22;
+  const exact = rebuildsExact && proofs.systemV2.status === "certified" && historicalSystemV2DigestExact && routingManifest.cardCount === 22;
   const status = certificationStatusV3({ exact, terminalCoverage, promoted, noActivation, authorityPreserved });
   const artifacts = Object.fromEntries(await Promise.all(Object.entries(BINDINGS).map(async ([key, relativePath]) => [key, await artifact(root, relativePath)])));
   const receipt = {

@@ -9,15 +9,16 @@ const rootUrl = new URL("../", import.meta.url);
 const root = rootUrl.pathname.replace(/^\/(.:)/, "$1");
 
 test("system v2 certifies total quarry infusion and twenty-one cold routes", async () => {
-  const expected = JSON.parse(await readFile(new URL("receipts/godskills-system-certification-v2.json", rootUrl), "utf8"));
-  const actual = expected;
-  assert.equal(actual.status, "certified");
-  assert.deepEqual(actual.counts, {
+  const receiptBytes = await readFile(new URL("receipts/godskills-system-certification-v2.json", rootUrl));
+  const receipt = JSON.parse(receiptBytes);
+  assert.equal(sha256(receiptBytes), "cf55d8a361c79b6fe40eba67d1df6feef1066bb379db1af96ca998c6503528c1");
+  assert.equal(receipt.status, "certified");
+  assert.deepEqual(receipt.counts, {
     legacyReviewedSources: 4741,
     quarrySources: 7776,
     canonicalBodies: 3581,
-    canonicalFacets: actual.counts.canonicalFacets,
-    securityRejectedCanonicalBodies: actual.counts.securityRejectedCanonicalBodies,
+    canonicalFacets: receipt.counts.canonicalFacets,
+    securityRejectedCanonicalBodies: receipt.counts.securityRejectedCanonicalBodies,
     exactDuplicates: 4195,
     unresolvedQuarrySources: 0,
     promotedCards: 21,

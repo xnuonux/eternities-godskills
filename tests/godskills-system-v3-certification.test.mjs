@@ -18,6 +18,7 @@ test("system v3 certifies the combined corpus and twenty-two universal routes", 
   assert.equal(actual.counts.canonicalBodies, 5209);
   assert.equal(actual.counts.unresolvedSources, 0);
   assert.equal(actual.counts.promotedCards, 22);
+  assert.equal(actual.gates.historicalSystemV2DigestExact, true);
 });
 
 test("system v3 binds all proofs and proves no activation or authority expansion", async () => {

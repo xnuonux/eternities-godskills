@@ -5,6 +5,7 @@ import { canonicalText, sha256 } from "./io.mjs";
 
 const STATUSES = new Set(["synthesized", "evaluated", "promoted"]);
 const REQUIRED_ARTIFACTS = ["skill", "capabilityContract", "routingCard", "evaluation"];
+const HISTORICAL_LOCKS_PATH = "data/historical-synthesis-locks.v1.json";
 
 function relativeFile(value, label) {
   if (typeof value !== "string" || value.trim() === "") {
@@ -129,6 +130,26 @@ async function jsonFiles(root) {
   }
 }
 
+async function historicalSynthesisLocks(repositoryRoot) {
+  try {
+    const document = JSON.parse(await readFile(path.join(repositoryRoot, HISTORICAL_LOCKS_PATH), "utf8"));
+    if (document.schemaVersion !== 1 || !Array.isArray(document.records)) {
+      throw new Error("historical synthesis lock registry is invalid");
+    }
+    const locks = new Map();
+    for (const record of document.records) {
+      const relative = relativeFile(record.path, "historical synthesis lock");
+      digest(record.sha256, `historical synthesis lock ${relative}`);
+      if (locks.has(relative)) throw new Error(`duplicate historical synthesis lock: ${relative}`);
+      locks.set(relative, record);
+    }
+    return locks;
+  } catch (error) {
+    if (error.code === "ENOENT") return new Map();
+    throw error;
+  }
+}
+
 function isInside(parent, child) {
   const relative = path.relative(parent, child);
   return relative !== "" && relative !== ".." &&
@@ -138,10 +159,18 @@ function isInside(parent, child) {
 export async function loadCandidateEvidence(root, repositoryRoot, clusterRows, reviewRows) {
   const rows = [];
   const canonicalRoot = await realpath(repositoryRoot);
+  const historicalLocks = await historicalSynthesisLocks(canonicalRoot);
   for (const filePath of await jsonFiles(root)) {
-    const record = JSON.parse(await readFile(filePath, "utf8"));
+    const synthesisText = await readFile(filePath, "utf8");
+    const record = JSON.parse(synthesisText);
+    const synthesisPath = path.relative(canonicalRoot, filePath).split(path.sep).join("/");
+    const historicalLock = historicalLocks.get(synthesisPath);
+    if (historicalLock && sha256(canonicalText(synthesisText)) !== historicalLock.sha256) {
+      throw new Error(`historical synthesis changed after lock: ${synthesisPath}`);
+    }
     for (const [key, artifact] of Object.entries(record.artifacts ?? {})) {
       const relative = relativeFile(artifact.path, key);
+      if (historicalLock && key !== "promotionReceipt") continue;
       const lexicalTarget = path.resolve(canonicalRoot, ...relative.split("/"));
       if (!isInside(canonicalRoot, lexicalTarget)) throw new Error(`artifact escapes repository root: ${key}`);
       const canonicalTarget = await realpath(lexicalTarget);
