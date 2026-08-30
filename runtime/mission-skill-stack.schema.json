@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eternities.ai/schemas/mission-skill-stack.v1.json",
+  "title": "Eternities Mission Skill Stack",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "missionId",
+    "projectFingerprint",
+    "requestDigest",
+    "routeReceiptDigest",
+    "routeStatus",
+    "selectionKind",
+    "selectedIds",
+    "selected",
+    "uncoveredCapabilities",
+    "availableAuthority",
+    "permittedEffects",
+    "selectedEffects",
+    "riskClasses",
+    "contextCost",
+    "sourceBodiesTransported",
+    "authorityExpanded",
+    "stackDigest"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "missionId": { "type": "string", "minLength": 1 },
+    "projectFingerprint": { "$ref": "#/$defs/digest" },
+    "requestDigest": { "$ref": "#/$defs/digest" },
+    "routeReceiptDigest": { "$ref": "#/$defs/digest" },
+    "routeStatus": { "enum": ["selected", "needs-decision", "no-qualified-route"] },
+    "selectionKind": { "enum": ["single", "composition", "none"] },
+    "selectedIds": { "$ref": "#/$defs/strings" },
+    "selected": { "type": "array", "maxItems": 3, "items": { "type": "object" } },
+    "uncoveredCapabilities": { "$ref": "#/$defs/strings" },
+    "availableAuthority": { "$ref": "#/$defs/strings" },
+    "permittedEffects": { "$ref": "#/$defs/strings" },
+    "selectedEffects": { "$ref": "#/$defs/strings" },
+    "riskClasses": { "$ref": "#/$defs/strings" },
+    "contextCost": { "type": "integer", "minimum": 0 },
+    "sourceBodiesTransported": { "const": 0 },
+    "authorityExpanded": { "const": false },
+    "stackDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "strings": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+  },
+  "additionalProperties": false
+}
