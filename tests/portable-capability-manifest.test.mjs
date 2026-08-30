@@ -15,11 +15,11 @@ const manifest = JSON.parse(manifestBytes);
 const receipt = JSON.parse(fs.readFileSync(path.join(root, "receipts/portable-capability-manifest-v1.json")));
 const sha256 = (value) => crypto.createHash("sha256").update(value).digest("hex");
 
-test("portable manifest contains 21 immutable owners and 22 operational delegates", () => {
-  assert.equal(manifest.capabilities.length, 43);
-  assert.equal(manifest.capabilities.filter((row) => row.tier === "godskill").length, 21);
+test("portable manifest contains 22 immutable owners and 22 operational delegates", () => {
+  assert.equal(manifest.capabilities.length, 44);
+  assert.equal(manifest.capabilities.filter((row) => row.tier === "godskill").length, 22);
   assert.equal(manifest.capabilities.filter((row) => row.tier === "operational-skill").length, 22);
-  assert.equal(new Set(manifest.capabilities.map((row) => row.id)).size, 43);
+  assert.equal(new Set(manifest.capabilities.map((row) => row.id)).size, 44);
   assert.equal(manifest.ownerRegistries.length, 13);
   assert.equal(manifest.ownerRegistries.reduce((sum, row) => sum + row.extensionCount, 0), 26);
 });

@@ -64,13 +64,13 @@ export function validateGodagentsRouteEnvelope({ result, requestId, hostContext,
 }
 
 export function buildPortableCapabilityManifest({ capabilities, ownerRegistries, releaseEvidence }) {
-  if (!Array.isArray(capabilities) || capabilities.length !== 43) throw new Error("portable manifest requires exactly 43 capabilities");
+  if (!Array.isArray(capabilities) || capabilities.length !== 44) throw new Error("portable manifest requires exactly 44 capabilities");
   if (!Array.isArray(ownerRegistries) || ownerRegistries.length !== 13) throw new Error("portable manifest requires exactly 13 owner registries");
   const ids = capabilities.map((row) => row.id);
-  if (new Set(ids).size !== 43) throw new Error("duplicate portable capability id");
+  if (new Set(ids).size !== 44) throw new Error("duplicate portable capability id");
   const topLevel = capabilities.filter((row) => row.tier === "godskill");
   const operational = capabilities.filter((row) => row.tier === "operational-skill");
-  if (topLevel.length !== 21 || operational.length !== 22) throw new Error("portable capability tier counts are invalid");
+  if (topLevel.length !== 22 || operational.length !== 22) throw new Error("portable capability tier counts are invalid");
   for (const row of capabilities) {
     if (row.entrypoint.path !== `skills/${row.id}/SKILL.md`) throw new Error(`entrypoint identity mismatch: ${row.id}`);
     if (row.capabilityDoesNotGrantAuthority !== true) throw new Error(`capability grants authority: ${row.id}`);

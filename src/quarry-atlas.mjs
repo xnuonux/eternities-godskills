@@ -16,9 +16,12 @@ function overlap(query, value) {
   return count;
 }
 
-export async function loadQuarryAtlas(root = path.resolve(".")) {
-  const receipt = JSON.parse(await readFile(path.join(root, "receipts/quarry-total-infusion-v1.json"), "utf8"));
+async function loadBoundAtlas(root, receiptPath, { requireTerminalCoverage = false } = {}) {
+  const receipt = JSON.parse(await readFile(path.join(root, receiptPath), "utf8"));
   if (receipt.status !== "certified") throw new Error("quarry atlas receipt is not certified");
+  if (requireTerminalCoverage && receipt.counts?.unresolvedSourceCount !== 0) {
+    throw new Error("quarry atlas terminal coverage is incomplete");
+  }
   const binding = receipt.outputs?.facets;
   if (!binding?.path || !/^[a-f0-9]{64}$/.test(binding.sha256 ?? "")) throw new Error("quarry atlas receipt lacks facet binding");
   const bytes = await readFile(path.join(root, binding.path));
@@ -30,6 +33,17 @@ export async function loadQuarryAtlas(root = path.resolve(".")) {
     }
   }
   return { receipt, facets };
+}
+
+export async function loadVerifiedAtlas(root = path.resolve("."), { version = "v2" } = {}) {
+  if (version !== "v1" && version !== "v2") throw new Error(`unsupported quarry atlas version: ${version}`);
+  return loadBoundAtlas(root, `receipts/quarry-total-infusion-${version}.json`, {
+    requireTerminalCoverage: version === "v2",
+  });
+}
+
+export async function loadQuarryAtlas(root = path.resolve(".")) {
+  return loadVerifiedAtlas(root, { version: "v1" });
 }
 
 export function searchQuarryAtlas(atlas, options = {}) {

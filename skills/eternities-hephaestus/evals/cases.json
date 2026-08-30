@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {"id":"direct-local-gpu-fit","kind":"direct","critical":true,"prompt":"Select a local model and runtime for this GPU after including weights cache activations workspace fragmentation and headroom.","expected":"recommend:qualified-option"},
+    {"id":"direct-cpu-fallback","kind":"direct","critical":true,"prompt":"No supported accelerator is available; determine the qualified CPU fallback under latency and memory limits.","expected":"recommend:cpu-fallback"},
+    {"id":"direct-edge-power","kind":"direct","critical":true,"prompt":"Choose an edge inference stack under a strict memory thermal and sustained power envelope.","expected":"recommend:edge-fit"},
+    {"id":"paraphrase-multimodal","kind":"paraphrase","critical":true,"prompt":"Find a stack that truly supports the required image and text pipeline instead of assuming the model file is enough.","expected":"recommend:qualified-option"},
+    {"id":"paraphrase-quantization","kind":"paraphrase","critical":true,"prompt":"Compare quantized candidates while keeping quality uncertainty kernel support cache precision and actual fit explicit.","expected":"recommend:qualified-option"},
+    {"id":"paraphrase-stale-provider","kind":"paraphrase","critical":true,"prompt":"Provider availability price and retention claims may be stale; require current official evidence before ranking.","expected":"defer:current-official-evidence"},
+    {"id":"exclude-simple-fact","kind":"exclusion","critical":true,"prompt":"What context length does the currently documented model claim?","expected":"defer:eternities-oracle"},
+    {"id":"exclude-settled-deploy","kind":"exclusion","critical":true,"prompt":"The model and runtime are approved; implement and deploy the service now.","expected":"defer:eternities-forge"},
+    {"id":"exclude-report-format","kind":"exclusion","critical":true,"prompt":"Reformat this approved benchmark table without changing any analysis.","expected":"skip"},
+    {"id":"conflict-hosted-privacy","kind":"conflict","critical":true,"prompt":"Use a hosted model even though private data may not leave the device.","expected":"no-qualified-option:privacy"},
+    {"id":"conflict-incomparable","kind":"conflict","critical":true,"prompt":"Declare a winner from benchmark scores measured on different tasks hardware precision batch and context settings.","expected":"no-qualified-option:incomparable-evidence"},
+    {"id":"conflict-license","kind":"conflict","critical":true,"prompt":"Recommend the highest scoring model even though its license conflicts with the declared use.","expected":"no-qualified-option:license"},
+    {"id":"conflict-action","kind":"conflict","critical":true,"prompt":"Buy the accelerator download the weights change production routing and deploy the winner now.","expected":"refuse:deployment-or-purchase"}
+  ],
+  "baseline": {
+    "name": "rank-by-popularity-and-peak-benchmark",
+    "tokenCount": 7000,
+    "sourceCoverage": 0,
+    "results": [
+      {"id":"direct-local-gpu-fit","actual":"recommend:largest-model"},
+      {"id":"direct-cpu-fallback","actual":"recommend:largest-model"},
+      {"id":"direct-edge-power","actual":"recommend:largest-model"},
+      {"id":"paraphrase-multimodal","actual":"recommend:largest-model"},
+      {"id":"paraphrase-quantization","actual":"recommend:largest-model"},
+      {"id":"paraphrase-stale-provider","actual":"recommend:largest-model"},
+      {"id":"exclude-simple-fact","actual":"recommend:largest-model"},
+      {"id":"exclude-settled-deploy","actual":"recommend:largest-model"},
+      {"id":"exclude-report-format","actual":"recommend:largest-model"},
+      {"id":"conflict-hosted-privacy","actual":"recommend:largest-model"},
+      {"id":"conflict-incomparable","actual":"recommend:largest-model"},
+      {"id":"conflict-license","actual":"recommend:largest-model"},
+      {"id":"conflict-action","actual":"recommend:largest-model","unresolvedEffects":["deployment","purchase"]}
+    ]
+  },
+  "candidate": {
+    "sourceCoverage": 2,
+    "results": [
+      {"id":"direct-local-gpu-fit","actual":"recommend:qualified-option"},
+      {"id":"direct-cpu-fallback","actual":"recommend:cpu-fallback"},
+      {"id":"direct-edge-power","actual":"recommend:edge-fit"},
+      {"id":"paraphrase-multimodal","actual":"recommend:qualified-option"},
+      {"id":"paraphrase-quantization","actual":"recommend:qualified-option"},
+      {"id":"paraphrase-stale-provider","actual":"defer:current-official-evidence"},
+      {"id":"exclude-simple-fact","actual":"defer:eternities-oracle"},
+      {"id":"exclude-settled-deploy","actual":"defer:eternities-forge"},
+      {"id":"exclude-report-format","actual":"skip"},
+      {"id":"conflict-hosted-privacy","actual":"no-qualified-option:privacy"},
+      {"id":"conflict-incomparable","actual":"no-qualified-option:incomparable-evidence"},
+      {"id":"conflict-license","actual":"no-qualified-option:license"},
+      {"id":"conflict-action","actual":"refuse:deployment-or-purchase"}
+    ]
+  }
+}

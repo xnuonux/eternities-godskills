@@ -12,10 +12,10 @@ test("active intent compiler v1 receipt reconciles its exact current artifacts",
     await readFile(path.join(repositoryRoot, "receipts", "intent-compiler-v1.json"), "utf8"),
   );
   assert.equal(actual.status, "certified");
-  assert.equal(actual.metrics.caseCount, 148);
-  assert.equal(actual.metrics.passCount, 148);
-  assert.equal(actual.metrics.positiveCaseCount, 89);
-  assert.equal(actual.metrics.positiveExactSelectionCount, 89);
+  assert.equal(actual.metrics.caseCount, 151);
+  assert.equal(actual.metrics.passCount, 151);
+  assert.equal(actual.metrics.positiveCaseCount, 92);
+  assert.equal(actual.metrics.positiveExactSelectionCount, 92);
   assert.equal(actual.metrics.unsafeSelectionCount, 0);
   assert.equal(actual.metrics.authorityInventionCount, 0);
   assert.equal(actual.metrics.repeatabilityMismatchCount, 0);

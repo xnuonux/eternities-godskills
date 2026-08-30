@@ -271,7 +271,7 @@ test("Aegis v3 adds skill supply-chain defense without replacing earlier routes"
   const contract = await json(
     "skills/eternities-aegis/references/capability-contract.json",
   );
-  assert.equal(contract.id, "godskill-eternities-aegis-v3");
+  assert.equal(contract.id, "godskill-eternities-aegis-v4");
   assert.deepEqual(
     contract.routes.map(({ id }) => id),
     [
@@ -283,6 +283,7 @@ test("Aegis v3 adds skill supply-chain defense without replacing earlier routes"
       "identity-access",
       "security-assurance",
       "skill-supply-chain",
+      "agentic-ci",
     ],
   );
   assert.deepEqual(contract.sourceEvidence.clusters.map(({ id }) => id), [

@@ -7,7 +7,7 @@ import { sha256, writeJsonAtomic } from "../src/io.mjs";
 
 const OPERATIONAL_RECEIPT = "receipts/operational-capabilities-v1.json";
 const EXTENSION_RECEIPT = "receipts/godskill-extensions-v1.json";
-const SYSTEM_RECEIPT = "receipts/godskills-system-certification-v2.json";
+const SYSTEM_RECEIPT = "receipts/godskills-system-certification-v3.json";
 
 async function artifact(root, relativePath) {
   const bytes = await readFile(path.join(root, relativePath));
@@ -25,7 +25,7 @@ export async function buildPortableManifestArtifacts({ root, write = false } = {
   const allSkillIds = (await readdir(path.join(repositoryRoot, "skills"), { withFileTypes: true }))
     .filter((entry) => entry.isDirectory()).map((entry) => entry.name).sort();
   const topLevelIds = allSkillIds.filter((id) => !operationalIds.has(id));
-  if (topLevelIds.length !== 21) throw new Error(`expected 21 top-level skills, received ${topLevelIds.length}`);
+  if (topLevelIds.length !== 22) throw new Error(`expected 22 top-level skills, received ${topLevelIds.length}`);
   const capabilities = [];
 
   for (const id of [...topLevelIds, ...operationalIds].sort()) {
@@ -82,7 +82,7 @@ export async function buildPortableManifestArtifacts({ root, write = false } = {
     receiptId: "portable-capability-manifest-v1",
     status: "certified-local-artifacts",
     manifest: { path: manifestPath, sha256: sha256(manifestText), bytes: Buffer.byteLength(manifestText), manifestDigest: manifest.manifestDigest },
-    counts: { capabilities: 43, topLevelGodskills: 21, operationalSkills: 22, ownerRegistries: 13, extensions: 26 },
+    counts: { capabilities: 44, topLevelGodskills: 22, operationalSkills: 22, ownerRegistries: 13, extensions: 26 },
     selectedEntrypointBoundary: { pattern: "skills/<id>/SKILL.md", maximumComposition: 3, authorityExpansion: false, effectExpansion: false },
     activation: manifest.activation,
     proofLimits: manifest.proofLimits,
