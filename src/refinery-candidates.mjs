@@ -161,11 +161,12 @@ export async function loadCandidateEvidence(root, repositoryRoot, clusterRows, r
   const canonicalRoot = await realpath(repositoryRoot);
   const historicalLocks = await historicalSynthesisLocks(canonicalRoot);
   for (const filePath of await jsonFiles(root)) {
-    const synthesisText = await readFile(filePath, "utf8");
+    const synthesisBytes = await readFile(filePath);
+    const synthesisText = synthesisBytes.toString("utf8");
     const record = JSON.parse(synthesisText);
     const synthesisPath = path.relative(canonicalRoot, filePath).split(path.sep).join("/");
     const historicalLock = historicalLocks.get(synthesisPath);
-    if (historicalLock && sha256(canonicalText(synthesisText)) !== historicalLock.sha256) {
+    if (historicalLock && sha256(synthesisBytes) !== historicalLock.sha256) {
       throw new Error(`historical synthesis changed after lock: ${synthesisPath}`);
     }
     for (const [key, artifact] of Object.entries(record.artifacts ?? {})) {

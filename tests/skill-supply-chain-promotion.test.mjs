@@ -100,8 +100,8 @@ test("the v3 receipt remains immutable historical evidence after Aegis advances"
   assert.equal((await json(receipt.historicalEvidence.preservedSynthesis)).status, "promoted");
   assert.equal(current.artifacts.priorReceipt.sha256, sha256(await readFile(current.artifacts.priorReceipt.path)));
   assert.equal(current.artifacts.priorSynthesis.sha256, sha256(await readFile(current.artifacts.priorSynthesis.path)));
-  assert.equal(sha256(await text("syntheses/eternities-aegis.v3.json")), "e9b928d0a33bb111ac0581f140303385823c7908cbae5c4ec3c48da6d3a45ed1");
-  assert.equal(sha256(await text("history/syntheses/eternities-aegis.v3.json")), "e9b928d0a33bb111ac0581f140303385823c7908cbae5c4ec3c48da6d3a45ed1");
+  assert.equal(sha256(await readFile(path.join(root, "syntheses/eternities-aegis.v3.json"))), "e9b928d0a33bb111ac0581f140303385823c7908cbae5c4ec3c48da6d3a45ed1");
+  assert.equal(sha256(await readFile(path.join(root, "history/syntheses/eternities-aegis.v3.json"))), "e9b928d0a33bb111ac0581f140303385823c7908cbae5c4ec3c48da6d3a45ed1");
   assert.equal(synthesis.artifacts.skill.sha256, receipt.evidence.skillSha256);
   assert.equal(synthesis.artifacts.routingCard.sha256, receipt.evidence.routingCardSha256);
 });

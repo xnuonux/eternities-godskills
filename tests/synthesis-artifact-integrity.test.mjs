@@ -18,12 +18,13 @@ test("every synthesis binds exact artifact bytes and contains no hash placeholde
   const names = (await readdir(path.join(root, "syntheses"))).filter((name) => name.endsWith(".json")).sort();
   const locks = await historicalLocks();
   for (const name of names) {
-    const synthesisText = await readFile(path.join(root, "syntheses", name), "utf8");
+    const synthesisBytes = await readFile(path.join(root, "syntheses", name));
+    const synthesisText = synthesisBytes.toString("utf8");
     assert.doesNotMatch(synthesisText, /\$[A-Za-z][A-Za-z0-9]*Hash/, `${name} contains a hash placeholder`);
     const synthesis = JSON.parse(synthesisText);
     const lock = locks.get(`syntheses/${name}`);
     if (lock) {
-      assert.equal(sha256(canonicalText(synthesisText)), lock.sha256, `${name} changed after historical lock`);
+      assert.equal(sha256(synthesisBytes), lock.sha256, `${name} changed after historical lock`);
       const receiptArtifact = synthesis.artifacts?.promotionReceipt;
       assert.ok(receiptArtifact, `${name} historical lock requires a promotion receipt`);
       const receiptText = await readFile(path.join(root, ...receiptArtifact.path.split("/")), "utf8");
