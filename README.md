@@ -206,6 +206,91 @@ read `docs\universal-capability-construction-report.md` and
 `receipts\universal-capability-construction-v1.json` for the exact result,
 adversarial dispositions, digests, and proof limits.
 
+## Godagents plus Godskills
+
+Godagents and Godskills are complementary, not interchangeable:
+
+```text
+Godagent = the persistent actor, purpose, identity, constitution, and authority
+Godskill = the smallest qualified method for the present outcome
+keel = continuity across sessions, cortexes, and hosts
+Realm Contract = the exact world the actor may observe or affect
+```
+
+the user should not need slash commands or a catalog of names. an agent submits
+ordinary intent with its verified host context. the router returns one smallest
+sufficient capability, a compatible composition of at most three, an explicit
+decision request, or no qualified route. only selected entrypoints enter the
+working context. selection can increase competence, never authority.
+
+### example 1 ... recover a rate-limited API
+
+> "this API keeps failing under rate limits. diagnose it and make the
+> integration resilient."
+
+the Godagent owns the mission, repository context, change authority, and stop
+conditions. `api-rate-limit-recovery` provides a focused operational method,
+while integration and diagnostic capabilities may be selected as the task
+state requires them. the cortex can propose retry, backoff, quota, concurrency,
+or idempotency changes, but it cannot invent credentials, deployment rights,
+or external-write authority. in the bounded Terra trial, the no-expansion
+wording identified `eternities-hermes` but correctly paused for explicit
+execution or network authority instead of selecting a method silently.
+
+```text
+reproduce -> classify -> design -> implement -> verify -> receipt
+```
+
+### example 2 ... build an accessible asynchronous interface
+
+> "turn this consequential workflow into an interface people can understand,
+> leave, return to, and recover safely."
+
+the Godagent preserves the product promise and task history. `eternities-muse`,
+`eternities-architect`, `eternities-forge`, and specialized accessibility or
+verification methods become candidates at the phase where each is useful. the
+result is one accountable actor reconciling bounded methods, not a collage of
+specialist prompts.
+
+```text
+observe -> specify states and authority -> design -> build -> verify access,
+failure, and resumption -> reconcile against the user promise
+```
+
+### example 3 ... carry an idea into a product
+
+> "i have an idea. find out whether it deserves to exist, then turn the
+> strongest version into a product."
+
+this is a lifecycle, not one oversized invocation. the persistent Godagent
+holds the lineage while the router selects the smallest sufficient method at
+each earned phase:
+
+```text
+raw idea
+  -> Prometheus: expose the valuable and surprising form
+  -> Oracle plus venture falsification: establish evidence and contradictions
+  -> Architect: settle the product and system decision
+  -> Forge plus Daedalus: plan, build, test, and integrate
+  -> Muse plus Aegis: prove experience, accessibility, trust, and authority
+  -> Beacon or Herald: prepare truthful release and communication
+  -> measured iteration, integration, pause, or retirement
+```
+
+the critical property is continuity without prompt bulk. the actor persists as
+methods change, and each phase must earn the next through evidence. Godskills
+do not make planning, implementation, security, publication, and market truth
+one atomic act, and a route never authorizes the external effect it describes.
+
+the exact bounded Terra trial selected `eternities-muse` for the interface,
+selected `eternities-architect` and `eternities-herald` for two separately
+qualified lifecycle phases, and paused every phase whose authority or
+preconditions were absent. read `docs\godagents-terra-integration-trial.md` for
+the exact requests, gates, focused tests, and proof boundary.
+
+the canonical relationship and proof boundary are maintained in
+`eternities-canon/canon/godagents-and-godskills.md`.
+
 ## release-one commands
 
 ```powershell
