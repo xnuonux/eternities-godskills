@@ -27,8 +27,8 @@ test("every synthesis binds exact artifact bytes and contains no hash placeholde
       assert.equal(sha256(synthesisBytes), lock.sha256, `${name} changed after historical lock`);
       const receiptArtifact = synthesis.artifacts?.promotionReceipt;
       assert.ok(receiptArtifact, `${name} historical lock requires a promotion receipt`);
-      const receiptText = await readFile(path.join(root, ...receiptArtifact.path.split("/")), "utf8");
-      assert.equal(receiptArtifact.sha256, sha256(canonicalText(receiptText)), `${name} has stale historical promotion receipt`);
+      const receiptBytes = await readFile(path.join(root, ...receiptArtifact.path.split("/")));
+      assert.equal(receiptArtifact.sha256, sha256(receiptBytes), `${name} has stale historical promotion receipt`);
       continue;
     }
     for (const [key, artifact] of Object.entries(synthesis.artifacts ?? {})) {

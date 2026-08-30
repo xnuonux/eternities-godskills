@@ -40,7 +40,7 @@ function equalArrays(left, right) {
   return left.length === right.length && left.every((value, index) => value === right[index]);
 }
 
-export function validateCandidateEvidence(record, clusterRows, reviewRows, promotionReceipt) {
+export function validateCandidateEvidence(record, clusterRows, reviewRows, promotionReceipt, promotionReceiptBytes = null) {
   if (!record || record.schemaVersion !== 1) throw new Error("candidate schemaVersion must be 1");
   if (typeof record.candidateId !== "string" || record.candidateId.trim() === "") throw new Error("candidateId is required");
   if (typeof record.familyId !== "string" || record.familyId.trim() === "") throw new Error("familyId is required");
@@ -94,8 +94,8 @@ export function validateCandidateEvidence(record, clusterRows, reviewRows, promo
   const promoted = record.status === "promoted";
   if (evaluated) {
     if (!promotionReceipt || !artifacts.promotionReceipt) throw new Error("evaluated candidate requires promotion receipt");
-    const receiptText = `${JSON.stringify(promotionReceipt, null, 2)}\n`;
-    if (sha256(receiptText) !== artifacts.promotionReceipt.sha256) throw new Error("stale promotion receipt hash");
+    const receiptEvidence = promotionReceiptBytes ?? `${JSON.stringify(promotionReceipt, null, 2)}\n`;
+    if (sha256(receiptEvidence) !== artifacts.promotionReceipt.sha256) throw new Error("stale promotion receipt hash");
     if (promotionReceipt.skillName !== record.candidateId) throw new Error("promotion receipt candidate id mismatch");
     const receiptSources = [...(promotionReceipt.evidence?.sourceIds ?? [])].sort((a, b) => a.localeCompare(b));
     if (!equalArrays(sourceIds, receiptSources)) throw new Error("promotion receipt source ids do not match candidate");
@@ -180,10 +180,11 @@ export async function loadCandidateEvidence(root, repositoryRoot, clusterRows, r
       if (sha256(canonicalText(text)) !== artifact.sha256) throw new Error(`stale artifact hash: ${key}`);
     }
     const receiptArtifact = record.artifacts?.promotionReceipt;
-    const receipt = receiptArtifact
-      ? JSON.parse(await readFile(await realpath(path.resolve(canonicalRoot, ...receiptArtifact.path.split("/"))), "utf8"))
+    const receiptBytes = receiptArtifact
+      ? await readFile(await realpath(path.resolve(canonicalRoot, ...receiptArtifact.path.split("/"))))
       : null;
-    rows.push(validateCandidateEvidence(record, clusterRows, reviewRows, receipt));
+    const receipt = receiptBytes ? JSON.parse(receiptBytes) : null;
+    rows.push(validateCandidateEvidence(record, clusterRows, reviewRows, receipt, receiptBytes));
   }
   return rows.sort((left, right) => left.candidateId.localeCompare(right.candidateId));
 }
