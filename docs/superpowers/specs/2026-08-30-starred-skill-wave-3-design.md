@@ -80,4 +80,3 @@ it refuses false precision, incomparable leaderboard aggregation, memory-fit cla
 ## proof limits
 
 this work proves exact local evidence accounting, deterministic routing and receipts, fixture behavior, and independently written capability contracts. it does not prove every third-party skill is correct or safe, every model benchmark is comparable, arbitrary live-agent judgment, provider availability, hardware performance, legal clearance, or production behavior.
-
