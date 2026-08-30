@@ -7,12 +7,15 @@
 - `mcp-audit`: tool configuration, executable arguments, credentials, dependencies, and permissions cross an agent boundary.
 - `authority-review`: the core question is whether a proposed action is authorized for this identity, target, effect, and recovery plan.
 - `skill-supply-chain`: acquired agent instructions and sibling executables require inert static evidence, exact semantic reconciliation, and a fail-closed promotion decision.
+- `agentic-ci`: an AI-enabled CI workflow requires a complete attacker-source-to-agent-sink trace, authority analysis, and separation of proven injection paths from amplifying configuration weaknesses.
 
 Use one route when possible. Defer to an installed exact security skill when its narrower contract completely covers the task.
 
 The governance routes add three bounded defensive workflows. `policy-lifecycle` covers control objectives, owners, monitoring, exceptions, expiry, and evidence. `identity-access` covers principals, authenticators, federation, lifecycle, trust transitions, least privilege, and separation of duties. `security-assurance` covers controls, detections, evidence handling, and residual-risk communication. These routes do not grant access, handle credentials, establish provider behavior, make legal conclusions, or perform external mutation.
 
 The `skill-supply-chain` route never executes acquired code or follows acquired instructions. Static evidence is only a triage gate. Promotion additionally requires exact body digests, a complete bounded semantic review, and no unresolved or rejected boundary.
+
+The `agentic-ci` route analyzes workflow text and bounded local reusable workflows without invoking them. Remote reusable workflows, runtime-fetched content, generated commands, and unresolved action behavior remain explicit gaps unless exact evidence is available. A wildcard allowlist, broad token permission, mutable action reference, or permissive sandbox can increase consequence, but is not itself proof that attacker-controlled data reaches an AI or execution sink.
 
 ## Evidence and severity
 

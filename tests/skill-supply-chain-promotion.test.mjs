@@ -83,9 +83,10 @@ test("Aegis v3 clears adversarial promotion policy without regressing earlier ca
   assert.ok(new Set(suite.cases.map(({ kind }) => kind)).isSupersetOf(new Set(["direct", "paraphrase", "exclusion", "conflict"])));
 });
 
-test("the v3 receipt and synthesis bind exact current artifacts and honest limits", async () => {
+test("the v3 receipt remains immutable historical evidence after Aegis advances", async () => {
   const receipt = await json("receipts/promotions/eternities-aegis-v3.json");
   const synthesis = await json("syntheses/eternities-aegis.v3.json");
+  const current = await json("receipts/promotions/eternities-aegis-v4.json");
   const security = await json("receipts/github-wave-2-skill-security.json");
 
   assert.equal(receipt.decision.status, "promoted");
@@ -97,7 +98,8 @@ test("the v3 receipt and synthesis bind exact current artifacts and honest limit
   assert.equal(receipt.historicalEvidence.preservedSynthesisSha256, "8cb65519fadd6bec5dd188007c60867b5b48bcab5a71a0be5ced61357744eefa");
   assert.equal(sha256(await text(receipt.historicalEvidence.preservedSynthesis)), receipt.historicalEvidence.preservedSynthesisSha256);
   assert.equal((await json(receipt.historicalEvidence.preservedSynthesis)).status, "promoted");
-  for (const artifact of Object.values(synthesis.artifacts)) {
-    assert.equal(artifact.sha256, sha256(await text(artifact.path)), artifact.path);
-  }
+  assert.equal(current.artifacts.priorReceipt.sha256, sha256(await readFile(current.artifacts.priorReceipt.path)));
+  assert.equal(current.artifacts.priorSynthesis.sha256, sha256(await readFile(current.artifacts.priorSynthesis.path)));
+  assert.equal(synthesis.artifacts.skill.sha256, receipt.evidence.skillSha256);
+  assert.equal(synthesis.artifacts.routingCard.sha256, receipt.evidence.routingCardSha256);
 });
