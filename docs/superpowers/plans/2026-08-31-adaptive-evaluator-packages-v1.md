@@ -189,7 +189,7 @@ git commit -m "feat: close adaptive evaluator package protocol"
 **Files:**
 - Create: `scripts/build-adaptive-evaluator-package-receipt.mjs`
 - Create: `tests/adaptive-evaluator-package-receipt.test.mjs`
-- Test: `tests/static-module-closure.test.mjs`
+- Test: `tests/adaptive-activation-executable-receipt.test.mjs`
 
 **Interfaces:**
 - Consumes: `discoverLocalModuleClosure({ repositoryRoot, roots, io })` and Task 1 policy/schema functions.
@@ -273,7 +273,7 @@ descriptor entrypoint.
 
 - [ ] **Step 4: Run package receipt and closure tests**
 
-Run: `node --test tests/static-module-closure.test.mjs tests/adaptive-evaluator-package-receipt.test.mjs`
+Run: `node --test tests/adaptive-activation-executable-receipt.test.mjs tests/adaptive-evaluator-package-receipt.test.mjs`
 
 Expected: PASS with byte-identical receipts across two temporary roots and all
 escape, alias, dependency, and drift attacks rejected.
