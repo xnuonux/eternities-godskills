@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "id": "capability-layer-abi-v1",
+  "status": "experimental-canary",
+  "capabilityGrantsAuthority": false,
+  "methodMode": "entrypoint-contract-operating-contract-v1",
+  "reviewerPolicy": {
+    "artifactRequired": true,
+    "selfCertificationAllowed": false,
+    "sourceFields": [
+      "successCondition",
+      "outputs",
+      "failureModes",
+      "terminationConditions"
+    ],
+    "proofLimits": [
+      "artifact-review-only",
+      "no-self-certification",
+      "no-runtime-observation-without-an-observation-receipt"
+    ]
+  },
+  "verifierPolicy": {
+    "initialStatus": "declared-not-executed",
+    "executedChecks": 0,
+    "observations": [],
+    "sourceFields": [
+      "successCondition",
+      "outputs",
+      "failureModes",
+      "terminationConditions"
+    ]
+  },
+  "proofLimits": [
+    "structural-layer-integrity-only",
+    "no-model-quality-claim",
+    "no-global-activation",
+    "no-external-authority"
+  ],
+  "canaries": [
+    {
+      "capabilityId": "eternities-aegis",
+      "sources": {
+        "entrypoint": "skills/eternities-aegis/SKILL.md",
+        "contract": "skills/eternities-aegis/references/capability-contract.json",
+        "routingCard": "skills/eternities-aegis/references/routing-card.json",
+        "operatingContract": "skills/eternities-aegis/references/operating-contract.md"
+      },
+      "inputSlots": [
+        {
+          "id": "authorization-boundary",
+          "sourceIndex": 0,
+          "typeId": "eternities.authority-envelope",
+          "jsonKind": "object"
+        },
+        {
+          "id": "system-evidence",
+          "sourceIndex": 1,
+          "typeId": "eternities.evidence-set",
+          "jsonKind": "array"
+        },
+        {
+          "id": "trust-context",
+          "sourceIndex": 2,
+          "typeId": "eternities.trust-map",
+          "jsonKind": "object"
+        }
+      ],
+      "outputSlots": [
+        {
+          "id": "authorization-decision",
+          "sourceIndex": 0,
+          "typeId": "eternities.authority-decision",
+          "jsonKind": "object"
+        },
+        {
+          "id": "trust-boundary-map",
+          "sourceIndex": 1,
+          "typeId": "eternities.trust-map",
+          "jsonKind": "object"
+        },
+        {
+          "id": "finding-ledger",
+          "sourceIndex": 2,
+          "typeId": "eternities.finding-ledger",
+          "jsonKind": "object"
+        },
+        {
+          "id": "mitigation-plan",
+          "sourceIndex": 3,
+          "typeId": "eternities.mitigation-plan",
+          "jsonKind": "object"
+        },
+        {
+          "id": "residual-risk-ledger",
+          "sourceIndex": 4,
+          "typeId": "eternities.risk-ledger",
+          "jsonKind": "object"
+        }
+      ]
+    },
+    {
+      "capabilityId": "eternities-forge",
+      "sources": {
+        "entrypoint": "skills/eternities-forge/SKILL.md",
+        "contract": "skills/eternities-forge/references/capability-contract.json",
+        "routingCard": "skills/eternities-forge/references/routing-card.json",
+        "operatingContract": "skills/eternities-forge/references/operating-contract.md"
+      },
+      "inputSlots": [
+        {
+          "id": "settled-outcome",
+          "sourceIndex": 0,
+          "typeId": "eternities.mission-spec",
+          "jsonKind": "object"
+        },
+        {
+          "id": "repository-state",
+          "sourceIndex": 1,
+          "typeId": "eternities.repository-state",
+          "jsonKind": "object"
+        },
+        {
+          "id": "acceptance-risk-boundary",
+          "sourceIndex": 2,
+          "typeId": "eternities.acceptance-contract",
+          "jsonKind": "object"
+        }
+      ],
+      "outputSlots": [
+        {
+          "id": "implementation",
+          "sourceIndex": 0,
+          "typeId": "eternities.implementation-artifact",
+          "jsonKind": "object"
+        },
+        {
+          "id": "claim-evidence-ledger",
+          "sourceIndex": 1,
+          "typeId": "eternities.evidence-ledger",
+          "jsonKind": "object"
+        },
+        {
+          "id": "review-disposition",
+          "sourceIndex": 2,
+          "typeId": "eternities.review-decision",
+          "jsonKind": "object"
+        },
+        {
+          "id": "integration-state",
+          "sourceIndex": 3,
+          "typeId": "eternities.integration-state",
+          "jsonKind": "object"
+        }
+      ]
+    },
+    {
+      "capabilityId": "eternities-muse",
+      "sources": {
+        "entrypoint": "skills/eternities-muse/SKILL.md",
+        "contract": "skills/eternities-muse/references/capability-contract.json",
+        "routingCard": "skills/eternities-muse/references/routing-card.json",
+        "operatingContract": "skills/eternities-muse/references/operating-contract.md"
+      },
+      "inputSlots": [
+        {
+          "id": "visual-source-set",
+          "sourceIndex": 0,
+          "typeId": "eternities.artifact-set",
+          "jsonKind": "array"
+        },
+        {
+          "id": "design-constraints",
+          "sourceIndex": 1,
+          "typeId": "eternities.constraint-set",
+          "jsonKind": "array"
+        },
+        {
+          "id": "available-specialists",
+          "sourceIndex": 2,
+          "typeId": "eternities.capability-set",
+          "jsonKind": "array"
+        }
+      ],
+      "outputSlots": [
+        {
+          "id": "visual-direction",
+          "sourceIndex": 0,
+          "typeId": "eternities.decision-record",
+          "jsonKind": "object"
+        },
+        {
+          "id": "visual-system",
+          "sourceIndex": 1,
+          "typeId": "eternities.design-system",
+          "jsonKind": "object"
+        },
+        {
+          "id": "specialist-handoff",
+          "sourceIndex": 2,
+          "typeId": "eternities.handoff-contract",
+          "jsonKind": "object"
+        },
+        {
+          "id": "acceptance-boundary",
+          "sourceIndex": 3,
+          "typeId": "eternities.acceptance-contract",
+          "jsonKind": "object"
+        }
+      ]
+    }
+  ]
+}
