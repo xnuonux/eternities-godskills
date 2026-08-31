@@ -181,6 +181,26 @@ test("binds static imports that follow regex literals", async (t) => {
   assert.notEqual(changed.receiptDigest, initial.receiptDigest);
 });
 
+test("rejects percent-encoded module aliases before filesystem resolution", async (t) => {
+  const { buildAdaptiveEvaluatorPackageReceipt } = await builder();
+  for (const [label, specifier, decoyPath] of [
+    ["encoded-name", "./%68elper.mjs", "src/%68elper.mjs"],
+    [
+      "encoded-dot-segments",
+      "./safe/%2e%2e/%2e%2e/%2e%2e/outside.mjs",
+      "src/safe/%2e%2e/%2e%2e/%2e%2e/outside.mjs",
+    ],
+  ]) {
+    const root = await fixture(t, `adaptive-evaluator-${label}-`);
+    await put(root, decoyPath, "export const decoy = true;\n");
+    await put(root, "src/entrypoint.mjs", `import '${specifier}';\n`);
+    await assert.rejects(buildAdaptiveEvaluatorPackageReceipt({
+      repositoryRoot: root,
+      descriptor: descriptor(),
+    }), /percent|encoded|specifier/i);
+  }
+});
+
 test("rejects descriptor escape, duplicates, missing data, and oversized resources", async (t) => {
   const { buildAdaptiveEvaluatorPackageReceipt } = await builder();
   const root = await fixture(t, "adaptive-evaluator-rejections-");

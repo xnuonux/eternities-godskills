@@ -99,6 +99,9 @@ async function containedFile(root, relativePath, io) {
 }
 
 function resolveSpecifier(root, importer, specifier) {
+  if (specifier.includes("%")) {
+    throw new Error(`percent-encoded module specifier is unsupported: ${specifier}`);
+  }
   if (specifier.startsWith("node:")) return null;
   if (!specifier.startsWith(".")) {
     throw new Error(`bare or external module dependency is unsupported: ${specifier}`);
