@@ -1,0 +1,583 @@
+{
+  "$comment": "Structural validation only. verifyPortfolioReport is required to recompute membership, counts, gates, digests, and cross-field consistency.",
+  "$id": "https://eternities.ai/schemas/adaptive-evidence-portfolio-v1/report.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "complete"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "missingSlotIds": {
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "incomplete"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "candidatesPassingEvidenceGate": {
+            "maxItems": 0
+          },
+          "missingSlotIds": {
+            "minItems": 1
+          },
+          "variantMetrics": {
+            "not": {
+              "contains": {
+                "properties": {
+                  "passedEvidenceGate": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "passedEvidenceGate"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "properties": {
+    "activationRequestAllowed": {
+      "const": false
+    },
+    "adaptiveEvidencePolicyDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "authorityExpanded": {
+      "const": false
+    },
+    "candidatesPassingEvidenceGate": {
+      "items": {
+        "enum": [
+          "guardrail",
+          "method",
+          "reviewer",
+          "combined"
+        ]
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "caseComparisonAggregationAllowed": {
+      "const": false
+    },
+    "completedTaskCount": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "diversityMetrics": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "axis": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "observedDistinct": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "passed": {
+            "type": "boolean"
+          },
+          "requiredDistinct": {
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "axis",
+          "requiredDistinct",
+          "observedDistinct",
+          "passed"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "generatedAt": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "lifecycleActionAllowed": {
+      "const": false
+    },
+    "members": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "completionDigest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          },
+          "ledgerDigest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          },
+          "profileDigest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          },
+          "slotId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "taskDefinitionDigest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          },
+          "trialDigest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "slotId",
+          "trialDigest",
+          "ledgerDigest",
+          "profileDigest",
+          "taskDefinitionDigest",
+          "completionDigest"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "missingSlotIds": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "planDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "portfolioPolicyDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "profileIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "capabilityId": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "capabilityVersion": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "consequenceClass": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "environmentId": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "modelFamily": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "reasoningTier": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "taskClass": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "taskClass",
+        "modelFamily",
+        "reasoningTier",
+        "consequenceClass",
+        "capabilityVersion",
+        "environmentId"
+      ],
+      "type": "object"
+    },
+    "profileKey": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "profilePromotionAllowed": {
+      "const": false
+    },
+    "protocolId": {
+      "const": "eternities-godskills-cross-trial-portfolio-v1"
+    },
+    "reportDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "reportingOnly": {
+      "const": true
+    },
+    "requiredTaskCount": {
+      "minimum": 2,
+      "type": "integer"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "semanticVerificationRequired": {
+      "const": true
+    },
+    "status": {
+      "enum": [
+        "incomplete",
+        "complete"
+      ]
+    },
+    "variantMetrics": {
+      "items": false,
+      "maxItems": 4,
+      "minItems": 4,
+      "prefixItems": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "completedTasks": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "criticalRegressions": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "failedGates": {
+              "items": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "type": "array",
+              "uniqueItems": true
+            },
+            "losses": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "passedEvidenceGate": {
+              "type": "boolean"
+            },
+            "supportingCompletionDigests": {
+              "items": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "type": "array",
+              "uniqueItems": true
+            },
+            "taskWinRate": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "ties": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "variant": {
+              "const": "guardrail"
+            },
+            "wins": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "worstTaskCriticalRegression": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "variant",
+            "completedTasks",
+            "wins",
+            "losses",
+            "ties",
+            "criticalRegressions",
+            "worstTaskCriticalRegression",
+            "taskWinRate",
+            "supportingCompletionDigests",
+            "failedGates",
+            "passedEvidenceGate"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "completedTasks": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "criticalRegressions": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "failedGates": {
+              "items": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "type": "array",
+              "uniqueItems": true
+            },
+            "losses": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "passedEvidenceGate": {
+              "type": "boolean"
+            },
+            "supportingCompletionDigests": {
+              "items": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "type": "array",
+              "uniqueItems": true
+            },
+            "taskWinRate": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "ties": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "variant": {
+              "const": "method"
+            },
+            "wins": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "worstTaskCriticalRegression": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "variant",
+            "completedTasks",
+            "wins",
+            "losses",
+            "ties",
+            "criticalRegressions",
+            "worstTaskCriticalRegression",
+            "taskWinRate",
+            "supportingCompletionDigests",
+            "failedGates",
+            "passedEvidenceGate"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "completedTasks": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "criticalRegressions": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "failedGates": {
+              "items": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "type": "array",
+              "uniqueItems": true
+            },
+            "losses": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "passedEvidenceGate": {
+              "type": "boolean"
+            },
+            "supportingCompletionDigests": {
+              "items": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "type": "array",
+              "uniqueItems": true
+            },
+            "taskWinRate": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "ties": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "variant": {
+              "const": "reviewer"
+            },
+            "wins": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "worstTaskCriticalRegression": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "variant",
+            "completedTasks",
+            "wins",
+            "losses",
+            "ties",
+            "criticalRegressions",
+            "worstTaskCriticalRegression",
+            "taskWinRate",
+            "supportingCompletionDigests",
+            "failedGates",
+            "passedEvidenceGate"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "completedTasks": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "criticalRegressions": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "failedGates": {
+              "items": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "type": "array",
+              "uniqueItems": true
+            },
+            "losses": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "passedEvidenceGate": {
+              "type": "boolean"
+            },
+            "supportingCompletionDigests": {
+              "items": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "type": "array",
+              "uniqueItems": true
+            },
+            "taskWinRate": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "ties": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "variant": {
+              "const": "combined"
+            },
+            "wins": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "worstTaskCriticalRegression": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "variant",
+            "completedTasks",
+            "wins",
+            "losses",
+            "ties",
+            "criticalRegressions",
+            "worstTaskCriticalRegression",
+            "taskWinRate",
+            "supportingCompletionDigests",
+            "failedGates",
+            "passedEvidenceGate"
+          ],
+          "type": "object"
+        }
+      ],
+      "type": "array"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "status",
+    "protocolId",
+    "planDigest",
+    "portfolioPolicyDigest",
+    "adaptiveEvidencePolicyDigest",
+    "profileIdentity",
+    "profileKey",
+    "requiredTaskCount",
+    "completedTaskCount",
+    "missingSlotIds",
+    "members",
+    "diversityMetrics",
+    "variantMetrics",
+    "candidatesPassingEvidenceGate",
+    "caseComparisonAggregationAllowed",
+    "semanticVerificationRequired",
+    "reportingOnly",
+    "profilePromotionAllowed",
+    "lifecycleActionAllowed",
+    "activationRequestAllowed",
+    "authorityExpanded",
+    "generatedAt",
+    "reportDigest"
+  ],
+  "title": "Adaptive Evidence Portfolio v1 report",
+  "type": "object"
+}

@@ -1,0 +1,216 @@
+{
+  "$comment": "Structural validation only. verifyPortfolioPlan is required for digest, cross-field axis, diversity, and policy semantics.",
+  "$id": "https://eternities.ai/schemas/adaptive-evidence-portfolio-v1/plan.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "planDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "policyDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "profileIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "capabilityId": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "capabilityVersion": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "consequenceClass": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "environmentId": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "modelFamily": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "reasoningTier": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "taskClass": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "taskClass",
+        "modelFamily",
+        "reasoningTier",
+        "consequenceClass",
+        "capabilityVersion",
+        "environmentId"
+      ],
+      "type": "object"
+    },
+    "profileKey": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "protocolId": {
+      "const": "eternities-godskills-cross-trial-portfolio-v1"
+    },
+    "registeredAt": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "selectionRule": {
+      "additionalProperties": false,
+      "properties": {
+        "diversityAxes": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 2,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "minimumDistinctValues": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "axis": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "count": {
+                "minimum": 2,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "axis",
+              "count"
+            ],
+            "type": "object"
+          },
+          "minItems": 2,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "mode": {
+          "const": "exact-preregistered-set"
+        }
+      },
+      "required": [
+        "mode",
+        "diversityAxes",
+        "minimumDistinctValues"
+      ],
+      "type": "object"
+    },
+    "semanticVerificationRequired": {
+      "const": true
+    },
+    "status": {
+      "const": "preregistered"
+    },
+    "taskSlots": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "diversityValues": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "axis": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "value": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "axis",
+                "value"
+              ],
+              "type": "object"
+            },
+            "minItems": 2,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "slotId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "taskDefinition": {
+            "additionalProperties": false,
+            "properties": {
+              "digest": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "id": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "version": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "version",
+              "digest"
+            ],
+            "type": "object"
+          },
+          "trialId": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "slotId",
+          "trialId",
+          "taskDefinition",
+          "diversityValues"
+        ],
+        "type": "object"
+      },
+      "minItems": 2,
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "status",
+    "protocolId",
+    "profileIdentity",
+    "profileKey",
+    "policyDigest",
+    "selectionRule",
+    "taskSlots",
+    "registeredAt",
+    "semanticVerificationRequired",
+    "planDigest"
+  ],
+  "title": "Adaptive Evidence Portfolio v1 plan",
+  "type": "object"
+}

@@ -1,0 +1,387 @@
+{
+  "$comment": "Structural validation only. verifyCompletedTrialReceipt is required against the exact plan, trial, ledger, profile, and policies.",
+  "$id": "https://eternities.ai/schemas/adaptive-evidence-portfolio-v1/completion.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "adaptiveEvidencePolicyDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "authorityExpanded": {
+      "const": false
+    },
+    "caseEvidenceDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "comparisonPolicyDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "completedAt": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "completionDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "ledgerDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "planDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "portfolioPolicyDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "profileDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "profileIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "capabilityId": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "capabilityVersion": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "consequenceClass": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "environmentId": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "modelFamily": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "reasoningTier": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "taskClass": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "taskClass",
+        "modelFamily",
+        "reasoningTier",
+        "consequenceClass",
+        "capabilityVersion",
+        "environmentId"
+      ],
+      "type": "object"
+    },
+    "profileKey": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "protocolId": {
+      "const": "eternities-godskills-cross-trial-portfolio-v1"
+    },
+    "rawReference": {
+      "additionalProperties": false,
+      "properties": {
+        "artifactDigest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "criticalRegression": {
+          "type": "boolean"
+        },
+        "proofLevel": {
+          "enum": [
+            "model",
+            "cross-model",
+            "field",
+            "universal"
+          ]
+        },
+        "rowDigest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rowDigest",
+        "artifactDigest",
+        "criticalRegression",
+        "proofLevel"
+      ],
+      "type": "object"
+    },
+    "reportingOnly": {
+      "const": true
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "semanticVerificationRequired": {
+      "const": true
+    },
+    "slotId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "status": {
+      "const": "completed"
+    },
+    "taskDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "digest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "version": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "digest"
+      ],
+      "type": "object"
+    },
+    "trialDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "trialId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "variantOutcomes": {
+      "items": false,
+      "maxItems": 4,
+      "minItems": 4,
+      "prefixItems": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "artifactDigest": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "criticalRegression": {
+              "type": "boolean"
+            },
+            "outcomeAgainstRaw": {
+              "enum": [
+                "win",
+                "loss",
+                "tie"
+              ]
+            },
+            "proofLevel": {
+              "enum": [
+                "model",
+                "cross-model",
+                "field",
+                "universal"
+              ]
+            },
+            "rowDigest": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "variant": {
+              "const": "guardrail"
+            }
+          },
+          "required": [
+            "variant",
+            "outcomeAgainstRaw",
+            "criticalRegression",
+            "proofLevel",
+            "rowDigest",
+            "artifactDigest"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "artifactDigest": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "criticalRegression": {
+              "type": "boolean"
+            },
+            "outcomeAgainstRaw": {
+              "enum": [
+                "win",
+                "loss",
+                "tie"
+              ]
+            },
+            "proofLevel": {
+              "enum": [
+                "model",
+                "cross-model",
+                "field",
+                "universal"
+              ]
+            },
+            "rowDigest": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "variant": {
+              "const": "method"
+            }
+          },
+          "required": [
+            "variant",
+            "outcomeAgainstRaw",
+            "criticalRegression",
+            "proofLevel",
+            "rowDigest",
+            "artifactDigest"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "artifactDigest": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "criticalRegression": {
+              "type": "boolean"
+            },
+            "outcomeAgainstRaw": {
+              "enum": [
+                "win",
+                "loss",
+                "tie"
+              ]
+            },
+            "proofLevel": {
+              "enum": [
+                "model",
+                "cross-model",
+                "field",
+                "universal"
+              ]
+            },
+            "rowDigest": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "variant": {
+              "const": "reviewer"
+            }
+          },
+          "required": [
+            "variant",
+            "outcomeAgainstRaw",
+            "criticalRegression",
+            "proofLevel",
+            "rowDigest",
+            "artifactDigest"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "artifactDigest": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "criticalRegression": {
+              "type": "boolean"
+            },
+            "outcomeAgainstRaw": {
+              "enum": [
+                "win",
+                "loss",
+                "tie"
+              ]
+            },
+            "proofLevel": {
+              "enum": [
+                "model",
+                "cross-model",
+                "field",
+                "universal"
+              ]
+            },
+            "rowDigest": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "variant": {
+              "const": "combined"
+            }
+          },
+          "required": [
+            "variant",
+            "outcomeAgainstRaw",
+            "criticalRegression",
+            "proofLevel",
+            "rowDigest",
+            "artifactDigest"
+          ],
+          "type": "object"
+        }
+      ],
+      "type": "array"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "status",
+    "protocolId",
+    "planDigest",
+    "portfolioPolicyDigest",
+    "adaptiveEvidencePolicyDigest",
+    "profileIdentity",
+    "profileKey",
+    "slotId",
+    "trialId",
+    "trialDigest",
+    "ledgerDigest",
+    "profileDigest",
+    "taskDefinition",
+    "comparisonPolicyDigest",
+    "rawReference",
+    "variantOutcomes",
+    "caseEvidenceDigest",
+    "completedAt",
+    "semanticVerificationRequired",
+    "reportingOnly",
+    "authorityExpanded",
+    "completionDigest"
+  ],
+  "title": "Adaptive Evidence Portfolio v1 completion",
+  "type": "object"
+}
