@@ -82,6 +82,11 @@ function stripComments(source) {
 
 function moduleSpecifiers(source) {
   const text = stripComments(source);
+  if (/\b(?:eval|Function|AsyncFunction|GeneratorFunction|AsyncGeneratorFunction)\b/m.test(text)
+      || /\b(?:globalThis|getBuiltinModule|createRequire)\b/m.test(text)
+      || /(?:\.|\[\s*["'])constructor\b/m.test(text)) {
+    throw new Error("runtime code generation is unsupported by the static module closure");
+  }
   if (/\bimport\s*\(/m.test(text)) {
     throw new Error("dynamic local module loading is unsupported");
   }

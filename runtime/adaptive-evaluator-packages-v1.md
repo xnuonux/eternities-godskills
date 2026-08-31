@@ -10,9 +10,12 @@ profile promotion, lifecycle action, or godagents activation.
 
 1. run `npm run build:adaptive-evaluator-packages` from the repository root.
 2. the builder reconstructs the three closed schemas in memory.
-3. the package builder discovers the complete local static module closure from
-   the pinned evaluator entrypoint and rejects dynamic, commonjs, bare,
-   escaping, missing, and symlink-aliased dependencies.
+3. the package builder discovers the complete direct static import graph from
+   the pinned evaluator entrypoint and rejects direct dynamic loading, commonjs,
+   common runtime code-generation primitives, bare dependencies, escapes,
+   missing files, and symlink aliases. the receipt explicitly leaves runtime
+   closure completeness false because static inspection is not a hostile-code
+   sandbox.
 4. the builder binds the evaluator code, policy, schemas, oracle, frozen task,
    archived artifacts, archived v1 observations, parent receipt, report, and
    runtime record into deterministic receipts.
@@ -25,7 +28,10 @@ profile promotion, lifecycle action, or godagents activation.
 the host imports `src/aegis-evaluator-v2.mjs` as a fixed, reviewed entrypoint.
 a receipt path is data and is never an execution instruction. the package
 policy keeps dynamic loading and receipt-path execution false. package identity
-does not grant authority and cannot select arbitrary code.
+does not grant authority and cannot select arbitrary code. a future host that
+accepts evaluator code beyond this exact reviewed entrypoint must add runtime
+isolation and an allowlisted module loader; the static receipt alone is not that
+isolation boundary.
 
 ## request and result contract
 

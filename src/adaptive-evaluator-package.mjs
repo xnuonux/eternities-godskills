@@ -284,26 +284,38 @@ export function validateEvaluatorRequest(request) {
     throw new Error("artifact digest does not match its bytes");
   }
   if (!TRIAL_VARIANTS.includes(request.variant)) throw new Error("evaluator request variant is invalid");
+  let baselineResult = null;
   if (request.variant === "raw") {
     if (request.baseline !== null) throw new Error("raw evaluator request cannot carry a baseline");
   } else {
     if (request.baseline === null) throw new Error("non-raw evaluator request requires a baseline");
-    const baselineResult = validateBoundArtifact(request.baseline, "evaluator request baseline");
+    baselineResult = validateBoundArtifact(request.baseline, "evaluator request baseline");
     validateBoundContext(baselineResult, request, "evaluator request baseline");
     if (baselineResult.variant !== "raw") {
       throw new Error("evaluator request baseline result variant must be raw");
     }
   }
   const expectedParent = EXPECTED_REVIEW_PARENTS[request.variant];
+  let parentResult = null;
   if (expectedParent) {
     if (request.parent === null) throw new Error(`${request.variant} evaluator request requires a parent`);
-    const parentResult = validateBoundArtifact(request.parent, "evaluator request parent");
+    parentResult = validateBoundArtifact(request.parent, "evaluator request parent");
     validateBoundContext(parentResult, request, "evaluator request parent");
     if (parentResult.variant !== expectedParent) {
       throw new Error("evaluator request parent result variant is invalid");
     }
   } else if (request.parent !== null) {
     throw new Error(`${request.variant} evaluator request cannot carry a review parent`);
+  }
+  if (request.variant === "reviewer"
+      && (request.parent.artifactDigest !== request.baseline.artifactDigest
+        || request.parent.resultDigest !== request.baseline.resultDigest)) {
+    throw new Error("reviewer baseline and parent lineage must be identical");
+  }
+  if (request.variant === "combined"
+      && (parentResult.comparison.baselineArtifactDigest !== request.baseline.artifactDigest
+        || parentResult.comparison.baselineResultDigest !== baselineResult.resultDigest)) {
+    throw new Error("combined parent and raw baseline lineage must be identical");
   }
   exactIso(request.evaluatedAt, "evaluator request evaluatedAt");
   return deepFreeze(structuredClone(request));
@@ -404,10 +416,20 @@ export function validateEvaluatorPackageReceipt(receipt) {
     throw new Error("receipt artifact media type is invalid");
   }
   if (receipt.authorityExpanded !== false) throw new Error("receipt cannot expand authority");
-  exactKeys(receipt.dependencyClosure, ["roots", "localModules", "complete"], "receipt dependency closure");
+  exactKeys(receipt.dependencyClosure, [
+    "roots",
+    "localModules",
+    "staticImportsComplete",
+    "codeGenerationPrimitivesRejected",
+    "runtimeClosureComplete",
+  ], "receipt dependency closure");
   uniqueStrings(receipt.dependencyClosure.roots, "receipt dependency roots");
   uniqueStrings(receipt.dependencyClosure.localModules, "receipt local modules");
-  if (receipt.dependencyClosure.complete !== true) throw new Error("receipt dependency closure is incomplete");
+  if (receipt.dependencyClosure.staticImportsComplete !== true
+      || receipt.dependencyClosure.codeGenerationPrimitivesRejected !== true
+      || receipt.dependencyClosure.runtimeClosureComplete !== false) {
+    throw new Error("receipt dependency closure proof boundary is invalid");
+  }
   if (!Array.isArray(receipt.artifacts) || receipt.artifacts.length === 0) {
     throw new TypeError("receipt artifacts must be non-empty");
   }
@@ -509,10 +531,18 @@ export function buildAdaptiveEvaluatorSchemas() {
       taskClass: { enum: [...EXPECTED_TASK_CLASSES] },
       artifactMediaType: { enum: [...EXPECTED_MEDIA_TYPES] },
       authorityExpanded: { const: false },
-      dependencyClosure: objectSchema(["roots", "localModules", "complete"], {
+      dependencyClosure: objectSchema([
+        "roots",
+        "localModules",
+        "staticImportsComplete",
+        "codeGenerationPrimitivesRejected",
+        "runtimeClosureComplete",
+      ], {
         roots: { type: "array", minItems: 1, uniqueItems: true, items: nonEmptyStringSchema },
         localModules: { type: "array", minItems: 1, uniqueItems: true, items: nonEmptyStringSchema },
-        complete: { const: true },
+        staticImportsComplete: { const: true },
+        codeGenerationPrimitivesRejected: { const: true },
+        runtimeClosureComplete: { const: false },
       }),
       artifacts: { type: "array", minItems: 1, items: artifact },
       proofLimits: { type: "array", minItems: 1, uniqueItems: true, items: nonEmptyStringSchema },

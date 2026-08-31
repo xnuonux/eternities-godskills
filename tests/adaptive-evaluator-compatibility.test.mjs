@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFile, readdir } from "node:fs/promises";
 import test from "node:test";
 
+import { canonicalDigest } from "../src/adaptive-evidence-contracts.mjs";
 import { sha256 } from "../src/io.mjs";
 
 const root = new URL("../", import.meta.url);
@@ -146,4 +147,48 @@ test("runtime record closes execution, shadow, and future evidence boundaries", 
   assert.equal(receipt.runtime.path, RUNTIME_PATH);
   assert.equal(receipt.runtime.sha256, sha256(runtime));
   assert.equal(receipt.runtime.bytes, Buffer.byteLength(runtime));
+});
+
+test("aggregate receipt binds every declared input and output to actual bytes", async () => {
+  const receipt = JSON.parse(await readFile(
+    new URL("receipts/adaptive-evaluator-packages-v1.json", root),
+    "utf8",
+  ));
+  const { receiptDigest, ...body } = receipt;
+  assert.equal(receiptDigest, canonicalDigest(body));
+
+  const rows = [
+    receipt.parent,
+    receipt.evaluatorPackage,
+    receipt.shadowReplay,
+    receipt.runtime,
+    receipt.taskDefinition,
+    receipt.oracle,
+    ...receipt.sources,
+    ...receipt.archivedInputs,
+    ...receipt.outputs,
+  ];
+  for (const row of rows) {
+    const bytes = await readFile(new URL(row.path, root));
+    assert.equal(row.sha256, sha256(bytes), row.path);
+    assert.equal(row.bytes, bytes.length, row.path);
+    if (row.logicalDigest !== undefined) {
+      assert.equal(row.logicalDigest, canonicalDigest(JSON.parse(bytes)), row.path);
+    }
+  }
+  assert.equal(new Set(receipt.sources.map(({ path }) => path)).size,
+    receipt.sources.length);
+  assert.equal(new Set(receipt.archivedInputs.map(({ path }) => path)).size,
+    receipt.archivedInputs.length);
+  assert.equal(new Set(receipt.outputs.map(({ path }) => path)).size,
+    receipt.outputs.length);
+
+  const parent = JSON.parse(await readFile(new URL(receipt.parent.path, root)));
+  const evaluatorPackage = JSON.parse(await readFile(
+    new URL(receipt.evaluatorPackage.path, root),
+  ));
+  const shadow = JSON.parse(await readFile(new URL(receipt.shadowReplay.path, root)));
+  assert.equal(receipt.parent.receiptDigest, parent.receiptDigest);
+  assert.equal(receipt.evaluatorPackage.receiptDigest, evaluatorPackage.receiptDigest);
+  assert.equal(receipt.shadowReplay.replayDigest, shadow.replayDigest);
 });

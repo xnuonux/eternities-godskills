@@ -243,13 +243,17 @@ export async function buildAdaptiveEvaluatorPackageReceipt({
     dependencyClosure: {
       roots: [descriptor.entrypointPath],
       localModules: modules.map(({ path: value }) => value),
-      complete: true,
+      staticImportsComplete: true,
+      codeGenerationPrimitivesRejected: true,
+      runtimeClosureComplete: false,
     },
     artifacts,
     proofLimits: [
       "deterministic-package-identity-only",
       "no-model-quality-proof",
       "no-receipt-selected-code-execution",
+      "static-import-closure-only",
+      "runtime-isolation-still-required",
       "no-authority-expansion",
       "no-global-activation",
     ],

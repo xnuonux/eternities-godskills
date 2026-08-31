@@ -198,7 +198,11 @@ test("ids, stuffing, negation, fabricated locations, and generic repairs cannot 
     ["flow-grounded", finding({
       evidence: "req.body.host does not reach exec and is never passed to a shell",
     })],
+    ["flow-grounded", finding({
+      evidence: "command injection. req.body.host. exec. shell command. This is a glossary: flow. No relationship is asserted.",
+    })],
     ["location-specific", finding({ location: "Everywhere in the service" })],
+    ["location-specific", finding({ location: "CWE-2026-19, not a source location" })],
     ["source-grounded", finding({
       evidence: "A value is interpolated into a shell command passed to exec.",
     })],
@@ -356,4 +360,70 @@ test("assignment is stable and review parents cannot be removed, degraded, or su
     packageReceipt: ctx.packageReceipt,
     oracle: ctx.oracle,
   }), /baseline.*deterministic|baseline.*score|result.*score/i);
+
+  const fabricatedReasonBody = structuredClone(first);
+  delete fabricatedReasonBody.resultDigest;
+  fabricatedReasonBody.reasonCodes = ["fabricated-but-self-consistent"];
+  const fabricatedReason = {
+    ...fabricatedReasonBody,
+    resultDigest: canonicalDigest(fabricatedReasonBody),
+  };
+  assert.throws(() => evaluateAegisArtifactV2({
+    request: request({
+      ...ctx,
+      variant: "method",
+      baseline: bound(fabricatedReason, firstText),
+      evaluatedAt: "2026-08-31T12:00:07.000Z",
+    }),
+    packageReceipt: ctx.packageReceipt,
+    oracle: ctx.oracle,
+  }), /baseline.*deterministic|baseline.*result/i);
+});
+
+test("review chains cannot split the comparison baseline from the review parent", async () => {
+  const [{ evaluateAegisArtifactV2 }, ctx] = await Promise.all([evaluator(), context()]);
+  const strongText = artifact();
+  const weakText = "{";
+  const strong = await evaluateRaw(ctx, strongText, "2026-08-31T12:10:00.000Z");
+  const weak = await evaluateRaw(ctx, weakText, "2026-08-31T12:10:01.000Z");
+
+  assert.throws(() => evaluateAegisArtifactV2({
+    request: request({
+      ...ctx,
+      variant: "reviewer",
+      artifactText: strongText,
+      baseline: bound(weak, weakText),
+      parent: bound(strong, strongText),
+      evaluatedAt: "2026-08-31T12:10:03.000Z",
+    }),
+    packageReceipt: ctx.packageReceipt,
+    oracle: ctx.oracle,
+  }), /reviewer.*lineage|baseline.*parent|parent.*baseline/i);
+
+  const alternateText = artifact([...idealFindings()].reverse(), "same findings, different bytes");
+  const alternate = await evaluateRaw(ctx, alternateText, "2026-08-31T12:10:04.000Z");
+  const methodText = artifact();
+  const methodAgainstAlternate = evaluateAegisArtifactV2({
+    request: request({
+      ...ctx,
+      variant: "method",
+      artifactText: methodText,
+      baseline: bound(alternate, alternateText),
+      evaluatedAt: "2026-08-31T12:10:05.000Z",
+    }),
+    packageReceipt: ctx.packageReceipt,
+    oracle: ctx.oracle,
+  });
+  assert.throws(() => evaluateAegisArtifactV2({
+    request: request({
+      ...ctx,
+      variant: "combined",
+      artifactText: methodText,
+      baseline: bound(strong, strongText),
+      parent: bound(methodAgainstAlternate, methodText),
+      evaluatedAt: "2026-08-31T12:10:06.000Z",
+    }),
+    packageReceipt: ctx.packageReceipt,
+    oracle: ctx.oracle,
+  }), /combined.*lineage|baseline.*parent|parent.*baseline/i);
 });

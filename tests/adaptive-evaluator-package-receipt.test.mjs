@@ -90,7 +90,9 @@ test("builds one relocation-independent closed evaluator package receipt", async
   assert.deepEqual(first.dependencyClosure, {
     roots: ["src/entrypoint.mjs"],
     localModules: ["src/entrypoint.mjs", "src/helper.mjs"],
-    complete: true,
+    staticImportsComplete: true,
+    codeGenerationPrimitivesRejected: true,
+    runtimeClosureComplete: false,
   });
   assert.deepEqual(first.artifacts.map(({ path: value }) => value), [
     "artifacts/oracle.v1.json",
@@ -215,6 +217,11 @@ test("rejects dynamic, CommonJS, bare, escaping, and symlinked module closure", 
 
   for (const [label, source, pattern] of [
     ["dynamic", "export const evaluate = () => import('./helper.mjs');\n", /dynamic/i],
+    [
+      "indirect-code-generation",
+      "export const evaluate = () => Function(\"return im\" + \"port('node:fs')\")();\n",
+      /dynamic|code generation|Function/i,
+    ],
     ["commonjs", "export const evaluate = () => require('./helper.mjs');\n", /CommonJS|require/i],
     ["bare", "import value from 'external-package'; export { value };\n", /bare|external/i],
   ]) {

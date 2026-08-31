@@ -60,6 +60,8 @@ const SEVERITIES = new Set(["critical", "high", "medium", "low", "info"]);
 const CONFIDENCE = new Set(["high", "medium", "low"]);
 const ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const NEGATED_FLOW = /\b(?:does not|do not|did not|never|cannot|can not|is not|isn t|not)\s+(?:directly\s+)?(?:embed\w*|execute\w*|flow\w*|interpolat\w*|pass\w*|reach\w*)\b/i;
+const NEGATED_RELATION = /\b(?:no\s+(?:relationship|connection|link)|unrelated|not\s+(?:related|connected|linked))\b/i;
+const RELATION_CONNECTOR = /\b(?:to|into|through|via|from|by|given|passed|reaches|flows)\b/i;
 const EXPECTED_REVIEW_PARENTS = Object.freeze({ reviewer: "raw", combined: "method" });
 const EXPECTED_PACKAGE = Object.freeze({
   id: "adaptive-evaluator-aegis-v2",
@@ -304,21 +306,49 @@ function findingIdentity(finding) {
   return normalizeEvaluatorText([finding.id, finding.title, finding.evidence].join(" "));
 }
 
+function declaredLocationLines(value) {
+  const match = value.match(/^\s*lines?\s+(\d+)(?:\s*(?:-|to)\s*(\d+))?\b/i);
+  if (!match) return [];
+  const start = Number(match[1]);
+  const end = Number(match[2] ?? match[1]);
+  if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end)
+      || start <= 0 || end < start || end - start > 50) return [];
+  return Array.from({ length: end - start + 1 }, (_, index) => start + index);
+}
+
+function evidenceClauses(value) {
+  return value
+    .replace(/(?<=[\p{L}\p{N}_])\.(?=[\p{L}\p{N}_])/gu, "\u0000")
+    .split(/[.!?;]+|\r?\n/gu)
+    .map((clause) => normalizeEvaluatorText(clause.replaceAll("\u0000", ".")))
+    .filter(Boolean);
+}
+
+function hasGroundedRelation(oracleCase, evidenceText) {
+  return evidenceClauses(evidenceText).some((clause) =>
+    includesAny(clause, oracleCase.sourceAliases)
+      && includesAny(clause, oracleCase.sinkAliases)
+      && includesAny(clause, oracleCase.flowTerms)
+      && RELATION_CONNECTOR.test(clause)
+      && !NEGATED_FLOW.test(clause)
+      && !NEGATED_RELATION.test(clause));
+}
+
 function findingCheckValues(oracleCase, finding) {
   const identity = findingIdentity(finding);
   if (!includesAny(identity, oracleCase.identityAliases)) return null;
-  const location = normalizeEvaluatorText(finding.location);
   const evidence = normalizeEvaluatorText(finding.evidence);
   const repair = normalizeEvaluatorText(finding.repair);
-  const locationNumbers = new Set((location.match(/\b\d+\b/g) ?? []).map(Number));
+  const locationLines = declaredLocationLines(finding.location);
   const sourceGrounded = includesAny(evidence, oracleCase.sourceAliases);
   const sinkGrounded = includesAny(evidence, oracleCase.sinkAliases);
   const flowGrounded = sourceGrounded && sinkGrounded
-    && includesAny(evidence, oracleCase.flowTerms) && !NEGATED_FLOW.test(evidence);
+    && hasGroundedRelation(oracleCase, finding.evidence);
   return {
     detected: true,
     "severity-correct": finding.severity === oracleCase.severity,
-    "location-specific": oracleCase.locationLines.some((line) => locationNumbers.has(line)),
+    "location-specific": locationLines.length > 0
+      && locationLines.every((line) => oracleCase.locationLines.includes(line)),
     "source-grounded": sourceGrounded,
     "sink-grounded": sinkGrounded,
     "flow-grounded": flowGrounded,
@@ -507,6 +537,26 @@ function validateBoundResultForOracle({
     || rescored.unsupportedCritical;
   if (result.criticalRegression !== expectedCriticalRegression) {
     throw new Error(`${label} deterministic critical regression does not match its artifact`);
+  }
+  const replayed = evaluateAegisArtifactV2({
+    request: {
+      schemaVersion: 1,
+      packageReceiptDigest: packageReceipt.receiptDigest,
+      taskDefinitionDigest: request.taskDefinitionDigest,
+      taskSourceText: request.taskSourceText,
+      taskSourceDigest: request.taskSourceDigest,
+      variant: expectedVariant,
+      artifactText: bound.artifactText,
+      artifactDigest: bound.artifactDigest,
+      baseline: expectedVariant === "raw" ? null : request.baseline,
+      parent: null,
+      evaluatedAt: result.evaluatedAt,
+    },
+    packageReceipt,
+    oracle,
+  });
+  if (replayed.resultDigest !== result.resultDigest) {
+    throw new Error(`${label} deterministic result does not reproduce exactly`);
   }
   return result;
 }
