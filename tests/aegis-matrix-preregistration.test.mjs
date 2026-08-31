@@ -2,9 +2,14 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 
 const root = new URL("../", import.meta.url);
 const hostPolicyPath = "C:\\Users\\Dom\\.codex\\AGENTS.md";
+const hostPolicySnapshotPath = fileURLToPath(new URL(
+  "evidence/adaptive-evidence-v2/aegis-matrix/host-policy.snapshot.md",
+  root,
+));
 const sha256 = (value) => createHash("sha256").update(value).digest("hex");
 
 async function preregistrationModule() {
@@ -116,6 +121,15 @@ test("Aegis matrix preregistration binds model, host policy, prompt constructor,
 
 test("checked Aegis environment and trial envelope rebuild exactly before dispatch", async () => {
   const { verifyCheckedAegisMatrixPreregistration } = await preregistrationModule();
-  const result = await verifyCheckedAegisMatrixPreregistration({ root, hostPolicyPath });
+  const [livePolicy, snapshotPolicy] = await Promise.all([
+    readFile(hostPolicyPath),
+    readFile(hostPolicySnapshotPath),
+  ]);
+  assert.notEqual(sha256(livePolicy), sha256(snapshotPolicy));
+  const result = await verifyCheckedAegisMatrixPreregistration({
+    root,
+    hostPolicyPath,
+    hostPolicySnapshotPath,
+  });
   assert.deepEqual(result, { valid: true, files: 2 });
 });

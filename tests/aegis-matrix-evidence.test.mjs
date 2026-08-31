@@ -1,9 +1,14 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 
 const root = new URL("../", import.meta.url);
 const hostPolicyPath = "C:\\Users\\Dom\\.codex\\AGENTS.md";
+const hostPolicySnapshotPath = fileURLToPath(new URL(
+  "evidence/adaptive-evidence-v2/aegis-matrix/host-policy.snapshot.md",
+  root,
+));
 const variants = ["raw", "guardrail", "method", "reviewer", "combined"];
 
 async function evidenceModule() {
@@ -37,7 +42,11 @@ async function loadCompileInputs() {
         loadJson(`evidence/adaptive-evidence-v2/aegis-matrix/observations/${variant}.json`),
       ]),
     ]);
-  const preregistration = await rebuildAegisMatrixPreregistration({ root, hostPolicyPath });
+  const preregistration = await rebuildAegisMatrixPreregistration({
+    root,
+    hostPolicyPath,
+    hostPolicySnapshotPath,
+  });
   const captures = {};
   for (const [index, variant] of variants.entries()) {
     captures[variant] = {
@@ -66,8 +75,16 @@ async function loadCompileInputs() {
 
 test("fresh five-condition matrix compiles into model evidence without promotion", async () => {
   const { rebuildAegisMatrixEvidence } = await evidenceModule();
-  const first = await rebuildAegisMatrixEvidence({ root, hostPolicyPath });
-  const second = await rebuildAegisMatrixEvidence({ root, hostPolicyPath });
+  const first = await rebuildAegisMatrixEvidence({
+    root,
+    hostPolicyPath,
+    hostPolicySnapshotPath,
+  });
+  const second = await rebuildAegisMatrixEvidence({
+    root,
+    hostPolicyPath,
+    hostPolicySnapshotPath,
+  });
 
   assert.deepEqual(first.files, second.files);
   assert.deepEqual(first.ledger.rows.map(({ variant }) => variant), variants);
@@ -136,7 +153,11 @@ test("matrix compiler rejects artifact and evaluator tampering", async () => {
 test("checked matrix ledger, profile, and lifecycle rebuild exactly", async () => {
   const { verifyCheckedAegisMatrixEvidence } = await evidenceModule();
   assert.deepEqual(
-    await verifyCheckedAegisMatrixEvidence({ root, hostPolicyPath }),
+    await verifyCheckedAegisMatrixEvidence({
+      root,
+      hostPolicyPath,
+      hostPolicySnapshotPath,
+    }),
     { valid: true, files: 5 },
   );
 });

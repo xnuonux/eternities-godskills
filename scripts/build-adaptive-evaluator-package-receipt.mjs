@@ -152,6 +152,23 @@ function artifactRow({ role, relativePath, bytes, logical = false }) {
   return row;
 }
 
+async function applyLexicalRuntimeHardening(root, modules, io) {
+  for (const module of modules) {
+    const bytes = await readContained(
+      root,
+      module.path,
+      io,
+      `evaluator package module ${module.path}`,
+    );
+    const source = bytes.toString("utf8");
+    if (/\b(?:eval|Function|AsyncFunction|GeneratorFunction|AsyncGeneratorFunction)\b/m.test(source)
+        || /\b(?:globalThis|getBuiltinModule|createRequire)\b/m.test(source)
+        || /(?:\.|\[\s*["'])constructor\b/m.test(source)) {
+      throw new Error("evaluator package contains a recognized runtime code generation pattern");
+    }
+  }
+}
+
 export async function buildAdaptiveEvaluatorPackageReceipt({
   repositoryRoot,
   descriptor,
@@ -190,6 +207,7 @@ export async function buildAdaptiveEvaluatorPackageReceipt({
     roots: [descriptor.entrypointPath],
     io: fs,
   });
+  await applyLexicalRuntimeHardening(root, modules, fs);
   const artifacts = modules.map((module) => ({
     role: module.path === descriptor.entrypointPath ? "entrypoint" : "dependency",
     ...module,
