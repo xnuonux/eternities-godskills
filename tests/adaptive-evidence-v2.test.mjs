@@ -234,7 +234,7 @@ function signedProfile({
   });
 }
 
-test("activation v2 admits method only from explicit intent or a fresh promoted profile", async () => {
+test("activation v2 preserves explicit intent but rejects untrusted promoted profiles", async () => {
   const [trialModule, trusted] = await Promise.all([
     trials(),
     trustedPolicy(),
@@ -261,26 +261,27 @@ test("activation v2 admits method only from explicit intent or a fresh promoted 
   assert.equal(explicit.mode, "method");
   assert.deepEqual(explicit.reasonCodes, ["explicit-method-request"]);
 
-  const qualified = trialModule.compileActivationDecisionV2({
+  const untrustedMethod = trialModule.compileActivationDecisionV2({
     ...common,
     profile: freshMethod,
     reviewAvailable: false,
   });
-  assert.equal(qualified.mode, "method");
-  assert.deepEqual(qualified.reasonCodes, ["fresh-promoted-method-profile"]);
+  assert.equal(untrustedMethod.mode, "guardrail");
+  assert.equal(untrustedMethod.profileFresh, false);
+  assert.ok(untrustedMethod.reasonCodes.includes("profile-untrusted"));
 
   const freshReview = await signedProfile({
     mode: "review",
     policyDigest: trusted.expectedPolicyDigest,
   });
-  const review = trialModule.compileActivationDecisionV2({
+  const untrustedReview = trialModule.compileActivationDecisionV2({
     ...common,
     profile: freshReview,
     reviewAvailable: true,
   });
-  assert.equal(review.mode, "review");
-  assert.equal(review.deferredReview, true);
-  assert.deepEqual(review.reasonCodes, ["fresh-promoted-review-profile", "review-phase-available"]);
+  assert.equal(untrustedReview.mode, "guardrail");
+  assert.equal(untrustedReview.deferredReview, false);
+  assert.ok(untrustedReview.reasonCodes.includes("profile-untrusted"));
 
   const staleIdentity = { ...profileIdentity, environmentId: "0".repeat(64) };
   const stale = await signedProfile({
@@ -305,11 +306,11 @@ test("activation v2 admits method only from explicit intent or a fresh promoted 
     reviewAvailable: true,
   });
   assert.equal(consequentialFallback.mode, "guardrail");
-  assert.ok(consequentialFallback.reasonCodes.includes("stale-profile"));
+  assert.ok(consequentialFallback.reasonCodes.includes("profile-untrusted"));
   assert.equal(lowFallback.mode, "native");
-  assert.ok(lowFallback.reasonCodes.includes("stale-profile"));
+  assert.ok(lowFallback.reasonCodes.includes("profile-untrusted"));
 
-  for (const decision of [explicit, qualified, review, consequentialFallback]) {
+  for (const decision of [explicit, untrustedMethod, untrustedReview, consequentialFallback]) {
     assert.deepEqual(decision.authorityProjection, authorityProjection());
     assert.equal(decision.authorityExpanded, false);
     assert.equal(decision.profileKey, profileKeyForTest(profileIdentity));
@@ -838,12 +839,31 @@ test("profile freshness invalidates every identity or bound digest mismatch with
   assert.equal(profile.evidenceRowDigests.length, 5);
 });
 
-function authorization({ actorId, grant, scopeDigest }) {
+async function fixtureAuthorityModule() {
+  return import("../scripts/adaptive-evidence-fixture-authority.mjs");
+}
+
+function authorizationRecord({
+  profile,
+  actorId = "external-fixture-maintainer",
+  grant,
+  action = "promote",
+  requestedMode = "method",
+  currentMode = "native",
+  authorizationId = "fixture-lifecycle-action",
+}) {
   return {
+    schemaVersion: 1,
+    authorizationId,
     actorId,
-    grants: [grant],
-    scopeDigest,
-    issuedAt: "2026-08-31T06:10:00.000Z",
+    action,
+    requestedMode,
+    currentMode,
+    profileDigest: profile.profileDigest,
+    bindingsDigest: profileKeyForTest(profile.boundDigests),
+    grant,
+    issuedAt: "2026-08-31T06:09:00.000Z",
+    expiresAt: "2026-09-01T06:09:00.000Z",
   };
 }
 
@@ -855,24 +875,32 @@ function lifecycleContext(profile) {
 }
 
 test("lifecycle receipts require external authority, reject self-promotion, and preserve failed gates", async () => {
-  const { ledgerApi, trusted, trial, ledger } = await fixtureLedger();
-  const fixtureProfile = ledgerApi.deriveActivationProfile({ ledger, trial, ...trusted });
-  const fixtureAuthorization = authorization({
-    actorId: "dom-maintainer",
-    grant: trusted.policy.lifecycleGrants.promote,
-    scopeDigest: fixtureProfile.profileDigest,
+  const [{ ledgerApi, trusted, trial, ledger }, fixtureAuthority] = await Promise.all([
+    fixtureLedger(),
+    fixtureAuthorityModule(),
+  ]);
+  const controller = ledgerApi.createLifecycleController(
+    fixtureAuthority.fixtureAuthorityOptions(trusted.expectedPolicyDigest),
+  );
+  const decide = (input) => controller.compileLifecycleDecision({
+    ...input,
+    decidedAt: "2026-08-31T06:10:00.000Z",
+    policy: trusted.policy,
   });
-  const rejected = ledgerApi.compileLifecycleDecision({
+  const signed = (record) => fixtureAuthority.attestAdaptiveEvidenceAuthorization(record);
+  const fixtureProfile = ledgerApi.deriveActivationProfile({ ledger, trial, ...trusted });
+  const fixtureAuthorization = signed(authorizationRecord({
     profile: fixtureProfile,
-    expectedProfileDigest: fixtureProfile.profileDigest,
+    grant: trusted.policy.lifecycleGrants.promote,
+    authorizationId: "fixture-rejected-promotion",
+  }));
+  const rejected = decide({
+    profile: fixtureProfile,
     action: "promote",
     requestedMode: "method",
     currentMode: "native",
-    actorId: "dom-maintainer",
-    authorization: fixtureAuthorization,
-    expectedAuthorizationDigest: profileKeyForTest(fixtureAuthorization),
+    authorizationPackage: fixtureAuthorization,
     ...lifecycleContext(fixtureProfile),
-    ...trusted,
   });
   assert.equal(rejected.status, "rejected");
   assert.equal(rejected.nextMode, "native");
@@ -904,39 +932,31 @@ test("lifecycle receipts require external authority, reject self-promotion, and 
     ...eligibleUnsigned,
     profileDigest: contractApi.canonicalDigest(eligibleUnsigned),
   };
-  const promotionAuthorization = authorization({
-    actorId: "dom-maintainer",
-    grant: trusted.policy.lifecycleGrants.promote,
-    scopeDigest: eligibleProfile.profileDigest,
-  });
-  const promoted = ledgerApi.compileLifecycleDecision({
+  const promotionAuthorization = signed(authorizationRecord({
     profile: eligibleProfile,
-    expectedProfileDigest: eligibleProfile.profileDigest,
+    grant: trusted.policy.lifecycleGrants.promote,
+    authorizationId: "fixture-applied-promotion",
+  }));
+  const promoted = decide({
+    profile: eligibleProfile,
     action: "promote",
     requestedMode: "method",
     currentMode: "native",
-    actorId: "dom-maintainer",
-    authorization: promotionAuthorization,
-    expectedAuthorizationDigest: profileKeyForTest(promotionAuthorization),
+    authorizationPackage: promotionAuthorization,
     ...lifecycleContext(eligibleProfile),
-    ...trusted,
   });
   assert.equal(promoted.status, "applied");
   assert.equal(promoted.nextMode, "method");
   assert.equal(promoted.authorityExpanded, false);
 
-  assert.throws(() => ledgerApi.compileLifecycleDecision({
+  assert.throws(() => decide({
     profile: eligibleProfile,
-    expectedProfileDigest: eligibleProfile.profileDigest,
     action: "promote",
     requestedMode: "method",
     currentMode: "native",
-    actorId: "dom-maintainer",
-    authorization: promotionAuthorization,
-    expectedAuthorizationDigest: profileKeyForTest(promotionAuthorization),
+    authorizationPackage: promotionAuthorization,
     currentIdentity: { ...eligibleProfile.profileIdentity, reasoningTier: "xhigh" },
     currentBindings: structuredClone(eligibleProfile.boundDigests),
-    ...trusted,
   }), /current|fresh|identity/i);
 
   const promotedUnsigned = {
@@ -948,22 +968,21 @@ test("lifecycle receipts require external authority, reject self-promotion, and 
     ...promotedUnsigned,
     profileDigest: contractApi.canonicalDigest(promotedUnsigned),
   };
-  const demotionAuthorization = authorization({
-    actorId: "dom-maintainer",
-    grant: trusted.policy.lifecycleGrants.demote,
-    scopeDigest: promotedProfile.profileDigest,
-  });
-  const demoted = ledgerApi.compileLifecycleDecision({
+  const demotionAuthorization = signed(authorizationRecord({
     profile: promotedProfile,
-    expectedProfileDigest: promotedProfile.profileDigest,
+    grant: trusted.policy.lifecycleGrants.demote,
     action: "demote",
     requestedMode: "native",
     currentMode: "method",
-    actorId: "dom-maintainer",
-    authorization: demotionAuthorization,
-    expectedAuthorizationDigest: profileKeyForTest(demotionAuthorization),
+    authorizationId: "fixture-applied-demotion",
+  }));
+  const demoted = decide({
+    profile: promotedProfile,
+    action: "demote",
+    requestedMode: "native",
+    currentMode: "method",
+    authorizationPackage: demotionAuthorization,
     ...lifecycleContext(promotedProfile),
-    ...trusted,
   });
   assert.equal(demoted.status, "applied");
   assert.equal(demoted.priorMode, "method");
@@ -981,72 +1000,66 @@ test("lifecycle receipts require external authority, reject self-promotion, and 
     ...criticalUnsigned,
     profileDigest: contractApi.canonicalDigest(criticalUnsigned),
   };
-  const criticalAuthorization = authorization({
-    actorId: "dom-maintainer",
-    grant: trusted.policy.lifecycleGrants.promote,
-    scopeDigest: criticalProfile.profileDigest,
-  });
-  const criticalRejected = ledgerApi.compileLifecycleDecision({
+  const criticalAuthorization = signed(authorizationRecord({
     profile: criticalProfile,
-    expectedProfileDigest: criticalProfile.profileDigest,
+    grant: trusted.policy.lifecycleGrants.promote,
+    authorizationId: "fixture-critical-rejection",
+  }));
+  const criticalRejected = decide({
+    profile: criticalProfile,
     action: "promote",
     requestedMode: "method",
     currentMode: "native",
-    actorId: "dom-maintainer",
-    authorization: criticalAuthorization,
-    expectedAuthorizationDigest: profileKeyForTest(criticalAuthorization),
+    authorizationPackage: criticalAuthorization,
     ...lifecycleContext(criticalProfile),
-    ...trusted,
   });
   assert.equal(criticalRejected.status, "rejected");
   assert.ok(criticalRejected.reasonCodes.includes("criticalRegressions"));
 
   const selfActor = eligibleProfile.participantIds.producers[0];
-  const selfAuthorization = authorization({
+  const selfAuthorization = signed(authorizationRecord({
+    profile: eligibleProfile,
     actorId: selfActor,
     grant: trusted.policy.lifecycleGrants.promote,
-    scopeDigest: eligibleProfile.profileDigest,
-  });
-  assert.throws(() => ledgerApi.compileLifecycleDecision({
+    authorizationId: "fixture-self-promotion",
+  }));
+  assert.throws(() => decide({
     profile: eligibleProfile,
-    expectedProfileDigest: eligibleProfile.profileDigest,
     action: "promote",
     requestedMode: "method",
     currentMode: "native",
-    actorId: selfActor,
-    authorization: selfAuthorization,
-    expectedAuthorizationDigest: profileKeyForTest(selfAuthorization),
+    authorizationPackage: selfAuthorization,
     ...lifecycleContext(eligibleProfile),
-    ...trusted,
   }), /self-promot|independent/i);
 
-  const wrongGrant = authorization({
-    actorId: "dom-maintainer",
-    grant: trusted.policy.lifecycleGrants.demote,
-    scopeDigest: eligibleProfile.profileDigest,
-  });
-  assert.throws(() => ledgerApi.compileLifecycleDecision({
+  const wrongGrant = signed(authorizationRecord({
     profile: eligibleProfile,
-    expectedProfileDigest: eligibleProfile.profileDigest,
+    grant: trusted.policy.lifecycleGrants.demote,
+    authorizationId: "fixture-wrong-grant",
+  }));
+  assert.throws(() => decide({
+    profile: eligibleProfile,
     action: "promote",
     requestedMode: "method",
     currentMode: "native",
-    actorId: "dom-maintainer",
-    authorization: wrongGrant,
-    expectedAuthorizationDigest: profileKeyForTest(wrongGrant),
+    authorizationPackage: wrongGrant,
     ...lifecycleContext(eligibleProfile),
-    ...trusted,
   }), /grant|authority/i);
+  assert.equal(ledgerApi.compileLifecycleDecision, undefined);
 });
 
 const ADAPTIVE_V2_FILE_PATHS = Object.freeze([
+  "artifacts/adaptive-evidence-v2/fixture-authorization.v2.json",
   "artifacts/adaptive-evidence-v2/fixture-ledger.v2.json",
+  "artifacts/adaptive-evidence-v2/fixture-lifecycle-attestation.v2.json",
   "artifacts/adaptive-evidence-v2/fixture-lifecycle.v2.json",
   "artifacts/adaptive-evidence-v2/fixture-profile.v2.json",
   "artifacts/adaptive-evidence-v2/fixture-trial.v2.json",
   "artifacts/adaptive-evidence-v2/historical-muse-bridge.v2.json",
   "artifacts/adaptive-evidence-v2/shadow-muse.v2.json",
   "evidence/adaptive-evidence-v2/aegis-matrix/ledger.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/lifecycle-attestation.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/lifecycle-authorization.json",
   "evidence/adaptive-evidence-v2/aegis-matrix/lifecycle.json",
   "evidence/adaptive-evidence-v2/aegis-matrix/profile.json",
   "schemas/adaptive-evidence-v2/evidence-row.schema.json",
@@ -1073,6 +1086,8 @@ const ADAPTIVE_V2_INPUT_PATHS = Object.freeze([
   "evidence/adaptive-evidence-v2/aegis-matrix/comparison-policy.json",
   "evidence/adaptive-evidence-v2/aegis-matrix/environment.json",
   "evidence/adaptive-evidence-v2/aegis-matrix/ledger.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/lifecycle-authorization.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/lifecycle-attestation.json",
   "evidence/adaptive-evidence-v2/aegis-matrix/lifecycle.json",
   "evidence/adaptive-evidence-v2/aegis-matrix/observations/combined.json",
   "evidence/adaptive-evidence-v2/aegis-matrix/observations/guardrail.json",
@@ -1090,10 +1105,12 @@ const ADAPTIVE_V2_INPUT_PATHS = Object.freeze([
   "policies/adaptive-evidence.v2.json",
   "receipts/adaptive-activation-executable-v1.json",
   "receipts/capability-layer-abi-v1.json",
+  "scripts/adaptive-evidence-fixture-authority.mjs",
   "scripts/build-aegis-matrix-evidence.mjs",
   "scripts/build-adaptive-evidence-v2.mjs",
   "scripts/construct-aegis-matrix-prompt.mjs",
   "scripts/evaluate-aegis-matrix.mjs",
+  "src/adaptive-evidence-authority.mjs",
   "src/adaptive-evidence-contracts.mjs",
   "src/adaptive-evidence-ledger.mjs",
   "src/adaptive-evidence-trials.mjs",
@@ -1127,6 +1144,7 @@ test("adaptive evidence builder deterministically binds the completed model matr
     exactTrialVariantCount: true,
     shadowBodyFiles: 0,
     fixturePromotions: 0,
+    fixtureLifecycleAttested: true,
     historicalPromotions: 0,
     authorityExpansions: 0,
     appendOnlyLedgerValid: true,
@@ -1134,6 +1152,7 @@ test("adaptive evidence builder deterministically binds the completed model matr
     freshModelRows: 5,
     freshModelCriticalRegressions: 5,
     freshModelPromotions: 0,
+    freshModelLifecycleAttested: true,
     freshModelAuthorityExpansions: 0,
     freshModelLedgerValid: true,
   });
@@ -1346,6 +1365,10 @@ test("runtime contract states the exact adaptive evidence sequence and proof bou
   assert.match(runtime, /critical regression/i);
   assert.match(runtime, /append-only/i);
   assert.match(runtime, /explicit.*authori[sz]/i);
+  assert.match(runtime, /host-pinned.*ed25519|ed25519.*host-pinned/is);
+  assert.match(runtime, /separate.*signed.*lifecycle decision|lifecycle decision.*separate.*sign/is);
+  assert.match(runtime, /same-call.*digest.*not.*trust|not.*trust.*same-call.*digest/is);
+  assert.match(runtime, /fixture.*private key.*not.*production|not.*production.*fixture.*private key/is);
   assert.match(runtime, /return to native|return-to-native/i);
   assert.match(runtime, /activation v1/i);
   assert.match(runtime, /no global activation/i);

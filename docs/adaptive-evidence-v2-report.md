@@ -30,6 +30,12 @@ guardrail scored 27 against raw 26, but all five conditions triggered the frozen
 
 the method and combined scores expose a post-dispatch evaluator limitation: its lexical taxonomy did not recognize some semantically correct hyphenated finding language. the evaluator remained frozen and no subject was rerun or rescored after this result was known. these scores characterize this exact verifier and task, not universal capability quality.
 
+## lifecycle trust boundary
+
+lifecycle authorization is verified under a host-pinned Ed25519 public-key root and exact policy digest. the authorization signs the profile, bindings, action, modes, grant, actor, and validity interval; the resulting lifecycle decision receives a separate signature before any evidence-derived activation may consume it.
+
+the checked fixture signer is deterministic test material only, not a production authority. direct activation calls cannot trust a caller-supplied profile, and possession of an authorization record without a trusted signature over the exact lifecycle decision cannot self-apply promotion.
+
 ## boundaries
 
 this report proves deterministic structural mechanics plus one preregistered task and model matrix. it does not prove universal behavior, cross-model equivalence, global activation, or external authority.

@@ -11,6 +11,7 @@ import {
   profileKey,
   validateAdaptiveEvidencePolicy,
 } from "./adaptive-evidence-contracts.mjs";
+import { createAdaptiveEvidenceAuthority } from "./adaptive-evidence-authority.mjs";
 import { verifyTrialEnvelope } from "./adaptive-evidence-trials.mjs";
 
 const RUNTIME_MODES = Object.freeze(["native", "guardrail", "method", "review"]);
@@ -631,50 +632,29 @@ export function evaluateProfileFreshness(options = {}) {
   return deepFreeze({ current: mismatches.length === 0, mismatches });
 }
 
-function validateAuthorization(authorization, expectedDigest, actorId, profile, grant) {
-  exactKeys(authorization, ["actorId", "grants", "scopeDigest", "issuedAt"], "lifecycle authorization");
-  digestString(expectedDigest, "expected authorization digest");
-  if (canonicalDigest(authorization) !== expectedDigest) {
-    throw new Error("lifecycle authorization does not match its trusted digest");
-  }
-  if (authorization.actorId !== actorId || authorization.scopeDigest !== profile.profileDigest) {
-    throw new Error("lifecycle authorization actor or scope is invalid");
-  }
-  uniqueStrings(authorization.grants, "lifecycle authorization grants");
-  if (!authorization.grants.includes(grant)) {
-    throw new Error("lifecycle authorization lacks the required action grant");
-  }
-  exactIso(authorization.issuedAt, "lifecycle authorization issuedAt");
-  return authorization;
-}
-
-export function compileLifecycleDecision(options = {}) {
+function compileLifecycleDecisionWithAuthority(options, authority, expectedPolicyDigest) {
   exactKeys(options, [
     "profile",
-    "expectedProfileDigest",
     "action",
     "requestedMode",
     "currentMode",
-    "actorId",
-    "authorization",
-    "expectedAuthorizationDigest",
+    "authorizationPackage",
+    "decidedAt",
     "currentIdentity",
     "currentBindings",
     "policy",
-    "expectedPolicyDigest",
   ], "lifecycle decision input");
-  const trustedPolicy = validateAdaptiveEvidencePolicy(options);
+  const trustedPolicy = validateAdaptiveEvidencePolicy({
+    policy: options.policy,
+    expectedPolicyDigest,
+  });
   validateProfile(options.profile, trustedPolicy);
-  digestString(options.expectedProfileDigest, "expected profile digest");
-  if (options.profile.profileDigest !== options.expectedProfileDigest) {
-    throw new Error("profile does not match the externally trusted profile digest");
-  }
   const freshness = evaluateProfileFreshness({
     profile: options.profile,
     currentIdentity: options.currentIdentity,
     currentBindings: options.currentBindings,
     policy: options.policy,
-    expectedPolicyDigest: options.expectedPolicyDigest,
+    expectedPolicyDigest,
   });
   if (!freshness.current) {
     throw new Error(`profile is not current: ${freshness.mismatches.join(", ")}`);
@@ -686,20 +666,27 @@ export function compileLifecycleDecision(options = {}) {
       || !trustedPolicy.runtimeModes.includes(options.currentMode)) {
     throw new Error("lifecycle mode is invalid");
   }
-  nonEmptyString(options.actorId, "lifecycle actorId");
-  validateAuthorization(
-    options.authorization,
-    options.expectedAuthorizationDigest,
-    options.actorId,
-    options.profile,
-    trustedPolicy.lifecycleGrants[options.action],
-  );
+  exactIso(options.decidedAt, "lifecycle decidedAt");
+  const bindingsDigest = canonicalDigest(options.currentBindings);
+  const authorization = authority.verifyAuthorizationPackage({
+    authorizationPackage: options.authorizationPackage,
+    expected: {
+      profileDigest: options.profile.profileDigest,
+      bindingsDigest,
+      action: options.action,
+      requestedMode: options.requestedMode,
+      currentMode: options.currentMode,
+      grant: trustedPolicy.lifecycleGrants[options.action],
+      decidedAt: options.decidedAt,
+    },
+  });
+  const actorId = authorization.record.actorId;
   const participants = new Set([
     options.profile.profileIdentity.capabilityId,
     ...options.profile.participantIds.producers,
     ...options.profile.participantIds.evaluators,
   ]);
-  if (participants.has(options.actorId)) {
+  if (participants.has(actorId)) {
     throw new Error("lifecycle actor cannot self-promote or govern its own evidence");
   }
 
@@ -753,14 +740,40 @@ export function compileLifecycleDecision(options = {}) {
     schemaVersion: 2,
     action: options.action,
     status,
-    actorId: options.actorId,
-    authorizationDigest: options.expectedAuthorizationDigest,
+    actorId,
+    authorityKeyId: authorization.authorityKeyId,
+    authorityTrustRootDigest: authorization.authorityTrustRootDigest,
+    authorizationDigest: authorization.authorizationDigest,
     profileDigest: options.profile.profileDigest,
+    bindingsDigest,
     evidenceDigest: canonicalDigest(options.profile.evidenceRowDigests),
     priorMode: options.currentMode,
     nextMode,
+    decidedAt: options.decidedAt,
     reasonCodes,
     authorityExpanded: false,
   };
   return deepFreeze({ ...body, decisionDigest: canonicalDigest(body) });
+}
+
+export function createLifecycleController(options = {}) {
+  exactKeys(
+    options,
+    ["trustRootId", "trustedKeys", "expectedPolicyDigest"],
+    "lifecycle controller input",
+  );
+  digestString(options.expectedPolicyDigest, "lifecycle trusted policy digest");
+  const authority = createAdaptiveEvidenceAuthority({
+    trustRootId: options.trustRootId,
+    trustedKeys: options.trustedKeys,
+  });
+  return Object.freeze({
+    trustRoot: authority.trustRoot,
+    trustRootDigest: authority.trustRootDigest,
+    compileLifecycleDecision: (input) => compileLifecycleDecisionWithAuthority(
+      input,
+      authority,
+      options.expectedPolicyDigest,
+    ),
+  });
 }

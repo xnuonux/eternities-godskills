@@ -11,6 +11,7 @@ import {
   sameProfileIdentity,
   validateAdaptiveEvidencePolicy,
 } from "./adaptive-evidence-contracts.mjs";
+import { createAdaptiveEvidenceAuthority } from "./adaptive-evidence-authority.mjs";
 
 const PROFILE_KEYS = Object.freeze([
   "schemaVersion",
@@ -141,8 +142,61 @@ function fallbackMode(consequenceClass, policy) {
   return policy.activationFallbacks.staleLow;
 }
 
-export function compileActivationDecisionV2(options = {}) {
-  const activationKeys = [
+function validateActivationBindings(bindings) {
+  exactKeys(bindings, [
+    "policyDigest",
+    "taskDefinitionDigest",
+    "comparisonPolicyDigest",
+    "trialDigest",
+    "ledgerDigest",
+  ], "activation current bindings");
+  for (const [name, digest] of Object.entries(bindings)) {
+    digestString(digest, `activation current binding.${name}`);
+  }
+  return bindings;
+}
+
+function validateLifecycleDecision(decision) {
+  exactKeys(decision, [
+    "schemaVersion",
+    "action",
+    "status",
+    "actorId",
+    "authorityKeyId",
+    "authorityTrustRootDigest",
+    "authorizationDigest",
+    "profileDigest",
+    "bindingsDigest",
+    "evidenceDigest",
+    "priorMode",
+    "nextMode",
+    "decidedAt",
+    "reasonCodes",
+    "authorityExpanded",
+    "decisionDigest",
+  ], "activation lifecycle decision");
+  const { decisionDigest, ...body } = decision;
+  digestString(decisionDigest, "activation lifecycle decision digest");
+  if (canonicalDigest(body) !== decisionDigest || decision.schemaVersion !== 2
+      || decision.authorityExpanded !== false) {
+    throw new Error("activation lifecycle decision digest or boundary is invalid");
+  }
+  for (const field of [
+    "authorityTrustRootDigest", "authorizationDigest", "profileDigest", "bindingsDigest",
+    "evidenceDigest",
+  ]) digestString(decision[field], `activation lifecycle decision.${field}`);
+  for (const field of ["actorId", "authorityKeyId", "action", "status", "priorMode", "nextMode"]) {
+    nonEmptyString(decision[field], `activation lifecycle decision.${field}`);
+  }
+  exactIso(decision.decidedAt, "activation lifecycle decision.decidedAt");
+  uniqueStrings(decision.reasonCodes, "activation lifecycle decision reason codes", {
+    allowEmpty: true,
+  });
+  return decision;
+}
+
+function compileActivationDecisionV2Internal(options, trust) {
+  const commonKeys = [
     "selectedId",
     "task",
     "profileIdentity",
@@ -150,12 +204,19 @@ export function compileActivationDecisionV2(options = {}) {
     "reviewAvailable",
     "profile",
     "policy",
-    "expectedPolicyDigest",
   ];
+  const activationKeys = trust === null
+    ? [...commonKeys, "expectedPolicyDigest"]
+    : [...commonKeys, "currentBindings", "lifecycleDecision", "lifecycleDecisionAttestation"];
   closedInput(
     options,
     activationKeys,
-    ["selectedId", "task", "profileIdentity", "policy", "expectedPolicyDigest"],
+    trust === null
+      ? ["selectedId", "task", "profileIdentity", "policy", "expectedPolicyDigest"]
+      : [
+          "selectedId", "task", "profileIdentity", "profile", "currentBindings",
+          "lifecycleDecision", "lifecycleDecisionAttestation", "policy",
+        ],
     "activation v2 input",
   );
   const {
@@ -166,8 +227,8 @@ export function compileActivationDecisionV2(options = {}) {
     reviewAvailable = false,
     profile = null,
     policy,
-    expectedPolicyDigest,
   } = options;
+  const expectedPolicyDigest = trust?.expectedPolicyDigest ?? options.expectedPolicyDigest;
   nonEmptyString(selectedId, "selectedId");
   const trustedPolicy = validateAdaptiveEvidencePolicy({ policy, expectedPolicyDigest });
   boolean(explicitMethodRequest, "explicitMethodRequest");
@@ -191,11 +252,36 @@ export function compileActivationDecisionV2(options = {}) {
 
   let profileFresh = false;
   let profileDigest = null;
+  let lifecycleDecisionDigest = null;
+  let authorityTrustRootDigest = null;
+  let authorizationDigest = null;
   if (profile !== null) {
     validateProfile(profile);
     profileDigest = profile.profileDigest;
-    profileFresh = sameProfileIdentity(profile.profileIdentity, identity)
-      && profile.boundDigests.policyDigest === expectedPolicyDigest;
+    if (trust !== null) {
+      const currentBindings = validateActivationBindings(options.currentBindings);
+      const lifecycle = validateLifecycleDecision(options.lifecycleDecision);
+      const bindingsDigest = canonicalDigest(currentBindings);
+      const lifecycleAttestation = trust.authority.verifyLifecycleDecisionAttestation({
+        attestation: options.lifecycleDecisionAttestation,
+        expectedDecisionDigest: lifecycle.decisionDigest,
+      });
+      if (lifecycle.action !== "promote" || lifecycle.status !== "applied"
+          || lifecycle.profileDigest !== profile.profileDigest
+          || lifecycle.bindingsDigest !== bindingsDigest
+          || lifecycle.nextMode !== profile.recommendedMode
+          || lifecycle.authorityTrustRootDigest !== trust.authority.trustRootDigest
+          || lifecycle.authorityTrustRootDigest !== lifecycleAttestation.authorityTrustRootDigest
+          || lifecycle.authorityKeyId !== lifecycleAttestation.authorityKeyId) {
+        throw new Error("activation lifecycle decision is not bound to trusted promotion authority");
+      }
+      profileFresh = sameProfileIdentity(profile.profileIdentity, identity)
+        && Object.entries(currentBindings).every(([field, digest]) =>
+          profile.boundDigests[field] === digest);
+      lifecycleDecisionDigest = lifecycle.decisionDigest;
+      authorityTrustRootDigest = lifecycleAttestation.authorityTrustRootDigest;
+      authorizationDigest = lifecycle.authorizationDigest;
+    }
   }
 
   let mode;
@@ -203,18 +289,19 @@ export function compileActivationDecisionV2(options = {}) {
   if (explicitMethodRequest) {
     mode = "method";
     reasonCodes.push("explicit-method-request");
-  } else if (profileFresh && profile.lifecycleState === "promoted"
+  } else if (profileFresh && profile.lifecycleState === "eligible"
       && profile.recommendedMode === "method") {
     mode = "method";
-    reasonCodes.push("fresh-promoted-method-profile");
-  } else if (profileFresh && profile.lifecycleState === "promoted"
+    reasonCodes.push("trusted-authorized-method-profile");
+  } else if (profileFresh && profile.lifecycleState === "eligible"
       && profile.recommendedMode === "review" && reviewAvailable) {
     mode = "review";
-    reasonCodes.push("fresh-promoted-review-profile", "review-phase-available");
+    reasonCodes.push("trusted-authorized-review-profile", "review-phase-available");
   } else {
     mode = fallbackMode(task.consequenceClass, trustedPolicy);
-    if (profile !== null && !profileFresh) reasonCodes.push("stale-profile");
-    else if (profile !== null && profile.lifecycleState !== "promoted") reasonCodes.push("profile-not-promoted");
+    if (profile !== null && trust === null) reasonCodes.push("profile-untrusted");
+    else if (profile !== null && !profileFresh) reasonCodes.push("stale-profile");
+    else if (profile !== null && profile.lifecycleState !== "eligible") reasonCodes.push("profile-not-eligible");
     else if (profile?.recommendedMode === "review" && !reviewAvailable) reasonCodes.push("review-unavailable");
     else reasonCodes.push("no-qualified-evidence");
     reasonCodes.push(mode === "guardrail" ? "consequence-guardrails" : "native-floor-preserved");
@@ -233,11 +320,37 @@ export function compileActivationDecisionV2(options = {}) {
     profileKey: profileKey(identity),
     profileDigest,
     profileFresh,
+    lifecycleDecisionDigest,
+    authorityTrustRootDigest,
+    authorizationDigest,
     policyDigest: expectedPolicyDigest,
     authorityProjection,
     authorityExpanded: false,
   };
   return deepFreeze({ ...unsigned, decisionDigest: canonicalDigest(unsigned) });
+}
+
+export function compileActivationDecisionV2(options = {}) {
+  return compileActivationDecisionV2Internal(options, null);
+}
+
+export function createActivationCompilerV2(options = {}) {
+  exactKeys(
+    options,
+    ["trustRootId", "trustedKeys", "expectedPolicyDigest"],
+    "trusted activation compiler input",
+  );
+  digestString(options.expectedPolicyDigest, "trusted activation policy digest");
+  const authority = createAdaptiveEvidenceAuthority({
+    trustRootId: options.trustRootId,
+    trustedKeys: options.trustedKeys,
+  });
+  const trust = Object.freeze({ authority, expectedPolicyDigest: options.expectedPolicyDigest });
+  return Object.freeze({
+    trustRoot: authority.trustRoot,
+    trustRootDigest: authority.trustRootDigest,
+    compileActivationDecisionV2: (input) => compileActivationDecisionV2Internal(input, trust),
+  });
 }
 
 function validateActivationDecision(decision, policyDigest) {
@@ -254,6 +367,9 @@ function validateActivationDecision(decision, policyDigest) {
     "profileKey",
     "profileDigest",
     "profileFresh",
+    "lifecycleDecisionDigest",
+    "authorityTrustRootDigest",
+    "authorizationDigest",
     "policyDigest",
     "authorityProjection",
     "authorityExpanded",
@@ -268,6 +384,19 @@ function validateActivationDecision(decision, policyDigest) {
       || decision.preInferenceDisclosure !== DISCLOSURE[decision.mode]
       || decision.deferredReview !== (decision.mode === "review")) {
     throw new Error("activation decision boundary is invalid");
+  }
+  for (const field of [
+    "profileDigest", "lifecycleDecisionDigest", "authorityTrustRootDigest", "authorizationDigest",
+  ]) {
+    if (decision[field] !== null) digestString(decision[field], `activation decision.${field}`);
+  }
+  if (decision.profileFresh && [
+    decision.profileDigest,
+    decision.lifecycleDecisionDigest,
+    decision.authorityTrustRootDigest,
+    decision.authorizationDigest,
+  ].some((value) => value === null)) {
+    throw new Error("fresh activation profile lacks trusted lifecycle provenance");
   }
   if (decision.profileKey !== profileKey(decision.profileIdentity)) {
     throw new Error("activation decision profile key is invalid");

@@ -402,15 +402,19 @@ export function buildAdaptiveEvidenceSchemas() {
     profileDigest: digestSchema(),
   });
   const lifecycle = baseSchema("lifecycle-decision", "Adaptive evidence v2 lifecycle decision", [
-    "schemaVersion", "action", "status", "actorId", "authorizationDigest",
-    "profileDigest", "evidenceDigest", "priorMode", "nextMode", "reasonCodes",
+    "schemaVersion", "action", "status", "actorId", "authorityKeyId",
+    "authorityTrustRootDigest", "authorizationDigest", "profileDigest", "bindingsDigest",
+    "evidenceDigest", "priorMode", "nextMode", "decidedAt", "reasonCodes",
     "authorityExpanded", "decisionDigest",
   ], {
     schemaVersion: { const: 2 }, action: { enum: ["promote", "demote", "quarantine", "invalidate"] },
     status: { enum: ["applied", "rejected", "no-change"] }, actorId: stringSchema(),
-    authorizationDigest: digestSchema(), profileDigest: digestSchema(), evidenceDigest: digestSchema(),
+    authorityKeyId: stringSchema(), authorityTrustRootDigest: digestSchema(),
+    authorizationDigest: digestSchema(), profileDigest: digestSchema(),
+    bindingsDigest: digestSchema(), evidenceDigest: digestSchema(),
     priorMode: { enum: ["native", "guardrail", "method", "review"] },
     nextMode: { enum: ["native", "guardrail", "method", "review"] },
+    decidedAt: stringSchema(),
     reasonCodes: { type: "array", items: stringSchema(), uniqueItems: true },
     authorityExpanded: { const: false }, decisionDigest: digestSchema(),
   });

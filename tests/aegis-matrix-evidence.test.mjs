@@ -88,12 +88,27 @@ test("fresh five-condition matrix compiles into model evidence without promotion
   assert.equal(first.lifecycle.priorMode, "native");
   assert.equal(first.lifecycle.nextMode, "native");
   assert.equal(first.lifecycle.authorityExpanded, false);
+  assert.match(first.lifecycle.authorityTrustRootDigest, /^[a-f0-9]{64}$/);
+  assert.equal(
+    first.lifecycle.authorizationDigest,
+    first.authorizationPackage.attestation.subjectDigest,
+  );
+  assert.equal(
+    first.lifecycleDecisionAttestation.subjectDigest,
+    first.lifecycle.decisionDigest,
+  );
+  assert.equal(
+    first.lifecycleDecisionAttestation.keyId,
+    first.lifecycle.authorityKeyId,
+  );
   assert.ok(first.lifecycle.reasonCodes.includes("criticalRegressions"));
   assert.ok(first.lifecycle.reasonCodes.includes("profile-not-eligible"));
   assert.ok(first.lifecycle.reasonCodes.includes("mode-not-recommended"));
 
   assert.deepEqual(Object.keys(first.files).sort(), [
     "evidence/adaptive-evidence-v2/aegis-matrix/ledger.json",
+    "evidence/adaptive-evidence-v2/aegis-matrix/lifecycle-attestation.json",
+    "evidence/adaptive-evidence-v2/aegis-matrix/lifecycle-authorization.json",
     "evidence/adaptive-evidence-v2/aegis-matrix/lifecycle.json",
     "evidence/adaptive-evidence-v2/aegis-matrix/profile.json",
   ]);
@@ -122,7 +137,7 @@ test("checked matrix ledger, profile, and lifecycle rebuild exactly", async () =
   const { verifyCheckedAegisMatrixEvidence } = await evidenceModule();
   assert.deepEqual(
     await verifyCheckedAegisMatrixEvidence({ root, hostPolicyPath }),
-    { valid: true, files: 3 },
+    { valid: true, files: 5 },
   );
 });
 
@@ -135,5 +150,5 @@ test("archived matrix evidence replays from its frozen repository inputs", async
   assert.equal(archived.profile.profileDigest,
     "1747cb530ed1c1fcf3b83a386f38537e96a3ccd380c9de7649248a40e8677a06");
   assert.equal(archived.lifecycle.decisionDigest,
-    "90290e2c2fb203a46c2733809ab674303e40d84db39cfe455759ddff95041c42");
+    "86e3bfccc472d0ea7b04dccfe5a2930db665912d80a91142eeffa53d1539dde7");
 });

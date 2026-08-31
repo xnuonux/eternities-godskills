@@ -10,7 +10,7 @@ import {
 } from "../src/adaptive-evidence-contracts.mjs";
 import {
   appendEvidenceRow,
-  compileLifecycleDecision,
+  createLifecycleController,
   createEvidenceLedger,
   deriveActivationProfile,
   verifyEvidenceLedger,
@@ -20,6 +20,11 @@ import { sha256 } from "../src/io.mjs";
 import { commitGeneratedFiles } from "./build-capability-layer-abi.mjs";
 import { constructAegisMatrixPrompt } from "./construct-aegis-matrix-prompt.mjs";
 import { evaluateAegisMatrixArtifact } from "./evaluate-aegis-matrix.mjs";
+import {
+  attestAdaptiveEvidenceAuthorization,
+  attestAdaptiveEvidenceLifecycleDecision,
+  fixtureAuthorityOptions,
+} from "./adaptive-evidence-fixture-authority.mjs";
 
 const POLICY_PATH = "policies/adaptive-evidence.v2.json";
 const MATRIX_ROOT = "evidence/adaptive-evidence-v2/aegis-matrix";
@@ -28,6 +33,8 @@ const COMPARISON_PATH = `${MATRIX_ROOT}/comparison-policy.json`;
 const ENVIRONMENT_PATH = `${MATRIX_ROOT}/environment.json`;
 const TRIAL_PATH = `${MATRIX_ROOT}/trial-envelope.json`;
 const OUTPUT_PATHS = Object.freeze({
+  authorization: `${MATRIX_ROOT}/lifecycle-authorization.json`,
+  attestation: `${MATRIX_ROOT}/lifecycle-attestation.json`,
   ledger: `${MATRIX_ROOT}/ledger.json`,
   profile: `${MATRIX_ROOT}/profile.json`,
   lifecycle: `${MATRIX_ROOT}/lifecycle.json`,
@@ -330,27 +337,38 @@ export function compileAegisMatrixEvidence(input = {}) {
     policy,
     expectedPolicyDigest: TRUSTED_POLICY_DIGEST,
   });
-  const authorization = {
+  const authorizationRecord = {
+    schemaVersion: 1,
+    authorizationId: "aegis-matrix-method-promotion-attempt",
     actorId: LIFECYCLE_ACTOR,
-    grants: [policy.lifecycleGrants.promote],
-    scopeDigest: profile.profileDigest,
-    issuedAt: AUTHORIZATION_ISSUED_AT,
-  };
-  const lifecycle = compileLifecycleDecision({
-    profile,
-    expectedProfileDigest: profile.profileDigest,
     action: "promote",
     requestedMode: "method",
     currentMode: "native",
-    actorId: authorization.actorId,
-    authorization,
-    expectedAuthorizationDigest: canonicalDigest(authorization),
+    profileDigest: profile.profileDigest,
+    bindingsDigest: canonicalDigest(profile.boundDigests),
+    grant: policy.lifecycleGrants.promote,
+    issuedAt: "2026-08-31T07:44:00.000Z",
+    expiresAt: "2026-09-01T07:44:00.000Z",
+  };
+  const authorizationPackage = attestAdaptiveEvidenceAuthorization(authorizationRecord);
+  const lifecycleController = createLifecycleController(
+    fixtureAuthorityOptions(TRUSTED_POLICY_DIGEST),
+  );
+  const lifecycle = lifecycleController.compileLifecycleDecision({
+    profile,
+    action: "promote",
+    requestedMode: "method",
+    currentMode: "native",
+    authorizationPackage,
+    decidedAt: AUTHORIZATION_ISSUED_AT,
     currentIdentity: profile.profileIdentity,
     currentBindings: profile.boundDigests,
     policy,
-    expectedPolicyDigest: TRUSTED_POLICY_DIGEST,
   });
+  const lifecycleDecisionAttestation = attestAdaptiveEvidenceLifecycleDecision(lifecycle);
   const files = {
+    [OUTPUT_PATHS.authorization]: canonicalFile(authorizationPackage),
+    [OUTPUT_PATHS.attestation]: canonicalFile(lifecycleDecisionAttestation),
     [OUTPUT_PATHS.ledger]: canonicalFile(ledger),
     [OUTPUT_PATHS.profile]: canonicalFile(profile),
     [OUTPUT_PATHS.lifecycle]: canonicalFile(lifecycle),
@@ -360,6 +378,8 @@ export function compileAegisMatrixEvidence(input = {}) {
     verification,
     profile,
     lifecycle,
+    lifecycleDecisionAttestation,
+    authorizationPackage,
     files: Object.freeze(files),
   });
 }

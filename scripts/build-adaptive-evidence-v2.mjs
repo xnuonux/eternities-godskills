@@ -11,7 +11,7 @@ import {
 } from "../src/adaptive-evidence-contracts.mjs";
 import {
   appendEvidenceRow,
-  compileLifecycleDecision,
+  createLifecycleController,
   createEvidenceLedger,
   deriveActivationProfile,
   evaluateProfileFreshness,
@@ -26,6 +26,12 @@ import {
 } from "../src/adaptive-evidence-trials.mjs";
 import { sha256 } from "../src/io.mjs";
 import { rebuildArchivedAegisMatrixEvidence } from "./build-aegis-matrix-evidence.mjs";
+import {
+  attestAdaptiveEvidenceAuthorization,
+  attestAdaptiveEvidenceLifecycleDecision,
+  fixtureAuthorityOptions,
+  fixtureAuthorityProofLimit,
+} from "./adaptive-evidence-fixture-authority.mjs";
 import { commitGeneratedFiles } from "./build-capability-layer-abi.mjs";
 
 const POLICY_PATH = "policies/adaptive-evidence.v2.json";
@@ -47,10 +53,12 @@ const CANARY_IDS = Object.freeze([
   "eternities-muse",
 ]);
 const ENGINE_SOURCE_PATHS = Object.freeze([
+  "scripts/adaptive-evidence-fixture-authority.mjs",
   "scripts/build-aegis-matrix-evidence.mjs",
   "scripts/build-adaptive-evidence-v2.mjs",
   "scripts/construct-aegis-matrix-prompt.mjs",
   "scripts/evaluate-aegis-matrix.mjs",
+  "src/adaptive-evidence-authority.mjs",
   "src/adaptive-evidence-contracts.mjs",
   "src/adaptive-evidence-ledger.mjs",
   "src/adaptive-evidence-trials.mjs",
@@ -302,26 +310,35 @@ function buildFixture({ canaries, policy, expectedPolicyDigest }) {
     policy,
     expectedPolicyDigest,
   });
-  const authorization = {
+  const authorizationRecord = {
+    schemaVersion: 1,
+    authorizationId: "structural-fixture-method-promotion-attempt",
     actorId: "external-fixture-maintainer",
-    grants: [policy.lifecycleGrants.promote],
-    scopeDigest: profile.profileDigest,
-    issuedAt: "2026-08-31T07:10:00.000Z",
-  };
-  const lifecycle = compileLifecycleDecision({
-    profile,
-    expectedProfileDigest: profile.profileDigest,
     action: "promote",
     requestedMode: "method",
     currentMode: "native",
-    actorId: authorization.actorId,
-    authorization,
-    expectedAuthorizationDigest: canonicalDigest(authorization),
+    profileDigest: profile.profileDigest,
+    bindingsDigest: canonicalDigest(profile.boundDigests),
+    grant: policy.lifecycleGrants.promote,
+    issuedAt: "2026-08-31T07:09:00.000Z",
+    expiresAt: "2026-09-01T07:09:00.000Z",
+  };
+  const authorizationPackage = attestAdaptiveEvidenceAuthorization(authorizationRecord);
+  const lifecycleController = createLifecycleController(
+    fixtureAuthorityOptions(expectedPolicyDigest),
+  );
+  const lifecycle = lifecycleController.compileLifecycleDecision({
+    profile,
+    action: "promote",
+    requestedMode: "method",
+    currentMode: "native",
+    authorizationPackage,
+    decidedAt: "2026-08-31T07:10:00.000Z",
     currentIdentity: profile.profileIdentity,
     currentBindings: profile.boundDigests,
     policy,
-    expectedPolicyDigest,
   });
+  const lifecycleDecisionAttestation = attestAdaptiveEvidenceLifecycleDecision(lifecycle);
   const staleIdentity = {
     ...profile.profileIdentity,
     environmentId: "0".repeat(64),
@@ -333,7 +350,16 @@ function buildFixture({ canaries, policy, expectedPolicyDigest }) {
     policy,
     expectedPolicyDigest,
   });
-  return { trial, ledger, ledgerVerification, profile, lifecycle, staleEvaluation };
+  return {
+    trial,
+    ledger,
+    ledgerVerification,
+    profile,
+    lifecycle,
+    lifecycleDecisionAttestation,
+    authorizationPackage,
+    staleEvaluation,
+  };
 }
 
 function outputRows(files) {
@@ -385,6 +411,12 @@ function buildReport({ fixture, historical, matrix }) {
     `guardrail scored ${guardrail.score} against raw ${raw.score}, but all five conditions triggered the frozen critical-regression predicate. the derived profile is therefore \`${matrix.profile.lifecycleState}\`, recommends \`${matrix.profile.recommendedMode}\`, and the attempted method promotion was \`${matrix.lifecycle.status}\` with the active mode remaining \`${matrix.lifecycle.nextMode}\`.`,
     "",
     "the method and combined scores expose a post-dispatch evaluator limitation: its lexical taxonomy did not recognize some semantically correct hyphenated finding language. the evaluator remained frozen and no subject was rerun or rescored after this result was known. these scores characterize this exact verifier and task, not universal capability quality.",
+    "",
+    "## lifecycle trust boundary",
+    "",
+    "lifecycle authorization is verified under a host-pinned Ed25519 public-key root and exact policy digest. the authorization signs the profile, bindings, action, modes, grant, actor, and validity interval; the resulting lifecycle decision receives a separate signature before any evidence-derived activation may consume it.",
+    "",
+    "the checked fixture signer is deterministic test material only, not a production authority. direct activation calls cannot trust a caller-supplied profile, and possession of an authorization record without a trusted signature over the exact lifecycle decision cannot self-apply promotion.",
     "",
     "## boundaries",
     "",
@@ -438,6 +470,8 @@ function buildReceipt({
       exactTrialVariantCount: fixture.ledgerVerification.rowCount === 5,
       shadowBodyFiles: shadow.disclosedLayerBodies.length,
       fixturePromotions: fixture.lifecycle.status === "applied" ? 1 : 0,
+      fixtureLifecycleAttested:
+        fixture.lifecycleDecisionAttestation.subjectDigest === fixture.lifecycle.decisionDigest,
       historicalPromotions: historical.promotable ? 1 : 0,
       authorityExpansions: [fixture.lifecycle.authorityExpanded].filter(Boolean).length,
       appendOnlyLedgerValid: fixture.ledgerVerification.valid,
@@ -446,6 +480,8 @@ function buildReceipt({
       freshModelCriticalRegressions: matrix.ledger.rows
         .filter((row) => row.criticalRegression).length,
       freshModelPromotions: matrix.lifecycle.status === "applied" ? 1 : 0,
+      freshModelLifecycleAttested:
+        matrix.lifecycleDecisionAttestation.subjectDigest === matrix.lifecycle.decisionDigest,
       freshModelAuthorityExpansions: matrix.lifecycle.authorityExpanded ? 1 : 0,
       freshModelLedgerValid: matrix.verification.valid,
     },
@@ -461,6 +497,9 @@ function buildReceipt({
       "deterministic-evaluator-lexical-taxonomy-limited",
       "all-five-model-conditions-triggered-critical-regression",
       "no-model-quality-promotion-passed",
+      "host-pinned-ed25519-lifecycle-control",
+      "separate-signed-lifecycle-decision-required-for-profile-activation",
+      fixtureAuthorityProofLimit,
       "no-global-activation",
       "no-external-authority",
     ],
@@ -521,6 +560,12 @@ export async function rebuildAdaptiveEvidenceV2({
   Object.assign(files, matrix.files, {
     "artifacts/adaptive-evidence-v2/shadow-muse.v2.json": canonicalFile(shadow),
     "artifacts/adaptive-evidence-v2/fixture-trial.v2.json": canonicalFile(fixture.trial),
+    "artifacts/adaptive-evidence-v2/fixture-authorization.v2.json": canonicalFile(
+      fixture.authorizationPackage,
+    ),
+    "artifacts/adaptive-evidence-v2/fixture-lifecycle-attestation.v2.json": canonicalFile(
+      fixture.lifecycleDecisionAttestation,
+    ),
     "artifacts/adaptive-evidence-v2/fixture-ledger.v2.json": canonicalFile(fixture.ledger),
     "artifacts/adaptive-evidence-v2/fixture-profile.v2.json": canonicalFile(fixture.profile),
     "artifacts/adaptive-evidence-v2/fixture-lifecycle.v2.json": canonicalFile(fixture.lifecycle),

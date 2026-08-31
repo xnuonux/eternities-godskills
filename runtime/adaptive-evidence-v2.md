@@ -129,7 +129,8 @@ required durable evidence is:
 - exact artifact bytes in bounded evidence storage plus their digests and byte counts
 - deterministic observations and their evaluation digests
 - the append-only ledger, derived profile, and lifecycle receipt
-- the external authorization digest for any lifecycle action
+- the signed external authorization record for any lifecycle action
+- the separate signed attestation over the exact lifecycle decision
 
 aggregate ledgers and receipts retain references, digests, metrics, verdicts,
 cost fields, and proof limits. they do not need raw prompt text, proprietary
@@ -145,12 +146,32 @@ or monetary measurements remain `null`; they are never converted to zero.
 
 ## lifecycle authority and recovery
 
-a lifecycle request requires an externally trusted profile digest, an exact
-grant scoped to that profile, a named actor, and a current identity and binding
-set. malformed authority throws. valid but unqualified promotion returns a
-digest-bound `rejected` decision. every decision records prior mode, next mode,
-reason codes, evidence digest, authorization digest, and
+the host creates the lifecycle controller and activation compiler from a
+host-pinned Ed25519 public-key set, trust-root id, and expected policy digest.
+these values are closed over by the compiler and cannot be supplied or replaced
+by an individual decision call. a same-call digest is an integrity check, not a
+trust root.
+
+a lifecycle request requires a signed authorization record bound to the exact
+profile digest, current binding-set digest, action, prior and requested modes,
+grant, actor, and validity interval. malformed authority, an untrusted
+signature, an expired grant, or participant self-promotion throws. valid but
+unqualified promotion returns a digest-bound `rejected` decision. every
+decision records prior mode, next mode, reason codes, evidence digest,
+authorization digest, signer key, trust-root digest, and
 `authorityExpanded: false`.
+
+activation from an evidence profile requires a separate signed lifecycle
+decision attestation. the activation compiler recomputes the decision digest,
+verifies its Ed25519 signature under the same host-pinned trust root, and
+requires exact profile identity, profile digest, current bindings, signer key,
+trust-root digest, applied status, action, and recommended mode. possession of
+a valid preauthorization alone cannot forge or self-apply a promotion.
+
+the repository fixture private key signs deterministic checked examples only.
+it is committed test material, not a production authority or production trust
+root. a real host must inject its own protected signer and pin only the
+corresponding public key material.
 
 demotion, quarantine, or invalidation derives a new receipt and never deletes
 history. return to native is the conservative recovery path when evidence is
