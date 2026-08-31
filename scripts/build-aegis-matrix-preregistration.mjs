@@ -186,7 +186,6 @@ function buildEnvironment({
 export async function rebuildAegisMatrixPreregistration({
   root = new URL("../", import.meta.url),
   hostPolicyPath,
-  hostPolicySnapshotPath,
 } = {}) {
   if (typeof hostPolicyPath !== "string" || hostPolicyPath.trim() === "") {
     throw new TypeError("hostPolicyPath must be a non-empty absolute path");
@@ -200,7 +199,7 @@ export async function rebuildAegisMatrixPreregistration({
       loadInput(root, COMPARISON_PATH, { json: true }),
       loadInput(root, PROMPT_PATH),
       loadInput(root, EVALUATOR_PATH),
-      readFile(hostPolicySnapshotPath ?? hostPolicyPath),
+      readFile(hostPolicyPath),
       loadAegisBundle(root),
       loadInput(root, EXECUTABLE_RECEIPT_PATH, { json: true }),
       buildAdaptiveActivationExecutableReceipt({ repositoryRoot }),

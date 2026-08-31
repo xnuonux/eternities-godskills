@@ -119,17 +119,35 @@ test("Aegis matrix preregistration binds model, host policy, prompt constructor,
   ));
 });
 
-test("checked Aegis environment and trial envelope rebuild exactly before dispatch", async () => {
-  const { verifyCheckedAegisMatrixPreregistration } = await preregistrationModule();
-  const [livePolicy, snapshotPolicy] = await Promise.all([
+test("archived Aegis environment preserves its exact host policy and trial envelope", async () => {
+  const [livePolicy, snapshotPolicy, environment, trial, policy, contracts, trials] =
+    await Promise.all([
     readFile(hostPolicyPath),
     readFile(hostPolicySnapshotPath),
-  ]);
+    readFile(new URL(
+      "evidence/adaptive-evidence-v2/aegis-matrix/environment.json",
+      root,
+    ), "utf8").then(JSON.parse),
+    readFile(new URL(
+      "evidence/adaptive-evidence-v2/aegis-matrix/trial-envelope.json",
+      root,
+    ), "utf8").then(JSON.parse),
+    readFile(new URL("policies/adaptive-evidence.v2.json", root), "utf8").then(JSON.parse),
+    import("../src/adaptive-evidence-contracts.mjs"),
+    import("../src/adaptive-evidence-trials.mjs"),
+    ]);
   assert.notEqual(sha256(livePolicy), sha256(snapshotPolicy));
-  const result = await verifyCheckedAegisMatrixPreregistration({
-    root,
-    hostPolicyPath,
-    hostPolicySnapshotPath,
+  assert.deepEqual(environment.hostPolicy, {
+    path: hostPolicyPath,
+    sha256: sha256(snapshotPolicy),
+    bytes: snapshotPolicy.length,
   });
-  assert.deepEqual(result, { valid: true, files: 2 });
+  const { environmentDigest, ...environmentBody } = environment;
+  assert.equal(contracts.canonicalDigest(environmentBody), environmentDigest);
+  assert.equal(trial.profileIdentity.environmentId, environmentDigest);
+  assert.equal(trials.verifyTrialEnvelope({
+    trial,
+    policy,
+    expectedPolicyDigest: contracts.canonicalDigest(policy),
+  }).valid, true);
 });

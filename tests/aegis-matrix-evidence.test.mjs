@@ -1,14 +1,8 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
-import { fileURLToPath } from "node:url";
 
 const root = new URL("../", import.meta.url);
-const hostPolicyPath = "C:\\Users\\Dom\\.codex\\AGENTS.md";
-const hostPolicySnapshotPath = fileURLToPath(new URL(
-  "evidence/adaptive-evidence-v2/aegis-matrix/host-policy.snapshot.md",
-  root,
-));
 const variants = ["raw", "guardrail", "method", "reviewer", "combined"];
 
 async function evidenceModule() {
@@ -22,15 +16,17 @@ async function loadJson(relative) {
 
 async function loadCompileInputs() {
   const [
-    { rebuildAegisMatrixPreregistration },
     policy,
+    trial,
+    environment,
     taskDefinitionText,
     comparisonPolicy,
     ...records
   ] =
     await Promise.all([
-      import("../scripts/build-aegis-matrix-preregistration.mjs"),
       loadJson("policies/adaptive-evidence.v2.json"),
+      loadJson("evidence/adaptive-evidence-v2/aegis-matrix/trial-envelope.json"),
+      loadJson("evidence/adaptive-evidence-v2/aegis-matrix/environment.json"),
       readFile(new URL(
         "evidence/adaptive-evidence-v2/aegis-matrix/task-definition.json",
         root,
@@ -42,11 +38,6 @@ async function loadCompileInputs() {
         loadJson(`evidence/adaptive-evidence-v2/aegis-matrix/observations/${variant}.json`),
       ]),
     ]);
-  const preregistration = await rebuildAegisMatrixPreregistration({
-    root,
-    hostPolicyPath,
-    hostPolicySnapshotPath,
-  });
   const captures = {};
   for (const [index, variant] of variants.entries()) {
     captures[variant] = {
@@ -56,7 +47,7 @@ async function loadCompileInputs() {
     };
   }
   const layers = {};
-  for (const layer of preregistration.environment.capability.selectedLayers) {
+  for (const layer of environment.capability.selectedLayers) {
     layers[layer.name] = {
       ...layer,
       text: await readFile(new URL(layer.path, root), "utf8"),
@@ -64,8 +55,8 @@ async function loadCompileInputs() {
   }
   return {
     policy,
-    trial: preregistration.trial,
-    environment: preregistration.environment,
+    trial,
+    environment,
     taskDefinitionText,
     comparisonPolicy,
     layers,
@@ -73,18 +64,10 @@ async function loadCompileInputs() {
   };
 }
 
-test("fresh five-condition matrix compiles into model evidence without promotion", async () => {
-  const { rebuildAegisMatrixEvidence } = await evidenceModule();
-  const first = await rebuildAegisMatrixEvidence({
-    root,
-    hostPolicyPath,
-    hostPolicySnapshotPath,
-  });
-  const second = await rebuildAegisMatrixEvidence({
-    root,
-    hostPolicyPath,
-    hostPolicySnapshotPath,
-  });
+test("archived five-condition matrix compiles into model evidence without promotion", async () => {
+  const { rebuildArchivedAegisMatrixEvidence } = await evidenceModule();
+  const first = await rebuildArchivedAegisMatrixEvidence({ root });
+  const second = await rebuildArchivedAegisMatrixEvidence({ root });
 
   assert.deepEqual(first.files, second.files);
   assert.deepEqual(first.ledger.rows.map(({ variant }) => variant), variants);
@@ -151,15 +134,10 @@ test("matrix compiler rejects artifact and evaluator tampering", async () => {
 });
 
 test("checked matrix ledger, profile, and lifecycle rebuild exactly", async () => {
-  const { verifyCheckedAegisMatrixEvidence } = await evidenceModule();
-  assert.deepEqual(
-    await verifyCheckedAegisMatrixEvidence({
-      root,
-      hostPolicyPath,
-      hostPolicySnapshotPath,
-    }),
-    { valid: true, files: 5 },
-  );
+  const { rebuildArchivedAegisMatrixEvidence } = await evidenceModule();
+  const rebuilt = await rebuildArchivedAegisMatrixEvidence({ root });
+  assert.equal(rebuilt.verification.valid, true);
+  assert.equal(Object.keys(rebuilt.files).length, 5);
 });
 
 test("archived matrix evidence replays from its frozen repository inputs", async () => {

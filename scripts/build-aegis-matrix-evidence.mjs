@@ -461,7 +461,6 @@ async function verifyCheckedFiles(root, files, label) {
 export async function rebuildAegisMatrixEvidence({
   root = new URL("../", import.meta.url),
   hostPolicyPath,
-  hostPolicySnapshotPath,
 } = {}) {
   const resolvedHostPolicyPath = await checkedHostPolicyPath(root, hostPolicyPath);
   const { rebuildAegisMatrixPreregistration } =
@@ -469,7 +468,6 @@ export async function rebuildAegisMatrixEvidence({
   const preregistration = await rebuildAegisMatrixPreregistration({
     root,
     hostPolicyPath: resolvedHostPolicyPath,
-    hostPolicySnapshotPath,
   });
   await verifyCheckedFiles(root, preregistration.files, "Aegis preregistration");
   return compileAegisMatrixEvidence(await loadCompilationInputs(
