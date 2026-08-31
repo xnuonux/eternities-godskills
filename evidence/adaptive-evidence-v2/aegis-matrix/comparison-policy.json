@@ -7,6 +7,7 @@
     "scoring:schema validity=3; each of three expected cases has detection=3,severity correctness=2,location specificity=1,source-grounded evidence=1,repair specificity=2; unsupported finding penalty=3 each; score floor=0; maximum=30; one-to-one finding assignment maximizes summed case points and resolves equal maxima lexically by matched finding ids",
     "critical-regression:schema invalid OR expected command-injection case lacks detection,critical severity,specific location,grounded source-to-sink evidence,or specific repair OR any unsupported critical finding exists OR a review condition lowers any detected parent case point total",
     "parent-map:reviewer=raw,combined=method",
+    "raw-baseline-binding:every non-raw evaluation requires variant=raw plus the exact raw artifact bytes,matching artifact SHA-256,and matching deterministic raw evaluation digest; reviewer parent identity must equal this same raw baseline",
     "review-prompt-binding:reviewer and combined evaluations require the exact prompt digest, exact disclosed reviewer-layer digest, embedded parent variant, embedded parent artifact digest, embedded parent evaluation digest, and byte-exact embedded parent artifact to match the evaluated parent",
     "tie-policy:aggregate scores equal means aggregate tie; equal expected-case point totals mean per-case tie; equal maximum-score assignments resolve deterministically by lexical matched-finding-id tuple",
     "case-counts:matched,wins,losses,ties compare only the three expected case point totals; schema validity and unsupported-finding modifiers affect aggregate outcomeAgainstRaw but never per-case counts",
@@ -15,7 +16,7 @@
     "trusted-guardrail-layer-sha256:5210b632954d16b30f215f8f6869e08766c861f0c07a3c17b2da6cfaf61a1925",
     "trusted-method-layer-sha256:5870b599b73361ec93d639c8fa809c97f674a3e2ef7b09dd48cfab63154b3b00",
     "trusted-reviewer-layer-sha256:e387aee8f7198dcba346621a854d67eb600bb7fd054545d31a1c1d690b7f4526",
-    "evaluator-sha256:9e8da374a1fb5eb0d18ad9b3be747bbf554eb7453a44296686587553921c4d12"
+    "evaluator-sha256:38dc6b3c5d1f8687feb0c0f05f47094b80b2e9ec76688d1a90af060be5f03d0b"
   ],
   "stopConditions": [
     "all-five-artifacts-recorded",

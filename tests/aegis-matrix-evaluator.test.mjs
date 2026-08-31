@@ -15,6 +15,16 @@ function artifact(findings, summary = "three source-grounded injection boundarie
   return JSON.stringify({ schemaVersion: 1, findings, summary });
 }
 
+function bindRaw(evaluateArtifact, artifactText) {
+  const evaluation = evaluateArtifact({ variant: "raw", artifactText });
+  return {
+    variant: "raw",
+    artifactText,
+    expectedArtifactDigest: evaluation.artifactDigest,
+    expectedEvaluationDigest: evaluation.evaluationDigest,
+  };
+}
+
 async function reviewPromptEvidence(parent, { disclosedArtifactText = parent.artifactText } = {}) {
   const [{ constructAegisMatrixPrompt }, taskDefinitionText, reviewerText] = await Promise.all([
     import("../scripts/construct-aegis-matrix-prompt.mjs"),
@@ -98,6 +108,7 @@ test("matrix task and comparison policy freeze one closed five-condition mission
   assert.ok(comparisonPolicy.metrics.some((value) => value.startsWith("scoring:")));
   assert.ok(comparisonPolicy.metrics.some((value) => value.startsWith("critical-regression:")));
   assert.ok(comparisonPolicy.metrics.includes("parent-map:reviewer=raw,combined=method"));
+  assert.ok(comparisonPolicy.metrics.some((value) => value.startsWith("raw-baseline-binding:")));
   assert.ok(comparisonPolicy.metrics.some((value) => value.startsWith("tie-policy:")));
   assert.ok(comparisonPolicy.metrics.some((value) => value.startsWith("case-counts:")));
   const [evaluatorBytes, promptConstructorBytes, taskDefinitionBytes, reviewerLayerBytes] =
@@ -139,7 +150,7 @@ test("deterministic evaluator rewards grounded coverage without requiring disclo
   const ideal = evaluateAegisMatrixArtifact({
     variant: "method",
     artifactText: idealText,
-    rawArtifactText: rawText,
+    rawBaseline: bindRaw(evaluateAegisMatrixArtifact, rawText),
   });
 
   assert.equal(raw.schemaValid, true);
@@ -157,7 +168,7 @@ test("deterministic evaluator rewards grounded coverage without requiring disclo
     evaluateAegisMatrixArtifact({
       variant: "method",
       artifactText: idealText,
-      rawArtifactText: rawText,
+      rawBaseline: bindRaw(evaluateAegisMatrixArtifact, rawText),
     }),
     ideal,
   );
@@ -169,7 +180,7 @@ test("malformed output, unsupported critical claims, and reviewer removal fail c
   const malformed = evaluateAegisMatrixArtifact({
     variant: "guardrail",
     artifactText: "```json\n{}\n```",
-    rawArtifactText: rawText,
+    rawBaseline: bindRaw(evaluateAegisMatrixArtifact, rawText),
   });
   assert.equal(malformed.schemaValid, false);
   assert.equal(malformed.score, 0);
@@ -188,7 +199,7 @@ test("malformed output, unsupported critical claims, and reviewer removal fail c
   const noisy = evaluateAegisMatrixArtifact({
     variant: "guardrail",
     artifactText: artifact([sql, traversal, command, unsupported]),
-    rawArtifactText: rawText,
+    rawBaseline: bindRaw(evaluateAegisMatrixArtifact, rawText),
   });
   assert.equal(noisy.unsupportedFindings, 1);
   assert.equal(noisy.criticalRegression, true);
@@ -205,7 +216,7 @@ test("malformed output, unsupported critical claims, and reviewer removal fail c
   const reviewer = evaluateAegisMatrixArtifact({
     variant: "reviewer",
     artifactText: artifact([sql, traversal]),
-    rawArtifactText: rawText,
+    rawBaseline: bindRaw(evaluateAegisMatrixArtifact, rawText),
     parent,
     promptEvidence: await reviewPromptEvidence(parent),
   });
@@ -221,7 +232,7 @@ test("review conditions bind the exact required parent artifact and evaluation",
   const methodEvaluation = evaluateAegisMatrixArtifact({
     variant: "method",
     artifactText: methodText,
-    rawArtifactText: rawText,
+    rawBaseline: bindRaw(evaluateAegisMatrixArtifact, rawText),
   });
   const methodParent = {
     variant: "method",
@@ -232,7 +243,7 @@ test("review conditions bind the exact required parent artifact and evaluation",
   const combined = evaluateAegisMatrixArtifact({
     variant: "combined",
     artifactText: methodText,
-    rawArtifactText: rawText,
+    rawBaseline: bindRaw(evaluateAegisMatrixArtifact, rawText),
     parent: methodParent,
     promptEvidence: await reviewPromptEvidence(methodParent),
   });
@@ -244,7 +255,7 @@ test("review conditions bind the exact required parent artifact and evaluation",
   assert.throws(() => evaluateAegisMatrixArtifact({
     variant: "combined",
     artifactText: methodText,
-    rawArtifactText: rawText,
+    rawBaseline: bindRaw(evaluateAegisMatrixArtifact, rawText),
     parent: {
       variant: "raw",
       artifactText: rawText,
@@ -255,7 +266,7 @@ test("review conditions bind the exact required parent artifact and evaluation",
   assert.throws(() => evaluateAegisMatrixArtifact({
     variant: "reviewer",
     artifactText: methodText,
-    rawArtifactText: rawText,
+    rawBaseline: bindRaw(evaluateAegisMatrixArtifact, rawText),
     parent: {
       variant: "raw",
       artifactText: rawText,
@@ -266,7 +277,7 @@ test("review conditions bind the exact required parent artifact and evaluation",
   assert.throws(() => evaluateAegisMatrixArtifact({
     variant: "reviewer",
     artifactText: methodText,
-    rawArtifactText: rawText,
+    rawBaseline: bindRaw(evaluateAegisMatrixArtifact, rawText),
     parent: {
       variant: "raw",
       artifactText: rawText,
@@ -274,6 +285,44 @@ test("review conditions bind the exact required parent artifact and evaluation",
       expectedEvaluationDigest: "0".repeat(64),
     },
   }), /parent evaluation digest/i);
+});
+
+test("every non-raw condition binds one exact evaluated raw baseline", async () => {
+  const { evaluateAegisMatrixArtifact } = await evaluator();
+  const rawText = artifact([sql]);
+  const rawBaseline = bindRaw(evaluateAegisMatrixArtifact, rawText);
+  const candidateText = artifact([sql, traversal, command]);
+  const candidate = evaluateAegisMatrixArtifact({
+    variant: "method",
+    artifactText: candidateText,
+    rawBaseline,
+  });
+  assert.equal(candidate.comparison.baselineArtifactDigest, rawBaseline.expectedArtifactDigest);
+  assert.equal(candidate.comparison.baselineEvaluationDigest, rawBaseline.expectedEvaluationDigest);
+  assert.throws(() => evaluateAegisMatrixArtifact({
+    variant: "method",
+    artifactText: candidateText,
+    rawBaseline: { ...rawBaseline, expectedArtifactDigest: "0".repeat(64) },
+  }), /raw baseline artifact digest/i);
+  assert.throws(() => evaluateAegisMatrixArtifact({
+    variant: "method",
+    artifactText: candidateText,
+    rawBaseline: { ...rawBaseline, expectedEvaluationDigest: "0".repeat(64) },
+  }), /raw baseline evaluation digest/i);
+  assert.throws(() => evaluateAegisMatrixArtifact({
+    variant: "method",
+    artifactText: candidateText,
+    rawArtifactText: "not JSON",
+  }), /exact raw baseline|rawArtifactText/i);
+  const alternateRaw = bindRaw(evaluateAegisMatrixArtifact, artifact([]));
+  const alternatePrompt = await reviewPromptEvidence(alternateRaw);
+  assert.throws(() => evaluateAegisMatrixArtifact({
+    variant: "reviewer",
+    artifactText: candidateText,
+    rawBaseline,
+    parent: alternateRaw,
+    promptEvidence: alternatePrompt,
+  }), /reviewer parent.*raw baseline/i);
 });
 
 test("review evaluation binds the exact parent bytes disclosed by its prompt", async () => {
@@ -290,7 +339,7 @@ test("review evaluation binds the exact parent bytes disclosed by its prompt", a
   const reviewed = evaluateAegisMatrixArtifact({
     variant: "reviewer",
     artifactText: rawText,
-    rawArtifactText: rawText,
+    rawBaseline: bindRaw(evaluateAegisMatrixArtifact, rawText),
     parent,
     promptEvidence,
   });
@@ -303,7 +352,7 @@ test("review evaluation binds the exact parent bytes disclosed by its prompt", a
   assert.throws(() => evaluateAegisMatrixArtifact({
     variant: "reviewer",
     artifactText: rawText,
-    rawArtifactText: rawText,
+    rawBaseline: bindRaw(evaluateAegisMatrixArtifact, rawText),
     parent,
     promptEvidence: forged,
   }), /prompt.*parent artifact|disclosed parent/i);
@@ -318,7 +367,7 @@ test("critical and inherited case quality regressions fail even when finding lab
   const method = evaluateAegisMatrixArtifact({
     variant: "method",
     artifactText: degradedText,
-    rawArtifactText: rawText,
+    rawBaseline: bindRaw(evaluateAegisMatrixArtifact, rawText),
   });
   assert.equal(method.criticalRegression, true);
   assert.ok(method.reasonCodes.includes("critical-finding-quality-incomplete"));
@@ -332,7 +381,7 @@ test("critical and inherited case quality regressions fail even when finding lab
   const reviewer = evaluateAegisMatrixArtifact({
     variant: "reviewer",
     artifactText: degradedText,
-    rawArtifactText: rawText,
+    rawBaseline: bindRaw(evaluateAegisMatrixArtifact, rawText),
     parent,
     promptEvidence: await reviewPromptEvidence(parent),
   });
@@ -414,7 +463,7 @@ test("closed evaluator rejects extra keys and contradictory comparison inputs", 
   assert.equal(invalid.criticalRegression, true);
   assert.throws(
     () => evaluateAegisMatrixArtifact({ variant: "method", artifactText: artifact([sql]) }),
-    /raw artifact/i,
+    /raw baseline|raw artifact/i,
   );
   assert.throws(
     () => evaluateAegisMatrixArtifact({
@@ -422,7 +471,7 @@ test("closed evaluator rejects extra keys and contradictory comparison inputs", 
       artifactText: artifact([sql]),
       rawArtifactText: artifact([sql]),
     }),
-    /raw baseline|raw artifact/i,
+    /raw baseline|raw artifact|rawArtifactText/i,
   );
   const duplicateMember = artifact([sql]).replace(
     '"schemaVersion":1',

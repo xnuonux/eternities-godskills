@@ -353,7 +353,37 @@ function degradedParentFinding(candidate, parent) {
     parentCase.detected && candidate.caseResults[index].points < parentCase.points);
 }
 
-function validateParent(parent, expectedVariant, rawArtifactText) {
+function validateRawBaseline(rawBaseline) {
+  if (!exactKeys(rawBaseline, PARENT_KEYS)) {
+    throw new Error("raw baseline evidence keys are not closed");
+  }
+  if (rawBaseline.variant !== "raw") throw new Error("raw baseline variant must be raw");
+  for (const field of ["artifactText", "expectedArtifactDigest", "expectedEvaluationDigest"]) {
+    if (typeof rawBaseline[field] !== "string" || rawBaseline[field].trim() === "") {
+      throw new Error(`raw baseline ${field} must be non-empty`);
+    }
+  }
+  const artifactDigest = sha256(rawBaseline.artifactText);
+  if (artifactDigest !== rawBaseline.expectedArtifactDigest) {
+    throw new Error("raw baseline artifact digest does not match its exact bytes");
+  }
+  const evaluation = evaluateAegisMatrixArtifact({
+    variant: "raw",
+    artifactText: rawBaseline.artifactText,
+  });
+  if (evaluation.evaluationDigest !== rawBaseline.expectedEvaluationDigest) {
+    throw new Error("raw baseline evaluation digest does not match its deterministic evaluation");
+  }
+  return {
+    scored: scoreArtifact(rawBaseline.artifactText),
+    record: {
+      artifactDigest,
+      evaluationDigest: evaluation.evaluationDigest,
+    },
+  };
+}
+
+function validateParent(parent, expectedVariant, rawBaseline) {
   if (!exactKeys(parent, PARENT_KEYS)) throw new Error("parent evidence keys are not closed");
   if (parent.variant !== expectedVariant) {
     throw new Error(`${expectedVariant === "raw" ? "reviewer" : "combined"} parent variant must be ${expectedVariant}`);
@@ -372,7 +402,7 @@ function validateParent(parent, expectedVariant, rawArtifactText) {
     : evaluateAegisMatrixArtifact({
         variant: "method",
         artifactText: parent.artifactText,
-        rawArtifactText,
+        rawBaseline,
       });
   if (evaluation.evaluationDigest !== parent.expectedEvaluationDigest) {
     throw new Error("parent evaluation digest does not match its deterministic evaluation");
@@ -470,17 +500,21 @@ function validateReviewPromptEvidence(promptEvidence, parent) {
 export function evaluateAegisMatrixArtifact({
   variant,
   artifactText,
+  rawBaseline,
   rawArtifactText,
   parent,
   promptEvidence,
 } = {}) {
   if (!VARIANTS.includes(variant)) throw new Error("Aegis matrix variant is invalid");
   if (typeof artifactText !== "string") throw new TypeError("artifact text must be a string");
+  if (rawArtifactText !== undefined) {
+    throw new Error("rawArtifactText is unsupported; exact raw baseline evidence is required");
+  }
   if (variant === "raw") {
-    if (rawArtifactText !== undefined) throw new Error("raw baseline cannot receive a raw artifact");
+    if (rawBaseline !== undefined) throw new Error("raw baseline cannot receive baseline evidence");
     if (parent !== undefined) throw new Error("raw baseline cannot receive a parent artifact");
-  } else if (typeof rawArtifactText !== "string") {
-    throw new Error("a non-raw condition requires the exact raw artifact");
+  } else if (rawBaseline === undefined) {
+    throw new Error("a non-raw condition requires exact raw baseline evidence");
   }
   const reviewVariant = variant === "reviewer" || variant === "combined";
   if (reviewVariant && parent === undefined) {
@@ -494,10 +528,20 @@ export function evaluateAegisMatrixArtifact({
   }
 
   const scored = scoreArtifact(artifactText);
-  const baseline = variant === "raw" ? null : scoreArtifact(rawArtifactText);
+  const baselineEvidence = variant === "raw" ? null : validateRawBaseline(rawBaseline);
+  const baseline = baselineEvidence?.scored ?? null;
   const parentEvidence = reviewVariant
-    ? validateParent(parent, variant === "reviewer" ? "raw" : "method", rawArtifactText)
+    ? validateParent(
+        parent,
+        variant === "reviewer" ? "raw" : "method",
+        rawBaseline,
+      )
     : null;
+  if (variant === "reviewer"
+      && (parentEvidence.record.artifactDigest !== baselineEvidence.record.artifactDigest
+        || parentEvidence.record.evaluationDigest !== baselineEvidence.record.evaluationDigest)) {
+    throw new Error("reviewer parent does not match the exact raw baseline evidence");
+  }
   const promptRecord = reviewVariant
     ? validateReviewPromptEvidence(promptEvidence, parent)
     : null;
@@ -512,13 +556,15 @@ export function evaluateAegisMatrixArtifact({
   const criticalRegression = !scored.schemaValid || criticalQualityIncomplete
     || scored.unsupportedCritical || parentDegradation;
   const comparison = variant === "raw"
-    ? {
+      ? {
         baselineArtifactDigest: null,
+        baselineEvaluationDigest: null,
         outcomeAgainstRaw: "baseline",
         counts: { matched: 0, wins: 0, losses: 0, ties: 0 },
       }
-    : {
-        baselineArtifactDigest: sha256(rawArtifactText),
+      : {
+        baselineArtifactDigest: baselineEvidence.record.artifactDigest,
+        baselineEvaluationDigest: baselineEvidence.record.evaluationDigest,
         ...compareToRaw(scored, baseline),
       };
   const reasonCodes = [
@@ -529,6 +575,7 @@ export function evaluateAegisMatrixArtifact({
     ...(parentRemoval ? ["parent-grounded-finding-removed"] : []),
     ...(parentDegradation ? ["parent-grounded-finding-degraded"] : []),
     ...(promptRecord ? ["review-prompt-parent-bound"] : []),
+    ...(baselineEvidence ? ["raw-baseline-artifact-and-evaluation-bound"] : []),
     ...(criticalRegression ? ["critical-regression"] : ["no-critical-regression"]),
   ];
   const body = {

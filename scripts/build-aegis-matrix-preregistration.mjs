@@ -12,6 +12,7 @@ import { preregisterTrial, verifyTrialEnvelope } from "../src/adaptive-evidence-
 import { sha256 } from "../src/io.mjs";
 import { commitGeneratedFiles } from "./build-capability-layer-abi.mjs";
 import { AEGIS_MATRIX_VERIFIER_ID } from "./evaluate-aegis-matrix.mjs";
+import { buildAdaptiveActivationExecutableReceipt } from "./build-adaptive-activation-executable-receipt.mjs";
 
 const POLICY_PATH = "policies/adaptive-evidence.v2.json";
 const TASK_PATH = "evidence/adaptive-evidence-v2/aegis-matrix/task-definition.json";
@@ -21,7 +22,12 @@ const PROMPT_PATH = "scripts/construct-aegis-matrix-prompt.mjs";
 const EVALUATOR_PATH = "scripts/evaluate-aegis-matrix.mjs";
 const ENVIRONMENT_PATH = "evidence/adaptive-evidence-v2/aegis-matrix/environment.json";
 const TRIAL_PATH = "evidence/adaptive-evidence-v2/aegis-matrix/trial-envelope.json";
+const EXECUTABLE_RECEIPT_PATH = "receipts/adaptive-activation-executable-v1.json";
 const TRUSTED_POLICY_DIGEST = "2f0e8c6b68c13be56b8a7ec2332402f4a3939368a162c31bde0fac3ef3ae7260";
+const TRUSTED_EXECUTABLE_COMMIT = "f6b828ffbea29cf28cba751d4438e5c41a8deb2d";
+const TRUSTED_EXECUTABLE_RECEIPT_SHA256 = "98ebeb63db38b67608cf71b1b511b807cfe2d96e17e9b1bc54e7dbb536f8403f";
+const TRUSTED_EXECUTABLE_RECEIPT_DIGEST = "c5a086bb131ff7e1a9508f02b95796ae9066627be3e8e1f8b7e57421220e9bd7";
+const TRUSTED_EXECUTABLE_PARENT_DIGEST = "a28a0af7e588f2abbbe1d51a15775dfbeb8d565109d0a176711bfa73b520440f";
 const REGISTERED_AT = "2026-08-31T07:10:00.000Z";
 const LIMITATION = "global-system-instructions-beyond-the-user-global-policy-file-are-not-byte-observable";
 
@@ -82,6 +88,57 @@ function disclosures(layers) {
   ];
 }
 
+function verifyExecutableTrustRoot(input, rebuilt) {
+  const receipt = input.value;
+  const { receiptDigest, ...body } = receipt;
+  if (input.sha256 !== TRUSTED_EXECUTABLE_RECEIPT_SHA256
+      || receiptDigest !== TRUSTED_EXECUTABLE_RECEIPT_DIGEST
+      || canonicalDigest(body) !== receiptDigest
+      || receipt.status !== "verified-build"
+      || receipt.protocolId !== "eternities-godskills-activation-v1"
+      || receipt.parentReceipt?.receiptDigest !== TRUSTED_EXECUTABLE_PARENT_DIGEST
+      || canonicalDigest(receipt) !== canonicalDigest(rebuilt)) {
+    throw new Error("certified adaptive activation executable trust root drifted");
+  }
+  return {
+    canonicalCommit: TRUSTED_EXECUTABLE_COMMIT,
+    receipt: inputRecord(input, {
+      receiptDigest,
+      status: receipt.status,
+      protocolId: receipt.protocolId,
+      parentReceipt: structuredClone(receipt.parentReceipt),
+    }),
+  };
+}
+
+export function verifyMatrixCommitments({
+  comparisonPolicy,
+  taskDefinitionSha256,
+  promptConstructorSha256,
+  evaluatorSha256,
+  layers,
+} = {}) {
+  if (!comparisonPolicy || !Array.isArray(comparisonPolicy.metrics)) {
+    throw new Error("comparison policy metrics are absent");
+  }
+  if (!Array.isArray(layers)) throw new Error("matrix layer commitments are absent");
+  const layerByName = Object.fromEntries(layers.map((layer) => [layer.name, layer]));
+  const commitments = [
+    ["task definition", `task-definition-sha256:${taskDefinitionSha256}`],
+    ["prompt constructor", `prompt-constructor-sha256:${promptConstructorSha256}`],
+    ["evaluator", `evaluator-sha256:${evaluatorSha256}`],
+    ["guardrail layer", `trusted-guardrail-layer-sha256:${layerByName.guardrails?.sha256}`],
+    ["method layer", `trusted-method-layer-sha256:${layerByName.method?.sha256}`],
+    ["reviewer layer", `trusted-reviewer-layer-sha256:${layerByName.reviewer?.sha256}`],
+  ];
+  for (const [label, commitment] of commitments) {
+    if (!comparisonPolicy.metrics.includes(commitment)) {
+      throw new Error(`${label} does not match its comparison-policy commitment`);
+    }
+  }
+  return true;
+}
+
 function buildEnvironment({
   hostPolicyPath,
   hostPolicyBytes,
@@ -90,6 +147,7 @@ function buildEnvironment({
   taskDefinition,
   comparisonPolicy,
   aegis,
+  executableTrustRoot,
 }) {
   const body = {
     schemaVersion: 2,
@@ -108,6 +166,7 @@ function buildEnvironment({
     evaluator: inputRecord(evaluator, { id: AEGIS_MATRIX_VERIFIER_ID }),
     taskDefinitionDigest: canonicalDigest(taskDefinition.value),
     comparisonPolicyDigest: canonicalDigest(comparisonPolicy.value),
+    executableTrustRoot,
     capability: {
       id: aegis.capabilityId,
       version: aegis.capabilityVersion,
@@ -131,7 +190,9 @@ export async function rebuildAegisMatrixPreregistration({
   if (typeof hostPolicyPath !== "string" || hostPolicyPath.trim() === "") {
     throw new TypeError("hostPolicyPath must be a non-empty absolute path");
   }
-  const [policy, taskDefinition, comparisonPolicy, prompt, evaluator, hostPolicyBytes, aegis] =
+  const repositoryRoot = fileURLToPath(root);
+  const [policy, taskDefinition, comparisonPolicy, prompt, evaluator, hostPolicyBytes, aegis,
+    executableReceipt, rebuiltExecutableReceipt] =
     await Promise.all([
       loadInput(root, POLICY_PATH, { json: true }),
       loadInput(root, TASK_PATH, { json: true }),
@@ -140,15 +201,25 @@ export async function rebuildAegisMatrixPreregistration({
       loadInput(root, EVALUATOR_PATH),
       readFile(hostPolicyPath),
       loadAegisBundle(root),
+      loadInput(root, EXECUTABLE_RECEIPT_PATH, { json: true }),
+      buildAdaptiveActivationExecutableReceipt({ repositoryRoot }),
     ]);
 
   validateAdaptiveEvidencePolicy({
     policy: policy.value,
     expectedPolicyDigest: TRUSTED_POLICY_DIGEST,
   });
-  if (!comparisonPolicy.value.metrics.includes(`evaluator-sha256:${evaluator.sha256}`)) {
-    throw new Error("comparison policy does not bind the exact evaluator bytes");
-  }
+  verifyMatrixCommitments({
+    comparisonPolicy: comparisonPolicy.value,
+    taskDefinitionSha256: taskDefinition.sha256,
+    promptConstructorSha256: prompt.sha256,
+    evaluatorSha256: evaluator.sha256,
+    layers: [aegis.layers.guardrails, aegis.layers.method, aegis.layers.reviewer],
+  });
+  const executableTrustRoot = verifyExecutableTrustRoot(
+    executableReceipt,
+    rebuiltExecutableReceipt,
+  );
   const environment = buildEnvironment({
     hostPolicyPath,
     hostPolicyBytes,
@@ -157,6 +228,7 @@ export async function rebuildAegisMatrixPreregistration({
     taskDefinition,
     comparisonPolicy,
     aegis,
+    executableTrustRoot,
   });
   const trial = preregisterTrial({
     trialId: "aegis-terra-five-condition-001",

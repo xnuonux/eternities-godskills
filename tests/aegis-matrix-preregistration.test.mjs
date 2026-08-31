@@ -13,13 +13,14 @@ async function preregistrationModule() {
 }
 
 test("Aegis matrix preregistration binds model, host policy, prompt constructor, layers, and verifier", async () => {
-  const [{ rebuildAegisMatrixPreregistration }, contracts, trials] = await Promise.all([
+  const [{ rebuildAegisMatrixPreregistration, verifyMatrixCommitments }, contracts, trials] =
+    await Promise.all([
     preregistrationModule(),
     import("../src/adaptive-evidence-contracts.mjs"),
     import("../src/adaptive-evidence-trials.mjs"),
-  ]);
+    ]);
   const [first, second, policy, taskDefinition, comparisonPolicy, evaluatorBytes, promptBytes,
-    hostPolicyBytes] = await Promise.all([
+    hostPolicyBytes, executableReceiptBytes, taskDefinitionBytes] = await Promise.all([
     rebuildAegisMatrixPreregistration({ root, hostPolicyPath }),
     rebuildAegisMatrixPreregistration({ root, hostPolicyPath }),
     readFile(new URL("policies/adaptive-evidence.v2.json", root), "utf8").then(JSON.parse),
@@ -34,6 +35,11 @@ test("Aegis matrix preregistration binds model, host policy, prompt constructor,
     readFile(new URL("scripts/evaluate-aegis-matrix.mjs", root)),
     readFile(new URL("scripts/construct-aegis-matrix-prompt.mjs", root)),
     readFile(hostPolicyPath),
+    readFile(new URL("receipts/adaptive-activation-executable-v1.json", root)),
+    readFile(new URL(
+      "evidence/adaptive-evidence-v2/aegis-matrix/task-definition.json",
+      root,
+    )),
   ]);
 
   assert.deepEqual(first.files, second.files);
@@ -51,6 +57,35 @@ test("Aegis matrix preregistration binds model, host policy, prompt constructor,
   assert.equal(first.environment.evaluator.sha256, sha256(evaluatorBytes));
   assert.equal(first.environment.taskDefinitionDigest, contracts.canonicalDigest(taskDefinition));
   assert.equal(first.environment.comparisonPolicyDigest, contracts.canonicalDigest(comparisonPolicy));
+  const commitments = {
+    comparisonPolicy,
+    taskDefinitionSha256: sha256(taskDefinitionBytes),
+    promptConstructorSha256: sha256(promptBytes),
+    evaluatorSha256: sha256(evaluatorBytes),
+    layers: first.environment.capability.selectedLayers,
+  };
+  assert.equal(verifyMatrixCommitments(commitments), true);
+  assert.throws(() => verifyMatrixCommitments({
+    ...commitments,
+    promptConstructorSha256: "0".repeat(64),
+  }), /prompt constructor/i);
+  const executableReceipt = JSON.parse(executableReceiptBytes);
+  assert.deepEqual(first.environment.executableTrustRoot, {
+    canonicalCommit: "f6b828ffbea29cf28cba751d4438e5c41a8deb2d",
+    receipt: {
+      path: "receipts/adaptive-activation-executable-v1.json",
+      sha256: sha256(executableReceiptBytes),
+      bytes: executableReceiptBytes.length,
+      receiptDigest: executableReceipt.receiptDigest,
+      status: executableReceipt.status,
+      protocolId: executableReceipt.protocolId,
+      parentReceipt: executableReceipt.parentReceipt,
+    },
+  });
+  assert.equal(
+    first.environment.executableTrustRoot.receipt.receiptDigest,
+    "c5a086bb131ff7e1a9508f02b95796ae9066627be3e8e1f8b7e57421220e9bd7",
+  );
   assert.deepEqual(
     first.environment.disclosures.map(({ variant, layers }) => [
       variant,
