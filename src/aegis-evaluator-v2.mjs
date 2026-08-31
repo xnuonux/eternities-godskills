@@ -498,7 +498,7 @@ function validateBoundResultForOracle({
       throw new Error(`${label} deterministic ${field} does not match its artifact`);
     }
   }
-  if (JSON.stringify(result.caseResults) !== JSON.stringify(rescored.caseResults)) {
+  if (canonicalDigest(result.caseResults) !== canonicalDigest(rescored.caseResults)) {
     throw new Error(`${label} deterministic case scores do not match its artifact`);
   }
   const criticalIncomplete = rescored.caseResults.some((entry) =>

@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifactMediaType": {
+      "enum": [
+        "application/json",
+        "text/markdown",
+        "text/plain"
+      ]
+    },
+    "artifacts": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "bytes": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "logicalDigest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          },
+          "path": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "role": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "sha256": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "role",
+          "path",
+          "sha256",
+          "bytes"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "authorityExpanded": {
+      "const": false
+    },
+    "dependencyClosure": {
+      "additionalProperties": false,
+      "properties": {
+        "complete": {
+          "const": true
+        },
+        "localModules": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "roots": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "roots",
+        "localModules",
+        "complete"
+      ],
+      "type": "object"
+    },
+    "evaluatorId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "evaluatorKind": {
+      "enum": [
+        "deterministic-verifier",
+        "reviewer"
+      ]
+    },
+    "id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "proofLimits": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "protocolId": {
+      "const": "eternities-godskills-evaluator-package-v1"
+    },
+    "receiptDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "status": {
+      "const": "verified-build"
+    },
+    "taskClass": {
+      "enum": [
+        "continuity",
+        "creative-generation",
+        "debugging-recovery",
+        "general",
+        "implementation",
+        "research",
+        "security-review",
+        "verification"
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "status",
+    "protocolId",
+    "evaluatorId",
+    "evaluatorKind",
+    "taskClass",
+    "artifactMediaType",
+    "authorityExpanded",
+    "dependencyClosure",
+    "artifacts",
+    "proofLimits",
+    "receiptDigest"
+  ],
+  "title": "Adaptive evaluator package receipt v1",
+  "type": "object"
+}

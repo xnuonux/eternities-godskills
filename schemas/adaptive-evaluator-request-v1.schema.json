@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifactDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "artifactText": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "baseline": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "artifactDigest": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "artifactText": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "resultDigest": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "resultText": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "artifactText",
+            "artifactDigest",
+            "resultText",
+            "resultDigest"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "evaluatedAt": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "packageReceiptDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "parent": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "artifactDigest": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "artifactText": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "resultDigest": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "resultText": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "artifactText",
+            "artifactDigest",
+            "resultText",
+            "resultDigest"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "taskDefinitionDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "taskSourceDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "taskSourceText": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "variant": {
+      "enum": [
+        "raw",
+        "guardrail",
+        "method",
+        "reviewer",
+        "combined"
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "packageReceiptDigest",
+    "taskDefinitionDigest",
+    "taskSourceText",
+    "taskSourceDigest",
+    "variant",
+    "artifactText",
+    "artifactDigest",
+    "baseline",
+    "parent",
+    "evaluatedAt"
+  ],
+  "title": "Adaptive evaluator request v1",
+  "type": "object"
+}
