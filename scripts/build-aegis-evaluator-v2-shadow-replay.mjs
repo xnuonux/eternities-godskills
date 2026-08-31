@@ -26,6 +26,7 @@ const PACKAGE_RECEIPT_PATH = "receipts/adaptive-evaluator-aegis-v2.json";
 const SHADOW_PATH = "artifacts/adaptive-evaluators/aegis-v2/shadow-replay.v1.json";
 const REPORT_PATH = "docs/adaptive-evaluator-aegis-v2-shadow-report.md";
 const AGGREGATE_RECEIPT_PATH = "receipts/adaptive-evaluator-packages-v1.json";
+const RUNTIME_PATH = "runtime/adaptive-evaluator-packages-v1.md";
 const TRUSTED_PARENT_RECEIPT_DIGEST =
   "2ed01045d7e25e1c737ef375ae472757edff1459fa5c9dd49ec77572f33f6a8d";
 const TRUSTED_PARENT_FILE_SHA256 =
@@ -58,6 +59,7 @@ const SOURCE_PATHS = Object.freeze([
 export const AEGIS_SHADOW_INPUT_PATHS = Object.freeze([
   PARENT_RECEIPT_PATH,
   POLICY_PATH,
+  RUNTIME_PATH,
   ORACLE_PATH,
   TASK_PATH,
   TRIAL_PATH,
@@ -289,6 +291,7 @@ function buildAggregateReceipt({
   packageText,
   shadowText,
   report,
+  runtimeInput,
   sourceInputs,
   taskInput,
   oracleInput,
@@ -322,6 +325,7 @@ function buildAggregateReceipt({
       ...outputRow(SHADOW_PATH, shadowText, { logical: true }),
       replayDigest: shadowReplay.replayDigest,
     },
+    runtime: inputRow(runtimeInput),
     taskDefinition: inputRow(taskInput, { logical: true }),
     oracle: inputRow(oracleInput, { logical: true }),
     sources: sourceInputs.map((input) => inputRow(input)),
@@ -358,11 +362,19 @@ export async function rebuildAegisEvaluatorV2Shadow({
   root = new URL("../", import.meta.url),
 } = {}) {
   const rootUrl = asRootUrl(root);
-  const [parentInput, taskInput, trialInput, oracleInput, ...sourceInputs] = await Promise.all([
+  const [
+    parentInput,
+    taskInput,
+    trialInput,
+    oracleInput,
+    runtimeInput,
+    ...sourceInputs
+  ] = await Promise.all([
     loadInput(rootUrl, PARENT_RECEIPT_PATH, { json: true }),
     loadInput(rootUrl, TASK_PATH, { json: true }),
     loadInput(rootUrl, TRIAL_PATH, { json: true }),
     loadInput(rootUrl, ORACLE_PATH, { json: true }),
+    loadInput(rootUrl, RUNTIME_PATH),
     ...SOURCE_PATHS.map((relativePath) => loadInput(rootUrl, relativePath)),
   ]);
   const archived = await Promise.all(VARIANTS.map(async (variant) => {
@@ -481,6 +493,7 @@ export async function rebuildAegisEvaluatorV2Shadow({
     packageText,
     shadowText,
     report,
+    runtimeInput,
     sourceInputs,
     taskInput,
     oracleInput,
