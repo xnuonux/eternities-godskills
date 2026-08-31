@@ -18,13 +18,13 @@ import {
 import { createObservationProposal } from "../src/adaptive-evidence-trials.mjs";
 import { sha256 } from "../src/io.mjs";
 import { commitGeneratedFiles } from "./build-capability-layer-abi.mjs";
-import { rebuildAegisMatrixPreregistration } from "./build-aegis-matrix-preregistration.mjs";
 import { constructAegisMatrixPrompt } from "./construct-aegis-matrix-prompt.mjs";
 import { evaluateAegisMatrixArtifact } from "./evaluate-aegis-matrix.mjs";
 
 const POLICY_PATH = "policies/adaptive-evidence.v2.json";
 const MATRIX_ROOT = "evidence/adaptive-evidence-v2/aegis-matrix";
 const TASK_PATH = `${MATRIX_ROOT}/task-definition.json`;
+const COMPARISON_PATH = `${MATRIX_ROOT}/comparison-policy.json`;
 const ENVIRONMENT_PATH = `${MATRIX_ROOT}/environment.json`;
 const TRIAL_PATH = `${MATRIX_ROOT}/trial-envelope.json`;
 const OUTPUT_PATHS = Object.freeze({
@@ -42,6 +42,11 @@ const VARIANT_LAYER = Object.freeze({
 });
 const PARENT_VARIANT = Object.freeze({ reviewer: "raw", combined: "method" });
 const TRUSTED_POLICY_DIGEST = "2f0e8c6b68c13be56b8a7ec2332402f4a3939368a162c31bde0fac3ef3ae7260";
+const TRUSTED_ENVIRONMENT_DIGEST = "c8897601687882e423aa565150c38b8d6c18456db3d17a19d6bd6db695c572b8";
+const TRUSTED_TRIAL_DIGEST = "0c19530c4e6b8ddc5588e832f82e719fbf4069a547032251234d3d9420959a76";
+const TRUSTED_EXECUTABLE_RECEIPT_DIGEST = "c5a086bb131ff7e1a9508f02b95796ae9066627be3e8e1f8b7e57421220e9bd7";
+const TRUSTED_EXECUTABLE_RECEIPT_SHA256 = "98ebeb63db38b67608cf71b1b511b807cfe2d96e17e9b1bc54e7dbb536f8403f";
+const TRUSTED_EXECUTABLE_COMMIT = "f6b828ffbea29cf28cba751d4438e5c41a8deb2d";
 const LEDGER_CREATED_AT = "2026-08-31T07:10:01.000Z";
 const AUTHORIZATION_ISSUED_AT = "2026-08-31T07:45:00.000Z";
 const LIFECYCLE_ACTOR = "external-aegis-matrix-maintainer";
@@ -76,12 +81,24 @@ function deepExact(actual, expected, label) {
   if (!isDeepStrictEqual(actual, expected)) throw new Error(`${label} is not exact`);
 }
 
-function verifyEnvironment(environment, trial) {
+function verifyEnvironment(environment, trial, taskDefinitionText, comparisonPolicy) {
   const { environmentDigest, ...body } = environment;
-  if (canonicalDigest(body) !== environmentDigest
+  let taskDefinition;
+  try {
+    taskDefinition = JSON.parse(taskDefinitionText);
+  } catch {
+    throw new Error("matrix task definition is not valid JSON");
+  }
+  if (environmentDigest !== TRUSTED_ENVIRONMENT_DIGEST
+      || trial.trialDigest !== TRUSTED_TRIAL_DIGEST
+      || canonicalDigest(body) !== environmentDigest
       || trial.profileIdentity.environmentId !== environmentDigest
       || trial.profileIdentity.modelFamily !== environment.modelFamily
       || trial.profileIdentity.reasoningTier !== environment.reasoningTier
+      || canonicalDigest(taskDefinition) !== trial.taskDefinition.digest
+      || canonicalDigest(comparisonPolicy) !== trial.comparisonPolicy.digest
+      || environment.taskDefinitionDigest !== trial.taskDefinition.digest
+      || environment.comparisonPolicyDigest !== trial.comparisonPolicy.digest
       || environment.authorityExpanded !== false
       || !Array.isArray(environment.externalToolsAllowed)
       || environment.externalToolsAllowed.length !== 0) {
@@ -241,11 +258,20 @@ function proposalFor({ trial, policy, variant, prompt, artifact, observation }) 
 
 export function compileAegisMatrixEvidence(input = {}) {
   exactKeys(input, [
-    "policy", "trial", "environment", "taskDefinitionText", "layers", "captures",
+    "policy", "trial", "environment", "taskDefinitionText", "comparisonPolicy", "layers",
+    "captures",
   ], "matrix evidence compilation input");
-  const { policy, trial, environment, taskDefinitionText, layers, captures } = input;
+  const {
+    policy,
+    trial,
+    environment,
+    taskDefinitionText,
+    comparisonPolicy,
+    layers,
+    captures,
+  } = input;
   validateAdaptiveEvidencePolicy({ policy, expectedPolicyDigest: TRUSTED_POLICY_DIGEST });
-  verifyEnvironment(environment, trial);
+  verifyEnvironment(environment, trial, taskDefinitionText, comparisonPolicy);
   verifyLayers(layers, environment);
   exactKeys(captures, VARIANTS, "matrix captures");
 
@@ -348,22 +374,11 @@ async function checkedHostPolicyPath(root, supplied) {
   return environment.hostPolicy.path;
 }
 
-export async function rebuildAegisMatrixEvidence({
-  root = new URL("../", import.meta.url),
-  hostPolicyPath,
-} = {}) {
-  const resolvedHostPolicyPath = await checkedHostPolicyPath(root, hostPolicyPath);
-  const preregistration = await rebuildAegisMatrixPreregistration({
-    root,
-    hostPolicyPath: resolvedHostPolicyPath,
-  });
-  for (const [relative, expected] of Object.entries(preregistration.files)) {
-    const checked = await readFile(new URL(relative, root), "utf8");
-    if (checked !== expected) throw new Error(`checked Aegis preregistration drifted: ${relative}`);
-  }
-  const [policy, taskDefinitionText, ...captureRecords] = await Promise.all([
+async function loadCompilationInputs(root, trial, environment) {
+  const [policy, taskDefinitionText, comparisonPolicy, ...captureRecords] = await Promise.all([
     loadJson(root, POLICY_PATH),
     readFile(new URL(TASK_PATH, root), "utf8"),
+    loadJson(root, COMPARISON_PATH),
     ...VARIANTS.flatMap((variant) => [
       loadJson(root, `${MATRIX_ROOT}/prompts/${variant}.json`),
       loadJson(root, `${MATRIX_ROOT}/artifacts/${variant}.json`),
@@ -379,29 +394,88 @@ export async function rebuildAegisMatrixEvidence({
     };
   }
   const layers = {};
-  for (const layer of preregistration.environment.capability.selectedLayers) {
+  for (const layer of environment.capability.selectedLayers) {
     layers[layer.name] = {
       ...layer,
       text: await readFile(new URL(layer.path, root), "utf8"),
     };
   }
-  return compileAegisMatrixEvidence({
-    policy,
-    trial: preregistration.trial,
-    environment: preregistration.environment,
-    taskDefinitionText,
-    layers,
-    captures,
+  return { policy, trial, environment, taskDefinitionText, comparisonPolicy, layers, captures };
+}
+
+async function verifyArchivedTrustRoots(root, environment) {
+  const executable = environment.executableTrustRoot;
+  if (executable.canonicalCommit !== TRUSTED_EXECUTABLE_COMMIT
+      || executable.receipt.receiptDigest !== TRUSTED_EXECUTABLE_RECEIPT_DIGEST
+      || executable.receipt.sha256 !== TRUSTED_EXECUTABLE_RECEIPT_SHA256) {
+    throw new Error("archived matrix executable trust root is invalid");
+  }
+  const [constructorBytes, evaluatorBytes, executableReceiptBytes] = await Promise.all([
+    readFile(new URL(environment.promptConstructor.path, root)),
+    readFile(new URL(environment.evaluator.path, root)),
+    readFile(new URL(executable.receipt.path, root)),
+  ]);
+  if (sha256(constructorBytes) !== environment.promptConstructor.sha256
+      || constructorBytes.length !== environment.promptConstructor.bytes
+      || sha256(evaluatorBytes) !== environment.evaluator.sha256
+      || evaluatorBytes.length !== environment.evaluator.bytes
+      || sha256(executableReceiptBytes) !== executable.receipt.sha256
+      || executableReceiptBytes.length !== executable.receipt.bytes) {
+    throw new Error("archived matrix runtime bytes drifted from the frozen environment");
+  }
+  const executableReceipt = JSON.parse(executableReceiptBytes);
+  if (executableReceipt.receiptDigest !== TRUSTED_EXECUTABLE_RECEIPT_DIGEST
+      || executableReceipt.status !== "verified-build"
+      || executableReceipt.protocolId !== "eternities-godskills-activation-v1") {
+    throw new Error("archived matrix executable receipt is invalid");
+  }
+}
+
+async function verifyCheckedFiles(root, files, label) {
+  for (const [relative, expected] of Object.entries(files)) {
+    const actual = await readFile(new URL(relative, root), "utf8");
+    if (actual !== expected) throw new Error(`checked ${label} drifted: ${relative}`);
+  }
+}
+
+export async function rebuildAegisMatrixEvidence({
+  root = new URL("../", import.meta.url),
+  hostPolicyPath,
+} = {}) {
+  const resolvedHostPolicyPath = await checkedHostPolicyPath(root, hostPolicyPath);
+  const { rebuildAegisMatrixPreregistration } =
+    await import("./build-aegis-matrix-preregistration.mjs");
+  const preregistration = await rebuildAegisMatrixPreregistration({
+    root,
+    hostPolicyPath: resolvedHostPolicyPath,
   });
+  await verifyCheckedFiles(root, preregistration.files, "Aegis preregistration");
+  return compileAegisMatrixEvidence(await loadCompilationInputs(
+    root,
+    preregistration.trial,
+    preregistration.environment,
+  ));
+}
+
+export async function rebuildArchivedAegisMatrixEvidence({
+  root = new URL("../", import.meta.url),
+} = {}) {
+  const [environment, trial] = await Promise.all([
+    loadJson(root, ENVIRONMENT_PATH),
+    loadJson(root, TRIAL_PATH),
+  ]);
+  await verifyArchivedTrustRoots(root, environment);
+  const rebuilt = compileAegisMatrixEvidence(
+    await loadCompilationInputs(root, trial, environment),
+  );
+  await verifyCheckedFiles(root, rebuilt.files, "Aegis matrix evidence");
+  return rebuilt;
 }
 
 export async function verifyCheckedAegisMatrixEvidence(options = {}) {
   const root = options.root ?? new URL("../", import.meta.url);
   const rebuilt = await rebuildAegisMatrixEvidence({ ...options, root });
-  for (const [relative, expected] of Object.entries(rebuilt.files)) {
-    const actual = await readFile(new URL(relative, root), "utf8");
-    if (actual !== expected) throw new Error(`checked Aegis matrix evidence drifted: ${relative}`);
-  }
+  await verifyCheckedFiles(root, rebuilt.files, "Aegis matrix evidence");
   return { valid: true, files: Object.keys(rebuilt.files).length };
 }
 

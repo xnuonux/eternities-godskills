@@ -472,7 +472,7 @@ The reviewer condition receives the raw artifact plus exact `reviewer.v1.md` onl
 
 Run the preregistered deterministic verifier over all five artifacts. Record coverage, severity correctness, repair specificity, unsupported claims, schema validity, critical regressions, artifact bytes, and unavailable host token or monetary metrics as explicit `null` values.
 
-Create proposals, append them in lexical variant order, verify the full ledger, derive the exact profile, and request a lifecycle action with explicit maintainer authority. If thresholds do not pass, write a rejected promotion or a no-change disposition. Never adjust thresholds after seeing results.
+Create proposals, append them in the preregistered order with raw admitted first, verify the full ledger, derive the exact profile, and request a lifecycle action with explicit maintainer authority. If thresholds do not pass, write a rejected promotion or a no-change disposition. Never adjust thresholds after seeing results.
 
 - [ ] **Step 6: Rebuild receipt and run all focused tests**
 

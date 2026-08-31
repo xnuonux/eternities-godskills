@@ -16,9 +16,21 @@ historical evidence remains useful context but is not retroactive preregistratio
 
 ## fresh model evidence
 
-the preregistered Aegis model matrix is pending. no method or review promotion is claimed.
+the preregistered Aegis matrix completed all five isolated Terra-high conditions against one frozen task, environment, prompt constructor, evaluator, and executable activation trust root.
+
+| condition | score / 30 | result against raw | critical regression | evidence level |
+| --- | ---: | --- | --- | --- |
+| raw | 26 | baseline | yes | model |
+| guardrail | 27 | win | yes | model |
+| method | 3 | loss | yes | model |
+| reviewer | 26 | tie | yes | model |
+| combined | 0 | loss | yes | model |
+
+guardrail scored 27 against raw 26, but all five conditions triggered the frozen critical-regression predicate. the derived profile is therefore `ineligible`, recommends `guardrail`, and the attempted method promotion was `rejected` with the active mode remaining `native`.
+
+the method and combined scores expose a post-dispatch evaluator limitation: its lexical taxonomy did not recognize some semantically correct hyphenated finding language. the evaluator remained frozen and no subject was rerun or rescored after this result was known. these scores characterize this exact verifier and task, not universal capability quality.
 
 ## boundaries
 
-this report proves deterministic structural and fixture engine behavior only. it does not prove universal behavior, cross-model equivalence, global activation, or external authority.
+this report proves deterministic structural mechanics plus one preregistered task and model matrix. it does not prove universal behavior, cross-model equivalence, global activation, or external authority.
 activation v1 remains the rollback path.

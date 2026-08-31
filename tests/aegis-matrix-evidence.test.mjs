@@ -16,7 +16,13 @@ async function loadJson(relative) {
 }
 
 async function loadCompileInputs() {
-  const [{ rebuildAegisMatrixPreregistration }, policy, taskDefinitionText, ...records] =
+  const [
+    { rebuildAegisMatrixPreregistration },
+    policy,
+    taskDefinitionText,
+    comparisonPolicy,
+    ...records
+  ] =
     await Promise.all([
       import("../scripts/build-aegis-matrix-preregistration.mjs"),
       loadJson("policies/adaptive-evidence.v2.json"),
@@ -24,6 +30,7 @@ async function loadCompileInputs() {
         "evidence/adaptive-evidence-v2/aegis-matrix/task-definition.json",
         root,
       ), "utf8"),
+      loadJson("evidence/adaptive-evidence-v2/aegis-matrix/comparison-policy.json"),
       ...variants.flatMap((variant) => [
         loadJson(`evidence/adaptive-evidence-v2/aegis-matrix/prompts/${variant}.json`),
         loadJson(`evidence/adaptive-evidence-v2/aegis-matrix/artifacts/${variant}.json`),
@@ -51,6 +58,7 @@ async function loadCompileInputs() {
     trial: preregistration.trial,
     environment: preregistration.environment,
     taskDefinitionText,
+    comparisonPolicy,
     layers,
     captures,
   };
@@ -116,4 +124,16 @@ test("checked matrix ledger, profile, and lifecycle rebuild exactly", async () =
     await verifyCheckedAegisMatrixEvidence({ root, hostPolicyPath }),
     { valid: true, files: 3 },
   );
+});
+
+test("archived matrix evidence replays from its frozen repository inputs", async () => {
+  const { rebuildArchivedAegisMatrixEvidence } = await evidenceModule();
+  const archived = await rebuildArchivedAegisMatrixEvidence({ root });
+  assert.equal(archived.verification.valid, true);
+  assert.equal(archived.ledger.ledgerDigest,
+    "d8fe5feabc14a7614550142e5028bf3ec5ffc7cdb6585d7c205b6847af75e133");
+  assert.equal(archived.profile.profileDigest,
+    "1747cb530ed1c1fcf3b83a386f38537e96a3ccd380c9de7649248a40e8677a06");
+  assert.equal(archived.lifecycle.decisionDigest,
+    "90290e2c2fb203a46c2733809ab674303e40d84db39cfe455759ddff95041c42");
 });

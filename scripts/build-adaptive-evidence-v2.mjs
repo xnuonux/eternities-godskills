@@ -25,6 +25,7 @@ import {
   preregisterTrial,
 } from "../src/adaptive-evidence-trials.mjs";
 import { sha256 } from "../src/io.mjs";
+import { rebuildArchivedAegisMatrixEvidence } from "./build-aegis-matrix-evidence.mjs";
 import { commitGeneratedFiles } from "./build-capability-layer-abi.mjs";
 
 const POLICY_PATH = "policies/adaptive-evidence.v2.json";
@@ -33,6 +34,7 @@ const PHASE1_CERTIFICATION_PATH = "docs/capability-layer-abi-v1-certification.md
 const HISTORICAL_PATH = "artifacts/adaptive-activation/evidence.v1.json";
 const RECEIPT_PATH = "receipts/adaptive-evidence-v2.json";
 const REPORT_PATH = "docs/adaptive-evidence-v2-report.md";
+const MATRIX_ROOT = "evidence/adaptive-evidence-v2/aegis-matrix";
 
 const TRUSTED_POLICY_DIGEST = "2f0e8c6b68c13be56b8a7ec2332402f4a3939368a162c31bde0fac3ef3ae7260";
 const TRUSTED_PHASE1_RECEIPT_DIGEST = "1c19271951abb00e93529656a35e8fb52dccc2f3cf0b6208bcee6821361ab788";
@@ -45,10 +47,28 @@ const CANARY_IDS = Object.freeze([
   "eternities-muse",
 ]);
 const ENGINE_SOURCE_PATHS = Object.freeze([
+  "scripts/build-aegis-matrix-evidence.mjs",
   "scripts/build-adaptive-evidence-v2.mjs",
+  "scripts/construct-aegis-matrix-prompt.mjs",
+  "scripts/evaluate-aegis-matrix.mjs",
   "src/adaptive-evidence-contracts.mjs",
   "src/adaptive-evidence-ledger.mjs",
   "src/adaptive-evidence-trials.mjs",
+]);
+const MATRIX_INPUT_PATHS = Object.freeze([
+  "artifacts/capability-layers/eternities-aegis/guardrails.v1.json",
+  "artifacts/capability-layers/eternities-aegis/method.v1.md",
+  "artifacts/capability-layers/eternities-aegis/reviewer.v1.md",
+  `${MATRIX_ROOT}/task-definition.json`,
+  `${MATRIX_ROOT}/comparison-policy.json`,
+  `${MATRIX_ROOT}/environment.json`,
+  `${MATRIX_ROOT}/trial-envelope.json`,
+  ...["raw", "guardrail", "method", "reviewer", "combined"].flatMap((variant) => [
+    `${MATRIX_ROOT}/prompts/${variant}.json`,
+    `${MATRIX_ROOT}/artifacts/${variant}.json`,
+    `${MATRIX_ROOT}/observations/${variant}.json`,
+  ]),
+  "receipts/adaptive-activation-executable-v1.json",
 ]);
 const VARIANT_FIXTURES = Object.freeze({
   raw: Object.freeze({ score: 10, matched: 0, wins: 0, losses: 0, ties: 0, bytes: 1000 }),
@@ -326,7 +346,13 @@ function outputRows(files) {
     }));
 }
 
-function buildReport({ fixture, historical }) {
+function buildReport({ fixture, historical, matrix }) {
+  const metric = (variant) => matrix.ledger.rows.find((row) => row.variant === variant);
+  const raw = metric("raw");
+  const guardrail = metric("guardrail");
+  const method = metric("method");
+  const reviewer = metric("reviewer");
+  const combined = metric("combined");
   return [
     "# adaptive evidence v2 report",
     "",
@@ -346,11 +372,23 @@ function buildReport({ fixture, historical }) {
     "",
     "## fresh model evidence",
     "",
-    "the preregistered Aegis model matrix is pending. no method or review promotion is claimed.",
+    "the preregistered Aegis matrix completed all five isolated Terra-high conditions against one frozen task, environment, prompt constructor, evaluator, and executable activation trust root.",
+    "",
+    "| condition | score / 30 | result against raw | critical regression | evidence level |",
+    "| --- | ---: | --- | --- | --- |",
+    `| raw | ${raw.score} | baseline | yes | ${raw.proofLevel} |`,
+    `| guardrail | ${guardrail.score} | ${guardrail.outcomeAgainstRaw} | yes | ${guardrail.proofLevel} |`,
+    `| method | ${method.score} | ${method.outcomeAgainstRaw} | yes | ${method.proofLevel} |`,
+    `| reviewer | ${reviewer.score} | ${reviewer.outcomeAgainstRaw} | yes | ${reviewer.proofLevel} |`,
+    `| combined | ${combined.score} | ${combined.outcomeAgainstRaw} | yes | ${combined.proofLevel} |`,
+    "",
+    `guardrail scored ${guardrail.score} against raw ${raw.score}, but all five conditions triggered the frozen critical-regression predicate. the derived profile is therefore \`${matrix.profile.lifecycleState}\`, recommends \`${matrix.profile.recommendedMode}\`, and the attempted method promotion was \`${matrix.lifecycle.status}\` with the active mode remaining \`${matrix.lifecycle.nextMode}\`.`,
+    "",
+    "the method and combined scores expose a post-dispatch evaluator limitation: its lexical taxonomy did not recognize some semantically correct hyphenated finding language. the evaluator remained frozen and no subject was rerun or rescored after this result was known. these scores characterize this exact verifier and task, not universal capability quality.",
     "",
     "## boundaries",
     "",
-    "this report proves deterministic structural and fixture engine behavior only. it does not prove universal behavior, cross-model equivalence, global activation, or external authority.",
+    "this report proves deterministic structural mechanics plus one preregistered task and model matrix. it does not prove universal behavior, cross-model equivalence, global activation, or external authority.",
     "activation v1 remains the rollback path.",
     "",
   ].join("\n");
@@ -363,10 +401,12 @@ function buildReceipt({
   canaries,
   historicalInput,
   sourceInputs,
+  matrixInputs,
   files,
   shadow,
   fixture,
   historical,
+  matrix,
 }) {
   const body = {
     schemaVersion: 2,
@@ -385,6 +425,11 @@ function buildReceipt({
         evidenceDigest: TRUSTED_HISTORICAL_DIGEST,
       }),
       engineSources: sourceInputs.map((input) => inputReceipt(input)),
+      freshModelMatrix: {
+        environmentDigest: matrix.profile.profileIdentity.environmentId,
+        trialDigest: matrix.ledger.trialDigest,
+        files: matrixInputs.map((input) => inputReceipt(input)),
+      },
     },
     outputs: outputRows(files),
     computedGates: {
@@ -397,16 +442,25 @@ function buildReceipt({
       authorityExpansions: [fixture.lifecycle.authorityExpanded].filter(Boolean).length,
       appendOnlyLedgerValid: fixture.ledgerVerification.valid,
       staleProfilesEligible: fixture.staleEvaluation.current ? 1 : 0,
+      freshModelRows: matrix.verification.rowCount,
+      freshModelCriticalRegressions: matrix.ledger.rows
+        .filter((row) => row.criticalRegression).length,
+      freshModelPromotions: matrix.lifecycle.status === "applied" ? 1 : 0,
+      freshModelAuthorityExpansions: matrix.lifecycle.authorityExpanded ? 1 : 0,
+      freshModelLedgerValid: matrix.verification.valid,
     },
     unresolvedGates: {
-      freshModelMatrix: "pending",
+      freshModelMatrix: "complete-promotion-blocked",
       independentReview: "pending",
       universalBehavior: "not-claimed",
     },
     proofLimits: [
       "structural-and-fixture-engine-integrity",
       "historical-evidence-is-not-retroactive-preregistration",
-      "no-model-quality-promotion-without-a-fresh-matrix",
+      "single-task-single-model-matrix-only",
+      "deterministic-evaluator-lexical-taxonomy-limited",
+      "all-five-model-conditions-triggered-critical-regression",
+      "no-model-quality-promotion-passed",
       "no-global-activation",
       "no-external-authority",
     ],
@@ -422,13 +476,16 @@ export async function rebuildAdaptiveEvidenceV2({
     phase1ReceiptInput,
     phase1CertificationInput,
     historicalInput,
-    ...sourceInputs
   ] = await Promise.all([
     loadInput(root, POLICY_PATH, { json: true }),
     loadInput(root, PHASE1_RECEIPT_PATH, { json: true }),
     loadInput(root, PHASE1_CERTIFICATION_PATH),
     loadInput(root, HISTORICAL_PATH, { json: true }),
-    ...ENGINE_SOURCE_PATHS.map((relative) => loadInput(root, relative)),
+  ]);
+  const [sourceInputs, matrixInputs, matrix] = await Promise.all([
+    Promise.all(ENGINE_SOURCE_PATHS.map((relative) => loadInput(root, relative))),
+    Promise.all(MATRIX_INPUT_PATHS.map((relative) => loadInput(root, relative))),
+    rebuildArchivedAegisMatrixEvidence({ root }),
   ]);
   validateAdaptiveEvidencePolicy({
     policy: policyInput.value,
@@ -461,7 +518,7 @@ export async function rebuildAdaptiveEvidenceV2({
   for (const [name, schema] of Object.entries(schemas)) {
     files[`schemas/adaptive-evidence-v2/${name}`] = canonicalFile(schema);
   }
-  Object.assign(files, {
+  Object.assign(files, matrix.files, {
     "artifacts/adaptive-evidence-v2/shadow-muse.v2.json": canonicalFile(shadow),
     "artifacts/adaptive-evidence-v2/fixture-trial.v2.json": canonicalFile(fixture.trial),
     "artifacts/adaptive-evidence-v2/fixture-ledger.v2.json": canonicalFile(fixture.ledger),
@@ -469,7 +526,7 @@ export async function rebuildAdaptiveEvidenceV2({
     "artifacts/adaptive-evidence-v2/fixture-lifecycle.v2.json": canonicalFile(fixture.lifecycle),
     "artifacts/adaptive-evidence-v2/historical-muse-bridge.v2.json": canonicalFile(historical),
   });
-  const report = buildReport({ fixture, historical });
+  const report = buildReport({ fixture, historical, matrix });
   const filesAndReport = { ...files, [REPORT_PATH]: report };
   const receipt = buildReceipt({
     policyInput,
@@ -478,10 +535,12 @@ export async function rebuildAdaptiveEvidenceV2({
     canaries,
     historicalInput,
     sourceInputs,
+    matrixInputs,
     files: filesAndReport,
     shadow,
     fixture,
     historical,
+    matrix,
   });
   return Object.freeze({
     files: Object.freeze(files),

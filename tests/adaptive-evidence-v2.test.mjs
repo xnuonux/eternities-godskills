@@ -1046,6 +1046,9 @@ const ADAPTIVE_V2_FILE_PATHS = Object.freeze([
   "artifacts/adaptive-evidence-v2/fixture-trial.v2.json",
   "artifacts/adaptive-evidence-v2/historical-muse-bridge.v2.json",
   "artifacts/adaptive-evidence-v2/shadow-muse.v2.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/ledger.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/lifecycle.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/profile.json",
   "schemas/adaptive-evidence-v2/evidence-row.schema.json",
   "schemas/adaptive-evidence-v2/lifecycle-decision.schema.json",
   "schemas/adaptive-evidence-v2/profile.schema.json",
@@ -1055,13 +1058,42 @@ const ADAPTIVE_V2_FILE_PATHS = Object.freeze([
 
 const ADAPTIVE_V2_INPUT_PATHS = Object.freeze([
   "artifacts/adaptive-activation/evidence.v1.json",
+  "artifacts/capability-layers/eternities-aegis/guardrails.v1.json",
   "artifacts/capability-layers/eternities-aegis/manifest.v1.json",
+  "artifacts/capability-layers/eternities-aegis/method.v1.md",
+  "artifacts/capability-layers/eternities-aegis/reviewer.v1.md",
   "artifacts/capability-layers/eternities-forge/manifest.v1.json",
   "artifacts/capability-layers/eternities-muse/manifest.v1.json",
   "docs/capability-layer-abi-v1-certification.md",
+  "evidence/adaptive-evidence-v2/aegis-matrix/artifacts/combined.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/artifacts/guardrail.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/artifacts/method.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/artifacts/raw.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/artifacts/reviewer.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/comparison-policy.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/environment.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/ledger.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/lifecycle.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/observations/combined.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/observations/guardrail.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/observations/method.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/observations/raw.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/observations/reviewer.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/profile.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/prompts/combined.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/prompts/guardrail.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/prompts/method.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/prompts/raw.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/prompts/reviewer.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/task-definition.json",
+  "evidence/adaptive-evidence-v2/aegis-matrix/trial-envelope.json",
   "policies/adaptive-evidence.v2.json",
+  "receipts/adaptive-activation-executable-v1.json",
   "receipts/capability-layer-abi-v1.json",
+  "scripts/build-aegis-matrix-evidence.mjs",
   "scripts/build-adaptive-evidence-v2.mjs",
+  "scripts/construct-aegis-matrix-prompt.mjs",
+  "scripts/evaluate-aegis-matrix.mjs",
   "src/adaptive-evidence-contracts.mjs",
   "src/adaptive-evidence-ledger.mjs",
   "src/adaptive-evidence-trials.mjs",
@@ -1075,7 +1107,7 @@ async function copyAdaptiveBuilderInputs(repository) {
   }
 }
 
-test("adaptive evidence builder deterministically emits closed fixtures and an honest pending receipt", async () => {
+test("adaptive evidence builder deterministically binds the completed model matrix without promotion", async () => {
   const { rebuildAdaptiveEvidenceV2 } = await builderModule();
   const [first, second] = await Promise.all([
     rebuildAdaptiveEvidenceV2({ root }),
@@ -1099,12 +1131,22 @@ test("adaptive evidence builder deterministically emits closed fixtures and an h
     authorityExpansions: 0,
     appendOnlyLedgerValid: true,
     staleProfilesEligible: 0,
+    freshModelRows: 5,
+    freshModelCriticalRegressions: 5,
+    freshModelPromotions: 0,
+    freshModelAuthorityExpansions: 0,
+    freshModelLedgerValid: true,
   });
   assert.deepEqual(first.receipt.unresolvedGates, {
-    freshModelMatrix: "pending",
+    freshModelMatrix: "complete-promotion-blocked",
     independentReview: "pending",
     universalBehavior: "not-claimed",
   });
+  assert.equal(first.receipt.inputs.freshModelMatrix.files.length, 23);
+  assert.equal(first.receipt.inputs.freshModelMatrix.trialDigest,
+    "0c19530c4e6b8ddc5588e832f82e719fbf4069a547032251234d3d9420959a76");
+  assert.equal(first.receipt.inputs.freshModelMatrix.environmentDigest,
+    "c8897601687882e423aa565150c38b8d6c18456db3d17a19d6bd6db695c572b8");
 
   const fixtureProfile = JSON.parse(
     first.files["artifacts/adaptive-evidence-v2/fixture-profile.v2.json"],
@@ -1116,6 +1158,15 @@ test("adaptive evidence builder deterministically emits closed fixtures and an h
     first.files["artifacts/adaptive-evidence-v2/historical-muse-bridge.v2.json"],
   );
   const shadow = JSON.parse(first.files["artifacts/adaptive-evidence-v2/shadow-muse.v2.json"]);
+  const modelLedger = JSON.parse(
+    first.files["evidence/adaptive-evidence-v2/aegis-matrix/ledger.json"],
+  );
+  const modelProfile = JSON.parse(
+    first.files["evidence/adaptive-evidence-v2/aegis-matrix/profile.json"],
+  );
+  const modelLifecycle = JSON.parse(
+    first.files["evidence/adaptive-evidence-v2/aegis-matrix/lifecycle.json"],
+  );
   assert.equal(fixtureProfile.lifecycleState, "ineligible");
   assert.equal(fixtureProfile.promotableEvidenceRows, 0);
   assert.equal(fixtureLifecycle.status, "rejected");
@@ -1123,10 +1174,19 @@ test("adaptive evidence builder deterministically emits closed fixtures and an h
   assert.equal(historical.promotable, false);
   assert.deepEqual(shadow.disclosedLayerBodies, []);
   assert.equal(shadow.nativeAttemptRequired, true);
+  assert.deepEqual(modelLedger.rows.map(({ proofLevel }) => proofLevel),
+    ["model", "model", "model", "model", "model"]);
+  assert.ok(modelLedger.rows.every(({ criticalRegression }) => criticalRegression));
+  assert.equal(modelProfile.lifecycleState, "ineligible");
+  assert.equal(modelProfile.recommendedMode, "guardrail");
+  assert.equal(modelLifecycle.status, "rejected");
+  assert.equal(modelLifecycle.nextMode, "native");
   assert.match(first.receipt.receiptDigest, /^[a-f0-9]{64}$/);
   assert.doesNotMatch(first.receiptText, /raw prompt|credential value|api key/i);
   assert.match(first.report, /fixture mechanics/i);
-  assert.match(first.report, /not.*model-quality|no model-quality/i);
+  assert.match(first.report, /guardrail.*27.*raw.*26/i);
+  assert.match(first.report, /lexical|taxonomy/i);
+  assert.match(first.report, /promotion.*rejected|rejected.*promotion/i);
 });
 
 test("checked adaptive evidence outputs rebuild byte for byte", async () => {
@@ -1243,4 +1303,50 @@ test("adaptive evidence writer restores all checked outputs after an injected la
       relative,
     );
   }
+});
+
+test("runtime contract states the exact adaptive evidence sequence and proof boundary", async () => {
+  const runtime = await readFile(
+    new URL("runtime/adaptive-evidence-v2.md", root),
+    "utf8",
+  );
+  const orderedSteps = [
+    "verify capability bundle and trusted policy",
+    "compile complete profile identity",
+    "derive or invalidate the current profile",
+    "compile body-free shadow prediction",
+    "preserve native attempt",
+    "preregister task, variants, evaluator, and comparison policy",
+    "construct each isolated artifact under its authorized disclosure",
+    "evaluate only after each artifact exists",
+    "append immutable evidence rows",
+    "derive a new profile without mutating history",
+    "apply only an explicitly authorized lifecycle receipt",
+    "fall back to activation v1 when v2 is disabled or ineligible",
+  ];
+  let cursor = -1;
+  for (const step of orderedSteps) {
+    const next = runtime.indexOf(step, cursor + 1);
+    assert.ok(next > cursor, `runtime step is absent or out of order: ${step}`);
+    cursor = next;
+  }
+  for (const field of [
+    "capabilityId", "taskClass", "modelFamily", "reasoningTier", "consequenceClass",
+    "capabilityVersion", "environmentId",
+  ]) assert.match(runtime, new RegExp(`\\b${field}\\b`));
+  for (const variant of ["raw", "guardrail", "method", "reviewer", "combined"]) {
+    assert.match(runtime, new RegExp(`\\b${variant}\\b`));
+  }
+  for (const level of [
+    "structural", "fixture", "artifact", "model", "cross-model", "field", "universal",
+  ]) assert.match(runtime, new RegExp(`\\b${level}\\b`));
+  assert.match(runtime, /fixture.*cannot promote|cannot promote.*fixture/is);
+  assert.match(runtime, /historical.*ineligible/is);
+  assert.match(runtime, /stale.*invalid/is);
+  assert.match(runtime, /critical regression/i);
+  assert.match(runtime, /append-only/i);
+  assert.match(runtime, /explicit.*authori[sz]/i);
+  assert.match(runtime, /return to native|return-to-native/i);
+  assert.match(runtime, /activation v1/i);
+  assert.match(runtime, /no global activation/i);
 });
