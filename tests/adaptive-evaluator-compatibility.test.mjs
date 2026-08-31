@@ -8,6 +8,10 @@ import { sha256 } from "../src/io.mjs";
 const root = new URL("../", import.meta.url);
 const PRE_PHASE_COMMIT = "95cd9c32be67f2438da200250f8024f14edd8dd7";
 const RUNTIME_PATH = "runtime/adaptive-evaluator-packages-v1.md";
+const HISTORICAL_HOST_POLICY = Object.freeze({
+  "evidence/adaptive-evidence-v2/aegis-matrix/host-policy.snapshot.md":
+    "dd37170be0e916515d26a8520d73c81ec566ffd1bc2fd9c1a49b44d0881ddeab",
+});
 
 const FROZEN_FILES = Object.freeze({
   "artifacts/adaptive-activation/evidence.v1.json": "b55a5cb4f7ff039cc7f4027c165b2f151bad723d9030913076a4225342fbe8c5",
@@ -122,7 +126,12 @@ test("all pre-phase activation, evidence, skill, and capability bytes remain fro
   assert.equal(Object.keys(FROZEN_MANIFESTS).length, 3);
   assert.deepEqual(await immediateSkillEntrypoints(), Object.keys(FROZEN_SKILLS).sort());
   assert.deepEqual(await capabilityManifests(), Object.keys(FROZEN_MANIFESTS).sort());
-  await assertHashes({ ...FROZEN_FILES, ...FROZEN_SKILLS, ...FROZEN_MANIFESTS });
+  await assertHashes({
+    ...FROZEN_FILES,
+    ...FROZEN_SKILLS,
+    ...FROZEN_MANIFESTS,
+    ...HISTORICAL_HOST_POLICY,
+  });
 });
 
 test("runtime record closes execution, shadow, and future evidence boundaries", async () => {
@@ -191,4 +200,27 @@ test("aggregate receipt binds every declared input and output to actual bytes", 
   assert.equal(receipt.parent.receiptDigest, parent.receiptDigest);
   assert.equal(receipt.evaluatorPackage.receiptDigest, evaluatorPackage.receiptDigest);
   assert.equal(receipt.shadowReplay.replayDigest, shadow.replayDigest);
+});
+
+test("certification binds the cleared reviewer head and exact proof boundary", async () => {
+  const certification = await readFile(
+    new URL("docs/adaptive-evaluator-packages-v1-certification.md", root),
+    "utf8",
+  ).catch((error) => assert.fail(
+    `adaptive evaluator certification is unavailable: ${error.message}`,
+  ));
+  for (const expected of [
+    "disposition: `certified-retrospective-evaluator-canary`",
+    "reviewed head: `d62ee7e0ee012bb0adc252835904293e83fdb935`",
+    "aggregate receipt: `a7649453504001333f103521d4dfe1e016de7041b70c6d910507c7d1734f1334`",
+    "evaluator package receipt: `5eb0360cb487f3525ffcc233dd4eb1ebc0754f89ec434a9cf9b8c96e5d0292f7`",
+    "shadow replay: `cab71a0bf4c889ccbb2b60ae2502adfd1c9dd3829a5605f341723e1951b002ca`",
+    "reviewer: `Hubble` (`01a05719-9b1a-7c63-8214-6ece1d1be382`)",
+    "full `npm test`: 725 passed, 0 failed",
+    "package integrity and Aegis v2 deterministic behavior only",
+    "retrospective replay is not preregistration",
+    "no model quality or recurring-advantage proof",
+    "no cross-trial portfolio or pooled profile",
+    "no lifecycle action, global activation, Godagents adapter, or Lunari integration",
+  ]) assert.ok(certification.includes(expected), expected);
 });
