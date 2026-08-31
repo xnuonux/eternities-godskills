@@ -135,7 +135,14 @@ The public result shape is:
   maximumScore,
   detectedCases,
   unsupportedFindings,
-  caseResults,
+  caseResults: [{
+    id,
+    matchedArtifactId: null | string,
+    critical,
+    score,
+    maximumScore,
+    checks: [{ id, passed, reasonCode }]
+  }],
   comparison,
   parent,
   criticalRegression,
@@ -318,8 +325,12 @@ const stuffed = finding({
   repair: "validate",
   severity: "critical",
 });
-assert.equal(evaluate([stuffed]).caseResults[0].evidenceGrounded, false);
-assert.equal(evaluate([stuffed]).criticalRegression, true);
+const result = evaluate([stuffed]);
+assert.equal(
+  result.caseResults[0].checks.find(({ id }) => id === "flow-grounded").passed,
+  false,
+);
+assert.equal(result.criticalRegression, true);
 ```
 
 Add cases for negated flow, invented lines, missing sink, missing source,
