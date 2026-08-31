@@ -10,14 +10,15 @@ profile promotion, lifecycle action, or godagents activation.
 
 1. run `npm run build:adaptive-evaluator-packages` from the repository root.
 2. the builder reconstructs the three closed schemas in memory.
-3. the package builder discovers the complete direct static import graph from
-   the pinned evaluator entrypoint and rejects direct dynamic loading, commonjs,
-   bare dependencies, escapes, missing files, and symlink aliases. it binds the
-   exact module bytes but deliberately does not classify `eval`, `Function`,
-   computed constructors, or other runtime code generation. the receipt sets
-   both runtime code-generation absence and runtime closure completeness to
-   false. arbitrary evaluator code remains untrusted and requires a separately
-   isolated execution host.
+3. the package builder uses the exactly pinned Acorn parser to discover the
+   complete direct static import graph from the evaluator entrypoint. syntax
+   errors, direct dynamic loading, commonjs or host loaders, bare dependencies,
+   escapes, missing files, and symlink aliases fail closed. package and lockfile
+   bytes bind the parser version. the builder deliberately does not classify
+   `eval`, `Function`, computed constructors, or other runtime code generation.
+   the receipt sets both runtime code-generation absence and runtime closure
+   completeness to false. arbitrary evaluator code remains untrusted and
+   requires a separately isolated execution host.
 4. the builder binds the evaluator code, policy, schemas, oracle, frozen task,
    archived artifacts, archived v1 observations, parent receipt, report, and
    runtime record into deterministic receipts.

@@ -42,7 +42,10 @@ const SCHEMA_PATHS = Object.freeze({
     "schemas/adaptive-evaluator-result-v1.schema.json",
 });
 const SOURCE_PATHS = Object.freeze([
+  "node_modules/acorn/dist/acorn.mjs",
+  "node_modules/acorn/package.json",
   "package.json",
+  "package-lock.json",
   "scripts/build-adaptive-evaluator-package-receipt.mjs",
   "scripts/build-aegis-evaluator-v2-shadow-replay.mjs",
   "scripts/build-capability-layer-abi.mjs",
@@ -51,9 +54,9 @@ const SOURCE_PATHS = Object.freeze([
   "src/adaptive-evidence-contracts.mjs",
   "src/aegis-evaluator-v2.mjs",
   "src/capability-layer-abi.mjs",
+  "src/evaluator-module-closure.mjs",
   "src/io.mjs",
   "src/paths.mjs",
-  "src/static-module-closure.mjs",
 ]);
 
 export const AEGIS_SHADOW_INPUT_PATHS = Object.freeze([

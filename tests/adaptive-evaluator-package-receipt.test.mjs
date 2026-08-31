@@ -155,6 +155,32 @@ test("every module, resource, policy byte, and generated schema affects identity
   assert.notEqual(policyBytesChanged.receiptDigest, resourceChanged.receiptDigest);
 });
 
+test("binds static imports that follow regex literals", async (t) => {
+  const { buildAdaptiveEvaluatorPackageReceipt } = await builder();
+  const root = await fixture(t, "adaptive-evaluator-regex-import-");
+  await put(root, "src/entrypoint.mjs", [
+    "if (true) /[//]/; import './helper.mjs';",
+    "export const ok = true;",
+    "",
+  ].join("\n"));
+
+  const initial = await buildAdaptiveEvaluatorPackageReceipt({
+    repositoryRoot: root,
+    descriptor: descriptor(),
+  });
+  assert.deepEqual(initial.dependencyClosure.localModules, [
+    "src/entrypoint.mjs",
+    "src/helper.mjs",
+  ]);
+
+  await put(root, "src/helper.mjs", "export const helperVersion = 999;\n");
+  const changed = await buildAdaptiveEvaluatorPackageReceipt({
+    repositoryRoot: root,
+    descriptor: descriptor(),
+  });
+  assert.notEqual(changed.receiptDigest, initial.receiptDigest);
+});
+
 test("rejects descriptor escape, duplicates, missing data, and oversized resources", async (t) => {
   const { buildAdaptiveEvaluatorPackageReceipt } = await builder();
   const root = await fixture(t, "adaptive-evaluator-rejections-");

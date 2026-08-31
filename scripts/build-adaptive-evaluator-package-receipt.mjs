@@ -19,8 +19,8 @@ import {
   exactKeys,
   nonEmptyString,
 } from "../src/adaptive-evidence-contracts.mjs";
+import { discoverEvaluatorModuleClosure } from "../src/evaluator-module-closure.mjs";
 import { sha256 } from "../src/io.mjs";
-import { discoverLocalModuleClosure } from "../src/static-module-closure.mjs";
 
 const DESCRIPTOR_KEYS = Object.freeze([
   "id",
@@ -185,7 +185,7 @@ export async function buildAdaptiveEvaluatorPackageReceipt({
     throw new Error("evaluator package exceeds the maximum of 16 declared resources");
   }
 
-  const modules = await discoverLocalModuleClosure({
+  const modules = await discoverEvaluatorModuleClosure({
     repositoryRoot: root,
     roots: [descriptor.entrypointPath],
     io: fs,
