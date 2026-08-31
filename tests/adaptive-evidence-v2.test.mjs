@@ -1373,3 +1373,25 @@ test("runtime contract states the exact adaptive evidence sequence and proof bou
   assert.match(runtime, /activation v1/i);
   assert.match(runtime, /no global activation/i);
 });
+
+test("phase 2 certification binds the reviewed implementation and bounded negative matrix", async () => {
+  const certification = await readFile(
+    new URL("docs/adaptive-evidence-v2-certification.md", root),
+    "utf8",
+  );
+  for (const required of [
+    "certified-adaptive-engine-canary",
+    "6d5b9475f5182f2e7992c9df41dd5ba6587e4cd8",
+    "2ed01045d7e25e1c737ef375ae472757edff1459fa5c9dd49ec77572f33f6a8d",
+    "01a056cc-41b0-7260-89ec-c365b704986c",
+    "699 passed",
+    "39 passed",
+  ]) assert.ok(certification.includes(required), `certification omits ${required}`);
+  assert.match(certification, /five.*critical regressions|critical regressions.*five/is);
+  assert.match(certification, /raw.*26.*guardrail.*27/is);
+  assert.match(certification, /method.*3.*reviewer.*26.*combined.*0/is);
+  assert.match(certification, /fixture.*private key.*not.*production/is);
+  assert.match(certification, /no global\s+activation|there is no global\s+activation/i);
+  assert.match(certification, /universal.*not (?:proved|certified|claimed)/i);
+  assert.match(certification, /phase 3.*not authorized|does not authorize phase 3/is);
+});
