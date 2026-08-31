@@ -56,8 +56,12 @@ test("builds one deterministic complete routing executable trust root", async ()
   const { buildRoutingExecutableReceipt } = await builderModule();
   const first = await buildRoutingExecutableReceipt({ repositoryRoot });
   const second = await buildRoutingExecutableReceipt({ repositoryRoot });
+  const checkedBytes = await readFile(path.join(repositoryRoot, "receipts/routing-executable-v1.json"));
+  const checked = JSON.parse(checkedBytes.toString("utf8"));
 
   assert.deepEqual(second, first);
+  assert.deepEqual(checked, first);
+  assert.equal(checkedBytes.toString("utf8"), `${JSON.stringify(first, null, 2)}\n`);
   assert.equal(first.schemaVersion, 1);
   assert.equal(first.id, "routing-executable-v1");
   assert.equal(first.status, "verified-build");
@@ -206,4 +210,19 @@ test("a stale executable receipt is rejected before request parsing or output pu
     "--receipt", receiptPath,
   ]), /receipt|verified build|digest/i);
   await assert.rejects(readFile(outputPath), /ENOENT/i);
+});
+
+test("certification binds the reviewed source, checked receipt, and honest proof boundary", async () => {
+  const certification = await readFile(
+    path.join(repositoryRoot, "docs/routing-executable-v1-certification.md"),
+    "utf8",
+  );
+  for (const value of [
+    "62b43e55c8bb77a4c42d838c5783bca99f4ca1c2",
+    "30ca5eb79e8935d8701f2fb466a22dd0007fc370f587c191fe03d065a930ff28",
+    "27cd2bc10ab225f62916f684bd5a621a3ffeaec43ef93c36d8b5b53188193c7d",
+    "768 passed, 0 failed",
+    "this is not an independent-review claim",
+    "Godagents adapter correctness",
+  ]) assert.match(certification, new RegExp(value, "i"));
 });
