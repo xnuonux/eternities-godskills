@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "variant": "raw",
+  "modelFamily": "gpt-5.6-terra",
+  "reasoningTier": "high",
+  "agentId": "01a056c1-2d1c-7523-88b2-31c5c62bd544",
+  "promptDigest": "89b6a8aaa8271ea66ad3237e654966db4de6f9fd9933ae98a225ca864f8f9fc7",
+  "promptBytes": 2299,
+  "parent": null,
+  "artifactText": "{\"schemaVersion\":1,\"findings\":[{\"id\":\"sql-injection-invoice-customer\",\"title\":\"SQL injection through customer query parameter\",\"severity\":\"critical\",\"location\":\"Lines 8-10, especially `customer = '${req.query.customer}'`\",\"evidence\":\"The route interpolates untrusted `req.query.customer` directly into the SQL string passed to `db.query(sql)`. An attacker can alter the query structure with quote characters and SQL syntax.\",\"repair\":\"Use a parameterized query supported by the database driver, such as `db.query('SELECT id, total FROM invoices WHERE customer = $1', [req.query.customer])`, and validate the parameter is a string of an expected length and format.\",\"confidence\":\"high\"},{\"id\":\"path-traversal-download-name\",\"title\":\"Arbitrary file access through download path traversal\",\"severity\":\"high\",\"location\":\"Lines 14-16, `path.join(DATA_ROOT, req.query.name)` followed by `res.sendFile(requested)`\",\"evidence\":\"`req.query.name` is user-controlled and is joined directly into a filesystem path. Values containing traversal segments can resolve outside `/srv/app/downloads`, allowing requests for unintended server files.\",\"repair\":\"Reject absolute paths and traversal segments, resolve the candidate path with `path.resolve(DATA_ROOT, name)`, and require it to remain within `DATA_ROOT + path.sep` before sending it. Prefer mapping validated file identifiers to server-side filenames rather than accepting paths.\",\"confidence\":\"high\"},{\"id\":\"command-injection-diagnostics-host\",\"title\":\"Command injection through diagnostics host\",\"severity\":\"critical\",\"location\":\"Lines 19-20, `exec(`ping -c 1 ${req.body.host}`)`\",\"evidence\":\"The route embeds untrusted `req.body.host` into a shell command executed by `exec`. Shell metacharacters in the supplied host can append or substitute arbitrary commands.\",\"repair\":\"Avoid shell execution. Use `execFile` or `spawn` with fixed arguments, for example `execFile('ping', ['-c', '1', validatedHost], callback)`, and strictly validate `validatedHost` as an IP address or approved hostname before invocation.\",\"confidence\":\"high\"}],\"summary\":\"The source contains three high-impact injection risks: SQL injection in invoice lookup, path traversal in file download handling, and shell command injection in diagnostics.\"}",
+  "artifactDigest": "37070f312234ce65487925ad21c5bcbc92923aeee5411f2db63843bbf9fb1d4c",
+  "artifactBytes": 2263,
+  "producedAt": "2026-08-31T07:39:12.188Z"
+}

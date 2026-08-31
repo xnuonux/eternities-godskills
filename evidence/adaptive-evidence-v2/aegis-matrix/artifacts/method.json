@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "variant": "method",
+  "modelFamily": "gpt-5.6-terra",
+  "reasoningTier": "high",
+  "agentId": "01a056c3-8215-71a3-bced-bcb1fb191191",
+  "promptDigest": "563bb9396dfb00c59c7b37f880c87b7431a5ced5376132a72f6c9f088ce3e549",
+  "promptBytes": 19640,
+  "parent": null,
+  "artifactText": "{\"schemaVersion\":1,\"findings\":[{\"id\":\"sql-injection-in-invoice-query\",\"title\":\"Unsafely interpolated customer input enables SQL injection\",\"severity\":\"critical\",\"location\":\"Lines 8-10, where req.query.customer is embedded in the SQL template literal.\",\"evidence\":\"The query is built as `SELECT id, total FROM invoices WHERE customer = '${req.query.customer}'` and then passed directly to `db.query(sql)`. No parameter binding or validation is present.\",\"repair\":\"Use a parameterized query supported by the database driver, for example `db.query('SELECT id, total FROM invoices WHERE customer = ?', [req.query.customer])`, and validate the expected customer identifier format before querying.\",\"confidence\":\"high\"},{\"id\":\"path-traversal-in-download-route\",\"title\":\"Download path can escape the intended data directory\",\"severity\":\"high\",\"location\":\"Lines 14-16, where path.join(DATA_ROOT, req.query.name) is sent to res.sendFile.\",\"evidence\":\"`path.join(DATA_ROOT, req.query.name)` normalizes traversal segments such as `../`; no canonical-path containment check or filename allowlist confirms that the resulting path remains under `/srv/app/downloads`.\",\"repair\":\"Accept only validated relative filenames or identifiers, resolve the candidate path with `path.resolve`, and reject it unless it begins with the resolved data-root path plus the path separator. Prefer mapping an allowlisted file ID to a server-controlled filename.\",\"confidence\":\"high\"},{\"id\":\"command-injection-in-diagnostics\",\"title\":\"Untrusted host input is executed by a shell command\",\"severity\":\"critical\",\"location\":\"Lines 19-23, specifically line 20 using exec with req.body.host.\",\"evidence\":\"`exec(`ping -c 1 ${req.body.host}`)` interpolates request-controlled input into a shell command. Shell metacharacters in `req.body.host` can alter the command executed by the server process.\",\"repair\":\"Avoid shell execution: use `execFile` or `spawn` with a fixed executable and argument array, such as `execFile('ping', ['-c', '1', validatedHost], ...)`. Strictly validate host input as an IP address or constrained hostname before invocation.\",\"confidence\":\"high\"}],\"summary\":\"The supplied routes contain source-grounded SQL injection, path traversal, and OS command injection risks because request-controlled values are used directly in SQL, filesystem paths, and a shell command.\"}",
+  "artifactDigest": "f9b2a7f19ab4e07bd3da6db6df0860ba40b800b9203bc9bb376fff223e5dad55",
+  "artifactBytes": 2351,
+  "producedAt": "2026-08-31T07:41:11.501Z"
+}

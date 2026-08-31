@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "variant": "combined",
+  "modelFamily": "gpt-5.6-terra",
+  "reasoningTier": "high",
+  "agentId": "01a056c4-9aca-7571-88fd-d2adf0836631",
+  "promptDigest": "2e484baff961f25331764b9f83706f60db744bdec4b732e7138bce80241552d4",
+  "promptBytes": 6361,
+  "parent": {
+    "variant": "method",
+    "artifactDigest": "f9b2a7f19ab4e07bd3da6db6df0860ba40b800b9203bc9bb376fff223e5dad55",
+    "evaluationDigest": "33cf2bbbe4ee327ed15f1cbe9a49de5ebff5f7d32c1c9d4d7e9342558819b3ee"
+  },
+  "artifactText": "{\"schemaVersion\":1,\"findings\":[{\"id\":\"sql-injection-in-invoice-query\",\"title\":\"Customer input is interpolated into SQL\",\"severity\":\"critical\",\"location\":\"Lines 8-10 in the /invoice handler.\",\"evidence\":\"Line 9 constructs SQL with `customer = '${req.query.customer}'`, and line 10 passes that constructed string to `db.query(sql)` without parameter binding.\",\"repair\":\"Use the database driver's parameterized-query API, for example `db.query('SELECT id, total FROM invoices WHERE customer = ?', [req.query.customer])`, and validate the customer identifier against the expected format.\",\"confidence\":\"high\"},{\"id\":\"path-traversal-in-download-route\",\"title\":\"Requested download name can traverse outside the data directory\",\"severity\":\"high\",\"location\":\"Lines 14-16 in the /download handler.\",\"evidence\":\"Line 15 joins request-controlled `req.query.name` with `DATA_ROOT`; traversal components such as `../` are normalized by `path.join`, and no containment check verifies the resulting path remains inside `/srv/app/downloads`.\",\"repair\":\"Resolve both the root and candidate path with `path.resolve`, reject candidates outside the resolved root plus separator, and preferably map an allowlisted file identifier to a server-controlled filename.\",\"confidence\":\"high\"},{\"id\":\"command-injection-in-diagnostics\",\"title\":\"Host input is interpolated into a shell command\",\"severity\":\"critical\",\"location\":\"Lines 19-23 in the /diagnostics handler, especially line 20.\",\"evidence\":\"Line 20 passes a template literal containing `req.body.host` to `exec`, which invokes a shell. Shell metacharacters in the request value can alter the command executed.\",\"repair\":\"Replace `exec` with `execFile` or `spawn` using a fixed executable and argument array, such as `execFile('ping', ['-c', '1', validatedHost], callback)`, and strictly validate the host as an IP address or constrained hostname.\",\"confidence\":\"high\"}],\"summary\":\"The supplied routes directly place request-controlled values into SQL, a filesystem path, and a shell command, creating SQL injection, path traversal, and command injection exposure.\"}",
+  "artifactDigest": "814d911d2e66176f3f440b7161fbecc32a45c8d08ef72a4818e2fa52b7551e89",
+  "artifactBytes": 2095,
+  "producedAt": "2026-08-31T07:42:24.466Z"
+}

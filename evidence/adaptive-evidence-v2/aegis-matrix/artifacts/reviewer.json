@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "variant": "reviewer",
+  "modelFamily": "gpt-5.6-terra",
+  "reasoningTier": "high",
+  "agentId": "01a056c4-2221-7262-a459-99a108e88efb",
+  "promptDigest": "dc8233284d49ce2e08106083518b2edc13879d664489a9ee38479445eb04fb55",
+  "promptBytes": 6270,
+  "parent": {
+    "variant": "raw",
+    "artifactDigest": "37070f312234ce65487925ad21c5bcbc92923aeee5411f2db63843bbf9fb1d4c",
+    "evaluationDigest": "d882d7ecab141327e64a420dbb1d2471cfdd50b61536d6a60e7288b11cbc94c7"
+  },
+  "artifactText": "{\"schemaVersion\":1,\"findings\":[{\"id\":\"sql-injection-invoice-customer\",\"title\":\"SQL injection through customer query parameter\",\"severity\":\"critical\",\"location\":\"Lines 8-10, especially `customer = '${req.query.customer}'`\",\"evidence\":\"The route interpolates untrusted `req.query.customer` directly into the SQL string passed to `db.query(sql)`. Quote characters and SQL syntax in the parameter can alter the query structure.\",\"repair\":\"Use the database driver's parameterized-query API, for example `db.query('SELECT id, total FROM invoices WHERE customer = $1', [customer])`, after validating `customer` is a string with an expected length and format.\",\"confidence\":\"high\"},{\"id\":\"path-traversal-download-name\",\"title\":\"Path traversal in download file selection\",\"severity\":\"high\",\"location\":\"Lines 14-16, `path.join(DATA_ROOT, req.query.name)` followed by `res.sendFile(requested)`\",\"evidence\":\"The user-controlled `req.query.name` is joined into a server filesystem path with no containment check. Traversal segments can cause the resulting path to resolve outside `/srv/app/downloads`.\",\"repair\":\"Require `name` to be a validated relative filename or opaque file identifier. Resolve it with `path.resolve(DATA_ROOT, name)` and reject it unless it begins with `DATA_ROOT + path.sep`; reject absolute paths before calling `res.sendFile`.\",\"confidence\":\"high\"},{\"id\":\"command-injection-diagnostics-host\",\"title\":\"Shell command injection through diagnostics host\",\"severity\":\"critical\",\"location\":\"Lines 19-20, `exec(`ping -c 1 ${req.body.host}`)`\",\"evidence\":\"The route inserts untrusted `req.body.host` into a command string given to `exec`, which invokes a shell. Shell metacharacters in the host value can execute additional commands.\",\"repair\":\"Avoid shell command construction. Use `execFile('ping', ['-c', '1', validatedHost], callback)` or equivalent argument-array execution, and strictly validate `validatedHost` as an IP address or approved hostname.\",\"confidence\":\"high\"}],\"summary\":\"The source contains three source-grounded high-impact injection issues: SQL injection in invoice lookup, path traversal in download handling, and shell command injection in diagnostics.\"}",
+  "artifactDigest": "5ad87d492211ba270e85c97f77a85d3e0f7ae1808a6a27919a282b633176ea12",
+  "artifactBytes": 2182,
+  "producedAt": "2026-08-31T07:41:52.527Z"
+}

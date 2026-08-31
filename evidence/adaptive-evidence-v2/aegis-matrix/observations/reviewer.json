@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "variant": "reviewer",
+  "evaluatorId": "aegis-matrix-deterministic-verifier-v1",
+  "artifactDigest": "5ad87d492211ba270e85c97f77a85d3e0f7ae1808a6a27919a282b633176ea12",
+  "observedAt": "2026-08-31T07:41:52.949Z",
+  "evaluation": {
+    "schemaVersion": 1,
+    "verifierId": "aegis-matrix-deterministic-verifier-v1",
+    "variant": "reviewer",
+    "artifactDigest": "5ad87d492211ba270e85c97f77a85d3e0f7ae1808a6a27919a282b633176ea12",
+    "artifactBytes": 2182,
+    "schemaValid": true,
+    "score": 26,
+    "maximumScore": 30,
+    "detectedFindings": 3,
+    "unsupportedFindings": 0,
+    "caseResults": [
+      {
+        "id": "sql-injection",
+        "expectedSeverity": "high",
+        "matchedFindingId": "sql-injection-invoice-customer",
+        "detected": true,
+        "severityCorrect": false,
+        "locationSpecific": true,
+        "evidenceGrounded": true,
+        "repairSpecific": true,
+        "points": 7
+      },
+      {
+        "id": "path-traversal",
+        "expectedSeverity": "high",
+        "matchedFindingId": "path-traversal-download-name",
+        "detected": true,
+        "severityCorrect": true,
+        "locationSpecific": true,
+        "evidenceGrounded": false,
+        "repairSpecific": true,
+        "points": 8
+      },
+      {
+        "id": "command-injection",
+        "expectedSeverity": "critical",
+        "matchedFindingId": "command-injection-diagnostics-host",
+        "detected": true,
+        "severityCorrect": true,
+        "locationSpecific": true,
+        "evidenceGrounded": false,
+        "repairSpecific": true,
+        "points": 8
+      }
+    ],
+    "comparison": {
+      "baselineArtifactDigest": "37070f312234ce65487925ad21c5bcbc92923aeee5411f2db63843bbf9fb1d4c",
+      "baselineEvaluationDigest": "d882d7ecab141327e64a420dbb1d2471cfdd50b61536d6a60e7288b11cbc94c7",
+      "outcomeAgainstRaw": "tie",
+      "counts": {
+        "matched": 3,
+        "wins": 0,
+        "losses": 0,
+        "ties": 3
+      }
+    },
+    "parent": {
+      "variant": "raw",
+      "artifactDigest": "37070f312234ce65487925ad21c5bcbc92923aeee5411f2db63843bbf9fb1d4c",
+      "evaluationDigest": "d882d7ecab141327e64a420dbb1d2471cfdd50b61536d6a60e7288b11cbc94c7"
+    },
+    "prompt": {
+      "promptDigest": "dc8233284d49ce2e08106083518b2edc13879d664489a9ee38479445eb04fb55",
+      "promptBytes": 6270,
+      "disclosedLayers": [
+        {
+          "name": "reviewer",
+          "path": "artifacts/capability-layers/eternities-aegis/reviewer.v1.md",
+          "sha256": "e387aee8f7198dcba346621a854d67eb600bb7fd054545d31a1c1d690b7f4526",
+          "bytes": 1533
+        }
+      ],
+      "parent": {
+        "variant": "raw",
+        "artifactDigest": "37070f312234ce65487925ad21c5bcbc92923aeee5411f2db63843bbf9fb1d4c",
+        "evaluationDigest": "d882d7ecab141327e64a420dbb1d2471cfdd50b61536d6a60e7288b11cbc94c7"
+      }
+    },
+    "criticalRegression": true,
+    "reasonCodes": [
+      "artifact-schema-valid",
+      "expected-coverage-3-of-3",
+      "unsupported-findings-0",
+      "critical-finding-quality-incomplete",
+      "review-prompt-parent-bound",
+      "raw-baseline-artifact-and-evaluation-bound",
+      "critical-regression"
+    ],
+    "evaluationDigest": "3571abdc13f99c1003456eb6c06eaffc20270fda7e2e429129d6c12550e5bbaf"
+  }
+}
