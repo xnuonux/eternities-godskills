@@ -3,7 +3,10 @@ import { createHash } from "node:crypto";
 import { mkdir, mkdtemp, readFile, rm, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import test from "node:test";
+
+const REPOSITORY_ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 
 async function trustRoot() {
   try {
@@ -279,4 +282,29 @@ test("binds every declared executable artifact and every discovered dependency",
   assert.equal(afterExtra.dependencyClosure.localModules.includes("src/new-dependency.mjs"), true);
   assert.equal(afterExtra.artifacts.some(({ path }) => path === "src/new-dependency.mjs"), true);
   assert.notEqual(afterExtra.receiptDigest, beforeExtra.receiptDigest);
+});
+
+test("binds the exact production activation module graph without omissions or extras", async () => {
+  const { buildAdaptiveActivationExecutableReceipt } = await receiptBuilder();
+  const receipt = await buildAdaptiveActivationExecutableReceipt({ repositoryRoot: REPOSITORY_ROOT });
+  const expectedModules = [
+    "scripts/activation.mjs",
+    "scripts/build-adaptive-activation-executable-receipt.mjs",
+    "src/adaptive-activation-protocol.mjs",
+    "src/adaptive-activation.mjs",
+    "src/io.mjs",
+    "src/static-module-closure.mjs",
+  ];
+  assert.deepEqual(receipt.dependencyClosure.roots, [
+    "scripts/activation.mjs",
+    "src/adaptive-activation.mjs",
+  ]);
+  assert.deepEqual(receipt.dependencyClosure.localModules, expectedModules);
+  assert.deepEqual(
+    receipt.artifacts
+      .filter(({ path }) => expectedModules.includes(path))
+      .map(({ path }) => path),
+    expectedModules,
+  );
+  assert.equal(receipt.artifacts.length, expectedModules.length + 5);
 });

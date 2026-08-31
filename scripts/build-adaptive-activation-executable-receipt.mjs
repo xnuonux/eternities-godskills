@@ -1,5 +1,13 @@
-import { readFile as nativeReadFile, realpath as nativeRealpath } from "node:fs/promises";
+import { randomUUID } from "node:crypto";
+import {
+  readFile as nativeReadFile,
+  realpath as nativeRealpath,
+  rename,
+  rm,
+  writeFile,
+} from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { sha256 } from "../src/io.mjs";
 import { discoverLocalModuleClosure } from "../src/static-module-closure.mjs";
@@ -138,4 +146,30 @@ export async function buildAdaptiveActivationExecutableReceipt({
     ],
   };
   return Object.freeze({ ...unsigned, receiptDigest: digest(unsigned) });
+}
+
+export async function writeAdaptiveActivationExecutableReceipt({
+  repositoryRoot,
+  outputPath = path.join(repositoryRoot, "receipts", "adaptive-activation-executable-v1.json"),
+} = {}) {
+  const receipt = await buildAdaptiveActivationExecutableReceipt({ repositoryRoot });
+  const target = path.resolve(outputPath);
+  const temporary = `${target}.${process.pid}.${randomUUID()}.tmp`;
+  try {
+    await writeFile(temporary, `${JSON.stringify(receipt, null, 2)}\n`, { encoding: "utf8", flag: "wx" });
+    await rename(temporary, target);
+  } finally {
+    await rm(temporary, { force: true });
+  }
+  return receipt;
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+  const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+  writeAdaptiveActivationExecutableReceipt({ repositoryRoot })
+    .then(({ receiptDigest }) => process.stdout.write(`${receiptDigest}\n`))
+    .catch((error) => {
+      process.stderr.write(`adaptive activation executable receipt failed: ${error.message}\n`);
+      process.exitCode = 1;
+    });
 }
