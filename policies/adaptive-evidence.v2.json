@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 2,
+  "id": "adaptive-evidence-policy-v2",
+  "runtimeModes": [
+    "native",
+    "guardrail",
+    "method",
+    "review"
+  ],
+  "trialVariants": [
+    "raw",
+    "guardrail",
+    "method",
+    "reviewer",
+    "combined"
+  ],
+  "taskClasses": [
+    "creative-generation",
+    "debugging-recovery",
+    "implementation",
+    "research",
+    "continuity",
+    "verification",
+    "security-review",
+    "general"
+  ],
+  "reasoningTiers": [
+    "low",
+    "medium",
+    "high",
+    "xhigh",
+    "max",
+    "ultra"
+  ],
+  "consequenceClasses": [
+    "low",
+    "consequential",
+    "critical"
+  ],
+  "profileKeyFields": [
+    "capabilityId",
+    "taskClass",
+    "modelFamily",
+    "reasoningTier",
+    "consequenceClass",
+    "capabilityVersion",
+    "environmentId"
+  ],
+  "evidenceLevels": [
+    "structural",
+    "fixture",
+    "artifact",
+    "model",
+    "cross-model",
+    "field",
+    "universal"
+  ],
+  "promotableEvidenceLevels": [
+    "model",
+    "cross-model",
+    "field",
+    "universal"
+  ],
+  "methodPromotion": {
+    "minimumMatchedComparisons": 3,
+    "minimumWins": 2,
+    "minimumWinRate": 0.6666666666666666,
+    "maximumCriticalRegressions": 0,
+    "maximumOverheadRatio": 1.35
+  },
+  "reviewPromotion": {
+    "minimumMatchedComparisons": 2,
+    "minimumWins": 1,
+    "minimumWinRate": 0.5,
+    "maximumCriticalRegressions": 0,
+    "maximumOverheadRatio": 1.5
+  },
+  "activationFallbacks": {
+    "staleCritical": "guardrail",
+    "staleConsequential": "guardrail",
+    "staleLow": "native",
+    "reviewUnavailableConsequential": "guardrail",
+    "noQualifiedEvidence": "native"
+  },
+  "lifecycleGrants": {
+    "promote": "adaptive-evidence:promote",
+    "demote": "adaptive-evidence:demote",
+    "quarantine": "adaptive-evidence:quarantine",
+    "invalidate": "adaptive-evidence:invalidate"
+  },
+  "fixtureEvidenceCanPromote": false,
+  "historicalEvidenceCanPromote": false,
+  "selfReviewAllowed": false,
+  "selfPromotionAllowed": false,
+  "authorityExpanded": false
+}
