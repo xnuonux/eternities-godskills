@@ -21,6 +21,11 @@ async function trials() {
     assert.fail(`adaptive evidence trials are unavailable: ${error.message}`));
 }
 
+async function ledgerModule() {
+  return import("../src/adaptive-evidence-ledger.mjs").catch((error) =>
+    assert.fail(`adaptive evidence ledger is unavailable: ${error.message}`));
+}
+
 function digestText(text) {
   return createHash("sha256").update(text).digest("hex");
 }
@@ -195,6 +200,10 @@ function signedProfile({
       recommendedMode: mode,
       variantMetrics: [],
       evidenceRowDigests: ["a".repeat(64)],
+      participantIds: {
+        producers: ["terra-subject-method"],
+        evaluators: ["aegis-matrix-verifier-v1"],
+      },
       promotableEvidenceRows: 3,
       failedGates: [],
       boundDigests: {
@@ -432,11 +441,14 @@ test("observation proposals preserve artifact order, evaluator identity, costs, 
       sha256: "2".repeat(64),
       bytes: 4096,
       mediaType: "application/json",
+      producedAt: "2026-08-31T06:04:00.000Z",
     },
     observation: {
       score: 12,
       outcomeAgainstRaw: "baseline",
       criticalRegression: false,
+      baselineArtifactDigest: null,
+      comparisons: { matched: 0, wins: 0, losses: 0, ties: 0 },
       reasonCodes: ["baseline-recorded"],
     },
     cost: { bytes: 0, tokens: null, latencyMs: null, monetaryCost: null },
@@ -450,6 +462,7 @@ test("observation proposals preserve artifact order, evaluator identity, costs, 
   assert.equal(proposal.artifactDigest, "2".repeat(64));
   assert.equal(proposal.outcomeAgainstRaw, "baseline");
   assert.equal(proposal.proofLevel, "model");
+  assert.deepEqual(proposal.comparisons, { matched: 0, wins: 0, losses: 0, ties: 0 });
   assert.deepEqual(proposal.cost, { bytes: 0, tokens: null, latencyMs: null, monetaryCost: null });
   assert.match(proposal.observationDigest, /^[a-f0-9]{64}$/);
   assert.match(proposal.proposalDigest, /^[a-f0-9]{64}$/);
@@ -458,8 +471,20 @@ test("observation proposals preserve artifact order, evaluator identity, costs, 
     ...proposal,
     trial,
     expectedTrialDigest: trial.trialDigest,
-    artifact: { sha256: "2".repeat(64), bytes: 4096, mediaType: "text/plain" },
-    observation: { score: 12, outcomeAgainstRaw: "baseline", criticalRegression: false, reasonCodes: [] },
+    artifact: {
+      sha256: "2".repeat(64),
+      bytes: 4096,
+      mediaType: "text/plain",
+      producedAt: "2026-08-31T06:04:00.000Z",
+    },
+    observation: {
+      score: 12,
+      outcomeAgainstRaw: "baseline",
+      criticalRegression: false,
+      baselineArtifactDigest: null,
+      comparisons: { matched: 0, wins: 0, losses: 0, ties: 0 },
+      reasonCodes: [],
+    },
     cost: proposal.cost,
     producerId: "terra-subject-raw",
     evaluatorId: "aegis-matrix-verifier-v1",
@@ -467,6 +492,32 @@ test("observation proposals preserve artifact order, evaluator identity, costs, 
     policy: trusted.policy,
     expectedPolicyDigest: trusted.expectedPolicyDigest,
   }), /media type|keys/i);
+
+  assert.throws(() => trialModule.createObservationProposal({
+    trial,
+    expectedTrialDigest: trial.trialDigest,
+    variant: "raw",
+    artifact: {
+      sha256: "2".repeat(64),
+      bytes: 4096,
+      mediaType: "application/json",
+      producedAt: "2026-08-31T06:06:00.000Z",
+    },
+    observation: {
+      score: 12,
+      outcomeAgainstRaw: "baseline",
+      criticalRegression: false,
+      baselineArtifactDigest: null,
+      comparisons: { matched: 0, wins: 0, losses: 0, ties: 0 },
+      reasonCodes: [],
+    },
+    cost: proposal.cost,
+    proofLevel: "model",
+    producerId: "terra-subject-raw",
+    evaluatorId: "aegis-matrix-verifier-v1",
+    observedAt: "2026-08-31T06:05:00.000Z",
+    ...trusted,
+  }), /artifact.*before|observation.*after/i);
 });
 
 test("historical Muse evidence remains visible but cannot become retroactively preregistered", async () => {
@@ -493,4 +544,481 @@ test("historical Muse evidence remains visible but cannot become retroactively p
   assert.equal(imported.rawWins, 3);
   assert.equal(imported.candidateWins, 1);
   assert.match(imported.importDigest, /^[a-f0-9]{64}$/);
+});
+
+async function observationFor({
+  trial,
+  variant,
+  proofLevel = "fixture",
+  score = 10,
+  outcomeAgainstRaw = variant === "raw" ? "baseline" : "tie",
+  comparisons = variant === "raw"
+    ? { matched: 0, wins: 0, losses: 0, ties: 0 }
+    : { matched: 3, wins: 0, losses: 0, ties: 3 },
+  criticalRegression = false,
+  contextBytes = 1000,
+  artifactSuffix = "0",
+  baselineArtifactDigest,
+} = {}) {
+  const [trialApi, trusted] = await Promise.all([trials(), trustedPolicy()]);
+  const artifactDigest = digestText(`${trial.trialDigest}:${variant}:${artifactSuffix}`);
+  return trialApi.createObservationProposal({
+    trial,
+    expectedTrialDigest: trial.trialDigest,
+    variant,
+    artifact: {
+      sha256: artifactDigest,
+      bytes: 2048 + score,
+      mediaType: "application/json",
+      producedAt: `2026-08-31T06:0${TRIAL_VARIANT_MINUTE[variant] - 1}:30.000Z`,
+    },
+    observation: {
+      score,
+      outcomeAgainstRaw,
+      criticalRegression,
+      baselineArtifactDigest: variant === "raw"
+        ? null
+        : baselineArtifactDigest ?? digestText(`${trial.trialDigest}:raw:0`),
+      comparisons,
+      reasonCodes: [`${variant}-evaluated`],
+    },
+    cost: { bytes: contextBytes, tokens: null, latencyMs: null, monetaryCost: null },
+    proofLevel,
+    producerId: `terra-subject-${variant}`,
+    evaluatorId: "aegis-matrix-verifier-v1",
+    observedAt: `2026-08-31T06:0${TRIAL_VARIANT_MINUTE[variant]}:00.000Z`,
+    ...trusted,
+  });
+}
+
+const TRIAL_VARIANT_MINUTE = Object.freeze({
+  raw: 1,
+  guardrail: 2,
+  method: 3,
+  reviewer: 4,
+  combined: 5,
+});
+
+async function fixtureLedger({ proofLevels = {}, observationOverrides = {}, contextBytes = {} } = {}) {
+  const [ledgerApi, trusted, trial] = await Promise.all([
+    ledgerModule(),
+    trustedPolicy(),
+    registeredTrial(),
+  ]);
+  let ledger = ledgerApi.createEvidenceLedger({
+    trial,
+    createdAt: "2026-08-31T06:00:30.000Z",
+    ...trusted,
+  });
+  const definitions = [
+    ["raw", "baseline", { matched: 0, wins: 0, losses: 0, ties: 0 }, 10, 1000],
+    ["guardrail", "win", { matched: 3, wins: 2, losses: 1, ties: 0 }, 12, 1100],
+    ["method", "loss", { matched: 3, wins: 1, losses: 2, ties: 0 }, 9, 1300],
+    ["reviewer", "win", { matched: 3, wins: 3, losses: 0, ties: 0 }, 15, 1200],
+    ["combined", "tie", { matched: 3, wins: 1, losses: 1, ties: 1 }, 10, 1400],
+  ];
+  for (const [variant, outcomeAgainstRaw, comparisons, score, defaultContextBytes] of definitions) {
+    const proposal = await observationFor({
+      trial,
+      variant,
+      outcomeAgainstRaw,
+      comparisons,
+      score,
+      proofLevel: proofLevels[variant] ?? "fixture",
+      contextBytes: contextBytes[variant] ?? defaultContextBytes,
+      ...observationOverrides[variant],
+    });
+    ledger = ledgerApi.appendEvidenceRow({ ledger, trial, proposal, ...trusted });
+  }
+  return { ledgerApi, trusted, trial, ledger };
+}
+
+test("append-only evidence rejects duplicate, cross-trial, and mutated rows", async () => {
+  const [ledgerApi, trusted, trial] = await Promise.all([
+    ledgerModule(),
+    trustedPolicy(),
+    registeredTrial(),
+  ]);
+  const empty = ledgerApi.createEvidenceLedger({
+    trial,
+    createdAt: "2026-08-31T06:00:30.000Z",
+    ...trusted,
+  });
+  const raw = await observationFor({ trial, variant: "raw" });
+  const interventionBeforeRaw = await observationFor({ trial, variant: "guardrail" });
+  assert.throws(
+    () => ledgerApi.appendEvidenceRow({
+      ledger: empty,
+      trial,
+      proposal: interventionBeforeRaw,
+      ...trusted,
+    }),
+    /raw baseline|baseline.*first/i,
+  );
+  const one = ledgerApi.appendEvidenceRow({ ledger: empty, trial, proposal: raw, ...trusted });
+
+  assert.equal(one.rows.length, 1);
+  assert.equal(one.rows[0].sequence, 0);
+  assert.equal(one.rows[0].previousRowDigest, null);
+  assert.equal(ledgerApi.verifyEvidenceLedger({ ledger: one, trial, ...trusted }).valid, true);
+  assert.throws(
+    () => ledgerApi.appendEvidenceRow({ ledger: one, trial, proposal: raw, ...trusted }),
+    /duplicate/i,
+  );
+  const wrongBaseline = await observationFor({
+    trial,
+    variant: "guardrail",
+    artifactSuffix: "wrong-baseline",
+    baselineArtifactDigest: "9".repeat(64),
+  });
+  assert.throws(
+    () => ledgerApi.appendEvidenceRow({ ledger: one, trial, proposal: wrongBaseline, ...trusted }),
+    /baseline.*digest|raw artifact/i,
+  );
+
+  const mutated = structuredClone(one);
+  mutated.rows[0].criticalRegression = true;
+  assert.throws(
+    () => ledgerApi.verifyEvidenceLedger({ ledger: mutated, trial, ...trusted }),
+    /row digest|ledger digest/i,
+  );
+
+  const otherTrial = await registeredTrial({ trialId: "aegis-terra-high-matrix-002" });
+  const otherProposal = await observationFor({ trial: otherTrial, variant: "guardrail" });
+  assert.throws(
+    () => ledgerApi.appendEvidenceRow({ ledger: one, trial: otherTrial, proposal: otherProposal, ...trusted }),
+    /trial|lineage/i,
+  );
+});
+
+test("causal profile keeps all five effects separate and forbids fixture promotion", async () => {
+  const { ledgerApi, trusted, trial, ledger } = await fixtureLedger();
+  const profile = ledgerApi.deriveActivationProfile({ ledger, trial, ...trusted });
+
+  assert.equal(profile.lifecycleState, "ineligible");
+  assert.equal(profile.recommendedMode, "native");
+  assert.equal(profile.promotableEvidenceRows, 0);
+  assert.deepEqual(profile.failedGates, ["promotable-evidence-level"]);
+  assert.equal(profile.evidenceRowDigests.length, 5);
+  assert.deepEqual(profile.participantIds.evaluators, ["aegis-matrix-verifier-v1"]);
+  assert.deepEqual(profile.participantIds.producers, [
+    "terra-subject-combined",
+    "terra-subject-guardrail",
+    "terra-subject-method",
+    "terra-subject-raw",
+    "terra-subject-reviewer",
+  ]);
+
+  const byVariant = Object.fromEntries(profile.variantMetrics.map((metric) => [metric.variant, metric]));
+  assert.deepEqual(
+    [byVariant.guardrail.wins, byVariant.method.wins, byVariant.reviewer.wins, byVariant.combined.wins],
+    [2, 1, 3, 1],
+  );
+  assert.deepEqual(
+    [byVariant.guardrail.maximumOverheadRatio, byVariant.method.maximumOverheadRatio,
+      byVariant.reviewer.maximumOverheadRatio, byVariant.combined.maximumOverheadRatio],
+    [1.1, 1.3, 1.2, 1.4],
+  );
+  assert.match(profile.profileDigest, /^[a-f0-9]{64}$/);
+});
+
+test("profiles require complete promotable condition coverage and fail closed on global critical regressions", async () => {
+  const partial = await fixtureLedger({
+    proofLevels: { raw: "model", method: "model" },
+    observationOverrides: {
+      method: {
+        outcomeAgainstRaw: "win",
+        comparisons: { matched: 3, wins: 3, losses: 0, ties: 0 },
+        contextBytes: 1200,
+      },
+    },
+  });
+  const partialProfile = partial.ledgerApi.deriveActivationProfile({
+    ledger: partial.ledger,
+    trial: partial.trial,
+    ...partial.trusted,
+  });
+  assert.equal(partialProfile.lifecycleState, "ineligible");
+  assert.equal(partialProfile.recommendedMode, "native");
+  assert.ok(partialProfile.failedGates.includes("promotable-variant-coverage"));
+
+  const allModel = Object.fromEntries(
+    ["raw", "guardrail", "method", "reviewer", "combined"].map((variant) => [variant, "model"]),
+  );
+  const critical = await fixtureLedger({
+    proofLevels: allModel,
+    observationOverrides: {
+      method: {
+        outcomeAgainstRaw: "win",
+        comparisons: { matched: 3, wins: 3, losses: 0, ties: 0 },
+        contextBytes: 1200,
+      },
+      combined: { criticalRegression: true },
+    },
+  });
+  const criticalProfile = critical.ledgerApi.deriveActivationProfile({
+    ledger: critical.ledger,
+    trial: critical.trial,
+    ...critical.trusted,
+  });
+  assert.equal(criticalProfile.lifecycleState, "ineligible");
+  assert.equal(criticalProfile.recommendedMode, "guardrail");
+  assert.ok(criticalProfile.failedGates.includes("criticalRegressions"));
+});
+
+test("unknown overhead stays null instead of becoming a synthetic finite metric", async () => {
+  const fixture = await fixtureLedger({
+    contextBytes: { raw: 0, guardrail: 100 },
+  });
+  const profile = fixture.ledgerApi.deriveActivationProfile({
+    ledger: fixture.ledger,
+    trial: fixture.trial,
+    ...fixture.trusted,
+  });
+  const guardrail = profile.variantMetrics.find((metric) => metric.variant === "guardrail");
+  assert.equal(guardrail.maximumOverheadRatio, null);
+});
+
+test("profile freshness invalidates every identity or bound digest mismatch without rewriting evidence", async () => {
+  const { ledgerApi, trusted, trial, ledger } = await fixtureLedger();
+  const profile = ledgerApi.deriveActivationProfile({ ledger, trial, ...trusted });
+  const exactBindings = structuredClone(profile.boundDigests);
+  assert.deepEqual(
+    ledgerApi.evaluateProfileFreshness({
+      profile,
+      currentIdentity: profile.profileIdentity,
+      currentBindings: exactBindings,
+      ...trusted,
+    }),
+    { current: true, mismatches: [] },
+  );
+
+  for (const field of Object.keys(profile.profileIdentity)) {
+    const changed = structuredClone(profile.profileIdentity);
+    changed[field] = ["capabilityVersion", "environmentId"].includes(field)
+      ? "9".repeat(64)
+      : `${changed[field]}-changed`;
+    const result = ledgerApi.evaluateProfileFreshness({
+      profile,
+      currentIdentity: changed,
+      currentBindings: exactBindings,
+      ...trusted,
+    });
+    assert.equal(result.current, false, field);
+    assert.deepEqual(result.mismatches, [`profileIdentity.${field}`]);
+  }
+
+  for (const field of Object.keys(exactBindings)) {
+    const changed = { ...exactBindings, [field]: "8".repeat(64) };
+    const result = ledgerApi.evaluateProfileFreshness({
+      profile,
+      currentIdentity: profile.profileIdentity,
+      currentBindings: changed,
+      ...trusted,
+    });
+    assert.equal(result.current, false, field);
+    assert.deepEqual(result.mismatches, [`boundDigests.${field}`]);
+  }
+  assert.equal(profile.evidenceRowDigests.length, 5);
+});
+
+function authorization({ actorId, grant, scopeDigest }) {
+  return {
+    actorId,
+    grants: [grant],
+    scopeDigest,
+    issuedAt: "2026-08-31T06:10:00.000Z",
+  };
+}
+
+function lifecycleContext(profile) {
+  return {
+    currentIdentity: structuredClone(profile.profileIdentity),
+    currentBindings: structuredClone(profile.boundDigests),
+  };
+}
+
+test("lifecycle receipts require external authority, reject self-promotion, and preserve failed gates", async () => {
+  const { ledgerApi, trusted, trial, ledger } = await fixtureLedger();
+  const fixtureProfile = ledgerApi.deriveActivationProfile({ ledger, trial, ...trusted });
+  const fixtureAuthorization = authorization({
+    actorId: "dom-maintainer",
+    grant: trusted.policy.lifecycleGrants.promote,
+    scopeDigest: fixtureProfile.profileDigest,
+  });
+  const rejected = ledgerApi.compileLifecycleDecision({
+    profile: fixtureProfile,
+    expectedProfileDigest: fixtureProfile.profileDigest,
+    action: "promote",
+    requestedMode: "method",
+    currentMode: "native",
+    actorId: "dom-maintainer",
+    authorization: fixtureAuthorization,
+    expectedAuthorizationDigest: profileKeyForTest(fixtureAuthorization),
+    ...lifecycleContext(fixtureProfile),
+    ...trusted,
+  });
+  assert.equal(rejected.status, "rejected");
+  assert.equal(rejected.nextMode, "native");
+  assert.ok(rejected.reasonCodes.includes("promotable-evidence-level"));
+
+  const contractApi = await contracts();
+  const eligibleUnsigned = {
+    ...fixtureProfile,
+    lifecycleState: "eligible",
+    recommendedMode: "method",
+    promotableEvidenceRows: 3,
+    failedGates: [],
+    variantMetrics: fixtureProfile.variantMetrics.map((metric) =>
+      metric.variant === "method"
+        ? {
+            ...metric,
+            matchedComparisons: 3,
+            wins: 3,
+            losses: 0,
+            ties: 0,
+            criticalRegressions: 0,
+            maximumOverheadRatio: 1.2,
+            evidenceLevels: ["model"],
+          }
+        : metric),
+  };
+  delete eligibleUnsigned.profileDigest;
+  const eligibleProfile = {
+    ...eligibleUnsigned,
+    profileDigest: contractApi.canonicalDigest(eligibleUnsigned),
+  };
+  const promotionAuthorization = authorization({
+    actorId: "dom-maintainer",
+    grant: trusted.policy.lifecycleGrants.promote,
+    scopeDigest: eligibleProfile.profileDigest,
+  });
+  const promoted = ledgerApi.compileLifecycleDecision({
+    profile: eligibleProfile,
+    expectedProfileDigest: eligibleProfile.profileDigest,
+    action: "promote",
+    requestedMode: "method",
+    currentMode: "native",
+    actorId: "dom-maintainer",
+    authorization: promotionAuthorization,
+    expectedAuthorizationDigest: profileKeyForTest(promotionAuthorization),
+    ...lifecycleContext(eligibleProfile),
+    ...trusted,
+  });
+  assert.equal(promoted.status, "applied");
+  assert.equal(promoted.nextMode, "method");
+  assert.equal(promoted.authorityExpanded, false);
+
+  assert.throws(() => ledgerApi.compileLifecycleDecision({
+    profile: eligibleProfile,
+    expectedProfileDigest: eligibleProfile.profileDigest,
+    action: "promote",
+    requestedMode: "method",
+    currentMode: "native",
+    actorId: "dom-maintainer",
+    authorization: promotionAuthorization,
+    expectedAuthorizationDigest: profileKeyForTest(promotionAuthorization),
+    currentIdentity: { ...eligibleProfile.profileIdentity, reasoningTier: "xhigh" },
+    currentBindings: structuredClone(eligibleProfile.boundDigests),
+    ...trusted,
+  }), /current|fresh|identity/i);
+
+  const promotedUnsigned = {
+    ...eligibleProfile,
+    lifecycleState: "promoted",
+  };
+  delete promotedUnsigned.profileDigest;
+  const promotedProfile = {
+    ...promotedUnsigned,
+    profileDigest: contractApi.canonicalDigest(promotedUnsigned),
+  };
+  const demotionAuthorization = authorization({
+    actorId: "dom-maintainer",
+    grant: trusted.policy.lifecycleGrants.demote,
+    scopeDigest: promotedProfile.profileDigest,
+  });
+  const demoted = ledgerApi.compileLifecycleDecision({
+    profile: promotedProfile,
+    expectedProfileDigest: promotedProfile.profileDigest,
+    action: "demote",
+    requestedMode: "native",
+    currentMode: "method",
+    actorId: "dom-maintainer",
+    authorization: demotionAuthorization,
+    expectedAuthorizationDigest: profileKeyForTest(demotionAuthorization),
+    ...lifecycleContext(promotedProfile),
+    ...trusted,
+  });
+  assert.equal(demoted.status, "applied");
+  assert.equal(demoted.priorMode, "method");
+  assert.equal(demoted.nextMode, "native");
+
+  const criticalUnsigned = {
+    ...eligibleProfile,
+    lifecycleState: "ineligible",
+    failedGates: ["criticalRegressions"],
+    variantMetrics: eligibleProfile.variantMetrics.map((metric) =>
+      metric.variant === "method" ? { ...metric, criticalRegressions: 1 } : metric),
+  };
+  delete criticalUnsigned.profileDigest;
+  const criticalProfile = {
+    ...criticalUnsigned,
+    profileDigest: contractApi.canonicalDigest(criticalUnsigned),
+  };
+  const criticalAuthorization = authorization({
+    actorId: "dom-maintainer",
+    grant: trusted.policy.lifecycleGrants.promote,
+    scopeDigest: criticalProfile.profileDigest,
+  });
+  const criticalRejected = ledgerApi.compileLifecycleDecision({
+    profile: criticalProfile,
+    expectedProfileDigest: criticalProfile.profileDigest,
+    action: "promote",
+    requestedMode: "method",
+    currentMode: "native",
+    actorId: "dom-maintainer",
+    authorization: criticalAuthorization,
+    expectedAuthorizationDigest: profileKeyForTest(criticalAuthorization),
+    ...lifecycleContext(criticalProfile),
+    ...trusted,
+  });
+  assert.equal(criticalRejected.status, "rejected");
+  assert.ok(criticalRejected.reasonCodes.includes("criticalRegressions"));
+
+  const selfActor = eligibleProfile.participantIds.producers[0];
+  const selfAuthorization = authorization({
+    actorId: selfActor,
+    grant: trusted.policy.lifecycleGrants.promote,
+    scopeDigest: eligibleProfile.profileDigest,
+  });
+  assert.throws(() => ledgerApi.compileLifecycleDecision({
+    profile: eligibleProfile,
+    expectedProfileDigest: eligibleProfile.profileDigest,
+    action: "promote",
+    requestedMode: "method",
+    currentMode: "native",
+    actorId: selfActor,
+    authorization: selfAuthorization,
+    expectedAuthorizationDigest: profileKeyForTest(selfAuthorization),
+    ...lifecycleContext(eligibleProfile),
+    ...trusted,
+  }), /self-promot|independent/i);
+
+  const wrongGrant = authorization({
+    actorId: "dom-maintainer",
+    grant: trusted.policy.lifecycleGrants.demote,
+    scopeDigest: eligibleProfile.profileDigest,
+  });
+  assert.throws(() => ledgerApi.compileLifecycleDecision({
+    profile: eligibleProfile,
+    expectedProfileDigest: eligibleProfile.profileDigest,
+    action: "promote",
+    requestedMode: "method",
+    currentMode: "native",
+    actorId: "dom-maintainer",
+    authorization: wrongGrant,
+    expectedAuthorizationDigest: profileKeyForTest(wrongGrant),
+    ...lifecycleContext(eligibleProfile),
+    ...trusted,
+  }), /grant|authority/i);
 });

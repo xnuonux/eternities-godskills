@@ -314,16 +314,30 @@ export function buildAdaptiveEvidenceSchemas() {
   });
   const evidenceRow = baseSchema("evidence-row", "Adaptive evidence v2 ledger row", [
     "schemaVersion", "sequence", "previousRowDigest", "proposalDigest", "trialDigest",
-    "profileKey", "variant", "artifactDigest", "observationDigest",
-    "outcomeAgainstRaw", "criticalRegression", "cost", "proofLevel",
-    "producerId", "evaluatorId", "rowDigest",
+    "profileKey", "variant", "artifactDigest", "artifactBytes", "artifactProducedAt",
+    "observationDigest", "score", "outcomeAgainstRaw", "criticalRegression",
+    "baselineArtifactDigest", "comparisons", "reasonCodes",
+    "cost", "proofLevel", "producerId", "evaluatorId", "observedAt", "rowDigest",
   ], {
     schemaVersion: { const: 2 }, sequence: { type: "integer", minimum: 0 },
     previousRowDigest: nullableDigestSchema(), proposalDigest: digestSchema(),
     trialDigest: digestSchema(), profileKey: digestSchema(),
     variant: { enum: [...TRIAL_VARIANTS] }, artifactDigest: digestSchema(),
-    observationDigest: digestSchema(), outcomeAgainstRaw: { enum: ["win", "loss", "tie", "baseline"] },
+    artifactBytes: { type: "integer", minimum: 0 }, artifactProducedAt: stringSchema(),
+    observationDigest: digestSchema(),
+    score: { type: "number", minimum: 0 },
+    outcomeAgainstRaw: { enum: ["win", "loss", "tie", "baseline"] },
     criticalRegression: { type: "boolean" },
+    baselineArtifactDigest: nullableDigestSchema(),
+    comparisons: {
+      type: "object", additionalProperties: false,
+      required: ["matched", "wins", "losses", "ties"],
+      properties: {
+        matched: { type: "integer", minimum: 0 }, wins: { type: "integer", minimum: 0 },
+        losses: { type: "integer", minimum: 0 }, ties: { type: "integer", minimum: 0 },
+      },
+    },
+    reasonCodes: { type: "array", items: stringSchema(), uniqueItems: true },
     cost: {
       type: "object", additionalProperties: false,
       required: ["bytes", "tokens", "latencyMs", "monetaryCost"],
@@ -335,18 +349,46 @@ export function buildAdaptiveEvidenceSchemas() {
       },
     },
     proofLevel: { enum: [...EVIDENCE_LEVELS] }, producerId: stringSchema(),
-    evaluatorId: stringSchema(), rowDigest: digestSchema(),
+    evaluatorId: stringSchema(), observedAt: stringSchema(), rowDigest: digestSchema(),
   });
   const profile = baseSchema("profile", "Adaptive evidence v2 derived profile", [
     "schemaVersion", "profileIdentity", "profileKey", "lifecycleState",
     "recommendedMode", "variantMetrics", "evidenceRowDigests",
-    "promotableEvidenceRows", "failedGates", "boundDigests", "profileDigest",
+    "participantIds", "promotableEvidenceRows", "failedGates", "boundDigests", "profileDigest",
   ], {
     schemaVersion: { const: 2 }, profileIdentity: profileIdentitySchema(),
     profileKey: digestSchema(), lifecycleState: { enum: ["ineligible", "eligible", "promoted", "demoted", "quarantined", "invalidated"] },
     recommendedMode: { enum: ["native", "guardrail", "method", "review"] },
-    variantMetrics: { type: "array", items: stringSchema() },
+    variantMetrics: {
+      type: "array",
+      items: {
+        type: "object", additionalProperties: false,
+        required: [
+          "variant", "matchedComparisons", "wins", "losses", "ties",
+          "criticalRegressions", "maximumOverheadRatio", "evidenceLevels", "rowDigests",
+        ],
+        properties: {
+          variant: { enum: [...TRIAL_VARIANTS] },
+          matchedComparisons: { type: "integer", minimum: 0 },
+          wins: { type: "integer", minimum: 0 },
+          losses: { type: "integer", minimum: 0 },
+          ties: { type: "integer", minimum: 0 },
+          criticalRegressions: { type: "integer", minimum: 0 },
+          maximumOverheadRatio: { anyOf: [{ type: "number", minimum: 0 }, { type: "null" }] },
+          evidenceLevels: { type: "array", items: { enum: [...EVIDENCE_LEVELS] }, uniqueItems: true },
+          rowDigests: { type: "array", items: digestSchema(), uniqueItems: true },
+        },
+      },
+    },
     evidenceRowDigests: { type: "array", items: digestSchema(), uniqueItems: true },
+    participantIds: {
+      type: "object", additionalProperties: false,
+      required: ["producers", "evaluators"],
+      properties: {
+        producers: { type: "array", items: stringSchema(), uniqueItems: true },
+        evaluators: { type: "array", items: stringSchema(), uniqueItems: true },
+      },
+    },
     promotableEvidenceRows: { type: "integer", minimum: 0 },
     failedGates: { type: "array", items: stringSchema(), uniqueItems: true },
     boundDigests: {

@@ -20,6 +20,7 @@ const PROFILE_KEYS = Object.freeze([
   "recommendedMode",
   "variantMetrics",
   "evidenceRowDigests",
+  "participantIds",
   "promotableEvidenceRows",
   "failedGates",
   "boundDigests",
@@ -109,6 +110,9 @@ function validateProfile(profile) {
   uniqueStrings(profile.evidenceRowDigests, "profile evidence row digests", { allowEmpty: true });
   for (const value of profile.evidenceRowDigests) digestString(value, "profile evidence row digest");
   if (!Array.isArray(profile.variantMetrics)) throw new TypeError("profile variant metrics must be an array");
+  exactKeys(profile.participantIds, ["producers", "evaluators"], "profile participant identities");
+  uniqueStrings(profile.participantIds.producers, "profile producers", { allowEmpty: true });
+  uniqueStrings(profile.participantIds.evaluators, "profile evaluators", { allowEmpty: true });
   if (!Number.isInteger(profile.promotableEvidenceRows) || profile.promotableEvidenceRows < 0) {
     throw new TypeError("profile promotable evidence rows must be a non-negative integer");
   }
@@ -498,14 +502,19 @@ export function createObservationProposal(options = {}) {
     throw new Error("observation does not match the expected trial digest");
   }
   if (!trial.variants.includes(options.variant)) throw new Error("observation variant is not preregistered");
-  exactKeys(options.artifact, ["sha256", "bytes", "mediaType"], "observation artifact");
+  exactKeys(options.artifact, ["sha256", "bytes", "mediaType", "producedAt"], "observation artifact");
   digestString(options.artifact.sha256, "observation artifact.sha256");
   finiteNonNegative(options.artifact.bytes, "observation artifact.bytes", { integer: true });
   if (options.artifact.mediaType !== trial.artifactBoundary.mediaType) {
     throw new Error("observation artifact media type does not match the required boundary");
   }
+  exactIso(options.artifact.producedAt, "observation artifact.producedAt");
+  if (new Date(options.artifact.producedAt) <= new Date(trial.registeredAt)) {
+    throw new Error("observation artifact must be produced after trial preregistration");
+  }
   exactKeys(options.observation, [
-    "score", "outcomeAgainstRaw", "criticalRegression", "reasonCodes",
+    "score", "outcomeAgainstRaw", "criticalRegression", "baselineArtifactDigest",
+    "comparisons", "reasonCodes",
   ], "evaluator observation");
   finiteNonNegative(options.observation.score, "evaluator observation.score");
   const expectedOutcomes = options.variant === "raw"
@@ -515,6 +524,29 @@ export function createObservationProposal(options = {}) {
     throw new Error("observation outcome does not match its variant");
   }
   boolean(options.observation.criticalRegression, "observation criticalRegression");
+  exactKeys(
+    options.observation.comparisons,
+    ["matched", "wins", "losses", "ties"],
+    "observation comparisons",
+  );
+  for (const [name, value] of Object.entries(options.observation.comparisons)) {
+    finiteNonNegative(value, `observation comparisons.${name}`, { integer: true });
+  }
+  const comparisonTotal = options.observation.comparisons.wins
+    + options.observation.comparisons.losses + options.observation.comparisons.ties;
+  if (comparisonTotal !== options.observation.comparisons.matched) {
+    throw new Error("observation comparison totals are contradictory");
+  }
+  if (options.variant === "raw" && options.observation.comparisons.matched !== 0) {
+    throw new Error("raw observation cannot claim intervention comparisons");
+  }
+  if (options.variant === "raw") {
+    if (options.observation.baselineArtifactDigest !== null) {
+      throw new Error("raw observation cannot reference a baseline artifact");
+    }
+  } else {
+    digestString(options.observation.baselineArtifactDigest, "observation baseline artifact digest");
+  }
   uniqueStrings(options.observation.reasonCodes, "observation reason codes", { allowEmpty: true });
   validateCost(options.cost);
   if (!EVIDENCE_LEVELS.includes(options.proofLevel)) throw new Error("observation proof level is invalid");
@@ -526,8 +558,8 @@ export function createObservationProposal(options = {}) {
     throw new Error("observation evaluator is not independent or does not match the trial");
   }
   exactIso(options.observedAt, "observedAt");
-  if (new Date(options.observedAt) <= new Date(trial.registeredAt)) {
-    throw new Error("observation must occur after trial preregistration");
+  if (new Date(options.observedAt) <= new Date(options.artifact.producedAt)) {
+    throw new Error("observation must occur after the artifact is produced");
   }
   const observationDigest = canonicalDigest(options.observation);
   const unsigned = {
@@ -539,10 +571,13 @@ export function createObservationProposal(options = {}) {
     artifactDigest: options.artifact.sha256,
     artifactBytes: options.artifact.bytes,
     artifactMediaType: options.artifact.mediaType,
+    artifactProducedAt: options.artifact.producedAt,
     observationDigest,
     score: options.observation.score,
     outcomeAgainstRaw: options.observation.outcomeAgainstRaw,
     criticalRegression: options.observation.criticalRegression,
+    baselineArtifactDigest: options.observation.baselineArtifactDigest,
+    comparisons: structuredClone(options.observation.comparisons),
     reasonCodes: [...options.observation.reasonCodes],
     cost: structuredClone(options.cost),
     proofLevel: options.proofLevel,
