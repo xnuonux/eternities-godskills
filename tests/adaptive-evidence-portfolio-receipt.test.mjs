@@ -135,3 +135,25 @@ test("direct builder and generated schemas preserve the parent-bound package man
   assert.equal(result.schemas.report.properties.reportingOnly.const, true);
   assert.equal(result.schemas.report.properties.profilePromotionAllowed.const, false);
 });
+
+test("portfolio certification binds the reviewed repair and honest review boundary", async () => {
+  const [certification, receipt] = await Promise.all([
+    readFile(new URL("../docs/adaptive-evidence-portfolio-v1-certification.md", import.meta.url), "utf8"),
+    readFile(new URL("../receipts/adaptive-evidence-portfolio-v1.json", import.meta.url), "utf8")
+      .then(JSON.parse),
+  ]);
+  assert.match(
+    certification,
+    /reviewed implementation head: `cc6032be62a013a1d900257933ccdc5b328ac678`/,
+  );
+  assert.match(
+    certification,
+    /independent defect-finding review head: `209e5af3b81f828e92b8570b0fada90895e85ad9`/,
+  );
+  assert.match(certification, /post-repair independent re-review: `not performed`/);
+  assert.match(certification, new RegExp(receipt.receiptDigest));
+  assert.match(certification, new RegExp(receipt.fixture.planWitnessDigest));
+  assert.match(certification, /fixture private key.*not.*production\s+trust root/is);
+  assert.match(certification, /no model-quality evidence|not model-quality evidence/i);
+  assert.match(certification, /no Godagents activation|Godagents.*not activated/i);
+});
