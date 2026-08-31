@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eternities.ai/schemas/godskills/adaptive-activation-result.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "protocolId",
+    "requestId",
+    "requestDigest",
+    "trustRootDigest",
+    "policyDigest",
+    "evidenceDigest",
+    "classification",
+    "decisions",
+    "resultDigest"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "protocolId": { "const": "eternities-godskills-activation-v1" },
+    "requestId": { "type": "string", "minLength": 1, "maxLength": 512, "pattern": "^[^\\u0000\\r\\n]+$" },
+    "requestDigest": { "$ref": "#/$defs/digest" },
+    "trustRootDigest": { "$ref": "#/$defs/digest" },
+    "policyDigest": { "$ref": "#/$defs/digest" },
+    "evidenceDigest": { "$ref": "#/$defs/digest" },
+    "classification": { "$ref": "adaptive-activation-request.v1.schema.json#/$defs/classification" },
+    "decisions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "items": { "$ref": "#/$defs/decision" }
+    },
+    "resultDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "selectedId", "taskClass", "consequenceClass", "mode", "reasonCodes", "preInferenceDisclosure", "deferredReview", "methodEvidence", "policyDigest", "evidenceDigest", "authorityProjection", "authorityExpanded", "decisionDigest"],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "selectedId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+        "taskClass": { "enum": ["creative-generation", "debugging-recovery", "implementation", "research", "continuity", "verification", "general"] },
+        "consequenceClass": { "enum": ["low", "consequential", "critical"] },
+        "mode": { "enum": ["native", "guardrail", "method", "review"] },
+        "reasonCodes": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "preInferenceDisclosure": { "enum": ["none", "guardrails-only", "entrypoint-and-contract"] },
+        "deferredReview": { "type": "boolean" },
+        "methodEvidence": { "$ref": "#/$defs/methodEvidence" },
+        "policyDigest": { "$ref": "#/$defs/digest" },
+        "evidenceDigest": { "$ref": "#/$defs/digest" },
+        "authorityProjection": { "$ref": "adaptive-activation-request.v1.schema.json#/$defs/authorityProjection" },
+        "authorityExpanded": { "const": false },
+        "decisionDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "methodEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["eligible", "matchedEvaluations", "wins", "losses", "ties", "winRate", "criticalRegressions", "overheadRatio", "failedGates"],
+      "properties": {
+        "eligible": { "type": "boolean" },
+        "matchedEvaluations": { "type": "integer", "minimum": 0 },
+        "wins": { "type": "integer", "minimum": 0 },
+        "losses": { "type": "integer", "minimum": 0 },
+        "ties": { "type": "integer", "minimum": 0 },
+        "winRate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "criticalRegressions": { "type": "integer", "minimum": 0 },
+        "overheadRatio": { "oneOf": [{ "type": "null" }, { "type": "number", "exclusiveMinimum": 0 }] },
+        "failedGates": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+      }
+    }
+  }
+}
