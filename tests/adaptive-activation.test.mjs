@@ -20,6 +20,14 @@ async function compiler() {
   }
 }
 
+async function receiptBuilder() {
+  try {
+    return await import("../scripts/build-adaptive-activation-receipt.mjs");
+  } catch (error) {
+    assert.fail(`adaptive activation receipt builder is unavailable: ${error.message}`);
+  }
+}
+
 const task = (overrides = {}) => ({
   taskClass: "creative-generation",
   consequenceClass: "consequential",
@@ -219,4 +227,24 @@ test("malformed, unreviewed, or self-contradictory evidence cannot steer activat
   assert.throws(() => compileActivationDecision({
     selectedId: "eternities-muse", task: task(), policy: { ...policy, modes: ["method"] }, evidence: null,
   }), /mode|policy/i);
+});
+
+test("checked activation receipt rebuilds exactly and keeps Muse out of method mode", async () => {
+  const [{ rebuildAdaptiveActivationReceipt }, checkedText] = await Promise.all([
+    receiptBuilder(),
+    readFile(new URL("../receipts/adaptive-activation-v1.json", import.meta.url), "utf8").catch((error) =>
+      assert.fail(`checked adaptive activation receipt is missing: ${error.message}`)),
+  ]);
+  const rebuilt = await rebuildAdaptiveActivationReceipt({ root: new URL("../", import.meta.url) });
+
+  assert.equal(`${JSON.stringify(rebuilt, null, 2)}\n`, checkedText);
+  assert.equal(rebuilt.id, "adaptive-activation-v1");
+  assert.equal(rebuilt.status, "experimental");
+  assert.equal(rebuilt.decisions.museWithReview.mode, "review");
+  assert.equal(rebuilt.decisions.museWithoutReview.mode, "guardrail");
+  assert.equal(rebuilt.decisions.museLowConsequence.mode, "native");
+  assert.equal(rebuilt.decisions.museWithReview.methodEvidence.eligible, false);
+  assert.ok(rebuilt.decisions.museWithReview.methodEvidence.failedGates.includes("wins"));
+  assert.ok(rebuilt.proofLimits.includes("model-quality-on-unseen-missions"));
+  assert.match(rebuilt.receiptDigest, /^[a-f0-9]{64}$/);
 });
