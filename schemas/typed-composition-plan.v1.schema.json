@@ -1,0 +1,154 @@
+{
+  "$defs": {
+    "authorityProjection": {
+      "additionalProperties": false,
+      "properties": {
+        "availableAuthority": {
+          "items": { "minLength": 1, "type": "string" },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "availablePreconditions": {
+          "items": { "minLength": 1, "type": "string" },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "contextBudget": { "minimum": 1, "type": "integer" },
+        "maximumRisk": { "enum": ["low", "moderate", "high"] },
+        "minimumEvidenceConfidence": { "enum": ["unverified", "inferred", "verified"] },
+        "permittedEffects": {
+          "items": { "minLength": 1, "type": "string" },
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "availableAuthority",
+        "permittedEffects",
+        "availablePreconditions",
+        "maximumRisk",
+        "minimumEvidenceConfidence",
+        "contextBudget"
+      ],
+      "type": "object"
+    },
+    "consumer": {
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": { "minLength": 1, "type": "string" },
+        "slotId": { "minLength": 1, "type": "string" }
+      },
+      "required": ["nodeId", "slotId"],
+      "type": "object"
+    },
+    "producer": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "inputId": { "minLength": 1, "type": "string" },
+            "kind": { "const": "mission-input" }
+          },
+          "required": ["kind", "inputId"],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "kind": { "const": "node-output" },
+            "nodeId": { "minLength": 1, "type": "string" },
+            "slotId": { "minLength": 1, "type": "string" }
+          },
+          "required": ["kind", "nodeId", "slotId"],
+          "type": "object"
+        }
+      ]
+    }
+  },
+  "$id": "urn:eternities:typed-composition:plan:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "activationResultDigest": { "pattern": "^[a-f0-9]{64}$", "type": "string" },
+    "activationTrustRootDigest": { "pattern": "^[a-f0-9]{64}$", "type": "string" },
+    "authorityProjection": { "$ref": "#/$defs/authorityProjection" },
+    "capabilityLayerReceiptDigest": { "pattern": "^[a-f0-9]{64}$", "type": "string" },
+    "links": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "artifactId": { "minLength": 1, "type": "string" },
+          "consumer": { "$ref": "#/$defs/consumer" },
+          "producer": { "$ref": "#/$defs/producer" }
+        },
+        "required": ["artifactId", "producer", "consumer"],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "maximumContextBytes": { "minimum": 1, "type": "integer" },
+    "missionId": { "minLength": 1, "type": "string" },
+    "missionInputs": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "artifactId": { "minLength": 1, "type": "string" },
+          "jsonKind": { "enum": ["array", "object"] },
+          "typeId": { "minLength": 1, "type": "string" }
+        },
+        "required": ["artifactId", "typeId", "jsonKind"],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "missionOutputs": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "nodeId": { "minLength": 1, "type": "string" },
+          "outputId": { "minLength": 1, "type": "string" },
+          "slotId": { "minLength": 1, "type": "string" }
+        },
+        "required": ["outputId", "nodeId", "slotId"],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "nodes": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "activationDecisionDigest": { "pattern": "^[a-f0-9]{64}$", "type": "string" },
+          "capabilityId": { "minLength": 1, "type": "string" },
+          "nodeId": { "minLength": 1, "type": "string" },
+          "phase": { "minLength": 1, "type": "string" }
+        },
+        "required": ["nodeId", "phase", "capabilityId", "activationDecisionDigest"],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "planDigest": { "pattern": "^[a-f0-9]{64}$", "type": "string" },
+    "policyDigest": { "pattern": "^[a-f0-9]{64}$", "type": "string" },
+    "protocolId": { "const": "eternities-typed-composition-plan-v1" },
+    "schemaVersion": { "const": 1 }
+  },
+  "required": [
+    "schemaVersion",
+    "protocolId",
+    "missionId",
+    "policyDigest",
+    "capabilityLayerReceiptDigest",
+    "activationTrustRootDigest",
+    "activationResultDigest",
+    "authorityProjection",
+    "maximumContextBytes",
+    "missionInputs",
+    "nodes",
+    "links",
+    "missionOutputs",
+    "planDigest"
+  ],
+  "title": "Eternities typed composition plan v1",
+  "type": "object"
+}

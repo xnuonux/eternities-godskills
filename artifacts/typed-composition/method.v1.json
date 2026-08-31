@@ -1,0 +1,385 @@
+{
+  "activationResultDigest": "f2210917bcb5d4d462332d2f871b026faf81317bfd6472c74d36c17f393a539c",
+  "activationTrustRootDigest": "c5a086bb131ff7e1a9508f02b95796ae9066627be3e8e1f8b7e57421220e9bd7",
+  "aggregate": {
+    "authorityExpanded": false,
+    "authorityRequirements": [
+      "local-read",
+      "local-write",
+      "repository-write"
+    ],
+    "contractBytes": 5926,
+    "effects": [
+      "local-read",
+      "local-write"
+    ],
+    "estimatedContextBytes": 8571,
+    "estimatedContextTokens": 2143,
+    "evidenceConfidence": [
+      "verified"
+    ],
+    "methodBodiesEmbedded": 0,
+    "preconditions": [
+      "repository-present",
+      "settled-outcome"
+    ],
+    "riskClasses": [
+      "moderate"
+    ],
+    "selectedLayerBytes": 2645,
+    "sourceBodiesTransported": 0
+  },
+  "authorityProjection": {
+    "availableAuthority": [
+      "local-read",
+      "local-write",
+      "repository-write"
+    ],
+    "availablePreconditions": [
+      "repository-present",
+      "settled-outcome"
+    ],
+    "contextBudget": 4096,
+    "maximumRisk": "high",
+    "minimumEvidenceConfidence": "verified",
+    "permittedEffects": [
+      "local-read",
+      "local-write"
+    ]
+  },
+  "capabilityLayerReceiptDigest": "1c19271951abb00e93529656a35e8fb52dccc2f3cf0b6208bcee6821361ab788",
+  "evidence": {
+    "compatibility": [
+      {
+        "left": "eternities-muse",
+        "mutuallyCompatible": true,
+        "right": "eternities-forge"
+      }
+    ],
+    "graph": {
+      "acyclic": true,
+      "everyArtifactHasOneProducer": true,
+      "everyRequiredInputBoundOnce": true,
+      "linkCount": 6,
+      "nodeCount": 2,
+      "phaseMonotonic": true,
+      "topologicalOrder": [
+        "design",
+        "implementation"
+      ]
+    }
+  },
+  "links": [
+    {
+      "artifactId": "available-specialists",
+      "consumer": {
+        "nodeId": "design",
+        "slotId": "available-specialists"
+      },
+      "producer": {
+        "inputId": "available-specialists",
+        "kind": "mission-input"
+      }
+    },
+    {
+      "artifactId": "design-constraints",
+      "consumer": {
+        "nodeId": "design",
+        "slotId": "design-constraints"
+      },
+      "producer": {
+        "inputId": "design-constraints",
+        "kind": "mission-input"
+      }
+    },
+    {
+      "artifactId": "visual-source-set",
+      "consumer": {
+        "nodeId": "design",
+        "slotId": "visual-source-set"
+      },
+      "producer": {
+        "inputId": "visual-source-set",
+        "kind": "mission-input"
+      }
+    },
+    {
+      "artifactId": "acceptance-boundary",
+      "consumer": {
+        "nodeId": "implementation",
+        "slotId": "acceptance-risk-boundary"
+      },
+      "producer": {
+        "kind": "node-output",
+        "nodeId": "design",
+        "slotId": "acceptance-boundary"
+      }
+    },
+    {
+      "artifactId": "repository-state",
+      "consumer": {
+        "nodeId": "implementation",
+        "slotId": "repository-state"
+      },
+      "producer": {
+        "inputId": "repository-state",
+        "kind": "mission-input"
+      }
+    },
+    {
+      "artifactId": "settled-outcome",
+      "consumer": {
+        "nodeId": "implementation",
+        "slotId": "settled-outcome"
+      },
+      "producer": {
+        "inputId": "settled-outcome",
+        "kind": "mission-input"
+      }
+    }
+  ],
+  "methodDigest": "63b0a268841992c55953415b279f8e76277a80b0152f49260b3a22db9a75e3c2",
+  "missionId": "canary:muse-to-forge:v1",
+  "missionInputs": [
+    {
+      "artifactId": "available-specialists",
+      "jsonKind": "array",
+      "typeId": "eternities.capability-set"
+    },
+    {
+      "artifactId": "design-constraints",
+      "jsonKind": "array",
+      "typeId": "eternities.constraint-set"
+    },
+    {
+      "artifactId": "repository-state",
+      "jsonKind": "object",
+      "typeId": "eternities.repository-state"
+    },
+    {
+      "artifactId": "settled-outcome",
+      "jsonKind": "object",
+      "typeId": "eternities.mission-spec"
+    },
+    {
+      "artifactId": "visual-source-set",
+      "jsonKind": "array",
+      "typeId": "eternities.artifact-set"
+    }
+  ],
+  "missionOutputs": [
+    {
+      "nodeId": "implementation",
+      "outputId": "claim-evidence-ledger",
+      "slotId": "claim-evidence-ledger"
+    },
+    {
+      "nodeId": "implementation",
+      "outputId": "implementation",
+      "slotId": "implementation"
+    },
+    {
+      "nodeId": "implementation",
+      "outputId": "integration-state",
+      "slotId": "integration-state"
+    },
+    {
+      "nodeId": "implementation",
+      "outputId": "review-disposition",
+      "slotId": "review-disposition"
+    }
+  ],
+  "nodes": [
+    {
+      "activation": {
+        "decisionDigest": "e310325b05d079e963fb288aa8f11c3acbb2ad64e60e08eb9858126488a2132a",
+        "deferredReview": false,
+        "layer": {
+          "bytes": 1552,
+          "mode": "guardrail",
+          "path": "artifacts/capability-layers/eternities-muse/guardrails.v1.json",
+          "sha256": "58b8f012fd43ecc616d9ad16b4a0bdccb58622a1356450e99c39fbf9274c4d81",
+          "timing": "pre-inference"
+        },
+        "mode": "guardrail",
+        "preInferenceDisclosure": "guardrails-only",
+        "reasonCodes": [
+          "review-unavailable",
+          "consequence-guardrails"
+        ]
+      },
+      "authorityRequirements": [
+        "local-read",
+        "local-write"
+      ],
+      "bundleDigest": "2d65a6cfee736aff89f919b8239c25dcdd273dd06b123f334085ec7a72b7028e",
+      "capabilityId": "eternities-muse",
+      "effects": [
+        "local-read",
+        "local-write"
+      ],
+      "estimatedContextBytes": 4617,
+      "evidenceConfidence": "verified",
+      "inputContract": {
+        "bytes": 1441,
+        "path": "artifacts/capability-layers/eternities-muse/input.schema.json",
+        "sha256": "80d80ea98da329505f02752b5834786ae4d6336c87e451ecae78922008ae17af",
+        "slots": [
+          {
+            "jsonKind": "array",
+            "slotId": "available-specialists",
+            "typeId": "eternities.capability-set"
+          },
+          {
+            "jsonKind": "array",
+            "slotId": "design-constraints",
+            "typeId": "eternities.constraint-set"
+          },
+          {
+            "jsonKind": "array",
+            "slotId": "visual-source-set",
+            "typeId": "eternities.artifact-set"
+          }
+        ]
+      },
+      "nodeId": "design",
+      "order": 0,
+      "outputContract": {
+        "bytes": 1624,
+        "path": "artifacts/capability-layers/eternities-muse/output.schema.json",
+        "sha256": "2d16bde7446ba9072e3fcd9134de34e6a6b913d15079fc69103506f839c64029",
+        "slots": [
+          {
+            "jsonKind": "object",
+            "slotId": "acceptance-boundary",
+            "typeId": "eternities.acceptance-contract"
+          },
+          {
+            "jsonKind": "object",
+            "slotId": "specialist-handoff",
+            "typeId": "eternities.handoff-contract"
+          },
+          {
+            "jsonKind": "object",
+            "slotId": "visual-direction",
+            "typeId": "eternities.decision-record"
+          },
+          {
+            "jsonKind": "object",
+            "slotId": "visual-system",
+            "typeId": "eternities.design-system"
+          }
+        ]
+      },
+      "phase": "design",
+      "phaseIndex": 1,
+      "preconditions": [],
+      "riskClass": "moderate",
+      "routeCard": {
+        "bytes": 2140,
+        "path": "artifacts/capability-layers/eternities-muse/route-card.v1.json",
+        "sha256": "aeda57137cb968921a2b5e9bf44d24bb5c397b17ec105b8ff718802f1608b2ab"
+      }
+    },
+    {
+      "activation": {
+        "decisionDigest": "763a450f6384fe387f5328c44a86388d1689c7f95d4a8d592344ec1339aec819",
+        "deferredReview": false,
+        "layer": {
+          "bytes": 1093,
+          "mode": "guardrail",
+          "path": "artifacts/capability-layers/eternities-forge/guardrails.v1.json",
+          "sha256": "8a1ffdff14b25c15dbb9926fc5f85e76d0714f0f1c7d3f8d4772c756fa67dd84",
+          "timing": "pre-inference"
+        },
+        "mode": "guardrail",
+        "preInferenceDisclosure": "guardrails-only",
+        "reasonCodes": [
+          "review-unavailable",
+          "consequence-guardrails"
+        ]
+      },
+      "authorityRequirements": [
+        "local-read",
+        "local-write",
+        "repository-write"
+      ],
+      "bundleDigest": "30bbd83a802d5600c7fe2dae4b26fc878fc9be7c1ad031ddc3282c6dca8fcaf1",
+      "capabilityId": "eternities-forge",
+      "effects": [
+        "local-read",
+        "local-write"
+      ],
+      "estimatedContextBytes": 3954,
+      "evidenceConfidence": "verified",
+      "inputContract": {
+        "bytes": 1340,
+        "path": "artifacts/capability-layers/eternities-forge/input.schema.json",
+        "sha256": "410cebd66bbe1121fd850a62e5c85c1838a62e27207682c938416f3420a58b10",
+        "slots": [
+          {
+            "jsonKind": "object",
+            "slotId": "acceptance-risk-boundary",
+            "typeId": "eternities.acceptance-contract"
+          },
+          {
+            "jsonKind": "object",
+            "slotId": "repository-state",
+            "typeId": "eternities.repository-state"
+          },
+          {
+            "jsonKind": "object",
+            "slotId": "settled-outcome",
+            "typeId": "eternities.mission-spec"
+          }
+        ]
+      },
+      "nodeId": "implementation",
+      "order": 1,
+      "outputContract": {
+        "bytes": 1521,
+        "path": "artifacts/capability-layers/eternities-forge/output.schema.json",
+        "sha256": "611939f4576612831127b3a390afb461b53d2e5acad7269a38a2ecd260749f4b",
+        "slots": [
+          {
+            "jsonKind": "object",
+            "slotId": "claim-evidence-ledger",
+            "typeId": "eternities.evidence-ledger"
+          },
+          {
+            "jsonKind": "object",
+            "slotId": "implementation",
+            "typeId": "eternities.implementation-artifact"
+          },
+          {
+            "jsonKind": "object",
+            "slotId": "integration-state",
+            "typeId": "eternities.integration-state"
+          },
+          {
+            "jsonKind": "object",
+            "slotId": "review-disposition",
+            "typeId": "eternities.review-decision"
+          }
+        ]
+      },
+      "phase": "implementation",
+      "phaseIndex": 2,
+      "preconditions": [
+        "repository-present",
+        "settled-outcome"
+      ],
+      "riskClass": "moderate",
+      "routeCard": {
+        "bytes": 2100,
+        "path": "artifacts/capability-layers/eternities-forge/route-card.v1.json",
+        "sha256": "8bf0b94f7786bac45f09c2f818f5c7382e23e7d86bb5605c9ef100918b370c27"
+      }
+    }
+  ],
+  "planDigest": "9849b421071a74535028cabd70d92db3cd4df6d4b0433f83bb562fb14d47d48f",
+  "policyDigest": "f5934f9b22fc3ede905fec359cc9697f40b23ede4f7144eb298f4cd184b005fd",
+  "protocolId": "eternities-typed-mission-method-v1",
+  "registryDigest": "5143a9ca74b5676605c33e94c7d610d830c3aafe7d57c32a48558d5112b713b8",
+  "schemaVersion": 1
+}

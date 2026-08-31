@@ -1,0 +1,304 @@
+{
+  "$defs": {
+    "authorityProjection": {
+      "additionalProperties": false,
+      "properties": {
+        "availableAuthority": { "items": { "type": "string" }, "type": "array", "uniqueItems": true },
+        "availablePreconditions": { "items": { "type": "string" }, "type": "array", "uniqueItems": true },
+        "contextBudget": { "minimum": 1, "type": "integer" },
+        "maximumRisk": { "enum": ["low", "moderate", "high"] },
+        "minimumEvidenceConfidence": { "enum": ["unverified", "inferred", "verified"] },
+        "permittedEffects": { "items": { "type": "string" }, "type": "array", "uniqueItems": true }
+      },
+      "required": [
+        "availableAuthority",
+        "permittedEffects",
+        "availablePreconditions",
+        "maximumRisk",
+        "minimumEvidenceConfidence",
+        "contextBudget"
+      ],
+      "type": "object"
+    },
+    "consumer": {
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": { "minLength": 1, "type": "string" },
+        "slotId": { "minLength": 1, "type": "string" }
+      },
+      "required": ["nodeId", "slotId"],
+      "type": "object"
+    },
+    "digest": { "pattern": "^[a-f0-9]{64}$", "type": "string" },
+    "fileReference": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": { "minimum": 1, "type": "integer" },
+        "path": { "minLength": 1, "type": "string" },
+        "sha256": { "$ref": "#/$defs/digest" }
+      },
+      "required": ["path", "sha256", "bytes"],
+      "type": "object"
+    },
+    "slot": {
+      "additionalProperties": false,
+      "properties": {
+        "jsonKind": { "enum": ["array", "object"] },
+        "slotId": { "minLength": 1, "type": "string" },
+        "typeId": { "minLength": 1, "type": "string" }
+      },
+      "required": ["slotId", "typeId", "jsonKind"],
+      "type": "object"
+    },
+    "slotContract": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": { "minimum": 1, "type": "integer" },
+        "path": { "minLength": 1, "type": "string" },
+        "sha256": { "$ref": "#/$defs/digest" },
+        "slots": { "items": { "$ref": "#/$defs/slot" }, "type": "array" }
+      },
+      "required": ["path", "sha256", "bytes", "slots"],
+      "type": "object"
+    },
+    "producer": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "inputId": { "minLength": 1, "type": "string" },
+            "kind": { "const": "mission-input" }
+          },
+          "required": ["kind", "inputId"],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "kind": { "const": "node-output" },
+            "nodeId": { "minLength": 1, "type": "string" },
+            "slotId": { "minLength": 1, "type": "string" }
+          },
+          "required": ["kind", "nodeId", "slotId"],
+          "type": "object"
+        }
+      ]
+    }
+  },
+  "$id": "urn:eternities:typed-composition:mission-method:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "activationResultDigest": { "$ref": "#/$defs/digest" },
+    "activationTrustRootDigest": { "$ref": "#/$defs/digest" },
+    "aggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "authorityExpanded": { "const": false },
+        "authorityRequirements": { "items": { "type": "string" }, "type": "array", "uniqueItems": true },
+        "contractBytes": { "minimum": 0, "type": "integer" },
+        "effects": { "items": { "type": "string" }, "type": "array", "uniqueItems": true },
+        "estimatedContextBytes": { "minimum": 0, "type": "integer" },
+        "estimatedContextTokens": { "minimum": 0, "type": "integer" },
+        "evidenceConfidence": { "items": { "enum": ["unverified", "inferred", "verified"] }, "type": "array", "uniqueItems": true },
+        "methodBodiesEmbedded": { "const": 0 },
+        "preconditions": { "items": { "type": "string" }, "type": "array", "uniqueItems": true },
+        "riskClasses": { "items": { "enum": ["low", "moderate", "high"] }, "type": "array", "uniqueItems": true },
+        "selectedLayerBytes": { "minimum": 0, "type": "integer" },
+        "sourceBodiesTransported": { "const": 0 }
+      },
+      "required": [
+        "effects",
+        "authorityRequirements",
+        "preconditions",
+        "riskClasses",
+        "evidenceConfidence",
+        "contractBytes",
+        "selectedLayerBytes",
+        "estimatedContextBytes",
+        "estimatedContextTokens",
+        "methodBodiesEmbedded",
+        "sourceBodiesTransported",
+        "authorityExpanded"
+      ],
+      "type": "object"
+    },
+    "authorityProjection": { "$ref": "#/$defs/authorityProjection" },
+    "capabilityLayerReceiptDigest": { "$ref": "#/$defs/digest" },
+    "evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "compatibility": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "left": { "type": "string" },
+              "mutuallyCompatible": { "const": true },
+              "right": { "type": "string" }
+            },
+            "required": ["left", "right", "mutuallyCompatible"],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "graph": {
+          "additionalProperties": false,
+          "properties": {
+            "acyclic": { "const": true },
+            "everyArtifactHasOneProducer": { "const": true },
+            "everyRequiredInputBoundOnce": { "const": true },
+            "linkCount": { "minimum": 0, "type": "integer" },
+            "nodeCount": { "minimum": 1, "type": "integer" },
+            "phaseMonotonic": { "const": true },
+            "topologicalOrder": { "items": { "type": "string" }, "type": "array" }
+          },
+          "required": [
+            "nodeCount",
+            "linkCount",
+            "topologicalOrder",
+            "acyclic",
+            "phaseMonotonic",
+            "everyRequiredInputBoundOnce",
+            "everyArtifactHasOneProducer"
+          ],
+          "type": "object"
+        }
+      },
+      "required": ["compatibility", "graph"],
+      "type": "object"
+    },
+    "links": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "artifactId": { "minLength": 1, "type": "string" },
+          "consumer": { "$ref": "#/$defs/consumer" },
+          "producer": { "$ref": "#/$defs/producer" }
+        },
+        "required": ["artifactId", "producer", "consumer"],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "methodDigest": { "$ref": "#/$defs/digest" },
+    "missionId": { "minLength": 1, "type": "string" },
+    "missionInputs": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "artifactId": { "minLength": 1, "type": "string" },
+          "jsonKind": { "enum": ["array", "object"] },
+          "typeId": { "minLength": 1, "type": "string" }
+        },
+        "required": ["artifactId", "typeId", "jsonKind"],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "missionOutputs": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "nodeId": { "minLength": 1, "type": "string" },
+          "outputId": { "minLength": 1, "type": "string" },
+          "slotId": { "minLength": 1, "type": "string" }
+        },
+        "required": ["outputId", "nodeId", "slotId"],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "nodes": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "activation": {
+            "additionalProperties": false,
+            "properties": {
+              "decisionDigest": { "$ref": "#/$defs/digest" },
+              "deferredReview": { "type": "boolean" },
+              "layer": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": { "minimum": 0, "type": "integer" },
+                  "mode": { "enum": ["native", "guardrail", "method", "review"] },
+                  "path": { "type": ["string", "null"] },
+                  "sha256": { "anyOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+                  "timing": { "enum": ["none", "pre-inference", "post-artifact"] }
+                },
+                "required": ["mode", "timing", "path", "sha256", "bytes"],
+                "type": "object"
+              },
+              "mode": { "enum": ["native", "guardrail", "method", "review"] },
+              "preInferenceDisclosure": { "type": "string" },
+              "reasonCodes": { "items": { "type": "string" }, "type": "array" }
+            },
+            "required": ["decisionDigest", "mode", "reasonCodes", "preInferenceDisclosure", "deferredReview", "layer"],
+            "type": "object"
+          },
+          "authorityRequirements": { "items": { "type": "string" }, "type": "array" },
+          "bundleDigest": { "$ref": "#/$defs/digest" },
+          "capabilityId": { "type": "string" },
+          "effects": { "items": { "type": "string" }, "type": "array" },
+          "estimatedContextBytes": { "minimum": 0, "type": "integer" },
+          "evidenceConfidence": { "enum": ["unverified", "inferred", "verified"] },
+          "inputContract": { "$ref": "#/$defs/slotContract" },
+          "nodeId": { "type": "string" },
+          "order": { "minimum": 0, "type": "integer" },
+          "outputContract": { "$ref": "#/$defs/slotContract" },
+          "phase": { "type": "string" },
+          "phaseIndex": { "minimum": 0, "type": "integer" },
+          "preconditions": { "items": { "type": "string" }, "type": "array" },
+          "riskClass": { "enum": ["low", "moderate", "high"] },
+          "routeCard": { "$ref": "#/$defs/fileReference" }
+        },
+        "required": [
+          "nodeId",
+          "phase",
+          "phaseIndex",
+          "order",
+          "capabilityId",
+          "bundleDigest",
+          "routeCard",
+          "inputContract",
+          "outputContract",
+          "activation",
+          "effects",
+          "authorityRequirements",
+          "preconditions",
+          "riskClass",
+          "evidenceConfidence",
+          "estimatedContextBytes"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "planDigest": { "$ref": "#/$defs/digest" },
+    "policyDigest": { "$ref": "#/$defs/digest" },
+    "protocolId": { "const": "eternities-typed-mission-method-v1" },
+    "registryDigest": { "$ref": "#/$defs/digest" },
+    "schemaVersion": { "const": 1 }
+  },
+  "required": [
+    "schemaVersion",
+    "protocolId",
+    "missionId",
+    "policyDigest",
+    "registryDigest",
+    "capabilityLayerReceiptDigest",
+    "activationTrustRootDigest",
+    "activationResultDigest",
+    "planDigest",
+    "authorityProjection",
+    "missionInputs",
+    "nodes",
+    "links",
+    "missionOutputs",
+    "aggregate",
+    "evidence",
+    "methodDigest"
+  ],
+  "title": "Eternities typed mission method v1",
+  "type": "object"
+}

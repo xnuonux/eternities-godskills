@@ -1,0 +1,106 @@
+{
+  "$defs": {
+    "consumer": {
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": { "minLength": 1, "type": "string" },
+        "slotId": { "minLength": 1, "type": "string" }
+      },
+      "required": ["nodeId", "slotId"],
+      "type": "object"
+    },
+    "digest": { "pattern": "^[a-f0-9]{64}$", "type": "string" },
+    "producer": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "inputId": { "minLength": 1, "type": "string" },
+            "kind": { "const": "mission-input" }
+          },
+          "required": ["kind", "inputId"],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "kind": { "const": "node-output" },
+            "nodeId": { "minLength": 1, "type": "string" },
+            "slotId": { "minLength": 1, "type": "string" }
+          },
+          "required": ["kind", "nodeId", "slotId"],
+          "type": "object"
+        }
+      ]
+    }
+  },
+  "$id": "urn:eternities:typed-composition:execution:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authorityExpanded": { "const": false },
+    "executionDigest": { "$ref": "#/$defs/digest" },
+    "handoffs": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "artifactId": { "type": "string" },
+          "consumer": { "$ref": "#/$defs/consumer" },
+          "producer": { "$ref": "#/$defs/producer" },
+          "valueDigest": { "$ref": "#/$defs/digest" }
+        },
+        "required": ["artifactId", "producer", "consumer", "valueDigest"],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "methodDigest": { "$ref": "#/$defs/digest" },
+    "missionId": { "minLength": 1, "type": "string" },
+    "missionInputDigest": { "$ref": "#/$defs/digest" },
+    "missionOutputs": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "nodeId": { "type": "string" },
+          "outputId": { "type": "string" },
+          "slotId": { "type": "string" },
+          "valueDigest": { "$ref": "#/$defs/digest" }
+        },
+        "required": ["outputId", "nodeId", "slotId", "valueDigest"],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "nodeExecutions": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "activationDecisionDigest": { "$ref": "#/$defs/digest" },
+          "capabilityId": { "type": "string" },
+          "inputDigest": { "$ref": "#/$defs/digest" },
+          "nodeId": { "type": "string" },
+          "outputDigest": { "$ref": "#/$defs/digest" }
+        },
+        "required": ["nodeId", "capabilityId", "activationDecisionDigest", "inputDigest", "outputDigest"],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "protocolId": { "const": "eternities-typed-composition-execution-v1" },
+    "schemaVersion": { "const": 1 }
+  },
+  "required": [
+    "schemaVersion",
+    "protocolId",
+    "missionId",
+    "methodDigest",
+    "missionInputDigest",
+    "nodeExecutions",
+    "handoffs",
+    "missionOutputs",
+    "authorityExpanded",
+    "executionDigest"
+  ],
+  "title": "Eternities typed composition execution receipt v1",
+  "type": "object"
+}
