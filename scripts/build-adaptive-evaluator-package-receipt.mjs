@@ -152,122 +152,6 @@ function artifactRow({ role, relativePath, bytes, logical = false }) {
   return row;
 }
 
-function regexLiteralMayStart(sanitizedSource) {
-  const prefix = sanitizedSource.trimEnd();
-  if (prefix === "") return true;
-  if (/=>$/u.test(prefix)) return true;
-  if (/[([{=,:;!?&|+\-*%~^<>]$/u.test(prefix)) return true;
-  return /\b(?:return|throw|case|delete|void|typeof|instanceof|in|of|new|yield|await|else|do)$/u
-    .test(prefix);
-}
-
-function consumeRegexLiteral(source, start) {
-  let index = start + 1;
-  let inCharacterClass = false;
-  let escaped = false;
-  while (index < source.length) {
-    const current = source[index];
-    if (current === "\n" || current === "\r") {
-      throw new Error("unterminated evaluator module regex literal");
-    }
-    if (escaped) {
-      escaped = false;
-    } else if (current === "\\") {
-      escaped = true;
-    } else if (current === "[") {
-      inCharacterClass = true;
-    } else if (current === "]" && inCharacterClass) {
-      inCharacterClass = false;
-    } else if (current === "/" && !inCharacterClass) {
-      index += 1;
-      while (index < source.length && /[a-z]/iu.test(source[index])) index += 1;
-      return index;
-    }
-    index += 1;
-  }
-  throw new Error("unterminated evaluator module regex literal");
-}
-
-function stripModuleComments(source) {
-  let result = "";
-  let index = 0;
-  let quote = null;
-  while (index < source.length) {
-    const current = source[index];
-    const next = source[index + 1];
-    if (quote !== null) {
-      result += current;
-      if (current === "\\") {
-        index += 1;
-        if (index < source.length) result += source[index];
-      } else if (current === quote) {
-        quote = null;
-      }
-      index += 1;
-      continue;
-    }
-    if (current === "\"" || current === "'" || current === "`") {
-      quote = current;
-      result += current;
-      index += 1;
-      continue;
-    }
-    if (current === "/" && next !== "/" && next !== "*"
-        && regexLiteralMayStart(result)) {
-      const end = consumeRegexLiteral(source, index);
-      result += " ".repeat(end - index);
-      index = end;
-      continue;
-    }
-    if (current === "/" && next === "/") {
-      result += "  ";
-      index += 2;
-      while (index < source.length && source[index] !== "\n") {
-        result += " ";
-        index += 1;
-      }
-      continue;
-    }
-    if (current === "/" && next === "*") {
-      result += "  ";
-      index += 2;
-      while (index < source.length
-          && !(source[index] === "*" && source[index + 1] === "/")) {
-        result += source[index] === "\n" ? "\n" : " ";
-        index += 1;
-      }
-      if (index >= source.length) throw new Error("unterminated evaluator module comment");
-      result += "  ";
-      index += 2;
-      continue;
-    }
-    result += current;
-    index += 1;
-  }
-  return result;
-}
-
-async function applyLexicalRuntimeHardening(root, modules, io) {
-  for (const module of modules) {
-    const bytes = await readContained(
-      root,
-      module.path,
-      io,
-      `evaluator package module ${module.path}`,
-    );
-    if (bytes.length !== module.bytes || sha256(bytes) !== module.sha256) {
-      throw new Error(`evaluator package module bytes drifted while screening: ${module.path}`);
-    }
-    if (path.posix.extname(module.path) === ".json") continue;
-    const source = stripModuleComments(bytes.toString("utf8"));
-    if (/\b(?:eval|Function|AsyncFunction|GeneratorFunction|AsyncGeneratorFunction)\b/m.test(source)
-        || /\b(?:globalThis|getBuiltinModule|createRequire)\b/m.test(source)
-        || /(?:\.|\[\s*["'])constructor\b/m.test(source)) {
-      throw new Error("evaluator package contains a recognized runtime code generation pattern");
-    }
-  }
-}
-
 export async function buildAdaptiveEvaluatorPackageReceipt({
   repositoryRoot,
   descriptor,
@@ -306,7 +190,6 @@ export async function buildAdaptiveEvaluatorPackageReceipt({
     roots: [descriptor.entrypointPath],
     io: fs,
   });
-  await applyLexicalRuntimeHardening(root, modules, fs);
   const artifacts = modules.map((module) => ({
     role: module.path === descriptor.entrypointPath ? "entrypoint" : "dependency",
     ...module,

@@ -9,6 +9,7 @@ import {
   canonicalFile,
 } from "../src/adaptive-evidence-contracts.mjs";
 import { validateEvaluatorPackageReceipt } from "../src/adaptive-evaluator-package.mjs";
+import { sha256 } from "../src/io.mjs";
 
 async function builder() {
   return import("../scripts/build-adaptive-evaluator-package-receipt.mjs").catch((error) =>
@@ -217,16 +218,6 @@ test("rejects dynamic, CommonJS, bare, escaping, and symlinked module closure", 
 
   for (const [label, source, pattern] of [
     ["dynamic", "export const evaluate = () => import('./helper.mjs');\n", /dynamic/i],
-    [
-      "indirect-code-generation",
-      "export const evaluate = () => Function(\"return im\" + \"port('node:fs')\")();\n",
-      /dynamic|code generation|Function/i,
-    ],
-    [
-      "regex-comment-confusion",
-      "const marker = /[//]/; Function(\"return 1\")();\nexport { marker };\n",
-      /code generation|Function/i,
-    ],
     ["commonjs", "export const evaluate = () => require('./helper.mjs');\n", /CommonJS|require/i],
     ["bare", "import value from 'external-package'; export { value };\n", /bare|external/i],
   ]) {
@@ -237,23 +228,6 @@ test("rejects dynamic, CommonJS, bare, escaping, and symlinked module closure", 
       descriptor: descriptor(),
     }), pattern);
   }
-
-  const computedConstructorRoot = await fixture(t, "adaptive-evaluator-computed-constructor-");
-  await put(computedConstructorRoot, "src/entrypoint.mjs", [
-    "export const evaluate = () =>",
-    "  ([][\"filter\"][\"con\" + \"structor\"])(",
-    "    \"return im\" + \"port('node:fs')\",",
-    "  )();",
-    "",
-  ].join("\n"));
-  const computedConstructorReceipt = await buildAdaptiveEvaluatorPackageReceipt({
-    repositoryRoot: computedConstructorRoot,
-    descriptor: descriptor(),
-  });
-  assert.equal(computedConstructorReceipt.dependencyClosure.runtimeCodeGenerationProvenAbsent,
-    false);
-  assert.equal(Object.hasOwn(computedConstructorReceipt.dependencyClosure,
-    "codeGenerationPrimitivesRejected"), false);
 
   const aliasRoot = await fixture(t, "adaptive-evaluator-alias-");
   const realDirectory = path.join(aliasRoot, "internal");
@@ -267,34 +241,63 @@ test("rejects dynamic, CommonJS, bare, escaping, and symlinked module closure", 
   }), /alias|symlink|canonical/i);
 });
 
-test("screens the exact module bytes bound by the receipt", async (t) => {
+test("binds arbitrary runtime code exactly without claiming runtime safety", async (t) => {
   const { buildAdaptiveEvaluatorPackageReceipt } = await builder();
-  const root = await fixture(t, "adaptive-evaluator-screened-bytes-");
+  const sources = [
+    "export const evaluate = () => Function(\"return 1\")();\n",
+    "if (true) /[//]/; Function(\"return 1\")();\nexport const ok = true;\n",
+    "const ratio = /a/ / Function(\"return 1\")() / 2;\nexport { ratio };\n",
+    [
+      "export const evaluate = () =>",
+      "  ([][\"filter\"][\"con\" + \"structor\"])(",
+      "    \"return im\" + \"port('node:fs')\",",
+      "  )();",
+      "",
+    ].join("\n"),
+  ];
+  for (const [index, source] of sources.entries()) {
+    const root = await fixture(t, `adaptive-evaluator-untrusted-runtime-${index}-`);
+    await put(root, "src/entrypoint.mjs", source);
+    const receipt = await buildAdaptiveEvaluatorPackageReceipt({
+      repositoryRoot: root,
+      descriptor: descriptor(),
+    });
+    const entrypoint = receipt.artifacts.find(({ role }) => role === "entrypoint");
+    assert.equal(entrypoint.sha256, sha256(Buffer.from(source, "utf8")));
+    assert.equal(receipt.dependencyClosure.runtimeCodeGenerationProvenAbsent, false);
+    assert.equal(receipt.dependencyClosure.runtimeClosureComplete, false);
+    assert.equal(Object.hasOwn(receipt.dependencyClosure,
+      "codeGenerationPrimitivesRejected"), false);
+  }
+
+  const root = await fixture(t, "adaptive-evaluator-single-read-");
   const entrypointPath = path.join(root, "src", "entrypoint.mjs");
-  const unsafe = Buffer.from(
+  const firstRead = Buffer.from(
     "export const evaluate = () => Function('return 1')();\n",
     "utf8",
   );
-  const safe = Buffer.from("export const evaluate = () => 1;\n", "utf8");
+  const laterRead = Buffer.from("export const evaluate = () => 1;\n", "utf8");
   let entrypointReads = 0;
 
-  await assert.rejects(buildAdaptiveEvaluatorPackageReceipt({
+  const receipt = await buildAdaptiveEvaluatorPackageReceipt({
     repositoryRoot: root,
     descriptor: descriptor(),
     io: {
       readFile: async (actualPath) => {
         if (path.resolve(actualPath) === path.resolve(entrypointPath)) {
           entrypointReads += 1;
-          return entrypointReads === 1 ? unsafe : safe;
+          return entrypointReads === 1 ? firstRead : laterRead;
         }
         return readFile(actualPath);
       },
     },
-  }), /module.*(?:changed|drift)|bytes.*(?:changed|drift)/i);
-  assert.equal(entrypointReads, 2);
+  });
+  assert.equal(entrypointReads, 1);
+  assert.equal(receipt.artifacts.find(({ role }) => role === "entrypoint").sha256,
+    sha256(firstRead));
 });
 
-test("ignores comments and inert JSON during lexical runtime screening", async (t) => {
+test("accepts inert comments, regex, and JSON without claiming runtime safety", async (t) => {
   const { buildAdaptiveEvaluatorPackageReceipt } = await builder();
   const root = await fixture(t, "adaptive-evaluator-inert-text-");
   await put(root, "src/entrypoint.mjs", [
