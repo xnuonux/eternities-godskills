@@ -269,7 +269,7 @@ export function buildAdaptiveEvidenceSchemas() {
     "schemaVersion", "trialId", "status", "profileIdentity", "profileKey",
     "capabilityManifestDigest", "policyDigest", "taskDefinition",
     "comparisonPolicy", "artifactBoundary", "evaluator", "variants",
-    "registeredAt", "trialDigest",
+    "producerId", "registeredAt", "trialDigest",
   ], {
     schemaVersion: { const: 2 },
     trialId: stringSchema(),
@@ -308,6 +308,7 @@ export function buildAdaptiveEvidenceSchemas() {
       },
     },
     variants: { type: "array", items: { enum: [...TRIAL_VARIANTS] }, uniqueItems: true },
+    producerId: stringSchema(),
     registeredAt: stringSchema(),
     trialDigest: digestSchema(),
   });
