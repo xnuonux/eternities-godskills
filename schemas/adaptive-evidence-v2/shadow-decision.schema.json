@@ -1,0 +1,114 @@
+{
+  "$id": "urn:eternities:adaptive-evidence:v2:shadow-decision",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifactDigest": {
+      "anyOf": [
+        {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "disclosedLayerBodies": {
+      "maxItems": 0,
+      "type": "array"
+    },
+    "id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "nativeAttemptRequired": {
+      "const": true
+    },
+    "policyDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "predictedDecisionDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "predictedMode": {
+      "enum": [
+        "native",
+        "guardrail",
+        "method",
+        "review"
+      ]
+    },
+    "profileIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "capabilityId": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "capabilityVersion": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "consequenceClass": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "environmentId": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "modelFamily": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "reasoningTier": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "taskClass": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "taskClass",
+        "modelFamily",
+        "reasoningTier",
+        "consequenceClass",
+        "capabilityVersion",
+        "environmentId"
+      ],
+      "type": "object"
+    },
+    "profileKey": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": 2
+    },
+    "shadowDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "profileIdentity",
+    "profileKey",
+    "predictedMode",
+    "predictedDecisionDigest",
+    "disclosedLayerBodies",
+    "nativeAttemptRequired",
+    "artifactDigest",
+    "policyDigest",
+    "shadowDigest"
+  ],
+  "title": "Adaptive evidence v2 shadow decision",
+  "type": "object"
+}

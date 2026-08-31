@@ -1,0 +1,257 @@
+{
+  "$id": "urn:eternities:adaptive-evidence:v2:profile",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "boundDigests": {
+      "additionalProperties": false,
+      "properties": {
+        "comparisonPolicyDigest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "ledgerDigest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "policyDigest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "taskDefinitionDigest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "trialDigest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "policyDigest",
+        "taskDefinitionDigest",
+        "comparisonPolicyDigest",
+        "trialDigest",
+        "ledgerDigest"
+      ],
+      "type": "object"
+    },
+    "evidenceRowDigests": {
+      "items": {
+        "pattern": "^[a-f0-9]{64}$",
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "failedGates": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "lifecycleState": {
+      "enum": [
+        "ineligible",
+        "eligible",
+        "promoted",
+        "demoted",
+        "quarantined",
+        "invalidated"
+      ]
+    },
+    "participantIds": {
+      "additionalProperties": false,
+      "properties": {
+        "evaluators": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "producers": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "producers",
+        "evaluators"
+      ],
+      "type": "object"
+    },
+    "profileDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "profileIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "capabilityId": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "capabilityVersion": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "consequenceClass": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "environmentId": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "modelFamily": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "reasoningTier": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "taskClass": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "taskClass",
+        "modelFamily",
+        "reasoningTier",
+        "consequenceClass",
+        "capabilityVersion",
+        "environmentId"
+      ],
+      "type": "object"
+    },
+    "profileKey": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "promotableEvidenceRows": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "recommendedMode": {
+      "enum": [
+        "native",
+        "guardrail",
+        "method",
+        "review"
+      ]
+    },
+    "schemaVersion": {
+      "const": 2
+    },
+    "variantMetrics": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "criticalRegressions": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "evidenceLevels": {
+            "items": {
+              "enum": [
+                "structural",
+                "fixture",
+                "artifact",
+                "model",
+                "cross-model",
+                "field",
+                "universal"
+              ]
+            },
+            "type": "array",
+            "uniqueItems": true
+          },
+          "losses": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "matchedComparisons": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maximumOverheadRatio": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "rowDigests": {
+            "items": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true
+          },
+          "ties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "variant": {
+            "enum": [
+              "raw",
+              "guardrail",
+              "method",
+              "reviewer",
+              "combined"
+            ]
+          },
+          "wins": {
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "variant",
+          "matchedComparisons",
+          "wins",
+          "losses",
+          "ties",
+          "criticalRegressions",
+          "maximumOverheadRatio",
+          "evidenceLevels",
+          "rowDigests"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "profileIdentity",
+    "profileKey",
+    "lifecycleState",
+    "recommendedMode",
+    "variantMetrics",
+    "evidenceRowDigests",
+    "participantIds",
+    "promotableEvidenceRows",
+    "failedGates",
+    "boundDigests",
+    "profileDigest"
+  ],
+  "title": "Adaptive evidence v2 derived profile",
+  "type": "object"
+}

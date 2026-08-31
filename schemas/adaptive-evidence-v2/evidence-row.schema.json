@@ -1,0 +1,227 @@
+{
+  "$id": "urn:eternities:adaptive-evidence:v2:evidence-row",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifactBytes": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "artifactDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "artifactProducedAt": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "baselineArtifactDigest": {
+      "anyOf": [
+        {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "comparisons": {
+      "additionalProperties": false,
+      "properties": {
+        "losses": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "matched": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "ties": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "wins": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "matched",
+        "wins",
+        "losses",
+        "ties"
+      ],
+      "type": "object"
+    },
+    "cost": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "latencyMs": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "monetaryCost": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tokens": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "bytes",
+        "tokens",
+        "latencyMs",
+        "monetaryCost"
+      ],
+      "type": "object"
+    },
+    "criticalRegression": {
+      "type": "boolean"
+    },
+    "evaluatorId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "observationDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "observedAt": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "outcomeAgainstRaw": {
+      "enum": [
+        "win",
+        "loss",
+        "tie",
+        "baseline"
+      ]
+    },
+    "previousRowDigest": {
+      "anyOf": [
+        {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "producerId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "profileKey": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "proofLevel": {
+      "enum": [
+        "structural",
+        "fixture",
+        "artifact",
+        "model",
+        "cross-model",
+        "field",
+        "universal"
+      ]
+    },
+    "proposalDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "reasonCodes": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "rowDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": 2
+    },
+    "score": {
+      "minimum": 0,
+      "type": "number"
+    },
+    "sequence": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "trialDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "variant": {
+      "enum": [
+        "raw",
+        "guardrail",
+        "method",
+        "reviewer",
+        "combined"
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "sequence",
+    "previousRowDigest",
+    "proposalDigest",
+    "trialDigest",
+    "profileKey",
+    "variant",
+    "artifactDigest",
+    "artifactBytes",
+    "artifactProducedAt",
+    "observationDigest",
+    "score",
+    "outcomeAgainstRaw",
+    "criticalRegression",
+    "baselineArtifactDigest",
+    "comparisons",
+    "reasonCodes",
+    "cost",
+    "proofLevel",
+    "producerId",
+    "evaluatorId",
+    "observedAt",
+    "rowDigest"
+  ],
+  "title": "Adaptive evidence v2 ledger row",
+  "type": "object"
+}

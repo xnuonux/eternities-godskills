@@ -1,0 +1,88 @@
+{
+  "$id": "urn:eternities:adaptive-evidence:v2:lifecycle-decision",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "action": {
+      "enum": [
+        "promote",
+        "demote",
+        "quarantine",
+        "invalidate"
+      ]
+    },
+    "actorId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "authorityExpanded": {
+      "const": false
+    },
+    "authorizationDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "decisionDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "evidenceDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "nextMode": {
+      "enum": [
+        "native",
+        "guardrail",
+        "method",
+        "review"
+      ]
+    },
+    "priorMode": {
+      "enum": [
+        "native",
+        "guardrail",
+        "method",
+        "review"
+      ]
+    },
+    "profileDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "reasonCodes": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "schemaVersion": {
+      "const": 2
+    },
+    "status": {
+      "enum": [
+        "applied",
+        "rejected",
+        "no-change"
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "action",
+    "status",
+    "actorId",
+    "authorizationDigest",
+    "profileDigest",
+    "evidenceDigest",
+    "priorMode",
+    "nextMode",
+    "reasonCodes",
+    "authorityExpanded",
+    "decisionDigest"
+  ],
+  "title": "Adaptive evidence v2 lifecycle decision",
+  "type": "object"
+}

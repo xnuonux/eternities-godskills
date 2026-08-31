@@ -1,7 +1,18 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { readFile } from "node:fs/promises";
+import {
+  copyFile,
+  mkdir,
+  mkdtemp,
+  readFile,
+  rename,
+  rm,
+  writeFile,
+} from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import test from "node:test";
+import { pathToFileURL } from "node:url";
 
 const root = new URL("../", import.meta.url);
 
@@ -24,6 +35,11 @@ async function trials() {
 async function ledgerModule() {
   return import("../src/adaptive-evidence-ledger.mjs").catch((error) =>
     assert.fail(`adaptive evidence ledger is unavailable: ${error.message}`));
+}
+
+async function builderModule() {
+  return import("../scripts/build-adaptive-evidence-v2.mjs").catch((error) =>
+    assert.fail(`adaptive evidence builder is unavailable: ${error.message}`));
 }
 
 function digestText(text) {
@@ -1021,4 +1037,210 @@ test("lifecycle receipts require external authority, reject self-promotion, and 
     ...lifecycleContext(eligibleProfile),
     ...trusted,
   }), /grant|authority/i);
+});
+
+const ADAPTIVE_V2_FILE_PATHS = Object.freeze([
+  "artifacts/adaptive-evidence-v2/fixture-ledger.v2.json",
+  "artifacts/adaptive-evidence-v2/fixture-lifecycle.v2.json",
+  "artifacts/adaptive-evidence-v2/fixture-profile.v2.json",
+  "artifacts/adaptive-evidence-v2/fixture-trial.v2.json",
+  "artifacts/adaptive-evidence-v2/historical-muse-bridge.v2.json",
+  "artifacts/adaptive-evidence-v2/shadow-muse.v2.json",
+  "schemas/adaptive-evidence-v2/evidence-row.schema.json",
+  "schemas/adaptive-evidence-v2/lifecycle-decision.schema.json",
+  "schemas/adaptive-evidence-v2/profile.schema.json",
+  "schemas/adaptive-evidence-v2/shadow-decision.schema.json",
+  "schemas/adaptive-evidence-v2/trial-envelope.schema.json",
+]);
+
+const ADAPTIVE_V2_INPUT_PATHS = Object.freeze([
+  "artifacts/adaptive-activation/evidence.v1.json",
+  "artifacts/capability-layers/eternities-aegis/manifest.v1.json",
+  "artifacts/capability-layers/eternities-forge/manifest.v1.json",
+  "artifacts/capability-layers/eternities-muse/manifest.v1.json",
+  "docs/capability-layer-abi-v1-certification.md",
+  "policies/adaptive-evidence.v2.json",
+  "receipts/capability-layer-abi-v1.json",
+  "scripts/build-adaptive-evidence-v2.mjs",
+  "src/adaptive-evidence-contracts.mjs",
+  "src/adaptive-evidence-ledger.mjs",
+  "src/adaptive-evidence-trials.mjs",
+]);
+
+async function copyAdaptiveBuilderInputs(repository) {
+  for (const relative of ADAPTIVE_V2_INPUT_PATHS) {
+    const destination = path.join(repository, ...relative.split("/"));
+    await mkdir(path.dirname(destination), { recursive: true });
+    await copyFile(new URL(relative, root), destination);
+  }
+}
+
+test("adaptive evidence builder deterministically emits closed fixtures and an honest pending receipt", async () => {
+  const { rebuildAdaptiveEvidenceV2 } = await builderModule();
+  const [first, second] = await Promise.all([
+    rebuildAdaptiveEvidenceV2({ root }),
+    rebuildAdaptiveEvidenceV2({ root }),
+  ]);
+
+  assert.deepEqual(Object.keys(first.files).sort(), ADAPTIVE_V2_FILE_PATHS);
+  assert.deepEqual(first.files, second.files);
+  assert.equal(first.receiptText, second.receiptText);
+  assert.equal(first.report, second.report);
+  assert.equal(first.receipt.status, "experimental-canary");
+  assert.equal(first.receipt.inputs.canaries.length, 3);
+  assert.equal(first.receipt.outputs.length, ADAPTIVE_V2_FILE_PATHS.length + 1);
+  assert.deepEqual(first.receipt.computedGates, {
+    phase1Certified: true,
+    exactCanaryCount: true,
+    exactTrialVariantCount: true,
+    shadowBodyFiles: 0,
+    fixturePromotions: 0,
+    historicalPromotions: 0,
+    authorityExpansions: 0,
+    appendOnlyLedgerValid: true,
+    staleProfilesEligible: 0,
+  });
+  assert.deepEqual(first.receipt.unresolvedGates, {
+    freshModelMatrix: "pending",
+    independentReview: "pending",
+    universalBehavior: "not-claimed",
+  });
+
+  const fixtureProfile = JSON.parse(
+    first.files["artifacts/adaptive-evidence-v2/fixture-profile.v2.json"],
+  );
+  const fixtureLifecycle = JSON.parse(
+    first.files["artifacts/adaptive-evidence-v2/fixture-lifecycle.v2.json"],
+  );
+  const historical = JSON.parse(
+    first.files["artifacts/adaptive-evidence-v2/historical-muse-bridge.v2.json"],
+  );
+  const shadow = JSON.parse(first.files["artifacts/adaptive-evidence-v2/shadow-muse.v2.json"]);
+  assert.equal(fixtureProfile.lifecycleState, "ineligible");
+  assert.equal(fixtureProfile.promotableEvidenceRows, 0);
+  assert.equal(fixtureLifecycle.status, "rejected");
+  assert.equal(historical.status, "historical-ineligible");
+  assert.equal(historical.promotable, false);
+  assert.deepEqual(shadow.disclosedLayerBodies, []);
+  assert.equal(shadow.nativeAttemptRequired, true);
+  assert.match(first.receipt.receiptDigest, /^[a-f0-9]{64}$/);
+  assert.doesNotMatch(first.receiptText, /raw prompt|credential value|api key/i);
+  assert.match(first.report, /fixture mechanics/i);
+  assert.match(first.report, /not.*model-quality|no model-quality/i);
+});
+
+test("checked adaptive evidence outputs rebuild byte for byte", async () => {
+  const { rebuildAdaptiveEvidenceV2 } = await builderModule();
+  const built = await rebuildAdaptiveEvidenceV2({ root });
+  for (const [relative, expected] of Object.entries(built.files)) {
+    assert.equal(await readFile(new URL(relative, root), "utf8"), expected, relative);
+  }
+  assert.equal(
+    await readFile(new URL("receipts/adaptive-evidence-v2.json", root), "utf8"),
+    built.receiptText,
+  );
+  assert.equal(
+    await readFile(new URL("docs/adaptive-evidence-v2-report.md", root), "utf8"),
+    built.report,
+  );
+});
+
+test("adaptive evidence builder rejects drift in every external trust root", async (t) => {
+  const { rebuildAdaptiveEvidenceV2 } = await builderModule();
+  const repository = await mkdtemp(path.join(tmpdir(), "adaptive-evidence-v2-trust-"));
+  t.after(() => rm(repository, { recursive: true, force: true }));
+  await copyAdaptiveBuilderInputs(repository);
+  const temporaryRoot = pathToFileURL(repository + path.sep);
+
+  const policyPath = path.join(repository, "policies", "adaptive-evidence.v2.json");
+  const policy = JSON.parse(await readFile(policyPath, "utf8"));
+  policy.methodPromotion.minimumWins = 1;
+  await writeFile(policyPath, JSON.stringify(policy, null, 2) + "\n", "utf8");
+  await assert.rejects(
+    () => rebuildAdaptiveEvidenceV2({ root: temporaryRoot }),
+    /trusted adaptive evidence policy|policy digest/i,
+  );
+  await copyFile(new URL("policies/adaptive-evidence.v2.json", root), policyPath);
+
+  const manifestPath = path.join(
+    repository,
+    "artifacts",
+    "capability-layers",
+    "eternities-aegis",
+    "manifest.v1.json",
+  );
+  const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
+  manifest.bundleDigest = "f".repeat(64);
+  await writeFile(manifestPath, JSON.stringify(manifest, null, 2) + "\n", "utf8");
+  await assert.rejects(
+    () => rebuildAdaptiveEvidenceV2({ root: temporaryRoot }),
+    /canary manifest|phase.?1|bundle digest/i,
+  );
+  await copyFile(
+    new URL("artifacts/capability-layers/eternities-aegis/manifest.v1.json", root),
+    manifestPath,
+  );
+
+  const historicalPath = path.join(
+    repository,
+    "artifacts",
+    "adaptive-activation",
+    "evidence.v1.json",
+  );
+  const historical = JSON.parse(await readFile(historicalPath, "utf8"));
+  historical.profiles[0].candidateId = "forged-candidate";
+  await writeFile(historicalPath, JSON.stringify(historical, null, 2) + "\n", "utf8");
+  await assert.rejects(
+    () => rebuildAdaptiveEvidenceV2({ root: temporaryRoot }),
+    /historical.*digest|trusted historical/i,
+  );
+
+  const certificationPath = path.join(
+    repository,
+    "docs",
+    "capability-layer-abi-v1-certification.md",
+  );
+  await copyFile(new URL("docs/capability-layer-abi-v1-certification.md", root), certificationPath);
+  await writeFile(certificationPath, "forged certification\n", "utf8");
+  await assert.rejects(
+    () => rebuildAdaptiveEvidenceV2({ root: temporaryRoot }),
+    /certification.*digest|phase.?1 certification/i,
+  );
+});
+
+test("adaptive evidence writer restores all checked outputs after an injected later-file failure", async (t) => {
+  const { writeAdaptiveEvidenceV2 } = await builderModule();
+  const repository = await mkdtemp(path.join(tmpdir(), "adaptive-evidence-v2-writer-"));
+  t.after(() => rm(repository, { recursive: true, force: true }));
+  await copyAdaptiveBuilderInputs(repository);
+  const temporaryRoot = pathToFileURL(repository + path.sep);
+  const initial = await writeAdaptiveEvidenceV2({ root: temporaryRoot });
+  const checkedPaths = [
+    ...Object.keys(initial.files),
+    "docs/adaptive-evidence-v2-report.md",
+    "receipts/adaptive-evidence-v2.json",
+  ].sort();
+  const before = Object.fromEntries(await Promise.all(checkedPaths.map(async (relative) => [
+    relative,
+    await readFile(path.join(repository, ...relative.split("/")), "utf8"),
+  ])));
+
+  const failingRename = async (source, destination) => {
+    const normalized = source.replaceAll("\\", "/");
+    if (normalized.includes("/staged/") && path.basename(source) === "fixture-profile.v2.json") {
+      throw new Error("injected adaptive evidence output failure");
+    }
+    return rename(source, destination);
+  };
+  await assert.rejects(
+    () => writeAdaptiveEvidenceV2({ root: temporaryRoot, renameFile: failingRename }),
+    /injected adaptive evidence output failure/i,
+  );
+  for (const relative of checkedPaths) {
+    assert.equal(
+      await readFile(path.join(repository, ...relative.split("/")), "utf8"),
+      before[relative],
+      relative,
+    );
+  }
 });

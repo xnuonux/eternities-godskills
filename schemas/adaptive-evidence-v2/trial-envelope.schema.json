@@ -1,0 +1,240 @@
+{
+  "$id": "urn:eternities:adaptive-evidence:v2:trial-envelope",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifactBoundary": {
+      "additionalProperties": false,
+      "properties": {
+        "mediaType": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "required": {
+          "const": true
+        }
+      },
+      "required": [
+        "mediaType",
+        "required"
+      ],
+      "type": "object"
+    },
+    "capabilityManifestDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "comparisonPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline": {
+          "const": "raw"
+        },
+        "digest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "metrics": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "stopConditions": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "variants": {
+          "items": {
+            "enum": [
+              "raw",
+              "guardrail",
+              "method",
+              "reviewer",
+              "combined"
+            ]
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "version": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "digest",
+        "baseline",
+        "variants",
+        "metrics",
+        "stopConditions"
+      ],
+      "type": "object"
+    },
+    "evaluator": {
+      "additionalProperties": false,
+      "properties": {
+        "digest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "reviewer",
+            "deterministic-verifier"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "digest"
+      ],
+      "type": "object"
+    },
+    "policyDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "producerId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "profileIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "capabilityId": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "capabilityVersion": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "consequenceClass": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "environmentId": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "modelFamily": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "reasoningTier": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "taskClass": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "taskClass",
+        "modelFamily",
+        "reasoningTier",
+        "consequenceClass",
+        "capabilityVersion",
+        "environmentId"
+      ],
+      "type": "object"
+    },
+    "profileKey": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "registeredAt": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": 2
+    },
+    "status": {
+      "const": "preregistered"
+    },
+    "taskDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "digest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "version": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "digest"
+      ],
+      "type": "object"
+    },
+    "trialDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "trialId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "variants": {
+      "items": {
+        "enum": [
+          "raw",
+          "guardrail",
+          "method",
+          "reviewer",
+          "combined"
+        ]
+      },
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "trialId",
+    "status",
+    "profileIdentity",
+    "profileKey",
+    "capabilityManifestDigest",
+    "policyDigest",
+    "taskDefinition",
+    "comparisonPolicy",
+    "artifactBoundary",
+    "evaluator",
+    "variants",
+    "producerId",
+    "registeredAt",
+    "trialDigest"
+  ],
+  "title": "Adaptive evidence v2 trial envelope",
+  "type": "object"
+}
