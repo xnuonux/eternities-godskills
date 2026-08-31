@@ -23,6 +23,11 @@ import {
 } from "../src/adaptive-evidence-trials.mjs";
 import { sha256 } from "../src/io.mjs";
 import { commitGeneratedFiles } from "./build-capability-layer-abi.mjs";
+import {
+  attestFixturePortfolioPlan,
+  createFixturePortfolioWitnessAuthority,
+  fixturePortfolioWitnessProofLimit,
+} from "./adaptive-evidence-portfolio-fixture-witness.mjs";
 
 const PROTOCOL_ID = "eternities-godskills-cross-trial-portfolio-v1";
 const PORTFOLIO_POLICY_PATH = "policies/adaptive-evidence-portfolio.v1.json";
@@ -54,21 +59,25 @@ const SCHEMA_PATHS = Object.freeze({
   plan: "schemas/adaptive-evidence-portfolio-v1/plan.schema.json",
   completion: "schemas/adaptive-evidence-portfolio-v1/completion.schema.json",
   report: "schemas/adaptive-evidence-portfolio-v1/report.schema.json",
+  witness: "schemas/adaptive-evidence-portfolio-v1/witness.schema.json",
 });
 const SOURCE_PATHS = Object.freeze([
   "docs/superpowers/plans/2026-08-31-cross-trial-portfolio-v1.md",
   "docs/superpowers/specs/2026-08-31-cross-trial-portfolio-v1-design.md",
   "package-lock.json",
   "package.json",
+  "scripts/adaptive-evidence-portfolio-fixture-witness.mjs",
   "scripts/build-adaptive-evidence-portfolio-v1.mjs",
   "scripts/build-capability-layer-abi.mjs",
   "src/adaptive-evidence-contracts.mjs",
   "src/adaptive-evidence-ledger.mjs",
   "src/adaptive-evidence-portfolio.mjs",
+  "src/adaptive-evidence-portfolio-witness.mjs",
   "src/adaptive-evidence-trials.mjs",
   "src/io.mjs",
   "tests/adaptive-evidence-portfolio-receipt.test.mjs",
   "tests/adaptive-evidence-portfolio.test.mjs",
+  "tests/adaptive-evidence-portfolio-witness.test.mjs",
 ]);
 const CANDIDATE_VARIANTS = Object.freeze(["guardrail", "method", "reviewer", "combined"]);
 const ALL_VARIANTS = Object.freeze(["raw", ...CANDIDATE_VARIANTS]);
@@ -234,6 +243,8 @@ function buildFixtureMember({
   task,
   taskIndex,
   plan,
+  planWitness,
+  witnessAuthority,
   portfolioPolicy,
   portfolioPolicyDigest,
   evidencePolicy,
@@ -320,6 +331,9 @@ function buildFixtureMember({
   });
   const completion = createCompletedTrialReceipt({
     plan,
+    planWitness,
+    witnessAuthority,
+    expectedWitnessTrustRootDigest: witnessAuthority.trustRootDigest,
     slotId: task.slotId,
     trial,
     ledger,
@@ -333,7 +347,7 @@ function buildFixtureMember({
   return Object.freeze({ trial, ledger, profile, completion });
 }
 
-function buildHumanReport({ plan, members, report }) {
+function buildHumanReport({ plan, planWitness, witnessAuthority, members, report }) {
   const lines = [
     "# Adaptive Evidence Portfolio v1 Structural Report",
     "",
@@ -342,6 +356,8 @@ function buildHumanReport({ plan, members, report }) {
     "The cross-trial portfolio protocol reduced two separately verified ledgers into one task-level report. This is a structural fixture, not model-quality evidence and not an activation decision.",
     "",
     `- plan: \`${plan.planDigest}\``,
+    `- preregistration witness: \`${planWitness.witnessDigest}\``,
+    `- witness trust root: \`${witnessAuthority.trustRootDigest}\``,
     `- report: \`${report.reportDigest}\``,
     `- preregistered tasks: ${plan.taskSlots.length}`,
     `- completed tasks: ${report.completedTaskCount}`,
@@ -358,7 +374,7 @@ function buildHumanReport({ plan, members, report }) {
     "",
     "## authority boundary",
     "",
-    "The report is reporting-only. It emits no profile promotion, lifecycle action, activation request, Godagents change, or authority expansion.",
+    "The report is reporting-only. It emits no profile promotion, lifecycle action, activation request, Godagents change, or authority expansion. The committed fixture key proves deterministic verifier behavior only. Production chronology requires a separately operated witness authority whose trust root is pinned by the host and whose clock and refusal policy are trusted.",
     "",
   ];
   return lines.join("\n");
@@ -390,6 +406,8 @@ function buildReceipt({
   evidencePolicyInput,
   sourceInputs,
   plan,
+  planWitness,
+  witnessAuthority,
   members,
   report,
   generatedWrites,
@@ -414,6 +432,8 @@ function buildReceipt({
     },
     fixture: {
       planDigest: plan.planDigest,
+      planWitnessDigest: planWitness.witnessDigest,
+      witnessAuthorityTrustRoot: witnessAuthority.trustRoot,
       profileKey: plan.profileKey,
       completionDigests: members.map(({ completion }) => completion.completionDigest),
       reportDigest: report.reportDigest,
@@ -421,6 +441,9 @@ function buildReceipt({
     computedGates: {
       exactPreregisteredTaskCount: plan.taskSlots.length,
       exactCompletedTaskCount: report.completedTaskCount,
+      hostPinnedPreregistrationWitnessVerified:
+        report.planWitnessDigest === planWitness.witnessDigest
+        && report.witnessAuthorityTrustRootDigest === witnessAuthority.trustRootDigest,
       independentLedgerCount: new Set(members.map(({ ledger }) => ledger.ledgerDigest)).size,
       taskOutcomesPerCandidate: report.variantMetrics[0].completedTasks,
       internalCaseCountsExcluded: report.caseComparisonAggregationAllowed === false
@@ -446,6 +469,9 @@ function buildReceipt({
       "no-activation-request",
       "no-godagents-activation",
       "no-authority-expansion",
+      "witness-authority-clock-and-refusal-integrity-remains-an-external-trust-assumption",
+      "diversity-label-materiality-requires-independent-domain-review",
+      fixturePortfolioWitnessProofLimit,
     ],
     reportingOnly: true,
     semanticVerificationRequired: true,
@@ -482,10 +508,22 @@ export async function rebuildAdaptiveEvidencePortfolioV1({
   const evidencePolicyDigest = canonicalDigest(evidencePolicy);
   const schemas = buildPortfolioSchemas();
   const plan = buildPlan({ portfolioPolicy, portfolioPolicyDigest });
+  const witnessAuthority = createFixturePortfolioWitnessAuthority();
+  const planWitness = attestFixturePortfolioPlan({
+    plan,
+    witnessedAt: "2026-08-31T14:00:10.000Z",
+  });
+  witnessAuthority.verifyPlanWitness({
+    witness: planWitness,
+    plan,
+    expectedPolicyDigest: portfolioPolicyDigest,
+  });
   const members = FIXTURE_TASKS.map((task, taskIndex) => buildFixtureMember({
     task,
     taskIndex,
     plan,
+    planWitness,
+    witnessAuthority,
     portfolioPolicy,
     portfolioPolicyDigest,
     evidencePolicy,
@@ -493,6 +531,9 @@ export async function rebuildAdaptiveEvidencePortfolioV1({
   }));
   const report = reduceTrialPortfolio({
     plan,
+    planWitness,
+    witnessAuthority,
+    expectedWitnessTrustRootDigest: witnessAuthority.trustRootDigest,
     members: members.map(({ trial, ledger, profile, completion }) => ({
       trial,
       ledger,
@@ -505,7 +546,13 @@ export async function rebuildAdaptiveEvidencePortfolioV1({
     evidencePolicy,
     expectedEvidencePolicyDigest: evidencePolicyDigest,
   });
-  const humanReport = buildHumanReport({ plan, members, report });
+  const humanReport = buildHumanReport({
+    plan,
+    planWitness,
+    witnessAuthority,
+    members,
+    report,
+  });
   const schemaWrites = Object.fromEntries(Object.entries(schemas).map(([name, schema]) => [
     SCHEMA_PATHS[name],
     canonicalFile(schema),
@@ -513,6 +560,7 @@ export async function rebuildAdaptiveEvidencePortfolioV1({
   const generatedWrites = {
     ...schemaWrites,
     [`${ARTIFACT_ROOT}/plan.json`]: canonicalFile(plan),
+    [`${ARTIFACT_ROOT}/plan-witness.json`]: canonicalFile(planWitness),
     ...memberWrites(members),
     [`${ARTIFACT_ROOT}/report.json`]: canonicalFile(report),
     [REPORT_PATH]: humanReport,
@@ -523,6 +571,8 @@ export async function rebuildAdaptiveEvidencePortfolioV1({
     evidencePolicyInput,
     sourceInputs,
     plan,
+    planWitness,
+    witnessAuthority,
     members,
     report,
     generatedWrites,
@@ -534,6 +584,8 @@ export async function rebuildAdaptiveEvidencePortfolioV1({
   return Object.freeze({
     schemas,
     plan,
+    planWitness,
+    witnessTrustRoot: witnessAuthority.trustRoot,
     members: Object.freeze(members),
     report,
     humanReport,

@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { generateKeyPairSync, sign } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
@@ -26,6 +27,11 @@ import {
   createObservationProposal,
   preregisterTrial,
 } from "../src/adaptive-evidence-trials.mjs";
+import {
+  createPortfolioWitnessAuthority,
+  portfolioWitnessAttestationMessage,
+  portfolioWitnessRecordDigest,
+} from "../src/adaptive-evidence-portfolio-witness.mjs";
 
 const portfolioPolicyUrl = new URL(
   "../policies/adaptive-evidence-portfolio.v1.json",
@@ -83,6 +89,14 @@ const comparisonPolicy = Object.freeze({
   stopConditions: Object.freeze(["five-artifacts-recorded", "critical-regression"]),
 });
 
+const witnessKeys = generateKeyPairSync("ed25519");
+const witnessAuthority = createPortfolioWitnessAuthority({
+  trustRootId: "portfolio-test-witness-root",
+  registryId: "portfolio-test-preregistration-log",
+  trustedKeys: new Map([["portfolio-test-witness-key", witnessKeys.publicKey]]),
+});
+const planWitnesses = new WeakMap();
+
 async function json(url) {
   return JSON.parse(await readFile(url, "utf8"));
 }
@@ -97,6 +111,50 @@ async function trusted() {
     expectedPortfolioPolicyDigest: canonicalDigest(portfolioPolicy),
     evidencePolicy,
     expectedEvidencePolicyDigest: canonicalDigest(evidencePolicy),
+    witnessAuthority,
+  };
+}
+
+function attestPlan(plan, witnessedAt = iso(plan.registeredAt, 1)) {
+  const record = {
+    schemaVersion: 1,
+    id: `${plan.id}-witness`,
+    purpose: "adaptive-evidence-portfolio-preregistration",
+    registryId: witnessAuthority.registryId,
+    sequence: 0,
+    previousWitnessDigest: null,
+    planDigest: plan.planDigest,
+    portfolioPolicyDigest: plan.policyDigest,
+    authorityTrustRootDigest: witnessAuthority.trustRootDigest,
+    witnessedAt,
+    dispatchNotStarted: true,
+  };
+  const subjectDigest = portfolioWitnessRecordDigest(record);
+  const unsigned = {
+    algorithm: "ed25519",
+    purpose: "adaptive-evidence-portfolio-preregistration",
+    subjectDigest,
+    keyId: "portfolio-test-witness-key",
+  };
+  const attestation = {
+    ...unsigned,
+    signature: sign(
+      null,
+      portfolioWitnessAttestationMessage(unsigned),
+      witnessKeys.privateKey,
+    ).toString("base64"),
+  };
+  const body = { record, attestation, semanticVerificationRequired: true };
+  return { ...body, witnessDigest: canonicalDigest(body) };
+}
+
+function witnessTrust(plan, trust) {
+  const planWitness = planWitnesses.get(plan);
+  assert.ok(planWitness, "test plan lacks its preregistration witness");
+  return {
+    planWitness,
+    witnessAuthority: trust.witnessAuthority,
+    expectedWitnessTrustRootDigest: trust.witnessAuthority.trustRootDigest,
   };
 }
 
@@ -115,7 +173,7 @@ function planInputSlots(source = tasks) {
 
 async function buildPlan(overrides = {}) {
   const trust = await trusted();
-  return preregisterPortfolioPlan({
+  const plan = preregisterPortfolioPlan({
     portfolioId: "aegis-cross-task-fixture-001",
     profileIdentity: identity,
     selectionRule: {
@@ -132,6 +190,8 @@ async function buildPlan(overrides = {}) {
     expectedPolicyDigest: trust.expectedPortfolioPolicyDigest,
     ...overrides,
   });
+  planWitnesses.set(plan, attestPlan(plan));
+  return plan;
 }
 
 function iso(base, offsetSeconds) {
@@ -261,6 +321,7 @@ async function complete(plan, slotId, options = {}) {
     plan,
     slotId,
     ...bundle,
+    ...witnessTrust(plan, trust),
     portfolioPolicy: trust.portfolioPolicy,
     expectedPortfolioPolicyDigest: trust.expectedPortfolioPolicyDigest,
     evidencePolicy: trust.evidencePolicy,
@@ -301,7 +362,7 @@ test("portfolio policy is closed, authority-neutral, and generates closed schema
   }), /keys|closed|digest/i);
 
   const schemas = buildPortfolioSchemas();
-  assert.deepEqual(Object.keys(schemas).sort(), ["completion", "plan", "report"]);
+  assert.deepEqual(Object.keys(schemas).sort(), ["completion", "plan", "report", "witness"]);
   for (const schema of Object.values(schemas)) {
     assert.equal(schema.additionalProperties, false);
     assert.equal(schema.$schema, "https://json-schema.org/draft/2020-12/schema");
@@ -312,6 +373,7 @@ test("portfolio policy is closed, authority-neutral, and generates closed schema
   assert.match(schemas.plan.$comment, /verifyPortfolioPlan.*required/i);
   assert.match(schemas.completion.$comment, /verifyCompletedTrialReceipt.*required/i);
   assert.match(schemas.report.$comment, /verifyPortfolioReport.*required/i);
+  assert.match(schemas.witness.$comment, /verifyPlanWitness.*required/i);
   assert.equal(schemas.plan.properties.semanticVerificationRequired.const, true);
   assert.equal(schemas.completion.properties.semanticVerificationRequired.const, true);
   assert.equal(schemas.report.properties.semanticVerificationRequired.const, true);
@@ -427,6 +489,11 @@ test("completion receipt reverifies one separate trial and exposes no case count
   assert.equal(member.receipt.status, "completed");
   assert.equal(member.receipt.semanticVerificationRequired, true);
   assert.equal(member.receipt.planDigest, plan.planDigest);
+  assert.equal(member.receipt.planWitnessDigest, planWitnesses.get(plan).witnessDigest);
+  assert.equal(
+    member.receipt.witnessAuthorityTrustRootDigest,
+    witnessAuthority.trustRootDigest,
+  );
   assert.equal(member.receipt.profileKey, plan.profileKey);
   assert.deepEqual(member.receipt.variantOutcomes.map(({ variant }) => variant), [
     "guardrail", "method", "reviewer", "combined",
@@ -441,6 +508,7 @@ test("completion receipt reverifies one separate trial and exposes no case count
     ledger: member.ledger,
     profile: member.profile,
     receipt: member.receipt,
+    ...witnessTrust(plan, trust),
     portfolioPolicy: trust.portfolioPolicy,
     expectedPortfolioPolicyDigest: trust.expectedPortfolioPolicyDigest,
     evidencePolicy: trust.evidencePolicy,
@@ -460,6 +528,7 @@ test("completion rejects incomplete, retrospective, unqualified, or drifted evid
     plan,
     slotId: "slot-filesystem-alias",
     ...incomplete,
+    ...witnessTrust(plan, trust),
     portfolioPolicy: trust.portfolioPolicy,
     expectedPortfolioPolicyDigest: trust.expectedPortfolioPolicyDigest,
     evidencePolicy: trust.evidencePolicy,
@@ -475,6 +544,7 @@ test("completion rejects incomplete, retrospective, unqualified, or drifted evid
     plan,
     slotId: "slot-filesystem-alias",
     ...fixture,
+    ...witnessTrust(plan, trust),
     portfolioPolicy: trust.portfolioPolicy,
     expectedPortfolioPolicyDigest: trust.expectedPortfolioPolicyDigest,
     evidencePolicy: trust.evidencePolicy,
@@ -489,6 +559,7 @@ test("completion rejects incomplete, retrospective, unqualified, or drifted evid
     slotId: "slot-filesystem-alias",
     ...completeBundle,
     profile: changedProfile,
+    ...witnessTrust(plan, trust),
     portfolioPolicy: trust.portfolioPolicy,
     expectedPortfolioPolicyDigest: trust.expectedPortfolioPolicyDigest,
     evidencePolicy: trust.evidencePolicy,
@@ -499,6 +570,7 @@ test("completion rejects incomplete, retrospective, unqualified, or drifted evid
     plan,
     slotId: "slot-provider-confusion",
     ...completeBundle,
+    ...witnessTrust(plan, trust),
     portfolioPolicy: trust.portfolioPolicy,
     expectedPortfolioPolicyDigest: trust.expectedPortfolioPolicyDigest,
     evidencePolicy: trust.evidencePolicy,
@@ -510,6 +582,7 @@ test("completion rejects incomplete, retrospective, unqualified, or drifted evid
     plan: latePlan,
     slotId: "slot-filesystem-alias",
     ...completeBundle,
+    ...witnessTrust(latePlan, trust),
     portfolioPolicy: trust.portfolioPolicy,
     expectedPortfolioPolicyDigest: trust.expectedPortfolioPolicyDigest,
     evidencePolicy: trust.evidencePolicy,
@@ -521,11 +594,73 @@ test("completion rejects incomplete, retrospective, unqualified, or drifted evid
     slotId: "slot-filesystem-alias",
     ...completeBundle,
     completedAt: completeBundle.ledger.rows.at(-1).observedAt,
+    ...witnessTrust(plan, trust),
     portfolioPolicy: trust.portfolioPolicy,
     expectedPortfolioPolicyDigest: trust.expectedPortfolioPolicyDigest,
     evidencePolicy: trust.evidencePolicy,
     expectedEvidencePolicyDigest: trust.expectedEvidencePolicyDigest,
   }), /completion.*after|completedAt/i);
+});
+
+test("completion requires a host-pinned signed witness created before trial dispatch", async () => {
+  const trust = await trusted();
+  const plan = await buildPlan();
+  const bundle = await buildEvidenceBundle({ plan, slotId: "slot-filesystem-alias" });
+  const lateWitness = attestPlan(plan, iso(bundle.trial.registeredAt, 1));
+  assert.throws(() => createCompletedTrialReceipt({
+    plan,
+    planWitness: lateWitness,
+    witnessAuthority: trust.witnessAuthority,
+    expectedWitnessTrustRootDigest: trust.witnessAuthority.trustRootDigest,
+    slotId: "slot-filesystem-alias",
+    ...bundle,
+    portfolioPolicy: trust.portfolioPolicy,
+    expectedPortfolioPolicyDigest: trust.expectedPortfolioPolicyDigest,
+    evidencePolicy: trust.evidencePolicy,
+    expectedEvidencePolicyDigest: trust.expectedEvidencePolicyDigest,
+  }), /witness.*predate|witness.*before|trial.*after/i);
+
+  const untrusted = generateKeyPairSync("ed25519");
+  const wrongAuthority = createPortfolioWitnessAuthority({
+    trustRootId: "portfolio-attacker-root",
+    registryId: "portfolio-test-preregistration-log",
+    trustedKeys: new Map([["portfolio-test-witness-key", untrusted.publicKey]]),
+  });
+  assert.throws(() => createCompletedTrialReceipt({
+    plan,
+    planWitness: planWitnesses.get(plan),
+    witnessAuthority: wrongAuthority,
+    expectedWitnessTrustRootDigest: trust.witnessAuthority.trustRootDigest,
+    slotId: "slot-filesystem-alias",
+    ...bundle,
+    portfolioPolicy: trust.portfolioPolicy,
+    expectedPortfolioPolicyDigest: trust.expectedPortfolioPolicyDigest,
+    evidencePolicy: trust.evidencePolicy,
+    expectedEvidencePolicyDigest: trust.expectedEvidencePolicyDigest,
+  }), /host-pinned|trust root|authority/i);
+
+  const forgedAuthorityObject = {
+    trustRootDigest: trust.witnessAuthority.trustRootDigest,
+    verifyPlanWitness: () => ({
+      valid: true,
+      witnessDigest: planWitnesses.get(plan).witnessDigest,
+      planDigest: plan.planDigest,
+      witnessedAt: planWitnesses.get(plan).record.witnessedAt,
+      authorityTrustRootDigest: trust.witnessAuthority.trustRootDigest,
+    }),
+  };
+  assert.throws(() => createCompletedTrialReceipt({
+    plan,
+    planWitness: planWitnesses.get(plan),
+    witnessAuthority: forgedAuthorityObject,
+    expectedWitnessTrustRootDigest: trust.witnessAuthority.trustRootDigest,
+    slotId: "slot-filesystem-alias",
+    ...bundle,
+    portfolioPolicy: trust.portfolioPolicy,
+    expectedPortfolioPolicyDigest: trust.expectedPortfolioPolicyDigest,
+    evidencePolicy: trust.evidencePolicy,
+    expectedEvidencePolicyDigest: trust.expectedEvidencePolicyDigest,
+  }), /authentic|constructed|host-pinned|trust root|authority/i);
 });
 
 test("portfolio counts tasks rather than internal oracle cases", async () => {
@@ -536,6 +671,7 @@ test("portfolio counts tasks rather than internal oracle cases", async () => {
   const report = reduceTrialPortfolio({
     plan,
     members: [first, second],
+    ...witnessTrust(plan, trust),
     generatedAt: "2026-08-31T13:00:00.000Z",
     portfolioPolicy: trust.portfolioPolicy,
     expectedPortfolioPolicyDigest: trust.expectedPortfolioPolicyDigest,
@@ -545,6 +681,7 @@ test("portfolio counts tasks rather than internal oracle cases", async () => {
   assert.equal(report.status, "complete");
   assert.equal(report.semanticVerificationRequired, true);
   assert.equal(report.completedTaskCount, 2);
+  assert.equal(report.planWitnessDigest, planWitnesses.get(plan).witnessDigest);
   for (const metric of report.variantMetrics) {
     assert.equal(metric.completedTasks, 2);
     assert.equal(metric.wins + metric.losses + metric.ties, 2);
@@ -576,6 +713,7 @@ test("one worst-task critical regression fails a candidate despite its wins", as
   const report = reduceTrialPortfolio({
     plan,
     members: [first, second],
+    ...witnessTrust(plan, trust),
     generatedAt: "2026-08-31T13:00:00.000Z",
     portfolioPolicy: trust.portfolioPolicy,
     expectedPortfolioPolicyDigest: trust.expectedPortfolioPolicyDigest,
@@ -598,6 +736,7 @@ test("a missing task stays visible and cannot become a smaller passing cohort", 
   const report = reduceTrialPortfolio({
     plan,
     members: [first],
+    ...witnessTrust(plan, trust),
     generatedAt: "2026-08-31T13:00:00.000Z",
     portfolioPolicy: trust.portfolioPolicy,
     expectedPortfolioPolicyDigest: trust.expectedPortfolioPolicyDigest,
@@ -618,6 +757,7 @@ test("portfolio rejects duplicate, unregistered, cross-profile, and tampered mem
   assert.throws(() => reduceTrialPortfolio({
     plan,
     members: [first, first],
+    ...witnessTrust(plan, trust),
     generatedAt: "2026-08-31T13:00:00.000Z",
     portfolioPolicy: trust.portfolioPolicy,
     expectedPortfolioPolicyDigest: trust.expectedPortfolioPolicyDigest,
@@ -630,6 +770,7 @@ test("portfolio rejects duplicate, unregistered, cross-profile, and tampered mem
   assert.throws(() => reduceTrialPortfolio({
     plan,
     members: [tampered],
+    ...witnessTrust(plan, trust),
     generatedAt: "2026-08-31T13:00:00.000Z",
     portfolioPolicy: trust.portfolioPolicy,
     expectedPortfolioPolicyDigest: trust.expectedPortfolioPolicyDigest,
@@ -647,6 +788,7 @@ test("portfolio rejects duplicate, unregistered, cross-profile, and tampered mem
     plan,
     slotId: "slot-filesystem-alias",
     ...foreign,
+    ...witnessTrust(plan, trust),
     portfolioPolicy: trust.portfolioPolicy,
     expectedPortfolioPolicyDigest: trust.expectedPortfolioPolicyDigest,
     evidencePolicy: trust.evidencePolicy,
@@ -665,6 +807,7 @@ test("portfolio report is deterministic under member reordering and fully reveri
   });
   const options = {
     plan,
+    ...witnessTrust(plan, trust),
     generatedAt: "2026-08-31T13:00:00.000Z",
     portfolioPolicy: trust.portfolioPolicy,
     expectedPortfolioPolicyDigest: trust.expectedPortfolioPolicyDigest,

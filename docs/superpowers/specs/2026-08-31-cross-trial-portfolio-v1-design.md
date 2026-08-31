@@ -27,12 +27,14 @@ before any member trial is registered.
 
 ## decision
 
-Build a separate v1 portfolio protocol with three immutable artifacts:
+Build a separate v1 portfolio protocol with four immutable artifacts:
 
 1. a portfolio plan preregistering one exact profile and one exact task set;
-2. one completion receipt per independently verified adaptive-evidence v2
+2. a signed pre-dispatch witness for that exact plan, verified against a
+   host-pinned independent authority trust root;
+3. one completion receipt per independently verified adaptive-evidence v2
    trial;
-3. one deterministic report reducing each intervention to one win, loss, or
+4. one deterministic report reducing each intervention to one win, loss, or
    tie per task.
 
 The report is descriptive evidence. It can state which variants passed the
@@ -46,7 +48,10 @@ an activation profile, request a lifecycle transition, or grant authority.
 - Internal oracle-case counts are bound by digest but never summed by the
   portfolio reducer.
 - The exact profile identity must match across the plan and every member.
-- The plan predates every accepted member trial.
+- The plan is signed by a host-pinned witness authority before every accepted
+  member trial is registered.
+- A caller-supplied plan timestamp is never sufficient evidence of
+  preregistration.
 - Every accepted task occupies one preregistered slot with an exact trial id
   and task-definition digest.
 - Duplicate trial ids, trial digests, ledger digests, profile digests, task
@@ -111,12 +116,33 @@ It is not activation.
 The plan compiler canonicalizes slot and diversity ordering, verifies that all
 declared axes are present exactly once in every slot, enforces each minimum
 distinct-value count, and rejects repeated task definitions. The resulting
-`planDigest` binds the exact cohort before dispatch.
+`planDigest` binds the exact cohort to be witnessed before dispatch.
 
 The generic protocol does not prescribe domain labels. A future Aegis cohort
 may use attack surface and failure mode; Forge may use implementation domain
 and acceptance mechanism; Muse may use visual family and reviewer rubric.
 The exact axes and values are still frozen in each plan.
+
+## preregistration witness
+
+`createPortfolioWitnessAuthority` compiles a host-pinned Ed25519 trust root and
+returns the only runtime verifier accepted by completion and reduction. A
+valid witness signs the exact plan digest, portfolio-policy digest, registry
+identity, monotonic sequence, previous-witness digest, witnessed time, and an
+explicit `dispatchNotStarted: true` statement.
+
+The witness must be created at or after plan registration and strictly before
+every member trial registration. Completion and report identities bind the
+verified witness digest, witnessed time, and authority trust-root digest.
+Supplying a different authority object, an untrusted key, an altered plan, a
+late witness, or an unsigned timestamp fails closed.
+
+The signature proves that a key accepted by the host made the attestation. Its
+chronology remains dependent on the operational integrity of the independent
+witness authority: the authority must refuse retrospective signing and the
+host must pin the intended trust root. The deterministic fixture signer is
+committed only to reproduce protocol fixtures. Its private key is public test
+material and is never a production trust root.
 
 ## completed trial receipt
 
@@ -128,7 +154,8 @@ requires byte-equivalent canonical profile content.
 A trial is complete only when:
 
 - it matches the plan's profile and exact task slot;
-- its registration time is after the plan's registration time;
+- the exact plan has a valid host-pinned witness;
+- its registration time is strictly after the signed witness time;
 - its ledger contains exactly one row for every frozen trial variant;
 - every row has a portfolio-admissible proof level;
 - its completion time is after the last observation;
@@ -195,13 +222,14 @@ claim a passing candidate.
 
 ## schemas and deterministic release receipt
 
-The protocol generates closed JSON Schemas for the plan, completion receipt,
-and report. A deterministic builder produces a two-task fixture cohort whose
-internal case counts differ dramatically while its portfolio counts remain
-exactly two tasks. It writes:
+The protocol generates closed JSON Schemas for the plan, preregistration
+witness, completion receipt, and report. A deterministic builder produces a
+two-task fixture cohort whose internal case counts differ dramatically while
+its portfolio counts remain exactly two tasks. It writes:
 
-- the three schemas;
+- the four schemas;
 - one fixture plan;
+- one fixture plan witness and its public trust-root identity;
 - two independent fixture trial completions;
 - one complete fixture report;
 - one human-readable report;
@@ -215,7 +243,11 @@ packages v1 parent receipt. Two rebuilds must reproduce every output byte.
 
 The implementation must reject:
 
-- a plan created after a member trial;
+- an unsigned plan timestamp presented as preregistration evidence;
+- a witness created after a member trial;
+- a witness signed by a caller-controlled or unpinned key;
+- a witness whose plan, policy, registry, chronology, chain, or signature was
+  altered;
 - a member not named by the exact preregistered set;
 - duplicate or aliased tasks and trials;
 - a changed profile field or profile digest;
@@ -230,9 +262,12 @@ The implementation must reject:
 
 ## proof boundary
 
-This milestone can prove that cross-trial evidence is selected in advance,
+Under a host-pinned witness authority that refuses retrospective signing, this
+milestone can prove that cross-trial evidence was selected before dispatch,
 kept profile-exact, reduced at task granularity, and blocked by the worst-task
-critical-regression gate. Its fixtures prove protocol behavior only.
+critical-regression gate. The repository cannot independently prove that an
+external authority's clock or refusal policy was honest. Its committed fixture
+key proves deterministic protocol behavior only.
 
 It cannot prove that Aegis, Forge, Muse, any Godskill, or any Godagent is
 better than a raw agent. That requires fresh, materially distinct,

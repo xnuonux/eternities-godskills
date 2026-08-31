@@ -15,6 +15,10 @@ import {
   verifyEvidenceLedger,
 } from "./adaptive-evidence-ledger.mjs";
 import { verifyTrialEnvelope } from "./adaptive-evidence-trials.mjs";
+import {
+  buildPortfolioWitnessSchema,
+  verifyPortfolioPlanWitness,
+} from "./adaptive-evidence-portfolio-witness.mjs";
 
 const PROTOCOL_ID = "eternities-godskills-cross-trial-portfolio-v1";
 const POLICY_ID = "adaptive-evidence-portfolio-policy-v1";
@@ -62,6 +66,9 @@ const COMPLETION_KEYS = Object.freeze([
   "status",
   "protocolId",
   "planDigest",
+  "planWitnessDigest",
+  "planWitnessedAt",
+  "witnessAuthorityTrustRootDigest",
   "portfolioPolicyDigest",
   "adaptiveEvidencePolicyDigest",
   "profileIdentity",
@@ -88,6 +95,9 @@ const REPORT_KEYS = Object.freeze([
   "status",
   "protocolId",
   "planDigest",
+  "planWitnessDigest",
+  "planWitnessedAt",
+  "witnessAuthorityTrustRootDigest",
   "portfolioPolicyDigest",
   "adaptiveEvidencePolicyDigest",
   "profileIdentity",
@@ -404,6 +414,28 @@ function compareProfile(profile, expected) {
   }
 }
 
+function verifyTrustedPlanWitness({
+  plan,
+  planWitness,
+  witnessAuthority,
+  expectedWitnessTrustRootDigest,
+  expectedPortfolioPolicyDigest,
+}) {
+  const verified = verifyPortfolioPlanWitness({
+    authority: witnessAuthority,
+    witness: planWitness,
+    plan,
+    expectedPolicyDigest: expectedPortfolioPolicyDigest,
+    expectedTrustRootDigest: expectedWitnessTrustRootDigest,
+  });
+  if (!verified || verified.valid !== true
+      || verified.planDigest !== plan.planDigest
+      || verified.authorityTrustRootDigest !== expectedWitnessTrustRootDigest) {
+    throw new Error("portfolio plan preregistration witness did not verify under the trusted root");
+  }
+  return verified;
+}
+
 function assertCompleteRows(ledger, portfolioPolicy) {
   if (ledger.rows.length !== portfolioPolicy.trialVariants.length) {
     throw new Error("completed trial ledger lacks complete variant coverage");
@@ -423,6 +455,9 @@ function assertCompleteRows(ledger, portfolioPolicy) {
 export function createCompletedTrialReceipt(options = {}) {
   exactKeys(options, [
     "plan",
+    "planWitness",
+    "witnessAuthority",
+    "expectedWitnessTrustRootDigest",
     "slotId",
     "trial",
     "ledger",
@@ -441,6 +476,13 @@ export function createCompletedTrialReceipt(options = {}) {
     plan: options.plan,
     policy: portfolioPolicy,
     expectedPolicyDigest: options.expectedPortfolioPolicyDigest,
+  });
+  const planWitness = verifyTrustedPlanWitness({
+    plan: options.plan,
+    planWitness: options.planWitness,
+    witnessAuthority: options.witnessAuthority,
+    expectedWitnessTrustRootDigest: options.expectedWitnessTrustRootDigest,
+    expectedPortfolioPolicyDigest: options.expectedPortfolioPolicyDigest,
   });
   verifyTrialEnvelope({
     trial: options.trial,
@@ -463,6 +505,9 @@ export function createCompletedTrialReceipt(options = {}) {
   }
   if (new Date(options.trial.registeredAt) <= new Date(options.plan.registeredAt)) {
     throw new Error("portfolio selection must predate every completed trial registration");
+  }
+  if (new Date(options.trial.registeredAt) <= new Date(planWitness.witnessedAt)) {
+    throw new Error("trusted portfolio plan witness must predate every trial registration");
   }
   assertCompleteRows(options.ledger, portfolioPolicy);
   const expectedProfile = deriveActivationProfile({
@@ -508,6 +553,9 @@ export function createCompletedTrialReceipt(options = {}) {
     status: "completed",
     protocolId: PROTOCOL_ID,
     planDigest: options.plan.planDigest,
+    planWitnessDigest: planWitness.witnessDigest,
+    planWitnessedAt: planWitness.witnessedAt,
+    witnessAuthorityTrustRootDigest: planWitness.authorityTrustRootDigest,
     portfolioPolicyDigest: options.expectedPortfolioPolicyDigest,
     adaptiveEvidencePolicyDigest: options.expectedEvidencePolicyDigest,
     profileIdentity: structuredClone(options.plan.profileIdentity),
@@ -538,6 +586,9 @@ export function createCompletedTrialReceipt(options = {}) {
 export function verifyCompletedTrialReceipt(options = {}) {
   exactKeys(options, [
     "plan",
+    "planWitness",
+    "witnessAuthority",
+    "expectedWitnessTrustRootDigest",
     "slotId",
     "trial",
     "ledger",
@@ -556,6 +607,9 @@ export function verifyCompletedTrialReceipt(options = {}) {
   }
   const expected = createCompletedTrialReceipt({
     plan: options.plan,
+    planWitness: options.planWitness,
+    witnessAuthority: options.witnessAuthority,
+    expectedWitnessTrustRootDigest: options.expectedWitnessTrustRootDigest,
     slotId: options.slotId,
     trial: options.trial,
     ledger: options.ledger,
@@ -621,6 +675,9 @@ function duplicateIdentitySets(receipts) {
 export function reduceTrialPortfolio(options = {}) {
   exactKeys(options, [
     "plan",
+    "planWitness",
+    "witnessAuthority",
+    "expectedWitnessTrustRootDigest",
     "members",
     "generatedAt",
     "portfolioPolicy",
@@ -637,11 +694,21 @@ export function reduceTrialPortfolio(options = {}) {
     policy: portfolioPolicy,
     expectedPolicyDigest: options.expectedPortfolioPolicyDigest,
   });
+  const planWitness = verifyTrustedPlanWitness({
+    plan: options.plan,
+    planWitness: options.planWitness,
+    witnessAuthority: options.witnessAuthority,
+    expectedWitnessTrustRootDigest: options.expectedWitnessTrustRootDigest,
+    expectedPortfolioPolicyDigest: options.expectedPortfolioPolicyDigest,
+  });
   if (!Array.isArray(options.members)) throw new TypeError("portfolio members must be an array");
   const verified = options.members.map((rawMember) => {
     const member = validateMemberShape(rawMember);
     verifyCompletedTrialReceipt({
       plan: options.plan,
+      planWitness: options.planWitness,
+      witnessAuthority: options.witnessAuthority,
+      expectedWitnessTrustRootDigest: options.expectedWitnessTrustRootDigest,
       slotId: member.receipt.slotId,
       trial: member.trial,
       ledger: member.ledger,
@@ -724,6 +791,9 @@ export function reduceTrialPortfolio(options = {}) {
     status: complete ? "complete" : "incomplete",
     protocolId: PROTOCOL_ID,
     planDigest: options.plan.planDigest,
+    planWitnessDigest: planWitness.witnessDigest,
+    planWitnessedAt: planWitness.witnessedAt,
+    witnessAuthorityTrustRootDigest: planWitness.authorityTrustRootDigest,
     portfolioPolicyDigest: options.expectedPortfolioPolicyDigest,
     adaptiveEvidencePolicyDigest: options.expectedEvidencePolicyDigest,
     profileIdentity: structuredClone(options.plan.profileIdentity),
@@ -750,6 +820,9 @@ export function reduceTrialPortfolio(options = {}) {
 export function verifyPortfolioReport(options = {}) {
   exactKeys(options, [
     "plan",
+    "planWitness",
+    "witnessAuthority",
+    "expectedWitnessTrustRootDigest",
     "members",
     "report",
     "generatedAt",
@@ -764,6 +837,9 @@ export function verifyPortfolioReport(options = {}) {
   if (canonicalDigest(body) !== reportDigest) throw new Error("portfolio report digest is invalid");
   const expected = reduceTrialPortfolio({
     plan: options.plan,
+    planWitness: options.planWitness,
+    witnessAuthority: options.witnessAuthority,
+    expectedWitnessTrustRootDigest: options.expectedWitnessTrustRootDigest,
     members: options.members,
     generatedAt: options.generatedAt,
     portfolioPolicy: options.portfolioPolicy,
@@ -856,6 +932,9 @@ export function buildPortfolioSchemas() {
     status: { const: "completed" },
     protocolId: { const: PROTOCOL_ID },
     planDigest: digestSchema(),
+    planWitnessDigest: digestSchema(),
+    planWitnessedAt: timestampSchema(),
+    witnessAuthorityTrustRootDigest: digestSchema(),
     portfolioPolicyDigest: digestSchema(),
     adaptiveEvidencePolicyDigest: digestSchema(),
     profileIdentity: profileIdentitySchema(),
@@ -920,6 +999,9 @@ export function buildPortfolioSchemas() {
     status: { enum: ["incomplete", "complete"] },
     protocolId: { const: PROTOCOL_ID },
     planDigest: digestSchema(),
+    planWitnessDigest: digestSchema(),
+    planWitnessedAt: timestampSchema(),
+    witnessAuthorityTrustRootDigest: digestSchema(),
     portfolioPolicyDigest: digestSchema(),
     adaptiveEvidencePolicyDigest: digestSchema(),
     profileIdentity: profileIdentitySchema(),
@@ -1006,5 +1088,6 @@ export function buildPortfolioSchemas() {
       report,
       "Structural validation only. verifyPortfolioReport is required to recompute membership, counts, gates, digests, and cross-field consistency.",
     ),
+    witness: buildPortfolioWitnessSchema(),
   });
 }

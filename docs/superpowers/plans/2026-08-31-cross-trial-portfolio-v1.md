@@ -7,11 +7,13 @@
 outcome per independent task and cannot turn oracle-case counts into fake
 recurrence.
 
-**Architecture:** a closed portfolio policy governs an exact pre-dispatch task
-plan. Each accepted adaptive-evidence v2 trial is independently reverified and
-collapsed into a completion receipt with one outcome per candidate variant. A
-deterministic reducer joins only exact plan members and emits descriptive
-task-level metrics with no profile, lifecycle, activation, or authority path.
+**Architecture:** a closed portfolio policy governs an exact task plan. An
+independent Ed25519 authority witnesses that plan before dispatch, and each
+host pins the accepted authority trust root. Each accepted adaptive-evidence
+v2 trial is independently reverified and collapsed into a completion receipt
+with one outcome per candidate variant. A deterministic reducer joins only
+exact plan members and emits descriptive task-level metrics with no profile,
+lifecycle, activation, or authority path.
 
 **Tech stack:** Node.js 24 ESM, built-in `node:test`, existing adaptive evidence
 v2 contracts, canonical SHA-256 identities, closed JSON Schema artifacts.
@@ -32,6 +34,11 @@ v2 contracts, canonical SHA-256 identities, closed JSON Schema artifacts.
 - All output is reporting-only and authority-neutral.
 - JSON Schema is structural only; every artifact must declare and pass its
   required runtime semantic verifier.
+- A caller timestamp is not preregistration evidence. Completion requires a
+  signed witness created before trial registration and verified through the
+  exact host-pinned trust root.
+- The committed fixture witness key is test material only and cannot be used
+  as a production trust root.
 - Write behavior-changing production code only after its focused test fails.
 - Use deterministic ordering and canonical digests for every identity.
 
@@ -43,8 +50,11 @@ v2 contracts, canonical SHA-256 identities, closed JSON Schema artifacts.
 
 - Create: `policies/adaptive-evidence-portfolio.v1.json`
 - Create: `src/adaptive-evidence-portfolio.mjs`
+- Create: `src/adaptive-evidence-portfolio-witness.mjs`
 - Create: `tests/adaptive-evidence-portfolio.test.mjs`
+- Create: `tests/adaptive-evidence-portfolio-witness.test.mjs`
 - Generate: `schemas/adaptive-evidence-portfolio-v1/plan.schema.json`
+- Generate: `schemas/adaptive-evidence-portfolio-v1/witness.schema.json`
 - Generate: `schemas/adaptive-evidence-portfolio-v1/completion.schema.json`
 - Generate: `schemas/adaptive-evidence-portfolio-v1/report.schema.json`
 
@@ -69,7 +79,24 @@ v2 contracts, canonical SHA-256 identities, closed JSON Schema artifacts.
 - [ ] Prove that a changed task, profile, axis, or threshold changes identity or
   fails verification.
 
-### task 3: finalize one independently verified trial
+### task 3: require an independently signed pre-dispatch witness
+
+**interface:** `createPortfolioWitnessAuthority(options)` and the returned
+`verifyPlanWitness(options)` verifier.
+
+- [ ] Write failing tests for trusted signature verification and exact plan,
+  policy, registry, key, and trust-root binding.
+- [ ] Reject caller-generated authorities, altered plans, forged signatures,
+  malformed chains, and witnesses at or after trial registration.
+- [ ] Bind witness identity, time, and authority trust root into every
+  completion and report.
+- [ ] Generate a closed witness schema with an explicit runtime-verification
+  requirement.
+- [ ] Keep the deterministic fixture private key isolated in
+  `scripts/adaptive-evidence-portfolio-fixture-witness.mjs` and label it as
+  non-production test material in release evidence.
+
+### task 4: finalize one independently verified trial
 
 **interface:** `createCompletedTrialReceipt(options)` and
 `verifyCompletedTrialReceipt(options)`.
@@ -85,7 +112,7 @@ v2 contracts, canonical SHA-256 identities, closed JSON Schema artifacts.
 - [ ] Bind internal comparisons only through `caseEvidenceDigest`; expose no
   case counters in the completion receipt.
 
-### task 4: reduce task outcomes without pooling ledgers
+### task 5: reduce task outcomes without pooling ledgers
 
 **interface:** `reduceTrialPortfolio(options)` and
 `verifyPortfolioReport(options)`.
@@ -101,13 +128,15 @@ v2 contracts, canonical SHA-256 identities, closed JSON Schema artifacts.
 - [ ] Assert the report has no profile, mode recommendation, lifecycle action,
   activation request, or authority expansion path.
 
-### task 5: generate deterministic fixtures and release receipt
+### task 6: generate deterministic fixtures and release receipt
 
 **files:**
 
 - Create: `scripts/build-adaptive-evidence-portfolio-v1.mjs`
+- Create: `scripts/adaptive-evidence-portfolio-fixture-witness.mjs`
 - Create: `tests/adaptive-evidence-portfolio-receipt.test.mjs`
 - Generate: `artifacts/adaptive-evidence-portfolio-v1/plan.json`
+- Generate: `artifacts/adaptive-evidence-portfolio-v1/plan-witness.json`
 - Generate: `artifacts/adaptive-evidence-portfolio-v1/completions/*.json`
 - Generate: `artifacts/adaptive-evidence-portfolio-v1/report.json`
 - Generate: `docs/adaptive-evidence-portfolio-v1-report.md`
@@ -122,7 +151,7 @@ v2 contracts, canonical SHA-256 identities, closed JSON Schema artifacts.
   directly with `node scripts/build-adaptive-evidence-portfolio-v1.mjs`.
 - [ ] Run the builder twice and compare every generated byte.
 
-### task 6: review, certify, and release
+### task 7: review, certify, and release
 
 **files:**
 
@@ -131,7 +160,8 @@ v2 contracts, canonical SHA-256 identities, closed JSON Schema artifacts.
 - [ ] Run syntax checks and focused portfolio tests.
 - [ ] Confirm certified parent paths are byte-identical to branch base.
 - [ ] Request one independent bounded review of the exact implementation head.
-- [ ] Repair only confirmed defects test-first and repeat review if needed.
+- [ ] Repair only confirmed defects test-first. If an independent re-review is
+  unavailable, record that fact instead of claiming one occurred.
 - [ ] Run two deterministic rebuilds.
 - [ ] Run the full repository test suite once at the release gate.
 - [ ] Record exact commit ids, logical digests, file hashes, test counts,

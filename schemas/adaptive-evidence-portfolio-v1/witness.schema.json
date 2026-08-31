@@ -1,0 +1,150 @@
+{
+  "$comment": "Structural validation only. A host-pinned createPortfolioWitnessAuthority(...).verifyPlanWitness call is required before any trial completion or reduction.",
+  "$id": "https://eternities.ai/schemas/adaptive-evidence-portfolio-v1/witness.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "attestation": {
+      "additionalProperties": false,
+      "properties": {
+        "algorithm": {
+          "const": "ed25519"
+        },
+        "keyId": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "purpose": {
+          "const": "adaptive-evidence-portfolio-preregistration"
+        },
+        "signature": {
+          "pattern": "^[A-Za-z0-9+/]{86}==$",
+          "type": "string"
+        },
+        "subjectDigest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "algorithm",
+        "purpose",
+        "subjectDigest",
+        "keyId",
+        "signature"
+      ],
+      "type": "object"
+    },
+    "record": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "else": {
+            "properties": {
+              "previousWitnessDigest": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              }
+            }
+          },
+          "if": {
+            "properties": {
+              "sequence": {
+                "const": 0
+              }
+            },
+            "required": [
+              "sequence"
+            ]
+          },
+          "then": {
+            "properties": {
+              "previousWitnessDigest": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "authorityTrustRootDigest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "dispatchNotStarted": {
+          "const": true
+        },
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "planDigest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "portfolioPolicyDigest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "previousWitnessDigest": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "purpose": {
+          "const": "adaptive-evidence-portfolio-preregistration"
+        },
+        "registryId": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "schemaVersion": {
+          "const": 1
+        },
+        "sequence": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "witnessedAt": {
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "id",
+        "purpose",
+        "registryId",
+        "sequence",
+        "previousWitnessDigest",
+        "planDigest",
+        "portfolioPolicyDigest",
+        "authorityTrustRootDigest",
+        "witnessedAt",
+        "dispatchNotStarted"
+      ],
+      "type": "object"
+    },
+    "semanticVerificationRequired": {
+      "const": true
+    },
+    "witnessDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "record",
+    "attestation",
+    "semanticVerificationRequired",
+    "witnessDigest"
+  ],
+  "title": "Adaptive Evidence Portfolio v1 Preregistration Witness",
+  "type": "object"
+}
