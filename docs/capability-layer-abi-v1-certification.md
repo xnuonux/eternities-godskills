@@ -54,7 +54,7 @@ the final pre-certification verification produced:
 - focused compatibility set: 34 passed, 0 failed
 - `npm test`: 643 passed, 0 failed, 0 skipped, 0 cancelled
 - `git diff --check`: pass
-- changed paths from `bc86dac`: 32 intended phase-1 paths, 0 outside the
+- changed paths from `bc86dac`: 33 intended phase-1 paths, 0 outside the
   declared scope
 - activation-default changes: 0
 
