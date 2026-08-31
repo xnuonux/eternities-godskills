@@ -43,6 +43,13 @@ const decision = compileActivationDecision({
 
 Every decision contains the mode, reason codes, disclosure timing, method-gate result, exact policy and evidence digests, unchanged authority projection, and a decision digest.
 
+The default compiler accepts only the policy and reviewed evidence registry
+pinned in its v1 trust root. A caller cannot turn an arbitrary object into
+method evidence by setting `reviewed: true`, changing a threshold, or supplying
+a self-consistent profile. The exported numeric evaluator can test future gate
+math, but its result is not an activation authorization. Adding a new trusted
+registry requires an explicit source and receipt revision.
+
 ## Current Muse disposition
 
 The reviewed visual evidence contains four matched product preferences. Raw Terra won three and the experimental Muse candidate won one. Muse is therefore not method-eligible for creative generation. Its evidence-qualified mode is `review` when a real review phase exists, otherwise consequential `guardrail` or low-consequence `native`.

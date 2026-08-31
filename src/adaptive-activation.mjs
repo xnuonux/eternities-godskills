@@ -1,6 +1,10 @@
 import { sha256 } from "./io.mjs";
 
 const EXPECTED_MODES = ["native", "guardrail", "method", "review"];
+const TRUSTED_POLICY_DIGEST = "bf9e6878399b4edeb4ff6bb77d234fdf646b53fd62ba6e1448b4374246d4c41d";
+const TRUSTED_EVIDENCE_DIGESTS = new Set([
+  "9a14d4296158c65c3929938c5c54b5f7f4b6a5ffeb5b0a827b3f8b25814f5e07",
+]);
 const DISCLOSURE = Object.freeze({
   native: "none",
   guardrail: "guardrails-only",
@@ -48,6 +52,12 @@ function validatePolicy(policy) {
     throw new Error("activation policy mode set is invalid");
   }
   const threshold = policy.methodEvidence;
+  validateMethodThreshold(threshold);
+  if (digest(policy) !== TRUSTED_POLICY_DIGEST) throw new Error("activation policy does not match the trusted policy digest");
+  return policy;
+}
+
+function validateMethodThreshold(threshold) {
   if (!threshold || !Number.isInteger(threshold.minimumMatchedEvaluations)
       || !Number.isInteger(threshold.minimumWins)
       || typeof threshold.minimumWinRate !== "number"
@@ -55,7 +65,7 @@ function validatePolicy(policy) {
       || typeof threshold.maximumOverheadRatio !== "number") {
     throw new TypeError("activation policy method evidence thresholds are invalid");
   }
-  return policy;
+  return threshold;
 }
 
 function validateTask(task, policy) {
@@ -134,6 +144,11 @@ function evaluateMethod(profile, threshold) {
   };
 }
 
+export function evaluateMethodEvidence(profile, threshold) {
+  validateMethodThreshold(threshold);
+  return deepFreeze(evaluateMethod(profile, threshold));
+}
+
 export function compileActivationDecision({
   selectedId,
   task,
@@ -153,6 +168,9 @@ export function compileActivationDecision({
 
   const selectedEvidence = profileFor(evidence, selectedId, task.taskClass);
   const methodEvidence = evaluateMethod(selectedEvidence.profile, policy.methodEvidence);
+  if (selectedEvidence.evidence && !TRUSTED_EVIDENCE_DIGESTS.has(digest(selectedEvidence.evidence))) {
+    throw new Error("activation evidence does not match a trusted evidence digest");
+  }
   let mode;
   const reasonCodes = [];
   if (explicitMethodRequest) {

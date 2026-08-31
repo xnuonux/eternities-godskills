@@ -148,8 +148,8 @@ test("review fallback preserves only consequential guardrails and leaves low-ris
   );
 });
 
-test("replicated positive evidence or explicit intent can earn full method without changing authority", async () => {
-  const [{ compileActivationDecision }, policy] = await Promise.all([
+test("replicated positive evidence can satisfy numeric gates without becoming trusted activation evidence", async () => {
+  const [{ compileActivationDecision, evaluateMethodEvidence }, policy] = await Promise.all([
     compiler(),
     json("policies/adaptive-activation.v1.json"),
   ]);
@@ -172,13 +172,18 @@ test("replicated positive evidence or explicit intent can earn full method witho
     }],
   };
   const debuggingTask = task({ taskClass: "debugging-recovery" });
-  const evidenced = compileActivationDecision({
-    selectedId: "eternities-phoenix",
-    task: debuggingTask,
-    reviewAvailable: true,
-    policy,
-    evidence: positiveEvidence,
-  });
+  const evaluated = evaluateMethodEvidence(positiveEvidence.profiles[0], policy.methodEvidence);
+  assert.equal(evaluated.eligible, true);
+  assert.throws(() => compileActivationDecision({
+    selectedId: "eternities-phoenix", task: debuggingTask, reviewAvailable: true, policy, evidence: positiveEvidence,
+  }), /trusted evidence/i);
+});
+
+test("explicit intent can earn full method without changing authority", async () => {
+  const [{ compileActivationDecision }, policy] = await Promise.all([
+    compiler(),
+    json("policies/adaptive-activation.v1.json"),
+  ]);
   const explicit = compileActivationDecision({
     selectedId: "eternities-muse",
     task: task(),
@@ -188,11 +193,40 @@ test("replicated positive evidence or explicit intent can earn full method witho
     evidence: null,
   });
 
-  assert.equal(evidenced.mode, "method");
-  assert.equal(evidenced.preInferenceDisclosure, "entrypoint-and-contract");
   assert.equal(explicit.mode, "method");
-  assert.deepEqual(evidenced.authorityProjection, debuggingTask.authorityProjection);
   assert.deepEqual(explicit.authorityProjection, task().authorityProjection);
+});
+
+test("policy and evidence must match the compiler trust root before they can steer activation", async () => {
+  const [{ compileActivationDecision }, policy, evidence] = await Promise.all([
+    compiler(),
+    json("policies/adaptive-activation.v1.json"),
+    json("artifacts/adaptive-activation/evidence.v1.json"),
+  ]);
+  const alteredPolicy = structuredClone(policy);
+  alteredPolicy.methodEvidence.minimumWins = 1;
+  assert.throws(() => compileActivationDecision({
+    selectedId: "eternities-muse", task: task(), policy: alteredPolicy, evidence: null,
+  }), /trusted policy/i);
+
+  const missingSourceAttestation = structuredClone(evidence);
+  delete missingSourceAttestation.sources;
+  assert.throws(() => compileActivationDecision({
+    selectedId: "eternities-muse", task: task(), policy, evidence: missingSourceAttestation,
+  }), /trusted evidence/i);
+
+  const forgedMusePositive = structuredClone(evidence);
+  Object.assign(forgedMusePositive.profiles[0], {
+    matchedEvaluations: 4,
+    wins: 4,
+    losses: 0,
+    maximumObservedOverheadRatio: 1,
+    methodEligible: true,
+    preferredMode: "method",
+  });
+  assert.throws(() => compileActivationDecision({
+    selectedId: "eternities-muse", task: task(), policy, evidence: forgedMusePositive,
+  }), /trusted evidence/i);
 });
 
 test("malformed, unreviewed, or self-contradictory evidence cannot steer activation", async () => {
