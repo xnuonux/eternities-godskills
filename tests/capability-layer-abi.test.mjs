@@ -1,8 +1,9 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, mkdtemp, readFile, readdir, rename, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import test from "node:test";
 
 const root = new URL("../", import.meta.url);
@@ -267,6 +268,7 @@ test("digest-bound activation decisions disclose only the authorized layer phase
     const result = await readCapabilityLayers({
       bundleDirectory: target.directory,
       manifest: target.bundle.manifest,
+      expectedBundleDigest: target.bundle.manifest.bundleDigest,
       activationDecision: decision,
       artifactAvailable,
       read: async (filePath) => {
@@ -300,8 +302,28 @@ test("digest-bound activation decisions disclose only the authorized layer phase
   await assert.rejects(() => readCapabilityLayers({
     bundleDirectory: aegis.directory,
     manifest: aegis.bundle.manifest,
+    expectedBundleDigest: aegis.bundle.manifest.bundleDigest,
     activationDecision: forged,
   }), /decision digest|method activation/i);
+
+  const forgedManifest = structuredClone(aegis.bundle.manifest);
+  const forgedGuardrails = aegis.bundle.files["guardrails.v1.json"].replace(
+    "Verified findings are separated from hypotheses",
+    "Forged findings are accepted without evidence",
+  );
+  forgedManifest.layers.guardrails.sha256 = sha256(forgedGuardrails);
+  forgedManifest.layers.guardrails.bytes = Buffer.byteLength(forgedGuardrails);
+  const { bundleDigest: ignoredDigest, ...forgedBody } = forgedManifest;
+  forgedManifest.bundleDigest = sha256(
+    (await import("../src/capability-layer-abi.mjs")).canonicalJson(forgedBody),
+  );
+  await writeFile(path.join(aegis.directory, "guardrails.v1.json"), forgedGuardrails, "utf8");
+  await assert.rejects(() => readCapabilityLayers({
+    bundleDirectory: aegis.directory,
+    manifest: forgedManifest,
+    expectedBundleDigest: aegis.bundle.manifest.bundleDigest,
+    activationDecision: decisions.guardrail,
+  }), /trusted bundle digest/i);
 });
 
 test("checked capability layer artifacts rebuild byte for byte", async () => {
@@ -353,4 +375,101 @@ test("aggregate receipt proves legacy entrypoint identity and leaves external ga
   });
   assert.match(first.report, /not evidence of higher model quality/i);
   assert.doesNotMatch(first.receiptText, /raw prompt|mission content|credential value/i);
+});
+
+test("generated file transaction rejects path escape before writing", async (t) => {
+  const { commitGeneratedFiles } = await import(
+    "../scripts/build-capability-layer-abi.mjs"
+  );
+  const parent = await mkdtemp(path.join(tmpdir(), "godskill-writer-containment-"));
+  const repository = path.join(parent, "repository");
+  const outside = path.join(parent, "outside.txt");
+  await mkdir(repository);
+  t.after(() => rm(parent, { recursive: true, force: true }));
+
+  await assert.rejects(() => commitGeneratedFiles({
+    rootPath: repository,
+    writes: { "../outside.txt": "forbidden\n" },
+  }), /outside canonical root|contained output path/i);
+  await assert.rejects(() => readFile(outside), /ENOENT/);
+  assert.deepEqual(await readdir(repository), []);
+});
+
+test("generated file transaction restores every original after a later rename fails", async (t) => {
+  const { commitGeneratedFiles } = await import(
+    "../scripts/build-capability-layer-abi.mjs"
+  );
+  const repository = await mkdtemp(path.join(tmpdir(), "godskill-writer-rollback-"));
+  t.after(() => rm(repository, { recursive: true, force: true }));
+  await writeFile(path.join(repository, "one.txt"), "original one\n", "utf8");
+  await writeFile(path.join(repository, "two.txt"), "original two\n", "utf8");
+
+  const failingRename = async (source, destination) => {
+    const normalized = source.replaceAll("\\", "/");
+    if (normalized.includes("/staged/") && path.basename(source) === "two.txt") {
+      throw new Error("injected second-file failure");
+    }
+    return rename(source, destination);
+  };
+
+  await assert.rejects(() => commitGeneratedFiles({
+    rootPath: repository,
+    writes: {
+      "one.txt": "replacement one\n",
+      "two.txt": "replacement two\n",
+      "nested/three.txt": "new three\n",
+    },
+    renameFile: failingRename,
+  }), /injected second-file failure/);
+
+  assert.equal(await readFile(path.join(repository, "one.txt"), "utf8"), "original one\n");
+  assert.equal(await readFile(path.join(repository, "two.txt"), "utf8"), "original two\n");
+  await assert.rejects(() => readFile(path.join(repository, "nested", "three.txt")), /ENOENT/);
+  assert.deepEqual(
+    (await readdir(repository)).filter((name) => name.startsWith(".capability-layer-abi-txn-")),
+    [],
+  );
+});
+
+test("the repository writer commits every checked output through the real transaction", async (t) => {
+  const { writeCapabilityLayerAbi } = await import(
+    "../scripts/build-capability-layer-abi.mjs"
+  );
+  const repository = await mkdtemp(path.join(tmpdir(), "godskill-writer-integration-"));
+  t.after(() => rm(repository, { recursive: true, force: true }));
+  const policy = await json("policies/capability-layer-abi.v1.json");
+  const sourcePaths = new Set([
+    "policies/capability-layer-abi.v1.json",
+    "artifacts/portable-capabilities/manifest.v1.json",
+    ...policy.canaries.flatMap((canary) => Object.values(canary.sources)),
+  ]);
+  for (const relative of [...sourcePaths].sort()) {
+    const destination = path.join(repository, ...relative.split("/"));
+    await mkdir(path.dirname(destination), { recursive: true });
+    await copyFile(new URL(relative, root), destination);
+  }
+
+  const result = await writeCapabilityLayerAbi({
+    root: pathToFileURL(repository + path.sep),
+  });
+
+  assert.equal(Object.keys(result.files).length, 24);
+  for (const [relative, expected] of Object.entries(result.files)) {
+    assert.equal(
+      await readFile(path.join(repository, ...relative.split("/")), "utf8"),
+      expected,
+    );
+  }
+  assert.equal(
+    await readFile(path.join(repository, "receipts", "capability-layer-abi-v1.json"), "utf8"),
+    result.receiptText,
+  );
+  assert.equal(
+    await readFile(path.join(repository, "docs", "capability-layer-abi-v1-report.md"), "utf8"),
+    result.report,
+  );
+  assert.deepEqual(
+    (await readdir(repository)).filter((name) => name.startsWith(".capability-layer-abi-txn-")),
+    [],
+  );
 });

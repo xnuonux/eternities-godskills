@@ -1,4 +1,13 @@
-import { mkdir, readFile, rename, rm, writeFile } from "node:fs/promises";
+import {
+  lstat,
+  mkdir,
+  mkdtemp,
+  readFile,
+  realpath,
+  rename,
+  rm,
+  writeFile,
+} from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -9,6 +18,7 @@ import {
   verifyCapabilityLayerBundle,
 } from "../src/capability-layer-abi.mjs";
 import { sha256 } from "../src/io.mjs";
+import { assertInside } from "../src/paths.mjs";
 
 const POLICY_PATH = "policies/capability-layer-abi.v1.json";
 const LEGACY_MANIFEST_PATH = "artifacts/portable-capabilities/manifest.v1.json";
@@ -225,23 +235,129 @@ export async function rebuildCapabilityLayerAbi({
   });
 }
 
-let atomicSequence = 0;
-
-async function writeTextAtomic(filePath, text) {
-  const directory = path.dirname(filePath);
-  atomicSequence += 1;
-  const temporary = path.join(
-    directory,
-    "." + path.basename(filePath) + "." + process.pid + "." + atomicSequence + ".tmp",
-  );
-  await mkdir(directory, { recursive: true });
+async function pathState(filePath) {
   try {
-    await writeFile(temporary, text, "utf8");
-    await rename(temporary, filePath);
+    return await lstat(filePath);
   } catch (error) {
-    await rm(temporary, { force: true });
+    if (error.code === "ENOENT") return null;
     throw error;
   }
+}
+
+function validateOutputRelative(relative) {
+  if (typeof relative !== "string" || relative.trim() === ""
+      || relative.includes("\\") || relative.startsWith("/")
+      || /^[a-z]:/i.test(relative) || path.posix.normalize(relative) !== relative
+      || relative.split("/").includes("..")) {
+    throw new Error("generated output is not a contained output path: " + relative);
+  }
+}
+
+export async function commitGeneratedFiles({
+  rootPath,
+  writes,
+  renameFile = rename,
+}) {
+  if (typeof rootPath !== "string" || rootPath.trim() === ""
+      || !writes || typeof writes !== "object" || Array.isArray(writes)
+      || typeof renameFile !== "function") {
+    throw new TypeError("generated file transaction options are invalid");
+  }
+  const canonicalRoot = await realpath(rootPath);
+  const entries = Object.entries(writes).sort(([left], [right]) =>
+    left.localeCompare(right));
+  if (entries.length === 0) throw new Error("generated file transaction is empty");
+  const destinations = [];
+  const folded = new Set();
+  for (const [relative, text] of entries) {
+    validateOutputRelative(relative);
+    if (typeof text !== "string") {
+      throw new TypeError("generated output must be UTF-8 text: " + relative);
+    }
+    const destination = assertInside(
+      canonicalRoot,
+      path.resolve(canonicalRoot, ...relative.split("/")),
+    );
+    const identity = destination.toLowerCase();
+    if (folded.has(identity)) throw new Error("duplicate generated output path: " + relative);
+    folded.add(identity);
+    destinations.push({ relative, text, destination });
+  }
+
+  const transactionRoot = await mkdtemp(
+    path.join(canonicalRoot, ".capability-layer-abi-txn-"),
+  );
+  assertInside(canonicalRoot, transactionRoot);
+  const stagedRoot = path.join(transactionRoot, "staged");
+  const backupRoot = path.join(transactionRoot, "backups");
+  const applied = [];
+  try {
+    for (const entry of destinations) {
+      const staged = assertInside(
+        transactionRoot,
+        path.resolve(stagedRoot, ...entry.relative.split("/")),
+      );
+      await mkdir(path.dirname(staged), { recursive: true });
+      await writeFile(staged, entry.text, "utf8");
+      const stagedBytes = await readFile(staged);
+      if (sha256(stagedBytes) !== sha256(entry.text)
+          || stagedBytes.length !== Buffer.byteLength(entry.text)) {
+        throw new Error("staged generated output does not match: " + entry.relative);
+      }
+      entry.staged = staged;
+    }
+
+    for (const entry of destinations) {
+      await mkdir(path.dirname(entry.destination), { recursive: true });
+      const realParent = await realpath(path.dirname(entry.destination));
+      assertInside(canonicalRoot, realParent);
+      assertInside(canonicalRoot, path.join(realParent, path.basename(entry.destination)));
+      const existing = await pathState(entry.destination);
+      if (existing && (!existing.isFile() || existing.isSymbolicLink())) {
+        throw new Error("generated output destination is not a regular file: " + entry.relative);
+      }
+      const backup = assertInside(
+        transactionRoot,
+        path.resolve(backupRoot, ...entry.relative.split("/")),
+      );
+      const state = {
+        destination: entry.destination,
+        backup,
+        hadOriginal: Boolean(existing),
+        applied: false,
+      };
+      if (existing) {
+        await mkdir(path.dirname(backup), { recursive: true });
+        await renameFile(entry.destination, backup);
+      }
+      applied.push(state);
+      await renameFile(entry.staged, entry.destination);
+      state.applied = true;
+    }
+  } catch (error) {
+    const rollbackErrors = [];
+    for (const state of [...applied].reverse()) {
+      try {
+        if (state.applied) await rm(state.destination, { force: true });
+        if (state.hadOriginal && await pathState(state.backup)) {
+          await mkdir(path.dirname(state.destination), { recursive: true });
+          await rename(state.backup, state.destination);
+        }
+      } catch (rollbackError) {
+        rollbackErrors.push(rollbackError);
+      }
+    }
+    if (rollbackErrors.length === 0) {
+      await rm(transactionRoot, { recursive: true, force: true });
+      throw error;
+    }
+    throw new AggregateError(
+      [error, ...rollbackErrors],
+      "generated file transaction rollback failed; recovery data remains at " + transactionRoot,
+    );
+  }
+  await rm(transactionRoot, { recursive: true, force: true });
+  return Object.freeze({ files: destinations.length });
 }
 
 export async function writeCapabilityLayerAbi({
@@ -253,9 +369,10 @@ export async function writeCapabilityLayerAbi({
     [RECEIPT_PATH]: result.receiptText,
     [REPORT_PATH]: result.report,
   };
-  for (const relative of Object.keys(writes).sort()) {
-    await writeTextAtomic(fileURLToPath(new URL(relative, root)), writes[relative]);
-  }
+  await commitGeneratedFiles({
+    rootPath: fileURLToPath(root),
+    writes,
+  });
   return result;
 }
 

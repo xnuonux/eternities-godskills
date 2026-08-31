@@ -646,6 +646,7 @@ function validateReadableManifest(manifest) {
 export async function readCapabilityLayers({
   bundleDirectory,
   manifest,
+  expectedBundleDigest,
   activationDecision,
   artifactAvailable = false,
   read = readFile,
@@ -655,6 +656,10 @@ export async function readCapabilityLayers({
     throw new TypeError("layer read options are invalid");
   }
   validateReadableManifest(manifest);
+  if (!/^[a-f0-9]{64}$/.test(expectedBundleDigest ?? "")
+      || manifest.bundleDigest !== expectedBundleDigest) {
+    throw new Error("manifest does not match the trusted bundle digest");
+  }
   const disclosure = validateActivationDecision(activationDecision, manifest);
   if (activationDecision.mode === "review" && !artifactAvailable) {
     return Object.freeze({
