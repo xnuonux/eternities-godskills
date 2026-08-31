@@ -4,7 +4,7 @@
 
 **Goal:** Separate capability selection from evidence-bound activation so a strong raw agent remains the floor and full Godskill method enters context only when it has earned that intervention.
 
-**Architecture:** Add a deterministic activation compiler and exact reviewed evidence registry to `eternities-godskills`, then add an optional package-shaping adapter path to `eternities-godagents`. Preserve all System v3 and adapter-v1 certificates. Apply a compact equivalent policy to global Codex skill routing only after repository tests pass.
+**Architecture:** Add a deterministic activation compiler and exact reviewed evidence registry to `eternities-godskills`, then add an optional package-shaping adapter path to `eternities-godagents`. The adapter accepts host task classification but compiles activation locally against the exact pinned policy and evidence trust root. Preserve all System v3 and adapter-v1 certificates. Apply a compact equivalent policy to global Codex skill routing only after repository tests pass.
 
 **Tech Stack:** Node.js 24 ESM, `node:test`, canonical JSON and SHA-256 receipts, existing Godskills router and Godagents adapter contracts.
 
@@ -177,7 +177,7 @@ git commit -m "test: certify adaptive activation decisions"
 - Modify: `C:\dev\eternities-godagents\README.md`
 
 **Interfaces:**
-- Consumes: an optional frozen `activationResolver({ mission, selected })` supplied to `createGodskillsAdapter`.
+- Consumes: an optional frozen activation classifier supplied to `createGodskillsAdapter`. It carries the exact pinned policy and evidence digests and may return only task class, consequence, and real review availability.
 - Produces: a first-attempt cortex package with per-capability activation, exact disclosure accounting, and digest-bound deferred review descriptors.
 
 - [ ] **Step 1: Write failing filesystem-spy tests**
@@ -188,7 +188,7 @@ Require:
 - `guardrail`: contract read only, no entrypoint read;
 - `method`: contract and entrypoint read;
 - `review`: neither selected artifact read before inference, plus one deferred descriptor;
-- omitted resolver: byte-compatible current method behavior.
+- omitted classifier: byte-compatible current method behavior.
 
 - [ ] **Step 2: Run the focused test and observe current unconditional reads**
 
@@ -198,11 +198,11 @@ Expected: native, guardrail, and review cases fail because the current binder al
 
 - [ ] **Step 3: Implement activation before artifact reads**
 
-Split metadata selection from artifact disclosure. Guardrail packages may contain only sorted contract-derived success, failure, effect, and termination constraints. Review descriptors contain ids and certified digests, no bodies. Include activation decisions in `stackDigest` and `packageDigest`.
+Split metadata selection from artifact disclosure. Compile modes inside the adapter rather than accepting a mode-bearing resolver. Guardrail packages may contain only sorted contract-derived success, failure, effect, and termination constraints. Review descriptors contain ids and certified digests, no bodies. Include activation decisions in `stackDigest` and `packageDigest`.
 
 - [ ] **Step 4: Preserve legacy defaults and recovery**
 
-Without a resolver, produce the existing method package. Rehydration must reproduce the same activation decision and reject a changed resolver digest or package.
+Without a classifier, produce the existing method package. Rehydration must recompile the stored activation context and reject a changed policy, evidence registry, explicit-method intent, authority projection, decision, or package.
 
 - [ ] **Step 5: Run focused and v1 regression suites**
 

@@ -75,21 +75,22 @@ The profile binds the exact private-repository commit and SHA-256 digests of bot
 
 ## godagents integration
 
-Godagents will gain an optional adaptive adapter path without altering the v1 certified default. The adapter must decide activation before reading selected entrypoint bytes.
+Godagents will gain an optional adaptive adapter path without altering the v1 certified default. A host classifier may declare task class, consequence, and real review availability, but it may not supply an activation mode. The adapter must verify the exact policy and evidence trust-root digests, compile the mode locally, and decide activation before reading selected entrypoint bytes.
 
 - `method` may read the entrypoint and contract.
 - `guardrail` may read the contract but must omit entrypoint prose and emit a bounded constraint slice.
 - `native` must read neither selected artifact.
 - `review` must read neither selected artifact during first-attempt binding and must expose a digest-bound deferred review descriptor.
 
-The first-attempt cortex package records activation modes and disclosure bytes. Recovery reuses the exact activation-policy, evidence, stack, and package digests. A future runtime review loop may consume the deferred descriptor, but no implementation may claim a review occurred merely because it was scheduled.
+The first-attempt cortex package records activation modes and disclosure bytes. Explicit method intent is bound to the mission source envelope. Recovery recompiles the stored activation context under the exact activation-policy, evidence, authority, stack, and package identities. A future runtime review loop may consume the deferred descriptor, but no implementation may claim a review occurred merely because it was scheduled.
 
 ## codex host behavior
 
 Global Codex routing will adopt the same distinction in compact form:
 
 - raw reasoning is the default floor;
-- full skill bodies are loaded before work only for an explicit request, a hard process requirement, or a verified recurring advantage;
+- full skill bodies are loaded before work only for an explicit request or a pinned, reviewed recurring advantage;
+- hard process requirements may impose compact guardrails or host checks but do not independently authorize full method injection;
 - creative first attempts use raw construction plus compact non-negotiable constraints, followed by skill-guided review when a real review pass is available;
 - routine work and unclear matches load no skill;
 - every superiority claim requires matched artifact evidence.
@@ -101,7 +102,7 @@ This rule applies to all skills, not only Muse, and does not disable determinist
 1. Selection and activation are represented as separate deterministic decisions.
 2. Muse v4 resolves to `review` for creative generation when review exists and never enters first-attempt context.
 3. The same evidence resolves to consequential `guardrail` or low-consequence `native` when review is unavailable.
-4. Synthetic replicated positive evidence can earn `method`; insufficient, stale, malformed, or contradictory evidence cannot.
+4. Synthetic replicated positive evidence can satisfy the numeric method gates, but only a pinned reviewed registry can authorize `method`; insufficient, stale, malformed, untrusted, or contradictory evidence cannot.
 5. Explicit skill requests can select `method` but cannot expand authority or effects.
 6. Every decision binds policy and evidence digests and reports reason codes and disclosure intent.
 7. Godagents can compile a native, guardrail, method, and deferred-review package without reading unauthorized bodies.

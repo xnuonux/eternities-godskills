@@ -76,6 +76,39 @@ path\to\natural-request.json` to compile and route without execution.
 the full local completion report is `docs\eternities-godskills-completion-report.md`
 and its machine receipt is `receipts\eternities-godskills-completion.json`.
 
+## adaptive amplification
+
+adaptive amplification keeps a strong raw agent as the measured capability
+floor. routing still identifies the smallest relevant Godskill, but a separate
+activation decision controls how much of that skill may shape the first
+attempt:
+
+- `native` discloses no selected skill artifact;
+- `guardrail` discloses only compact non-negotiable constraints;
+- `method` discloses the exact entrypoint and bounded contract;
+- `review` preserves a native first attempt and schedules the selected skill
+  for a real later critique phase.
+
+full method injection must be explicitly requested or earned by reviewed,
+matched evidence. selection accuracy, corpus size, structural tests, and one
+successful demonstration do not establish a method advantage. no activation
+mode can expand authority, effects, risk, preconditions, context, or
+composition.
+
+the first profile applies this rule to `eternities-muse`. raw Terra won three
+of four reviewed visual product preferences, while the Muse v4 candidate won
+the bioluminescent-ecosystem mission and retained useful art-direction
+strengths. Muse therefore remains experimental and resolves to `review` when a
+real review phase exists, consequential `guardrail` when it does not, and
+low-consequence `native`. it is not promoted to unconditional `method`.
+
+the optional Godagents adapter path decides activation before reading selected
+artifact bytes and preserves the certified legacy path when no activation
+resolver is supplied. the exact policy, development evidence, decisions, and
+proof limits are bound in `receipts\adaptive-activation-v1.json`. read
+`docs\adaptive-amplification-report.md` for the implementation and verification
+boundary.
+
 ## eternities agora
 
 `eternities-agora` is the promoted agency and client-service godskill. it keeps
