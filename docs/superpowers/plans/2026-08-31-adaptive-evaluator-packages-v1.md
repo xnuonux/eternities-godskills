@@ -104,10 +104,10 @@ Implement strict helpers in `src/adaptive-evaluator-package.mjs`. The public req
   artifactText,
   artifactDigest,
   baseline: null | {
-    artifactText, artifactDigest, resultDigest
+    artifactText, artifactDigest, resultText, resultDigest
   },
   parent: null | {
-    variant, artifactText, artifactDigest, resultDigest
+    artifactText, artifactDigest, resultText, resultDigest
   },
   evaluatedAt
 }

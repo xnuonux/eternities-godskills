@@ -77,7 +77,12 @@ const RESULT_KEYS = Object.freeze([
   "evaluatedAt",
   "resultDigest",
 ]);
-const BOUND_ARTIFACT_KEYS = Object.freeze(["artifactText", "artifactDigest", "resultDigest"]);
+const BOUND_ARTIFACT_KEYS = Object.freeze([
+  "artifactText",
+  "artifactDigest",
+  "resultText",
+  "resultDigest",
+]);
 const RESULT_PARENT_KEYS = Object.freeze(["variant", "artifactDigest", "resultDigest"]);
 const CASE_KEYS = Object.freeze([
   "id",
@@ -163,7 +168,36 @@ function validateBoundArtifact(value, label) {
   if (sha256(value.artifactText) !== value.artifactDigest) {
     throw new Error(`${label} artifact digest does not match its bytes`);
   }
+  nonEmptyString(value.resultText, `${label}.resultText`);
   digestString(value.resultDigest, `${label}.resultDigest`);
+  let result;
+  try {
+    result = JSON.parse(value.resultText);
+  } catch (error) {
+    throw new Error(`${label} result text is invalid JSON`, { cause: error });
+  }
+  validateEvaluatorResult(result);
+  if (result.resultDigest !== value.resultDigest) {
+    throw new Error(`${label} result digest does not match its result text`);
+  }
+  if (result.artifactDigest !== value.artifactDigest
+      || result.artifactBytes !== Buffer.byteLength(value.artifactText)) {
+    throw new Error(`${label} result does not bind the artifact bytes`);
+  }
+  return result;
+}
+
+function validateBoundContext(result, request, label) {
+  for (const field of [
+    "packageReceiptDigest",
+    "taskDefinitionDigest",
+    "taskSourceDigest",
+  ]) {
+    if (result[field] !== request[field]) throw new Error(`${label} ${field} is stale`);
+  }
+  if (new Date(result.evaluatedAt) >= new Date(request.evaluatedAt)) {
+    throw new Error(`${label} result must predate the current evaluation`);
+  }
 }
 
 function validateResultParent(value, label) {
@@ -254,12 +288,20 @@ export function validateEvaluatorRequest(request) {
     if (request.baseline !== null) throw new Error("raw evaluator request cannot carry a baseline");
   } else {
     if (request.baseline === null) throw new Error("non-raw evaluator request requires a baseline");
-    validateBoundArtifact(request.baseline, "evaluator request baseline");
+    const baselineResult = validateBoundArtifact(request.baseline, "evaluator request baseline");
+    validateBoundContext(baselineResult, request, "evaluator request baseline");
+    if (baselineResult.variant !== "raw") {
+      throw new Error("evaluator request baseline result variant must be raw");
+    }
   }
   const expectedParent = EXPECTED_REVIEW_PARENTS[request.variant];
   if (expectedParent) {
     if (request.parent === null) throw new Error(`${request.variant} evaluator request requires a parent`);
-    validateBoundArtifact(request.parent, "evaluator request parent");
+    const parentResult = validateBoundArtifact(request.parent, "evaluator request parent");
+    validateBoundContext(parentResult, request, "evaluator request parent");
+    if (parentResult.variant !== expectedParent) {
+      throw new Error("evaluator request parent result variant is invalid");
+    }
   } else if (request.parent !== null) {
     throw new Error(`${request.variant} evaluator request cannot carry a review parent`);
   }
@@ -409,6 +451,7 @@ export function buildAdaptiveEvaluatorSchemas() {
   const boundArtifact = objectSchema([...BOUND_ARTIFACT_KEYS], {
     artifactText: nonEmptyStringSchema,
     artifactDigest: digestSchema,
+    resultText: nonEmptyStringSchema,
     resultDigest: digestSchema,
   });
   const resultParent = objectSchema([...RESULT_PARENT_KEYS], {

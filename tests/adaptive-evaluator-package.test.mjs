@@ -87,6 +87,24 @@ function validResult(overrides = {}) {
   return { ...body, resultDigest: canonicalDigest(body) };
 }
 
+function boundEvaluation(request) {
+  const artifactDigest = sha256(request.artifactText);
+  const result = validResult({
+    packageReceiptDigest: request.packageReceiptDigest,
+    taskDefinitionDigest: request.taskDefinitionDigest,
+    taskSourceDigest: request.taskSourceDigest,
+    artifactDigest,
+    artifactBytes: Buffer.byteLength(request.artifactText),
+    evaluatedAt: "2026-08-31T11:59:59.000Z",
+  });
+  return {
+    artifactText: request.artifactText,
+    artifactDigest,
+    resultText: JSON.stringify(result),
+    resultDigest: result.resultDigest,
+  };
+}
+
 test("trusted evaluator policy closes loading, resources, authority, and size", async () => {
   const [{ validateAdaptiveEvaluatorPackagePolicy }, trusted] = await Promise.all([
     protocol(),
@@ -148,25 +166,31 @@ test("portable request validates exact artifact and task bytes", async () => {
     ...request,
     taskSourceDigest: digest("2"),
   }), /task source digest/i);
+  const baseline = boundEvaluation(request);
+  assert.equal(validateEvaluatorRequest({
+    ...request,
+    variant: "method",
+    baseline,
+  }).baseline.resultDigest, baseline.resultDigest);
   assert.throws(() => validateEvaluatorRequest({
     ...request,
     variant: "reviewer",
-    baseline: {
-      artifactText: request.artifactText,
-      artifactDigest: request.artifactDigest,
-      resultDigest: digest("3"),
-    },
+    baseline,
     parent: null,
   }), /parent/i);
   assert.throws(() => validateEvaluatorRequest({
     ...request,
     variant: "raw",
-    baseline: {
-      artifactText: "{}",
-      artifactDigest: sha256("{}"),
-      resultDigest: digest("4"),
-    },
+    baseline,
   }), /raw.*baseline/i);
+  assert.throws(() => validateEvaluatorRequest({
+    ...request,
+    variant: "method",
+    baseline: {
+      ...baseline,
+      resultText: baseline.resultText.replace("case-detected", "case-forged"),
+    },
+  }), /result digest|result text/i);
 });
 
 test("portable result closes case checks, comparison totals, digest, and authority", async () => {
