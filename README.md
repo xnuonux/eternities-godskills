@@ -76,6 +76,24 @@ path\to\natural-request.json` to compile and route without execution.
 the full local completion report is `docs\eternities-godskills-completion-report.md`
 and its machine receipt is `receipts\eternities-godskills-completion.json`.
 
+## sealed local routing executable
+
+`scripts\routing.mjs` is the receipt-bound file transport for hosts that need
+an exact local Godskills routing program rather than an unverified repository
+path. it exposes only the certified `default` and `specialist` modes, fixes the
+canonical routing-card source, accepts one absolute request path and one
+absolute output path, and verifies the complete executable closure before it
+reads the request.
+
+rebuild the trust root with
+`node scripts\build-routing-executable-receipt.mjs`. a host must supply the
+resulting `receipts\routing-executable-v1.json` explicitly and must separately
+enforce a scrubbed child environment, timeout, byte ceilings, and durable
+dispatch reconciliation. this boundary proves exact local executable identity
+and deterministic routing behavior. it does not prove model quality, provider
+access, global activation, hostile same-user filesystem isolation, or host
+correctness.
+
 ## adaptive amplification
 
 adaptive amplification keeps a strong raw agent as the measured capability
