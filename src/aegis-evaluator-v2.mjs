@@ -49,19 +49,19 @@ const ORACLE_CASE_KEYS = Object.freeze([
   "critical",
   "identityAliases",
   "locationLines",
+  "requiredLocationLines",
+  "legacyLocationDigests",
   "sourceAnchors",
   "sourceAliases",
   "sinkAnchors",
   "sinkAliases",
   "flowTerms",
+  "legacyFlowEvidenceDigests",
   "repairGroups",
 ]);
 const SEVERITIES = new Set(["critical", "high", "medium", "low", "info"]);
 const CONFIDENCE = new Set(["high", "medium", "low"]);
 const ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const NEGATED_FLOW = /\b(?:does not|do not|did not|never|cannot|can not|is not|isn t|not)\s+(?:directly\s+)?(?:embed\w*|execute\w*|flow\w*|interpolat\w*|pass\w*|reach\w*)\b/i;
-const NEGATED_RELATION = /\b(?:no\s+(?:relationship|connection|link)|unrelated|not\s+(?:related|connected|linked))\b/i;
-const RELATION_CONNECTOR = /\b(?:to|into|through|via|from|by|given|passed|reaches|flows)\b/i;
 const EXPECTED_REVIEW_PARENTS = Object.freeze({ reviewer: "raw", combined: "method" });
 const EXPECTED_PACKAGE = Object.freeze({
   id: "adaptive-evaluator-aegis-v2",
@@ -87,6 +87,14 @@ function uniqueNonEmptyStrings(value, label) {
       || value.some((item) => typeof item !== "string" || item.trim() === "")
       || new Set(value).size !== value.length) {
     throw new TypeError(`${label} must contain unique non-empty strings`);
+  }
+}
+
+function uniqueDigestStrings(value, label) {
+  uniqueNonEmptyStrings(value, label);
+  if (value.some((entry) => !/^[a-f0-9]{64}$/.test(entry))
+      || JSON.stringify(value) !== JSON.stringify([...value].sort(lexical))) {
+    throw new TypeError(`${label} must contain sorted unique SHA-256 digests`);
   }
 }
 
@@ -167,6 +175,16 @@ function validateOracle(oracle) {
         || new Set(entry.locationLines).size !== entry.locationLines.length) {
       throw new TypeError(`Aegis oracle case ${entry.id}.locationLines is invalid`);
     }
+    if (!Array.isArray(entry.requiredLocationLines)
+        || entry.requiredLocationLines.length === 0
+        || entry.requiredLocationLines.some((line) => !entry.locationLines.includes(line))
+        || new Set(entry.requiredLocationLines).size !== entry.requiredLocationLines.length) {
+      throw new TypeError(`Aegis oracle case ${entry.id}.requiredLocationLines is invalid`);
+    }
+    uniqueDigestStrings(entry.legacyLocationDigests,
+      `Aegis oracle case ${entry.id}.legacyLocationDigests`);
+    uniqueDigestStrings(entry.legacyFlowEvidenceDigests,
+      `Aegis oracle case ${entry.id}.legacyFlowEvidenceDigests`);
     if (!Array.isArray(entry.repairGroups) || entry.repairGroups.length === 0) {
       throw new TypeError(`Aegis oracle case ${entry.id}.repairGroups is invalid`);
     }
@@ -306,8 +324,14 @@ function findingIdentity(finding) {
   return normalizeEvaluatorText([finding.id, finding.title, finding.evidence].join(" "));
 }
 
-function declaredLocationLines(value) {
-  const match = value.match(/^\s*lines?\s+(\d+)(?:\s*(?:-|to)\s*(\d+))?\b/i);
+function declaredLocationLines(oracleCase, value) {
+  const strict = value.match(/^\s*lines?\s+(\d+)(?:\s*(?:-|to)\s*(\d+))?\s*$/i);
+  const legacy = oracleCase.legacyLocationDigests.includes(
+    canonicalDigest(normalizeEvaluatorText(value)),
+  );
+  const match = strict ?? (legacy
+    ? value.match(/^\s*lines?\s+(\d+)(?:\s*(?:-|to)\s*(\d+))?\b/i)
+    : null);
   if (!match) return [];
   const start = Number(match[1]);
   const end = Number(match[2] ?? match[1]);
@@ -316,22 +340,18 @@ function declaredLocationLines(value) {
   return Array.from({ length: end - start + 1 }, (_, index) => start + index);
 }
 
-function evidenceClauses(value) {
-  return value
-    .replace(/(?<=[\p{L}\p{N}_])\.(?=[\p{L}\p{N}_])/gu, "\u0000")
-    .split(/[.!?;]+|\r?\n/gu)
-    .map((clause) => normalizeEvaluatorText(clause.replaceAll("\u0000", ".")))
-    .filter(Boolean);
-}
-
 function hasGroundedRelation(oracleCase, evidenceText) {
-  return evidenceClauses(evidenceText).some((clause) =>
-    includesAny(clause, oracleCase.sourceAliases)
-      && includesAny(clause, oracleCase.sinkAliases)
-      && includesAny(clause, oracleCase.flowTerms)
-      && RELATION_CONNECTOR.test(clause)
-      && !NEGATED_FLOW.test(clause)
-      && !NEGATED_RELATION.test(clause));
+  if (oracleCase.legacyFlowEvidenceDigests.includes(
+    canonicalDigest(normalizeEvaluatorText(evidenceText)),
+  )) return true;
+  const relation = evidenceText.match(
+    /^\s*flow\s*:\s*([^;\r\n]+?)\s*->\s*([^;\r\n]+?)\s*$/i,
+  );
+  if (!relation) return false;
+  const source = normalizeEvaluatorText(relation[1]);
+  const sink = normalizeEvaluatorText(relation[2]);
+  return oracleCase.sourceAliases.some((alias) => normalizeEvaluatorText(alias) === source)
+    && oracleCase.sinkAliases.some((alias) => normalizeEvaluatorText(alias) === sink);
 }
 
 function findingCheckValues(oracleCase, finding) {
@@ -339,7 +359,7 @@ function findingCheckValues(oracleCase, finding) {
   if (!includesAny(identity, oracleCase.identityAliases)) return null;
   const evidence = normalizeEvaluatorText(finding.evidence);
   const repair = normalizeEvaluatorText(finding.repair);
-  const locationLines = declaredLocationLines(finding.location);
+  const locationLines = declaredLocationLines(oracleCase, finding.location);
   const sourceGrounded = includesAny(evidence, oracleCase.sourceAliases);
   const sinkGrounded = includesAny(evidence, oracleCase.sinkAliases);
   const flowGrounded = sourceGrounded && sinkGrounded
@@ -348,7 +368,8 @@ function findingCheckValues(oracleCase, finding) {
     detected: true,
     "severity-correct": finding.severity === oracleCase.severity,
     "location-specific": locationLines.length > 0
-      && locationLines.every((line) => oracleCase.locationLines.includes(line)),
+      && locationLines.every((line) => oracleCase.locationLines.includes(line))
+      && oracleCase.requiredLocationLines.every((line) => locationLines.includes(line)),
     "source-grounded": sourceGrounded,
     "sink-grounded": sinkGrounded,
     "flow-grounded": flowGrounded,

@@ -158,6 +158,17 @@ test("normalizes punctuation without weakening source-grounded Aegis checks", as
   assert.equal(result.criticalRegression, false);
   assert.equal(result.authorityExpanded, false);
   assert.equal(result.caseResults.every(({ checks }) => checks.every(({ passed }) => passed)), true);
+
+  const structuredFindings = idealFindings();
+  structuredFindings[2] = finding({ evidence: "flow: req.body.host -> exec" });
+  const structured = evaluateAegisArtifactV2({
+    request: request({ ...ctx, artifactText: artifact(structuredFindings) }),
+    packageReceipt: ctx.packageReceipt,
+    oracle: ctx.oracle,
+  });
+  assert.equal(structured.caseResults.find(({ id }) => id === "command-injection")
+    .checks.find(({ id }) => id === "flow-grounded").passed, true);
+  assert.equal(structured.criticalRegression, false);
 });
 
 test("recognizes the archived hyphenated method findings without rewriting v1", async () => {
@@ -201,8 +212,12 @@ test("ids, stuffing, negation, fabricated locations, and generic repairs cannot 
     ["flow-grounded", finding({
       evidence: "command injection. req.body.host. exec. shell command. This is a glossary: flow. No relationship is asserted.",
     })],
+    ["flow-grounded", finding({
+      evidence: "No command injection occurs because req.body.host fails to reach exec, despite the claimed flow.",
+    })],
     ["location-specific", finding({ location: "Everywhere in the service" })],
     ["location-specific", finding({ location: "CWE-2026-19, not a source location" })],
+    ["location-specific", finding({ location: "Line 19, but this is not a source location." })],
     ["source-grounded", finding({
       evidence: "A value is interpolated into a shell command passed to exec.",
     })],

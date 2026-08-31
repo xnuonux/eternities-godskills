@@ -12,9 +12,10 @@ profile promotion, lifecycle action, or godagents activation.
 2. the builder reconstructs the three closed schemas in memory.
 3. the package builder discovers the complete direct static import graph from
    the pinned evaluator entrypoint and rejects direct dynamic loading, commonjs,
-   common runtime code-generation primitives, bare dependencies, escapes,
-   missing files, and symlink aliases. the receipt explicitly leaves runtime
-   closure completeness false because static inspection is not a hostile-code
+   common runtime code-generation patterns, bare dependencies, escapes,
+   missing files, and symlink aliases. this is only a lexical hardening screen.
+   the receipt explicitly sets both runtime code-generation absence and runtime
+   closure completeness to false because static inspection is not a hostile-code
    sandbox.
 4. the builder binds the evaluator code, policy, schemas, oracle, frozen task,
    archived artifacts, archived v1 observations, parent receipt, report, and
@@ -53,9 +54,13 @@ body. `authorityExpanded` must remain false.
 the source is extracted from the exact frozen task after its first blank line.
 the task file hash, task logical digest, source hash, oracle logical digest, and
 package receipt must all agree. source and sink anchors committed by the oracle
-must occur in that bound source before any artifact is scored. findings require
-one-to-one identity, location, source, sink, directional-flow, severity, and
-repair evidence. normalization only applies nfkc, lowercase folding,
+must occur in that bound source before any artifact is scored. authoritative
+location is either a closed `lines N-M` field or one exact digest-bound legacy
+field, and it must include every source line required by the oracle. authoritative
+flow is either the closed `flow: source -> sink` relation with exact oracle
+aliases or one exact digest-bound legacy evidence statement. surrounding prose
+cannot create either proof. findings also require one-to-one identity, severity,
+and repair evidence. normalization only applies nfkc, lowercase folding,
 punctuation separation, and whitespace collapse.
 
 ## fail-closed behavior

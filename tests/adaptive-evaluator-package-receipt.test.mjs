@@ -91,7 +91,7 @@ test("builds one relocation-independent closed evaluator package receipt", async
     roots: ["src/entrypoint.mjs"],
     localModules: ["src/entrypoint.mjs", "src/helper.mjs"],
     staticImportsComplete: true,
-    codeGenerationPrimitivesRejected: true,
+    runtimeCodeGenerationProvenAbsent: false,
     runtimeClosureComplete: false,
   });
   assert.deepEqual(first.artifacts.map(({ path: value }) => value), [
@@ -232,6 +232,23 @@ test("rejects dynamic, CommonJS, bare, escaping, and symlinked module closure", 
       descriptor: descriptor(),
     }), pattern);
   }
+
+  const computedConstructorRoot = await fixture(t, "adaptive-evaluator-computed-constructor-");
+  await put(computedConstructorRoot, "src/entrypoint.mjs", [
+    "export const evaluate = () =>",
+    "  ([][\"filter\"][\"con\" + \"structor\"])(",
+    "    \"return im\" + \"port('node:fs')\",",
+    "  )();",
+    "",
+  ].join("\n"));
+  const computedConstructorReceipt = await buildAdaptiveEvaluatorPackageReceipt({
+    repositoryRoot: computedConstructorRoot,
+    descriptor: descriptor(),
+  });
+  assert.equal(computedConstructorReceipt.dependencyClosure.runtimeCodeGenerationProvenAbsent,
+    false);
+  assert.equal(Object.hasOwn(computedConstructorReceipt.dependencyClosure,
+    "codeGenerationPrimitivesRejected"), false);
 
   const aliasRoot = await fixture(t, "adaptive-evaluator-alias-");
   const realDirectory = path.join(aliasRoot, "internal");

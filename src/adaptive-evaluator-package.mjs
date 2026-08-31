@@ -420,13 +420,13 @@ export function validateEvaluatorPackageReceipt(receipt) {
     "roots",
     "localModules",
     "staticImportsComplete",
-    "codeGenerationPrimitivesRejected",
+    "runtimeCodeGenerationProvenAbsent",
     "runtimeClosureComplete",
   ], "receipt dependency closure");
   uniqueStrings(receipt.dependencyClosure.roots, "receipt dependency roots");
   uniqueStrings(receipt.dependencyClosure.localModules, "receipt local modules");
   if (receipt.dependencyClosure.staticImportsComplete !== true
-      || receipt.dependencyClosure.codeGenerationPrimitivesRejected !== true
+      || receipt.dependencyClosure.runtimeCodeGenerationProvenAbsent !== false
       || receipt.dependencyClosure.runtimeClosureComplete !== false) {
     throw new Error("receipt dependency closure proof boundary is invalid");
   }
@@ -535,13 +535,13 @@ export function buildAdaptiveEvaluatorSchemas() {
         "roots",
         "localModules",
         "staticImportsComplete",
-        "codeGenerationPrimitivesRejected",
+        "runtimeCodeGenerationProvenAbsent",
         "runtimeClosureComplete",
       ], {
         roots: { type: "array", minItems: 1, uniqueItems: true, items: nonEmptyStringSchema },
         localModules: { type: "array", minItems: 1, uniqueItems: true, items: nonEmptyStringSchema },
         staticImportsComplete: { const: true },
-        codeGenerationPrimitivesRejected: { const: true },
+        runtimeCodeGenerationProvenAbsent: { const: false },
         runtimeClosureComplete: { const: false },
       }),
       artifacts: { type: "array", minItems: 1, items: artifact },
