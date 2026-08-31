@@ -127,6 +127,28 @@ proof limits are bound in `receipts\adaptive-activation-v1.json`. read
 `docs\adaptive-amplification-report.md` for the implementation and verification
 boundary.
 
+## typed composition and validated execution steps
+
+typed composition compiles one body-free, authority-bounded mission graph from
+exact capability contracts, activation decisions, phase ownership, artifact
+links, and context ceilings. the historical reference runner remains frozen in
+`src\typed-composition.mjs` and certified by
+`receipts\typed-composition-v1.json`.
+
+the additive execution stepper in `src\typed-execution-stepper.mjs` exposes one
+private-provenance graph node at a time. it validates a node's complete typed
+output before the next node becomes runnable. a recovering host can therefore
+reconstruct the same method, replay already accepted outputs through fresh
+steps, and continue at the first unfinished node without trusting serialized
+method state. invalid, cloned, stale, reordered, or cross-execution steps fail
+closed.
+
+run `npm run build:typed-execution-stepper` to reproduce the source-pinned
+receipt after its release source is committed. this boundary supplies the
+validated commit point for a later durable Godagents journal. it does not
+persist outputs, deduplicate external executors, grant effects or authority,
+call a provider, or change any default agent path.
+
 ## eternities agora
 
 `eternities-agora` is the promoted agency and client-service godskill. it keeps
