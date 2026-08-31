@@ -124,3 +124,28 @@ test("checked preference fixture and receipt match a pure rebuild", async () => 
   assert.equal(fixture, result.writes["artifacts/specialist-preference-routing-v1/fixture.json"]);
   assert.equal(receipt, result.writes["receipts/specialist-preference-routing-v1.json"]);
 });
+
+test("certification binds the reviewed implementation and honest proof boundary", async () => {
+  const [certification, receiptText] = await Promise.all([
+    readFile(
+      new URL("../docs/specialist-preference-routing-v1-certification.md", import.meta.url),
+      "utf8",
+    ),
+    readFile(
+      new URL("../receipts/specialist-preference-routing-v1.json", import.meta.url),
+      "utf8",
+    ),
+  ]);
+  const receipt = JSON.parse(receiptText);
+  assert.match(
+    certification,
+    /reviewed implementation head: `b85a7be178463a548ed92f0b1346de4f8772a527`/,
+  );
+  assert.match(certification, /post-repair independent re-review: `not performed`/);
+  assert.match(certification, new RegExp(receipt.receiptDigest));
+  assert.match(certification, new RegExp(sha256(receiptText)));
+  assert.match(certification, /historical.*byte-identical|byte-identical.*historical/is);
+  assert.match(certification, /no specialist-quality|no model-quality/i);
+  assert.match(certification, /no authority expansion|authorityExpanded.*false/i);
+  assert.match(certification, /no Godagents activation|Godagents.*not activated/i);
+});
