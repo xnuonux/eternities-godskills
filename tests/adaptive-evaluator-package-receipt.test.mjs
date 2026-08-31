@@ -262,6 +262,55 @@ test("rejects dynamic, CommonJS, bare, escaping, and symlinked module closure", 
   }), /alias|symlink|canonical/i);
 });
 
+test("screens the exact module bytes bound by the receipt", async (t) => {
+  const { buildAdaptiveEvaluatorPackageReceipt } = await builder();
+  const root = await fixture(t, "adaptive-evaluator-screened-bytes-");
+  const entrypointPath = path.join(root, "src", "entrypoint.mjs");
+  const unsafe = Buffer.from(
+    "export const evaluate = () => Function('return 1')();\n",
+    "utf8",
+  );
+  const safe = Buffer.from("export const evaluate = () => 1;\n", "utf8");
+  let entrypointReads = 0;
+
+  await assert.rejects(buildAdaptiveEvaluatorPackageReceipt({
+    repositoryRoot: root,
+    descriptor: descriptor(),
+    io: {
+      readFile: async (actualPath) => {
+        if (path.resolve(actualPath) === path.resolve(entrypointPath)) {
+          entrypointReads += 1;
+          return entrypointReads === 1 ? unsafe : safe;
+        }
+        return readFile(actualPath);
+      },
+    },
+  }), /module.*(?:changed|drift)|bytes.*(?:changed|drift)/i);
+  assert.equal(entrypointReads, 2);
+});
+
+test("ignores comments and inert JSON during lexical runtime screening", async (t) => {
+  const { buildAdaptiveEvaluatorPackageReceipt } = await builder();
+  const root = await fixture(t, "adaptive-evaluator-inert-text-");
+  await put(root, "src/entrypoint.mjs", [
+    "// Function and eval are forbidden by policy.",
+    "import config from './config.json' with { type: 'json' };",
+    "export const evaluate = () => config.allowed;",
+    "",
+  ].join("\n"));
+  await put(root, "src/config.json", {
+    allowed: true,
+    policyNote: "Function constructors are forbidden",
+  });
+
+  const receipt = await buildAdaptiveEvaluatorPackageReceipt({
+    repositoryRoot: root,
+    descriptor: descriptor(),
+  });
+  assert.ok(receipt.dependencyClosure.localModules.includes("src/config.json"));
+  assert.equal(receipt.dependencyClosure.runtimeCodeGenerationProvenAbsent, false);
+});
+
 test("writer publishes one validated receipt without executing its entrypoint", async (t) => {
   const root = await fixture(t, "adaptive-evaluator-writer-");
   await put(root, "src/entrypoint.mjs", "throw new Error('entrypoint executed');\n");

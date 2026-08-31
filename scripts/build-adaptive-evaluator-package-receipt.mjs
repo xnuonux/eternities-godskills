@@ -152,6 +152,58 @@ function artifactRow({ role, relativePath, bytes, logical = false }) {
   return row;
 }
 
+function stripModuleComments(source) {
+  let result = "";
+  let index = 0;
+  let quote = null;
+  while (index < source.length) {
+    const current = source[index];
+    const next = source[index + 1];
+    if (quote !== null) {
+      result += current;
+      if (current === "\\") {
+        index += 1;
+        if (index < source.length) result += source[index];
+      } else if (current === quote) {
+        quote = null;
+      }
+      index += 1;
+      continue;
+    }
+    if (current === "\"" || current === "'" || current === "`") {
+      quote = current;
+      result += current;
+      index += 1;
+      continue;
+    }
+    if (current === "/" && next === "/") {
+      result += "  ";
+      index += 2;
+      while (index < source.length && source[index] !== "\n") {
+        result += " ";
+        index += 1;
+      }
+      continue;
+    }
+    if (current === "/" && next === "*") {
+      result += "  ";
+      index += 2;
+      while (index < source.length
+          && !(source[index] === "*" && source[index + 1] === "/")) {
+        result += source[index] === "\n" ? "\n" : " ";
+        index += 1;
+      }
+      if (index >= source.length) throw new Error("unterminated evaluator module comment");
+      result += "  ";
+      index += 2;
+      continue;
+    }
+    result += current;
+    index += 1;
+  }
+  return result;
+}
+
 async function applyLexicalRuntimeHardening(root, modules, io) {
   for (const module of modules) {
     const bytes = await readContained(
@@ -160,7 +212,11 @@ async function applyLexicalRuntimeHardening(root, modules, io) {
       io,
       `evaluator package module ${module.path}`,
     );
-    const source = bytes.toString("utf8");
+    if (bytes.length !== module.bytes || sha256(bytes) !== module.sha256) {
+      throw new Error(`evaluator package module bytes drifted while screening: ${module.path}`);
+    }
+    if (path.posix.extname(module.path) === ".json") continue;
+    const source = stripModuleComments(bytes.toString("utf8"));
     if (/\b(?:eval|Function|AsyncFunction|GeneratorFunction|AsyncGeneratorFunction)\b/m.test(source)
         || /\b(?:globalThis|getBuiltinModule|createRequire)\b/m.test(source)
         || /(?:\.|\[\s*["'])constructor\b/m.test(source)) {
