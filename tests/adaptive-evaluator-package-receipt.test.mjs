@@ -222,6 +222,11 @@ test("rejects dynamic, CommonJS, bare, escaping, and symlinked module closure", 
       "export const evaluate = () => Function(\"return im\" + \"port('node:fs')\")();\n",
       /dynamic|code generation|Function/i,
     ],
+    [
+      "regex-comment-confusion",
+      "const marker = /[//]/; Function(\"return 1\")();\nexport { marker };\n",
+      /code generation|Function/i,
+    ],
     ["commonjs", "export const evaluate = () => require('./helper.mjs');\n", /CommonJS|require/i],
     ["bare", "import value from 'external-package'; export { value };\n", /bare|external/i],
   ]) {
@@ -295,7 +300,8 @@ test("ignores comments and inert JSON during lexical runtime screening", async (
   await put(root, "src/entrypoint.mjs", [
     "// Function and eval are forbidden by policy.",
     "import config from './config.json' with { type: 'json' };",
-    "export const evaluate = () => config.allowed;",
+    "const inertPattern = /Function\\(/;",
+    "export const evaluate = () => config.allowed && inertPattern.test('safe');",
     "",
   ].join("\n"));
   await put(root, "src/config.json", {

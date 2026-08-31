@@ -152,6 +152,42 @@ function artifactRow({ role, relativePath, bytes, logical = false }) {
   return row;
 }
 
+function regexLiteralMayStart(sanitizedSource) {
+  const prefix = sanitizedSource.trimEnd();
+  if (prefix === "") return true;
+  if (/=>$/u.test(prefix)) return true;
+  if (/[([{=,:;!?&|+\-*%~^<>]$/u.test(prefix)) return true;
+  return /\b(?:return|throw|case|delete|void|typeof|instanceof|in|of|new|yield|await|else|do)$/u
+    .test(prefix);
+}
+
+function consumeRegexLiteral(source, start) {
+  let index = start + 1;
+  let inCharacterClass = false;
+  let escaped = false;
+  while (index < source.length) {
+    const current = source[index];
+    if (current === "\n" || current === "\r") {
+      throw new Error("unterminated evaluator module regex literal");
+    }
+    if (escaped) {
+      escaped = false;
+    } else if (current === "\\") {
+      escaped = true;
+    } else if (current === "[") {
+      inCharacterClass = true;
+    } else if (current === "]" && inCharacterClass) {
+      inCharacterClass = false;
+    } else if (current === "/" && !inCharacterClass) {
+      index += 1;
+      while (index < source.length && /[a-z]/iu.test(source[index])) index += 1;
+      return index;
+    }
+    index += 1;
+  }
+  throw new Error("unterminated evaluator module regex literal");
+}
+
 function stripModuleComments(source) {
   let result = "";
   let index = 0;
@@ -174,6 +210,13 @@ function stripModuleComments(source) {
       quote = current;
       result += current;
       index += 1;
+      continue;
+    }
+    if (current === "/" && next !== "/" && next !== "*"
+        && regexLiteralMayStart(result)) {
+      const end = consumeRegexLiteral(source, index);
+      result += " ".repeat(end - index);
+      index = end;
       continue;
     }
     if (current === "/" && next === "/") {
