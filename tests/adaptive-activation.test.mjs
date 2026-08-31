@@ -12,6 +12,24 @@ async function json(relative) {
   }
 }
 
+async function compiler() {
+  try {
+    return await import("../src/adaptive-activation.mjs");
+  } catch (error) {
+    assert.fail(`adaptive activation compiler is unavailable: ${error.message}`);
+  }
+}
+
+const task = (overrides = {}) => ({
+  taskClass: "creative-generation",
+  consequenceClass: "consequential",
+  authorityProjection: {
+    availableAuthority: ["local-read", "local-write"],
+    permittedEffects: ["local-read", "local-write"],
+  },
+  ...overrides,
+});
+
 test("reviewed visual evidence rejects unconditional Muse method activation", async () => {
   const [contract, policy, evidence] = await Promise.all([
     json("artifacts/adaptive-activation/neutral-contract.json"),
@@ -69,4 +87,136 @@ test("reviewed visual evidence rejects unconditional Muse method activation", as
     preferredMode: "review",
   });
   assert.equal(JSON.stringify(evidence).includes('"verbatim"'), false);
+});
+
+test("mixed Muse evidence defers method until after the native creative attempt", async () => {
+  const [{ compileActivationDecision }, policy, evidence] = await Promise.all([
+    compiler(),
+    json("policies/adaptive-activation.v1.json"),
+    json("artifacts/adaptive-activation/evidence.v1.json"),
+  ]);
+  const decision = compileActivationDecision({
+    selectedId: "eternities-muse",
+    task: task(),
+    reviewAvailable: true,
+    policy,
+    evidence,
+  });
+
+  assert.equal(decision.mode, "review");
+  assert.equal(decision.preInferenceDisclosure, "none");
+  assert.equal(decision.deferredReview, true);
+  assert.equal(decision.methodEvidence.eligible, false);
+  assert.deepEqual(decision.authorityProjection, task().authorityProjection);
+  assert.match(decision.policyDigest, /^[a-f0-9]{64}$/);
+  assert.match(decision.evidenceDigest, /^[a-f0-9]{64}$/);
+  assert.match(decision.decisionDigest, /^[a-f0-9]{64}$/);
+});
+
+test("review fallback preserves only consequential guardrails and leaves low-risk work native", async () => {
+  const [{ compileActivationDecision }, policy, evidence] = await Promise.all([
+    compiler(),
+    json("policies/adaptive-activation.v1.json"),
+    json("artifacts/adaptive-activation/evidence.v1.json"),
+  ]);
+  const consequential = compileActivationDecision({
+    selectedId: "eternities-muse",
+    task: task(),
+    reviewAvailable: false,
+    policy,
+    evidence,
+  });
+  const low = compileActivationDecision({
+    selectedId: "eternities-muse",
+    task: task({ consequenceClass: "low" }),
+    reviewAvailable: false,
+    policy,
+    evidence,
+  });
+
+  assert.deepEqual(
+    [consequential.mode, consequential.preInferenceDisclosure, low.mode, low.preInferenceDisclosure],
+    ["guardrail", "guardrails-only", "native", "none"],
+  );
+});
+
+test("replicated positive evidence or explicit intent can earn full method without changing authority", async () => {
+  const [{ compileActivationDecision }, policy] = await Promise.all([
+    compiler(),
+    json("policies/adaptive-activation.v1.json"),
+  ]);
+  const positiveEvidence = {
+    schemaVersion: 1,
+    id: "synthetic-held-out-positive",
+    partition: "held-out",
+    reviewed: true,
+    profiles: [{
+      capabilityId: "eternities-phoenix",
+      taskClass: "debugging-recovery",
+      matchedEvaluations: 4,
+      wins: 3,
+      losses: 1,
+      ties: 0,
+      criticalRegressions: 0,
+      maximumObservedOverheadRatio: 1.2,
+      methodEligible: true,
+      preferredMode: "method",
+    }],
+  };
+  const debuggingTask = task({ taskClass: "debugging-recovery" });
+  const evidenced = compileActivationDecision({
+    selectedId: "eternities-phoenix",
+    task: debuggingTask,
+    reviewAvailable: true,
+    policy,
+    evidence: positiveEvidence,
+  });
+  const explicit = compileActivationDecision({
+    selectedId: "eternities-muse",
+    task: task(),
+    explicitMethodRequest: true,
+    reviewAvailable: true,
+    policy,
+    evidence: null,
+  });
+
+  assert.equal(evidenced.mode, "method");
+  assert.equal(evidenced.preInferenceDisclosure, "entrypoint-and-contract");
+  assert.equal(explicit.mode, "method");
+  assert.deepEqual(evidenced.authorityProjection, debuggingTask.authorityProjection);
+  assert.deepEqual(explicit.authorityProjection, task().authorityProjection);
+});
+
+test("malformed, unreviewed, or self-contradictory evidence cannot steer activation", async () => {
+  const [{ compileActivationDecision }, policy] = await Promise.all([
+    compiler(),
+    json("policies/adaptive-activation.v1.json"),
+  ]);
+  const base = {
+    schemaVersion: 1,
+    id: "invalid-evidence",
+    partition: "development",
+    reviewed: true,
+    profiles: [{
+      capabilityId: "eternities-muse",
+      taskClass: "creative-generation",
+      matchedEvaluations: 4,
+      wins: 1,
+      losses: 3,
+      ties: 0,
+      criticalRegressions: 0,
+      maximumObservedOverheadRatio: 1.2,
+      methodEligible: true,
+      preferredMode: "method",
+    }],
+  };
+  assert.throws(() => compileActivationDecision({
+    selectedId: "eternities-muse", task: task(), policy, evidence: { ...base, reviewed: false },
+  }), /reviewed/i);
+  assert.throws(() => compileActivationDecision({
+    selectedId: "eternities-muse", task: task(), policy, evidence: base,
+  }), /contradict/i);
+  assert.throws(() => compileActivationDecision({
+    selectedId: "eternities-muse", task: task(), policy: { ...policy, modes: ["method"] }, evidence: null,
+  }), /mode|policy/i);
 });
