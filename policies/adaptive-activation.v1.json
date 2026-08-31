@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "adaptive-activation-policy-v1",
+  "modes": [
+    "native",
+    "guardrail",
+    "method",
+    "review"
+  ],
+  "taskClasses": [
+    "creative-generation",
+    "debugging-recovery",
+    "implementation",
+    "research",
+    "continuity",
+    "verification",
+    "general"
+  ],
+  "consequenceClasses": [
+    "low",
+    "consequential",
+    "critical"
+  ],
+  "methodEvidence": {
+    "minimumMatchedEvaluations": 3,
+    "minimumWins": 2,
+    "minimumWinRate": 0.6666666666666666,
+    "maximumCriticalRegressions": 0,
+    "maximumOverheadRatio": 1.35
+  },
+  "fallbacks": {
+    "reviewUnavailableConsequential": "guardrail",
+    "reviewUnavailableLow": "native",
+    "criticalWithoutMethodEvidence": "guardrail",
+    "noReviewedEvidence": "native"
+  },
+  "authorityExpanded": false,
+  "selectionImpliesActivation": false
+}
