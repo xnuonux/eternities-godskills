@@ -1,0 +1,57 @@
+{
+  "$id": "urn:eternities:godskill:eternities-muse:output:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "capabilityId": {
+      "const": "eternities-muse"
+    },
+    "missionId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "slots": {
+      "additionalProperties": false,
+      "properties": {
+        "acceptance-boundary": {
+          "description": "explicit unknowns, budgets, invariants, and rejection criteria",
+          "type": "object",
+          "x-eternities-type": "eternities.acceptance-contract"
+        },
+        "specialist-handoff": {
+          "description": "bounded specialist handoff",
+          "type": "object",
+          "x-eternities-type": "eternities.handoff-contract"
+        },
+        "visual-direction": {
+          "description": "confidence-labeled visual evidence or art-direction contract",
+          "type": "object",
+          "x-eternities-type": "eternities.decision-record"
+        },
+        "visual-system": {
+          "description": "token, component, narrative, motion, media, or acceptance system",
+          "type": "object",
+          "x-eternities-type": "eternities.design-system"
+        }
+      },
+      "required": [
+        "visual-direction",
+        "visual-system",
+        "specialist-handoff",
+        "acceptance-boundary"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "capabilityId",
+    "missionId",
+    "slots"
+  ],
+  "title": "eternities-muse output envelope v1",
+  "type": "object"
+}

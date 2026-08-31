@@ -1,0 +1,63 @@
+{
+  "$id": "urn:eternities:godskill:eternities-aegis:output:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "capabilityId": {
+      "const": "eternities-aegis"
+    },
+    "missionId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "slots": {
+      "additionalProperties": false,
+      "properties": {
+        "authorization-decision": {
+          "description": "authorization statement",
+          "type": "object",
+          "x-eternities-type": "eternities.authority-decision"
+        },
+        "finding-ledger": {
+          "description": "evidence-ranked findings",
+          "type": "object",
+          "x-eternities-type": "eternities.finding-ledger"
+        },
+        "mitigation-plan": {
+          "description": "verified mitigation plan",
+          "type": "object",
+          "x-eternities-type": "eternities.mitigation-plan"
+        },
+        "residual-risk-ledger": {
+          "description": "residual risk and authority ledger",
+          "type": "object",
+          "x-eternities-type": "eternities.risk-ledger"
+        },
+        "trust-boundary-map": {
+          "description": "asset and trust-boundary map",
+          "type": "object",
+          "x-eternities-type": "eternities.trust-map"
+        }
+      },
+      "required": [
+        "authorization-decision",
+        "trust-boundary-map",
+        "finding-ledger",
+        "mitigation-plan",
+        "residual-risk-ledger"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "capabilityId",
+    "missionId",
+    "slots"
+  ],
+  "title": "eternities-aegis output envelope v1",
+  "type": "object"
+}

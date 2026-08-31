@@ -1,10 +1,12 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
 
 const root = new URL("../", import.meta.url);
+const sha256 = (value) => createHash("sha256").update(value).digest("hex");
 
 async function json(relative) {
   return JSON.parse(await readFile(new URL(relative, root), "utf8"));
@@ -300,4 +302,55 @@ test("digest-bound activation decisions disclose only the authorized layer phase
     manifest: aegis.bundle.manifest,
     activationDecision: forged,
   }), /decision digest|method activation/i);
+});
+
+test("checked capability layer artifacts rebuild byte for byte", async () => {
+  const { rebuildCapabilityLayerAbi } = await import(
+    "../scripts/build-capability-layer-abi.mjs"
+  );
+  const built = await rebuildCapabilityLayerAbi({ root });
+
+  for (const [relative, expected] of Object.entries(built.files)) {
+    assert.equal(await readFile(new URL(relative, root), "utf8"), expected, relative);
+  }
+  assert.equal(
+    await readFile(new URL("receipts/capability-layer-abi-v1.json", root), "utf8"),
+    built.receiptText,
+  );
+  assert.equal(
+    await readFile(new URL("docs/capability-layer-abi-v1-report.md", root), "utf8"),
+    built.report,
+  );
+});
+
+test("aggregate receipt proves legacy entrypoint identity and leaves external gates unresolved", async () => {
+  const { rebuildCapabilityLayerAbi } = await import(
+    "../scripts/build-capability-layer-abi.mjs"
+  );
+  const [first, second, legacyBytes] = await Promise.all([
+    rebuildCapabilityLayerAbi({ root }),
+    rebuildCapabilityLayerAbi({ root }),
+    readFile(new URL("artifacts/portable-capabilities/manifest.v1.json", root)),
+  ]);
+  const legacy = JSON.parse(legacyBytes);
+
+  assert.deepEqual(first.files, second.files);
+  assert.equal(first.receiptText, second.receiptText);
+  assert.equal(first.report, second.report);
+  assert.equal(Object.keys(first.files).length, 24);
+  assert.deepEqual(first.receipt.legacyManifest, {
+    path: "artifacts/portable-capabilities/manifest.v1.json",
+    sha256: sha256(legacyBytes),
+    bytes: legacyBytes.length,
+    manifestDigest: legacy.manifestDigest,
+  });
+  assert.equal(first.receipt.computedGates.legacyEntrypointsModified, 0);
+  assert.deepEqual(first.receipt.unresolvedGates, {
+    historicalFullSuite: "pending",
+    independentReview: "pending",
+    modelQuality: "not-claimed",
+    globalActivation: "not-authorized",
+  });
+  assert.match(first.report, /not evidence of higher model quality/i);
+  assert.doesNotMatch(first.receiptText, /raw prompt|mission content|credential value/i);
 });

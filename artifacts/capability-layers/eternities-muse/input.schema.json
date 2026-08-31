@@ -1,0 +1,51 @@
+{
+  "$id": "urn:eternities:godskill:eternities-muse:input:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "capabilityId": {
+      "const": "eternities-muse"
+    },
+    "missionId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "slots": {
+      "additionalProperties": false,
+      "properties": {
+        "available-specialists": {
+          "description": "available visual, interface, narrative, motion, and media specialists",
+          "type": "array",
+          "x-eternities-type": "eternities.capability-set"
+        },
+        "design-constraints": {
+          "description": "audience, platform, accessibility, performance, and authority constraints",
+          "type": "array",
+          "x-eternities-type": "eternities.constraint-set"
+        },
+        "visual-source-set": {
+          "description": "visual sources, product intent, brand material, or an implemented artifact",
+          "type": "array",
+          "x-eternities-type": "eternities.artifact-set"
+        }
+      },
+      "required": [
+        "visual-source-set",
+        "design-constraints",
+        "available-specialists"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "capabilityId",
+    "missionId",
+    "slots"
+  ],
+  "title": "eternities-muse input envelope v1",
+  "type": "object"
+}

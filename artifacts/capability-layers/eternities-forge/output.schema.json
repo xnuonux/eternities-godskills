@@ -1,0 +1,57 @@
+{
+  "$id": "urn:eternities:godskill:eternities-forge:output:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "capabilityId": {
+      "const": "eternities-forge"
+    },
+    "missionId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "slots": {
+      "additionalProperties": false,
+      "properties": {
+        "claim-evidence-ledger": {
+          "description": "claim-to-evidence ledger",
+          "type": "object",
+          "x-eternities-type": "eternities.evidence-ledger"
+        },
+        "implementation": {
+          "description": "verified implementation",
+          "type": "object",
+          "x-eternities-type": "eternities.implementation-artifact"
+        },
+        "integration-state": {
+          "description": "explicit integration state",
+          "type": "object",
+          "x-eternities-type": "eternities.integration-state"
+        },
+        "review-disposition": {
+          "description": "review disposition",
+          "type": "object",
+          "x-eternities-type": "eternities.review-decision"
+        }
+      },
+      "required": [
+        "implementation",
+        "claim-evidence-ledger",
+        "review-disposition",
+        "integration-state"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "capabilityId",
+    "missionId",
+    "slots"
+  ],
+  "title": "eternities-forge output envelope v1",
+  "type": "object"
+}
