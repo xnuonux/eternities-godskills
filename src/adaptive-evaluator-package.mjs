@@ -412,6 +412,7 @@ export function validateEvaluatorPackageReceipt(receipt) {
     throw new TypeError("receipt artifacts must be non-empty");
   }
   const paths = new Set();
+  const singularRoles = new Set();
   for (const artifact of receipt.artifacts) {
     const keys = Object.keys(artifact).sort();
     const withoutLogical = ["bytes", "path", "role", "sha256"];
@@ -421,6 +422,10 @@ export function validateEvaluatorPackageReceipt(receipt) {
       throw new Error("receipt artifact keys are not closed");
     }
     nonEmptyString(artifact.role, "receipt artifact role");
+    if (artifact.role !== "dependency") {
+      if (singularRoles.has(artifact.role)) throw new Error("receipt contains a duplicate artifact role");
+      singularRoles.add(artifact.role);
+    }
     relativePath(artifact.path, "receipt artifact path");
     if (paths.has(artifact.path)) throw new Error("receipt contains a duplicate artifact path");
     paths.add(artifact.path);

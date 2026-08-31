@@ -46,6 +46,12 @@ const SCHEMA_ROLES = Object.freeze({
   "adaptive-evaluator-request-v1.schema.json": "request-schema",
   "adaptive-evaluator-result-v1.schema.json": "result-schema",
 });
+const RESERVED_RESOURCE_ROLES = new Set([
+  "entrypoint",
+  "dependency",
+  "policy",
+  ...Object.values(SCHEMA_ROLES),
+]);
 
 const lexical = (left, right) => left < right ? -1 : left > right ? 1 : 0;
 
@@ -116,6 +122,7 @@ function validateDescriptor(descriptor) {
     throw new TypeError("evaluator package resources must be an array");
   }
   const paths = new Set();
+  const roles = new Set();
   for (const resource of descriptor.resources) {
     exactKeys(resource, RESOURCE_KEYS, "evaluator package resource");
     nonEmptyString(resource.role, "evaluator package resource.role");
@@ -123,7 +130,12 @@ function validateDescriptor(descriptor) {
     if (typeof resource.logical !== "boolean") {
       throw new TypeError("evaluator package resource.logical must be boolean");
     }
+    if (RESERVED_RESOURCE_ROLES.has(resource.role)) {
+      throw new Error("evaluator package resource uses a reserved role");
+    }
+    if (roles.has(resource.role)) throw new Error("evaluator package contains a duplicate resource role");
     if (paths.has(resource.path)) throw new Error("evaluator package contains a duplicate resource path");
+    roles.add(resource.role);
     paths.add(resource.path);
   }
   return descriptor;

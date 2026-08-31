@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 1,
+  "id": "aegis-terra-security-review-oracle-v2",
+  "taskDefinitionPath": "evidence/adaptive-evidence-v2/aegis-matrix/task-definition.json",
+  "taskDefinitionSha256": "71dc6ba5957d7183e4e0f6d99c650d3244cc3e6808c111706b4c74df09f49aa7",
+  "taskSourceSha256": "30fada07d02bcffa41d4a7322f3c32354c8f8e97982a2195802052892c4bbf1e",
+  "normalization": {
+    "unicodeForm": "NFKC",
+    "caseFold": "lowercase",
+    "punctuation": "separator",
+    "whitespace": "collapse"
+  },
+  "scoring": {
+    "schemaPoints": 3,
+    "unsupportedFindingPenalty": 3,
+    "checks": [
+      {
+        "id": "detected",
+        "points": 3
+      },
+      {
+        "id": "severity-correct",
+        "points": 1
+      },
+      {
+        "id": "location-specific",
+        "points": 1
+      },
+      {
+        "id": "source-grounded",
+        "points": 1
+      },
+      {
+        "id": "sink-grounded",
+        "points": 1
+      },
+      {
+        "id": "flow-grounded",
+        "points": 1
+      },
+      {
+        "id": "repair-specific",
+        "points": 1
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "command-injection",
+      "severity": "critical",
+      "critical": true,
+      "identityAliases": [
+        "command injection",
+        "cwe 78",
+        "os command",
+        "shell injection"
+      ],
+      "locationLines": [
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "sourceAnchors": [
+        "req.body.host"
+      ],
+      "sourceAliases": [
+        "body host",
+        "host input",
+        "req.body.host"
+      ],
+      "sinkAnchors": [
+        "exec(`ping -c 1 ${req.body.host}`"
+      ],
+      "sinkAliases": [
+        "exec",
+        "shell command"
+      ],
+      "flowTerms": [
+        "embed",
+        "execute",
+        "flow",
+        "interpolat",
+        "pass",
+        "reach"
+      ],
+      "repairGroups": [
+        [
+          "argument array",
+          "execfile",
+          "spawn",
+          "without a shell",
+          "without shell"
+        ],
+        [
+          "allowlist",
+          "approved hostname",
+          "constrained hostname",
+          "ip address",
+          "strictly validate",
+          "validated host"
+        ]
+      ]
+    },
+    {
+      "id": "path-traversal",
+      "severity": "high",
+      "critical": false,
+      "identityAliases": [
+        "arbitrary file access",
+        "cwe 22",
+        "directory traversal",
+        "path traversal"
+      ],
+      "locationLines": [
+        14,
+        15,
+        16
+      ],
+      "sourceAnchors": [
+        "req.query.name"
+      ],
+      "sourceAliases": [
+        "query name",
+        "req.query.name",
+        "requested name",
+        "user controlled name"
+      ],
+      "sinkAnchors": [
+        "path.join(DATA_ROOT, req.query.name)",
+        "res.sendFile(requested)"
+      ],
+      "sinkAliases": [
+        "path join",
+        "res sendfile",
+        "sendfile"
+      ],
+      "flowTerms": [
+        "escape",
+        "flow",
+        "join",
+        "normaliz",
+        "pass",
+        "reach",
+        "resolve",
+        "traversal",
+        "untrusted",
+        "user controlled"
+      ],
+      "repairGroups": [
+        [
+          "canonical path",
+          "path resolve",
+          "resolve"
+        ],
+        [
+          "allowlist",
+          "base directory",
+          "contain",
+          "file identifier",
+          "inside",
+          "remain within",
+          "starts with"
+        ]
+      ]
+    },
+    {
+      "id": "sql-injection",
+      "severity": "high",
+      "critical": false,
+      "identityAliases": [
+        "cwe 89",
+        "sql injection",
+        "sqli"
+      ],
+      "locationLines": [
+        8,
+        9,
+        10
+      ],
+      "sourceAnchors": [
+        "req.query.customer"
+      ],
+      "sourceAliases": [
+        "customer input",
+        "query customer",
+        "req.query.customer",
+        "untrusted customer"
+      ],
+      "sinkAnchors": [
+        "db.query(sql)"
+      ],
+      "sinkAliases": [
+        "db query",
+        "database query",
+        "sql query"
+      ],
+      "flowTerms": [
+        "build",
+        "concatenat",
+        "embed",
+        "flow",
+        "interpolat",
+        "pass",
+        "reach"
+      ],
+      "repairGroups": [
+        [
+          "bind",
+          "parameterized",
+          "placeholder",
+          "prepared"
+        ]
+      ]
+    }
+  ]
+}

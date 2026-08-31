@@ -106,6 +106,14 @@ test("builds one relocation-independent closed evaluator package receipt", async
   assert.equal(first.artifacts.filter(({ role }) => role.endsWith("schema")).length, 3);
   assert.equal(first.artifacts.some(({ path: value }) => path.isAbsolute(value)), false);
   assert.deepEqual(validateEvaluatorPackageReceipt(first), first);
+
+  const duplicateRoleBody = structuredClone(first);
+  delete duplicateRoleBody.receiptDigest;
+  duplicateRoleBody.artifacts.find(({ role }) => role === "dependency").role = "oracle";
+  assert.throws(() => validateEvaluatorPackageReceipt({
+    ...duplicateRoleBody,
+    receiptDigest: canonicalDigest(duplicateRoleBody),
+  }), /duplicate.*role/i);
 });
 
 test("every module, resource, policy byte, and generated schema affects identity", async (t) => {
@@ -165,6 +173,24 @@ test("rejects descriptor escape, duplicates, missing data, and oversized resourc
       ],
     }),
   }), /duplicate.*path/i);
+  await put(root, "artifacts/second-oracle.json", { schemaVersion: 1, id: "second" });
+  await assert.rejects(buildAdaptiveEvaluatorPackageReceipt({
+    repositoryRoot: root,
+    descriptor: descriptor({
+      resources: [
+        { role: "oracle", path: "artifacts/oracle.v1.json", logical: true },
+        { role: "oracle", path: "artifacts/second-oracle.json", logical: true },
+      ],
+    }),
+  }), /duplicate.*role/i);
+  await assert.rejects(buildAdaptiveEvaluatorPackageReceipt({
+    repositoryRoot: root,
+    descriptor: descriptor({
+      resources: [
+        { role: "entrypoint", path: "artifacts/oracle.v1.json", logical: true },
+      ],
+    }),
+  }), /reserved.*role|role.*reserved/i);
   await assert.rejects(buildAdaptiveEvaluatorPackageReceipt({
     repositoryRoot: root,
     descriptor: descriptor({
