@@ -52,3 +52,5 @@ The receipts prove deterministic contracts, exact provenance, bounded fixtures, 
 ## integration boundary
 
 This release is a certified local candidate only. It does not install a global skill, enable a runtime adapter, alter a profile, mutate an account, publish, contact anyone, spend money, set a live price, accept a contract, or perform any external market action. Local integration preserves those boundaries.
+
+The release receipt is frozen-snapshot evidence for Git commit `de76904685001e7b3cdce7c53ae458425cc0ab37` and is bound by `receipts/eternities-beacon-release-v1-snapshot.json`. Later corpus maintenance may change mutable review and evidence paths. Current-head evidence requires a new receipt and fresh gates; the historical receipt is not silently refreshed in place.

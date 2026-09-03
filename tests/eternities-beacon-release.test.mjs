@@ -1,14 +1,27 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { execFile as execFileCallback } from "node:child_process";
 import { readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+import { promisify } from "node:util";
 
 import { sha256 } from "../src/io.mjs";
 import { validateCompositionGraph } from "../src/composition.mjs";
 
 const root = new URL("../", import.meta.url);
+const repositoryRoot = fileURLToPath(root);
+const execFile = promisify(execFileCallback);
 async function text(relative) { return readFile(new URL(relative, root), "utf8"); }
 async function json(relative) { return JSON.parse(await text(relative)); }
 async function lines(relative) { return (await text(relative)).split(/\r?\n/).filter(Boolean).map(JSON.parse); }
+async function gitShow(commit, relative) {
+  const { stdout } = await execFile("git", ["show", `${commit}:${relative}`], {
+    cwd: repositoryRoot,
+    encoding: null,
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  return stdout;
+}
 
 test("Beacon release receipt reconciles every local certification boundary", async () => {
   const [receipt, map, batch, clusterReceipt, promotionText, promotion, contract, routerV4, routerV5, coverage] = await Promise.all([
@@ -131,4 +144,26 @@ test("Beacon report and README state measured scope and proof limits", async () 
     "live-model interpretation", "platform policy freshness", "commercial performance",
     "production operation", "no global activation", "external market action",
   ]) assert.match(report.toLowerCase(), new RegExp(phrase));
+});
+
+test("Beacon historical release receipt binds every artifact to its pinned snapshot", async () => {
+  const snapshot = await json("receipts/eternities-beacon-release-v1-snapshot.json");
+  const receiptBytes = await readFile(new URL(snapshot.releaseReceiptPath, root));
+  const receipt = JSON.parse(receiptBytes);
+  assert.equal(snapshot.schemaVersion, 1);
+  assert.equal(snapshot.status, "frozen-historical-snapshot");
+  assert.equal(snapshot.releaseReceiptPath, "receipts/eternities-beacon-release.json");
+  assert.match(snapshot.gitCommit, /^[a-f0-9]{40}$/);
+  assert.equal(snapshot.releaseReceiptSha256, sha256(receiptBytes));
+  assert.deepEqual(receiptBytes, await gitShow(snapshot.gitCommit, snapshot.releaseReceiptPath));
+  const artifacts = Object.entries(receipt.artifacts);
+  assert.ok(artifacts.length > 0);
+  for (const [key, artifact] of artifacts) {
+    assert.match(artifact.path, /^(?!\/)(?!.*(?:^|\/)\.\.(?:\/|$))[^\\]+(?:\/[^\\]+)*$/, `${key} must use a repository-relative path`);
+    assert.match(artifact.sha256, /^[a-f0-9]{64}$/, `${key} must declare a sha256 digest`);
+    assert.equal(artifact.sha256, sha256(await gitShow(snapshot.gitCommit, artifact.path)), `${key} must bind pinned snapshot bytes`);
+  }
+  assert.equal(receipt.promotionReceiptSha256,
+    sha256(await gitShow(snapshot.gitCommit, "receipts/promotions/eternities-beacon.json")),
+    "promotionReceiptSha256 must bind the pinned promotion receipt");
 });

@@ -225,6 +225,12 @@ outside its synthesized boundary. read `docs\eternities-beacon-report.md` and
 `receipts\eternities-beacon-release.json` for the measured local-candidate
 verdict. it is not globally activated by this release.
 
+that receipt is frozen evidence for Git commit
+`de76904685001e7b3cdce7c53ae458425cc0ab37`, with its snapshot identity
+bound by `receipts\eternities-beacon-release-v1-snapshot.json`. current-head
+changes require a new receipt and fresh gates rather than rewriting this
+historical certificate.
+
 Beacon advances the corpus to exactly 217 synthesized, 217 evaluated, and 217
 promoted source rows while preserving the frozen evidence of earlier releases.
 
