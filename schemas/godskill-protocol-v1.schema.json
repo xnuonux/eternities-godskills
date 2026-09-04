@@ -1,0 +1,640 @@
+{
+  "$id": "https://eternities.ai/schemas/godskill-protocol-v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "body": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/missionBody"
+        },
+        {
+          "$ref": "#/$defs/queryBody"
+        },
+        {
+          "$ref": "#/$defs/selectionBody"
+        },
+        {
+          "$ref": "#/$defs/activationBody"
+        },
+        {
+          "$ref": "#/$defs/authorityBody"
+        },
+        {
+          "$ref": "#/$defs/disclosureBody"
+        },
+        {
+          "$ref": "#/$defs/artifactBody"
+        },
+        {
+          "$ref": "#/$defs/reviewBody"
+        },
+        {
+          "$ref": "#/$defs/verdictBody"
+        },
+        {
+          "$ref": "#/$defs/evidenceBody"
+        },
+        {
+          "$ref": "#/$defs/lifecycleBody"
+        }
+      ]
+    },
+    "digest": {
+      "$ref": "#/$defs/digest"
+    },
+    "messageId": {
+      "$ref": "#/$defs/identifier"
+    },
+    "messageType": {
+      "enum": [
+        "MissionEnvelope",
+        "CapabilityQuery",
+        "SelectionDecision",
+        "ActivationDecision",
+        "AuthorityIntersection",
+        "DisclosureEnvelope",
+        "ArtifactObservation",
+        "ReviewObservation",
+        "AcceptanceVerdict",
+        "EvidenceProposal",
+        "LifecycleDecision"
+      ]
+    },
+    "missionId": {
+      "$ref": "#/$defs/identifier"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "parentIds": {
+      "items": {
+        "$ref": "#/$defs/identifier"
+      },
+      "maxItems": 2,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "protocolId": {
+      "const": "eternities-godskill-protocol-v1"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "activationBody": {
+      "additionalProperties": false,
+      "properties": {
+        "authorityExpanded": {
+          "const": false
+        },
+        "capabilityId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "capabilityVersion": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "disclosurePlanDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "explicitIntent": {
+          "type": "boolean"
+        },
+        "matchedEvidenceDigest": {
+          "$ref": "#/$defs/nullableDigest"
+        },
+        "mode": {
+          "enum": [
+            "native",
+            "guardrail",
+            "method",
+            "review"
+          ]
+        },
+        "packageDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      },
+      "required": [
+        "mode",
+        "capabilityId",
+        "capabilityVersion",
+        "packageDigest",
+        "disclosurePlanDigest",
+        "explicitIntent",
+        "matchedEvidenceDigest",
+        "authorityExpanded"
+      ],
+      "type": "object"
+    },
+    "artifactBody": {
+      "additionalProperties": false,
+      "properties": {
+        "artifactBytes": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "artifactDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "artifactKind": {
+          "$ref": "#/$defs/identifier"
+        },
+        "effectObserved": {
+          "enum": [
+            "execute",
+            "external-write",
+            "network",
+            "read",
+            "write",
+            "none",
+            "unknown"
+          ]
+        },
+        "metrics": {
+          "$ref": "#/$defs/metrics"
+        },
+        "rawContentStored": {
+          "const": false
+        }
+      },
+      "required": [
+        "artifactDigest",
+        "artifactKind",
+        "artifactBytes",
+        "effectObserved",
+        "metrics",
+        "rawContentStored"
+      ],
+      "type": "object"
+    },
+    "authorityBody": {
+      "additionalProperties": false,
+      "properties": {
+        "authorityCeilingDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "authorityExpanded": {
+          "const": false
+        },
+        "decision": {
+          "enum": [
+            "allowed",
+            "partially-allowed",
+            "denied"
+          ]
+        },
+        "externalMutationAllowed": {
+          "type": "boolean"
+        },
+        "grantedEffects": {
+          "$ref": "#/$defs/effects"
+        },
+        "requestedEffects": {
+          "$ref": "#/$defs/effects"
+        },
+        "targetDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      },
+      "required": [
+        "requestedEffects",
+        "grantedEffects",
+        "authorityCeilingDigest",
+        "targetDigest",
+        "externalMutationAllowed",
+        "authorityExpanded",
+        "decision"
+      ],
+      "type": "object"
+    },
+    "digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "effects": {
+      "items": {
+        "enum": [
+          "execute",
+          "external-write",
+          "network",
+          "read",
+          "write"
+        ]
+      },
+      "maxItems": 5,
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "evidenceBody": {
+      "additionalProperties": false,
+      "properties": {
+        "candidateStatus": {
+          "enum": [
+            "proposed",
+            "eligible",
+            "deferred",
+            "rejected"
+          ]
+        },
+        "evidenceDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "evidenceLevel": {
+          "$ref": "#/$defs/evidenceLevel"
+        },
+        "inputDigests": {
+          "items": {
+            "$ref": "#/$defs/digest"
+          },
+          "maxItems": 64,
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "promotionEligible": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "evidenceDigest",
+        "evidenceLevel",
+        "inputDigests",
+        "candidateStatus",
+        "promotionEligible"
+      ],
+      "type": "object"
+    },
+    "evidenceLevel": {
+      "enum": [
+        "structural",
+        "artifact",
+        "model",
+        "cross-model",
+        "field",
+        "universal"
+      ]
+    },
+    "identifier": {
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "type": "string"
+    },
+    "lifecycleBody": {
+      "additionalProperties": false,
+      "properties": {
+        "authorityDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "decision": {
+          "enum": [
+            "retain",
+            "promote",
+            "demote",
+            "defer"
+          ]
+        },
+        "evidenceDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "reasonCodes": {
+          "$ref": "#/$defs/reasonCodes"
+        },
+        "version": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "evidenceDigest",
+        "decision",
+        "authorityDigest",
+        "reasonCodes",
+        "version"
+      ],
+      "type": "object"
+    },
+    "metrics": {
+      "additionalProperties": false,
+      "properties": {
+        "costMinorUnits": {
+          "minimum": 0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "latencyMs": {
+          "minimum": 0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tokens": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "tokens",
+        "latencyMs",
+        "costMinorUnits"
+      ],
+      "type": "object"
+    },
+    "missionBody": {
+      "additionalProperties": false,
+      "properties": {
+        "authorityDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "consequenceClass": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        },
+        "contentMode": {
+          "enum": [
+            "digest-only",
+            "user-authorized-content"
+          ]
+        },
+        "objectiveDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "targetDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      },
+      "required": [
+        "objectiveDigest",
+        "authorityDigest",
+        "targetDigest",
+        "consequenceClass",
+        "contentMode"
+      ],
+      "type": "object"
+    },
+    "nullableDigest": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/digest"
+        }
+      ]
+    },
+    "queryBody": {
+      "additionalProperties": false,
+      "properties": {
+        "acceptedProtocols": {
+          "items": {
+            "$ref": "#/$defs/identifier"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "candidateLimit": {
+          "maximum": 32,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "hostKind": {
+          "$ref": "#/$defs/identifier"
+        },
+        "queryDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "requestedEffects": {
+          "$ref": "#/$defs/effects"
+        }
+      },
+      "required": [
+        "queryDigest",
+        "requestedEffects",
+        "candidateLimit",
+        "hostKind",
+        "acceptedProtocols"
+      ],
+      "type": "object"
+    },
+    "reasonCodes": {
+      "items": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+        "type": "string"
+      },
+      "maxItems": 64,
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "reviewBody": {
+      "additionalProperties": false,
+      "properties": {
+        "evidenceLevel": {
+          "$ref": "#/$defs/evidenceLevel"
+        },
+        "findingsDigest": {
+          "$ref": "#/$defs/nullableDigest"
+        },
+        "reviewDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "reviewedArtifactDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "reviewerId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "verdict": {
+          "enum": [
+            "pass",
+            "fail",
+            "inconclusive"
+          ]
+        }
+      },
+      "required": [
+        "reviewerId",
+        "reviewDigest",
+        "reviewedArtifactDigest",
+        "verdict",
+        "evidenceLevel",
+        "findingsDigest"
+      ],
+      "type": "object"
+    },
+    "selectionBody": {
+      "additionalProperties": false,
+      "properties": {
+        "reasonCodes": {
+          "$ref": "#/$defs/reasonCodes"
+        },
+        "selectedCapabilityId": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/identifier"
+            }
+          ]
+        },
+        "selectedCapabilityVersion": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "minimum": 1,
+              "type": "integer"
+            }
+          ]
+        },
+        "selectedEffects": {
+          "items": {
+            "enum": [
+              "execute",
+              "external-write",
+              "network",
+              "read",
+              "write"
+            ]
+          },
+          "maxItems": 5,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "selectedPackageDigest": {
+          "$ref": "#/$defs/nullableDigest"
+        },
+        "selectionMode": {
+          "enum": [
+            "single",
+            "composition",
+            "none"
+          ]
+        }
+      },
+      "required": [
+        "selectedPackageDigest",
+        "selectedCapabilityId",
+        "selectedCapabilityVersion",
+        "selectionMode",
+        "reasonCodes",
+        "selectedEffects"
+      ],
+      "type": "object"
+    },
+    "disclosureBody": {
+      "additionalProperties": false,
+      "properties": {
+        "artifactRequired": {
+          "type": "boolean"
+        },
+        "contentBytes": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/nullableDigest"
+        },
+        "layer": {
+          "enum": [
+            "none",
+            "guardrails",
+            "method",
+            "reviewer",
+            "contract"
+          ]
+        },
+        "mode": {
+          "enum": [
+            "native",
+            "guardrail",
+            "method",
+            "review"
+          ]
+        },
+        "packageDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      },
+      "required": [
+        "packageDigest",
+        "mode",
+        "layer",
+        "contentDigest",
+        "contentBytes",
+        "artifactRequired"
+      ],
+      "type": "object"
+    },
+    "verdictBody": {
+      "additionalProperties": false,
+      "properties": {
+        "artifactDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "evidenceDigest": {
+          "$ref": "#/$defs/nullableDigest"
+        },
+        "qualityClaim": {
+          "enum": [
+            "none",
+            "structural",
+            "artifact",
+            "model",
+            "cross-model",
+            "field",
+            "universal"
+          ]
+        },
+        "reasonCodes": {
+          "$ref": "#/$defs/reasonCodes"
+        },
+        "verdict": {
+          "enum": [
+            "accepted",
+            "rejected",
+            "uncertain"
+          ]
+        }
+      },
+      "required": [
+        "artifactDigest",
+        "verdict",
+        "reasonCodes",
+        "qualityClaim",
+        "evidenceDigest"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "protocolId",
+    "messageType",
+    "messageId",
+    "missionId",
+    "parentIds",
+    "owner",
+    "status",
+    "body",
+    "digest"
+  ],
+  "title": "Eternities provider-neutral Godskills protocol v1",
+  "type": "object"
+}

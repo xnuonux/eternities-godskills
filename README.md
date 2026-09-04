@@ -91,6 +91,30 @@ verify it with `node scripts\build-godskill-package-v1.mjs`. its exact coordinat
 `docs\godskill-package-v1-certification.md`. this canary is a portable
 verification boundary, not a global host activation.
 
+## provider-neutral protocol v1
+
+the provider-neutral protocol defines the data boundary between an agent host,
+the Godskills router, a verified package, and the evidence ledger. its closed
+eleven-message chain runs from `MissionEnvelope` through `LifecycleDecision`
+with canonical SHA-256 message and chain digests, explicit parent lineage,
+digest-only mission references, effect narrowing, package-layer binding,
+artifact and review observations, and lifecycle eligibility.
+
+the protocol is intentionally inert. it does not load skill bodies, select a
+model, invoke a provider, grant authority, execute package source, or perform a
+host or external write. adapters may transport the messages through files,
+local functions, MCP, HTTP, or another authenticated boundary, but they cannot
+change the trust rules. partial prefixes are verifiable as incomplete evidence
+only, and stale, reordered, duplicated, cross-mission, authority-expanding, or
+raw-content messages fail closed.
+
+rebuild the deterministic fixture with
+`node scripts\build-godskill-protocol-v1.mjs`. the exact chain and source
+coordinates are in `receipts\godskill-protocol-v1.json`; the certification
+matrix and proof limits are in `docs\godskill-protocol-v1-certification.md`.
+the current candidate passes 10 of 10 focused tests and 812 of 813 full-suite
+tests, with one documented environment skip and zero failures.
+
 ## sealed local routing executable
 
 `scripts\routing.mjs` is the receipt-bound file transport for hosts that need
