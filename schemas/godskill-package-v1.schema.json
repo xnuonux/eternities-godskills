@@ -1,0 +1,276 @@
+{
+  "$id": "https://eternities.ai/schemas/godskill-package-v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "attestation": {
+      "additionalProperties": false,
+      "properties": {
+        "authorityId": {
+          "type": "string"
+        },
+        "kind": {
+          "const": "first-party-digest-attestation-v1"
+        },
+        "status": {
+          "const": "attested"
+        },
+        "subjectDigest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "trustRootDigest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "authorityId",
+        "trustRootDigest",
+        "subjectDigest",
+        "status"
+      ],
+      "type": "object"
+    },
+    "capabilityGrantsAuthority": {
+      "const": false
+    },
+    "capabilityVersion": {
+      "type": "integer"
+    },
+    "compatibility": {
+      "additionalProperties": false,
+      "properties": {
+        "effects": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "hostKinds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "maxCompositionDepth": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "protocols": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "hostKinds",
+        "protocols",
+        "effects",
+        "maxCompositionDepth"
+      ],
+      "type": "object"
+    },
+    "content": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "bytes": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "mediaType": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "sha256": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "role",
+          "mediaType",
+          "bytes",
+          "sha256"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "id": {
+      "type": "string"
+    },
+    "packageDigest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "packageId": {
+      "type": "string"
+    },
+    "packageKind": {
+      "const": "directory"
+    },
+    "packageVersion": {
+      "type": "integer"
+    },
+    "policy": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "id": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "sourcePath": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "path",
+        "sourcePath",
+        "sha256",
+        "bytes"
+      ],
+      "type": "object"
+    },
+    "protocolId": {
+      "const": "eternities-godskill-package-v1"
+    },
+    "provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "layerBundle": {
+          "$ref": "#/$defs/provenanceRow"
+        },
+        "promotionEvidence": {
+          "$ref": "#/$defs/provenanceRow"
+        },
+        "sourceArtifacts": {
+          "items": {
+            "$ref": "#/$defs/provenanceRow"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "layerBundle",
+        "sourceArtifacts",
+        "promotionEvidence"
+      ],
+      "type": "object"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "status": {
+      "type": "string"
+    },
+    "verification": {
+      "additionalProperties": false,
+      "properties": {
+        "authorityExpansionAllowed": {
+          "const": false
+        },
+        "contentIsInert": {
+          "const": true
+        },
+        "externalMutationAllowed": {
+          "const": false
+        },
+        "requiresArtifactBeforeReview": {
+          "const": true
+        },
+        "sourceExecutionAllowed": {
+          "const": false
+        }
+      },
+      "required": [
+        "contentIsInert",
+        "sourceExecutionAllowed",
+        "externalMutationAllowed",
+        "authorityExpansionAllowed",
+        "requiresArtifactBeforeReview"
+      ],
+      "type": "object"
+    }
+  },
+  "$defs": {
+    "provenanceRow": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "bundleDigest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "evidenceLevel": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "packagePath": {
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "sourcePath": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "sourcePath",
+        "packagePath",
+        "sha256",
+        "bytes"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "protocolId",
+    "packageKind",
+    "id",
+    "packageId",
+    "packageVersion",
+    "capabilityVersion",
+    "status",
+    "capabilityGrantsAuthority",
+    "content",
+    "provenance",
+    "compatibility",
+    "verification",
+    "policy",
+    "attestation",
+    "packageDigest"
+  ],
+  "title": "Eternities Godskill package v1",
+  "type": "object"
+}

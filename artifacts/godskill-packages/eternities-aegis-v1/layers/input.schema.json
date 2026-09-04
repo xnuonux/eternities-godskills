@@ -1,0 +1,51 @@
+{
+  "$id": "urn:eternities:godskill:eternities-aegis:input:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "capabilityId": {
+      "const": "eternities-aegis"
+    },
+    "missionId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "slots": {
+      "additionalProperties": false,
+      "properties": {
+        "authorization-boundary": {
+          "description": "authorized target and effect boundary",
+          "type": "object",
+          "x-eternities-type": "eternities.authority-envelope"
+        },
+        "system-evidence": {
+          "description": "system or configuration evidence",
+          "type": "array",
+          "x-eternities-type": "eternities.evidence-set"
+        },
+        "trust-context": {
+          "description": "assets, identities, and trust relationships",
+          "type": "object",
+          "x-eternities-type": "eternities.trust-map"
+        }
+      },
+      "required": [
+        "authorization-boundary",
+        "system-evidence",
+        "trust-context"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "capabilityId",
+    "missionId",
+    "slots"
+  ],
+  "title": "eternities-aegis input envelope v1",
+  "type": "object"
+}

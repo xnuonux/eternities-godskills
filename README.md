@@ -76,6 +76,21 @@ path\to\natural-request.json` to compile and route without execution.
 the full local completion report is `docs\eternities-godskills-completion-report.md`
 and its machine receipt is `receipts\eternities-godskills-completion.json`.
 
+## portable `.godskill` package
+
+the first provider-neutral inert package canary is now built for
+`eternities-aegis` capability version 4. the package verifier checks a trusted
+package digest and policy digest, exact recursive inventory, source provenance,
+the existing capability-layer ABI, and the promotion evidence before returning
+a verified data result. it never executes package source, grants authority,
+activates a method, selects a model, or performs an external mutation.
+
+the package is at `artifacts\godskill-packages\eternities-aegis-v1`; rebuild and
+verify it with `node scripts\build-godskill-package-v1.mjs`. its exact coordinates are in
+`receipts\godskill-package-v1.json` and the verification matrix is in
+`docs\godskill-package-v1-certification.md`. this canary is a portable
+verification boundary, not a global host activation.
+
 ## sealed local routing executable
 
 `scripts\routing.mjs` is the receipt-bound file transport for hosts that need
