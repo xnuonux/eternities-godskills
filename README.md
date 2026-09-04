@@ -139,6 +139,33 @@ are in `docs\godskill-observatory-v1-certification.md`. this foundation
 currently passes 9 of 9 focused tests and 821 of 822 full-suite tests, with one
 documented environment skip and zero failures.
 
+## provider-neutral adapter conformance v1
+
+the adapter conformance harness defines the smallest host translation boundary
+for `claude-code`, `codex`, `godagents`, `local-model`, and `mcp`. it accepts
+only bounded host metadata and digest-only mission and package references,
+intersects requested effects with host availability, and produces one
+host-neutral guarded decision when package, protocol, and secret-isolation
+preconditions are present.
+
+unsupported preconditions produce an explicit `unsupported` result with no
+decision. host-specific model labels, context ceilings, reasoning tiers, and
+review availability never alter the normalized semantic decision. raw prompts,
+mission text, artifact and response bodies, credentials, private keys, and
+free-form notes are rejected. the harness is inert and makes no provider call,
+loads no skill body, executes no source, changes no routing, and performs no
+external write.
+
+rebuild the deterministic fixture with
+`node scripts\build-godskill-adapter-conformance-v1.mjs`. exact roots,
+fixture, schema, runtime, receipt, and proof limits are in
+`receipts\godskill-adapter-conformance-v1.json` and
+`docs\godskill-adapter-conformance-v1-certification.md`. the local fixture
+currently passes 6 of 6 focused tests and 827 of 828 full-suite tests, with
+one documented environment skip and zero failures. this proves bounded
+metadata conformance only, not live host adoption, model equivalence, provider
+quality, or production readiness.
+
 ## sealed local routing executable
 
 `scripts\routing.mjs` is the receipt-bound file transport for hosts that need
