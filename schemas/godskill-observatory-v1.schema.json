@@ -1,0 +1,318 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eternities.invalid/schemas/godskill-observatory-v1.schema.json",
+  "title": "Eternities provider-neutral Godskills observatory v1",
+  "description": "Closed digest-only observability records. This schema authorizes no execution or promotion.",
+  "oneOf": [
+    { "$ref": "#/$defs/replayRecord" },
+    { "$ref": "#/$defs/counterfactualRecord" },
+    { "$ref": "#/$defs/candidateRecord" },
+    { "$ref": "#/$defs/failureRecord" },
+    { "$ref": "#/$defs/costRecord" },
+    { "$ref": "#/$defs/snapshotRecord" }
+  ],
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "variant": {
+      "type": "string",
+      "enum": ["raw", "guardrail", "method", "reviewer", "combined"]
+    },
+    "effect": {
+      "type": "string",
+      "enum": ["execute", "external-write", "network", "read", "write"]
+    },
+    "recordBase": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "observatoryId": { "const": "eternities-godskill-observatory-v1" },
+        "recordId": { "$ref": "#/$defs/identifier" },
+        "digest": { "$ref": "#/$defs/digest" }
+      },
+      "required": ["schemaVersion", "observatoryId", "recordId", "digest"]
+    },
+    "replayBody": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "protocolReceiptDigest": { "$ref": "#/$defs/digest" },
+        "chainDigest": { "$ref": "#/$defs/digest" },
+        "missionId": { "$ref": "#/$defs/identifier" },
+        "messageCount": { "type": "integer", "minimum": 1, "maximum": 11 },
+        "complete": { "type": "boolean" },
+        "lastMessageType": {
+          "type": "string",
+          "enum": ["MissionEnvelope", "CapabilityQuery", "SelectionDecision", "ActivationDecision", "AuthorityIntersection", "DisclosureEnvelope", "ArtifactObservation", "ReviewObservation", "AcceptanceVerdict", "EvidenceProposal", "LifecycleDecision"]
+        },
+        "messageDigests": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 11,
+          "items": { "$ref": "#/$defs/digest" }
+        },
+        "requestedEffects": {
+          "type": "array",
+          "maxItems": 5,
+          "items": { "$ref": "#/$defs/effect" }
+        },
+        "grantedEffects": {
+          "type": "array",
+          "maxItems": 5,
+          "items": { "$ref": "#/$defs/effect" }
+        },
+        "derivedDecisionDigest": { "$ref": "#/$defs/digest" },
+        "rawContentStored": { "const": false }
+      },
+      "required": ["protocolReceiptDigest", "chainDigest", "missionId", "messageCount", "complete", "lastMessageType", "messageDigests", "requestedEffects", "grantedEffects", "derivedDecisionDigest", "rawContentStored"]
+    },
+    "replayRecord": {
+      "allOf": [
+        { "$ref": "#/$defs/recordBase" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schemaVersion": { "const": 1 },
+            "observatoryId": { "const": "eternities-godskill-observatory-v1" },
+            "recordType": { "const": "ReplayObservation" },
+            "recordId": { "$ref": "#/$defs/identifier" },
+            "digest": { "$ref": "#/$defs/digest" },
+            "body": { "$ref": "#/$defs/replayBody" }
+          },
+          "required": ["schemaVersion", "observatoryId", "recordType", "recordId", "digest", "body"]
+        }
+      ]
+    },
+    "counterfactualSide": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "variant": { "$ref": "#/$defs/variant" },
+        "observationDigest": { "$ref": "#/$defs/digest" },
+        "identityDigest": { "$ref": "#/$defs/digest" },
+        "score": { "type": "integer", "minimum": 0, "maximum": 1000 },
+        "criticalRegressions": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "artifactBytes": { "type": "integer", "minimum": 0, "maximum": 1000000000 },
+        "disclosureBytes": { "type": "integer", "minimum": 0, "maximum": 1000000000 }
+      },
+      "required": ["variant", "observationDigest", "identityDigest", "score", "criticalRegressions", "artifactBytes", "disclosureBytes"]
+    },
+    "counterfactualBody": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "missionId": { "$ref": "#/$defs/identifier" },
+        "identityDigest": { "$ref": "#/$defs/digest" },
+        "baseline": { "$ref": "#/$defs/counterfactualSide" },
+        "candidate": { "$ref": "#/$defs/counterfactualSide" },
+        "scoreDelta": { "type": "integer", "minimum": -1000, "maximum": 1000 },
+        "criticalRegressionDelta": { "type": "integer", "minimum": -100, "maximum": 100 },
+        "promotionEligible": { "const": false }
+      },
+      "required": ["missionId", "identityDigest", "baseline", "candidate", "scoreDelta", "criticalRegressionDelta", "promotionEligible"]
+    },
+    "counterfactualRecord": {
+      "allOf": [
+        { "$ref": "#/$defs/recordBase" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schemaVersion": { "const": 1 },
+            "observatoryId": { "const": "eternities-godskill-observatory-v1" },
+            "recordType": { "const": "CounterfactualView" },
+            "recordId": { "$ref": "#/$defs/identifier" },
+            "digest": { "$ref": "#/$defs/digest" },
+            "body": { "$ref": "#/$defs/counterfactualBody" }
+          },
+          "required": ["schemaVersion", "observatoryId", "recordType", "recordId", "digest", "body"]
+        }
+      ]
+    },
+    "candidateBody": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "sourceObservationDigest": { "$ref": "#/$defs/digest" },
+        "missionId": { "$ref": "#/$defs/identifier" },
+        "capabilityDigest": { "$ref": "#/$defs/digest" },
+        "taskDigest": { "$ref": "#/$defs/digest" },
+        "modelProfileDigest": { "$ref": "#/$defs/digest" },
+        "environmentDigest": { "$ref": "#/$defs/digest" },
+        "candidateStatus": { "const": "untrusted-candidate" },
+        "promotionEligible": { "const": false },
+        "trusted": { "const": false },
+        "reason": { "const": "raw-success-observation" }
+      },
+      "required": ["sourceObservationDigest", "missionId", "capabilityDigest", "taskDigest", "modelProfileDigest", "environmentDigest", "candidateStatus", "promotionEligible", "trusted", "reason"]
+    },
+    "candidateRecord": {
+      "allOf": [
+        { "$ref": "#/$defs/recordBase" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schemaVersion": { "const": 1 },
+            "observatoryId": { "const": "eternities-godskill-observatory-v1" },
+            "recordType": { "const": "RawSuccessCandidate" },
+            "recordId": { "$ref": "#/$defs/identifier" },
+            "digest": { "$ref": "#/$defs/digest" },
+            "body": { "$ref": "#/$defs/candidateBody" }
+          },
+          "required": ["schemaVersion", "observatoryId", "recordType", "recordId", "digest", "body"]
+        }
+      ]
+    },
+    "failureCluster": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "scopeDigest": { "$ref": "#/$defs/digest" },
+        "failureCode": { "$ref": "#/$defs/identifier" },
+        "observationDigests": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 128,
+          "items": { "$ref": "#/$defs/digest" }
+        },
+        "count": { "type": "integer", "minimum": 1, "maximum": 128 },
+        "criticalCount": { "type": "integer", "minimum": 0, "maximum": 128 },
+        "variants": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "items": { "$ref": "#/$defs/variant" }
+        }
+      },
+      "required": ["scopeDigest", "failureCode", "observationDigests", "count", "criticalCount", "variants"]
+    },
+    "failureBody": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "reportScopeDigest": { "$ref": "#/$defs/digest" },
+        "clusterCount": { "type": "integer", "minimum": 0, "maximum": 128 },
+        "clusters": {
+          "type": "array",
+          "maxItems": 128,
+          "items": { "$ref": "#/$defs/failureCluster" }
+        },
+        "rawContentStored": { "const": false }
+      },
+      "required": ["reportScopeDigest", "clusterCount", "clusters", "rawContentStored"]
+    },
+    "failureRecord": {
+      "allOf": [
+        { "$ref": "#/$defs/recordBase" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schemaVersion": { "const": 1 },
+            "observatoryId": { "const": "eternities-godskill-observatory-v1" },
+            "recordType": { "const": "FailureClusterReport" },
+            "recordId": { "$ref": "#/$defs/identifier" },
+            "digest": { "$ref": "#/$defs/digest" },
+            "body": { "$ref": "#/$defs/failureBody" }
+          },
+          "required": ["schemaVersion", "observatoryId", "recordType", "recordId", "digest", "body"]
+        }
+      ]
+    },
+    "costBody": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "protocolReceiptDigest": { "$ref": "#/$defs/digest" },
+        "disclosureMessageDigest": { "$ref": "#/$defs/digest" },
+        "missionId": { "$ref": "#/$defs/identifier" },
+        "packageDigest": { "$ref": "#/$defs/digest" },
+        "mode": { "type": "string", "enum": ["native", "guardrail", "method", "review"] },
+        "layer": { "type": "string", "enum": ["none", "guardrails", "method", "reviewer"] },
+        "contentDigest": { "anyOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+        "contentBytes": { "type": "integer", "minimum": 0, "maximum": 1000000000 },
+        "tokens": { "anyOf": [{ "type": "integer", "minimum": 0, "maximum": 1000000000 }, { "type": "null" }] },
+        "latencyMs": { "anyOf": [{ "type": "number", "minimum": 0 }, { "type": "null" }] },
+        "costMinorUnits": { "anyOf": [{ "type": "number", "minimum": 0 }, { "type": "null" }] }
+      },
+      "required": ["protocolReceiptDigest", "disclosureMessageDigest", "missionId", "packageDigest", "mode", "layer", "contentDigest", "contentBytes", "tokens", "latencyMs", "costMinorUnits"]
+    },
+    "costRecord": {
+      "allOf": [
+        { "$ref": "#/$defs/recordBase" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schemaVersion": { "const": 1 },
+            "observatoryId": { "const": "eternities-godskill-observatory-v1" },
+            "recordType": { "const": "DisclosureCostEntry" },
+            "recordId": { "$ref": "#/$defs/identifier" },
+            "digest": { "$ref": "#/$defs/digest" },
+            "body": { "$ref": "#/$defs/costBody" }
+          },
+          "required": ["schemaVersion", "observatoryId", "recordType", "recordId", "digest", "body"]
+        }
+      ]
+    },
+    "retentionPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mode": { "const": "digest-only" },
+        "appendOnly": { "const": true },
+        "rawMissionContentStored": { "const": false },
+        "rawArtifactContentStored": { "const": false },
+        "candidateAutoPromotion": { "const": false }
+      },
+      "required": ["mode", "appendOnly", "rawMissionContentStored", "rawArtifactContentStored", "candidateAutoPromotion"]
+    },
+    "snapshotBody": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "protocolReceiptDigest": { "$ref": "#/$defs/digest" },
+        "recordDigests": {
+          "type": "array",
+          "maxItems": 512,
+          "items": { "$ref": "#/$defs/digest" }
+        },
+        "recordTypes": {
+          "type": "array",
+          "maxItems": 512,
+          "items": { "type": "string", "enum": ["ReplayObservation", "CounterfactualView", "RawSuccessCandidate", "FailureClusterReport", "DisclosureCostEntry"] }
+        },
+        "recordCount": { "type": "integer", "minimum": 0, "maximum": 512 },
+        "retentionPolicy": { "$ref": "#/$defs/retentionPolicy" },
+        "rawContentStored": { "const": false }
+      },
+      "required": ["protocolReceiptDigest", "recordDigests", "recordTypes", "recordCount", "retentionPolicy", "rawContentStored"]
+    },
+    "snapshotRecord": {
+      "allOf": [
+        { "$ref": "#/$defs/recordBase" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schemaVersion": { "const": 1 },
+            "observatoryId": { "const": "eternities-godskill-observatory-v1" },
+            "recordType": { "const": "ObservatorySnapshot" },
+            "recordId": { "$ref": "#/$defs/identifier" },
+            "digest": { "$ref": "#/$defs/digest" },
+            "body": { "$ref": "#/$defs/snapshotBody" }
+          },
+          "required": ["schemaVersion", "observatoryId", "recordType", "recordId", "digest", "body"]
+        }
+      ]
+    }
+  }
+}

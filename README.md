@@ -115,6 +115,30 @@ matrix and proof limits are in `docs\godskill-protocol-v1-certification.md`.
 the current candidate passes 10 of 10 focused tests and 812 of 813 full-suite
 tests, with one documented environment skip and zero failures.
 
+## provider-neutral observatory v1
+
+the observatory is the first phase-5 read-only evidence view over the frozen
+protocol. it replays exact chains against an externally supplied digest,
+compares bounded counterfactual results under one shared identity, clusters
+repeated failures, attributes disclosed layer bytes and optional host metrics,
+and builds a digest-only snapshot.
+
+raw-success extraction produces only an explicitly untrusted candidate with
+`promotionEligible: false`. raw prompts, mission text, artifact or response
+bodies, credentials, private keys, free-form notes, and unknown input fields
+are rejected. the observatory cannot load a skill, select a model, call a
+provider, grant authority, execute source, change routing, or perform an
+external write. its snapshot is a derived view that can be disabled without
+changing protocol, package, or activation v1 behavior.
+
+rebuild the deterministic fixture with
+`node scripts\build-godskill-observatory-v1.mjs`. exact protocol-root,
+snapshot, fixture, and receipt coordinates are in
+`receipts\godskill-observatory-v1.json`; the acceptance matrix and proof limits
+are in `docs\godskill-observatory-v1-certification.md`. this foundation
+currently passes 9 of 9 focused tests and 821 of 822 full-suite tests, with one
+documented environment skip and zero failures.
+
 ## sealed local routing executable
 
 `scripts\routing.mjs` is the receipt-bound file transport for hosts that need

@@ -1,0 +1,448 @@
+{
+  "chainDigest": "734afa4cb56b5899c9234c0971dd5875973c1a65b5bbc403a8690129e2af2dfa",
+  "messages": [
+    {
+      "body": {
+        "authorityDigest": "7bf840d766f30f8721afa5ec328852ca4e3a4806dacc528406107d537b85cfdc",
+        "consequenceClass": "high",
+        "contentMode": "digest-only",
+        "objectiveDigest": "d454bec656d32723404961023ed9cb3c37221687c40b498a57b3eefa93c4c5f4",
+        "targetDigest": "34a04005bcaf206eec990bd9637d9fdb6725e0a0c0d4aebf003f17f4c956eb5c"
+      },
+      "digest": "3550468215f944b27d38581006b4a4c8872de2df328f946e0276f93388cfb4c1",
+      "messageId": "mission-001",
+      "messageType": "MissionEnvelope",
+      "missionId": "mission-001",
+      "owner": "mission",
+      "parentIds": [],
+      "protocolId": "eternities-godskill-protocol-v1",
+      "schemaVersion": 1,
+      "status": "open"
+    },
+    {
+      "body": {
+        "acceptedProtocols": [
+          "eternities-godskill-package-v1"
+        ],
+        "candidateLimit": 8,
+        "hostKind": "agent-neutral",
+        "queryDigest": "a8b771920b8319e47251d1360f5e880bc18e8d329b0f0d003ea3c7e615558947",
+        "requestedEffects": [
+          "read",
+          "write"
+        ]
+      },
+      "digest": "e55a3c37eddb614e67fba334eec5a8f75fd80b9a918b98f8419bfd99e448e3c4",
+      "messageId": "query-001",
+      "messageType": "CapabilityQuery",
+      "missionId": "mission-001",
+      "owner": "router",
+      "parentIds": [
+        "mission-001"
+      ],
+      "protocolId": "eternities-godskill-protocol-v1",
+      "schemaVersion": 1,
+      "status": "resolved"
+    },
+    {
+      "body": {
+        "reasonCodes": [
+          "exact-capability-match"
+        ],
+        "selectedCapabilityId": "eternities-aegis",
+        "selectedCapabilityVersion": 4,
+        "selectedEffects": [
+          "read",
+          "write"
+        ],
+        "selectedPackageDigest": "891e02fa55f1f9b9e457cd008853ee7194e470d06ae26e42c65cd055b40eeb57",
+        "selectionMode": "single"
+      },
+      "digest": "27190d2be439ed853d83a8d95fdbceb3f9f72d1ac24e8904089302426fbe9c48",
+      "messageId": "selection-001",
+      "messageType": "SelectionDecision",
+      "missionId": "mission-001",
+      "owner": "router",
+      "parentIds": [
+        "mission-001",
+        "query-001"
+      ],
+      "protocolId": "eternities-godskill-protocol-v1",
+      "schemaVersion": 1,
+      "status": "selected"
+    },
+    {
+      "body": {
+        "authorityExpanded": false,
+        "capabilityId": "eternities-aegis",
+        "capabilityVersion": 4,
+        "disclosurePlanDigest": "47f3299bd8253ed40235fb53377fb580e0bc523054af6595f4c5fe01f13fcd0e",
+        "explicitIntent": false,
+        "matchedEvidenceDigest": null,
+        "mode": "guardrail",
+        "packageDigest": "891e02fa55f1f9b9e457cd008853ee7194e470d06ae26e42c65cd055b40eeb57"
+      },
+      "digest": "cc38c193d31e24b4b04d6737ed2858477e748dddc165e909f95e24989cf8d12a",
+      "messageId": "activation-001",
+      "messageType": "ActivationDecision",
+      "missionId": "mission-001",
+      "owner": "activator",
+      "parentIds": [
+        "selection-001"
+      ],
+      "protocolId": "eternities-godskill-protocol-v1",
+      "schemaVersion": 1,
+      "status": "activated"
+    },
+    {
+      "body": {
+        "authorityCeilingDigest": "16d4b9a594bc49a9ca119002814436155c4789e35e141fb48e5b37c918b5f111",
+        "authorityExpanded": false,
+        "decision": "allowed",
+        "externalMutationAllowed": false,
+        "grantedEffects": [
+          "read",
+          "write"
+        ],
+        "requestedEffects": [
+          "read",
+          "write"
+        ],
+        "targetDigest": "34a04005bcaf206eec990bd9637d9fdb6725e0a0c0d4aebf003f17f4c956eb5c"
+      },
+      "digest": "3d242b83fb218bfd16dd5294f7197efdbbfe2cc948cc2f80836978ae6984bb61",
+      "messageId": "authority-001",
+      "messageType": "AuthorityIntersection",
+      "missionId": "mission-001",
+      "owner": "authority",
+      "parentIds": [
+        "activation-001"
+      ],
+      "protocolId": "eternities-godskill-protocol-v1",
+      "schemaVersion": 1,
+      "status": "allowed"
+    },
+    {
+      "body": {
+        "artifactRequired": false,
+        "contentBytes": 1603,
+        "contentDigest": "1db2ff839613b20b2b8980f3a324bddf0756244cd72aa0acf8a92571fb461246",
+        "layer": "guardrails",
+        "mode": "guardrail",
+        "packageDigest": "891e02fa55f1f9b9e457cd008853ee7194e470d06ae26e42c65cd055b40eeb57"
+      },
+      "digest": "350ccdf2b49c9b23b9803a9d1b6f78e52fff5bf8a8a09b07055c9a059691f35c",
+      "messageId": "disclosure-001",
+      "messageType": "DisclosureEnvelope",
+      "missionId": "mission-001",
+      "owner": "discloser",
+      "parentIds": [
+        "activation-001",
+        "authority-001"
+      ],
+      "protocolId": "eternities-godskill-protocol-v1",
+      "schemaVersion": 1,
+      "status": "disclosed"
+    },
+    {
+      "body": {
+        "artifactBytes": 2048,
+        "artifactDigest": "0c4def370440ec924e4e907156290f050967a623a9e0acf45cad65ca9f88818d",
+        "artifactKind": "bounded-test-artifact",
+        "effectObserved": "read",
+        "metrics": {
+          "costMinorUnits": 0,
+          "latencyMs": 12.5,
+          "tokens": 42
+        },
+        "rawContentStored": false
+      },
+      "digest": "6cfede35e25d86c3c663a8b90f2090a5b9ceeeb85257bae4c69dd0736564493c",
+      "messageId": "artifact-001",
+      "messageType": "ArtifactObservation",
+      "missionId": "mission-001",
+      "owner": "observer",
+      "parentIds": [
+        "disclosure-001"
+      ],
+      "protocolId": "eternities-godskill-protocol-v1",
+      "schemaVersion": 1,
+      "status": "observed"
+    },
+    {
+      "body": {
+        "evidenceLevel": "artifact",
+        "findingsDigest": "98f758651b40b2f2582aede0c3c7d799385e487846ecbe26ed5510315c943937",
+        "reviewDigest": "df27a4740357d514cf5fe0781c9e5e0ef871fb2d612e66c5095b068db490f598",
+        "reviewedArtifactDigest": "0c4def370440ec924e4e907156290f050967a623a9e0acf45cad65ca9f88818d",
+        "reviewerId": "terra-reviewer",
+        "verdict": "pass"
+      },
+      "digest": "ea0bc38f76f5016272dbdbbafba281e425a884983728bcb4b2c5af9c41eeb01c",
+      "messageId": "review-001",
+      "messageType": "ReviewObservation",
+      "missionId": "mission-001",
+      "owner": "reviewer",
+      "parentIds": [
+        "artifact-001"
+      ],
+      "protocolId": "eternities-godskill-protocol-v1",
+      "schemaVersion": 1,
+      "status": "observed"
+    },
+    {
+      "body": {
+        "artifactDigest": "0c4def370440ec924e4e907156290f050967a623a9e0acf45cad65ca9f88818d",
+        "evidenceDigest": "c1ac56831f01bb0a051aa78b99993331feabfc477937bc275fca9a2236303cb8",
+        "qualityClaim": "artifact",
+        "reasonCodes": [
+          "review-passed"
+        ],
+        "verdict": "accepted"
+      },
+      "digest": "3ee343dd81f29b822031ce27dff6341fba74c09b4b90296e5210828718e0409b",
+      "messageId": "verdict-001",
+      "messageType": "AcceptanceVerdict",
+      "missionId": "mission-001",
+      "owner": "verdict",
+      "parentIds": [
+        "artifact-001",
+        "review-001"
+      ],
+      "protocolId": "eternities-godskill-protocol-v1",
+      "schemaVersion": 1,
+      "status": "accepted"
+    },
+    {
+      "body": {
+        "candidateStatus": "eligible",
+        "evidenceDigest": "c1ac56831f01bb0a051aa78b99993331feabfc477937bc275fca9a2236303cb8",
+        "evidenceLevel": "artifact",
+        "inputDigests": [
+          "3ee343dd81f29b822031ce27dff6341fba74c09b4b90296e5210828718e0409b"
+        ],
+        "promotionEligible": true
+      },
+      "digest": "450935f933c706b6ad520b90e23a002683454c6862ff0849ba2f81466e180a68",
+      "messageId": "proposal-001",
+      "messageType": "EvidenceProposal",
+      "missionId": "mission-001",
+      "owner": "evidence",
+      "parentIds": [
+        "verdict-001"
+      ],
+      "protocolId": "eternities-godskill-protocol-v1",
+      "schemaVersion": 1,
+      "status": "eligible"
+    },
+    {
+      "body": {
+        "authorityDigest": "6e2bbe3847f8669ce2e8a71d47940559e7b8ec3605aa011b2d1bb7eba10a666e",
+        "decision": "promote",
+        "evidenceDigest": "c1ac56831f01bb0a051aa78b99993331feabfc477937bc275fca9a2236303cb8",
+        "reasonCodes": [
+          "independent-authority-approved"
+        ],
+        "version": 4
+      },
+      "digest": "58f5fdd7e6fc70e116c3f191015cc77f0388588b4034e0ee022bb7cd9d7f59bb",
+      "messageId": "lifecycle-001",
+      "messageType": "LifecycleDecision",
+      "missionId": "mission-001",
+      "owner": "lifecycle",
+      "parentIds": [
+        "proposal-001"
+      ],
+      "protocolId": "eternities-godskill-protocol-v1",
+      "schemaVersion": 1,
+      "status": "recorded"
+    }
+  ],
+  "observatoryId": "eternities-godskill-observatory-v1",
+  "protocolReceiptDigest": "7675fcb3e49c450c50968dcdafd3e98f4788058bd4cf3599bbf73e9e00166da8",
+  "records": [
+    {
+      "body": {
+        "chainDigest": "734afa4cb56b5899c9234c0971dd5875973c1a65b5bbc403a8690129e2af2dfa",
+        "complete": true,
+        "derivedDecisionDigest": "f165daa0abad185a1d3a7a4911a74ffe02d97df7a1da366ed9f8cd907bd46ea8",
+        "grantedEffects": [
+          "read",
+          "write"
+        ],
+        "lastMessageType": "LifecycleDecision",
+        "messageCount": 11,
+        "messageDigests": [
+          "3550468215f944b27d38581006b4a4c8872de2df328f946e0276f93388cfb4c1",
+          "e55a3c37eddb614e67fba334eec5a8f75fd80b9a918b98f8419bfd99e448e3c4",
+          "27190d2be439ed853d83a8d95fdbceb3f9f72d1ac24e8904089302426fbe9c48",
+          "cc38c193d31e24b4b04d6737ed2858477e748dddc165e909f95e24989cf8d12a",
+          "3d242b83fb218bfd16dd5294f7197efdbbfe2cc948cc2f80836978ae6984bb61",
+          "350ccdf2b49c9b23b9803a9d1b6f78e52fff5bf8a8a09b07055c9a059691f35c",
+          "6cfede35e25d86c3c663a8b90f2090a5b9ceeeb85257bae4c69dd0736564493c",
+          "ea0bc38f76f5016272dbdbbafba281e425a884983728bcb4b2c5af9c41eeb01c",
+          "3ee343dd81f29b822031ce27dff6341fba74c09b4b90296e5210828718e0409b",
+          "450935f933c706b6ad520b90e23a002683454c6862ff0849ba2f81466e180a68",
+          "58f5fdd7e6fc70e116c3f191015cc77f0388588b4034e0ee022bb7cd9d7f59bb"
+        ],
+        "missionId": "mission-001",
+        "protocolReceiptDigest": "7675fcb3e49c450c50968dcdafd3e98f4788058bd4cf3599bbf73e9e00166da8",
+        "rawContentStored": false,
+        "requestedEffects": [
+          "read",
+          "write"
+        ]
+      },
+      "digest": "cf06899f470727ebf702822de0e1a07cc54f532d0782807d6b2f42e66dc1a983",
+      "observatoryId": "eternities-godskill-observatory-v1",
+      "recordId": "replay-734afa4cb56b5899",
+      "recordType": "ReplayObservation",
+      "schemaVersion": 1
+    },
+    {
+      "body": {
+        "baseline": {
+          "artifactBytes": 1270,
+          "criticalRegressions": 0,
+          "disclosureBytes": 0,
+          "identityDigest": "4f86d7eafd114c107c395ede2e2d3e1dc9cdd90ad1b64fce76b84aef398ae98f",
+          "observationDigest": "a1b624a7f62f11058a16449c38226ae061f4196dc5a53f3ea5707506f615f1ee",
+          "score": 70,
+          "variant": "raw"
+        },
+        "candidate": {
+          "artifactBytes": 1288,
+          "criticalRegressions": 1,
+          "disclosureBytes": 1600,
+          "identityDigest": "4f86d7eafd114c107c395ede2e2d3e1dc9cdd90ad1b64fce76b84aef398ae98f",
+          "observationDigest": "5ef7baff1e2e951f06d1371dc418a631c5586b9eb0bb3af24cb257fdac8633a1",
+          "score": 88,
+          "variant": "guardrail"
+        },
+        "criticalRegressionDelta": 1,
+        "identityDigest": "4f86d7eafd114c107c395ede2e2d3e1dc9cdd90ad1b64fce76b84aef398ae98f",
+        "missionId": "mission-001",
+        "promotionEligible": false,
+        "scoreDelta": 18
+      },
+      "digest": "8832439694422a7dfc5f01eff4319dbb8baad33b58a498a6a72bd0d8f13d474b",
+      "observatoryId": "eternities-godskill-observatory-v1",
+      "recordId": "counterfactual-7727028941579d16",
+      "recordType": "CounterfactualView",
+      "schemaVersion": 1
+    },
+    {
+      "body": {
+        "candidateStatus": "untrusted-candidate",
+        "capabilityDigest": "38a5be91af79d7e5ba9809bf383c699b6864ee50446239fe56a45e32b84638fe",
+        "environmentDigest": "ba5285161ba6eed0085fb13784ce5c92f70ebc268b94fd66aa1d68a32884204d",
+        "missionId": "mission-001",
+        "modelProfileDigest": "9ba49d54c15c9fa8a51bf930c4d885ce59e10f00b02a553b2129e6f72667e0b8",
+        "promotionEligible": false,
+        "reason": "raw-success-observation",
+        "sourceObservationDigest": "67a4b2c9c40f3507197d99235faa09c191c056b3e6908d64cb3540825cb8130b",
+        "taskDigest": "0ebb429fa86d481c2630fac53db1c91cffed5d4d41d1021c179444eb67e7ee0b",
+        "trusted": false
+      },
+      "digest": "d12965b374d1c9993c624ec41771553d7ef0fd85be78e3b42b76d62ef3470136",
+      "observatoryId": "eternities-godskill-observatory-v1",
+      "recordId": "candidate-67a4b2c9c40f3507",
+      "recordType": "RawSuccessCandidate",
+      "schemaVersion": 1
+    },
+    {
+      "body": {
+        "clusterCount": 2,
+        "clusters": [
+          {
+            "count": 2,
+            "criticalCount": 1,
+            "failureCode": "missing-assertion",
+            "observationDigests": [
+              "43fda8f7b35a54b8dde8339bb1a7227180afadf82bb57b562619175684316df8",
+              "74a450ddd95d02e196f91442f03bd07dbe5898508badc97fefbe0423725d030b"
+            ],
+            "scopeDigest": "9164325537bd4d537957db9bb6b919ce51593ac7b692b11a787e00dc07fabe9f",
+            "variants": [
+              "guardrail",
+              "raw"
+            ]
+          },
+          {
+            "count": 1,
+            "criticalCount": 1,
+            "failureCode": "schema-invalid",
+            "observationDigests": [
+              "7125bd2bef05ae13b314d45dc3040408d862e10a672d68aab553176dafc3f538"
+            ],
+            "scopeDigest": "9164325537bd4d537957db9bb6b919ce51593ac7b692b11a787e00dc07fabe9f",
+            "variants": [
+              "method"
+            ]
+          }
+        ],
+        "rawContentStored": false,
+        "reportScopeDigest": "9164325537bd4d537957db9bb6b919ce51593ac7b692b11a787e00dc07fabe9f"
+      },
+      "digest": "838709fb22cec7934af1f8f21c914d01314b355e1ab5fb8265c303c2e1b67678",
+      "observatoryId": "eternities-godskill-observatory-v1",
+      "recordId": "failures-a8ece53aff6b9f84",
+      "recordType": "FailureClusterReport",
+      "schemaVersion": 1
+    },
+    {
+      "body": {
+        "contentBytes": 1603,
+        "contentDigest": "1db2ff839613b20b2b8980f3a324bddf0756244cd72aa0acf8a92571fb461246",
+        "costMinorUnits": null,
+        "disclosureMessageDigest": "350ccdf2b49c9b23b9803a9d1b6f78e52fff5bf8a8a09b07055c9a059691f35c",
+        "latencyMs": 42.5,
+        "layer": "guardrails",
+        "missionId": "mission-001",
+        "mode": "guardrail",
+        "packageDigest": "891e02fa55f1f9b9e457cd008853ee7194e470d06ae26e42c65cd055b40eeb57",
+        "protocolReceiptDigest": "7675fcb3e49c450c50968dcdafd3e98f4788058bd4cf3599bbf73e9e00166da8",
+        "tokens": 120
+      },
+      "digest": "366c0a00d45f0b600abfdb6ae8a962b318015c4d8ffd3df41c5174eb61b9bba0",
+      "observatoryId": "eternities-godskill-observatory-v1",
+      "recordId": "cost-350ccdf2b49c9b23",
+      "recordType": "DisclosureCostEntry",
+      "schemaVersion": 1
+    }
+  ],
+  "schemaVersion": 1,
+  "snapshot": {
+    "body": {
+      "protocolReceiptDigest": "7675fcb3e49c450c50968dcdafd3e98f4788058bd4cf3599bbf73e9e00166da8",
+      "rawContentStored": false,
+      "recordCount": 5,
+      "recordDigests": [
+        "366c0a00d45f0b600abfdb6ae8a962b318015c4d8ffd3df41c5174eb61b9bba0",
+        "838709fb22cec7934af1f8f21c914d01314b355e1ab5fb8265c303c2e1b67678",
+        "8832439694422a7dfc5f01eff4319dbb8baad33b58a498a6a72bd0d8f13d474b",
+        "cf06899f470727ebf702822de0e1a07cc54f532d0782807d6b2f42e66dc1a983",
+        "d12965b374d1c9993c624ec41771553d7ef0fd85be78e3b42b76d62ef3470136"
+      ],
+      "recordTypes": [
+        "DisclosureCostEntry",
+        "FailureClusterReport",
+        "CounterfactualView",
+        "ReplayObservation",
+        "RawSuccessCandidate"
+      ],
+      "retentionPolicy": {
+        "appendOnly": true,
+        "candidateAutoPromotion": false,
+        "mode": "digest-only",
+        "rawArtifactContentStored": false,
+        "rawMissionContentStored": false
+      }
+    },
+    "digest": "ef89ce8bbe86987bf98e66d01e448589c6227f4e6c6327ff3a51ceb5431bc782",
+    "observatoryId": "eternities-godskill-observatory-v1",
+    "recordId": "snapshot-387e286cd39637b5",
+    "recordType": "ObservatorySnapshot",
+    "schemaVersion": 1
+  }
+}
