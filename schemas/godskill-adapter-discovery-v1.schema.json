@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eternities.invalid/schemas/godskill-adapter-discovery-v1.schema.json",
+  "title": "Eternities provider-neutral adapter discovery v1",
+  "description": "Closed exact-match adapter discovery results. This schema authorizes no routing, activation, provider call, or external mutation.",
+  "$ref": "#/$defs/result",
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "hostFamily": {
+      "type": "string",
+      "enum": ["claude-code", "codex", "godagents", "local-model", "mcp"]
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "discoveryId": { "const": "eternities-godskill-adapter-discovery-v1" },
+        "matrixDigest": { "$ref": "#/$defs/digest" },
+        "matrixStatus": { "type": "string", "enum": ["equivalent", "mixed", "unsupported"] },
+        "hostProfileDigest": { "$ref": "#/$defs/digest" },
+        "hostFamily": { "$ref": "#/$defs/hostFamily" },
+        "status": { "type": "string", "enum": ["selected", "unsupported"] },
+        "reasonCodes": { "type": "array", "minItems": 1, "maxItems": 1, "uniqueItems": true, "items": { "type": "string", "enum": ["selected-exact-profile", "host-profile-not-certified", "matrix-entry-unsupported"] } },
+        "adapterId": { "anyOf": [{ "$ref": "#/$defs/identifier" }, { "type": "null" }] },
+        "adapterVersion": { "anyOf": [{ "type": "integer", "minimum": 1, "maximum": 32 }, { "type": "null" }] },
+        "descriptorDigest": { "anyOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+        "entryDigest": { "anyOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+        "projectionDigest": { "anyOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+        "normalizedDecisionDigest": { "anyOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+        "digest": { "$ref": "#/$defs/digest" }
+      },
+      "required": ["schemaVersion", "discoveryId", "matrixDigest", "matrixStatus", "hostProfileDigest", "hostFamily", "status", "reasonCodes", "adapterId", "adapterVersion", "descriptorDigest", "entryDigest", "projectionDigest", "normalizedDecisionDigest", "digest"]
+    }
+  }
+}

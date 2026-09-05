@@ -188,6 +188,25 @@ runtime, implementation bytes, and proof limits are in
 and matrix conformance only, not live host adoption, model or provider
 equivalence, tool security, or production readiness.
 
+## provider-neutral adapter discovery v1
+
+the opt-in discovery resolver verifies an adapter sdk matrix and selects an
+exact certified host profile, or fails closed. a family label alone is never
+enough: drift in host version, model family, reasoning tier, context budget,
+review state, effects, protocol support, or secret isolation produces an
+unsupported result until a new descriptor and matrix are certified.
+
+the result carries only digest-bound matrix, host-profile, adapter, entry,
+projection, and normalized-decision identities. discovery does not grant
+effects, choose a model, activate a skill, change routing, invoke a provider or
+host, load package source, or perform an external write.
+
+rebuild the inert reference result with
+`node scripts\build-godskill-adapter-discovery-v1.mjs`. exact roots, fixture,
+schema, runtime, implementation bytes, and proof limits are in
+`receipts\godskill-adapter-discovery-v1.json`. this proves exact local
+declarative discovery only, not live host adoption or production readiness.
+
 ## sealed local routing executable
 
 `scripts\routing.mjs` is the receipt-bound file transport for hosts that need
