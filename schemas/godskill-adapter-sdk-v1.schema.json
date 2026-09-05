@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eternities.invalid/schemas/godskill-adapter-sdk-v1.schema.json",
+  "title": "Eternities provider-neutral adapter sdk v1",
+  "description": "Closed adapter descriptors and capability matrices. This schema authorizes no execution, provider call, host adoption, or external mutation.",
+  "$ref": "#/$defs/matrix",
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "hostFamily": {
+      "type": "string",
+      "enum": ["claude-code", "codex", "godagents", "local-model", "mcp"]
+    },
+    "effect": {
+      "type": "string",
+      "enum": ["execute", "external-write", "network", "read", "write"]
+    },
+    "reasoningTier": {
+      "type": "string",
+      "enum": ["none", "minimal", "low", "medium", "high", "xhigh", "max", "ultra"]
+    },
+    "reviewMode": {
+      "const": "review"
+    },
+    "hostProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hostFamily": { "$ref": "#/$defs/hostFamily" },
+        "hostVersion": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "modelFamily": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "reasoningTier": { "$ref": "#/$defs/reasoningTier" },
+        "contextBudget": { "type": "integer", "minimum": 1, "maximum": 1000000 },
+        "reviewAvailable": { "type": "boolean" },
+        "availableEffects": { "type": "array", "maxItems": 5, "uniqueItems": true, "items": { "$ref": "#/$defs/effect" } },
+        "supportsPackageProtocol": { "type": "boolean" },
+        "supportsProtocolVersion": { "type": "integer", "minimum": 0, "maximum": 32 },
+        "secretsOutsidePayload": { "type": "boolean" }
+      },
+      "required": ["hostFamily", "hostVersion", "modelFamily", "reasoningTier", "contextBudget", "reviewAvailable", "availableEffects", "supportsPackageProtocol", "supportsProtocolVersion", "secretsOutsidePayload"]
+    },
+    "adapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "sdkId": { "const": "eternities-godskill-adapter-sdk-v1" },
+        "adapterId": { "$ref": "#/$defs/identifier" },
+        "adapterVersion": { "type": "integer", "minimum": 1, "maximum": 32 },
+        "hostFamily": { "$ref": "#/$defs/hostFamily" },
+        "protocolId": { "const": "eternities-godskill-protocol-v1" },
+        "protocolVersion": { "const": 1 },
+        "supportedEffects": { "type": "array", "maxItems": 5, "uniqueItems": true, "items": { "$ref": "#/$defs/effect" } },
+        "supportedReasoningTiers": { "type": "array", "minItems": 1, "maxItems": 8, "uniqueItems": true, "items": { "$ref": "#/$defs/reasoningTier" } },
+        "maxContextBudget": { "type": "integer", "minimum": 1, "maximum": 1000000 },
+        "reviewModes": { "type": "array", "maxItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/reviewMode" } },
+        "hostProfile": { "$ref": "#/$defs/hostProfile" },
+        "digest": { "$ref": "#/$defs/digest" }
+      },
+      "required": ["schemaVersion", "sdkId", "adapterId", "adapterVersion", "hostFamily", "protocolId", "protocolVersion", "supportedEffects", "supportedReasoningTiers", "maxContextBudget", "reviewModes", "hostProfile", "digest"]
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "missionId": { "$ref": "#/$defs/identifier" },
+        "objectiveDigest": { "$ref": "#/$defs/digest" },
+        "packageReceiptDigest": { "$ref": "#/$defs/digest" },
+        "packageDigest": { "$ref": "#/$defs/digest" },
+        "capabilityId": { "$ref": "#/$defs/identifier" },
+        "capabilityVersion": { "type": "integer", "minimum": 1 },
+        "requestedEffects": { "type": "array", "minItems": 1, "maxItems": 5, "uniqueItems": true, "items": { "$ref": "#/$defs/effect" } },
+        "grantedEffects": { "type": "array", "maxItems": 5, "uniqueItems": true, "items": { "$ref": "#/$defs/effect" } },
+        "activationMode": { "const": "guardrail" },
+        "disclosureLayer": { "const": "guardrails" },
+        "rawContentStored": { "const": false }
+      },
+      "required": ["missionId", "objectiveDigest", "packageReceiptDigest", "packageDigest", "capabilityId", "capabilityVersion", "requestedEffects", "grantedEffects", "activationMode", "disclosureLayer", "rawContentStored"]
+    },
+    "projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "conformanceId": { "const": "eternities-godskill-adapter-conformance-v1" },
+        "hostFamily": { "$ref": "#/$defs/hostFamily" },
+        "status": { "type": "string", "enum": ["conformant", "unsupported"] },
+        "reasonCodes": { "type": "array", "minItems": 1, "maxItems": 5, "uniqueItems": true, "items": { "type": "string", "enum": ["protocol-equivalent", "effect-narrowed", "package-protocol-unsupported", "protocol-version-unsupported", "secrets-not-isolated"] } },
+        "hostProfile": { "$ref": "#/$defs/hostProfile" },
+        "decision": { "anyOf": [{ "$ref": "#/$defs/decision" }, { "type": "null" }] },
+        "normalizedDecisionDigest": { "anyOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+        "digest": { "$ref": "#/$defs/digest" }
+      },
+      "required": ["schemaVersion", "conformanceId", "hostFamily", "status", "reasonCodes", "hostProfile", "decision", "normalizedDecisionDigest", "digest"]
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "adapter": { "$ref": "#/$defs/adapter" },
+        "projection": { "$ref": "#/$defs/projection" },
+        "digest": { "$ref": "#/$defs/digest" }
+      },
+      "required": ["adapter", "projection", "digest"]
+    },
+    "matrix": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "sdkId": { "const": "eternities-godskill-adapter-sdk-v1" },
+        "protocolId": { "const": "eternities-godskill-protocol-v1" },
+        "protocolVersion": { "const": 1 },
+        "matrixId": { "$ref": "#/$defs/identifier" },
+        "protocolReceiptDigest": { "$ref": "#/$defs/digest" },
+        "packageReceiptDigest": { "$ref": "#/$defs/digest" },
+        "packageDigest": { "$ref": "#/$defs/digest" },
+        "capabilityId": { "$ref": "#/$defs/identifier" },
+        "capabilityVersion": { "type": "integer", "minimum": 1 },
+        "missionId": { "$ref": "#/$defs/identifier" },
+        "objectiveDigest": { "$ref": "#/$defs/digest" },
+        "requestedEffects": { "type": "array", "minItems": 1, "maxItems": 5, "uniqueItems": true, "items": { "$ref": "#/$defs/effect" } },
+        "adapterIds": { "type": "array", "minItems": 1, "maxItems": 32, "uniqueItems": true, "items": { "$ref": "#/$defs/identifier" } },
+        "hostFamilies": { "type": "array", "minItems": 1, "maxItems": 32, "uniqueItems": true, "items": { "$ref": "#/$defs/hostFamily" } },
+        "entries": { "type": "array", "minItems": 1, "maxItems": 32, "items": { "$ref": "#/$defs/entry" } },
+        "status": { "type": "string", "enum": ["equivalent", "mixed", "unsupported"] },
+        "semanticDecision": { "anyOf": [{ "$ref": "#/$defs/decision" }, { "type": "null" }] },
+        "normalizedDecisionDigest": { "anyOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+        "digest": { "$ref": "#/$defs/digest" }
+      },
+      "required": ["schemaVersion", "sdkId", "protocolId", "protocolVersion", "matrixId", "protocolReceiptDigest", "packageReceiptDigest", "packageDigest", "capabilityId", "capabilityVersion", "missionId", "objectiveDigest", "requestedEffects", "adapterIds", "hostFamilies", "entries", "status", "semanticDecision", "normalizedDecisionDigest", "digest"]
+    }
+  }
+}

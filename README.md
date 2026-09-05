@@ -166,6 +166,28 @@ one documented environment skip and zero failures. this proves bounded
 metadata conformance only, not live host adoption, model equivalence, provider
 quality, or production readiness.
 
+## provider-neutral adapter sdk v1
+
+the opt-in adapter sdk adds a small universal contract above the conformance
+harness. each adapter declares a closed, digest-bound translation envelope for
+one host family, then projects a digest-only mission through the certified
+conformance rules. a capability matrix compares those projections and reports
+`equivalent`, `mixed`, or `unsupported`; only the equivalent case carries a
+shared semantic decision.
+
+the sdk preserves host authority intersection, rejects raw prompts, mission
+text, artifacts, responses, credentials, private keys, functions, and unknown
+fields, and remains outside the default package export surface. it does not
+call providers, load skill bodies, execute package source, select models, alter
+routing, enable hosts, or perform external writes.
+
+rebuild the inert reference matrix with
+`node scripts\build-godskill-adapter-sdk-v1.mjs`. exact roots, fixture, schema,
+runtime, implementation bytes, and proof limits are in
+`receipts\godskill-adapter-sdk-v1.json`. this proves local declarative adapter
+and matrix conformance only, not live host adoption, model or provider
+equivalence, tool security, or production readiness.
+
 ## sealed local routing executable
 
 `scripts\routing.mjs` is the receipt-bound file transport for hosts that need
