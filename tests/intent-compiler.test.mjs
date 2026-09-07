@@ -76,14 +76,14 @@ function syntheticCard({ id, family, intent, provides }) {
 
 const localSchedulingText = "Select the maximum-total-weight compatible subset of the supplied jobs. Produce one scheduling result";
 
-test("local scheduling without exclusion wording should not require external-read", {
-  todo: "Separate ranking defect: generic overlap selects Hephaestus; do not bypass its authority requirements",
-}, async () => {
+test("local scheduling without exclusion wording reports an uncovered intent", async () => {
   const result = compileIntent({ cards: await cards(), request: request(localSchedulingText, {
     context: context({ permittedEffects: ["local-read"], availableAuthority: ["local-read"] }),
   }) });
   assert.deepEqual(result.requestedEffects, ["local-read"]);
   assert.ok(!result.unresolvedDecisions.includes("authority:external-read"));
+  assert.deepEqual(result.envelope.candidateFamilies, []);
+  assert.ok(result.unresolvedDecisions.includes("intent-not-understood"));
 });
 
 for (const exclusion of [
@@ -102,8 +102,7 @@ for (const exclusion of [
     assert.deepEqual(result.requestedEffects, ["local-read"]);
     assert.deepEqual(result.candidateScores, baseline.candidateScores);
     assert.deepEqual(result.unresolvedDecisions, baseline.unresolvedDecisions);
-    // The unrelated selected-card authority requirement must not be bypassed.
-    assert.ok(result.unresolvedDecisions.includes("authority:external-read"));
+    assert.ok(result.unresolvedDecisions.includes("intent-not-understood"));
     assert.deepEqual(result.suppliedAuthority, ["local-read"]);
     assert.equal(result.envelope.outcome, `${localSchedulingText}, ${exclusion}.`);
   });

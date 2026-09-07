@@ -10,7 +10,7 @@ import { searchWave2SemanticAtlas } from "./quarry-atlas.mjs";
 const STOP_WORDS = new Set([
   "a", "about", "after", "all", "an", "and", "anything", "as", "at", "be",
   "been", "before", "but", "by", "can", "do", "for", "from", "have", "how",
-  "i", "in", "into", "is", "it", "its", "me", "my", "of", "on", "or",
+  "i", "in", "into", "is", "it", "its", "me", "my", "of", "on", "one", "or",
   "our", "please", "so", "some", "that", "the", "their", "them", "these",
   "this", "those", "through", "to", "turn", "up", "us", "we", "while",
   "with", "without", "you", "your",
@@ -27,6 +27,8 @@ const EXTERNAL_WRITE_WORDS = new Set([
   "buy", "deploy", "email", "message", "notify", "post", "publish", "purchase",
   "send", "spend", "submit", "upload",
 ]);
+
+const MINIMUM_INTENT_SUPPORT = 12;
 
 function lexicalCompare(left, right) {
   if (left < right) return -1;
@@ -184,9 +186,23 @@ function scoreCard(card, requestTokens, plain) {
     const current = byEvidence.get(entry.evidence);
     if (current === undefined || entry.weight > current) byEvidence.set(entry.evidence, entry.weight);
   }
+  const byToken = new Map();
+  let intentSupport = 0;
+  for (const [evidence, weight] of byEvidence) {
+    if (weight < 0) continue;
+    if (evidence.startsWith("intent-hint:")) {
+      intentSupport += weight;
+      continue;
+    }
+    const token = evidence.slice(evidence.indexOf(":") + 1);
+    byToken.set(token, Math.max(byToken.get(token) ?? 0, weight));
+  }
   return {
     id: card.id,
     score: [...byEvidence.values()].reduce((sum, value) => sum + value, 0),
+    // Admission needs independent positive support, not repeated metadata words.
+    // Keep the established ranking scale and negative penalties after admission.
+    independentSupport: [...byToken.values()].reduce((sum, value) => sum + value, intentSupport),
     evidence: sorted([...byEvidence.keys()]),
   };
 }
@@ -382,7 +398,11 @@ export function compileIntent({ request, cards }) {
   const requestTokens = tokens(intentText);
   const requestPlain = plainText(intentText);
   const scored = values.map((card) => scoreCard(card, requestTokens, requestPlain)).sort(compareScores);
-  const meaningful = scored.filter(({ score }) => score >= 12).slice(0, 8);
+  const meaningful = scored
+    .filter(({ score, independentSupport }) =>
+      score >= MINIMUM_INTENT_SUPPORT && independentSupport >= MINIMUM_INTENT_SUPPORT)
+    .slice(0, 8)
+    .map(({ independentSupport, ...score }) => score);
   const byId = new Map(values.map((card) => [card.id, card]));
   const proposal = natural.proposal === undefined
     ? null
