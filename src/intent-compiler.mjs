@@ -81,6 +81,26 @@ function plainText(text) {
   return text.normalize("NFKD").toLowerCase().replace(/[^a-z0-9\s]+/g, " ");
 }
 
+function omitExplicitExternalExclusions(text) {
+  // Only recognize a bounded noun-list grammar. Preserve uncertain/double
+  // negation, and never let one excluded mention cancel another occurrence.
+  const item = "(?:any\\s+)?(?:tools?|network\\s+access|browsing)";
+  const list = `(?:${item}(?:\\s*,\\s*${item}){0,3}\\s*,?\\s+(?:and|or)\\s+)?`;
+  const exclusion = new RegExp(
+    `\\b(?:without|no)\\s+(?:any\\s+)?${list}external\\s+(?:actions?|changes?|mutations?)\\b`,
+    "gi",
+  );
+  return text.replace(exclusion, (match, offset) => {
+    const suffix = text.slice(offset + match.length);
+    // A qualifier/continuation is not an unconditional prohibition. Only
+    // accept a terminal clause; comma continuations remain conservative too.
+    if (!/^\s*(?:[.!?;:\n]|$)/.test(suffix)) return match;
+    const prefix = text.slice(0, offset).split(/[,.!?;:\n]/).at(-1);
+    if (/\b(?:not|never|no|without|cannot|\w+n['’]t)\b/i.test(prefix)) return match;
+    return " ";
+  });
+}
+
 function actionNegated(plain, word) {
   const action = `\\b${word}\\w*\\b`;
   const reversal = new RegExp(
@@ -207,8 +227,7 @@ function inferRequestedEffects(text) {
   ];
   const productionMutation = /\b(?:production|live)\b/.test(plain) &&
     productionMutationWords.some((token) => requestTokens.has(stem(token)) && !negated(token));
-  const explicitExternalChange = /\bexternal\s+(?:action|change|mutation)s?\b/.test(plain) &&
-    !/\bwithout\s+external\s+(?:action|change|mutation)s?\b/.test(plain);
+  const explicitExternalChange = /\bexternal\s+(?:action|change|mutation)s?\b/.test(plain);
   if (
     [...EXTERNAL_WRITE_WORDS].some((token) => requestTokens.has(stem(token)) && !negated(token)) ||
     publicationRequested(plain) ||
@@ -359,8 +378,9 @@ export function compileIntent({ request, cards }) {
   const natural = validateNaturalRequest(request);
   if (!Array.isArray(cards)) throw new TypeError("cards must be an array");
   const values = cards.map(validateRoutingCard).sort((left, right) => lexicalCompare(left.id, right.id));
-  const requestTokens = tokens(natural.text);
-  const requestPlain = plainText(natural.text);
+  const intentText = omitExplicitExternalExclusions(natural.text);
+  const requestTokens = tokens(intentText);
+  const requestPlain = plainText(intentText);
   const scored = values.map((card) => scoreCard(card, requestTokens, requestPlain)).sort(compareScores);
   const meaningful = scored.filter(({ score }) => score >= 12).slice(0, 8);
   const byId = new Map(values.map((card) => [card.id, card]));
@@ -384,7 +404,7 @@ export function compileIntent({ request, cards }) {
     Math.abs(capabilityEvidenceCount(meaningful[0]) - capabilityEvidenceCount(meaningful[1])) >= 1
     ? byId.get(capabilityPreferredScore.id)
     : null;
-  const broadAmbiguity = acceptedProposalIds.length === 0 && broadDomainCount(natural.text) >= 3;
+  const broadAmbiguity = acceptedProposalIds.length === 0 && broadDomainCount(intentText) >= 3;
   const forgeSignals = ["implementation", "integration", "review", "test", "verification"]
     .filter((signal) => new Set(requestTokens).has(stem(signal))).length;
   const resolvedEngineeringCoordination = forgeSignals >= 3;
@@ -412,14 +432,14 @@ export function compileIntent({ request, cards }) {
         : [capabilityEvidenceLead ?? byId.get(meaningful[0].id)];
 
   const requestedEffects = sorted([
-    ...inferRequestedEffects(natural.text),
+    ...inferRequestedEffects(intentText),
     ...(proposal?.requestedEffects ?? []),
   ]);
   const unresolvedDecisions = sorted([
     ...(selectedCards.length === 0 ? ["intent-not-understood"] : []),
     ...(ambiguous ? ["intent-ambiguous"] : []),
     ...consequentialDecisions(
-      natural.text,
+      intentText,
       requestedEffects,
       natural.context,
       selectedCards,

@@ -74,6 +74,104 @@ function syntheticCard({ id, family, intent, provides }) {
   };
 }
 
+const localSchedulingText = "Select the maximum-total-weight compatible subset of the supplied jobs. Produce one scheduling result";
+
+test("local scheduling without exclusion wording should not require external-read", {
+  todo: "Separate ranking defect: generic overlap selects Hephaestus; do not bypass its authority requirements",
+}, async () => {
+  const result = compileIntent({ cards: await cards(), request: request(localSchedulingText, {
+    context: context({ permittedEffects: ["local-read"], availableAuthority: ["local-read"] }),
+  }) });
+  assert.deepEqual(result.requestedEffects, ["local-read"]);
+  assert.ok(!result.unresolvedDecisions.includes("authority:external-read"));
+});
+
+for (const exclusion of [
+  "without external actions",
+  "without tools or external actions",
+  "without tools and external actions",
+  "without tools, network access, or external actions",
+  "without any tools or external mutations",
+  "no tools or external changes",
+]) {
+  test(`external exclusion is neither an effect nor positive routing evidence: ${exclusion}`, async () => {
+    const values = await cards();
+    const localContext = context({ permittedEffects: ["local-read"], availableAuthority: ["local-read"] });
+    const baseline = compileIntent({ request: request(localSchedulingText, { context: localContext }), cards: values });
+    const result = compileIntent({ request: request(`${localSchedulingText}, ${exclusion}.`, { context: localContext }), cards: values });
+    assert.deepEqual(result.requestedEffects, ["local-read"]);
+    assert.deepEqual(result.candidateScores, baseline.candidateScores);
+    assert.deepEqual(result.unresolvedDecisions, baseline.unresolvedDecisions);
+    // The unrelated selected-card authority requirement must not be bypassed.
+    assert.ok(result.unresolvedDecisions.includes("authority:external-read"));
+    assert.deepEqual(result.suppliedAuthority, ["local-read"]);
+    assert.equal(result.envelope.outcome, `${localSchedulingText}, ${exclusion}.`);
+  });
+}
+
+for (const text of [
+  "Take external actions without tools or external actions.",
+  "Take external actions first. Finish without external actions.",
+  "Start without external actions; then take external actions.",
+  "Without tools or external actions for the first step. Then take external actions.",
+  "Without tools or external actions for the first step, but take external actions afterward.",
+  "Not without tools or external actions.",
+  "Never without external actions.",
+  "Don't proceed without tools or external actions.",
+  "Cannot proceed without external actions.",
+  "No tools, external actions are permitted.",
+  "Produce one scheduling result without external actions unless necessary.",
+  "Produce one scheduling result without tools or external actions if necessary.",
+  "Produce one scheduling result without external actions, except when needed.",
+  "Not only without external actions but with external changes.",
+  "Without collecting private records and external actions.",
+]) {
+  test(`positive or unresolved external mention remains fail-closed: ${text}`, async () => {
+    const result = compileIntent({ cards: await cards(), request: request(text, {
+      context: context({ permittedEffects: ["local-read"], availableAuthority: ["local-read"] }),
+    }) });
+    assert.ok(result.requestedEffects.includes("external-write"));
+    assert.ok(result.unresolvedDecisions.includes("authority:external-write"));
+    assert.ok(result.unresolvedDecisions.includes("effect-authority:external-write"));
+  });
+}
+
+test("unrelated negation in a preceding clause does not reverse an external exclusion", async () => {
+  const result = compileIntent({ cards: await cards(), request: request(
+    `${localSchedulingText} with no local changes, without external actions.`,
+    { context: context({ permittedEffects: ["local-read"], availableAuthority: ["local-read"] }) },
+  ) });
+  assert.deepEqual(result.requestedEffects, ["local-read"]);
+  assert.ok(result.candidateScores.every(row => !row.evidence.includes("example-token:external")));
+});
+
+test("an external exclusion does not erase a separate positive publication or its authority checks", async () => {
+  const result = compileIntent({ cards: await cards(), request: request(
+    "Compute without tools or external actions; publish the result.",
+    { context: context({ permittedEffects: ["local-read"], availableAuthority: ["local-read"] }) },
+  ) });
+  assert.ok(result.requestedEffects.includes("external-write"));
+  assert.ok(result.unresolvedDecisions.includes("authority:publication-authority"));
+  assert.ok(result.unresolvedDecisions.includes("effect-authority:external-write"));
+});
+
+test("external exclusions do not erase proposed effects or supplied decision requirements", async () => {
+  const mission = request(`${localSchedulingText}, without tools or external actions.`, {
+    context: context({ permittedEffects: ["local-read"], availableAuthority: ["local-read"] }),
+  });
+  mission.proposal = {
+    schemaVersion: 1,
+    candidateIds: ["eternities-hephaestus"],
+    requiredCapabilities: ["model-selection"],
+    requestedEffects: ["external-write"],
+    unresolvedDecisions: ["explicit-review-required"],
+  };
+  const result = compileIntent({ cards: await cards(), request: mission });
+  assert.ok(result.requestedEffects.includes("external-write"));
+  assert.ok(result.unresolvedDecisions.includes("effect-authority:external-write"));
+  assert.ok(result.unresolvedDecisions.includes("explicit-review-required"));
+});
+
 const positiveCases = [
   [
     "eternities-architect",
