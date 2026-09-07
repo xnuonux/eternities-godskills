@@ -124,20 +124,47 @@ function changeRequestsMutation(plain) {
 }
 
 function explicitLocalArtifactRequested(text) {
-  // Recognize direct filesystem imperatives, not every use of "write" or
-  // "create". Discussion prefixes and quoted/code examples remain outside it.
-  const clauses = text.replace(/```[\s\S]*?```/g, " ")
+  // Mask quoted operands before clause splitting, so quoted prose cannot turn
+  // into an imperative and filenames can retain spaces or sentence punctuation.
+  let prefix = "__artifact_literal_";
+  while (text.includes(prefix)) prefix += "_";
+  const literals = new Map();
+  const masked = text.replace(/```[\s\S]*?```/g, " ")
+    .replace(/(?<![a-z0-9])(["'`])([\s\S]*?)(?<!\\)\1(?![a-z0-9])/gi, (match, quote, body) => {
+      const token = `${prefix}${literals.size}__`;
+      literals.set(token, body);
+      return token;
+    });
+  const actionPattern = /^(?:(?:then|please)\s+|(?:can|could|would|will)\s+you\s+(?:please\s+)?|(?:do not|don't)\s+(?:forget|fail|neglect)\s+to\s+)*(?:create|write|save|generate|emit|make)\s+/i;
+  const artifactTarget = value => {
+    const target = value
+      .replace(/^(?:it|this|that|(?:the\s+)?(?:content|output))\s+(?:as|to|into)\s+/i, "")
+      .replace(/^(?:(?:a|an|the|new|local)\s+){0,3}/i, "");
+    const fileNoun = /^(?:(?!(?:for|to|of|about|how|that|which|with|without)\b)[a-z0-9-]+\s+){0,3}(?:files?|folders?|director(?:y|ies))(?=\s+(?:named|called|at|under|in|with|containing|for|to)\b|[,.!?]|$)/i;
+    const first = target.split(/\s/)[0];
+    const literal = literals.get(first) ?? literals.get(first.replace(/[,.!?]$/, ""));
+    return fileNoun.test(target) || (literal !== undefined
+      ? /\.[a-z][a-z0-9]{0,11}$/i.test(literal)
+      : /^[^"'`\s<>]+\.[a-z][a-z0-9]{0,11}(?=\s|[,.!?;]|$)/i.test(target));
+  };
+  const clauses = masked
     .split(/;\s*|\r?\n|(?<=[.!?])\s+|,\s*(?:and\s+)?then\s+/i);
-  return clauses.some(value => {
-    const clause = value.trim();
-    const action = /^(?:(?:then|please)\s+|(?:can|could|would|will)\s+you\s+(?:please\s+)?|(?:do not|don't)\s+(?:forget|fail|neglect)\s+to\s+)*(?:create|write|save|generate|emit|make)\s+/i.exec(clause);
-    if (!action) return false;
-    if (/\b(?:in|into)\s+(?:(?:the|your|this)\s+)?(?:chat|response|reply)\b|\b(?:chat|response|reply)\s+only\b/i.test(clause)) return false;
-    if (/\b(?:without\s+(?:(?:saving|writing|creating)\s+(?:(?:a|any)\s+)?files?|touching\s+(?:the\s+)?filesystem)|in\s+memory\s+only)(?=\s*(?:[.!?]|$))/i.test(clause)) return false;
-    if (/\b(?:on|to|in|into)\s+(?:(?:the|a|an)\s+)?(?:remote|external|cloud|github|production)\b/i.test(clause)) return false;
-    const target = clause.slice(action[0].length).replace(/^(?:(?:a|an|the|new|local)\s+){0,3}/i, "");
-    return /^(?:files?|folders?|director(?:y|ies))(?=\s+(?:named|called|at|under|in|with|containing|for|to)\b|[.!?]|$)/i.test(target) ||
-      /^["'`]?[^"'`\s<>]+\.[a-z][a-z0-9]{0,11}["'`]?(?=\s|[,.!?;]|$)/i.test(target);
+  return clauses.some(sentence => {
+    if (!actionPattern.test(sentence.trim())) return false;
+    // Coordination is considered only under an imperative, not a discussion
+    // prefix or an instructional subordinate clause ("instructions on how to").
+    const coordinated = /\b(?:how\s+to|code\s+(?:that|to)|instructions\s+(?:for|to|on))\b/i.test(sentence)
+      ? [sentence]
+      : sentence.split(/\s+and\s+(?:also\s+)?(?=(?:(?:please|then)\s+)?(?:create|write|save|generate|emit|make)\b)/i);
+    return coordinated.some(value => {
+      const clause = value.trim();
+      const action = actionPattern.exec(clause);
+      if (!action) return false;
+      if (/\b(?:in|into)\s+(?:(?:the|your|this)\s+)?(?:chat|response|reply)\b|\b(?:chat|response|reply)\s+only\b/i.test(clause)) return false;
+      if (/\b(?:without\s+(?:(?:saving|writing|creating)\s+(?:(?:a|any)\s+)?files?|touching\s+(?:the\s+)?filesystem)|in\s+memory\s+only)(?=\s*(?:[.!?]|$))/i.test(clause)) return false;
+      if (/\b(?:on|to|in|into)\s+(?:(?:the|a|an)\s+)?(?:remote|external|cloud|github|production)\b/i.test(clause)) return false;
+      return artifactTarget(clause.slice(action[0].length));
+    });
   });
 }
 

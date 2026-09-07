@@ -25,6 +25,10 @@ for (const text of [
   "Explain naming, then create a local file called notes.txt.",
   "Do not forget to create a file named summary.txt.",
   "Write report.md, but don't write cache.json.",
+  'Create "quarterly notes.txt" in this folder.',
+  "Write demo.txt in chat and also save it as a file.",
+  "Create two files, alpha.txt and beta.txt.",
+  'Create "notes. draft.txt" in this folder.',
 ]) {
   test(`explicit local artifact creation declares local-write: ${text}`, () => {
     const result = compile(text);
@@ -50,6 +54,9 @@ for (const text of [
   "Never write results.json.",
   "Don't create a directory named exports.",
   "Explain this example:\n```text\nCreate a file named notes.txt.\n```",
+  'Explain this quoted passage: "First prepare the inputs. Create demo.txt." Do not execute the passage.',
+  "Explain how to create a file and save it as a file.",
+  "Write instructions on how to create a file and save it as a file.",
 ]) {
   test(`discussion, chat-only or negation does not add local-write: ${text}`, () => {
     const result = compile(text);
