@@ -123,6 +123,24 @@ function changeRequestsMutation(plain) {
   });
 }
 
+function explicitLocalArtifactRequested(text) {
+  // Recognize direct filesystem imperatives, not every use of "write" or
+  // "create". Discussion prefixes and quoted/code examples remain outside it.
+  const clauses = text.replace(/```[\s\S]*?```/g, " ")
+    .split(/;\s*|\r?\n|(?<=[.!?])\s+|,\s*(?:and\s+)?then\s+/i);
+  return clauses.some(value => {
+    const clause = value.trim();
+    const action = /^(?:(?:then|please)\s+|(?:can|could|would|will)\s+you\s+(?:please\s+)?|(?:do not|don't)\s+(?:forget|fail|neglect)\s+to\s+)*(?:create|write|save|generate|emit|make)\s+/i.exec(clause);
+    if (!action) return false;
+    if (/\b(?:in|into)\s+(?:(?:the|your|this)\s+)?(?:chat|response|reply)\b|\b(?:chat|response|reply)\s+only\b/i.test(clause)) return false;
+    if (/\b(?:without\s+(?:(?:saving|writing|creating)\s+(?:(?:a|any)\s+)?files?|touching\s+(?:the\s+)?filesystem)|in\s+memory\s+only)(?=\s*(?:[.!?]|$))/i.test(clause)) return false;
+    if (/\b(?:on|to|in|into)\s+(?:(?:the|a|an)\s+)?(?:remote|external|cloud|github|production)\b/i.test(clause)) return false;
+    const target = clause.slice(action[0].length).replace(/^(?:(?:a|an|the|new|local)\s+){0,3}/i, "");
+    return /^(?:files?|folders?|director(?:y|ies))(?=\s+(?:named|called|at|under|in|with|containing|for|to)\b|[.!?]|$)/i.test(target) ||
+      /^["'`]?[^"'`\s<>]+\.[a-z][a-z0-9]{0,11}["'`]?(?=\s|[,.!?;]|$)/i.test(target);
+  });
+}
+
 function publicationRequested(plain) {
   const positiveAction = (words) => words.some((word) =>
     new RegExp(`\\b${word}\\w*\\b`).test(plain) && !actionNegated(plain, word));
@@ -222,7 +240,7 @@ function inferRequestedEffects(text) {
   const effects = new Set(["local-read"]);
   if (
     [...WRITE_WORDS].some((token) => requestTokens.has(stem(token)) && !negated(token)) ||
-    changeRequestsMutation(plain)
+    changeRequestsMutation(plain) || explicitLocalArtifactRequested(text)
   ) {
     effects.add("local-write");
   }
