@@ -1,0 +1,400 @@
+{
+  "status": "exploratory-reproduction-not-benchmark",
+  "inspectedAt": "2026-09-06",
+  "sourceCommit": "3501f20baedc95a7ec25a6535278f463b7f98c19",
+  "module": "src/intent-runtime.mjs",
+  "cardsPath": "artifacts/routing/cards.jsonl",
+  "providerCalls": 0,
+  "notes": [
+    "First six requests are exploratory product probes, not held-out qualification trials.",
+    "Last two requests isolate single-word effects in the first and fourth probes.",
+    "No activation policy, method promotion, or authority changed."
+  ],
+  "probes": [
+    {
+      "request": {
+        "schemaVersion": 1,
+        "requestId": "audit-0",
+        "text": "fix the client so HTTP 429 respects Retry-After, never duplicates a payment, and stops after five attempts",
+        "context": {
+          "permittedEffects": [
+            "local-read",
+            "local-write"
+          ],
+          "availableAuthority": [
+            "local-read",
+            "local-write",
+            "repository-write"
+          ],
+          "availablePreconditions": [
+            "repository-present",
+            "settled-outcome",
+            "settled-requirement"
+          ],
+          "forbiddenCapabilities": [],
+          "maximumRisk": "moderate",
+          "minimumEvidenceConfidence": "verified",
+          "contextBudget": 4000,
+          "maxCompositionSize": 3
+        }
+      },
+      "observed": {
+        "status": "selected",
+        "selected": [
+          "eternities-agora"
+        ],
+        "unresolved": [],
+        "candidates": [
+          {
+            "id": "eternities-agora",
+            "score": 21,
+            "evidence": [
+              "capability-token:client",
+              "example-token:client",
+              "family-token:client",
+              "intent-token:client"
+            ]
+          }
+        ],
+        "requestedEffects": [
+          "local-read",
+          "local-write"
+        ]
+      }
+    },
+    {
+      "request": {
+        "schemaVersion": 1,
+        "requestId": "audit-1",
+        "text": "find why our app crashes when a connection drops, then repair it and test the failure",
+        "context": {
+          "permittedEffects": [
+            "local-read",
+            "local-write"
+          ],
+          "availableAuthority": [
+            "local-read",
+            "local-write",
+            "repository-write"
+          ],
+          "availablePreconditions": [
+            "repository-present",
+            "settled-outcome",
+            "settled-requirement"
+          ],
+          "forbiddenCapabilities": [],
+          "maximumRisk": "moderate",
+          "minimumEvidenceConfidence": "verified",
+          "contextBudget": 4000,
+          "maxCompositionSize": 3
+        }
+      },
+      "observed": {
+        "status": "selected",
+        "selected": [
+          "eternities-forge"
+        ],
+        "unresolved": [],
+        "candidates": [
+          {
+            "id": "eternities-forge",
+            "score": 15,
+            "evidence": [
+              "capability-token:test",
+              "example-token:repair",
+              "example-token:test"
+            ]
+          }
+        ],
+        "requestedEffects": [
+          "local-read"
+        ]
+      }
+    },
+    {
+      "request": {
+        "schemaVersion": 1,
+        "requestId": "audit-2",
+        "text": "design a playable puzzle garden with strange plants and one delightful repeatable interaction",
+        "context": {
+          "permittedEffects": [
+            "local-read",
+            "local-write"
+          ],
+          "availableAuthority": [
+            "local-read",
+            "local-write",
+            "repository-write"
+          ],
+          "availablePreconditions": [
+            "repository-present",
+            "settled-outcome",
+            "settled-requirement"
+          ],
+          "forbiddenCapabilities": [],
+          "maximumRisk": "moderate",
+          "minimumEvidenceConfidence": "verified",
+          "contextBudget": 4000,
+          "maxCompositionSize": 3
+        }
+      },
+      "observed": {
+        "status": "selected",
+        "selected": [
+          "eternities-arcadia"
+        ],
+        "unresolved": [],
+        "candidates": [
+          {
+            "id": "eternities-arcadia",
+            "score": 27,
+            "evidence": [
+              "example-token:design",
+              "example-token:one",
+              "example-token:playable",
+              "family-token:design",
+              "intent-token:one",
+              "intent-token:playable"
+            ]
+          },
+          {
+            "id": "eternities-prometheus",
+            "score": 19,
+            "evidence": [
+              "capability-token:design",
+              "example-token:design",
+              "intent-token:one",
+              "success-token:one"
+            ]
+          }
+        ],
+        "requestedEffects": [
+          "local-read"
+        ]
+      }
+    },
+    {
+      "request": {
+        "schemaVersion": 1,
+        "requestId": "audit-3",
+        "text": "check this sales page for unsupported promises and make the message more persuasive without inventing facts",
+        "context": {
+          "permittedEffects": [
+            "local-read",
+            "local-write"
+          ],
+          "availableAuthority": [
+            "local-read",
+            "local-write",
+            "repository-write"
+          ],
+          "availablePreconditions": [
+            "repository-present",
+            "settled-outcome",
+            "settled-requirement"
+          ],
+          "forbiddenCapabilities": [],
+          "maximumRisk": "moderate",
+          "minimumEvidenceConfidence": "verified",
+          "contextBudget": 4000,
+          "maxCompositionSize": 3
+        }
+      },
+      "observed": {
+        "status": "needs-decision",
+        "selected": [],
+        "unresolved": [
+          "authority:external-write",
+          "authority:human-review-for-deferred-routes",
+          "authority:rights-and-consent-when-applicable",
+          "effect-authority:external-write",
+          "unsupported-effect:external-write"
+        ],
+        "candidates": [
+          {
+            "id": "eternities-orpheus",
+            "score": 13,
+            "evidence": [
+              "example-token:check",
+              "example-token:invent",
+              "intent-token:check"
+            ]
+          }
+        ],
+        "requestedEffects": [
+          "external-write",
+          "local-read"
+        ]
+      }
+    },
+    {
+      "request": {
+        "schemaVersion": 1,
+        "requestId": "audit-4",
+        "text": "validate the heat simulation against units, energy conservation and a known analytic solution",
+        "context": {
+          "permittedEffects": [
+            "local-read",
+            "local-write"
+          ],
+          "availableAuthority": [
+            "local-read",
+            "local-write",
+            "repository-write"
+          ],
+          "availablePreconditions": [
+            "repository-present",
+            "settled-outcome",
+            "settled-requirement"
+          ],
+          "forbiddenCapabilities": [],
+          "maximumRisk": "moderate",
+          "minimumEvidenceConfidence": "verified",
+          "contextBudget": 4000,
+          "maxCompositionSize": 3
+        }
+      },
+      "observed": {
+        "status": "needs-decision",
+        "selected": [],
+        "unresolved": [
+          "intent-not-understood"
+        ],
+        "candidates": [],
+        "requestedEffects": [
+          "local-read"
+        ]
+      }
+    },
+    {
+      "request": {
+        "schemaVersion": 1,
+        "requestId": "audit-5",
+        "text": "hello",
+        "context": {
+          "permittedEffects": [
+            "local-read",
+            "local-write"
+          ],
+          "availableAuthority": [
+            "local-read",
+            "local-write",
+            "repository-write"
+          ],
+          "availablePreconditions": [
+            "repository-present",
+            "settled-outcome",
+            "settled-requirement"
+          ],
+          "forbiddenCapabilities": [],
+          "maximumRisk": "moderate",
+          "minimumEvidenceConfidence": "verified",
+          "contextBudget": 4000,
+          "maxCompositionSize": 3
+        }
+      },
+      "observed": {
+        "status": "needs-decision",
+        "selected": [],
+        "unresolved": [
+          "intent-not-understood"
+        ],
+        "candidates": [],
+        "requestedEffects": [
+          "local-read"
+        ]
+      }
+    },
+    {
+      "request": {
+        "schemaVersion": 1,
+        "requestId": "audit-6",
+        "text": "fix the program so HTTP 429 respects Retry-After, never duplicates a payment, and stops after five attempts",
+        "context": {
+          "permittedEffects": [
+            "local-read",
+            "local-write"
+          ],
+          "availableAuthority": [
+            "local-read",
+            "local-write",
+            "repository-write"
+          ],
+          "availablePreconditions": [
+            "repository-present",
+            "settled-outcome",
+            "settled-requirement"
+          ],
+          "forbiddenCapabilities": [],
+          "maximumRisk": "moderate",
+          "minimumEvidenceConfidence": "verified",
+          "contextBudget": 4000,
+          "maxCompositionSize": 3
+        }
+      },
+      "observed": {
+        "status": "needs-decision",
+        "selected": [],
+        "unresolved": [
+          "intent-not-understood"
+        ],
+        "candidates": [],
+        "requestedEffects": [
+          "local-read",
+          "local-write"
+        ]
+      }
+    },
+    {
+      "request": {
+        "schemaVersion": 1,
+        "requestId": "audit-7",
+        "text": "check this sales page for unsupported promises and make the wording more persuasive without inventing facts",
+        "context": {
+          "permittedEffects": [
+            "local-read",
+            "local-write"
+          ],
+          "availableAuthority": [
+            "local-read",
+            "local-write",
+            "repository-write"
+          ],
+          "availablePreconditions": [
+            "repository-present",
+            "settled-outcome",
+            "settled-requirement"
+          ],
+          "forbiddenCapabilities": [],
+          "maximumRisk": "moderate",
+          "minimumEvidenceConfidence": "verified",
+          "contextBudget": 4000,
+          "maxCompositionSize": 3
+        }
+      },
+      "observed": {
+        "status": "needs-decision",
+        "selected": [],
+        "unresolved": [
+          "authority:human-review-for-deferred-routes",
+          "authority:rights-and-consent-when-applicable"
+        ],
+        "candidates": [
+          {
+            "id": "eternities-orpheus",
+            "score": 17,
+            "evidence": [
+              "example-token:check",
+              "example-token:invent",
+              "example-token:word",
+              "intent-token:check"
+            ]
+          }
+        ],
+        "requestedEffects": [
+          "local-read"
+        ]
+      }
+    }
+  ]
+}
