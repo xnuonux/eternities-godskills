@@ -56,4 +56,13 @@ if (canonical(result) !== canonical(expected)) throw new Error('effect-only resu
 
 - [x] Send pure API, exact compiler/envelope/route outputs and commit to the existing Godagents owner for independent vector comparison and review. Do not spawn or dispatch inference.
 - [x] Verify legacy receipt tests and unchanged tracked v1 bytes. Run full suite only at final bounded integration gate; report the existing global-instruction wording failure separately if still present, never edit around it.
-- [ ] Commit/push only the isolated consumer branch after review fixes and record the disposition. Host wiring, new executable trust-root certification and pin adoption remain separate coordinated milestones. Do not claim end-to-end production integration or arbitrary prose understanding.
+- [x] Commit/push only the isolated consumer branch after review fixes and record the disposition. Host wiring, new executable trust-root certification and pin adoption remain separate coordinated milestones. Do not claim end-to-end production integration or arbitrary prose understanding.
+
+## Subsequent coordinated bounded milestone
+
+The Godagents owner requested the separate executable source boundary after the
+pure consumer review. The accepted shape, test-first CLI/issuer work, independent
+review, captured evidence and issued structural-only receipt are recorded in
+`docs/audits/2026-09-07-effect-only-executable-v2.md`. It adds no live host adoption
+or v1 changes and does not convert the known-red installed-host wording test into
+a passing release gate. Main integration remains held.

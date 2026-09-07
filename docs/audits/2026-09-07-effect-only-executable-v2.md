@@ -1,7 +1,7 @@
 # Effect-only v2 executable boundary
 
-Status: implementation candidate, structural review and issuance pending.
-No release receipt has been written. No main merge or host pin adoption.
+Status: structural source receipt issued for independently reviewed implementation
+`7342a75f53d763be11fd85d856e38640561a5eca`. No main merge or host pin adoption.
 
 ## Purpose
 
@@ -83,4 +83,47 @@ fixes; the oversized-input test was corrected to use valid bound JSON so it coul
 not pass merely from a parser error, then failed against the unbounded reader.
 The issuer test failed before its module existed. Current targeted candidate:
 88 tests pass, zero failures/skips/TODOs (66 consumer, 14 CLI, 8 source receipt).
-This is not final independent review or a published trust root.
+Final wider candidate run: 931 tests, 929 pass, 1 known installed-host wording
+failure, 1 existing skip, 0 TODOs. The exact reduced summaries are captured under
+`artifacts/effect-only-v2/`; no raw global-instruction dump was copied.
+
+The coordinator compared all 11 implementation, dependency, builder, test and
+vector files against Git objects at the implementation commit: zero mismatches.
+Canonical main and origin/main remain `2ccdacf8ae04aceaff417de7c27fb3885b0bb7b7`.
+## Issuance correction and final disposition
+
+The first issuance attempt correctly stopped before writing a receipt: the real
+Node summary contains a literal `✖ failing tests:` heading, absent from the first
+synthetic fixture. A regression test failed with that actual heading and repeated
+failure name. Commit `7342a75f53d763be11fd85d856e38640561a5eca` ignores only that
+exact heading; failure-name and count checks remain intact. Both logs were freshly
+recaptured on this commit. Old logs remain under `history/f90a6cb-*.log` rather
+than being relabelled as results from newer source.
+
+Final evidence: 89 targeted tests pass; 932 full tests, 930 pass, one known
+installed-host wording failure, one existing skip, zero TODOs. All 11 relevant
+files again matched their Git objects at the corrected implementation commit.
+
+Independent reviewer task `01a04a0c-ae62-7c83-8f77-9d7b1614f390` reviewed the full
+new CLI and builder at f90a6cb and ran all 22 then-focused tests, then reviewed the
+exact parser delta and ran all nine issuer tests at 7342a75. Its disposition for
+the corrected implementation is `approved-structural-scope`, not deployment or
+main-release approval. It independently inspected both captured summaries.
+
+After those gates, two builds returned identical receipts; the written artifact
+then reproduced exact canonical values and formatted file bytes on a third build.
+
+- Receipt: `receipts/effect-only-executable-v2.json`
+- Status: `verified-structural-only`
+- Logical digest: `03fe45aeb133b715354174867a05781fac9b3cfa5353edf020cecdafa1a88a73`
+- File SHA-256: `f4baee63d9d802f7a985b5570deb81bbf174dbad3d7aea3d3aba67d546851e04`
+- Entrypoint SHA-256: `12ae69b74a412ba711a1ae630eec0fc3bb3181a4a18df1810857a4e49df1ab3b`
+- Targeted log SHA-256: `dfd908f2f3dbf5f703336763e0cb7f57b36e7c6d56133c026448f1aa92819c42`
+- Full log SHA-256: `9fe45b47177be480a4ed940bae8095b6d30c5db521f3bdcfcc23c4ebd8cb8066`
+
+This receipt preserves the full-suite failure explicitly. The branch remains
+held for the separate installed-host policy-test reconciliation and coordinated
+host integration. No existing v1 source, receipts, pins or experimental heuristic
+branches were changed. Hard-link publication is not an fsync-backed durability
+guarantee: a host must reconcile uncertain post-publication outcomes and never
+blindly retry after cleanup or transport failure.
