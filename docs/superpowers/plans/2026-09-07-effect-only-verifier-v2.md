@@ -24,20 +24,20 @@
 
 Create `scripts/verify-effect-only-v2.mjs` and `tests/effect-only-verifier-cli.test.mjs`.
 
-- [ ] Write subprocess tests for exact success, exact needs-decision, corrupted input/result/binding, argument closure, input/result size, redaction and unchanged file contents/directory inventory.
+- [x] Write subprocess tests for exact success, exact needs-decision, corrupted input/result/binding, argument closure, input/result size, redaction and unchanged file contents/directory inventory.
 
 ```js
 assert.equal(run(['--request', request, '--expected-source', source, '--result', result]).status, 0);
 assert.deepEqual(await snapshotFiles(), before);
 ```
 
-- [ ] Observe missing implementation failure, then implement only bounded reads and `verifyEffectOnlyV2Result({request,expectedSource,result})`. Catch errors without body/stack disclosure. Retest every named behavior.
+- [x] Observe missing implementation failure, then implement only bounded reads and `verifyEffectOnlyV2Result({request,expectedSource,result})`. Catch errors without body/stack disclosure. Retest every named behavior.
 
 ### Task 2: Separate source receipt and review
 
 Create `scripts/build-effect-only-verifier-receipt.mjs`, `tests/effect-only-verifier-receipt.test.mjs` and evidence/audit files under verifier-specific paths.
 
-- [ ] Write failing tests for exact parent pins, shared-source hash equality, closed verifier source manifest, binding of tests/vectors/captured summaries, unknown failures, source identity and reviewer disposition. Keep old root untouched.
-- [ ] Implement a builder returning a structural-only object, with no publication or adoption. Reuse immutable source-closure machinery and pure canonical hashing. Do not claim builder executes tests or authenticates reviewer origin.
-- [ ] Commit tested source, capture fresh scoped/full test summaries without private body dumps, verify exact Git object membership and obtain existing Godagents owner's independent review before issuance.
-- [ ] Build twice, write only the reviewed receipt, verify exact rebuild, record known full-suite failure honestly, and relay frozen coordinates. Preserve feature branch for coordinated host integration, not silent adoption.
+- [x] Write failing tests for exact parent pins, shared-source hash equality, closed verifier source manifest, binding of tests/vectors/captured summaries, unknown failures, source identity and reviewer disposition. Keep old root untouched.
+- [x] Implement a builder returning a structural-only object, with no publication or adoption. Reuse immutable source-closure machinery and pure canonical hashing. Do not claim builder executes tests or authenticates reviewer origin.
+- [x] Commit tested source, capture fresh scoped/full test summaries without private body dumps, verify exact Git object membership and obtain existing Godagents owner's independent review before issuance.
+- [x] Build twice, write only the reviewed receipt, verify exact rebuild, record known full-suite failure honestly, and relay frozen coordinates. Preserve feature branch for coordinated host integration, not silent adoption.
