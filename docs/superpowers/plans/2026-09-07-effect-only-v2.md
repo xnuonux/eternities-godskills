@@ -28,7 +28,7 @@
 
 **Interfaces:** `compileAndRouteEffectOnlyV2({request, expectedSource}) -> {compilerReceipt, routeReceipt}`; `verifyEffectOnlyV2Result({request, expectedSource, result}) -> result` or throws. No I/O, inference, policy mutation, or native execution.
 
-- [ ] Add the independent synthetic Godagents golden fixture with literal S/producer/A/R pins. Write tests before implementation for the decision table, closed fields, exact source binding, partial intent, no aliasing, v1 separation and forged receipts. Minimal acceptance:
+- [x] Add the independent synthetic Godagents golden fixture with literal S/producer/A/R pins. Write tests before implementation for the decision table, closed fields, exact source binding, partial intent, no aliasing, v1 separation and forged receipts. Minimal acceptance:
 
 ```js
 const result = compileAndRouteEffectOnlyV2(vector);
@@ -38,8 +38,8 @@ assert.deepEqual(result.compilerReceipt.envelope.requiredCapabilities, []);
 assert.equal(result.compilerReceipt.requestDigest, vector.digests.requestDigest);
 ```
 
-- [ ] Run `node --test tests/effect-intent-v2.test.mjs`; confirm the missing implementation failure before adding production code.
-- [ ] Implement exact JSON validation and v1-shaped validation projection only for existing request/context semantics. Generate bindings and sorted policy reasons, then build v2 compiler/envelope/route receipts. Recompute complete expected result to reject extra fields or altered persisted receipts.
+- [x] Run `node --test tests/effect-intent-v2.test.mjs`; confirm the missing implementation failure before adding production code.
+- [x] Implement exact JSON validation and v1-shaped validation projection only for existing request/context semantics. Generate bindings and sorted policy reasons, then build v2 compiler/envelope/route receipts. Recompute complete expected result to reject extra fields or altered persisted receipts.
 
 ```js
 const expected = compileAndRouteEffectOnlyV2({request, expectedSource});
@@ -48,12 +48,12 @@ const expected = compileAndRouteEffectOnlyV2({request, expectedSource});
 if (canonical(result) !== canonical(expected)) throw new Error('effect-only result mismatch');
 ```
 
-- [ ] Run targeted v2 and unchanged v1 contract tests. Review boundary cases and add red-first tests for any confirmed omission.
+- [x] Run targeted v2 and unchanged v1 contract tests. Review boundary cases and add red-first tests for any confirmed omission.
 
 ### Task 2: Interoperability and independent review
 
 **Files:** Create `docs/audits/2026-09-07-effect-only-v2-consumer.md`; update plan checkboxes and golden vector with independently confirmed envelope digest only.
 
-- [ ] Send pure API, exact compiler/envelope/route outputs and commit to the existing Godagents owner for independent vector comparison and review. Do not spawn or dispatch inference.
-- [ ] Verify legacy receipt tests and unchanged tracked v1 bytes. Run full suite only at final bounded integration gate; report the existing global-instruction wording failure separately if still present, never edit around it.
+- [x] Send pure API, exact compiler/envelope/route outputs and commit to the existing Godagents owner for independent vector comparison and review. Do not spawn or dispatch inference.
+- [x] Verify legacy receipt tests and unchanged tracked v1 bytes. Run full suite only at final bounded integration gate; report the existing global-instruction wording failure separately if still present, never edit around it.
 - [ ] Commit/push only the isolated consumer branch after review fixes and record the disposition. Host wiring, new executable trust-root certification and pin adoption remain separate coordinated milestones. Do not claim end-to-end production integration or arbitrary prose understanding.

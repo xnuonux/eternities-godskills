@@ -7,6 +7,7 @@ import { validateNaturalRequest } from '../src/intent-contracts.mjs';
 import { validateRequestEnvelope } from '../src/routing-contracts.mjs';
 
 const vector = JSON.parse(readFileSync(new URL('../data/effect-only-golden-vector-v2.json', import.meta.url)));
+const expectedResult = JSON.parse(readFileSync(new URL('../data/effect-only-result-v2.json', import.meta.url)));
 const canonical = (v) => JSON.stringify(v, function (_key, value) {
   return value && !Array.isArray(value) && typeof value === 'object'
     ? Object.fromEntries(Object.keys(value).sort().map(k => [k, value[k]])) : value;
@@ -20,6 +21,12 @@ const bind = request => ({request, expectedSource: {
   producerDescriptorDigest: request.effectAssessment.producerDescriptorDigest,
   requestDigest: hash(request),
 }});
+
+test('independently reviewed full wire vector stays interoperable', () => {
+  assert.deepEqual(compileAndRouteEffectOnlyV2(fresh()), expectedResult);
+  assert.equal(expectedResult.routeReceipt.requestDigest,
+    '314a64cdf75866bb1bce22c4dd11cd727d14b2e4e751a14c93e23e5c8ceb2349');
+});
 
 test('independent host golden input produces understood no-skill receipts with exact acyclic bindings', () => {
   const before = fresh();
