@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { compileIntent } from "../src/intent-compiler.mjs";
+import { compileAndRoute } from "../src/intent-runtime.mjs";
 
 const cards = (await readFile(new URL("../artifacts/routing/cards.jsonl", import.meta.url), "utf8"))
   .trim().split(/\r?\n/).map(JSON.parse);
@@ -85,6 +86,15 @@ for (const [id, text] of [
     assert.equal(result.candidateScores[0].id, id);
     assert.ok(result.envelope.candidateFamilies.includes(cards.find(card => card.id === id).family));
     assert.ok(!result.unresolvedDecisions.includes("intent-not-understood"));
+    const routed = compileAndRoute({ cards, request: {
+      schemaVersion: 1, requestId: "supported-ranking-control", text,
+      context: { ...localContext,
+        permittedEffects: ["external-read", "local-read", "local-write"],
+        availableAuthority: ["external-read", ...localContext.availableAuthority],
+      },
+    } });
+    assert.equal(routed.routeReceipt.status, "selected");
+    assert.ok(routed.routeReceipt.selectedIds.includes(id));
   });
 }
 test("genuine model-runtime selection retains card authority even with external exclusion", () => {
