@@ -5,12 +5,12 @@ receipt changes or consumer pin adoption authorized by this document.
 
 ## Decision
 
-**First evaluate the existing semantic-proposal hook through legitimate,
-source-bound host ingress for known-capability requests.** Keep unknown intent
-explicit and clarify when necessary. Do not create a new Godskills protocol just
-to duplicate this hook, and do not fabricate a skill to make the hook accept an
-effect-only request. An independent effect-only extension is a later decision if
-the pilot demonstrates that the existing coupling prevents required use cases.
+**Revised after cross-repository review:** the known-capability-only pilot cannot
+meet the required understood-but-no-skill task. The nonempty-candidate coupling
+already proves that limitation; no extra pilot is needed to rediscover it.
+Proceed with the [minimal effect-only v2 design](2026-09-07-effect-only-v2-consumer-contract.md),
+not implementation. Keep the existing proposal hook for its valid supported-card
+cases, but do not require or fabricate a card for an effect-only declaration.
 
 ## Inspected Godskills boundaries
 
@@ -49,7 +49,7 @@ That side's host authenticity and migration remain owned by the Godagents task.
 | B. Bounded interpretation producing the existing proposal | Reuses a real Godskills interface; the current host agent can emit a proposal in its normal workflow. No new mandatory model service. | Interpretation is fallible, and the current hook remains coupled to known capabilities and lexical admission. A new interpreter call would add cost and require separate authority. Valid schema/spans do not prove semantics. |
 | C. Clarification or abstention | Preserves authority when consequential effects or task applicability cannot be established. Does not pretend unknown means read-only. | Excessive clarification harms usability. Use a specific unresolved question at the affected action boundary, not a blanket halt for all conversation or a disguised native fallback. |
 
-## Smallest migration to evaluate
+## Limited existing-hook option, not the chosen vertical slice
 
 1. **Host provenance first.** Preserve original natural text. A legitimate host
    request supplies the optional validated proposal; bind it to that request's
@@ -83,11 +83,11 @@ effect can be removed is a separate obligation.
 
 ## Decision limits and next handoff
 
-This is an ingress/provenance pilot design, not approval to activate it. The
-strongest counterargument is that additive proposals retain lexical false
-positives and cannot express uncovered tasks without a capability. Revisit an
-independent versioned effect-declaration contract only if those limitations block
-the pilot's explicit use cases. Do not silently broaden version-1 validation.
+The existing-hook option is a limited diagnostic, not the chosen migration.
+Additive proposals retain lexical false positives and cannot express uncovered
+tasks without a capability. Those limitations already block the required use
+case. The linked v2 draft separates effect knowledge from explicit no-skill
+workflow selection while preserving version-1 validation and source evidence.
 
 The Godagents owner must identify the exact trusted ingress source and envelope
 binding, then both owners can settle the producer/consumer migration and tests.
