@@ -107,3 +107,13 @@ test('unexpected extra dependency is not silently admitted into executable closu
   await writeFile(path.join(input.repositoryRoot,'src/extra.mjs'),'export const surprise = true;\n');
   await assert.rejects(buildEffectOnlyExecutableReceipt(input),/closure/);
 });
+
+test('real Node failure-summary heading and repeated failure name remain valid evidence', async t => {
+  const {buildEffectOnlyExecutableReceipt} = await builder();
+  const input = await fixture(t);
+  const log = path.join(input.repositoryRoot,'artifacts/effect-only-v2/full.log');
+  await writeFile(log,await readFile(log,'utf8')+'✖ failing tests:\n✖ installed Codex routing keeps raw capability as the floor and activation evidence-bound (1ms)\n');
+  const result = await buildEffectOnlyExecutableReceipt(input);
+  assert.equal(result.verification.full.fail,1);
+  assert.equal(result.verification.full.knownFailures.length,1);
+});

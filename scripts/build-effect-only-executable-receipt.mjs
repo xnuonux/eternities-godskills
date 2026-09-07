@@ -39,11 +39,12 @@ async function observedTests(root, mode, sourceCommit) {
   const counts = {};
   const failures = new Set();
   for (const line of lines) {
+    if (line === '✖ failing tests:') continue;
     const match = /^ℹ (tests|pass|fail|skipped|cancelled|todo) (\d+)$/.exec(line);
     if (match) {
       if (Object.hasOwn(counts,match[1])) throw new Error('duplicate test summary count');
       counts[match[1]] = Number(match[2]);
-    } else if (line.startsWith('✖ ') && line !== '✖ failing tests:') {
+    } else if (line.startsWith('✖ ')) {
       const failure = /^✖ (.+) \([0-9.]+ms\)$/.exec(line);
       if (!failure) throw new Error('unsupported failure summary line');
       failures.add(failure[1]);
