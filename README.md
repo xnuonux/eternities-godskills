@@ -13,6 +13,7 @@ proof of improvement, and a skill never grants authority.
 ## start here
 
 - [current state, verified limits, and defects](docs/audits/2026-09-06-product-state.md)
+- [latest interface-refinement outcome and exact evidence](docs/audits/2026-09-08-incident-refinement-closeout.md)
 - [complete current capability directory](docs/capability-directory.md)
 - [finite v1 completion contract and architecture](docs/superpowers/specs/2026-09-06-godskills-v1-completion.md)
 - [first implementation milestone](docs/superpowers/plans/2026-09-06-capability-directory-v1.md)

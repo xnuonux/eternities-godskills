@@ -1,5 +1,9 @@
 # godskills and godagents: product state, 2026-09-06
 
+Later outcome evidence: the [2026-09-08 incident-refinement closeout](2026-09-08-incident-refinement-closeout.md)
+records a negative promotion result for one experimental candidate, with exact
+external artifact hashes. The dated snapshot below remains historical.
+
 ## decision
 
 continue the project, but change the critical path from accumulating certified
