@@ -89,7 +89,8 @@ Terra in three of four user preferences.
 
 ## evidence and development
 
-- [latest starred-repository skill intake and production candidates](docs/quarry-intakes/2026-09-07.md)
+- [latest starred-repository skill intake and production candidates](docs/quarry-intakes/2026-09-13.md)
+- [previous intake, including ECC and broader source packs](docs/quarry-intakes/2026-09-07.md)
 - [visual comparison and activation limits](docs/adaptive-amplification-report.md)
 - [preregistered security trial](docs/adaptive-evidence-v2-report.md)
 - [retrospective evaluator correction](docs/adaptive-evaluator-aegis-v2-shadow-report.md)
