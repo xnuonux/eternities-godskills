@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "protocolId": "eternities-godskills-effect-only-executable-v2",
+  "status": "verified-structural-only",
+  "sourceCommit": "7342a75f53d763be11fd85d856e38640561a5eca",
+  "entrypoint": {
+    "path": "scripts/effect-only-v2.mjs",
+    "sha256": "12ae69b74a412ba711a1ae630eec0fc3bb3181a4a18df1810857a4e49df1ab3b"
+  },
+  "sources": [
+    {
+      "path": "scripts/effect-only-v2.mjs",
+      "sha256": "12ae69b74a412ba711a1ae630eec0fc3bb3181a4a18df1810857a4e49df1ab3b"
+    },
+    {
+      "path": "src/effect-intent-v2.mjs",
+      "sha256": "d0364093f47b5b7f874134c5a24c51c53e5db4c1d53bd7455fe5caaa0fd90cdc"
+    },
+    {
+      "path": "src/intent-contracts.mjs",
+      "sha256": "0a78ae1a36b1e02b94bfd9593e057ed900ec8acbec4d35c5d1c804a5f6b8f6d5"
+    },
+    {
+      "path": "src/io.mjs",
+      "sha256": "48dca2b203947e12ca3d5500b70a25066a8166d86bc2284aaeed6abf622a5c37"
+    },
+    {
+      "path": "src/routing-contracts.mjs",
+      "sha256": "ac4c6812b58fad715c27491e48fc4c8465da048fbdd91d8386fed0987d80373b"
+    }
+  ],
+  "builder": {
+    "path": "scripts/build-effect-only-executable-receipt.mjs",
+    "sha256": "39beca5528cc1354ce55cfb6797946143fc6499aa63365fb4cdc5c4bd6ce75ee"
+  },
+  "tests": [
+    {
+      "path": "tests/effect-intent-v2.test.mjs",
+      "sha256": "87cbddfb384464fc7128a40ed6fd7e14ebc75b1c1bb8bb447d8adc140b3c5cb1"
+    },
+    {
+      "path": "tests/effect-only-v2-cli.test.mjs",
+      "sha256": "c0f8f0066b88bc06b1e52f4785862301d84e4ed44194350a5903fbdffb67154d"
+    },
+    {
+      "path": "tests/effect-only-executable-receipt.test.mjs",
+      "sha256": "39914f924b50701237e9e909034c02e578ece007c59982b314acd056f8e6d0b0"
+    }
+  ],
+  "vectors": [
+    {
+      "role": "input",
+      "path": "data/effect-only-golden-vector-v2.json",
+      "sha256": "55817a3754c4f55247f5dba77a0f4f361bb13a3b90a204c6a05566bc6e872420"
+    },
+    {
+      "role": "result",
+      "path": "data/effect-only-result-v2.json",
+      "sha256": "1ee21038641043ac5e6f796490179021d83ff5c53216957c7113572357467f65"
+    }
+  ],
+  "verification": {
+    "targeted": {
+      "tests": 89,
+      "pass": 89,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/effect-intent-v2.test.mjs",
+        "tests/effect-only-v2-cli.test.mjs",
+        "tests/effect-only-executable-receipt.test.mjs"
+      ],
+      "logPath": "artifacts/effect-only-v2/targeted.log",
+      "logSha256": "dfd908f2f3dbf5f703336763e0cb7f57b36e7c6d56133c026448f1aa92819c42"
+    },
+    "full": {
+      "tests": 932,
+      "pass": 930,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 1,
+      "todo": 0,
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec"
+      ],
+      "logPath": "artifacts/effect-only-v2/full.log",
+      "logSha256": "9fe45b47177be480a4ed940bae8095b6d30c5db521f3bdcfcc23c4ebd8cb8066",
+      "knownFailures": [
+        {
+          "test": "tests/codex-routing-policy.test.mjs",
+          "category": "installed-host-wording",
+          "baselineReproduced": true
+        }
+      ]
+    },
+    "review": {
+      "implementationCommit": "7342a75f53d763be11fd85d856e38640561a5eca",
+      "reviewerTaskId": "01a04a0c-ae62-7c83-8f77-9d7b1614f390",
+      "disposition": "approved-structural-scope"
+    }
+  },
+  "proofLimits": [
+    "captured-test-evidence-not-rerun-by-builder",
+    "does-not-authenticate-producer-or-reviewer-origin",
+    "does-not-certify-model-quality-or-arbitrary-language-understanding",
+    "does-not-enable-native-dispatch-or-adopt-host-pins",
+    "host-must-verify-pinned-source-and-execute-isolated-snapshot",
+    "known-full-suite-failure-is-not-a-passing-release-gate",
+    "source-commit-membership-is-a-separate-issuance-check"
+  ],
+  "receiptDigest": "03fe45aeb133b715354174867a05781fac9b3cfa5353edf020cecdafa1a88a73"
+}
