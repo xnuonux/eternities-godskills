@@ -89,6 +89,7 @@ Terra in three of four user preferences.
 
 ## evidence and development
 
+- [Jev ecosystem intake and measured decision pilot](docs/quarry-intakes/2026-09-20-jev.md)
 - [latest starred-repository cold intake and bounded refinery candidates](docs/quarry-intakes/2026-09-20.md)
 - [September 17 broad source scan and review boundary](docs/quarry-intakes/2026-09-17.md)
 - [September 13 reviewed production candidates](docs/quarry-intakes/2026-09-13.md)
