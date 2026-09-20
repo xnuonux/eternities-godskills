@@ -13,6 +13,7 @@ proof of improvement, and a skill never grants authority.
 ## start here
 
 - [optional Jev advisory selector: pilot results and limitations](docs/jev-advisory-selection-v1.md)
+- [multi-dimensional skill discovery: corpus audit, Jev trials, and next gates](docs/skill-discovery-facets-v2-plan.md)
 - [current state, verified limits, and defects](docs/audits/2026-09-06-product-state.md)
 - [latest interface-refinement outcome and exact evidence](docs/audits/2026-09-08-incident-refinement-closeout.md)
 - [complete current capability directory](docs/capability-directory.md)
