@@ -117,3 +117,8 @@ and facet file hash were inspected; the earlier authentication failure remains
 preserved. Facets are mechanically checked but accuracy is not qualified.
 Discovery category tags are search buckets, not certified capabilities.
 Neither batch grants execution authority to acquired material.
+
+The first implementation follow-up is the cold
+[infrastructure evidence candidate](infrastructure-evidence-candidate.md).
+It adds a pure report-completeness helper and executable boundary tests, not
+Terraform execution or active skill routing. Promotion remains pending.

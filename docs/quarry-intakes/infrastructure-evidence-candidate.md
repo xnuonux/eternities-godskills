@@ -57,3 +57,15 @@ cases pass. These tests do not run Terraform, prove a real cleanup, or evaluate
 agent skill use. No superiority or promotion claim is made. Promotion still
 requires baseline/candidate agent evaluations, independent review, token-budget
 and policy gates. Broader infrastructure language support is not implied.
+
+## Repository regression evidence
+
+On 2026-09-20, candidate `7814ba1` ran 864 tests: 857 passed, five failed,
+two skipped. A detached baseline at `f396669` ran 856 tests: 849 passed,
+the same five failed, two skipped. The baseline used a local copy of the
+already-installed Acorn package, without downloading or running install hooks;
+an initial baseline run lacked that dependency and is not the comparison run.
+The five shared failures concern missing historical host `AGENTS.md` evidence
+(two), an Athena source digest mismatch (one), and stale attested-continuity
+source bytes (two). Historical receipts and global host instructions were not
+rewritten. Full-suite green is not claimed.
