@@ -96,3 +96,24 @@ source-grounded report, no installs, commits or shared-index writes.
 The existing finite v1 completion contract remains the release boundary. The
 historical 163 conflicting source IDs are not repaired by this additive intake.
 New material must still earn first-party synthesis, evaluation and promotion.
+
+## Reviewed synthesis and coordinated agent intake
+
+The bounded [Luna/max synthesis](2026-09-20-category-synthesis.md) inspects six
+exact methods from the preceding web intake. Its three ranked proposals cover
+robotics verification, effect-separated Terraform testing, and semantic async
+React Native testing. Source identities were checked during orchestration;
+these are proposals, not implemented or promoted capabilities.
+
+Godagents independently acquired 31 additional agent/harness repositories and
+reused 46 pinned existing origins. All 31 new origins, commits and clean
+checkouts were independently checked before additive warehouse registration.
+The shared index now contains 1,519 entries. Publication receipt:
+`D:/03-ARSENAL/warehouse/_operations/agent-harness-intake-2026-09-20/index-publication-receipt.json`.
+
+Its corrected Jev batch processed 77 public README bodies in 39 successful
+calls, reporting 373,179 input and 23,679 output tokens. Classification receipt
+and facet file hash were inspected; the earlier authentication failure remains
+preserved. Facets are mechanically checked but accuracy is not qualified.
+Discovery category tags are search buckets, not certified capabilities.
+Neither batch grants execution authority to acquired material.
