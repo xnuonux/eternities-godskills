@@ -71,8 +71,7 @@ blank semantics. That final wording has not been through a second worker run;
 the exact exercised skill is preserved as `candidate-skill.md`.
 
 Final review, exercise and installation coordinates are recorded in the wave's
-release verification artifact after they are observed. Until then this document
-describes the candidate and its checked source boundary, not a finished release.
+[release verification artifact](../artifacts/universal-product-v1/wave4/release-verification.json).
 
 The independent review found no confirmed product-skill, family-accounting,
 portability or authority-boundary defect. It independently passed 34 focused
@@ -81,3 +80,32 @@ passed 969 of 970 repository tests, with zero failures and one pre-existing
 Windows file-symlink skip; the real Windows junction and C:/D: volume checks ran.
 A copy of the standalone product in a fresh temporary directory validated and
 returned the new method for a paraphrased query without dependency installation.
+
+## Published and installed
+
+Implementation and evidence were fast-forwarded to main, retested there and
+pushed at `2763e72059c7d52ebb6c80e8e4d5f6e161d52187`.
+Release identity:
+`7307b57da4c92f845d96ffd92b2b2b751c291ba225d7ad4e006f64639b23eab2`.
+
+The existing 59-method installation was checked before replacement. All 60 new
+native skill directories and the standalone pack were verified against the new
+manifest. All 56 unrelated files matched both the immediate pre-upgrade snapshot
+and the original migration snapshot. Prior files remain recoverable through
+`universal-v1-20260921-r5/install-receipt.json`; no unrelated skill or old backup
+was deleted.
+
+A fresh non-forked Luna worker, `01a0c3dc-7d6b-7572-9dd1-208b3f3886c4`, reported
+the new skill name and `r1/structured-output-contracts/SKILL.md` from its initial
+host catalog without tools or file reads. The visible description was truncated
+by that catalog view; this establishes name/path discovery, not complete UI
+rendering or refresh of all already-open tasks.
+
+The portable ZIP was built from the committed product tree and validated after
+fresh extraction. `eternities-godskills-7307b57d.zip` is 248,322 bytes, SHA-256
+`1a52330aeb4b38ab3ec73fa3bf835c4972a4865f8b80230be8e66dc25731ac66`.
+All six historical compatibility paths remained unchanged.
+
+This wave is finished, but complete body-level refinement of the source corpus
+is not. The now-complete metadata family workplan provides the next bounded
+source-review batches; it does not retroactively certify any of those sources.

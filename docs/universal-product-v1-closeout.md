@@ -1,8 +1,9 @@
 # Universal Godskills: installed release and continuation
 
-Historical 57-method milestone. The later 59-method release and installation are
-recorded in [wave 3](universal-intake-distillation-wave-3.md); this record and its
-original receipts remain unchanged below.
+Historical 57-method milestone. The later 59-method release is recorded in
+[wave 3](universal-intake-distillation-wave-3.md), and the current 60-method
+installation in [wave 4](universal-intake-distillation-wave-4.md). This record and
+its original receipts remain unchanged below.
 
 Date: 2026-09-21. This records the finite portable-product milestone. It does not
 declare that every acquired source has been distilled or that the pack is
