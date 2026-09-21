@@ -1,0 +1,119 @@
+{
+  "sourceId": "speech-fixture-1",
+  "revision": "r1",
+  "originalText": "Cafe\u0301 \ud83c\udf19. Dr. Vega says \u2460.",
+  "offsetUnit": "UTF-16 code units",
+  "rangeConvention": "half-open",
+  "normalization": "none",
+  "locale": "en-US",
+  "policyRevision": "portable-speech-chunk-alignment-v1",
+  "budget": {
+    "maximum": 6,
+    "basis": "extended grapheme clusters of unchanged source text including spaces and punctuation",
+    "rendererFitVerified": false
+  },
+  "chunks": [
+    {
+      "id": "speech-fixture-1-r1-c01",
+      "sourceRange": [0, 5],
+      "text": "Cafe\u0301",
+      "graphemeCount": 4,
+      "pronunciationIds": [],
+      "status": "planned"
+    },
+    {
+      "id": "speech-fixture-1-r1-c02",
+      "sourceRange": [5, 10],
+      "text": " \ud83c\udf19. ",
+      "graphemeCount": 4,
+      "pronunciationIds": [],
+      "status": "planned"
+    },
+    {
+      "id": "speech-fixture-1-r1-c03",
+      "sourceRange": [10, 18],
+      "text": "Dr. Vega",
+      "graphemeCount": 8,
+      "pronunciationIds": ["p-vega"],
+      "status": "blocked",
+      "reason": "Protected pronunciation unit p-vega spans 8 extended grapheme clusters ([10,18]) and exceeds the provisional maximum of 6; it cannot be split or rendered as a ready chunk under this plan."
+    },
+    {
+      "id": "speech-fixture-1-r1-c04",
+      "sourceRange": [18, 24],
+      "text": " says ",
+      "graphemeCount": 6,
+      "pronunciationIds": [],
+      "status": "planned"
+    },
+    {
+      "id": "speech-fixture-1-r1-c05",
+      "sourceRange": [24, 26],
+      "text": "\u2460.",
+      "graphemeCount": 2,
+      "pronunciationIds": [],
+      "status": "planned"
+    }
+  ],
+  "pronunciationDecisions": [
+    {
+      "id": "p-vega",
+      "sourceRange": [10, 18],
+      "reading": "Doctor VAY-guh",
+      "status": "supplied accepted reading",
+      "protected": true,
+      "note": "Preserved exactly from input. Renderer compatibility, actual spoken output, and pronunciation accuracy are not independently verified; no engine-specific substitution was made."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "budget-capacity",
+      "constraint": "The declared maximum is provisional; no actual renderer budget is available or verified.",
+      "action": "Confirm the renderer's budget basis and capacity before rendering, then revise chunk boundaries if its contract differs."
+    },
+    {
+      "id": "protected-pronunciation-fit",
+      "constraint": "The protected p-vega unit requires 8 extended grapheme clusters, so it cannot fit within the declared maximum of 6 as one unit.",
+      "action": "Use a renderer budget of at least 8 for this unit or create an explicitly approved source/policy revision; do not split the span or guess a provider-specific spelling."
+    },
+    {
+      "id": "audio-validation",
+      "constraint": "No renderer or audio output is available for this exercise.",
+      "action": "After rendering, record output identity and emitted segments, then verify timing, overlap or gaps, final flush, seams, and listening results before claiming completion."
+    }
+  ],
+  "audio": {
+    "rendered": false,
+    "listened": false,
+    "emittedSegments": [],
+    "completionClaim": "No audio completion claim: this task produced a text-only plan and no audio was rendered, listened to, or emitted."
+  },
+  "historicalDisposition": {
+    "retainedRecords": [
+      {
+        "chunkId": "historical-q",
+        "revision": "r0",
+        "attemptId": "old-complete",
+        "status": "complete",
+        "fileLabel": "old.wav",
+        "evidenceStatus": "supplied metadata only; artifact not independently verified"
+      },
+      {
+        "chunkId": "historical-q",
+        "revision": "r1",
+        "attemptId": "new-cancelled",
+        "status": "cancelled",
+        "fileLabel": "partial.wav",
+        "reportedDurationSeconds": 0.42,
+        "evidenceStatus": "supplied metadata only; artifact not independently verified"
+      }
+    ],
+    "assemblyAllowed": false,
+    "reasons": [
+      "The complete record is revision r0 and is stale relative to current revision r1.",
+      "The current-revision record is cancelled and only reports a partial output.",
+      "No audio files or independent receipts are available, so the supplied metadata does not establish a verified current-revision artifact."
+    ],
+    "nextAction": "Obtain and independently verify fresh r1 output and receipts for the chunks, then assemble only verified non-cancelled current-revision attempts."
+  }
+}

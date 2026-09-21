@@ -66,6 +66,7 @@ Search metadata first; open the selected skill, then only its needed references.
 
 ## finance
 
+- [cashflow-forecast-scenario-integrity](skills/cashflow-forecast-scenario-integrity/SKILL.md): Build time-bucketed cash forecasts with traceable settlement timing, explicit liquidity constraints and scenario changes tied to declared drivers. Specialist of financial-statement-reconciliation.
 - [financial-statement-reconciliation](skills/financial-statement-reconciliation/SKILL.md): Reconcile reported financial statements, trace calculated ratios, and stress-test assumptions without inventing assurance or investment certainty.
 
 ## games

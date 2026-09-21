@@ -1,0 +1,39 @@
+{
+  "schema":"godskills-single-assisted-exercise-v1",
+  "agentId":"01a0c40a-5443-7d52-a929-8b18e5249751",
+  "model":"gpt-5.6-luna",
+  "reasoning":"max",
+  "forkContext":false,
+  "nativeHostInstructionsPresent":true,
+  "design":"single-assisted-no-baseline",
+  "scoring":"parent-manual-preregistered-criteria-plus-independent-structural-check",
+  "hashes":{
+    "input.json":"d10a368db0e89c720f7e6b8f48a966b7d257a554d93ed88b460b1631ef615379",
+    "task.md":"237b556df28067f1e6fc3f0da8b5a4dd245b0a6b9bf1ba005a12318e79a0ff82",
+    "protocol.md":"d1f59d81a685f27b66b20f0de0f91282ac9a9a0f856f5c1e87b4787ec8d96114",
+    "candidate-skill.md":"93283ef9cf5b93a365d1fb7da970efb0c7afc2961385631909320856b9178166",
+    "candidate.json":"b14d5955e5a2a5498832fcd846f9d493473ee277d7d975ea3ff301645e5e7bbd",
+    "candidate-notes.md":"e6bff8a67c5f09b87688babd848465fcc88d1fecfb8af217f46b3fa2bed42985"
+  },
+  "criteria":[
+    {"id":1,"status":"pass","observation":"Requested JSON parses and source identity/revision/text match input."},
+    {"id":2,"status":"pass","observation":"UTF-16 half-open offsets, none normalization, locale and policy revision declared."},
+    {"id":3,"status":"pass","observation":"Ranges [0,5),[5,10),[10,18),[18,24),[24,26) cover the source exactly once; slice text matches."},
+    {"id":4,"status":"pass","observation":"All range endpoints are independently checked extended-grapheme boundaries."},
+    {"id":5,"status":"pass","observation":"Counts4,4,8,6,2 verified; all planned records at most6."},
+    {"id":6,"status":"pass","observation":"Protected10..18 is one eight-cluster blocked record with p-vega and explicit conflict."},
+    {"id":7,"status":"pass","observation":"All remaining source spans have fitting planned records."},
+    {"id":8,"status":"pass","observation":"Supplied reading retained and labeled; no source normalization or engine spelling substitution."},
+    {"id":9,"status":"pass","observation":"Actual renderer fit false; confirm basis/capacity and revise the plan rather than assuming fit."},
+    {"id":10,"status":"pass","observation":"No render/listen/emission/completion claim; actual audio checks reserved for a future render."},
+    {"id":11,"status":"pass","observation":"Both supplied attempts and all original fields retained, including cancelled state and reported duration."},
+    {"id":12,"status":"pass","observation":"Mixed stale/partial assembly rejected, artifacts explicitly unverified, fresh current-revision evidence requested."}
+  ],
+  "passed":12,
+  "failed":0,
+  "partial":0,
+  "candidatePreserved":true,
+  "audioRenderedOrListened":false,
+  "incrementalImprovementEstablished":false,
+  "limits":"One task explicitly requests many checks the skill also recommends. No baseline, repeated trials, acoustic quality, real renderer budget, latency or general multilingual reliability was measured. Package maturity remains instruction-reviewed."
+}

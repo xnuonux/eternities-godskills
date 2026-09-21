@@ -104,7 +104,7 @@ through `universal-v1-20260921-r6/install-receipt.json`. No unrelated skill or p
 backup was deleted.
 
 The portable ZIP was created from the committed product tree and validated after
-fresh extraction. It is259,566 bytes, SHA-256
+fresh extraction. It is 259,566 bytes, SHA-256
 `f7fd845652fb4f9da0d8e36e82f6e0e2d76b494261b101d6f5b1d124f3bbe993`.
 A fresh non-forked Luna worker (`01a0c400-d33e-7c31-b83e-ccb33e7c4936`) reported
 both new method names and their r1 entrypoint paths from its initial host catalog,

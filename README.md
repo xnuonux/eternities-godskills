@@ -7,7 +7,7 @@ optional consumers, not prerequisites.
 
 ## portable product successor
 
-The self-contained pack is now in **[product/](product/README.md)**: 62 refined
+The self-contained pack is now in **[product/](product/README.md)**: 63 refined
 skill entrypoints organized into 21 primary domains, with the 26 existing owner
 extensions folded into relevant methods. It includes broad and specialist
 discovery, a compact relationship catalog, explainable offline search, an exact
@@ -19,7 +19,8 @@ optional CLI uses Node built-ins only.
 - [Idea-to-product, incident repair, research-to-article and visual-scene examples](product/RECIPES.md)
 - [Read the source-corpus scope and unfinished refinement boundary](product/CORPUS-SCOPE.md)
 - [Understand the evidence correction](docs/universal-evidence-correction.md)
-- [Read the newest scientific, speech and education distillation](docs/universal-intake-distillation-wave-5.md)
+- [Read the cash-flow refinement and actual consumer exercises](docs/universal-intake-distillation-wave-6.md)
+- [Read the scientific, speech and education distillation](docs/universal-intake-distillation-wave-5.md)
 - [Read the structured-output, integration and refinement-loop distillation](docs/universal-intake-distillation-wave-4.md)
 - [See the research-family workplan for the newest source intake](docs/universal-refinement-family-workplan.md)
 - [See the installed release, verification and remaining work](docs/universal-product-v1-closeout.md)

@@ -86,6 +86,15 @@ reference was clarified afterward, not reexercised. Molecular simulation and
 audio rendering were not performed. These remain instruction-reviewed methods,
 not experimentally qualified expertise.
 
+A sixth bounded wave adds cash-flow forecast/scenario integrity from three fully
+read source entrypoints, for 63 methods. A text-only speech-planning sample passed
+12 manual/structural criteria without rendering audio. The first cash-flow sample
+had correct tables but a wrong period-delta claim in its prose: 11 criteria passed
+and one was partial. The skill was clarified, and a different targeted case using
+the revised wording passed six checks. Both original results are retained. These
+single-assisted samples have no unaided baseline and establish no incremental
+benefit, forecast accuracy or professional certification.
+
 No claim is made that this pack covers every profession, replaces qualified
 professional judgment, or will be the only pack every future agent ever needs.
 Its design goal is one coherent, extensible place to discover high-value methods

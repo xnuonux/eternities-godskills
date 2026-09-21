@@ -1,0 +1,38 @@
+{
+  "schema":"godskills-single-assisted-exercise-v1",
+  "agentId":"01a0c40e-697d-7322-a0b8-85bc1d4eeb15",
+  "model":"gpt-5.6-luna",
+  "reasoning":"max",
+  "forkContext":false,
+  "nativeHostInstructionsPresent":true,
+  "design":"single-assisted-no-baseline",
+  "scoring":"parent-manual-preregistered-criteria-with-independent-arithmetic",
+  "hashes":{
+    "task.md":"1f0f514218407fe2bc940676340f624c834d1beb0e3905cc6a6b4d131f6901bd",
+    "protocol.md":"6ef500a4c6fa5f197864942634eb59c7af35ae527c97d888f3d5c9aaf21d161b",
+    "candidate-skill.md":"595588e1f66b369b33de0c7ae7b13d37c09303f202b6d9385154ca84bfa5a685",
+    "candidate.md":"c7547518eafe72e310209ecf41653c91a8bc686dab7293229c22feb84c94cff4"
+  },
+  "criteria":[
+    {"id":1,"status":"pass","observation":"Total1200 and unrestricted1000 opening cash correctly separated."},
+    {"id":2,"status":"pass","observation":"All supplied event IDs and settlements retained without duplicate invoice cash."},
+    {"id":3,"status":"pass","observation":"Base receipts300,900,0; payments900,500,750."},
+    {"id":4,"status":"pass","observation":"Base total openings1200,600,1000 and closings600,1000,250."},
+    {"id":5,"status":"pass","observation":"Base available400,800,50; headroom250,650,-100."},
+    {"id":6,"status":"pass","observation":"Downside receipts300,0,0 with unchanged payments."},
+    {"id":7,"status":"pass","observation":"Downside total openings1200,600,100 and closings600,100,-650."},
+    {"id":8,"status":"pass","observation":"Downside available400,-100,-850; headroom250,-250,-1000."},
+    {"id":9,"status":"partial","observation":"A stays recognized W1, outstanding900 until W4, no haircut, cumulative balance deltas correct. But prose wrongly calls BOTH W2 and W3 receipt deltas -900. Actual period receipt delta is0,-900,0; W3 has no receipt difference."},
+    {"id":10,"status":"pass","observation":"Depreciation non-cash, transfer internal, credit undrawn/unconfirmed, restrictions preserved in interpretation."},
+    {"id":11,"status":"pass","observation":"Floor gaps shown at correct weeks and amounts; negative residuals distinguished from cleared bank activity."},
+    {"id":12,"status":"pass","observation":"No invented timing/taxes/funding; useful account, collection and credit checks proposed."}
+  ],
+  "passed":11,
+  "failed":0,
+  "partial":1,
+  "candidatePreserved":true,
+  "productResponse":"Revised scenario paragraph explicitly distinguishes period movement and cumulative balance deltas and requires numerical prose/table agreement.",
+  "recheck":"Separate changed-task sample under ../cashflow-recheck; not an identical-task replication or causal test of the wording change.",
+  "incrementalImprovementEstablished":false,
+  "limits":"Fictional arithmetic and interpretation only. The numerical contradiction means this sample is not an all-pass result or a reliable completed forecast."
+}
