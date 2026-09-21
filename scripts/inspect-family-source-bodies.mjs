@@ -6,7 +6,9 @@ const root=new URL('../',import.meta.url),hash=b=>createHash('sha256').update(b)
 const read=p=>readFile(new URL(p,root));
 const lines=b=>b.toString('utf8').trim().split(/\r?\n/).filter(Boolean).map(JSON.parse);
 const [warehouseArg,output,...extra]=process.argv.slice(2);
-if(!warehouseArg||!output||extra.length)throw new Error('Usage: node scripts/inspect-family-source-bodies.mjs WAREHOUSE OUTPUT_JSON');
+const bodyForms=extra.length===1&&extra[0]==='--body-forms';
+if(!warehouseArg||!output||(extra.length&&!bodyForms))throw new Error('Usage: node scripts/inspect-family-source-bodies.mjs WAREHOUSE OUTPUT_JSON [--body-forms]');
+const inspectLauncherBody=bodyForms?(await import('../src/launcher-body-form.mjs')).inspectLauncherBody:null;
 const warehouse=await realpath(warehouseArg);
 const inside=(base,path)=>{const r=relative(base,path);return r!==''&&!isAbsolute(r)&&r!=='..'&&!r.startsWith('..'+sep);};
 const sourceBytes=await read('data/quarry-intake-2026-09-21-exa/sources.jsonl'),sources=lines(sourceBytes);
@@ -34,9 +36,11 @@ for(const item of plan){
     if(heads.get(repo)!==source.commit){Object.assign(row,{sourceCommit:source.commit,currentCommit:heads.get(repo),commitMatches:false});throw new Error('source-commit-changed');}
     const content=bytes.toString('utf8').replace(/^\uFEFF/,''),body=content.replace(/^---\r?\n[\s\S]*?\r?\n---(?:\r?\n|$)/,'');
     Object.assign(row,{status:'bytes-verified',sourceCommit:source.commit,currentCommit:heads.get(repo),commitMatches:heads.get(repo)===source.commit,bytes:bytes.length,bodyBytes:Buffer.byteLength(body),nonemptyBodyLines:body.split(/\r?\n/).filter(s=>s.trim()).length,headings:[...body.matchAll(/^#{1,4}\s+(.+)$/gm)].map(m=>m[1].trim()).slice(0,20)});
+    if(bodyForms)row.bodyForm=inspectLauncherBody({body,name:source.name,description:source.description});
   }catch(error){Object.assign(row,{status:'unresolved',reason:error.message});}
   rows.push(row);
 }
 const report={schema:'godskills-family-source-observation-v1',sourceSnapshot:hash(sourceBytes),planSha256:hash(planBytes),authority:'none',activation:'none',note:'Deterministic byte observations only. Body size, headings and commit match do not establish quality, safety, novelty or model review.',rows};
+if(bodyForms){report.schema='godskills-family-body-form-observation-v1';report.note='Exact known body-template recognition only. Frontmatter, external launcher implementations, source safety and overall capabilities are not evaluated. Unmatched is unresolved form, not a substantive-method or quality finding. No source promotion or execution authority.';}
 await writeFile(resolve(output),JSON.stringify(report,null,2)+'\n',{flag:'wx'});
 console.log(JSON.stringify({observed:rows.length,verified:rows.filter(r=>r.status==='bytes-verified').length,unresolved:rows.filter(r=>r.status!=='bytes-verified').length,emptyBodies:rows.filter(r=>r.bodyBytes===0).length,under200BodyBytes:rows.filter(r=>r.bodyBytes<200).length,changedCommits:rows.filter(r=>r.commitMatches===false).length}));

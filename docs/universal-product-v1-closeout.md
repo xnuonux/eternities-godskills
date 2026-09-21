@@ -3,8 +3,9 @@
 Historical 57-method milestone. The later 59-method release is recorded in
 [wave 3](universal-intake-distillation-wave-3.md), the 60-method installation in
 [wave 4](universal-intake-distillation-wave-4.md), the 62-method installation in
-[wave 5](universal-intake-distillation-wave-5.md), and the current 63-method
-installation in [wave 6](universal-intake-distillation-wave-6.md). This record and
+[wave 5](universal-intake-distillation-wave-5.md), the initial 63-method release in
+[wave 6](universal-intake-distillation-wave-6.md), and its three-owner extension in
+[wave 7](universal-intake-distillation-wave-7.md). This record and
 its original receipts remain unchanged below.
 
 Date: 2026-09-21. This records the finite portable-product milestone. It does not
