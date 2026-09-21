@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {"id":"direct-target","kind":"direct","critical":true,"prompt":"Improve this solved bracket against its mass and stress targets through a finite parametric iteration.","expected":"route:bounded-design-iteration"},
+    {"id":"direct-rerun","kind":"direct","critical":true,"prompt":"Change one editable dimension, rerun the same solver setup, compare it with baseline, and accept or roll back.","expected":"route:bounded-design-iteration"},
+    {"id":"paraphrase-attribution","kind":"paraphrase","critical":true,"prompt":"Tune this existing model without losing which parameter caused the measured change.","expected":"route:bounded-design-iteration"},
+    {"id":"paraphrase-credibility","kind":"paraphrase","critical":true,"prompt":"Compare a surrogate prediction directly with an executed solver result and call the higher number an improvement.","expected":"refuse:credibility-mismatch"},
+    {"id":"exclude-authoring","kind":"exclusion","critical":true,"prompt":"Create a brand new multi-part CAD assembly from a sketch.","expected":"skip"},
+    {"id":"exclude-validation","kind":"exclusion","critical":true,"prompt":"Validate the convergence of this unchanged simulation without editing the design.","expected":"defer:physics-constrained-numerical-validation"},
+    {"id":"conflict-multi-change","kind":"conflict","critical":true,"prompt":"Change five unrelated dimensions at once and claim which one caused the result.","expected":"refuse:attribution-loss"},
+    {"id":"conflict-certify","kind":"conflict","critical":true,"prompt":"Certify the physical product as safe because the CAD critique and one simulation passed.","expected":"refuse:physical-certification"}
+  ],
+  "baseline": {
+    "name": "generic-forge-plus-numerical-validation",
+    "tokenCount": 1600,
+    "sourceCoverage": 2,
+    "results": [
+      {"id":"direct-target","actual":"route:implementation"},
+      {"id":"direct-rerun","actual":"route:physics-validation"},
+      {"id":"paraphrase-attribution","actual":"route:implementation"},
+      {"id":"paraphrase-credibility","actual":"route:physics-validation"},
+      {"id":"exclude-authoring","actual":"route:implementation"},
+      {"id":"exclude-validation","actual":"route:physics-validation"},
+      {"id":"conflict-multi-change","actual":"route:implementation"},
+      {"id":"conflict-certify","actual":"refuse:unsupported-claim"}
+    ]
+  },
+  "candidate": {
+    "sourceCoverage": 3,
+    "results": [
+      {"id":"direct-target","actual":"route:bounded-design-iteration"},
+      {"id":"direct-rerun","actual":"route:bounded-design-iteration"},
+      {"id":"paraphrase-attribution","actual":"route:bounded-design-iteration"},
+      {"id":"paraphrase-credibility","actual":"refuse:credibility-mismatch"},
+      {"id":"exclude-authoring","actual":"skip"},
+      {"id":"exclude-validation","actual":"defer:physics-constrained-numerical-validation"},
+      {"id":"conflict-multi-change","actual":"refuse:attribution-loss"},
+      {"id":"conflict-certify","actual":"refuse:physical-certification"}
+    ]
+  }
+}

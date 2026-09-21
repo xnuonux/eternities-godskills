@@ -89,6 +89,15 @@ decision means the cold candidate cleared this bounded comparison; it is not
 installed, activated, added to global routing, or certified for live-model
 behavior, audible quality, devices, plugin hosts, or production deployments.
 
+The second bounded synthesis is
+`candidates/bounded-parametric-design-iteration`. It converts three exact
+CAD/CAE sources into a provider-neutral finite loop that freezes a solved
+baseline, changes one bounded parameter, gates mutation and solver effects,
+compares like-for-like evidence, and accepts or rolls back with a complete
+iteration ledger. All eight critical fixtures pass in 991 measured tokens. Its
+receipt is `receipts/candidates/bounded-parametric-design-iteration.json` and,
+like the audio candidate, remains cold and absent from global routing.
+
 ## Next boundary
 
 Use exact-body deduplication before semantic review. Jev may propose bounded
