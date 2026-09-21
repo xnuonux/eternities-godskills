@@ -15,6 +15,7 @@ Search metadata first; open the selected skill, then only its needed references.
 
 - [audio-dsp-integrity-review](skills/audio-dsp-integrity-review/SKILL.md): Review audio DSP across realtime deadline, numeric, and signal-graph lanes with exact findings, remediation, verification, and proof boundaries. Specialist of eternities-orpheus.
 - [eternities-orpheus](skills/eternities-orpheus/SKILL.md): Create provenance, transcription, alignment, timeline, and reviewable local media artifacts from supplied audio.
+- [portable-speech-chunk-alignment](skills/portable-speech-chunk-alignment/SKILL.md): Prepare multilingual speech chunks with pronunciation decisions, Unicode-safe boundaries and traceable text-to-audio lineage, including partial or cancelled output. Specialist of eternities-orpheus.
 
 ## automation
 
@@ -45,7 +46,7 @@ Search metadata first; open the selected skill, then only its needed references.
 
 ## education
 
-- [evidence-linked-learning-design](skills/evidence-linked-learning-design/SKILL.md): Design lessons or training from observable learning goals, prerequisite evidence, accessible practice, and aligned assessment.
+- [evidence-linked-learning-design](skills/evidence-linked-learning-design/SKILL.md): Design evidence-linked lessons, assessments, teaching handoffs and learner reports from observable goals and supplied achievement evidence.
 
 ## engineering
 
@@ -109,6 +110,7 @@ Search metadata first; open the selected skill, then only its needed references.
 - [diagnostic-statistical-model-inference](skills/diagnostic-statistical-model-inference/SKILL.md): Diagnose fit, assumptions, influence, uncertainty, and specification sensitivity before making descriptive, predictive, or causal claims. Specialist of eternities-athena.
 - [eternities-athena](skills/eternities-athena/SKILL.md): Appraise claims and studies through design validity, bias, confounding, statistical inference, causal limits, and calibrated uncertainty.
 - [genomic-coordinate-assembly-and-variant-gates](skills/genomic-coordinate-assembly-and-variant-gates/SKILL.md): Bind genomic coordinate and variant transformations to assemblies, contigs, orientation, normalization rules, mapping provenance, and explicit rejection gates. Specialist of eternities-athena.
+- [molecular-observable-integrity](skills/molecular-observable-integrity/SKILL.md): Check molecular trajectory observables for atom identity, periodic-coordinate interpretation, equilibration and correlation-aware uncertainty before reporting results. Specialist of physics-constrained-numerical-validation.
 - [physics-constrained-numerical-validation](skills/physics-constrained-numerical-validation/SKILL.md): Validate numerical models through dimensional checks, invariants, limiting cases, convergence, stability, and independent references with explicit uncertainty boundaries. Specialist of eternities-athena.
 - [symbolic-mathematics-python](skills/symbolic-mathematics-python/SKILL.md): Perform assumption-aware symbolic derivations in Python with domain, unit, branch, singularity, and independent numerical cross-check evidence. Specialist of eternities-daedalus.
 

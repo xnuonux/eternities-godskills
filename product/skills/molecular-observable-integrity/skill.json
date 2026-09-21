@@ -1,0 +1,21 @@
+{
+  "id":"molecular-observable-integrity",
+  "category":"science",
+  "summary":"Check molecular trajectory observables for atom identity, periodic-coordinate interpretation, equilibration and correlation-aware uncertainty before reporting results.",
+  "triggers":["molecular dynamics trajectory observable periodic boundary autocorrelation","diffusion estimate wrapped coordinates independent saved frames","RMSD atom selection equilibration correlated block uncertainty"],
+  "antiTriggers":["choose a molecular force field","design a physical laboratory experiment"],
+  "taskTypes":["research","verify","build"],
+  "related":["physics-constrained-numerical-validation","eternities-athena","diagnostic-statistical-model-inference","experiment-artifact-lineage"],
+  "specializes":"physics-constrained-numerical-validation",
+  "resources":[],
+  "maturity":"instruction-reviewed",
+  "provenance":[
+    {"kind":"pattern-reference","source":"SFETNI/Deep-Matter-Chem-Skills@2d90941a2985ca177f96e200f0708d31b53dc1f7:skills/atomistic-md/md-equilibration/SKILL.md","note":"Luna full entrypoint read, SHA-256 2f1f734c63685c46aedddf04bdee9e00f800a634abecf679053d73afd619a85b. Observable-specific equilibration informed independent writing; engine commands, example thresholds and source prose excluded. Repository MIT license observed, not legal clearance."},
+    {"kind":"pattern-reference","source":"SFETNI/Deep-Matter-Chem-Skills@2d90941a2985ca177f96e200f0708d31b53dc1f7:skills/atomistic-md/md-analysis/SKILL.md","note":"Luna full entrypoint read, SHA-256 e68321d54630521c5fc7eebe3706b5194fd3fe8ffbabb135eb19e8f58a5c4169. Trajectory identity, representation and sampling patterns independently refined; source code and prose excluded."},
+    {"kind":"reference","source":"https://docs.mdanalysis.org/2.7.0/documentation_pages/transformations/wrap.html","note":"Official documentation checked for whole-molecule versus individually wrapped coordinates."},
+    {"kind":"reference","source":"https://mdanalysis.readthedocs.io/en/latest/documentation_pages/transformations/nojump.html","note":"Official documentation checked for sequential unwrapping and required box history; no single algorithm mandated."},
+    {"kind":"reference","source":"https://manual.gromacs.org/current/onlinehelp/gmx-rms.html","note":"Official reference checked for structural fitting and mass-weighting choices."},
+    {"kind":"reference","source":"https://manual.gromacs.org/current/onlinehelp/gmx-msd.html","note":"Official reference checked for diffusion fit range and insufficient long-lag sampling."},
+    {"kind":"reference","source":"https://manual.gromacs.org/current/onlinehelp/gmx-analyze.html","note":"Official reference checked for time spacing, autocorrelation and uncertainty assumptions."}
+  ]
+}

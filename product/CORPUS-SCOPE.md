@@ -65,7 +65,7 @@ skills. Body-level review and outcome checks remain separate work.
 
 A fourth body-review wave adds structured-output contracts and extends Hermes
 with truthful degraded-adapter handling and Forge with bounded model-feedback
-refinement. The current product contains 60 instruction-reviewed methods. Four
+refinement. That release contains 60 instruction-reviewed methods. Four
 source entrypoints were read for this wave; three contributed conceptual patterns
 and one metadata-only stub was retained as a rejected lead. No upstream bodies
 or implementation snippets are redistributed.
@@ -75,6 +75,16 @@ leads against 40 capability families, pinned to the previous 59-method release.
 The family layer is a development workplan, not another installed skill catalog;
 method candidates, owner extensions, platform adapters and unclear sources still
 need distinct body-level review. Family assignment itself promotes zero methods.
+
+A fifth bounded wave reads seven more source entrypoints and brings the product
+to 62 methods: molecular observable integrity and portable speech chunk alignment,
+plus a teaching-handoff/reporting extension of the existing education owner.
+Source bytes, provenance and discovery checks are recorded independently from
+behavioral evidence. A single-assisted education exercise met 10 of 12 manual
+criteria, with one failure and one partial result retained. The corresponding
+reference was clarified afterward, not reexercised. Molecular simulation and
+audio rendering were not performed. These remain instruction-reviewed methods,
+not experimentally qualified expertise.
 
 No claim is made that this pack covers every profession, replaces qualified
 professional judgment, or will be the only pack every future agent ever needs.
