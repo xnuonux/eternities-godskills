@@ -90,29 +90,80 @@ export function validateCapabilityContract(value) {
   }
   if (value.sourceEvidence !== undefined) {
     const evidence = object(value.sourceEvidence, "capabilityContract.sourceEvidence");
-    if (evidence.mode !== "cluster-review-v1") {
-      throw new Error(`unknown source evidence mode: ${evidence.mode}`);
-    }
-    nonEmptyString(evidence.clusterSetId, "capabilityContract.sourceEvidence.clusterSetId");
-    if (!Array.isArray(evidence.clusters) || evidence.clusters.length === 0) {
-      throw new Error("capabilityContract.sourceEvidence.clusters must not be empty");
-    }
-    const clusterIds = [];
-    for (const [index, cluster] of evidence.clusters.entries()) {
-      object(cluster, `capabilityContract.sourceEvidence.clusters[${index}]`);
-      nonEmptyString(cluster.id, `capabilityContract.sourceEvidence.clusters[${index}].id`);
-      if (!/^[0-9a-f]{64}$/.test(cluster.digest)) {
+    if (evidence.mode === "cluster-review-v1") {
+      nonEmptyString(evidence.clusterSetId, "capabilityContract.sourceEvidence.clusterSetId");
+      if (!Array.isArray(evidence.clusters) || evidence.clusters.length === 0) {
+        throw new Error("capabilityContract.sourceEvidence.clusters must not be empty");
+      }
+      const clusterIds = [];
+      for (const [index, cluster] of evidence.clusters.entries()) {
+        object(cluster, `capabilityContract.sourceEvidence.clusters[${index}]`);
+        nonEmptyString(cluster.id, `capabilityContract.sourceEvidence.clusters[${index}].id`);
+        if (!/^[0-9a-f]{64}$/.test(cluster.digest)) {
+          throw new Error(
+            `capabilityContract.sourceEvidence.clusters[${index}].digest must be a lowercase SHA-256 digest`,
+          );
+        }
+        clusterIds.push(cluster.id);
+      }
+      if (new Set(clusterIds).size !== clusterIds.length) {
+        throw new Error("capabilityContract.sourceEvidence contains a duplicate cluster id");
+      }
+      if (clusterIds.some((id, index) => id !== [...clusterIds].sort()[index])) {
+        throw new Error("capabilityContract.sourceEvidence cluster ids must be lexically sorted");
+      }
+    } else if (evidence.mode === "cold-intake-v1") {
+      if (!/^quarry-intake-[a-z0-9][a-z0-9-]*$/.test(evidence.intakeDirectory ?? "")) {
+        throw new Error("capabilityContract.sourceEvidence cold intake directory is invalid");
+      }
+      if (!/^[0-9a-f]{64}$/.test(evidence.sourcesJsonlSha256 ?? "")) {
         throw new Error(
-          `capabilityContract.sourceEvidence.clusters[${index}].digest must be a lowercase SHA-256 digest`,
+          "capabilityContract.sourceEvidence.sourcesJsonlSha256 must be a lowercase SHA-256 digest",
         );
       }
-      clusterIds.push(cluster.id);
-    }
-    if (new Set(clusterIds).size !== clusterIds.length) {
-      throw new Error("capabilityContract.sourceEvidence contains a duplicate cluster id");
-    }
-    if (clusterIds.some((id, index) => id !== [...clusterIds].sort()[index])) {
-      throw new Error("capabilityContract.sourceEvidence cluster ids must be lexically sorted");
+      if (!Array.isArray(evidence.sources) || evidence.sources.length === 0) {
+        throw new Error("capabilityContract.sourceEvidence.sources must not be empty");
+      }
+      const sourceIds = [];
+      const dispositions = new Set([
+        "independent-implementation",
+        "pattern-reference",
+        "rejected",
+        "deferred",
+      ]);
+      for (const [index, source] of evidence.sources.entries()) {
+        object(source, `capabilityContract.sourceEvidence.sources[${index}]`);
+        nonEmptyString(source.sourceId, `capabilityContract.sourceEvidence.sources[${index}].sourceId`);
+        if (!/^[0-9a-f]{64}$/.test(source.bodySha256 ?? "")) {
+          throw new Error(
+            `capabilityContract.sourceEvidence.sources[${index}].bodySha256 must be a lowercase SHA-256 digest`,
+          );
+        }
+        if (!dispositions.has(source.disposition)) {
+          throw new Error(
+            `capabilityContract.sourceEvidence.sources[${index}].disposition is invalid`,
+          );
+        }
+        if (source.proseCopied !== false) {
+          throw new Error(
+            `capabilityContract.sourceEvidence.sources[${index}].proseCopied must be false`,
+          );
+        }
+        sourceIds.push(source.sourceId);
+      }
+      if (new Set(sourceIds).size !== sourceIds.length) {
+        throw new Error("capabilityContract.sourceEvidence contains a duplicate source id");
+      }
+      const declared = [...value.sourceIds].sort();
+      const evidenced = [...sourceIds].sort();
+      if (
+        declared.length !== evidenced.length ||
+        declared.some((sourceId, index) => sourceId !== evidenced[index])
+      ) {
+        throw new Error("capabilityContract.sourceEvidence source union must equal sourceIds");
+      }
+    } else {
+      throw new Error(`unknown source evidence mode: ${evidence.mode}`);
     }
   }
   return value;

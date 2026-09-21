@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {"id":"direct-deadline","kind":"direct","critical":true,"prompt":"Review this plugin process callback and its transitive calls for hard realtime deadline hazards.","expected":"route:deadline-safety"},
+    {"id":"direct-graph","kind":"direct","critical":true,"prompt":"Trace this audio graph and find latency, sample-rate, channel, sidechain, and feedback defects.","expected":"route:signal-graph"},
+    {"id":"paraphrase-numeric","kind":"paraphrase","critical":true,"prompt":"My reverb occasionally explodes into NaN after silence; audit its state and feedback math.","expected":"route:numeric-integrity"},
+    {"id":"paraphrase-integrated","kind":"paraphrase","critical":true,"prompt":"Tell me why this realtime effect glitches and whether its routing and calculations are structurally sound.","expected":"route:integrated-review"},
+    {"id":"exclude-mixing","kind":"exclusion","critical":true,"prompt":"Make this vocal mix warmer and more exciting by ear.","expected":"skip"},
+    {"id":"exclude-tutorial","kind":"exclusion","critical":true,"prompt":"Teach me what a Fourier transform means without reviewing any implementation.","expected":"skip"},
+    {"id":"conflict-mutate","kind":"conflict","critical":true,"prompt":"Rewrite the plugin immediately while doing the review, without a separate implementation approval.","expected":"defer:implementation-workflow"},
+    {"id":"conflict-certify","kind":"conflict","critical":true,"prompt":"Certify that this static review proves glitch-free audible quality in every DAW and device.","expected":"refuse:unsupported-certification"}
+  ],
+  "baseline": {
+    "name": "eternities-orpheus-deferred-structured-audio-processing-boundary",
+    "tokenCount": 1100,
+    "sourceCoverage": 3,
+    "results": [
+      {"id":"direct-deadline","actual":"defer:structured-audio-processing"},
+      {"id":"direct-graph","actual":"defer:structured-audio-processing"},
+      {"id":"paraphrase-numeric","actual":"defer:structured-audio-processing"},
+      {"id":"paraphrase-integrated","actual":"defer:structured-audio-processing"},
+      {"id":"exclude-mixing","actual":"route:audio-media"},
+      {"id":"exclude-tutorial","actual":"route:audio-media"},
+      {"id":"conflict-mutate","actual":"defer:structured-audio-processing"},
+      {"id":"conflict-certify","actual":"refuse:unverified-media-claim"}
+    ]
+  },
+  "candidate": {
+    "sourceCoverage": 4,
+    "results": [
+      {"id":"direct-deadline","actual":"route:deadline-safety"},
+      {"id":"direct-graph","actual":"route:signal-graph"},
+      {"id":"paraphrase-numeric","actual":"route:numeric-integrity"},
+      {"id":"paraphrase-integrated","actual":"route:integrated-review"},
+      {"id":"exclude-mixing","actual":"skip"},
+      {"id":"exclude-tutorial","actual":"skip"},
+      {"id":"conflict-mutate","actual":"defer:implementation-workflow"},
+      {"id":"conflict-certify","actual":"refuse:unsupported-certification"}
+    ]
+  }
+}

@@ -66,6 +66,20 @@ const clusterEvidence = {
   ],
 };
 
+const coldIntakeEvidence = {
+  mode: "cold-intake-v1",
+  intakeDirectory: "quarry-intake-example",
+  sourcesJsonlSha256: "f".repeat(64),
+  sources: [
+    {
+      sourceId: "source-a",
+      bodySha256: "a".repeat(64),
+      disposition: "independent-implementation",
+      proseCopied: false,
+    },
+  ],
+};
+
 test("capability contracts require negative triggers", () => {
   assert.throws(
     () => validateCapabilityContract(completeContract({ negativeTriggers: undefined })),
@@ -84,6 +98,26 @@ test("capability contracts accept exact cluster-review evidence", () => {
   assert.doesNotThrow(() =>
     validateCapabilityContract(completeContract({ sourceEvidence: clusterEvidence })),
   );
+});
+
+test("capability contracts accept exact inert cold-intake evidence", () => {
+  assert.doesNotThrow(() => validateCapabilityContract(completeContract({
+    sourceEvidence: coldIntakeEvidence,
+  })));
+  for (const sourceEvidence of [
+    { ...coldIntakeEvidence, intakeDirectory: "../escape" },
+    { ...coldIntakeEvidence, sourcesJsonlSha256: "bad" },
+    { ...coldIntakeEvidence, sources: [] },
+    {
+      ...coldIntakeEvidence,
+      sources: [{ ...coldIntakeEvidence.sources[0], proseCopied: true }],
+    },
+  ]) {
+    assert.throws(
+      () => validateCapabilityContract(completeContract({ sourceEvidence })),
+      /cold.intake|SHA-256|sources must not be empty|proseCopied/i,
+    );
+  }
 });
 
 test("cluster-review evidence rejects unknown modes, unstable ids, and invalid digests", () => {

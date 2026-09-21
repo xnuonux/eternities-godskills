@@ -6,6 +6,7 @@ import { evaluateSuite } from "../src/evaluate.mjs";
 import { canonicalText, sha256, writeJsonAtomic } from "../src/io.mjs";
 import { decidePromotion } from "../src/promote.mjs";
 import {
+  deriveColdIntakeSourceEvidence,
   deriveClusterSourceEvidence,
   deriveSourceEvidence,
 } from "../src/provenance-evidence.mjs";
@@ -56,6 +57,24 @@ export async function buildSkillReceipt({ skillPath, policyPath }) {
       parseJsonLines(canonicalText(clusterText)),
       parseJsonLines(canonicalText(reviewText)),
     );
+  } else if (contract.sourceEvidence?.mode === "cold-intake-v1") {
+    const intakeRoot = path.join(
+      repositoryRoot,
+      "data",
+      contract.sourceEvidence.intakeDirectory,
+    );
+    const [sourcesText, manifestText] = await Promise.all([
+      readFile(path.join(intakeRoot, "sources.jsonl"), "utf8"),
+      readFile(path.join(intakeRoot, "manifest.json"), "utf8"),
+    ]);
+    sourceEvidence = deriveColdIntakeSourceEvidence(
+      contract,
+      parseJsonLines(sourcesText),
+      {
+        manifest: JSON.parse(manifestText),
+        sourcesJsonlSha256: sha256(sourcesText),
+      },
+    );
   } else {
     const ledgerText = canonicalText(
       await readFile(path.join(repositoryRoot, "provenance", "source-ledger.jsonl"), "utf8"),
@@ -95,7 +114,15 @@ export async function buildSkillReceipt({ skillPath, policyPath }) {
       ...(sourceEvidence.sourceEvidenceMode
         ? {
             sourceEvidenceMode: sourceEvidence.sourceEvidenceMode,
-            clusterIds: sourceEvidence.clusterIds,
+            ...(sourceEvidence.clusterIds
+              ? { clusterIds: sourceEvidence.clusterIds }
+              : {}),
+            ...(sourceEvidence.intakeDirectory
+              ? {
+                  intakeDirectory: sourceEvidence.intakeDirectory,
+                  sourcesJsonlSha256: sourceEvidence.sourcesJsonlSha256,
+                }
+              : {}),
           }
         : {}),
     },

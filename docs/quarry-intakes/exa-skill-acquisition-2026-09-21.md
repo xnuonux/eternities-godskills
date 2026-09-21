@@ -47,6 +47,48 @@ Operational evidence remains at
 Repository bodies remain inert at
 `D:\03-ARSENAL\warehouse\hunt\exa-skills-2026-09-20`.
 
+## Exact overlap and advisory triage
+
+Exact-byte comparison found no overlap between the intake's 2,558 unique
+bodies and the prior registered corpus. The intake itself contains 54 alias
+groups, with no group larger than three bodies. These are exact-byte facts,
+not semantic quality claims.
+
+A deterministic 69-item metadata-only sample was sent to Jev under the
+`method-archetype-v1` taxonomy. Seven batches returned 53 usable advisory
+results: 26 proposals and 27 abstentions. Two other batches, covering 16
+items, were unavailable because the provider returned probability
+distributions that failed its own sum validation. A minimum-excerpt follow-up
+selected eight abstentions, but both correctly sized provider calls failed for
+the same `distribution-sum` reason. Retrying stopped there.
+
+The sample therefore establishes two useful limits: metadata alone is often
+insufficient, and this Jev build is not structurally reliable enough to own
+classification. Its partial proposals remain hints only. Discovery lanes are
+also provenance labels rather than ground-truth categories; visibly unrelated
+skills can occur inside a lane. The compact evidence and accounting summary is
+`data/quarry-intake-2026-09-21-exa/semantic-sample-summary.json`; raw responses
+remain in the operational evidence directory.
+
+## First refinery result
+
+The evaluator now supports a fail-closed `cold-intake-v1` evidence mode. It
+binds a candidate to a safe registered intake directory, the exact
+`sources.jsonl` SHA-256, the manifest record count and inert state, and the
+exact source identity plus body hash for every inspected source. Stale files,
+changed bodies, duplicate identities, path escape, activation, changed review
+state, undeclared sources, and copied prose all reject.
+
+The first bounded synthesis is
+`candidates/audio-dsp-integrity-review`. It independently combines four exact
+audio sources into a tri-lane review of hard realtime deadlines, numeric
+integrity, and signal-graph integrity. Its eight critical contract fixtures
+pass, the entrypoint is 993 measured tokens, and its deterministic receipt is
+`receipts/candidates/audio-dsp-integrity-review.json`. The receipt's promotion
+decision means the cold candidate cleared this bounded comparison; it is not
+installed, activated, added to global routing, or certified for live-model
+behavior, audible quality, devices, plugin hosts, or production deployments.
+
 ## Next boundary
 
 Use exact-body deduplication before semantic review. Jev may propose bounded
