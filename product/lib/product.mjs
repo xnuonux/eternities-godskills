@@ -69,7 +69,8 @@ async function inspectCatalog(root) {
     for(const file of Object.keys(files)){
       if(!/\.(md|json)$/i.test(file))continue;
       const content=await readFile(join(dir,file),'utf8');
-      check(!/(?:(?<![A-Z0-9+.-])[A-Z]:[\\/]\S|\\\\[^\s\\]+\\|\/(?:Users|home)\/[a-z][^\s/]*\/)/i.test(content),`Machine-local path in ${meta.id}/${file}`);
+      const nonUrlContent=content.replace(/\bhttps?:\/\/[^\s<>"'`()]+/gi,'');
+      check(!/(?:[A-Z]:[\\/]\S|\\\\[^\s\\]+\\|\/(?:Users|home)\/[a-z][^\s/]*\/)/i.test(nonUrlContent),`Machine-local path in ${meta.id}/${file}`);
       if(file.endsWith('.md'))for(const match of content.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)){
         const target=match[1].split('#')[0];
         if(!target||/^(?:https?:|mailto:)/.test(target))continue;

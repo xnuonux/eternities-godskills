@@ -53,9 +53,9 @@
 
 **Interfaces:** Fresh Luna contexts receive identical inert task inputs. The baseline is host-native (existing global skills cannot be removed); only the assisted arm receives the uninstalled candidate. Predeclare cases and criteria, freeze candidate bytes, retain outputs and failures, and do not expose the scoring key to workers.
 
-- [ ] Run an actual artifact-lineage decision exercise with independent expected outcomes, including valid reuse, incomplete evidence, changed split, missing resume state and leakage.
-- [ ] Review candidate instructions for concrete defects independently of their author; preserve findings and revisions.
-- [ ] Run the full repository suite with the existing second-volume fixture and compare protected artifacts against the pinned base.
+- [x] Run an actual artifact-lineage decision exercise with independent expected outcomes, including valid reuse, incomplete evidence, changed split, missing resume state and leakage.
+- [x] Review candidate instructions for concrete defects independently of their author; preserve findings and revisions.
+- [x] Run the full repository suite with the existing second-volume fixture and compare protected artifacts against the pinned base.
 - [ ] Reconcile upstream, commit only scoped changes, fast-forward canonical main and push verified work.
 - [ ] Install with a new explicit backup directory; verify every installed skill against the release manifest and preserve unrelated files. Update the clean-machine ZIP and local receipt.
 

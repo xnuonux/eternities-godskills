@@ -1,6 +1,6 @@
 # Universal wave 3: geospatial coordinate integrity source review
 
-**Lane:** geospatial coordinate integrity  
+**Lane:** geospatial coordinate integrity
 **Scope:** bounded body review of four inert quarry records for a universal
 Godskills method. No corpus tool, script, installer, web call, product edit,
 catalog edit, test edit, manifest edit, or other task-file mutation was
@@ -267,4 +267,3 @@ This procedure preserves the strongest supported value from the source bodies
 while keeping axis resolution, geometry repair, CRS selection, and spatial
 fold design as explicit decisions rather than hidden defaults. It is a
 proposal for the next product owner, not an implementation or certification.
-

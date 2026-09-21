@@ -1,8 +1,8 @@
 # Universal wave 3: experiment artifact lineage source review
 
-Review date: 2026-09-21.  
-Worktree: `C:\dev\eternities-godskills\.worktrees\universal-product-v1`.  
-Lane: model experiment artifact lineage and reproducibility.  
+Review date: 2026-09-21.
+Worktree: `C:\dev\eternities-godskills\.worktrees\universal-product-v1`.
+Lane: model experiment artifact lineage and reproducibility.
 Review scope: the four exact source records named for this lane, plus the complete local product bodies `product/skills/eternities-athena/SKILL.md` and `product/skills/eternities-hephaestus/SKILL.md`.
 
 ## Result
@@ -182,4 +182,3 @@ This is the smallest useful procedure to add. It is runtime- and provider-neutra
 The sources justify a neutral lineage method only after the above scope is enforced. The strongest retained mechanisms are: decision-first planning and baseline inheritance; leakage-aware splits and uncertainty; explicit phase dependencies; and provenance manifests with re-execution. The mechanisms to reject as universal rules are existence-only checkpoint reuse, fixed-seed sufficiency, unqualified “final outputs match,” arbitrary checklist thresholds, mandatory vendor/archive choices, and any metadata-based quality or licensing inference.
 
 Recommended acceptance fixtures for the eventual method are exactly: valid reuse, incomplete evidence, changed split, missing resume state, and heldout leakage. A candidate that cannot distinguish those cases adds a title and a path, not a reliable lineage capability.
-

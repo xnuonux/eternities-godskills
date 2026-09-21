@@ -129,13 +129,13 @@ test('portable metadata rejects unrecognized task types',async()=>{
 test('portable reference URLs are not mistaken for local drive paths',async()=>{
   const {pack}=await fixture();
   const file=join(pack,'skills/build/SKILL.md');
-  await writeFile(file,(await readFile(file,'utf8'))+'\n[Reference](https://example.org/docs) and http://example.org/spec.\n');
+  await writeFile(file,(await readFile(file,'utf8'))+'\n[Reference](https://example.org/docs) and http://example.org/spec.\nhttps://example.org/spec?source=C:/tmp\nhttps://example.org/C:/tmp\nhttps://example.org/home/person/docs\n');
   await buildProduct(pack);
   assert.equal((await verifyProduct(pack)).skillCount,3);
 });
 
 test('machine-specific drive, home and UNC paths remain rejected',async()=>{
-  for(const local of ['C:/Dev/private/file.md','D:\\warehouse\\source.md','/home/person/project/file','/Users/person/project/file','\\\\server\\share\\file']){
+  for(const local of ['C:/Dev/private/file.md','D:\\warehouse\\source.md','/home/person/project/file','/Users/person/project/file','\\\\server\\share\\file','-C:/Dev/private/file.md','+D:\\warehouse\\source.md','.C:/Dev/private/file.md','https://example.org/spec C:/Dev/private/file.md','[web](https://example.org/spec)C:/Dev/private/file.md']){
     const {pack}=await fixture();
     const file=join(pack,'skills/build/SKILL.md');
     await writeFile(file,(await readFile(file,'utf8'))+`\nRead ${local}.\n`);

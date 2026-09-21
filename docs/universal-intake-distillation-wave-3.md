@@ -52,8 +52,13 @@ relations expose the new specialists without automatically loading them.
 
 A product build uncovered a real pre-existing portability-checker defect: the
 final `s:/` within an HTTPS URL matched the Windows-drive expression. A failing
-regression reproduced it. The fix requires a drive-prefix boundary while retaining
-tests rejecting genuine drive, home-directory and UNC paths. No search algorithm,
+regression reproduced it. The first fix required a drive-prefix boundary, but an
+independent Luna review found URL query/path false positives and punctuation-led
+local-path false negatives. Both were reproduced with failing tests. The final
+fix excludes bounded HTTP(S) URL tokens from the prose scan and then checks local
+paths, including paths adjacent to a Markdown link. Drive, home-directory and
+UNC rejection tests remain. This is a portability lint, not a security parser.
+No search algorithm,
 installer transaction or historical activation ABI was changed.
 
 The full pre-review suite ran 944 tests: 943 passed, zero failed, one existing
@@ -78,4 +83,25 @@ Workers started 2026-09-21T11:15:03Z, S then H. No worker receives the scorer or
 the other output. The guard processes inert manifests, not actual ML checkpoints.
 Consequently its results cannot certify live training resumption.
 
-Results and final release disposition are appended after the independent checks.
+Both workers completed within the ten-minute limit. The parent inspected the
+implementation modules before executing them; neither imports dependencies or
+performs external actions. The archived outputs were scored H then S:
+
+| Condition | Independent acceptance cases | Worker-authored checks rerun by parent |
+| --- | --- | --- |
+| H: host-native | 26/26 | 11/11 |
+| S: host-native plus lineage method | 26/26 | 15/15 |
+
+The preregistered cases found no unsafe accepts and both arms accepted all valid
+controls. This is a **tie with no demonstrated incremental quality gain** on this
+task. The task supplied a detailed contract and the host-native model was already
+capable; more varied tasks would be needed to test an advantage. Do not infer one
+from the assisted worker writing more of its own tests. Actual token charges were
+not exposed. The workers reported shared host TDD guidance; H also reported the
+verification skill. That self-report is retained, not represented as a complete
+audit of hidden host context.
+
+Both original implementations, local checks, reports and case results are kept.
+No losing condition was patched or selectively retried. The new method remains
+instruction-reviewed, not performance-qualified. The exercise establishes a
+bounded successful use and documents its limits.

@@ -37,6 +37,8 @@ cache/checkpoint reuse respectively. Source-review records, retained/rejected
 mechanisms and a small matched agent exercise live in the development repository.
 That exercise cannot establish superiority across tasks or certify actual model
 training or survey accuracy. The default maturity remains instruction-reviewed.
+On the recorded manifest-guard task, both the host-native and skill-assisted
+agents passed 26 of 26 independent cases: no incremental quality gain was shown.
 
 The source corpus remains a research backlog. Do not describe unresolved rows as
 "all skills incorporated" or treat a matching category as proof of semantic
