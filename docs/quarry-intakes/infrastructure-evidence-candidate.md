@@ -20,6 +20,15 @@ credential checker, or proof that a provider was mocked correctly. Conflicting
 or unknown effect declarations stay incomplete. A plan is not assumed to be
 offline merely because it is called a plan.
 
+The packet and nested check/authority/cleanup records have closed field sets.
+Unknown fields are rejected, not interpreted as alternative effect vocabularies.
+Every check and cleanup record declares `subjectDigest` equal to the packet's
+subject. Its `evidenceDigest` is a separate reference to report bytes and need
+not equal the subject digest. These associations are structural declarations,
+not cryptographic attestations. Plan packets reject apply-only authority and
+cleanup records. Both modes require an isolated test environment; apply isolation
+does not imply absence of external effects.
+
 ## First-party workflow
 
 1. Identify exact subject bytes, environment and tool/provider versions.
@@ -59,6 +68,12 @@ requires baseline/candidate agent evaluations, independent review, token-budget
 and policy gates. Broader infrastructure language support is not implied.
 
 ## Repository regression evidence
+
+2026-09-21 review follow-up: added three failing regressions for missing/wrong
+check subject, missing/wrong cleanup subject, and unknown effect fields. The
+implementation now rejects these cases. The initial reviewer correctly identified
+missing explicit associations; differing evidence and subject hashes alone are
+not an error because they identify different artifacts. Candidate remains cold.
 
 On 2026-09-20, candidate `7814ba1` ran 864 tests: 857 passed, five failed,
 two skipped. A detached baseline at `f396669` ran 856 tests: 849 passed,
