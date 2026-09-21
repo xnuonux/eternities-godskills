@@ -1,7 +1,7 @@
 # Universal intake distillation, wave 5
 
-Baseline: 6edda5c524428ed8dbfc97ad2770f5e0e4d01e6b. Work in progress until the
-release verification record is finalized.
+Baseline: 6edda5c524428ed8dbfc97ad2770f5e0e4d01e6b. This bounded wave is
+published and installed; full source-corpus refinement remains unfinished.
 
 This wave reviews substantive source bodies across scientific, audio and
 educational workflows. The family plan remains advisory research organization;
@@ -84,6 +84,35 @@ observed exercise is explicitly recorded. Package integrity, task retrieval and
 actual agent behavior are separate evidence classes. Historical Godagents-facing
 files and prior exercise failures must not be refreshed to hide uncertainty.
 
-Independent review passed31 focused checks and found no critical or important
+Independent review passed 31 focused checks and found no critical or important
 product defect. The minor helper fix is recorded with its parent red/green
 regression evidence in [the review](universal-wave5-independent-review.md).
+
+## Published and installed
+
+Implementation and evidence were fast-forwarded to main, retested there and
+pushed at `31b44d59427375e01f15534f138da9c27282d799`. Both final worktree and
+canonical runs passed 977 of 978 tests, with zero failures and one pre-existing
+Windows file-symlink fixture skipped. Real junction and C:/D: volume checks ran.
+Release identity:
+`ec7598344b33ad65fa7aceb51e878ef055f2d10abede51d9244cbf9fff952398`.
+
+All 62 native skill directories and the standalone pack were verified after the
+upgrade. All 56 unrelated files matched both the immediate pre-upgrade snapshot
+and the original migration snapshot. The 60-method prior release is recoverable
+through `universal-v1-20260921-r6/install-receipt.json`. No unrelated skill or prior
+backup was deleted.
+
+The portable ZIP was created from the committed product tree and validated after
+fresh extraction. It is259,566 bytes, SHA-256
+`f7fd845652fb4f9da0d8e36e82f6e0e2d76b494261b101d6f5b1d124f3bbe993`.
+A fresh non-forked Luna worker (`01a0c400-d33e-7c31-b83e-ccb33e7c4936`) reported
+both new method names and their r1 entrypoint paths from its initial host catalog,
+without file reads or tools. Its visible descriptions were truncated. This proves
+fresh-worker name/path visibility, not refresh of every open task or complete UI
+rendering on every host.
+
+Next bounded work should exercise the new specialist methods on fixed consumer
+tasks and continue substantive source-family refinement. Use the wave5 source
+disposition ledger to avoid rereading these seven entrypoints as untouched leads;
+it accounts for selected mechanisms only, not their entire original capability.
