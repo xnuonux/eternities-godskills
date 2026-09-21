@@ -7,7 +7,7 @@ optional consumers, not prerequisites.
 
 ## portable product successor
 
-The self-contained pack is now in **[product/](product/README.md)**: 59 refined
+The self-contained pack is now in **[product/](product/README.md)**: 60 refined
 skill entrypoints organized into 21 primary domains, with the 26 existing owner
 extensions folded into relevant methods. It includes broad and specialist
 discovery, a compact relationship catalog, explainable offline search, an exact
@@ -19,7 +19,8 @@ optional CLI uses Node built-ins only.
 - [Idea-to-product, incident repair, research-to-article and visual-scene examples](product/RECIPES.md)
 - [Read the source-corpus scope and unfinished refinement boundary](product/CORPUS-SCOPE.md)
 - [Understand the evidence correction](docs/universal-evidence-correction.md)
-- [Read the newest retrieval, agent-evaluation and scene-continuity distillation](docs/universal-intake-distillation-wave-2.md)
+- [Read the newest structured-output, integration and refinement-loop distillation](docs/universal-intake-distillation-wave-4.md)
+- [See the research-family workplan for the newest source intake](docs/universal-refinement-family-workplan.md)
 - [See the installed release, verification and remaining work](docs/universal-product-v1-closeout.md)
 
 The `skills/` tree and pinned historical protocols below remain preserved for
@@ -46,9 +47,12 @@ proof of improvement, and a skill never grants authority.
 - [first implementation milestone](docs/superpowers/plans/2026-09-06-capability-directory-v1.md)
 - [historical development record](docs/history/README-before-2026-09-06.md)
 
-## what is here
+## preserved compatibility library
 
-| layer | current contents | what the count means |
+The following counts and commands describe the historical runtime, not the
+portable product above. They remain available for consumers pinned to that ABI.
+
+| layer | historical contents | what the count means |
 | --- | --- | --- |
 | broad godskills | 22 cards across 21 families | default router catalog |
 | operational skills | 22 separate skill directories | focused methods owned by broad capabilities |
@@ -56,12 +60,12 @@ proof of improvement, and a skill never grants authority.
 | source foundation | 4,741 original cards | a historical corpus, not installed skills |
 | combined wave-2/3 atlas | 15,993 source identities, 5,209 exact bodies, 4,926 accepted metadata facets | source accounting, not finished godskills |
 
-there are **44 skill directories**. do not add the foundation to the later
+there are **44 historical skill directories**. do not add the foundation to the later
 atlas and call it a unique total: cross-foundation deduplication is not
 established by those summaries. the quarry stays cold at
 `D:\03-ARSENAL\warehouse`. normal use of shipped skills should not require it.
 
-## use the library today
+## use the preserved runtime
 
 1. find a relevant outcome in the [directory](docs/capability-directory.md).
 2. load only the selected `SKILL.md` and its required references.

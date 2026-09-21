@@ -32,6 +32,8 @@ const cases=[
   ['My map layers do not line up and buffer distances are in degrees','geospatial-coordinate-integrity'],
   ['Resume model training only when checkpoint dataset split and experiment lineage match','experiment-artifact-lineage'],
   ['Can I reuse cached features after preprocessing and training data changed','experiment-artifact-lineage'],
+  ['Validate structured model output against a versioned JSON schema before consuming it','structured-output-contracts'],
+  ['My agent returns valid JSON but invents record IDs and sends incomplete streamed results','structured-output-contracts'],
 ];
 for(const [query,id] of cases)test(`offline task lookup exposes ${id} in first three candidates`,async()=>{
   const result=searchCatalog(await catalog(),query,{limit:3});
@@ -42,4 +44,14 @@ test('nonsense has no match and task filters constrain returned skills',async()=
   const hits=searchCatalog(c,'test software reliability',{taskType:'verify',limit:20}).results;
   assert.ok(hits.length>0);
   for(const hit of hits)assert.ok(c.skills.find(x=>x.id===hit.id).taskTypes.includes('verify'));
+});
+test('structured-output discovery preserves the narrow exclusion and optional owner relation',async()=>{
+  const c=await catalog(),item=c.skills.find(s=>s.id==='structured-output-contracts');
+  assert.equal(item.specializes,'eternities-hermes');
+  assert.ok(c.skills.find(s=>s.id==='eternities-hermes').related.includes(item.id));
+  const negative=searchCatalog(c,'edit an already supplied static JSON value',{limit:20});
+  assert.ok(!negative.results.some(s=>s.id===item.id));
+  const positive=searchCatalog(c,'structured model output JSON schema validation',{limit:3});
+  assert.ok(positive.results.some(s=>s.id===item.id));
+  assert.equal(positive.activation,'none');assert.equal(positive.authority,'none');
 });

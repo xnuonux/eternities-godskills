@@ -31,7 +31,7 @@ instruction-reviewed methods. A launcher-only source contributed no method.
 This count describes the shipped pack, not the number of sources reviewed.
 
 A third bounded wave adds geospatial coordinate integrity and experiment artifact
-lineage, bringing the current product to 59 methods in the same 21 domains. These
+lineage, bringing that release to 59 methods in the same 21 domains. These
 methods address coordinate interpretation and transformation mistakes, and unsafe
 cache/checkpoint reuse respectively. Source-review records, retained/rejected
 mechanisms and a small matched agent exercise live in the development repository.
@@ -62,6 +62,19 @@ The resulting development queue records 406 bodies with suggested coverage gaps.
 These are advisory research leads, not 406 automatically missing product skills
 or proof that a source implementation is usable. The metadata pass promotes no
 skills. Body-level review and outcome checks remain separate work.
+
+A fourth body-review wave adds structured-output contracts and extends Hermes
+with truthful degraded-adapter handling and Forge with bounded model-feedback
+refinement. The current product contains 60 instruction-reviewed methods. Four
+source entrypoints were read for this wave; three contributed conceptual patterns
+and one metadata-only stub was retained as a rejected lead. No upstream bodies
+or implementation snippets are redistributed.
+
+Research organization now groups 410 gap-bearing or unresolved newest-intake
+leads against 40 capability families, pinned to the previous 59-method release.
+The family layer is a development workplan, not another installed skill catalog;
+method candidates, owner extensions, platform adapters and unclear sources still
+need distinct body-level review. Family assignment itself promotes zero methods.
 
 No claim is made that this pack covers every profession, replaces qualified
 professional judgment, or will be the only pack every future agent ever needs.

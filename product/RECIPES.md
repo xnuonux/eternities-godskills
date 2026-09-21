@@ -65,3 +65,15 @@ can reject a technically correct result that lacks the intended experience.
 No recipe guarantees that skill use beats a raw model. Preserve spontaneous
 solutions and use the methods to solve observed gaps, not to replace creativity
 with process.
+
+## From model answers to a dependable integration
+
+User: "Extract records from these documents and feed our application, but make
+missing evidence and outages visible."
+
+**Structured output contracts** defines the consumer's schema and source-bound
+meaning, preserves abstention and tests malformed, stale and incomplete replies.
+**Hermes** owns the adapter, timeouts, permitted effects and truthful degraded
+mode. **Retrieval-grounded answering** joins only if document retrieval itself
+needs work. **Forge** may coordinate a bounded critique/revision loop, but a model
+reviewer's approval cannot replace validation or authorize downstream writes.

@@ -15,6 +15,7 @@ Hermes is the automation and integration route. It turns a concrete workflow int
 - **Protocol-server generation** defines a Java or similar server boundary, typed tool/resource schemas, generated-file manifest, error contract, and local test fixture.
 - **CLI or API bridge** separates read operations, configuration, invocation, authentication material, retries, and mutation.
 - **Remote-test coordination** builds a fixture matrix, prerequisites, skip rules, evidence capture, and cleanup without pretending that remote state changed.
+- **Degraded integrations** distinguish an optional adapter from a required effect; use the failure-mode card in [methods.md](references/methods.md) when an absent backend or mock fallback could look like success.
 
 ## Working method
 

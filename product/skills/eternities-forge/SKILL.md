@@ -14,6 +14,7 @@ Forge is the coordination route for changes that need more than one engineering 
 - **Refactor** protects behavior with a baseline while structure changes.
 - **Risky integration** adds isolation, dependency closure, rollback, review, and fresh integration state.
 - **Closure review** is an optional adversarial pass when the user names a specific defect shape or ideal-bar question. It returns the bounded state supported by evidence, not literal perfection.
+- **Model-feedback refinement** uses a bounded generator/reviewer loop when critique can improve an artifact; the optional card in [methods.md](references/methods.md) keeps model judgments separate from verified acceptance.
 
 ## Working method
 
