@@ -80,7 +80,33 @@ credentials, original checkout or personal folder layout was needed. This is a
 Windows clean-copy check, not independent Linux/macOS qualification.
 
 Publication, final tests, independent review and installation receipts are recorded
-below when completed. The next refinement batch should continue substantive
+below. The next refinement batch should continue substantive
 family bodies, not recount these three as untouched leads. Older corpus conflicts
 and body-level dispositions remain unfinished; neither the new skill count nor
 passing software tests erases that boundary.
+
+## Published and installed
+
+Implementation and frozen exercise evidence were fast-forwarded into canonical
+main and pushed at `4171afe5427f011f41cd4e19ff2f55eec199d798`. Both final worktree
+and canonical test runs reported 982 tests: 981 passed, zero failed and one
+pre-existing Windows file-symlink fixture skipped. Real junction and C:/D:
+cross-volume checks ran. The independent review passed 35 focused tests with
+one conditional skip and found no critical, important or minor issue. Its exact
+reviewed hashes were rechecked before commit; see
+[the review](universal-wave6-independent-review.md).
+
+Release identity:
+`82694be5aefde7e841b1522387524dba9bd3a1c58c48acf05d3cb76fa4a27b7f`.
+All 63 native skill directories and the standalone runtime match this release.
+The native folder contains 205 files; all 56 unrelated files match both the
+immediate pre-upgrade and original migration snapshots. The previous 62-method
+pack is recoverable through `universal-v1-20260921-r7/install-receipt.json`.
+No unrelated skill or prior backup was deleted. Already-open tasks may retain a
+cached catalog; this wave did not independently test a refresh of every task.
+
+The ZIP `eternities-godskills-82694be5.zip` was created from the committed product
+tree, then validated after fresh extraction. It is 264,244 bytes, SHA-256
+`3c11525f310671f526ecd9f17263beabe9ac9942c475887dd711f903795f7571`.
+The reusable worktree is retained for the active refinement goal. All six frozen
+Godagents-facing paths remain unchanged from their protected baseline.
