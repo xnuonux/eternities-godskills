@@ -1,4 +1,4 @@
-# eternities skills
+# Eternities Godskills
 
 a portable professional capability library for ai agents. godskills organize
 broad disciplines, operational skills supply focused methods, and extensions
@@ -7,7 +7,7 @@ optional consumers, not prerequisites.
 
 ## portable product successor
 
-The self-contained pack is now in **[product/](product/README.md)**: 54 rewritten
+The self-contained pack is now in **[product/](product/README.md)**: 57 refined
 skill entrypoints organized into 21 primary domains, with the 26 existing owner
 extensions folded into relevant methods. It includes broad and specialist
 discovery, a compact relationship catalog, explainable offline search, an exact
@@ -19,6 +19,8 @@ optional CLI uses Node built-ins only.
 - [Idea-to-product, incident repair, research-to-article and visual-scene examples](product/RECIPES.md)
 - [Read the source-corpus scope and unfinished refinement boundary](product/CORPUS-SCOPE.md)
 - [Understand the evidence correction](docs/universal-evidence-correction.md)
+- [Read the newest retrieval, agent-evaluation and scene-continuity distillation](docs/universal-intake-distillation-wave-2.md)
+- [See the installed release, verification and remaining work](docs/universal-product-v1-closeout.md)
 
 The `skills/` tree and pinned historical protocols below remain preserved for
 compatibility. New installations should use `product/skills/`; the old 44-folder

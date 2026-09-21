@@ -24,6 +24,12 @@ education, financial-statement analysis, contract review, and agricultural trial
 Distillation records live in the development
 repository; the shipped skill metadata retains provenance relationships.
 
+A second body-review wave read eight additional source entrypoints and added
+three independently written methods: retrieval-grounded answering, counterbalanced
+agent evaluation, and scene continuity/coverage. The current product has 57
+instruction-reviewed methods. A launcher-only source contributed no method.
+This count describes the shipped pack, not the number of sources reviewed.
+
 The source corpus remains a research backlog. Do not describe unresolved rows as
 "all skills incorporated" or treat a matching category as proof of semantic
 equivalence. New source discoveries should earn their place by contributing a
@@ -33,6 +39,19 @@ agent improvement. More entries alone are not a quality target.
 The additional domain-classification pass yielded six proposals and two
 abstentions on its first eight bodies, then stopped when the provider paced the
 next batch. Those labels are advisory and do not fill the unreviewed backlog.
+
+The subsequent Luna metadata pass accounts for all 2,558 unique newest-intake
+bodies. Deterministic source checks recovered 318 descriptions that the importer
+had reduced to folded-text markers; a second metadata pass reconsidered those
+items without rewriting the original intake. The combined categorization leaves
+35 bodies unknown, down from 199 before those corrections. Another 86 source
+entrypoints still have no extractable description; some can be broadly categorized
+from their names, but that is not a substitute for reading their methods.
+
+The resulting development queue records 406 bodies with suggested coverage gaps.
+These are advisory research leads, not 406 automatically missing product skills
+or proof that a source implementation is usable. The metadata pass promotes no
+skills. Body-level review and outcome checks remain separate work.
 
 No claim is made that this pack covers every profession, replaces qualified
 professional judgment, or will be the only pack every future agent ever needs.

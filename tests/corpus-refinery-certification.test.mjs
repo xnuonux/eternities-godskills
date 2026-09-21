@@ -35,7 +35,8 @@ test("corpus refinery foundation certifies honest all-source coverage", async ()
   const reviews = jsonLines(reviewText);
 
   assert.equal(packageJson.name, "@eternities/skills");
-  assert.match(readme, /^# eternities skills/m);
+  // Current product branding; the historical foundation receipts below remain frozen.
+  assert.match(readme, /^# Eternities Godskills$/m);
   assert.equal(certification.schemaVersion, 1);
   assert.equal(certification.status, "certified-foundation");
   assert.deepEqual(certification.criticalFailures, []);

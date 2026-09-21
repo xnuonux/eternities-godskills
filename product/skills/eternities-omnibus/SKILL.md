@@ -16,7 +16,8 @@ Omnibus is the product navigator. Use it when the installed broad routes do not 
        node <pack>/bin/godskills.mjs search "query"
 
 4. Read only the returned entrypoint metadata and the smallest referenced method page needed to choose a route. Report the metadata source or manual-index boundary, why each result matched, what it does not cover, and whether the request is covered, a handoff, or an unresolved gap.
-5. Never write the catalog, activate a skill merely because it matched, execute source bodies, or infer permission from discovery. If no result matches, return the query, search boundary, and missing capability rather than inventing one.
+5. Once a route is chosen, read its complete SKILL.md before applying it, then only the references needed for this task. Do not substitute a search summary for the selected method.
+6. Never write the catalog, activate a skill merely because it matched, execute source bodies, or infer permission from discovery. If no result matches, return the query, search boundary, and missing capability rather than inventing one.
 
 ## Deliverable and finish
 

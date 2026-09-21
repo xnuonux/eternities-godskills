@@ -25,6 +25,9 @@ const cases=[
   ['Memory continuity after context compaction without rereading entire history','eternities-mnemosyne'],
   ['Reproduce a production crash and isolate the root cause','eternities-phoenix'],
   ['Frame a compelling article from canon while preserving source truth','eternities-logos'],
+  ['Build retrieval grounded answers with citations and test empty or stale evidence','retrieval-grounded-answering'],
+  ['Compare raw agents against skill enabled agents with blinded counterbalanced evaluation','counterbalanced-agent-evaluation'],
+  ['Storyboard camera coverage on one shared scene timeline without repeating the action','scene-continuity-and-coverage'],
 ];
 for(const [query,id] of cases)test(`offline task lookup exposes ${id} in first three candidates`,async()=>{
   const result=searchCatalog(await catalog(),query,{limit:3});

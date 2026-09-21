@@ -21,3 +21,16 @@ export function summarizeDomainReview({bodyHashes,skillIds,snapshot,rows}){
   }
   return {schema:'universal-domain-review-summary-v1',status:seen.size===bodies.size?'metadata-review-complete':'partial',authority:'none',activation:'none',sourceSnapshot:snapshot,totalBodies:bodies.size,reviewedBodies:seen.size,remainingBodies:bodies.size-seen.size,unknownBodies:counts.unknown??0,skillPromotions:0,categories:Object.fromEntries(Object.entries(counts).sort()),gapLabels:Object.fromEntries(Object.entries(gaps).sort()),limits:'Metadata classification is advisory. It is not body review, semantic equivalence, skill incorporation or performance qualification.'};
 }
+
+export function mergeDomainRevisions({original,repair}){
+  const originalSummary=summarizeDomainReview(original),repairSummary=summarizeDomainReview(repair);
+  const admitted=new Set(original.bodyHashes);
+  if(repair.bodyHashes.some(x=>!admitted.has(x)))throw new Error('Repair refers to a foreign body');
+  const effective=new Map(original.rows.map(x=>[x.bodySha256,x]));
+  for(const row of repair.rows)effective.set(row.bodySha256,row);
+  const rows=[...effective.values()].sort((a,b)=>a.bodySha256<b.bodySha256?-1:a.bodySha256>b.bodySha256?1:0);
+  // Only the count projection uses one snapshot; returned evidence retains each
+  // row's real classification input snapshot, including corrected descriptions.
+  const combined=summarizeDomainReview({...original,rows:rows.map(x=>({...x,sourceSnapshot:original.snapshot}))});
+  return {rows,summary:{...combined,schema:'universal-domain-refinement-v1',status:originalSummary.status==='metadata-review-complete'&&repairSummary.status==='metadata-review-complete'?'metadata-review-complete':'partial',repairSnapshot:repair.snapshot,repairedMetadataBodies:repairSummary.reviewedBodies,remainingReclassification:repairSummary.remainingBodies,originalUnknownBodies:originalSummary.unknownBodies}};
+}

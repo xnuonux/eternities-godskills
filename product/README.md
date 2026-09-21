@@ -114,3 +114,8 @@ replaced by this versioned catalog.
 automatically remove upstream obligations. Do not redistribute upstream source
 packs as if they were first-party work. Retain applicable notices for any actual
 third-party material you add.
+
+Provenance strings identify authoring history; they are not files the receiving
+agent must locate or read. Only the selected entrypoint and its declared bundled
+resources are needed to use a method. A new computer does not need the source
+repositories, private development history, or a matching author workstation.

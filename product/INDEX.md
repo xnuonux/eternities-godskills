@@ -39,6 +39,7 @@ Search metadata first; open the selected skill, then only its needed references.
 - [bounded-parametric-design-iteration](skills/bounded-parametric-design-iteration/SKILL.md): Improve an existing solved parametric design through isolated changes, solver-backed comparison, hard-constraint checks, and finite accept-or-rollback evidence. Specialist of eternities-forge.
 - [eternities-muse](skills/eternities-muse/SKILL.md): Direct visual forensics, interface direction, motion, accessibility, and rendered acceptance through coherent evidence.
 - [interface-localization-and-bidirectionality](skills/interface-localization-and-bidirectionality/SKILL.md): Implement and verify locale-aware content, formatting, RTL/LTR layout, mixed-direction text, controls, accessibility, and human translation review. Specialist of eternities-muse.
+- [scene-continuity-and-coverage](skills/scene-continuity-and-coverage/SKILL.md): Design storyboards and camera coverage on a shared scene timeline with expressive motion, coherent geography and continuity across edits. Specialist of eternities-muse.
 
 ## education
 
@@ -82,6 +83,7 @@ Search metadata first; open the selected skill, then only its needed references.
 
 - [approval-bound-private-session-mining](skills/approval-bound-private-session-mining/SKILL.md): Extract source-labeled, minimized findings from an approved private transcript set while retaining scope, redaction, uncertainty, and revocation evidence. Specialist of eternities-mnemosyne.
 - [eternities-mnemosyne](skills/eternities-mnemosyne/SKILL.md): Recover task truth, design durable memory, reduce context, audit retrieval, and maintain reasoned dependency state.
+- [retrieval-grounded-answering](skills/retrieval-grounded-answering/SKILL.md): Build and test retrieval-grounded answers with evidence citations, permission filters, freshness and measured context cost. Specialist of eternities-mnemosyne.
 
 ## models
 
@@ -100,6 +102,7 @@ Search metadata first; open the selected skill, then only its needed references.
 
 ## science
 
+- [counterbalanced-agent-evaluation](skills/counterbalanced-agent-evaluation/SKILL.md): Compare raw and skill-enabled agents using isolated conditions, blinded counterbalanced review, held-out tasks and quality-cost evidence. Specialist of eternities-athena.
 - [diagnostic-statistical-model-inference](skills/diagnostic-statistical-model-inference/SKILL.md): Diagnose fit, assumptions, influence, uncertainty, and specification sensitivity before making descriptive, predictive, or causal claims. Specialist of eternities-athena.
 - [eternities-athena](skills/eternities-athena/SKILL.md): Appraise claims and studies through design validity, bias, confounding, statistical inference, causal limits, and calibrated uncertainty.
 - [genomic-coordinate-assembly-and-variant-gates](skills/genomic-coordinate-assembly-and-variant-gates/SKILL.md): Bind genomic coordinate and variant transformations to assemblies, contigs, orientation, normalization rules, mapping provenance, and explicit rejection gates. Specialist of eternities-athena.
