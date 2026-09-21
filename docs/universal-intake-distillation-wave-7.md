@@ -107,3 +107,34 @@ unfinished. Canonical publication, installation and ZIP receipts follow below.
 A standalone copy validated and found all three owners with an empty PATH and an
 explicitly supplied Node executable. No package installation, warehouse or network
 was used. This is a Windows clean-copy check, not Linux/macOS qualification.
+
+## Published and installed
+
+Implementation and preserved evidence were fast-forwarded to canonical main and
+pushed at `24e904b3cc8f5d3fc04965eacd83ddc306430077`. Canonical tests repeated the
+992-test result: 991 passed, zero failed, one conditional skip. The frozen consumer
+Markdown outputs retain their original hard-break spaces; the staged whitespace
+check excluded only those two evidence files rather than rewriting their bytes.
+
+Release identity:
+`e4ff1f1da08f498c9b8bc2ad5c586be553b2de6088253d97df32d2eff1d75972`.
+All 63 native directories and the standalone runtime match it. The native folder
+now contains 208 files. All 56 unrelated files match both the immediate pre-upgrade
+snapshot and the original migration snapshot. All 205 pre-upgrade files were
+checked unchanged immediately before installation. The previous release is
+recoverable through `universal-v1-20260921-r8/install-receipt.json`. No unrelated
+skill, source repository, historic evidence or prior backup was deleted.
+
+The portable ZIP `eternities-godskills-e4ff1f1d.zip` was produced from the committed
+product tree and validated after fresh extraction: 272,672 bytes, SHA-256
+`7a3b092a7f97b015f610309ff4ab764eafb28e2089d7aa357238a9c964dd278e`.
+The [release receipt](../artifacts/universal-product-v1/wave7/release-verification.json)
+separates installation, software tests and imperfect consumer outcomes. An already
+open task may retain cached skill metadata; no refresh of every task was tested.
+
+The reusable worktree remains for the active goal. The six protected Godagents
+paths, frozen intake/family plan and original observation report are unchanged.
+Next work should continue substantive family bodies, use the source-form report
+only as triage, and test claim-state fidelity without treating added prose as
+proof that every agent will follow it. Neither these three extensions nor the
+153 template matches completes the broader corpus.
