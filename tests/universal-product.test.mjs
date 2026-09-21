@@ -126,6 +126,23 @@ test('portable metadata rejects unrecognized task types',async()=>{
   await assert.rejects(buildProduct(pack),/task type/i);
 });
 
+test('portable reference URLs are not mistaken for local drive paths',async()=>{
+  const {pack}=await fixture();
+  const file=join(pack,'skills/build/SKILL.md');
+  await writeFile(file,(await readFile(file,'utf8'))+'\n[Reference](https://example.org/docs) and http://example.org/spec.\n');
+  await buildProduct(pack);
+  assert.equal((await verifyProduct(pack)).skillCount,3);
+});
+
+test('machine-specific drive, home and UNC paths remain rejected',async()=>{
+  for(const local of ['C:/Dev/private/file.md','D:\\warehouse\\source.md','/home/person/project/file','/Users/person/project/file','\\\\server\\share\\file']){
+    const {pack}=await fixture();
+    const file=join(pack,'skills/build/SKILL.md');
+    await writeFile(file,(await readFile(file,'utf8'))+`\nRead ${local}.\n`);
+    await assert.rejects(buildProduct(pack),/machine-local path/i);
+  }
+});
+
 test('installer refuses a junction that would redirect a target outside its named directory',async()=>{
   const {root,pack}=await fixture();await buildProduct(pack);
   const outside=join(root,'outside'),linked=join(root,'linked');await mkdir(outside);

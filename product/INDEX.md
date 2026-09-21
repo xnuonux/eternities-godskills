@@ -32,6 +32,7 @@ Search metadata first; open the selected skill, then only its needed references.
 - [columnar-ingestion-rollup-and-query-layout-design](skills/columnar-ingestion-rollup-and-query-layout-design/SKILL.md): Design and compare columnar ingestion, partition, rollup, and query layouts from representative workload, lineage, late-data, and measurement evidence. Specialist of eternities-atlas.
 - [eternities-atlas](skills/eternities-atlas/SKILL.md): Build reproducible analytics, query, schema, migration, synchronization, telemetry, and experiment artifacts from bounded data evidence.
 - [formula-preserving-workbook-engineering](skills/formula-preserving-workbook-engineering/SKILL.md): Change spreadsheet packages while preserving formula lineage, names, links, calculation behavior, package structure, and rendered sheets. Specialist of eternities-daedalus.
+- [geospatial-coordinate-integrity](skills/geospatial-coordinate-integrity/SKILL.md): Identify GIS CRS and axis conventions, transform coordinates, and verify map alignment, distance units and spatial output integrity. Specialist of eternities-atlas.
 - [lazy-tabular-transformation-and-validation](skills/lazy-tabular-transformation-and-validation/SKILL.md): Build and validate lazy tabular plans with explicit schemas, invariants, inspected execution, bounded collection, and resource evidence. Specialist of eternities-atlas.
 
 ## design
@@ -88,6 +89,7 @@ Search metadata first; open the selected skill, then only its needed references.
 ## models
 
 - [eternities-hephaestus](skills/eternities-hephaestus/SKILL.md): Qualify model, runtime, hardware, and serving choices against matched quality, capacity, operational, privacy, license, and cost evidence.
+- [experiment-artifact-lineage](skills/experiment-artifact-lineage/SKILL.md): Verify model training checkpoint lineage, dataset splits and cached feature dependencies before reuse, resume, warm-start or reproducibility claims. Specialist of eternities-hephaestus.
 
 ## release
 

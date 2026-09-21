@@ -26,9 +26,17 @@ repository; the shipped skill metadata retains provenance relationships.
 
 A second body-review wave read eight additional source entrypoints and added
 three independently written methods: retrieval-grounded answering, counterbalanced
-agent evaluation, and scene continuity/coverage. The current product has 57
+agent evaluation, and scene continuity/coverage. That milestone shipped 57
 instruction-reviewed methods. A launcher-only source contributed no method.
 This count describes the shipped pack, not the number of sources reviewed.
+
+A third bounded wave adds geospatial coordinate integrity and experiment artifact
+lineage, bringing the current product to 59 methods in the same 21 domains. These
+methods address coordinate interpretation and transformation mistakes, and unsafe
+cache/checkpoint reuse respectively. Source-review records, retained/rejected
+mechanisms and a small matched agent exercise live in the development repository.
+That exercise cannot establish superiority across tasks or certify actual model
+training or survey accuracy. The default maturity remains instruction-reviewed.
 
 The source corpus remains a research backlog. Do not describe unresolved rows as
 "all skills incorporated" or treat a matching category as proof of semantic

@@ -28,6 +28,10 @@ const cases=[
   ['Build retrieval grounded answers with citations and test empty or stale evidence','retrieval-grounded-answering'],
   ['Compare raw agents against skill enabled agents with blinded counterbalanced evaluation','counterbalanced-agent-evaluation'],
   ['Storyboard camera coverage on one shared scene timeline without repeating the action','scene-continuity-and-coverage'],
+  ['Fix GIS CRS axis order and reproject coordinates without changing their location','geospatial-coordinate-integrity'],
+  ['My map layers do not line up and buffer distances are in degrees','geospatial-coordinate-integrity'],
+  ['Resume model training only when checkpoint dataset split and experiment lineage match','experiment-artifact-lineage'],
+  ['Can I reuse cached features after preprocessing and training data changed','experiment-artifact-lineage'],
 ];
 for(const [query,id] of cases)test(`offline task lookup exposes ${id} in first three candidates`,async()=>{
   const result=searchCatalog(await catalog(),query,{limit:3});

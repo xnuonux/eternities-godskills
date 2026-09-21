@@ -1,0 +1,21 @@
+{
+  "id": "experiment-artifact-lineage",
+  "category": "models",
+  "summary": "Verify model training checkpoint lineage, dataset splits and cached feature dependencies before reuse, resume, warm-start or reproducibility claims.",
+  "triggers": ["resume model training checkpoint dataset split experiment lineage", "reuse cached features preprocessing training data changed", "machine learning reproducibility experiment tracking", "weights only warm start optimizer random state"],
+  "antiTriggers": ["simple model selection without artifact reuse"],
+  "taskTypes": ["build", "verify", "recover", "plan"],
+  "related": ["eternities-hephaestus", "eternities-athena", "eternities-atlas", "counterbalanced-agent-evaluation"],
+  "specializes": "eternities-hephaestus",
+  "resources": [],
+  "maturity": "instruction-reviewed",
+  "provenance": [
+    {"kind":"pattern-reference","source":"muend/geoai-skills@096e5d4e6825a128e376b017783ee4c8c7323f9b:skills/ml-experiment-standards/SKILL.md","note":"Luna source review verified body ee9407d47e45846b7ed275d7e39b69539397ed49bd8ac59537c8312f7eb6333f. Leakage-aware splits and train-only fitted preprocessing inform independent synthesis. Intake license hint MIT."},
+    {"kind":"pattern-reference","source":"kjuhwa/skills-hub@b8e7275ea024cc3f9d8551b41aa9ebf89b464cd1:skills/ml-ops/sequential-two-phase-training-orchestrator/SKILL.md","note":"Luna source review verified body f471eed818d2d6f3a5179f13caa715191dbd0938ab97b3614f2dacec850cffa5. Ordered phase dependency is retained; existence-only skipping rejected. Intake license hint MIT; nested origin statement remains unverified. No source code copied."},
+    {"kind":"pattern-reference","source":"uchicago-dsi/ai-sci-skills@a83a035de3138276d0254b7c0bfd38136a32b634:skills/experiment-design/SKILL.md","note":"Luna source review verified body ee76773a102bd94e5b8c189b711e4730cf2cff087ea856fa50fbcdc5610d75b2. Frozen-arm and retained-baseline concepts inform lineage boundaries, not a duplicate experiment planner. Intake license hint MIT."},
+    {"kind":"pattern-reference","source":"baratadiego/ecological-agent-skills@db8917a13c7655dcbae2644abcdb14c992f69ec4:skills/reproducible-ecology-pipeline/SKILL.md","note":"Luna source review verified body ed7b3b4fbf5391e0f1d65c44a7dcfca685eab57502b315b6b86d199ec0335c06. Provenance and re-execution concepts considered; no text/code copied, fixed layouts and numeric checklist threshold rejected. Intake license hint GPL-3.0; no licensing-clearance claim."},
+    {"kind":"authoring","source":"product/skills/experiment-artifact-lineage/SKILL.md","note":"Independent task-contract authoring with concrete reuse and resume boundaries; no automatic training or reproducibility certification."},
+    {"kind":"reference","source":"https://docs.pytorch.org/docs/stable/notes/randomness.html","note":"Official guidance consulted 2026-09-21 for limits of seed-based and cross-environment reproducibility; method remains framework-neutral."},
+    {"kind":"reference","source":"https://docs.pytorch.org/tutorials/beginner/saving_loading_models.html","note":"Official guidance consulted 2026-09-21 for weights versus general training checkpoint state; no code copied."}
+  ]
+}

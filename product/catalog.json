@@ -635,7 +635,9 @@
         "eternities-aegis",
         "eternities-architect",
         "eternities-daedalus",
-        "eternities-prometheus"
+        "eternities-prometheus",
+        "experiment-artifact-lineage",
+        "geospatial-coordinate-integrity"
       ],
       "maturity": "instruction-reviewed",
       "entrypoint": "skills/eternities-atlas/SKILL.md",
@@ -838,7 +840,8 @@
         "eternities-architect",
         "eternities-daedalus",
         "eternities-herald",
-        "eternities-oracle"
+        "eternities-oracle",
+        "experiment-artifact-lineage"
       ],
       "maturity": "instruction-reviewed",
       "entrypoint": "skills/eternities-hephaestus/SKILL.md",
@@ -1282,6 +1285,37 @@
       "resources": []
     },
     {
+      "id": "experiment-artifact-lineage",
+      "category": "models",
+      "summary": "Verify model training checkpoint lineage, dataset splits and cached feature dependencies before reuse, resume, warm-start or reproducibility claims.",
+      "triggers": [
+        "resume model training checkpoint dataset split experiment lineage",
+        "reuse cached features preprocessing training data changed",
+        "machine learning reproducibility experiment tracking",
+        "weights only warm start optimizer random state"
+      ],
+      "antiTriggers": [
+        "simple model selection without artifact reuse"
+      ],
+      "taskTypes": [
+        "build",
+        "verify",
+        "recover",
+        "plan"
+      ],
+      "related": [
+        "counterbalanced-agent-evaluation",
+        "eternities-athena",
+        "eternities-atlas",
+        "eternities-hephaestus"
+      ],
+      "specializes": "eternities-hephaestus",
+      "maturity": "instruction-reviewed",
+      "entrypoint": "skills/experiment-artifact-lineage/SKILL.md",
+      "entrypointSha256": "92da8b7ef85c7b308d7e4842e3ef3de02ce4b54061a9603e2338fa6d676682fe",
+      "resources": []
+    },
+    {
       "id": "financial-statement-reconciliation",
       "category": "finance",
       "summary": "Reconcile reported financial statements, trace calculated ratios, and stress-test assumptions without inventing assurance or investment certainty.",
@@ -1401,6 +1435,36 @@
       "maturity": "instruction-reviewed",
       "entrypoint": "skills/genomic-coordinate-assembly-and-variant-gates/SKILL.md",
       "entrypointSha256": "d276703d60093ee3a3f346ad9afcaf453bf0bee6801975f93fdc816d3671e852",
+      "resources": []
+    },
+    {
+      "id": "geospatial-coordinate-integrity",
+      "category": "data",
+      "summary": "Identify GIS CRS and axis conventions, transform coordinates, and verify map alignment, distance units and spatial output integrity.",
+      "triggers": [
+        "GIS CRS axis order reproject coordinates",
+        "map layers do not line up buffer distances degrees",
+        "geospatial projection datum coordinate transformation",
+        "raster grid resampling spatial join units"
+      ],
+      "antiTriggers": [
+        "purely visual map style change"
+      ],
+      "taskTypes": [
+        "build",
+        "verify",
+        "recover",
+        "plan"
+      ],
+      "related": [
+        "eternities-athena",
+        "eternities-atlas",
+        "physics-constrained-numerical-validation"
+      ],
+      "specializes": "eternities-atlas",
+      "maturity": "instruction-reviewed",
+      "entrypoint": "skills/geospatial-coordinate-integrity/SKILL.md",
+      "entrypointSha256": "f1ddcb9456b48559add138210cb86daf3906e7ec80c097505379966b64dda4b1",
       "resources": []
     },
     {
