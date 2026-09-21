@@ -1,0 +1,44 @@
+{
+  "id": "infrastructure-plan-apply-isolation",
+  "category": "release",
+  "summary": "Isolate infrastructure tests and plans from authorized state-changing applies, preserving version, state, diff, and cleanup evidence.",
+  "triggers": [
+    "Terraform module behavior needs tests with mocks, a plan, or a narrowly scoped apply.",
+    "An infrastructure change needs a clear boundary between proposed resources and remote state mutation.",
+    "A release or recovery record must retain provider versions, state identity, resource diff, and cleanup evidence."
+  ],
+  "antiTriggers": [
+    "Apply infrastructure merely because a plan or mock test passed.",
+    "Use unsupported mock features as if they were provider or permission coverage.",
+    "Reuse broad shared state or expose credentials while testing."
+  ],
+  "taskTypes": [
+    "plan",
+    "build",
+    "verify",
+    "recover"
+  ],
+  "related": [
+    "eternities-herald",
+    "eternities-daedalus",
+    "eternities-aegis",
+    "release-script-safety",
+    "performance-release-gating",
+    "bounded-service-shutdown"
+  ],
+  "resources": [],
+  "maturity": "instruction-reviewed",
+  "provenance": [
+    {
+      "kind": "intake-synthesis",
+      "source": "docs/quarry-intakes/2026-09-20-category-synthesis.md",
+      "note": "Independent design grounded in the I source ledger: hashicorp/agent-skills@c2d65dfe492f74d360d35b859b88932222470bd8:plugins/terraform/skills/terraform-test/SKILL.md and its MOCK_PROVIDERS.md, CI_CD.md, and EXAMPLES.md references; version-aware plan/mock/apply separation and stateful evidence were rewritten for portable use without copying source prose."
+    },
+    {
+      "kind": "routing-context",
+      "source": "docs/capability-directory.md",
+      "note": "Herald release routing, Daedalus engineering routing, and Aegis boundary context were used for optional relationships; no provider execution or infrastructure certification is claimed."
+    }
+  ],
+  "specializes": "eternities-herald"
+}

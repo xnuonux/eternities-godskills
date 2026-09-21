@@ -1,0 +1,46 @@
+{
+  "id": "bounded-verified-object-ingestion",
+  "category": "data",
+  "summary": "Ingest a manifest-bound object set with identity and digest validation, quarantine, atomic staging, replay accounting, and rollback evidence.",
+  "triggers": [
+    "A supplied manifest defines the exact objects to ingest.",
+    "Accepted, rejected, quarantined, and conflicting objects need a replayable ledger.",
+    "Storage writes must be checked before and after commit."
+  ],
+  "antiTriggers": [
+    "Crawl paths outside the authorized manifest.",
+    "Overwrite a collision before identity and rollback checks pass.",
+    "Delete source objects as an implicit part of ingestion."
+  ],
+  "taskTypes": [
+    "build",
+    "verify",
+    "recover"
+  ],
+  "related": [
+    "eternities-atlas",
+    "eternities-aegis",
+    "eternities-oracle",
+    "confirmed-destructive-reconstruction"
+  ],
+  "resources": [],
+  "maturity": "instruction-reviewed",
+  "provenance": [
+    {
+      "kind": "historical-entrypoint",
+      "source": "skills/bounded-verified-object-ingestion/SKILL.md",
+      "note": "Method source read in full and independently rewritten for portable product use; the historical file remains unchanged."
+    },
+    {
+      "kind": "historical-contract",
+      "source": "skills/bounded-verified-object-ingestion/references/capability-contract.json",
+      "note": "Manifest, integrity, quarantine, replay, and rollback semantics informed the rewrite; no source prose was copied."
+    },
+    {
+      "kind": "historical-provenance",
+      "source": "skills/bounded-verified-object-ingestion/references/provenance.json",
+      "note": "Ownership and evidence boundaries were consulted; no ingestion or source-quality result is asserted."
+    }
+  ],
+  "specializes": "eternities-atlas"
+}

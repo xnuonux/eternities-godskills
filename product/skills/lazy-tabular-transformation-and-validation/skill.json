@@ -1,0 +1,46 @@
+{
+  "id": "lazy-tabular-transformation-and-validation",
+  "category": "data",
+  "summary": "Build and validate lazy tabular plans with explicit schemas, invariants, inspected execution, bounded collection, and resource evidence.",
+  "triggers": [
+    "A table pipeline should defer work until a measured materialization boundary.",
+    "Schema drift, join cardinality, nulls, keys, or resource use need explicit validation.",
+    "A logical plan must be inspected before collecting or writing results."
+  ],
+  "antiTriggers": [
+    "Read arbitrary datasets outside the supplied scope.",
+    "Collect an unbounded plan into memory.",
+    "Call a sampled or partial result proof of full-data completeness."
+  ],
+  "taskTypes": [
+    "build",
+    "verify"
+  ],
+  "related": [
+    "eternities-atlas",
+    "eternities-daedalus",
+    "eternities-aegis",
+    "bounded-verified-object-ingestion",
+    "columnar-ingestion-rollup-and-query-layout-design"
+  ],
+  "resources": [],
+  "maturity": "instruction-reviewed",
+  "provenance": [
+    {
+      "kind": "historical-entrypoint",
+      "source": "skills/lazy-tabular-transformation-and-validation/SKILL.md",
+      "note": "Method source read in full and independently rewritten for portable product use; the historical file remains unchanged."
+    },
+    {
+      "kind": "historical-contract",
+      "source": "skills/lazy-tabular-transformation-and-validation/references/capability-contract.json",
+      "note": "Schema, lazy-plan, collection-boundary, resource, and validation semantics informed the rewrite; no source prose was copied."
+    },
+    {
+      "kind": "historical-provenance",
+      "source": "skills/lazy-tabular-transformation-and-validation/references/provenance.json",
+      "note": "Ownership and evidence boundaries were consulted; no dataset or pipeline result is asserted."
+    }
+  ],
+  "specializes": "eternities-atlas"
+}

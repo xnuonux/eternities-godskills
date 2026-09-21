@@ -1,0 +1,47 @@
+{
+  "id": "release-script-safety",
+  "category": "release",
+  "summary": "Harden release procedures with effect inventories, preflight checks, dry-run, idempotent state, interruption recovery, rollback, and noninteractive failure evidence.",
+  "triggers": [
+    "A release script needs dry-run, idempotency, rollback, or stale-state protection.",
+    "A local artifact must be separated from a later publish, tag, or deploy effect.",
+    "An interrupted release needs typed reconciliation before retry."
+  ],
+  "antiTriggers": [
+    "Publish or deploy without the task's explicit external-effect scope.",
+    "Retry after a timeout without reconciling possible partial effects.",
+    "Read or print credentials as part of a safety check."
+  ],
+  "taskTypes": [
+    "build",
+    "verify",
+    "recover"
+  ],
+  "related": [
+    "eternities-herald",
+    "eternities-aegis",
+    "eternities-daedalus",
+    "performance-release-gating",
+    "confirmed-destructive-reconstruction"
+  ],
+  "resources": [],
+  "maturity": "instruction-reviewed",
+  "provenance": [
+    {
+      "kind": "historical-entrypoint",
+      "source": "skills/release-script-safety/SKILL.md",
+      "note": "Method source read in full and independently rewritten for portable product use; the historical file remains unchanged."
+    },
+    {
+      "kind": "historical-contract",
+      "source": "skills/release-script-safety/references/capability-contract.json",
+      "note": "Effect inventory, dry-run, idempotency, interruption, rollback, and failure semantics informed the rewrite; no source prose was copied."
+    },
+    {
+      "kind": "historical-provenance",
+      "source": "skills/release-script-safety/references/provenance.json",
+      "note": "Ownership and evidence boundaries were consulted; no release or deployment result is asserted."
+    }
+  ],
+  "specializes": "eternities-herald"
+}

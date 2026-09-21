@@ -1,0 +1,46 @@
+{
+  "id": "bounded-service-shutdown",
+  "category": "engineering",
+  "summary": "Implement an idempotent shutdown lifecycle with admission fencing, active-work accounting, bounded drain, cleanup ordering, and clean-versus-forced evidence.",
+  "triggers": [
+    "A service or worker must stop accepting work and drain tracked activity.",
+    "Shutdown readiness, duplicate signals, cleanup, or timeout behavior needs review.",
+    "A termination receipt must distinguish clean completion from forced exit."
+  ],
+  "antiTriggers": [
+    "Stop a production process without the required operational scope.",
+    "Choose a deadline without evidence of the host grace window.",
+    "Assume one listener close drains every transport or worker."
+  ],
+  "taskTypes": [
+    "build",
+    "orchestrate",
+    "verify"
+  ],
+  "related": [
+    "eternities-daedalus",
+    "eternities-aegis",
+    "eternities-phoenix",
+    "api-rate-limit-recovery"
+  ],
+  "resources": [],
+  "maturity": "instruction-reviewed",
+  "provenance": [
+    {
+      "kind": "historical-entrypoint",
+      "source": "skills/bounded-service-shutdown/SKILL.md",
+      "note": "Method source read in full and independently rewritten for portable product use; the historical file remains unchanged."
+    },
+    {
+      "kind": "historical-contract",
+      "source": "skills/bounded-service-shutdown/references/capability-contract.json",
+      "note": "Lifecycle operations, failure cases, and termination semantics informed the rewrite; no source prose was copied."
+    },
+    {
+      "kind": "historical-provenance",
+      "source": "skills/bounded-service-shutdown/references/provenance.json",
+      "note": "Ownership and evidence boundaries were consulted; this is instruction-reviewed, not a runtime qualification."
+    }
+  ],
+  "specializes": "eternities-daedalus"
+}

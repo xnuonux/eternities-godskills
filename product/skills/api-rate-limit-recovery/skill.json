@@ -1,0 +1,46 @@
+{
+  "id": "api-rate-limit-recovery",
+  "category": "engineering",
+  "summary": "Build protocol-aware retry behavior with idempotency, bounded backoff, cancellation, concurrency control, and terminal evidence.",
+  "triggers": [
+    "A client receives documented rate-limit responses and needs bounded recovery.",
+    "Retry delay, jitter, idempotency, or exhaustion behavior needs implementation or review.",
+    "A request may be retried while its commit status is uncertain."
+  ],
+  "antiTriggers": [
+    "Evade a provider quota or access policy.",
+    "Retry a non-idempotent mutation without a deduplication contract.",
+    "Claim provider behavior from client-side fixtures alone."
+  ],
+  "taskTypes": [
+    "recover",
+    "build",
+    "verify"
+  ],
+  "related": [
+    "eternities-daedalus",
+    "eternities-hermes",
+    "eternities-aegis",
+    "bounded-service-shutdown"
+  ],
+  "resources": [],
+  "maturity": "instruction-reviewed",
+  "provenance": [
+    {
+      "kind": "historical-entrypoint",
+      "source": "skills/api-rate-limit-recovery/SKILL.md",
+      "note": "Method source read in full and independently rewritten for portable product use; the historical file remains unchanged."
+    },
+    {
+      "kind": "historical-contract",
+      "source": "skills/api-rate-limit-recovery/references/capability-contract.json",
+      "note": "Inputs, retry operations, failure modes, and termination semantics informed the rewrite; no source prose was copied."
+    },
+    {
+      "kind": "historical-provenance",
+      "source": "skills/api-rate-limit-recovery/references/provenance.json",
+      "note": "Ownership and evidence boundaries were consulted; this entrypoint makes no performance or certification claim."
+    }
+  ],
+  "specializes": "eternities-daedalus"
+}

@@ -7,6 +7,7 @@ import { sha256 } from "../src/io.mjs";
 import { decidePromotion } from "../src/promote.mjs";
 import { routeCapabilities } from "../src/router.mjs";
 import { validateRoutingCard } from "../src/routing-contracts.mjs";
+import { readPinnedSourceBytes } from "../src/pinned-source-bytes.mjs";
 
 const root = new URL("../", import.meta.url);
 const skillRoot = new URL("skills/eternities-athena/", root);
@@ -35,7 +36,7 @@ test("Athena contract exposes scientific validity and exact inert provenance", a
   assert.equal(source.bodySha256, "48a3b32aa9273343dacae7532546a2fee375b148bb467305905b0ca169c1d3b0");
   assert.equal(contract.provenance.sourceId, sourceId);
   assert.equal(contract.provenance.bodySha256, source.bodySha256);
-  assert.equal(sha256(await readFile(source.sourceAbsolutePath)), source.bodySha256);
+  assert.equal(sha256(await readPinnedSourceBytes(source)), source.bodySha256);
   assert.deepEqual(contract.effects, ["read"]);
   assert.equal(contract.provenance.copiedSourceProse, false);
   assert.equal(contract.provenance.copiedImplementation, false);

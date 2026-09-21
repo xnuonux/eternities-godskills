@@ -5,6 +5,27 @@ broad disciplines, operational skills supply focused methods, and extensions
 add bounded mechanisms to an owner. godagents, the keel, and Lunari are
 optional consumers, not prerequisites.
 
+## portable product successor
+
+The self-contained pack is now in **[product/](product/README.md)**: 54 rewritten
+skill entrypoints organized into 21 primary domains, with the 26 existing owner
+extensions folded into relevant methods. It includes broad and specialist
+discovery, a compact relationship catalog, explainable offline search, an exact
+file manifest, and a backed-up installer with rollback. Markdown use requires no
+Node, API, warehouse, personal folder, Keel, or Godagents installation. The
+optional CLI uses Node built-ins only.
+
+- [Browse the portable directory](product/INDEX.md)
+- [Idea-to-product, incident repair, research-to-article and visual-scene examples](product/RECIPES.md)
+- [Read the source-corpus scope and unfinished refinement boundary](product/CORPUS-SCOPE.md)
+- [Understand the evidence correction](docs/universal-evidence-correction.md)
+
+The `skills/` tree and pinned historical protocols below remain preserved for
+compatibility. New installations should use `product/skills/`; the old 44-folder
+count describes that historical tree, not the portable successor. Product methods
+are instruction-reviewed. Package tests and a bounded real agent exercise do not
+establish universal performance superiority or completion of the entire quarry.
+
 **current state: development library, not a universally performance-qualified
 v1 release.** the routing and integrity machinery has substantial local test
 coverage. actual agent-outcome evidence is limited and mixed. selection is not

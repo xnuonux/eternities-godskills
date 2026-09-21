@@ -13,6 +13,7 @@ import {
   verifyCheckpointEnvelope,
 } from "../src/continuity-packets.mjs";
 import { sha256, writeJsonAtomic } from "../src/io.mjs";
+import { readPinnedSourceBytes } from "../src/pinned-source-bytes.mjs";
 
 const SOURCE_ID = "OthmanAdi/planning-with-files@9e94390e5912b1ff296556505cd999ff84838160:skills/planning-with-files/SKILL.md";
 const SOURCE_DIGEST = "d57fd5bd607a15b3669b7d53b54b201994eb7dbe68f80ffc33ea0d7e53122f84";
@@ -153,7 +154,7 @@ export async function buildAttestedContinuityReceipt({ root = path.resolve("."),
     .trim().split(/\r?\n/).map(JSON.parse);
   const source = rows.find(({ id }) => id === SOURCE_ID);
   if (!source || source.inert !== true || source.bodySha256 !== SOURCE_DIGEST) throw new Error("continuity source record is absent or stale");
-  if (sha256(await readFile(source.sourceAbsolutePath)) !== SOURCE_DIGEST) throw new Error("continuity source bytes are stale");
+  if (sha256(await readPinnedSourceBytes(source)) !== SOURCE_DIGEST) throw new Error("continuity source bytes are stale");
   const metrics = await evaluateMechanism();
   const gates = {
     exactInertSource: true,
