@@ -56,7 +56,7 @@
 - [x] Run an actual artifact-lineage decision exercise with independent expected outcomes, including valid reuse, incomplete evidence, changed split, missing resume state and leakage.
 - [x] Review candidate instructions for concrete defects independently of their author; preserve findings and revisions.
 - [x] Run the full repository suite with the existing second-volume fixture and compare protected artifacts against the pinned base.
-- [ ] Reconcile upstream, commit only scoped changes, fast-forward canonical main and push verified work.
-- [ ] Install with a new explicit backup directory; verify every installed skill against the release manifest and preserve unrelated files. Update the clean-machine ZIP and local receipt.
+- [x] Reconcile upstream, commit only scoped changes, fast-forward canonical main and push verified work.
+- [x] Install with a new explicit backup directory; verify every installed skill against the release manifest and preserve unrelated files. Update the clean-machine ZIP and local receipt.
 
 If a candidate fails to add a real procedure, defer it rather than adding a title for coverage. Audio/video synchronization remains deferred here: the initial source is a launcher shell, not sufficient evidence of a missing method.

@@ -1,6 +1,6 @@
 # Universal intake distillation, wave 3
 
-Date: 2026-09-21. Candidate expansion of the 57-method portable pack to 59 methods,
+Date: 2026-09-21. Verified expansion of the 57-method portable pack to 59 methods,
 still 21 primary domains. Maturity remains instruction-reviewed.
 
 ## Why these methods
@@ -105,3 +105,33 @@ Both original implementations, local checks, reports and case results are kept.
 No losing condition was patched or selectively retried. The new method remains
 instruction-reviewed, not performance-qualified. The exercise establishes a
 bounded successful use and documents its limits.
+
+## Published and installed result
+
+Implementation and exercise evidence were merged and pushed at
+`49638d5db9ce0dae9a400bef50930ed0ba71eb50`. Canonical main was tested again after
+the fast-forward: 944 total, 943 passed, zero failed, one legacy platform skip.
+The product's exact release ID is
+`8de2600c40fab57bfbe8b26b50ca7ccfa3351cda02eaf6e86fe4263dd704bee4`.
+
+All 59 native skill directories and the standalone pack were installed and
+independently compared with the release manifest. All 56 unrelated pre-existing
+files remained unchanged, checked against both the original snapshot and the
+immediate pre-upgrade snapshot. Rollback receipt:
+`C:\Users\Dom\.agents\godskills-backups\universal-v1-20260921-r4\install-receipt.json`.
+Prior versions remain recoverable; no old backup or unrelated skill was deleted.
+
+A fresh non-forked Luna worker, `01a0c3bb-2e99-7a73-a310-dafbf6e05780`, reported
+both new names and their native entrypoint paths from its initial host catalog
+without reading files or loading bodies. This confirms observed fresh-worker
+catalog visibility only; existing open desktop tasks may cache an older catalog.
+
+The ZIP was built from committed `HEAD:product`, extracted to a fresh directory,
+and validated successfully. Archive: `eternities-godskills-8de2600c.zip`, 241,851
+bytes, SHA-256
+`6f06f0cb77f9eb9fb4a154bf4c22670177626500007ff13a2904562078c2f707`.
+
+The isolated development worktree is retained for the active refinement goal.
+This is a finished two-method wave, not completion of all source-body synthesis.
+Next work should group and refine the remaining evidence-backed gaps, retaining
+this same distinction between metadata coverage and useful tested procedures.
