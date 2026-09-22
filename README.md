@@ -43,6 +43,8 @@ proof of improvement, and a skill never grants authority.
 - [801-repository catalog skill intake, deduplication, and partial Jev classification](docs/quarry-intakes/2026-09-21-catalog801.md)
 - [Additive Jev continuation: 16 metadata judgments and the preserved pacing refusal](artifacts/catalog801-continuation-20260922/README.md)
 - [Local spacing diagnosis and 40 further Jev metadata judgments](artifacts/catalog801-paced-continuation-20260922/RESULTS.md)
+- [Searchable integration of saved Jev continuations, without rewriting frozen evidence](artifacts/catalog801-continuations/README.md)
+- [Eight-source agent-workflow review and optional overhead-review draft](artifacts/universal-product-v1/wave9-agent-workflows/parent-disposition.md)
 - [optional Jev advisory selector: pilot results and limitations](docs/jev-advisory-selection-v1.md)
 - [multi-dimensional skill discovery: corpus audit, Jev trials, and next gates](docs/skill-discovery-facets-v2-plan.md)
 - [public-web skill intake and offline experimental source search](docs/quarry-intakes/2026-09-20-web.md)

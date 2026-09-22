@@ -1,0 +1,13 @@
+# Parent disposition: source-bound draft, not a released skill
+
+MiMo inspected the eight `agent-workflow-reliability` family leads and authored the three adjacent research artifacts. Parent independently recomputed all eight source SHA-256 values, verified their original intake identities, current repository commits, Git blobs, and commit:path blobs. All matched. The candidate is 277 whitespace-separated words. This does not independently reproduce every semantic coverage judgment or establish legal clearance.
+
+The useful proposal is an optional Forge-owned overhead/value review. Five leads were considered already covered, one retained, one rejected as a host-specific wrapper, and one deferred for runtime implementation. Those are bounded source-review dispositions, not a claim that the full discipline or corpus is complete. The runtime-process-registry lead remains explicitly unfinished.
+
+No product change is adopted in this batch. In particular, the draft's instruction to stop/defer whenever no comparable baseline exists is too broad: safe qualitative inspection and reversible simplification can still be useful without a paid comparison. A baseline is needed for measured comparative claims, not for every engineering judgment. The next revision should retain that distinction and avoid turning an overhead audit into a mandatory per-task receipt.
+
+Before adoption, compare a compact guidance candidate with existing Forge guidance on a fresh, bounded coding task, preserve unchanged acceptance criteria and uncertainty about real monetary cost, and assess whether its benefits justify its own context/latency burden. The earlier wave8 mixed result is motivation, not proof that this new draft works. Supporting source references were read by the worker but are not individually hash-bound in the eight-entry ledger; do not claim a complete dependency closure.
+
+The worker exited successfully after reporting that final structural checks were next, without returning those checks. Parent performed JSON parsing, eight-row identity/hash/blob/commit verification, three-file inventory, and word-count verification directly. Worker token reporting was 1,219,936 input tokens including 819,200 cached, and 22,632 output tokens including 8,352 reasoning. These counters are not an invoice and do not imply a cost saving. The source review took materially longer and loaded more context than desirable; future worker briefs should include exact source ledger locations and bounded projections up front.
+
+Installed pack remains the wave8 release with 63 methods. This folder is inert research, not an automatically discoverable installed skill, and no private transcripts or credentials were ingested.

@@ -42,6 +42,10 @@ export function normalizeJevReceipt(request,record){
   assert.equal(raw.request_digest,bindingDigest(request),'Unbound request digest');
   assert.equal(raw.snapshot_id,request.snapshot_id,'Changed response snapshot');
   assert(['ok','unavailable'].includes(raw.status),'Unexpected provider status');
+  // Bound helper failures may omit returned identity, but cannot contradict it.
+  // The label's model identifies the requested route, not a successful inference.
+  if(Object.hasOwn(raw,'returned_model'))assert.equal(raw.returned_model,model,'Contradictory returned model');
+  if(Object.hasOwn(raw,'provider'))assert.equal(raw.provider,'TypeSafe','Contradictory provider');
   const base={requestId:request.request_id,snapshotId:request.snapshot_id,receiptDigest:sha(JSON.stringify(canonical(record))),model,scope:'selected-metadata-only',authority:'none'};
   if(raw.status==='unavailable')return{raw,labels:request.items.map(item=>({...base,inputSha256:item.id.slice(2),classificationStatus:'jev-unavailable',advisoryDomain:null,reason:String(raw.reason??'unavailable').slice(0,160)}))};
   assert.equal(raw.request_digest,bindingDigest(request));assert.equal(raw.snapshot_id,request.snapshot_id);
@@ -91,6 +95,6 @@ export function searchCatalogIntake(sources,queue,{query,domain,limit=5}={}){
   for(const row of queue){assert(!byBody.has(row.bodySha256),'Duplicate queue body');byBody.set(row.bodySha256,row);}
   const selected=sources.filter(s=>{const row=byBody.get(s.bodySha256);return row&&row.sourceIds.includes(s.sourceId)&&(!domain||(domain==='unknown'?row.classificationStatus==='jev-unknown':row.classificationStatus==='jev-provisional'&&row.advisoryDomain===domain));});
   return searchColdIntakes(selected,[],{query,limit}).map(result=>{
-    const row=byBody.get(result.bodySha256);return{...result,advisoryDomain:row.advisoryDomain,classificationStatus:row.classificationStatus,classificationScope:'selected-metadata-only'};
+    const row=byBody.get(result.bodySha256);return{...result,advisoryDomain:row.advisoryDomain,classificationStatus:row.classificationStatus,classificationScope:'selected-metadata-only',authority:'none'};
   });
 }
