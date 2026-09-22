@@ -20,7 +20,7 @@ Daedalus is the practical engineering route. It can inspect, plan, implement, re
 
 1. State the objective, repository and file boundary, route, authority, effects, acceptance signal, rollback, and handoff owner.
 2. Inspect the actual source, configuration, dependency graph, fixtures, and tests. Keep observed facts, user constraints, derived choices, assumptions, unknowns, and conflicts in a source ledger.
-3. For a behavior change, write or identify the failing test that names the behavior. Make the smallest implementation, then run focused checks and the relevant broader suite.
+3. For a behavior change, write or identify the failing test that names the behavior. Make the smallest implementation, then run focused checks and the relevant broader suite. For fixture, oracle, mock-boundary, simulation, or end-to-end coverage choices, use [test design and evidence](references/test-design-and-evidence.md).
 4. Preserve route-specific contracts: performance needs a workload and resource baseline; configuration needs schema and precedence; integrations need named boundaries; migrations need compatibility and recovery.
 5. Review generated or unfamiliar code as an unexecuted artifact until its behavior is independently inspected and tested. Record exact paths, test results, uncovered edges, and performed effects.
 

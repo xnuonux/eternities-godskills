@@ -19,7 +19,7 @@ Phoenix is the diagnosis and recovery route. It protects the investigation from 
 ## Working method
 
 1. Bind affected component, scope, authority, impact, timestamps, acceptance condition, reproduction or its absence, baseline, and rollback owner.
-2. Read local evidence first. Preserve exact observations and locators; distinguish observed facts, derived values, hypotheses, proposals, and unresolved conflict.
+2. Read local evidence first. Preserve exact observations and locators; distinguish observed facts, derived values, hypotheses, proposals, and unresolved conflict. When another person or later session must replay the failure, use [reproducible bug packets](references/reproducible-bug-packets.md).
 3. Rank hypotheses and run one predeclared reversible check at a time. Record negative results so an eliminated explanation does not silently return.
 4. Compare expected and actual behavior, then propose the smallest repair or recovery that can be independently checked. If implementation is authorized, change one bounded surface and rerun the reproducer and regression checks.
 5. Keep production mutation, destructive repair, credentials, external systems, background monitoring, and missing rollback as explicit boundaries requiring another decision.

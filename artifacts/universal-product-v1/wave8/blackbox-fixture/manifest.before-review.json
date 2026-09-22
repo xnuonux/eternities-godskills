@@ -1,0 +1,33 @@
+{
+  "fixture": "coalesce-blackbox-v1",
+  "scopeNote": "Author-independent but same-provider small synthetic exercise. It is not evidence of general superiority.",
+  "contract": {
+    "input": "array of objects with nonempty string id and finite number amount; unrelated fields ignored",
+    "rejections": "TypeError for non-array input, null/non-object element, empty/non-string id, non-number/nonfinite amount; whole call rejects with no partial result",
+    "aggregation": "sum by exact case-sensitive id in input order, order of first appearance, empty input is []",
+    "results": "fresh objects with only id and amount; no input mutation and no retained references",
+    "validAmounts": "zero and negative amounts valid; numeric strings invalid",
+    "specialIds": "__proto__ and constructor are ordinary ids",
+    "numericSemantics": "ordinary JavaScript addition in input order; no rounding, currency, overflow, or Unicode-normalization requirements"
+  },
+  "rubric": {
+    "validTestSuite": "reference case exits 0",
+    "mutantKillCount": "count of opaque variant cases that exit nonzero",
+    "countingRule": "timeout, signal, spawn error, and crash outcomes are never counted as caught semantic bugs",
+    "cases": "1 reference plus 8 opaque numbered variants, each in a separate process"
+  },
+  "sources": {
+    "reference.mjs": { "sha256": "afc41bd0a661d27629417158a2824b4c9748a0ddea63d9642f135fe351d24159" },
+    "variants/mutant-01.mjs": { "sha256": "14df67a5fe1731797d1c478228c5ed235394722daed4fbf96219cdc9558dc61a" },
+    "variants/mutant-02.mjs": { "sha256": "ef6a82c60be0451ff0db7180e8faf8e81d87d4286b270e98a67c125eaeda803b" },
+    "variants/mutant-03.mjs": { "sha256": "a40154107e3b9630755b5b286387cb2925dabb904dfd779ae04a12f3b3886b80" },
+    "variants/mutant-04.mjs": { "sha256": "c9f4865fcd6060f2d49b668501d60c061f6631f50828c3fc11bf0b5ec04b74b6" },
+    "variants/mutant-05.mjs": { "sha256": "9c23fdc36a651be4e268f9f83c1b307407999691c294895ea08f3840633ccb42" },
+    "variants/mutant-06.mjs": { "sha256": "1b3ebcd500d78f57e1006611141e885bfacd2d42f5a7d32d66bdc40322ac114a" },
+    "variants/mutant-07.mjs": { "sha256": "500c656991bf0c046794fe5b9daeacce3974aaa5c6802dee9b43a1b78f9462af" },
+    "variants/mutant-08.mjs": { "sha256": "e079c7008164103d8c274b5ebb2d1d46f8735595eaba1dd8e84efa1b4a054108" },
+    "selftest.mjs": { "sha256": "5e559e74a30073060ef7e1e9eb34fe8b884ca62126e11d6f51161e2ef25d0161" },
+    "evaluate.mjs": { "sha256": "bf2e4ac13cad381a143dc811d3e66394957b53589e0ebc3e967a5b48a688bdeb" },
+    "consumer-task.md": { "sha256": "ee5d3a85817839bf128bd02190fa42919af89fc293dedc9354276fa4c36858a3" }
+  }
+}

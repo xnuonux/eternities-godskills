@@ -1,0 +1,14 @@
+Created `tests.mjs` — a Node built-in test suite (`node:test`, `node:assert/strict`, `node:url`) that imports `coalesce` from `process.env.TARGET_MODULE` via `pathToFileURL`.
+
+What it covers, with hand-derived expected values:
+
+- export exists as a function; empty input returns a fresh `[]`
+- exact case-sensitive aggregation in first-seen order, including `' '`, `'a'` vs `'A'`, negative and zero amounts
+- input-order ordinary number addition (the `1e16 + 1 - 1e16 === 0` cancellation case, which rules out reordering or compensated summation)
+- output rows are fresh objects with exactly own keys `id` and `amount`, optional fields ignored, inputs never mutated, and rows hold no input references (checked by post-call input mutation)
+- `'__proto__'`, `'constructor'`, `'toString'` aggregate as ordinary ids (catches plain-object key maps)
+- TypeError on non-array inputs (undefined, null, number, string, array-like, Map) and on every listed invalid element kind — bad elements placed after a valid one so partial results would surface: null/undefined/primitive elements, empty/non-string ids, numeric strings, null/boolean/bigint amounts, NaN, ±Infinity
+
+One deliberate tolerance: invalid input is accepted as signaling `TypeError` whether via promise rejection or synchronous throw, and any resolved/returned value fails the test. That keeps the assertions faithful to "TypeError and never a partial result" without over-constraining the unspecified throw-vs-reject style.
+
+Verification: `node --check tests.mjs` exited 0. I did not execute the suite (no target available), so there are no test outcomes to report. Only `tests.mjs` was changed.

@@ -19,6 +19,7 @@ optional CLI uses Node built-ins only.
 - [Idea-to-product, incident repair, research-to-article and visual-scene examples](product/RECIPES.md)
 - [Read the source-corpus scope and unfinished refinement boundary](product/CORPUS-SCOPE.md)
 - [Understand the evidence correction](docs/universal-evidence-correction.md)
+- [Read the testing and debugging refinement, routing correction and bounded comparison](docs/universal-intake-distillation-wave-8.md)
 - [Read the browser, communication and business extensions and consumer tests](docs/universal-intake-distillation-wave-7.md)
 - [Read the cash-flow refinement and actual consumer exercises](docs/universal-intake-distillation-wave-6.md)
 - [Read the scientific, speech and education distillation](docs/universal-intake-distillation-wave-5.md)
@@ -40,6 +41,7 @@ proof of improvement, and a skill never grants authority.
 ## start here
 
 - [801-repository catalog skill intake, deduplication, and partial Jev classification](docs/quarry-intakes/2026-09-21-catalog801.md)
+- [Additive Jev continuation: 16 metadata judgments and the preserved pacing refusal](artifacts/catalog801-continuation-20260922/README.md)
 - [optional Jev advisory selector: pilot results and limitations](docs/jev-advisory-selection-v1.md)
 - [multi-dimensional skill discovery: corpus audit, Jev trials, and next gates](docs/skill-discovery-facets-v2-plan.md)
 - [public-web skill intake and offline experimental source search](docs/quarry-intakes/2026-09-20-web.md)

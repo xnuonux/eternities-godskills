@@ -1,0 +1,178 @@
+{
+  "fixture": "coalesce-blackbox-v1",
+  "testsPath": "C:\\Users\\Dom\\AppData\\Local\\Temp\\godskills-wave8-evaluation\\consumers-a13c6afbbe\\arm-b\\tests.mjs",
+  "timeoutMs": 5000,
+  "outputLimit": 2048,
+  "validTestSuite": false,
+  "mutantCount": 8,
+  "eligibleFailureCandidateCount": 0,
+  "confirmedMutantKillCount": null,
+  "requiresManualFailureReview": true,
+  "referenceRule": "The reference must pass before any failure candidate is eligible; a failed reference invalidates the aggregate candidate count (reported as 0).",
+  "reviewRule": "Failure candidates are unreviewed normal-exit failures, not confirmed semantic kills. The parent must inspect each candidate's assertion failure or legitimate contract exception before claiming a caught mutant; broad output heuristics cannot certify a kill.",
+  "countingRule": "Only a nonzero normal exit is a failure candidate. Timeout, signal, and spawn errors are distinctly non-candidates.",
+  "cases": [
+    {
+      "id": "reference",
+      "outcome": "failed",
+      "exitCode": 1,
+      "signal": null,
+      "timeout": false,
+      "spawnError": null,
+      "durationMs": 52,
+      "stdout": {
+        "text": "✖ non-array inputs reject with TypeError (0.6486ms)\n✖ null or non-object elements reject atomically (0.1135ms)\n✖ empty or non-string ids reject (0.0805ms)\n✖ non-number or non-finite amounts reject; numeric strings are invalid (0.0931ms)\n✔ empty input returns a fresh empty array (0.4732ms)\n✔ aggregates by exact case-sensitive id in first-appearance order (0.1406ms)\n✔ sums with ordinary addition in input order (0.0879ms)\n✔ returns fresh objects with only id and amount and never mutates input (0.1493ms)\n✔ '__proto__' and 'constructor' are ordinary ids (0.078ms)\nℹ tests 9\nℹ suites 0\nℹ pass 5\nℹ fail 4\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 6.4382\n\n✖ failing tests:\n\ntest at consumers-a13c6afbbe\\arm-b\\tests.mjs:17:1\n✖ non-array inputs reject with TypeError (0.6486ms)\n  TypeError: items must be an array\n      at coalesce (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/reference.mjs:2:36)\n      at rejects (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:12:16)\n      at TestContext.<anonymous> (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:19:11)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1325:25)\n      at Test.start (node:internal/test_runner/test:1191:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)\n      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n\ntest at consumers-a13c6afbbe\\arm-b\\tests.mjs:23:1\n✖ null or non-object elements reject atomically (0.1135ms)\n  TypeError: each item must be an object\n      at coalesce (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/reference.mjs:4:58)\n      at rejects (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:12:16)\n      at TestContext.<anonymous> (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm",
+        "truncated": true
+      },
+      "stderr": {
+        "text": "",
+        "truncated": false
+      },
+      "failureCandidate": true
+    },
+    {
+      "id": "mutant-01",
+      "outcome": "failed",
+      "exitCode": 1,
+      "signal": null,
+      "timeout": false,
+      "spawnError": null,
+      "durationMs": 54,
+      "stdout": {
+        "text": "✖ non-array inputs reject with TypeError (0.5713ms)\n✖ null or non-object elements reject atomically (0.1135ms)\n✖ empty or non-string ids reject (0.0771ms)\n✖ non-number or non-finite amounts reject; numeric strings are invalid (0.3397ms)\n✔ empty input returns a fresh empty array (0.3904ms)\n✔ aggregates by exact case-sensitive id in first-appearance order (0.1334ms)\n✔ sums with ordinary addition in input order (0.0961ms)\n✔ returns fresh objects with only id and amount and never mutates input (0.138ms)\n✔ '__proto__' and 'constructor' are ordinary ids (0.0771ms)\nℹ tests 9\nℹ suites 0\nℹ pass 5\nℹ fail 4\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 6.5183\n\n✖ failing tests:\n\ntest at consumers-a13c6afbbe\\arm-b\\tests.mjs:17:1\n✖ non-array inputs reject with TypeError (0.5713ms)\n  TypeError: items must be an array\n      at coalesce (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/variants/mutant-01.mjs:7:36)\n      at rejects (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:12:16)\n      at TestContext.<anonymous> (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:19:11)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1325:25)\n      at Test.start (node:internal/test_runner/test:1191:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)\n      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n\ntest at consumers-a13c6afbbe\\arm-b\\tests.mjs:23:1\n✖ null or non-object elements reject atomically (0.1135ms)\n  TypeError: each item must be an object\n      at coalesce (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/variants/mutant-01.mjs:11:58)\n      at rejects (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:12:16)\n      at TestContext.<anonymous> (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consu",
+        "truncated": true
+      },
+      "stderr": {
+        "text": "",
+        "truncated": false
+      },
+      "failureCandidate": true
+    },
+    {
+      "id": "mutant-02",
+      "outcome": "failed",
+      "exitCode": 1,
+      "signal": null,
+      "timeout": false,
+      "spawnError": null,
+      "durationMs": 47,
+      "stdout": {
+        "text": "✖ non-array inputs reject with TypeError (0.5985ms)\n✖ null or non-object elements reject atomically (0.1003ms)\n✖ empty or non-string ids reject (0.0735ms)\n✖ non-number or non-finite amounts reject; numeric strings are invalid (0.0847ms)\n✔ empty input returns a fresh empty array (0.3755ms)\n✖ aggregates by exact case-sensitive id in first-appearance order (0.0845ms)\n✔ sums with ordinary addition in input order (0.0937ms)\n✔ returns fresh objects with only id and amount and never mutates input (0.2014ms)\n✔ '__proto__' and 'constructor' are ordinary ids (0.0955ms)\nℹ tests 9\nℹ suites 0\nℹ pass 4\nℹ fail 5\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 6.1266\n\n✖ failing tests:\n\ntest at consumers-a13c6afbbe\\arm-b\\tests.mjs:17:1\n✖ non-array inputs reject with TypeError (0.5985ms)\n  TypeError: items must be an array\n      at coalesce (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/variants/mutant-02.mjs:2:36)\n      at rejects (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:12:16)\n      at TestContext.<anonymous> (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:19:11)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1325:25)\n      at Test.start (node:internal/test_runner/test:1191:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)\n      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n\ntest at consumers-a13c6afbbe\\arm-b\\tests.mjs:23:1\n✖ null or non-object elements reject atomically (0.1003ms)\n  TypeError: each item must be an object\n      at coalesce (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/variants/mutant-02.mjs:6:58)\n      at rejects (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:12:16)\n      at TestContext.<anonymous> (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consu",
+        "truncated": true
+      },
+      "stderr": {
+        "text": "",
+        "truncated": false
+      },
+      "failureCandidate": true
+    },
+    {
+      "id": "mutant-03",
+      "outcome": "failed",
+      "exitCode": 1,
+      "signal": null,
+      "timeout": false,
+      "spawnError": null,
+      "durationMs": 47,
+      "stdout": {
+        "text": "✖ non-array inputs reject with TypeError (0.5251ms)\n✖ null or non-object elements reject atomically (0.0973ms)\n✖ empty or non-string ids reject (0.0717ms)\n✖ non-number or non-finite amounts reject; numeric strings are invalid (0.0832ms)\n✔ empty input returns a fresh empty array (0.3716ms)\n✖ aggregates by exact case-sensitive id in first-appearance order (0.0834ms)\n✔ sums with ordinary addition in input order (0.072ms)\n✔ returns fresh objects with only id and amount and never mutates input (0.1907ms)\n✔ '__proto__' and 'constructor' are ordinary ids (0.0922ms)\nℹ tests 9\nℹ suites 0\nℹ pass 4\nℹ fail 5\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 5.6955\n\n✖ failing tests:\n\ntest at consumers-a13c6afbbe\\arm-b\\tests.mjs:17:1\n✖ non-array inputs reject with TypeError (0.5251ms)\n  TypeError: items must be an array\n      at coalesce (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/variants/mutant-03.mjs:2:36)\n      at rejects (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:12:16)\n      at TestContext.<anonymous> (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:19:11)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1325:25)\n      at Test.start (node:internal/test_runner/test:1191:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)\n      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n\ntest at consumers-a13c6afbbe\\arm-b\\tests.mjs:23:1\n✖ null or non-object elements reject atomically (0.0973ms)\n  TypeError: each item must be an object\n      at coalesce (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/variants/mutant-03.mjs:6:58)\n      at rejects (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:12:16)\n      at TestContext.<anonymous> (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consum",
+        "truncated": true
+      },
+      "stderr": {
+        "text": "",
+        "truncated": false
+      },
+      "failureCandidate": true
+    },
+    {
+      "id": "mutant-04",
+      "outcome": "failed",
+      "exitCode": 1,
+      "signal": null,
+      "timeout": false,
+      "spawnError": null,
+      "durationMs": 47,
+      "stdout": {
+        "text": "✖ non-array inputs reject with TypeError (0.5322ms)\n✖ null or non-object elements reject atomically (0.0978ms)\n✖ empty or non-string ids reject (0.0736ms)\n✖ non-number or non-finite amounts reject; numeric strings are invalid (0.0849ms)\n✔ empty input returns a fresh empty array (0.3881ms)\n✖ aggregates by exact case-sensitive id in first-appearance order (0.7161ms)\n✔ sums with ordinary addition in input order (0.1072ms)\n✔ returns fresh objects with only id and amount and never mutates input (0.193ms)\n✔ '__proto__' and 'constructor' are ordinary ids (0.2862ms)\nℹ tests 9\nℹ suites 0\nℹ pass 4\nℹ fail 5\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 7.2439\n\n✖ failing tests:\n\ntest at consumers-a13c6afbbe\\arm-b\\tests.mjs:17:1\n✖ non-array inputs reject with TypeError (0.5322ms)\n  TypeError: items must be an array\n      at coalesce (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/variants/mutant-04.mjs:2:36)\n      at rejects (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:12:16)\n      at TestContext.<anonymous> (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:19:11)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1325:25)\n      at Test.start (node:internal/test_runner/test:1191:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)\n      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n\ntest at consumers-a13c6afbbe\\arm-b\\tests.mjs:23:1\n✖ null or non-object elements reject atomically (0.0978ms)\n  TypeError: each item must be an object\n      at coalesce (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/variants/mutant-04.mjs:6:58)\n      at rejects (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:12:16)\n      at TestContext.<anonymous> (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consum",
+        "truncated": true
+      },
+      "stderr": {
+        "text": "",
+        "truncated": false
+      },
+      "failureCandidate": true
+    },
+    {
+      "id": "mutant-05",
+      "outcome": "failed",
+      "exitCode": 1,
+      "signal": null,
+      "timeout": false,
+      "spawnError": null,
+      "durationMs": 51,
+      "stdout": {
+        "text": "✖ non-array inputs reject with TypeError (0.5471ms)\n✖ null or non-object elements reject atomically (0.1016ms)\n✖ empty or non-string ids reject (0.0722ms)\n✖ non-number or non-finite amounts reject; numeric strings are invalid (0.0876ms)\n✔ empty input returns a fresh empty array (0.4633ms)\n✖ aggregates by exact case-sensitive id in first-appearance order (0.8071ms)\n✔ sums with ordinary addition in input order (0.1036ms)\n✔ returns fresh objects with only id and amount and never mutates input (0.1431ms)\n✔ '__proto__' and 'constructor' are ordinary ids (0.0947ms)\nℹ tests 9\nℹ suites 0\nℹ pass 4\nℹ fail 5\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 7.4625\n\n✖ failing tests:\n\ntest at consumers-a13c6afbbe\\arm-b\\tests.mjs:17:1\n✖ non-array inputs reject with TypeError (0.5471ms)\n  TypeError: items must be an array\n      at coalesce (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/variants/mutant-05.mjs:2:36)\n      at rejects (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:12:16)\n      at TestContext.<anonymous> (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:19:11)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1325:25)\n      at Test.start (node:internal/test_runner/test:1191:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)\n      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n\ntest at consumers-a13c6afbbe\\arm-b\\tests.mjs:23:1\n✖ null or non-object elements reject atomically (0.1016ms)\n  TypeError: each item must be an object\n      at coalesce (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/variants/mutant-05.mjs:6:58)\n      at rejects (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:12:16)\n      at TestContext.<anonymous> (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consu",
+        "truncated": true
+      },
+      "stderr": {
+        "text": "",
+        "truncated": false
+      },
+      "failureCandidate": true
+    },
+    {
+      "id": "mutant-06",
+      "outcome": "failed",
+      "exitCode": 1,
+      "signal": null,
+      "timeout": false,
+      "spawnError": null,
+      "durationMs": 50,
+      "stdout": {
+        "text": "✖ non-array inputs reject with TypeError (0.5647ms)\n✖ null or non-object elements reject atomically (0.1353ms)\n✖ empty or non-string ids reject (0.1653ms)\n✖ non-number or non-finite amounts reject; numeric strings are invalid (0.1151ms)\n✔ empty input returns a fresh empty array (0.3981ms)\n✔ aggregates by exact case-sensitive id in first-appearance order (0.1325ms)\n✔ sums with ordinary addition in input order (0.0901ms)\n✖ returns fresh objects with only id and amount and never mutates input (0.7411ms)\n✔ '__proto__' and 'constructor' are ordinary ids (0.1179ms)\nℹ tests 9\nℹ suites 0\nℹ pass 4\nℹ fail 5\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 7.0899\n\n✖ failing tests:\n\ntest at consumers-a13c6afbbe\\arm-b\\tests.mjs:17:1\n✖ non-array inputs reject with TypeError (0.5647ms)\n  TypeError: items must be an array\n      at coalesce (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/variants/mutant-06.mjs:2:36)\n      at rejects (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:12:16)\n      at TestContext.<anonymous> (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:19:11)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1325:25)\n      at Test.start (node:internal/test_runner/test:1191:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)\n      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n\ntest at consumers-a13c6afbbe\\arm-b\\tests.mjs:23:1\n✖ null or non-object elements reject atomically (0.1353ms)\n  TypeError: each item must be an object\n      at coalesce (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/variants/mutant-06.mjs:6:58)\n      at rejects (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:12:16)\n      at TestContext.<anonymous> (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consu",
+        "truncated": true
+      },
+      "stderr": {
+        "text": "",
+        "truncated": false
+      },
+      "failureCandidate": true
+    },
+    {
+      "id": "mutant-07",
+      "outcome": "failed",
+      "exitCode": 1,
+      "signal": null,
+      "timeout": false,
+      "spawnError": null,
+      "durationMs": 48,
+      "stdout": {
+        "text": "✖ non-array inputs reject with TypeError (0.6081ms)\n✖ null or non-object elements reject atomically (0.1307ms)\n✖ empty or non-string ids reject (0.094ms)\n✖ non-number or non-finite amounts reject; numeric strings are invalid (0.0876ms)\n✔ empty input returns a fresh empty array (0.4837ms)\n✔ aggregates by exact case-sensitive id in first-appearance order (0.153ms)\n✔ sums with ordinary addition in input order (0.1753ms)\n✔ returns fresh objects with only id and amount and never mutates input (0.1677ms)\n✖ '__proto__' and 'constructor' are ordinary ids (0.7315ms)\nℹ tests 9\nℹ suites 0\nℹ pass 4\nℹ fail 5\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 7.0663\n\n✖ failing tests:\n\ntest at consumers-a13c6afbbe\\arm-b\\tests.mjs:17:1\n✖ non-array inputs reject with TypeError (0.6081ms)\n  TypeError: items must be an array\n      at coalesce (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/variants/mutant-07.mjs:2:36)\n      at rejects (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:12:16)\n      at TestContext.<anonymous> (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:19:11)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1325:25)\n      at Test.start (node:internal/test_runner/test:1191:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)\n      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n\ntest at consumers-a13c6afbbe\\arm-b\\tests.mjs:23:1\n✖ null or non-object elements reject atomically (0.1307ms)\n  TypeError: each item must be an object\n      at coalesce (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/variants/mutant-07.mjs:6:58)\n      at rejects (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:12:16)\n      at TestContext.<anonymous> (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consume",
+        "truncated": true
+      },
+      "stderr": {
+        "text": "",
+        "truncated": false
+      },
+      "failureCandidate": true
+    },
+    {
+      "id": "mutant-08",
+      "outcome": "failed",
+      "exitCode": 1,
+      "signal": null,
+      "timeout": false,
+      "spawnError": null,
+      "durationMs": 48,
+      "stdout": {
+        "text": "✖ non-array inputs reject with TypeError (0.6253ms)\n✖ null or non-object elements reject atomically (0.1539ms)\n✖ empty or non-string ids reject (0.0807ms)\n✖ non-number or non-finite amounts reject; numeric strings are invalid (0.0913ms)\n✔ empty input returns a fresh empty array (0.3944ms)\n✔ aggregates by exact case-sensitive id in first-appearance order (0.1311ms)\n✔ sums with ordinary addition in input order (0.0899ms)\n✔ returns fresh objects with only id and amount and never mutates input (0.1614ms)\n✔ '__proto__' and 'constructor' are ordinary ids (0.082ms)\nℹ tests 9\nℹ suites 0\nℹ pass 5\nℹ fail 4\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 6.9168\n\n✖ failing tests:\n\ntest at consumers-a13c6afbbe\\arm-b\\tests.mjs:17:1\n✖ non-array inputs reject with TypeError (0.6253ms)\n  TypeError: items must be an array\n      at coalesce (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/variants/mutant-08.mjs:2:36)\n      at rejects (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:12:16)\n      at TestContext.<anonymous> (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:19:11)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1325:25)\n      at Test.start (node:internal/test_runner/test:1191:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)\n      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n\ntest at consumers-a13c6afbbe\\arm-b\\tests.mjs:23:1\n✖ null or non-object elements reject atomically (0.1539ms)\n  TypeError: Cannot read properties of null (reading 'id')\n      at coalesce (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/variants/mutant-08.mjs:12:28)\n      at rejects (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave8-evaluation/consumers-a13c6afbbe/arm-b/tests.mjs:12:16)\n      at TestContext.<anonymous> (file:///C:/Users/Dom/AppData/Local/Temp/godskills-wave",
+        "truncated": true
+      },
+      "stderr": {
+        "text": "",
+        "truncated": false
+      },
+      "failureCandidate": true
+    }
+  ]
+}

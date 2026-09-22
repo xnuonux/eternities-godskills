@@ -1,0 +1,9 @@
+Created `tests.mjs` — 9 behavioral tests using only `node:test`, `node:assert/strict`, `node:process`, and `node:url`:
+
+- **Rejection contract**: non-array inputs, null/non-object elements, empty/non-string `id`s, and non-number/non-finite `amount`s (including numeric strings) all reject with `TypeError`, each asserted both alone and after a valid element to pin atomicity — never a partial result. Invalid calls must genuinely reject (a returned value fails the test).
+- **Aggregation**: exact case-sensitive `id` matching, first-appearance ordering, empty input → `[]`, and `0`/negative amounts.
+- **Sum order**: `0.1, 0.2, 0.3` must equal `0.1 + 0.2 + 0.3` in that order (and the reversed order differs), pinning ordinary addition in input order without inventing rounding rules.
+- **Fidelity**: output array and result objects are fresh, contain only `id` and `amount` (extra fields dropped), input is unmutated, and mutating output doesn't touch input — no shared references.
+- **Prototype ids**: `'__proto__'` and `'constructor'` aggregate as ordinary ids with no `Object.prototype` pollution.
+
+Verification: `node --check tests.mjs` exited 0 (that is the only check I ran; I did not execute the suite against a target, since `TARGET_MODULE` is unavailable during authoring). Only `tests.mjs` was created or modified.
