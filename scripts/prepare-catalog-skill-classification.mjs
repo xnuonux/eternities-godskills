@@ -1,0 +1,11 @@
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+import {createHash} from 'node:crypto';
+import {createClassificationRequests} from '../src/catalog-skill-classification.mjs';
+const dir=fileURLToPath(new URL('../data/quarry-intake-2026-09-21-catalog801/',import.meta.url));
+const read=async name=>(await readFile(dir+name,'utf8')).trim().split(/\r?\n/).filter(Boolean).map(JSON.parse);
+const requests=createClassificationRequests(await read('classification-inputs.jsonl'),await read('body-groups.jsonl'));
+const bytes=requests.map(x=>JSON.stringify(x)).join('\n')+'\n';
+await writeFile(dir+'jev-requests.jsonl',bytes,{flag:'wx'});
+await mkdir(dir+'jev-receipts',{recursive:true});
+console.log(JSON.stringify({requests:requests.length,items:requests.flatMap(x=>x.items).length,sha256:createHash('sha256').update(bytes).digest('hex')}));

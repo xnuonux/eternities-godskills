@@ -39,6 +39,7 @@ proof of improvement, and a skill never grants authority.
 
 ## start here
 
+- [801-repository catalog skill intake, deduplication, and partial Jev classification](docs/quarry-intakes/2026-09-21-catalog801.md)
 - [optional Jev advisory selector: pilot results and limitations](docs/jev-advisory-selection-v1.md)
 - [multi-dimensional skill discovery: corpus audit, Jev trials, and next gates](docs/skill-discovery-facets-v2-plan.md)
 - [public-web skill intake and offline experimental source search](docs/quarry-intakes/2026-09-20-web.md)
