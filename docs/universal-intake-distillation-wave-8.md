@@ -21,3 +21,13 @@ The author's proposed exercise under `artifacts/universal-product-v1/wave8/consu
 ## Consumer result
 
 The method-assisted suite passed the reference and caught all eight injected defects after parent inspection. The baseline suite was invalid because it required Promise-only error signaling absent from the contract; its variant failures are not scored. No consumer was selectively retried or repaired. The assisted run took approximately 511 seconds versus 188 seconds and produced 18,324 versus 5,085 output tokens including reasoning. No broad quality or efficiency superiority is claimed. See the [preserved outputs, costs/uncertainty and decision](../artifacts/universal-product-v1/wave8/blackbox-fixture/RESULTS.md).
+
+## Integration and local installation
+
+Implementation commit `6843290` was fast-forwarded into clean canonical main after reconciling origin. The merged checkout reran all 1,018 tests: 1,016 passed, zero failed, two conditional skips. The three coordinated adaptive-activation paths remain byte-for-byte unchanged from the intake base `8857355`. No other worktree was removed.
+
+The backed-up installer refreshed all 63 skill directories and the standalone discovery runtime. Installed runtime validation reports release `b6844fb8e76fd7e439276117b3273a5c585f688797c38c8f5a788132ee3ff5bc`; the live intermittent-crash query returns Phoenix first with no activation or authority. All 56 unrelated installed entries retain the same aggregate SHA-256, `9ec4fbb3b3980eb1380fc9234f4b005269b307240ba6196546409ac99b768d5a`.
+
+Local rollback receipt: `C:/Users/Dom/.agents/godskills-backups/universal-v1-20260922-wave8/install-receipt.json`. Originals are preserved there; rollback was not executed on this live installation. These are local deployment records, not workstation prerequisites of the portable pack. File installation does not establish that every already-open task refreshed its cached skill catalog.
+
+Raw reviewer Markdown and frozen experiment logs retain original whitespace. Default Git whitespace checking reports their trailing spaces/blank EOF lines; the product, tests and documentation pass ordinary whitespace checking, and evidence paths pass with only those two whitespace warnings excluded. Frozen evidence bytes were not normalized to hide this distinction.
