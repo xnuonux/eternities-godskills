@@ -1,0 +1,7 @@
+Implemented standalone catalog intake summary mode.
+
+- Changed `scripts/query-catalog-skill-intake.mjs` to accept exclusive `--summary`, derive all counts through the verified continuation loader, and omit `results`, `sources`, and `queue`.
+- Added `tests/catalog-summary.test.mjs` covering summary fields, dynamic counts, omitted data, and invalid/repeated/combinational arguments.
+- Documented usage and trust limitations in `docs/catalog-status.md`.
+
+Verification: `node --test` passed all 27 tests, including the 25 existing tests. A separate process-level check confirmed invalid invocations exit nonzero with empty stdout. No network, package installation, Git operations, evidence rewrites, or out-of-fixture access were used.

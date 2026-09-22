@@ -1,0 +1,9 @@
+# Catalog intake status command
+
+Add a standalone `--summary` mode to `scripts/query-catalog-skill-intake.mjs` in this real Godskills repository slice. It is for a caller who wants current verified intake progress, not matching source records.
+
+`node scripts/query-catalog-skill-intake.mjs --summary` must print one JSON object and exit successfully. Preserve the existing scope, networkCalls, classificationComplete, continuation and bodyStatuses fields, derived through the existing verified continuation loader. Add mode="summary", sourceCount (sources array length), uniqueBodyCount (queue array length), authority="none", and activation="none". Omit results, sources and queue. Never hardcode current counts or imply metadata triage certifies a skill. Do not bypass any loader integrity checks and do not make network calls or rewrite evidence.
+
+Summary is exclusive: reject any combination with --query, --domain or --limit; repeated --summary, a value after it, or any unknown argument also fails with nonzero exit and no success JSON. Existing valid query behavior and JSON must remain unchanged; existing invalid query behavior must remain rejected. The data can change later under its established manifest contract, so summary must derive from current valid evidence.
+
+Implement test-first, add focused regression tests, and explain the new invocation in docs/catalog-status.md. Source code additions/changes are restricted to scripts/query-catalog-skill-intake.mjs, a new src/catalog-query-options.mjs if useful, tests/catalog-summary.test.mjs, and docs/catalog-status.md. Other files are read-only. Run applicable verification, then give a concise final summary of changes, checks and limitations. This is a maintenance change, not a request to implement classification, alter trust policy or install skills.

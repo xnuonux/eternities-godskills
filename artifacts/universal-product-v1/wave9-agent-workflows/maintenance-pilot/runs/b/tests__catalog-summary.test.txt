@@ -1,0 +1,48 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+import {loadCatalogWithContinuations} from '../src/catalog-continuation.mjs';
+
+const root=fileURLToPath(new URL('../',import.meta.url));
+const script=fileURLToPath(new URL('../scripts/query-catalog-skill-intake.mjs',import.meta.url));
+const run=args=>spawnSync(process.execPath,[script,...args],{cwd:root,encoding:'utf8'});
+
+test('summary reports verified intake progress without search results',async()=>{
+  const loaded=await loadCatalogWithContinuations(root),result=run(['--summary']);
+  assert.equal(result.status,0,result.stderr);
+  const summary=JSON.parse(result.stdout);
+  assert.deepEqual(Object.keys(summary).sort(),['activation','authority','bodyStatuses','classificationComplete','continuation','mode','networkCalls','scope','sourceCount','uniqueBodyCount']);
+  assert.equal(summary.mode,'summary');
+  assert.equal(summary.sourceCount,loaded.sources.length);
+  assert.equal(summary.uniqueBodyCount,loaded.queue.length);
+  assert.equal(summary.authority,'none');
+  assert.equal(summary.activation,'none');
+  assert.equal(summary.networkCalls,0);
+  assert.equal(summary.classificationComplete,loaded.classificationComplete);
+  assert.deepEqual(summary.continuation,loaded.continuation);
+  assert.deepEqual(summary.bodyStatuses,loaded.bodyStatuses);
+  assert(!Object.hasOwn(summary,'results'));
+  assert(!Object.hasOwn(summary,'sources'));
+  assert(!Object.hasOwn(summary,'queue'));
+});
+
+test('summary rejects combinations, repeated flags, values and unknown arguments',()=>{
+  for(const args of [
+    ['--summary','--query','devtools-vue'],
+    ['--query','devtools-vue','--summary'],
+    ['--summary','--domain','engineering'],
+    ['--summary','--limit','2'],
+    ['--summary','--summary'],
+    ['--summary','value'],
+    ['--summary','--unknown'],
+    ['--unknown'],
+    ['--query','devtools-vue','--unknown'],
+    ['--query',''],
+    ['--query','devtools-vue','--limit','9'],
+  ]){
+    const result=run(args);
+    assert.notEqual(result.status,0,`expected rejection: ${args.join(' ')}`);
+    assert.equal(result.stdout,'',`unexpected success JSON: ${args.join(' ')}`);
+  }
+});

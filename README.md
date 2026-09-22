@@ -46,6 +46,8 @@ proof of improvement, and a skill never grants authority.
 - [Searchable integration of saved Jev continuations, without rewriting frozen evidence](artifacts/catalog801-continuations/README.md)
 - [Eight-source agent-workflow review and optional overhead-review draft](artifacts/universal-product-v1/wave9-agent-workflows/parent-disposition.md)
 - [Compact-guidance coding pilot: equal checked quality, lower observed usage, adoption deferred](artifacts/universal-product-v1/wave9-agent-workflows/overhead-pilot/RESULTS.md)
+- [Maintenance follow-up: higher observed input usage, default card still deferred](artifacts/universal-product-v1/wave9-agent-workflows/maintenance-pilot/RESULTS.md)
+- [Compact, evidence-verified catalog intake status](docs/catalog-status.md)
 - [optional Jev advisory selector: pilot results and limitations](docs/jev-advisory-selection-v1.md)
 - [multi-dimensional skill discovery: corpus audit, Jev trials, and next gates](docs/skill-discovery-facets-v2-plan.md)
 - [public-web skill intake and offline experimental source search](docs/quarry-intakes/2026-09-20-web.md)

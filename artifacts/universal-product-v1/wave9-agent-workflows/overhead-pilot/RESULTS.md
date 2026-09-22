@@ -43,3 +43,7 @@ Machine-readable frozen inputs, original implementations, messages/commands, usa
 Five harness/evidence tests pass, including rerunning both preserved implementations and checking the frozen inputs and output hashes. Parent full repository suite: 1,048 tests, 1,046 passed, zero failed, two conditional skips (Windows file-symlink creation and a cross-volume destination fixture). Product, intake data, runtime source, policies and protected activation artifacts are unchanged. This research-only batch does not require reinstalling the skill pack.
 
 A local `.gitattributes` preserves the exact experiment bytes instead of applying repository-wide line-ending normalization. Original consumer evidence keeps its trailing whitespace where present; checks of authored files remain separate from those preserved evidence bytes. No workstation configuration was changed.
+
+## Completed follow-up
+
+The proposed real maintenance comparison is complete: [results](../maintenance-pilot/RESULTS.md). It did not reproduce lower input usage, and default adoption remains deferred. That follow-up closes this small pilot series; the original observations and frozen records above are preserved, not retroactively upgraded.

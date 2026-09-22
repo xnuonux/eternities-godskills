@@ -1,0 +1,59 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {execFileSync,spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+import {loadCatalogWithContinuations} from '../src/catalog-continuation.mjs';
+
+const root=fileURLToPath(new URL('../',import.meta.url));
+const script=fileURLToPath(new URL('../scripts/query-catalog-skill-intake.mjs',import.meta.url));
+const run=args=>spawnSync(process.execPath,[script,...args],{encoding:'utf8'});
+
+test('summary reports verified intake progress without source records',async()=>{
+  const loaded=await loadCatalogWithContinuations(root);
+  const output=JSON.parse(execFileSync(process.execPath,[script,'--summary'],{encoding:'utf8'}));
+  assert.deepEqual(output,{
+    scope:'catalog801 cold source metadata; advisory domains are incomplete',
+    networkCalls:0,
+    classificationComplete:loaded.classificationComplete,
+    continuation:loaded.continuation,
+    bodyStatuses:loaded.bodyStatuses,
+    mode:'summary',
+    sourceCount:loaded.sources.length,
+    uniqueBodyCount:loaded.queue.length,
+    authority:'none',
+    activation:'none',
+  });
+  assert(!Object.hasOwn(output,'results'));
+  assert(!Object.hasOwn(output,'sources'));
+  assert(!Object.hasOwn(output,'queue'));
+});
+
+test('summary is exclusive and rejects malformed invocations without JSON',()=>{
+  const invalid=[
+    ['--summary','--query','devtools-vue'],
+    ['--query','devtools-vue','--summary'],
+    ['--summary','--domain','engineering'],
+    ['--summary','--limit','2'],
+    ['--summary','--summary'],
+    ['--summary','value'],
+    ['--summary=value'],
+    ['--unknown'],
+    ['--query'],
+    ['--query',''],
+  ];
+  for(const args of invalid){
+    const result=run(args);
+    assert.notEqual(result.status,0,args.join(' '));
+    assert.equal(result.stdout,'',args.join(' '));
+  }
+});
+
+test('existing valid query output remains unchanged in shape',()=>{
+  const output=JSON.parse(execFileSync(process.execPath,[script,'--query','devtools-vue','--domain','engineering'],{encoding:'utf8'}));
+  assert.equal(output.networkCalls,0);
+  assert.equal(output.mode,undefined);
+  assert.equal(output.sourceCount,undefined);
+  assert.equal(output.uniqueBodyCount,undefined);
+  assert(output.results.some(result=>result.name==='devtools-vue'));
+  assert(output.results.every(result=>result.authority==='none'&&result.activation==='none'));
+});
