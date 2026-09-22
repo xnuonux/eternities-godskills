@@ -1,0 +1,7 @@
+# Bounded continuation after the maintenance pilot
+
+Continue the original immutable catalog801 request plan at indices 19 through 50, at most 32 requests / 256 selected public metadata inputs. Original JSONL SHA-256 c1274fdcf5a54a023a3415e00bb1e813073251659e85c9a004acb6efb0915edb. Preserve each original request ID and snapshot; never regenerate inputs or redispatch old attempts to complete a count. Shared status was ready, credential present, pending zero, accounting stop false, with 43,291 accounted microusd against the unchanged 2,000,000 daily limit before this batch. No key/model/policy changes.
+
+One request in flight; wait at least 2.2 seconds after a successful returned call before another. Stop this dispatch series at the first unavailable, paced, busy, uncertain or malformed result, preserving it. Never rotate keys or mint IDs around a refusal. A provider-bound distribution-sum failure remains unavailable, not a label. Save raw results immediately and normalize against exact frozen request bindings. This is advisory domain triage, not body review, quality certification, synthesis or installation.
+
+Independently inspect receipt validity and append only explicit byte-bound valid receipts to the existing continuation manifest. Preserve frozen original data and prior continuation files. Verify summary/search and regression checks before merging. Uncalled planned requests remain uncalled; no scheduled background inference is implied.

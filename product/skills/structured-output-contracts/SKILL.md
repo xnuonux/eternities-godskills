@@ -1,14 +1,18 @@
 ---
 name: structured-output-contracts
-description: Build or repair machine-consumed model outputs with explicit schemas, source binding, semantic checks, bounded repair, and truthful failure states.
+description: Build or repair machine-consumed records and model outputs with explicit schemas, source binding, semantic checks, bounded repair, and truthful failure states.
 ---
 
 # Structured output contracts
 
-Use when software consumes a model's classifications, extracted records, routing
-choices or tool arguments. Plain conversational answers and an already supplied
+Use when software consumes classifications, extracted records, model outputs,
+vocabulary-bound annotations, routing choices or tool arguments. Plain conversational answers and an already supplied
 static JSON edit normally do not need this method. A correctly shaped answer is
 not necessarily true, current or authorized.
+
+When records must use a declared vocabulary or relationship model, read
+[governed vocabulary validation](references/governed-vocabulary-validation.md).
+Ordinary format checks do not need that additional workflow.
 
 ## Establish the consumer boundary
 

@@ -20,7 +20,7 @@ Search metadata first; open the selected skill, then only its needed references.
 ## automation
 
 - [eternities-hermes](skills/eternities-hermes/SKILL.md): Design and implement bounded automation, browser, protocol, CLI, and test integrations with explicit effect and close-out evidence.
-- [structured-output-contracts](skills/structured-output-contracts/SKILL.md): Validate machine-consumed model JSON and structured outputs with schemas, source-bound record IDs, semantic checks and truthful failure states. Specialist of eternities-hermes.
+- [structured-output-contracts](skills/structured-output-contracts/SKILL.md): Validate machine-consumed records and model JSON with schemas, source-bound IDs, governed vocabularies, relationship checks and truthful failure states. Specialist of eternities-hermes.
 
 ## business
 

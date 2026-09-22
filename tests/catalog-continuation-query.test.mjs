@@ -8,9 +8,16 @@ test('normal domain search includes saved continuation judgments without grantin
   assert(result.results.some(x=>x.name==='devtools-vue'),'The saved Vue judgment must be searchable');
   assert.equal(result.networkCalls,0);
   assert.equal(result.classificationComplete,false);
-  assert.equal(result.continuation.providerReceipts,8);
-  assert.equal(result.continuation.inputStatuses['jev-provisional'],39);
-  assert.equal(result.continuation.inputStatuses['jev-abstained'],17);
-  assert.equal(result.continuation.inputStatuses['jev-unavailable'],8);
+  assert.equal(result.continuation.providerReceipts,16);
+  assert.equal(result.continuation.inputStatuses['jev-provisional'],74);
+  assert.equal(result.continuation.inputStatuses['jev-abstained'],38);
+  assert.equal(result.continuation.inputStatuses['jev-unavailable'],16);
   assert(result.results.every(x=>x.activation==='none'&&x.authority==='none'));
+});
+
+test('second continuation makes its saved knowledge judgment searchable',()=>{
+  const result=JSON.parse(execFileSync(process.execPath,[fileURLToPath(new URL('../scripts/query-catalog-skill-intake.mjs',import.meta.url)), '--query','qmd','--domain','knowledge'],{encoding:'utf8'}));
+  assert(result.results.some(x=>x.name==='qmd'&&x.advisoryDomain==='knowledge'));
+  assert(result.results.every(x=>x.activation==='none'&&x.authority==='none'));
+  assert.equal(result.networkCalls,0);assert.equal(result.classificationComplete,false);
 });

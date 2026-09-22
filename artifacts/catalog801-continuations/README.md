@@ -1,5 +1,7 @@
 # Searchable continuation overlay
 
+Current continuation update: [batch B](../catalog801-continuation-20260922-b/RESULTS.md) adds eight bound receipts (seven successful, one unavailable). The live combined queue is 130 provisional, 61 abstained, 24 unavailable, one unknown, one excluded and 8,624 not dispatched; `--summary` reports these values after verification. The original integration record below describes the earlier eight-receipt snapshot, not current totals.
+
 The normal `scripts/query-catalog-skill-intake.mjs` command now reads the explicitly enumerated, byte-bound receipt set in `manifest.json` alongside the original frozen catalog801 intake. No copy of the full queue is stored, no directory-wide receipt discovery occurs, and no provider call is made. The effective queue exists in memory only.
 
 The eight additional provider-bound receipts contain 56 successful metadata judgments (39 provisional domains and 17 abstentions) plus eight unavailable inputs from the rejected probability distribution. They affect 67 distinct bodies because some selected metadata inputs represent multiple bodies. The local pacing refusal is explicitly excluded: it lacks an inner provider request binding and is not a classification result. It remains preserved in the original artifact directory.
