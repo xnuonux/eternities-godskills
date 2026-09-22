@@ -100,7 +100,7 @@ export function applyClassificationRetries(queue,requests,records){
     for(const label of normalizeJevReceipt(retry,record).labels){
       const prior=queue.filter(row=>row.inputSha256===label.inputSha256);
       assert(prior.length>0,'Retry input not in queue');
-      assert(prior.every(row=>row.requestId===original.request_id&&row.snapshotId===original.snapshot_id&&row.classificationStatus==='jev-unavailable'&&row.reason==='distribution-sum'),'Retry original is not a settled malformed distribution');
+      assert(prior.every(row=>row.requestId===original.request_id&&row.snapshotId===original.snapshot_id&&row.classificationStatus==='jev-unavailable'&&['distribution-sum','argmax'].includes(row.reason)),'Retry original is not a settled malformed distribution');
       assert(!replacements.has(label.inputSha256),'Duplicate retry input');
       replacements.set(label.inputSha256,label);
     }

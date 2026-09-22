@@ -3,12 +3,41 @@ from pathlib import Path
 import unittest
 import json
 import tempfile
+from contextlib import closing
 
 spec=importlib.util.spec_from_file_location('recovery',Path(__file__).with_name('recovery.py'))
 recovery=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(recovery)
 
 class RecoveryTests(unittest.TestCase):
+    def test_admission_delay_reads_ledger_without_changing_it(self):
+        import sqlite3
+        with tempfile.TemporaryDirectory() as folder:
+            path=Path(folder)/'ledger.sqlite'
+            with closing(sqlite3.connect(path)) as db:
+                db.executescript("CREATE TABLE meta(name TEXT,value REAL); CREATE TABLE calls(state TEXT); INSERT INTO meta VALUES ('last_time',100),('next_start',102),('active_until',0),('stopped',0);")
+            before=path.read_bytes()
+            self.assertAlmostEqual(recovery.admission_delay(path,101),1.05)
+            self.assertEqual(recovery.admission_delay(path,103),0)
+            self.assertEqual(path.read_bytes(),before)
+            with self.assertRaisesRegex(ValueError,'clock-rewind'):
+                recovery.admission_delay(path,99)
+            with closing(sqlite3.connect(path)) as db:
+                db.execute("INSERT INTO calls VALUES ('pending')");db.commit()
+            with self.assertRaisesRegex(ValueError,'pending-or-uncertain'):
+                recovery.admission_delay(path,103)
+
+    def test_admission_delay_preserves_stop_and_lease(self):
+        import sqlite3
+        with tempfile.TemporaryDirectory() as folder:
+            path=Path(folder)/'ledger.sqlite'
+            with closing(sqlite3.connect(path)) as db:
+                db.executescript("CREATE TABLE meta(name TEXT,value REAL); CREATE TABLE calls(state TEXT); INSERT INTO meta VALUES ('last_time',100),('next_start',102),('active_until',130),('stopped',0);")
+            with self.assertRaisesRegex(ValueError,'busy'):recovery.admission_delay(path,101)
+            with closing(sqlite3.connect(path)) as db:
+                db.execute("UPDATE meta SET value=1 WHERE name='stopped'");db.commit()
+            with self.assertRaisesRegex(ValueError,'accounting-stop'):recovery.admission_delay(path,140)
+
     def exercise(self, responses):
         called=[];saved=[]
         def judge(req):
@@ -30,6 +59,17 @@ class RecoveryTests(unittest.TestCase):
     def test_repeated_malformed_output_is_quarantined_not_looped(self):
         bad={'status':'unavailable','reason':'distribution-sum','request_digest':'bound','snapshot_id':'frozen','model_calls_this_invocation':1}
         outcome,calls,saved=self.exercise([bad,bad])
+        self.assertEqual(outcome,'quarantined');self.assertEqual(len(calls),2)
+
+    def test_argmax_is_retried_once_without_accepting_or_repairing_invalid_label(self):
+        bad={'status':'unavailable','reason':'argmax','request_digest':'bound','snapshot_id':'frozen','model_calls_this_invocation':1}
+        outcome,calls,saved=self.exercise([bad,{'status':'ok'}])
+        self.assertEqual(outcome,'complete');self.assertEqual(len(calls),2)
+        self.assertEqual(saved[0][1],bad)
+        outcome,calls,saved=self.exercise([bad,bad])
+        self.assertEqual(outcome,'quarantined');self.assertEqual(len(calls),2)
+        sum_bad=dict(bad,reason='distribution-sum')
+        outcome,calls,saved=self.exercise([sum_bad,bad])
         self.assertEqual(outcome,'quarantined');self.assertEqual(len(calls),2)
 
     def test_limits_uncertainty_and_other_failures_stop_without_retry(self):

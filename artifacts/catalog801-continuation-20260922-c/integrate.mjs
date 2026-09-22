@@ -52,7 +52,7 @@ const normalized={request_id:diagnostic.request_id,snapshot_id:diagnostic.snapsh
 const retryPath=dir+'/receipts/'+normalized.request_id+'.json';
 const retryBytes=JSON.stringify(normalized,null,2)+'\n';
 try{assert.equal((await read(retryPath)).toString(),retryBytes);}catch(error){if(error.code!=='ENOENT')throw error;await writeFile(join(root,retryPath),retryBytes,{flag:'wx'});}
-for(const sub of ['receipts','bulk-receipts']){
+for(const sub of ['receipts','bulk-receipts','unlimited-receipts','admission-refusals']){
   const names=(await readdir(join(root,dir,sub))).filter(f=>f.endsWith('.json')).sort();
   for(const name of names)await add(dir+'/'+sub+'/'+name);
 }

@@ -59,3 +59,12 @@ test('a failed retry remains unavailable, never receives a fabricated domain',()
   const result=classifier.applyClassificationRetries(f.queue,f.requests,[f.record]);
   assert.equal(result[0].classificationStatus,'jev-unavailable');assert.equal(result[0].advisoryDomain,null);
 });
+
+test('retry may recover a settled argmax failure but not launder an invalid retry distribution',()=>{
+  const f=fixture();f.queue[0].reason='argmax';
+  assert.equal(classifier.applyClassificationRetries(f.queue,f.requests,[f.record])[0].advisoryDomain,'engineering');
+  const raw=JSON.parse(f.record.result.content[0].text),item=f.retry.items[0].id;
+  raw.results[item].probabilities.engineering=.8;
+  f.record.result.content[0].text=JSON.stringify(raw);
+  assert.throws(()=>classifier.applyClassificationRetries(f.queue,f.requests,[f.record]),/Invalid probability sum/);
+});

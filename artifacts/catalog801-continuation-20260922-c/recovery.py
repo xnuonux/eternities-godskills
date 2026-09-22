@@ -4,7 +4,7 @@ Task-local runner, not universal product or a changed shared Jev policy.
 Never retries admission refusals, uncertain calls, transport or identity failures.
 """
 def retryable(out, request):
-    return (out.get('status') == 'unavailable' and out.get('reason') == 'distribution-sum'
+    return (out.get('status') == 'unavailable' and out.get('reason') in ('distribution-sum', 'argmax')
         and bool(out.get('request_digest')) and out.get('snapshot_id') == request['snapshot_id']
         and (out.get('model_calls_this_invocation') == 1 or out.get('replayed') is True))
 
@@ -36,6 +36,20 @@ def judge_or_replay(request, path, bound_digest, dispatch):
     if 'request_digest' in out:
         assert out['request_digest'] == bound_digest
     return out, True
+
+def admission_delay(ledger_path, now):
+    """Read scheduling state only; never reserve, clear, or retry a call."""
+    import sqlite3
+    from contextlib import closing
+    with closing(sqlite3.connect(ledger_path.as_uri()+'?mode=ro',uri=True)) as db:
+        db.execute('BEGIN')
+        meta=dict(db.execute('SELECT name,value FROM meta'))
+        pending=db.execute("SELECT COUNT(*) FROM calls WHERE state='pending'").fetchone()[0]
+    if meta['stopped']:raise ValueError('accounting-stop')
+    if pending:raise ValueError('pending-or-uncertain')
+    if now < meta['last_time']:raise ValueError('clock-rewind')
+    if now < meta['active_until']:raise ValueError('busy')
+    return max(0,meta['next_start']-now+.05) if now < meta['next_start'] else 0
 
 def main(start=28, folder_name='bulk-receipts', status_name='bulk-status.json'):
     import hashlib
@@ -73,6 +87,9 @@ def main(start=28, folder_name='bulk-receipts', status_name='bulk-status.json'):
                         total = math.fsum(ps.values())
                         if abs(total - 1) > 1e-5:
                             diagnostics.append(dict(itemIndex=i, optionCount=len(ps), total=total, deviation=total-1))
+                        chosen = answer.get('choice')
+                        if chosen in ps and max(ps.values()) - ps[chosen] > 1e-7:
+                            diagnostics.append(dict(itemIndex=i, mismatch='argmax', chosenProbability=ps[chosen], maximumProbability=max(ps.values())))
         return raw
 
     service = Service(transport=observed_transport)
@@ -91,6 +108,14 @@ def main(start=28, folder_name='bulk-receipts', status_name='bulk-status.json'):
         path = path_for(request)
         def dispatch(req):
             time.sleep(2.2)
+            try:
+                delay=admission_delay(service.path,time.time())
+            except ValueError as error:
+                return dict(status='unavailable',authority='none',may_execute=False,reason=str(error))
+            if delay>30:
+                return dict(status='unavailable',authority='none',may_execute=False,reason='admission-delay-excessive')
+            if delay:time.sleep(delay)
+            # Service remains the atomic authority; a race refusal still stops.
             return service.judge(**req)
         out, replayed = judge_or_replay(request, path, build(**request)[1], dispatch)
         if replayed:
