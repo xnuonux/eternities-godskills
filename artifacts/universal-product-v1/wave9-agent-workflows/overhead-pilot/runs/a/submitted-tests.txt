@@ -1,0 +1,290 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+
+import { runChecks } from './runner.mjs';
+
+const noopExecute = () => {};
+
+test('empty targets validate the whole catalog and return []', async () => {
+  let called = 0;
+  const results = await runChecks([{ id: 'a', requires: [] }], [], () => {
+    called += 1;
+  });
+  assert.deepEqual(results, []);
+  assert.equal(called, 0);
+
+  // A cycle in unselected checks still rejects before execute runs.
+  await assert.rejects(
+    runChecks(
+      [
+        { id: 'a', requires: ['b'] },
+        { id: 'b', requires: ['a'] },
+      ],
+      [],
+      () => {
+        called += 1;
+      },
+    ),
+    TypeError,
+  );
+  assert.equal(called, 0);
+});
+
+test('malformed catalogs and targets reject with TypeError before execute', async () => {
+  const valid = { id: 'a', requires: [] };
+  const holeyChecks = new Array(1);
+  const holeyRequires = { id: 'a', requires: new Array(1) };
+  const holeyTargets = new Array(1);
+  const cases = [
+    [undefined, [], noopExecute],
+    [[valid], undefined, noopExecute],
+    [[null], [], noopExecute],
+    [['string'], [], noopExecute],
+    [holeyChecks, [], noopExecute],
+    [[{}], [], noopExecute],
+    [[{ id: 'a' }], [], noopExecute],
+    [[{ id: '', requires: [] }], [], noopExecute],
+    [[{ id: '   ', requires: [] }], [], noopExecute],
+    [[{ id: 3, requires: [] }], [], noopExecute],
+    [[{ id: 'a', requires: 'b' }], [], noopExecute],
+    [holeyRequires, [], noopExecute],
+    [[{ id: 'a', requires: [''] }], [], noopExecute],
+    [[{ id: 'a', requires: [1] }], [], noopExecute],
+    [
+      [
+        { id: 'a', requires: [] },
+        { id: 'a', requires: [] },
+      ],
+      [],
+      noopExecute,
+    ],
+    [[{ id: 'a', requires: ['missing'] }], [], noopExecute],
+    [[{ id: 'a', requires: ['a'] }], [], noopExecute],
+    [
+      [
+        { id: 'a', requires: ['b'] },
+        { id: 'b', requires: ['c'] },
+        { id: 'c', requires: ['a'] },
+      ],
+      [],
+      noopExecute,
+    ],
+    [[valid], ['missing'], noopExecute],
+    [[valid], [''], noopExecute],
+    [[valid], [42], noopExecute],
+    [[valid], holeyTargets, noopExecute],
+    [[valid], [], undefined],
+  ];
+
+  let called = 0;
+  const execute = () => {
+    called += 1;
+  };
+  for (const [checks, targets, exec] of cases) {
+    await assert.rejects(
+      runChecks(checks, targets, exec === noopExecute ? execute : exec),
+      TypeError,
+    );
+  }
+  assert.equal(called, 0);
+});
+
+test('IDs are exact, case-sensitive, and prototype-safe', async () => {
+  const calls = [];
+  const results = await runChecks(
+    [
+      { id: 'A', requires: ['a'] },
+      { id: 'a', requires: [] },
+      { id: '__proto__', requires: [] },
+      { id: 'constructor', requires: ['__proto__'] },
+      { id: 'toString', requires: ['constructor', 'A'] },
+    ],
+    ['toString'],
+    async (id) => {
+      calls.push(id);
+    },
+  );
+  assert.deepEqual(calls, ['__proto__', 'constructor', 'a', 'A', 'toString']);
+  assert.equal(results.length, 5);
+  assert.ok(results.every((entry) => entry.status === 'passed'));
+});
+
+test('surrounding whitespace is part of an ID identity', async () => {
+  const calls = [];
+  await runChecks(
+    [
+      { id: ' a', requires: ['a '] },
+      { id: 'a ', requires: [] },
+    ],
+    [' a', 'a '],
+    async (id) => {
+      calls.push(id);
+    },
+  );
+  assert.deepEqual(calls, ['a ', ' a']);
+});
+
+test('dependency-first depth-first order with deduplicated targets and edges', async () => {
+  const calls = [];
+  const results = await runChecks(
+    [
+      { id: 'root', requires: ['left', 'right', 'left'] },
+      { id: 'left', requires: ['shared'] },
+      { id: 'right', requires: ['shared'] },
+      { id: 'shared', requires: [] },
+      { id: 'other', requires: [] },
+    ],
+    ['root', 'root', 'shared', 'other', 'other'],
+    async (id) => {
+      calls.push(id);
+    },
+  );
+  assert.deepEqual(calls, ['shared', 'left', 'right', 'root', 'other']);
+  assert.deepEqual(
+    results.map((entry) => entry.id),
+    ['shared', 'left', 'right', 'root', 'other'],
+  );
+});
+
+test('targets are traversed depth first in input order', async () => {
+  const calls = [];
+  await runChecks(
+    [
+      { id: 'late', requires: [] },
+      { id: 'mid', requires: ['late'] },
+      { id: 'early', requires: ['mid'] },
+    ],
+    ['early', 'late', 'mid'],
+    async (id) => {
+      calls.push(id);
+    },
+  );
+  assert.deepEqual(calls, ['late', 'mid', 'early']);
+});
+
+test('execute runs sequentially and awaits settlement', async () => {
+  const events = [];
+  let inFlight = 0;
+  let maxInFlight = 0;
+  await runChecks(
+    [
+      { id: 'a', requires: [] },
+      { id: 'b', requires: [] },
+      { id: 'c', requires: ['a', 'b'] },
+    ],
+    ['a', 'b', 'c'],
+    async (id) => {
+      inFlight += 1;
+      maxInFlight = Math.max(maxInFlight, inFlight);
+      events.push(`start:${id}`);
+      await new Promise((resolve) => setTimeout(resolve, id === 'a' ? 10 : 1));
+      events.push(`end:${id}`);
+      inFlight -= 1;
+    },
+  );
+  assert.equal(maxInFlight, 1);
+  assert.deepEqual(events, [
+    'start:a',
+    'end:a',
+    'start:b',
+    'end:b',
+    'start:c',
+    'end:c',
+  ]);
+});
+
+test('failures record messages without retry and do not stop independent work', async () => {
+  const attempts = [];
+  const results = await runChecks(
+    [
+      { id: 'err', requires: [] },
+      { id: 'str', requires: [] },
+      { id: 'obj', requires: [] },
+      { id: 'silent', requires: [] },
+      { id: 'dependent', requires: ['err'] },
+      { id: 'unrelated', requires: [] },
+    ],
+    ['err', 'str', 'obj', 'silent', 'dependent', 'unrelated'],
+    async (id) => {
+      attempts.push(id);
+      if (id === 'err') throw new Error('boom');
+      if (id === 'str') throw 'raw failure';
+      if (id === 'obj') throw { toString: () => 'object failure' };
+      if (id === 'silent') throw new Error('');
+    },
+  );
+
+  assert.deepEqual(attempts, ['err', 'str', 'obj', 'silent', 'unrelated']);
+  assert.deepEqual(results, [
+    { id: 'err', status: 'failed', error: 'boom' },
+    { id: 'str', status: 'failed', error: 'raw failure' },
+    { id: 'obj', status: 'failed', error: 'object failure' },
+    { id: 'silent', status: 'failed', error: '' },
+    { id: 'dependent', status: 'blocked', blockedBy: ['err'] },
+    { id: 'unrelated', status: 'passed' },
+  ]);
+
+  // A synchronous throw is a failure too.
+  const syncResults = await runChecks([{ id: 'sync', requires: [] }], ['sync'], () => {
+    throw new RangeError('sync boom');
+  });
+  assert.deepEqual(syncResults, [
+    { id: 'sync', status: 'failed', error: 'sync boom' },
+  ]);
+
+  // Non-Error rejection reasons use String(reason).
+  const numeric = await runChecks([{ id: 'n', requires: [] }], ['n'], () =>
+    Promise.reject(0),
+  );
+  assert.deepEqual(numeric, [{ id: 'n', status: 'failed', error: '0' }]);
+});
+
+test('blocking is immediate-only, unique, and in declaration order', async () => {
+  const attempts = [];
+  const results = await runChecks(
+    [
+      { id: 'root', requires: [] },
+      { id: 'b', requires: ['root'] },
+      { id: 'a', requires: ['root'] },
+      { id: 'good', requires: [] },
+      { id: 'top', requires: ['b', 'a', 'b', 'root', 'good'] },
+    ],
+    ['root', 'top'],
+    async (id) => {
+      attempts.push(id);
+      if (id === 'root') throw new Error('root failed');
+    },
+  );
+
+  assert.deepEqual(attempts, ['root', 'good']);
+  assert.deepEqual(results, [
+    { id: 'root', status: 'failed', error: 'root failed' },
+    { id: 'b', status: 'blocked', blockedBy: ['root'] },
+    { id: 'a', status: 'blocked', blockedBy: ['root'] },
+    { id: 'good', status: 'passed' },
+    // Failed and blocked immediates both block; the passing 'good' edge is
+    // excluded and duplicate edges collapse in declaration order.
+    { id: 'top', status: 'blocked', blockedBy: ['b', 'a', 'root'] },
+  ]);
+});
+
+test('inputs are not mutated and no results carry across calls', async () => {
+  const checks = Object.freeze([
+    Object.freeze({ id: 'a', requires: Object.freeze([]) }),
+    Object.freeze({ id: 'b', requires: Object.freeze(['a']) }),
+  ]);
+  const targets = Object.freeze(['b']);
+  const first = await runChecks(checks, targets, async () => {});
+  const second = await runChecks(checks, targets, async () => {});
+
+  assert.deepEqual(first, [
+    { id: 'a', status: 'passed' },
+    { id: 'b', status: 'passed' },
+  ]);
+  assert.deepEqual(second, first);
+  assert.deepEqual(checks, [
+    { id: 'a', requires: [] },
+    { id: 'b', requires: ['a'] },
+  ]);
+  assert.deepEqual(targets, ['b']);
+});

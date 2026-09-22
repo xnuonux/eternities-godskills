@@ -1,0 +1,125 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+
+import { runChecks } from './runner.mjs';
+
+test('runs only reachable work in dependency-first order and deduplicates edges', async () => {
+  const calls = [];
+  const checks = [
+    { id: 'app', requires: ['build', 'lint'] },
+    { id: 'build', requires: ['setup', 'setup'] },
+    { id: 'lint', requires: ['setup'] },
+    { id: 'setup', requires: [] },
+    { id: 'unused', requires: [] },
+  ];
+
+  const results = await runChecks(checks, ['app', 'build'], async (id) => {
+    calls.push(id);
+  });
+
+  assert.deepEqual(calls, ['setup', 'build', 'lint', 'app']);
+  assert.deepEqual(results, [
+    { id: 'setup', status: 'passed' },
+    { id: 'build', status: 'passed' },
+    { id: 'lint', status: 'passed' },
+    { id: 'app', status: 'passed' },
+  ]);
+});
+
+test('awaits each execution sequentially and continues after failures', async () => {
+  const order = [];
+  const checks = [
+    { id: 'first', requires: [] },
+    { id: 'blocked', requires: ['first', 'failed', 'failed'] },
+    { id: 'failed', requires: [] },
+    { id: 'independent', requires: [] },
+  ];
+
+  const results = await runChecks(checks, ['first', 'blocked', 'failed', 'independent'], (id) => {
+    order.push(`start:${id}`);
+    if (id === 'failed') {
+      throw new Error('intentional failure');
+    }
+    return Promise.resolve().then(() => {
+      order.push(`end:${id}`);
+    });
+  });
+
+  assert.deepEqual(order, [
+    'start:first',
+    'end:first',
+    'start:failed',
+    'start:independent',
+    'end:independent',
+  ]);
+  assert.deepEqual(results, [
+    { id: 'first', status: 'passed' },
+    { id: 'failed', status: 'failed', error: 'intentional failure' },
+    { id: 'blocked', status: 'blocked', blockedBy: ['failed'] },
+    { id: 'independent', status: 'passed' },
+  ]);
+});
+
+test('validates the full catalog before calling execute', async () => {
+  let called = false;
+  const checks = [
+    { id: 'selected', requires: [] },
+    { id: 'bad', requires: ['missing'] },
+  ];
+
+  await assert.rejects(
+    runChecks(checks, ['selected'], () => {
+      called = true;
+    }),
+    TypeError,
+  );
+  assert.equal(called, false);
+
+  await assert.rejects(
+    runChecks([{ id: 'ok', requires: [] }], ['missing'], () => {}),
+    TypeError,
+  );
+  assert.equal(called, false);
+});
+
+test('rejects malformed catalogs, duplicate ids, and cycles', async () => {
+  const invalidCatalogs = [
+    [null],
+    [{}],
+    [{ id: 'a', requires: '' }],
+    [{ id: 'a', requires: [''] }],
+    [{ id: 'a', requires: [] }, { id: 'a', requires: [] }],
+    [{ id: 'a', requires: ['a'] }],
+  ];
+
+  for (const checks of invalidCatalogs) {
+    await assert.rejects(runChecks(checks, [], () => {}), TypeError);
+  }
+
+  const withHole = [];
+  withHole[1] = { id: 'a', requires: [] };
+  await assert.rejects(runChecks(withHole, [], () => {}), TypeError);
+
+  const withHoleRequires = [];
+  withHoleRequires[1] = 'a';
+  await assert.rejects(
+    runChecks([{ id: 'a', requires: withHoleRequires }], [], () => {}),
+    TypeError,
+  );
+
+  const withHoleTargets = [];
+  withHoleTargets[1] = 'a';
+  await assert.rejects(
+    runChecks([{ id: 'a', requires: [] }], withHoleTargets, () => {}),
+    TypeError,
+  );
+});
+
+test('returns independent results for repeated calls', async () => {
+  const checks = [{ id: 'a', requires: [] }];
+  const first = await runChecks(checks, ['a'], () => Promise.reject(new Error('first')));
+  const second = await runChecks(checks, ['a'], () => undefined);
+
+  assert.deepEqual(first, [{ id: 'a', status: 'failed', error: 'first' }]);
+  assert.deepEqual(second, [{ id: 'a', status: 'passed' }]);
+});
