@@ -87,6 +87,27 @@ export function buildClassifiedQueue(inputs,groups,requests,receipts){
     nextAction:'source-review-and-original-synthesis-before-any-promotion',activation:'none',semanticEquivalenceEstablished:false};});
 }
 
+// This consumes explicitly listed, owner-authorized retry evidence. It never
+// dispatches, retries admission failures, changes thresholds or erases attempts.
+export function applyClassificationRetries(queue,requests,records){
+  const byRequest=new Map(requests.map(r=>[r.request_id,r])),seen=new Set(),replacements=new Map();
+  for(const record of records){
+    const original=byRequest.get(record.originalRequestId);
+    assert(original,'Unknown retry original');
+    assert(!seen.has(original.request_id),'Duplicate retry original');seen.add(original.request_id);
+    assert([original.request_id+'-retry-1',original.request_id+'-diagnostic-1'].includes(record.request_id),'Invalid retry identity');
+    const retry={...original,request_id:record.request_id};
+    for(const label of normalizeJevReceipt(retry,record).labels){
+      const prior=queue.filter(row=>row.inputSha256===label.inputSha256);
+      assert(prior.length>0,'Retry input not in queue');
+      assert(prior.every(row=>row.requestId===original.request_id&&row.snapshotId===original.snapshot_id&&row.classificationStatus==='jev-unavailable'&&row.reason==='distribution-sum'),'Retry original is not a settled malformed distribution');
+      assert(!replacements.has(label.inputSha256),'Duplicate retry input');
+      replacements.set(label.inputSha256,label);
+    }
+  }
+  return queue.map(row=>replacements.has(row.inputSha256)?{...row,...replacements.get(row.inputSha256),reason:replacements.get(row.inputSha256).reason??null,priorRequestId:row.requestId,priorReceiptDigest:row.receiptDigest}:row);
+}
+
 export function classificationsComplete(queue){return queue.length>0&&queue.every(x=>x.classificationStatus==='jev-provisional'&&Object.hasOwn(domainChoices,x.advisoryDomain)&&x.advisoryDomain!=='unknown');}
 
 export function searchCatalogIntake(sources,queue,{query,domain,limit=5}={}){

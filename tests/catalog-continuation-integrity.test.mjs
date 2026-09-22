@@ -31,7 +31,7 @@ async function fixture(t){
   const record={request_id:request.request_id,snapshot_id:request.snapshot_id,result:{content:[{type:'text',text:JSON.stringify(raw)}]}};
   const overlay={schema:'catalog-continuation-v1',intakeManifestSha256:summary.intakeManifestSha256,classificationSummarySha256:sha(json(summary)),requestPlanSha256:planHash,requestPlanReceiptSha256:sha(json({persistedRequestPlanSha256:planHash})),receipts:[{path:'artifacts/saved/receipt.json',sha256:sha(json(record))}]};
   async function save(){await writeFile(join(root,'artifacts/saved/receipt.json'),json(record));overlay.receipts[0].sha256=sha(json(record));await writeFile(join(root,'artifacts/catalog801-continuations/manifest.json'),json(overlay));}
-  await save();return{root,dir,record,raw,overlay,save,summary,queue};
+  await save();return{root,dir,record,raw,overlay,save,summary,queue,request};
 }
 test('verified overlay changes only the in-memory queue and preserves the frozen input bytes',async t=>{
   const f=await fixture(t),before=await readFile(join(f.dir,'refinement-queue.jsonl'));
@@ -63,6 +63,35 @@ test('unknown requests, duplicates and local refusals do not produce labels',asy
 test('bound unavailable receipts remain unavailable rather than a domain proposal',async t=>{
   const f=await fixture(t);f.raw.status='unavailable';f.raw.reason='distribution-sum';delete f.raw.results;delete f.raw.returned_model;delete f.raw.provider;f.record.result.content[0].text=JSON.stringify(f.raw);await f.save();
   const result=await load(f.root);assert.equal(result.queue[0].classificationStatus,'jev-unavailable');assert.equal(result.queue[0].advisoryDomain,null);
+});
+test('hash-bound retry overlay preserves the failed receipt and refuses altered or linked retry evidence',async t=>{
+  const f=await fixture(t);
+  const retryRequest={...f.request,request_id:f.request.request_id+'-retry-1'};
+  const retryRaw={...f.raw,request_digest:bindingDigest(retryRequest)};
+  const retryRecord={request_id:retryRequest.request_id,snapshot_id:retryRequest.snapshot_id,originalRequestId:f.request.request_id,result:{content:[{type:'text',text:JSON.stringify(retryRaw)}]}};
+  f.raw.status='unavailable';f.raw.reason='distribution-sum';delete f.raw.results;
+  f.record.result.content[0].text=JSON.stringify(f.raw);
+  const retryPath='artifacts/saved/retry.json',retryBytes=json(retryRecord);
+  await writeFile(join(f.root,retryPath),retryBytes);
+  f.overlay.retryReceipts=[{path:retryPath,sha256:sha(retryBytes)}];await f.save();
+  const failureBefore=await readFile(join(f.root,'artifacts/saved/receipt.json'));
+  const result=await load(f.root);
+  assert.equal(result.queue[0].classificationStatus,'jev-provisional');
+  assert.equal(result.queue[0].priorRequestId,f.request.request_id);
+  assert.equal(result.continuation.retryProviderReceipts,1);
+  assert.equal(result.continuation.inputStatuses['jev-unavailable'],1);
+  assert.deepEqual(await readFile(join(f.root,'artifacts/saved/receipt.json')),failureBefore);
+  await writeFile(join(f.root,retryPath),retryBytes+' ');
+  await assert.rejects(load(f.root),/Changed evidence/);
+  await writeFile(join(f.root,retryPath),retryBytes);
+  f.overlay.retryReceipts.push({...f.overlay.retryReceipts[0]});await f.save();
+  await assert.rejects(load(f.root),/Duplicate retry receipt path/);
+  f.overlay.retryReceipts=[{path:'../retry.json',sha256:sha(retryBytes)}];await f.save();
+  await assert.rejects(load(f.root),/Retry receipt outside artifacts/);
+  await mkdir(join(f.root,'retry-elsewhere'));await writeFile(join(f.root,'retry-elsewhere/retry.json'),retryBytes);
+  await symlink(join(f.root,'retry-elsewhere'),join(f.root,'artifacts/retry-link'),'junction');
+  f.overlay.retryReceipts=[{path:'artifacts/retry-link/retry.json',sha256:sha(retryBytes)}];await f.save();
+  await assert.rejects(load(f.root),/Linked evidence path/);
 });
 test('unavailable receipts cannot contradict the bound provider or model',async t=>{
   for(const field of ['provider','returned_model'])await t.test(field,async t=>{

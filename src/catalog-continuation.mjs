@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {readFile,lstat,realpath} from 'node:fs/promises';
 import {resolve,join} from 'node:path';
 import {createHash} from 'node:crypto';
-import {createClassificationRequests,buildClassifiedQueue,normalizeJevReceipt,classificationsComplete} from './catalog-skill-classification.mjs';
+import {createClassificationRequests,buildClassifiedQueue,normalizeJevReceipt,classificationsComplete,applyClassificationRetries} from './catalog-skill-classification.mjs';
 
 const sha=b=>createHash('sha256').update(b).digest('hex');
 const rows=b=>b.toString().trim().split(/\r?\n/).filter(Boolean).map(JSON.parse);
@@ -58,11 +58,20 @@ export async function loadCatalogWithContinuations(repositoryRoot){
   }
   // The existing builder rejects foreign requests and duplicate request/input labels
   // across the complete receipt set, and validates each exact provider binding.
-  const queue=buildClassifiedQueue(inputs,groups,requests,[...originals,...continuations]);
+  const originalCombinedQueue=buildClassifiedQueue(inputs,groups,requests,[...originals,...continuations]);
+  assert(overlay.retryReceipts===undefined||Array.isArray(overlay.retryReceipts),'Invalid retry receipt list');
+  const retries=[];
+  for(const entry of overlay.retryReceipts??[]){
+    assert(typeof entry.path==='string'&&entry.path.startsWith('artifacts/'),'Retry receipt outside artifacts');
+    assert(!paths.has(entry.path),'Duplicate retry receipt path');paths.add(entry.path);
+    retries.push(JSON.parse(await bound(entry.path,entry.sha256)));
+  }
+  const queue=applyClassificationRetries(originalCombinedQueue,requests,retries);
   const requestMap=new Map(requests.map(x=>[x.request_id,x])),inputStatuses={};
   for(const receipt of continuations)for(const label of normalizeJevReceipt(requestMap.get(receipt.request_id),receipt).labels){
     inputStatuses[label.classificationStatus]=(inputStatuses[label.classificationStatus]??0)+1;
   }
   const bodyStatuses={};for(const row of queue)bodyStatuses[row.classificationStatus]=(bodyStatuses[row.classificationStatus]??0)+1;
-  return{sources,queue,classificationComplete:classificationsComplete(queue),continuation:{manifestPath,manifestSha256:sha(overlayBytes),providerReceipts:continuations.length,inputStatuses},bodyStatuses};
+  const retrySummary=retries.length?{retryProviderReceipts:retries.length}:{};
+  return{sources,queue,classificationComplete:classificationsComplete(queue),continuation:{manifestPath,manifestSha256:sha(overlayBytes),providerReceipts:continuations.length,inputStatuses,...retrySummary},bodyStatuses};
 }

@@ -8,10 +8,11 @@ test('normal domain search includes saved continuation judgments without grantin
   assert(result.results.some(x=>x.name==='devtools-vue'),'The saved Vue judgment must be searchable');
   assert.equal(result.networkCalls,0);
   assert.equal(result.classificationComplete,false);
-  assert.equal(result.continuation.providerReceipts,16);
-  assert.equal(result.continuation.inputStatuses['jev-provisional'],74);
-  assert.equal(result.continuation.inputStatuses['jev-abstained'],38);
-  assert.equal(result.continuation.inputStatuses['jev-unavailable'],16);
+  assert.equal(result.continuation.providerReceipts,170);
+  assert.equal(result.continuation.inputStatuses['jev-provisional'],695);
+  assert.equal(result.continuation.inputStatuses['jev-abstained'],470);
+  assert.equal(result.continuation.inputStatuses['jev-unavailable'],176);
+  assert.equal(result.continuation.retryProviderReceipts,20);
   assert(result.results.every(x=>x.activation==='none'&&x.authority==='none'));
 });
 
