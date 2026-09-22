@@ -9,6 +9,21 @@ const sha=b=>createHash('sha256').update(b).digest('hex');
 const json=x=>JSON.stringify(x)+'\n';
 const lines=xs=>xs.map(JSON.stringify).join('\n')+'\n';
 const load=async root=>(await import('../src/catalog-continuation.mjs')).loadCatalogWithContinuations(root);
+test('native direct evidence loads only through exact hashes and retains native identity',async t=>{
+  const f=await fixture(t);
+  const {createDirectRecord}=await import('../src/catalog-typesafe.mjs');
+  const native=createDirectRecord(f.request,{httpStatus:200,response:{model:'jev-1.13.0',answers:{q0:{type:'choice',choice:'engineering',confidence:1,probabilities:Object.fromEntries(Object.keys(domainChoices).map(k=>[k,k==='engineering'?1:0]))}},usage:{input_tokens:100,output_tokens:20}}});
+  const path='artifacts/saved/native.json',bytes=json(native);
+  await writeFile(join(f.root,path),bytes);
+  f.overlay.receipts=[];f.overlay.directReceipts=[{path,sha256:sha(bytes)}];
+  const save=()=>writeFile(join(f.root,'artifacts/catalog801-continuations/manifest.json'),json(f.overlay));
+  await save();const result=await load(f.root);
+  assert.equal(result.queue[0].advisoryDomain,'engineering');assert.equal(result.queue[0].providerRoute,'typesafe-direct');
+  assert.equal(result.continuation.directProviderReceipts,1);
+  await writeFile(join(f.root,path),bytes+' ');await assert.rejects(load(f.root),/Changed evidence/);
+  await writeFile(join(f.root,path),bytes);f.overlay.directReceipts.push({...f.overlay.directReceipts[0]});await save();
+  await assert.rejects(load(f.root),/Duplicate direct receipt path/);
+});
 async function fixture(t){
   const root=await mkdtemp(join(tmpdir(),'gsk-continuation-'));
   t.after(()=>rm(root,{recursive:true,force:true}));

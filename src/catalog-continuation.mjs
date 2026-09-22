@@ -3,6 +3,7 @@ import {readFile,lstat,realpath} from 'node:fs/promises';
 import {resolve,join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {createClassificationRequests,buildClassifiedQueue,normalizeJevReceipt,classificationsComplete,applyClassificationRetries} from './catalog-skill-classification.mjs';
+import {applyDirectReceipts} from './catalog-typesafe.mjs';
 
 const sha=b=>createHash('sha256').update(b).digest('hex');
 const rows=b=>b.toString().trim().split(/\r?\n/).filter(Boolean).map(JSON.parse);
@@ -66,12 +67,20 @@ export async function loadCatalogWithContinuations(repositoryRoot){
     assert(!paths.has(entry.path),'Duplicate retry receipt path');paths.add(entry.path);
     retries.push(JSON.parse(await bound(entry.path,entry.sha256)));
   }
-  const queue=applyClassificationRetries(originalCombinedQueue,requests,retries);
+  const retriedQueue=applyClassificationRetries(originalCombinedQueue,requests,retries);
+  assert(overlay.directReceipts===undefined||Array.isArray(overlay.directReceipts),'Invalid direct receipt list');
+  const direct=[];
+  for(const entry of overlay.directReceipts??[]){
+    assert(typeof entry.path==='string'&&entry.path.startsWith('artifacts/'),'Direct receipt outside artifacts');
+    assert(!paths.has(entry.path),'Duplicate direct receipt path');paths.add(entry.path);
+    direct.push(JSON.parse(await bound(entry.path,entry.sha256)));
+  }
+  const queue=applyDirectReceipts(retriedQueue,requests,direct);
   const requestMap=new Map(requests.map(x=>[x.request_id,x])),inputStatuses={};
   for(const receipt of continuations)for(const label of normalizeJevReceipt(requestMap.get(receipt.request_id),receipt).labels){
     inputStatuses[label.classificationStatus]=(inputStatuses[label.classificationStatus]??0)+1;
   }
   const bodyStatuses={};for(const row of queue)bodyStatuses[row.classificationStatus]=(bodyStatuses[row.classificationStatus]??0)+1;
-  const retrySummary=retries.length?{retryProviderReceipts:retries.length}:{};
+  const retrySummary={...(retries.length?{retryProviderReceipts:retries.length}:{}),...(direct.length?{directProviderReceipts:direct.length}:{})};
   return{sources,queue,classificationComplete:classificationsComplete(queue),continuation:{manifestPath,manifestSha256:sha(overlayBytes),providerReceipts:continuations.length,inputStatuses,...retrySummary},bodyStatuses};
 }

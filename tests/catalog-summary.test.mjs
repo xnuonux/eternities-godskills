@@ -34,7 +34,7 @@ test('summary reports verified intake progress without search results',async()=>
 test('summary derives changed counts and rejects damaged evidence through the real CLI',async t=>{
   const fixture=await mkdtemp(join(tmpdir(),'gsk-summary-integrity-'));
   t.after(()=>rm(fixture,{recursive:true,force:true}));
-  for(const path of ['scripts/query-catalog-skill-intake.mjs','src/catalog-continuation.mjs','src/catalog-skill-classification.mjs','src/cold-intake-search.mjs']){
+  for(const path of ['scripts/query-catalog-skill-intake.mjs','src/catalog-continuation.mjs','src/catalog-typesafe.mjs','src/catalog-skill-classification.mjs','src/cold-intake-search.mjs']){
     await mkdir(dirname(join(fixture,path)),{recursive:true});
     await copyFile(join(root,path),join(fixture,path));
   }
