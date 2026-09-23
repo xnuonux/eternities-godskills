@@ -441,6 +441,44 @@
       "resources": []
     },
     {
+      "id": "ecological-sampling-and-detection-uncertainty",
+      "category": "science",
+      "summary": "Audit ecological sampling, event and effort records, imperfect detection and reporting-support uncertainty before occupancy, abundance or change claims.",
+      "triggers": [
+        "ecological detection history repeated visits imperfect detection",
+        "camera trap event independence trap effort",
+        "surveyed non-detection missing occasion occupancy",
+        "aggregate reporting support change detectability uncertainty"
+      ],
+      "antiTriggers": [
+        "certify species absence from one or more zero detections",
+        "universal sample-size or independence threshold",
+        "carbon credit issuance or regulatory MRV approval",
+        "crop treatment trial without an observation-process question"
+      ],
+      "taskTypes": [
+        "research",
+        "plan",
+        "verify"
+      ],
+      "related": [
+        "agricultural-observation-and-trial",
+        "diagnostic-statistical-model-inference",
+        "eternities-athena",
+        "landscape-connectivity-analysis"
+      ],
+      "specializes": "eternities-athena",
+      "maturity": "instruction-reviewed",
+      "entrypoint": "skills/ecological-sampling-and-detection-uncertainty/SKILL.md",
+      "entrypointSha256": "396fc469613b35fc2bc67ea34c8458d8d262d0cd312867526bc60ef38dd30c1c",
+      "resources": [
+        {
+          "path": "skills/ecological-sampling-and-detection-uncertainty/references/sampling-and-detection-records.md",
+          "sha256": "5726960dd5072aa93919e1a600898bec7b16b06b3fb38cd89fd6fb0d8cddca5f"
+        }
+      ]
+    },
+    {
       "id": "eternities-aegis",
       "category": "security",
       "summary": "Evidence-linked security, trust-boundary, authority, workflow, and residual-risk decisions.",
@@ -1518,15 +1556,17 @@
     {
       "id": "geospatial-coordinate-integrity",
       "category": "data",
-      "summary": "Identify GIS CRS and axis conventions, transform coordinates, and verify map alignment, distance units and spatial output integrity.",
+      "summary": "Identify horizontal and vertical reference meaning, transform coordinates, and verify map alignment, distance units, height comparability and spatial output integrity.",
       "triggers": [
         "GIS CRS axis order reproject coordinates",
         "map layers do not line up buffer distances degrees",
         "geospatial projection datum coordinate transformation",
+        "orthometric ellipsoidal height geoid vertical datum",
         "raster grid resampling spatial join units"
       ],
       "antiTriggers": [
-        "purely visual map style change"
+        "purely visual map style change",
+        "raw point-cloud classification or terrain derivative calculation"
       ],
       "taskTypes": [
         "build",
@@ -1537,13 +1577,20 @@
       "related": [
         "eternities-athena",
         "eternities-atlas",
-        "physics-constrained-numerical-validation"
+        "landscape-connectivity-analysis",
+        "physics-constrained-numerical-validation",
+        "terrain-watershed-analysis"
       ],
       "specializes": "eternities-atlas",
       "maturity": "instruction-reviewed",
       "entrypoint": "skills/geospatial-coordinate-integrity/SKILL.md",
-      "entrypointSha256": "f1ddcb9456b48559add138210cb86daf3906e7ec80c097505379966b64dda4b1",
-      "resources": []
+      "entrypointSha256": "ef14fd4bc877408a1acb6c24efb09557a4a02d65a6688fd22e3dfe893ce65ce0",
+      "resources": [
+        {
+          "path": "skills/geospatial-coordinate-integrity/references/vertical-and-surface-comparability.md",
+          "sha256": "31b73d5ff157bd1d32a729d442ad0d6d6400cb5d4c0d6c5736c4e2cde8961d62"
+        }
+      ]
     },
     {
       "id": "infrastructure-plan-apply-isolation",
@@ -1668,6 +1715,46 @@
       "entrypoint": "skills/jurisdiction-aware-contract-review/SKILL.md",
       "entrypointSha256": "c600a5c1b47f652f435c4b0a1cb8d71ee043de7b801eff34aeb25a2b04c43303",
       "resources": []
+    },
+    {
+      "id": "landscape-connectivity-analysis",
+      "category": "science",
+      "summary": "Analyze habitat connectivity and corridor assumptions with explicit patch, resistance, graph and movement-threshold sensitivity evidence.",
+      "triggers": [
+        "habitat connectivity wildlife corridor",
+        "resistance surface least-cost path circuit current",
+        "patch importance stepping stone pinch point",
+        "landscape graph dispersal barrier permeability"
+      ],
+      "antiTriggers": [
+        "road travel-time accessibility or routing service area",
+        "single map-layer coordinate alignment",
+        "prescribed conservation, land acquisition or regulatory outcome",
+        "observed movement claims without telemetry or field evidence"
+      ],
+      "taskTypes": [
+        "research",
+        "plan",
+        "build",
+        "verify"
+      ],
+      "related": [
+        "diagnostic-statistical-model-inference",
+        "ecological-sampling-and-detection-uncertainty",
+        "eternities-athena",
+        "geospatial-coordinate-integrity",
+        "terrain-watershed-analysis"
+      ],
+      "specializes": "eternities-athena",
+      "maturity": "instruction-reviewed",
+      "entrypoint": "skills/landscape-connectivity-analysis/SKILL.md",
+      "entrypointSha256": "3ac3320e31f833962123acd1174ccc6a8031e3b3a777044d66beb21740541e97",
+      "resources": [
+        {
+          "path": "skills/landscape-connectivity-analysis/references/connectivity-operations.md",
+          "sha256": "dcf15931b1588968bcd707b278124815acd30ef4b2c5be3785ea07137b568425"
+        }
+      ]
     },
     {
       "id": "lazy-tabular-transformation-and-validation",
@@ -2161,6 +2248,44 @@
       "entrypoint": "skills/symbolic-mathematics-python/SKILL.md",
       "entrypointSha256": "e3d7645546def7d305480c7cc52c9767c49b4652081b389a30426f14bc0ecff5",
       "resources": []
+    },
+    {
+      "id": "terrain-watershed-analysis",
+      "category": "data",
+      "summary": "Select elevation surfaces and verify terrain derivatives, hydrologic conditioning, stream thresholds, catchments and viewsheds with explicit unit and sensitivity evidence.",
+      "triggers": [
+        "DEM DTM DSM slope aspect curvature",
+        "flow accumulation stream threshold watershed catchment",
+        "pour point snapping hydrological conditioning",
+        "viewshed observer height terrain visibility"
+      ],
+      "antiTriggers": [
+        "raw LAS LAZ point-cloud classification before an elevation surface exists",
+        "CRS-only map alignment or coordinate transformation",
+        "habitat corridor or resistance-surface connectivity",
+        "flood certification or engineering drainage design without qualified review"
+      ],
+      "taskTypes": [
+        "plan",
+        "build",
+        "verify"
+      ],
+      "related": [
+        "eternities-athena",
+        "geospatial-coordinate-integrity",
+        "landscape-connectivity-analysis",
+        "physics-constrained-numerical-validation"
+      ],
+      "specializes": "geospatial-coordinate-integrity",
+      "maturity": "instruction-reviewed",
+      "entrypoint": "skills/terrain-watershed-analysis/SKILL.md",
+      "entrypointSha256": "6ccbcc81b696b2050e8c6383b9a69eec0b2b3efbd0ed5f5b299db7981c0ebdea",
+      "resources": [
+        {
+          "path": "skills/terrain-watershed-analysis/references/terrain-operations.md",
+          "sha256": "e1d10f927d52154bdbf0963e479bb567856aeffabb3817df8a9689c481e10704"
+        }
+      ]
     },
     {
       "id": "venture-falsification-and-planning",

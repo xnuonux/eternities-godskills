@@ -1,0 +1,170 @@
+{
+  "schema": "godskills-behavioral-review-cases-v1",
+  "familyIds": [
+    "geospatial-analysis",
+    "ecological-environmental-analysis"
+  ],
+  "purpose": "Pre-authoring behavioral cases for useful discovery and bounded owner behavior. These cases are review fixtures, not agent-performance evidence.",
+  "cases": [
+    {
+      "id": "vertical-orthometric-ellipsoidal-positive",
+      "kind": "positive",
+      "query": "Two elevation products use metres but one is ellipsoidal and the other is tied to a national geoid. Before subtracting them, verify vertical datum, height type, geoid version, units and transformation metadata.",
+      "expectedOwners": ["geospatial-coordinate-integrity"],
+      "requiredMechanisms": ["vertical-datum", "height-type", "geoid-version", "output-metadata"]
+    },
+    {
+      "id": "vertical-change-boundary",
+      "kind": "boundary",
+      "query": "After vertical comparability is established, estimate elevation change between two LiDAR acquisitions and assess whether the change exceeds acquisition error.",
+      "expectedOwners": ["geospatial-coordinate-integrity", "diagnostic-statistical-model-inference"],
+      "requiredMechanisms": ["co-registration", "vertical-error-budget", "change-not-datum-only"]
+    },
+    {
+      "id": "terrain-watershed-paraphrase",
+      "kind": "paraphrase",
+      "query": "The drainage map sends a river across a ridge after filling every depression. Help me choose a bare-earth surface, condition barriers, and test outlet and stream-threshold assumptions.",
+      "expectedOwners": ["terrain-watershed-analysis"],
+      "requiredMechanisms": ["surface-selection", "conditioning-order", "pour-point-snapping", "threshold-sensitivity"]
+    },
+    {
+      "id": "terrain-viewshed-boundary",
+      "kind": "boundary",
+      "query": "Design a viewshed for candidate observation towers where trees and buildings may block sight lines.",
+      "expectedOwners": ["terrain-watershed-analysis"],
+      "requiredMechanisms": ["dsm-or-feature-heights", "observer-height", "curvature-refraction", "surface-limit"]
+    },
+    {
+      "id": "terrain-point-cloud-negative",
+      "kind": "negative",
+      "query": "Classify raw LAS returns into ground points and decide whether point density supports a 0.25 metre DTM.",
+      "expectedOwners": [],
+      "excludedOwners": ["terrain-watershed-analysis"],
+      "reason": "Raw point classification and density-supported surface creation require a point-cloud owner that is not in this staged slice."
+    },
+    {
+      "id": "terrain-failure-mode",
+      "kind": "failure-mode",
+      "query": "A watershed consists of three cells because the supplied outlet was not on the modelled stream network.",
+      "expectedOwners": ["terrain-watershed-analysis"],
+      "requiredMechanisms": ["snap-outlet", "accumulation-check", "re-delineate"]
+    },
+    {
+      "id": "connectivity-positive",
+      "kind": "positive",
+      "query": "Compare habitat patches as a movement graph, build a documented resistance surface, and rank patch removal effects while testing dispersal-distance assumptions.",
+      "expectedOwners": ["landscape-connectivity-analysis"],
+      "requiredMechanisms": ["patch-definition", "resistance-provenance", "graph-threshold-sensitivity", "patch-removal-importance"]
+    },
+    {
+      "id": "connectivity-corridor-paraphrase",
+      "kind": "paraphrase",
+      "query": "Find candidate wildlife corridors and pinch points, but show how conclusions change if movement cost or the assumed crossing distance changes.",
+      "expectedOwners": ["landscape-connectivity-analysis"],
+      "requiredMechanisms": ["least-cost-alternative", "current-density-optional", "sensitivity", "proxy-claim-limit"]
+    },
+    {
+      "id": "connectivity-route-negative",
+      "kind": "negative",
+      "query": "Give me the fastest driving route between two hospitals and a 20-minute drive-time service area.",
+      "expectedOwners": [],
+      "excludedOwners": ["landscape-connectivity-analysis"],
+      "reason": "Road-network travel accessibility is not habitat connectivity; no network-accessibility owner is staged here."
+    },
+    {
+      "id": "connectivity-failure-mode",
+      "kind": "failure-mode",
+      "query": "A large patch ranks first for dPC and the report calls it a uniquely important corridor even though patch area was not reported.",
+      "expectedOwners": ["landscape-connectivity-analysis"],
+      "requiredMechanisms": ["report-patch-area", "separate-area-effect", "withhold-unqualified-importance-claim"]
+    },
+    {
+      "id": "ecological-detection-positive",
+      "kind": "positive",
+      "query": "Several visits produced zeros and non-detections. Build a detection history that distinguishes surveyed zeros from missing visits and plan analysis of imperfect detection.",
+      "expectedOwners": ["ecological-sampling-and-detection-uncertainty"],
+      "requiredMechanisms": ["one-zero-na-encoding", "repeated-visits", "state-detection-separation", "effort-reporting"]
+    },
+    {
+      "id": "ecological-camera-effort-paraphrase",
+      "kind": "paraphrase",
+      "query": "Turn camera-trap records into comparable events without pretending that more photos mean more animals, and record camera downtime and event independence choices.",
+      "expectedOwners": ["ecological-sampling-and-detection-uncertainty"],
+      "requiredMechanisms": ["event-definition", "trap-effort", "relative-index-limit", "sensitivity-check"]
+    },
+    {
+      "id": "ecological-support-uncertainty-positive",
+      "kind": "positive",
+      "query": "Point-level soil carbon errors look small, but the claim is for a project mean over time. Quantify uncertainty at the reporting support and include model-choice disagreement before reporting change.",
+      "expectedOwners": ["ecological-sampling-and-detection-uncertainty", "diagnostic-statistical-model-inference"],
+      "requiredMechanisms": ["reporting-support", "temporal-error-correlation", "between-model-spread", "detectability"]
+    },
+    {
+      "id": "ecological-absence-negative",
+      "kind": "negative",
+      "query": "No one saw the species this season, so certify that it is absent from the reserve.",
+      "expectedOwners": [],
+      "excludedOwners": ["ecological-sampling-and-detection-uncertainty"],
+      "reason": "A zero detection is not proof of absence without survey design and detection evidence."
+    },
+    {
+      "id": "ecological-regulatory-boundary",
+      "kind": "boundary",
+      "query": "Use the soil-carbon numbers to issue carbon credits under a named MRV programme.",
+      "expectedOwners": [],
+      "excludedOwners": ["ecological-sampling-and-detection-uncertainty"],
+      "reason": "The method can structure measurement uncertainty, but crediting rules, programme compliance and professional verification remain external."
+    },
+    {
+      "id": "discovery-dem-slope",
+      "kind": "discovery",
+      "query": "DEM slope in degrees versus percent and flow accumulation assumptions",
+      "expectedOwners": ["terrain-watershed-analysis"],
+      "reason": "Distinctive surface, derivative and hydrologic-assumption vocabulary should retrieve the focused method."
+    },
+    {
+      "id": "discovery-pour-point",
+      "kind": "discovery",
+      "query": "snap a pour point to the stream network and delineate a catchment",
+      "expectedOwners": ["terrain-watershed-analysis"],
+      "reason": "Useful operation wording rather than a shared word such as environment or analysis."
+    },
+    {
+      "id": "discovery-resistance-surface",
+      "kind": "discovery",
+      "query": "resistance surface sensitivity and patch removal connectivity metric",
+      "expectedOwners": ["landscape-connectivity-analysis"],
+      "reason": "Characteristic connectivity mechanisms should beat generic geospatial routes."
+    },
+    {
+      "id": "discovery-detection-history",
+      "kind": "discovery",
+      "query": "repeated-visit detection history with surveyed non-detections and missing occasions",
+      "expectedOwners": ["ecological-sampling-and-detection-uncertainty"],
+      "reason": "Specific observation semantics should retrieve the sampling method."
+    },
+    {
+      "id": "discovery-geoid-version",
+      "kind": "discovery",
+      "query": "orthometric versus ellipsoidal height geoid model version in output metadata",
+      "expectedOwners": ["geospatial-coordinate-integrity"],
+      "reason": "Vertical comparability remains the coordinate-integrity owner's extension."
+    },
+    {
+      "id": "boundary-generic-map-alignment",
+      "kind": "boundary",
+      "query": "These two vector layers do not line up; diagnose whether the CRS label or transformation is wrong.",
+      "expectedOwners": ["geospatial-coordinate-integrity"],
+      "excludedOwners": ["terrain-watershed-analysis", "landscape-connectivity-analysis"],
+      "reason": "A coordinate-label or transform problem does not activate terrain or ecological contracts."
+    },
+    {
+      "id": "boundary-trial-design",
+      "kind": "boundary",
+      "query": "Design a small randomized field trial comparing two crop treatments and record observations over the season.",
+      "expectedOwners": ["agricultural-observation-and-trial"],
+      "excludedOwners": ["ecological-sampling-and-detection-uncertainty"],
+      "reason": "A crop intervention trial belongs to the agricultural owner; imperfect-detection survey methods are conditional follow-up only."
+    }
+  ]
+}

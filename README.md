@@ -7,7 +7,7 @@ optional consumers, not prerequisites.
 
 ## portable product successor
 
-The self-contained pack is now in **[product/](product/README.md)**: 63 refined
+The self-contained pack is now in **[product/](product/README.md)**: 66 refined
 skill entrypoints organized into 21 primary domains, with the 26 existing owner
 extensions folded into relevant methods. It includes broad and specialist
 discovery, a compact relationship catalog, explainable offline search, an exact

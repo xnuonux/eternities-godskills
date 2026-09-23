@@ -1,0 +1,44 @@
+{
+  "id": "terrain-watershed-analysis",
+  "category": "data",
+  "summary": "Select elevation surfaces and verify terrain derivatives, hydrologic conditioning, stream thresholds, catchments and viewsheds with explicit unit and sensitivity evidence.",
+  "triggers": [
+    "DEM DTM DSM slope aspect curvature",
+    "flow accumulation stream threshold watershed catchment",
+    "pour point snapping hydrological conditioning",
+    "viewshed observer height terrain visibility"
+  ],
+  "antiTriggers": [
+    "raw LAS LAZ point-cloud classification before an elevation surface exists",
+    "CRS-only map alignment or coordinate transformation",
+    "habitat corridor or resistance-surface connectivity",
+    "flood certification or engineering drainage design without qualified review"
+  ],
+  "taskTypes": ["plan", "build", "verify"],
+  "related": [
+    "geospatial-coordinate-integrity",
+    "landscape-connectivity-analysis",
+    "eternities-athena",
+    "physics-constrained-numerical-validation"
+  ],
+  "specializes": "geospatial-coordinate-integrity",
+  "resources": ["references/terrain-operations.md"],
+  "maturity": "draft",
+  "provenance": [
+    {
+      "kind": "pattern-reference",
+      "source": "muend/geoai-skills@096e5d4e6825a128e376b017783ee4c8c7323f9b:skills/terrain-hydrology/SKILL.md",
+      "note": "Full entrypoint reviewed after SHA-256 391051e89b612760565c758b6e7db0a7a15993e2372c0ba300f8195c487c3304 and Git blob identity were verified. Surface selection, conditioning order, flow-algorithm choice, threshold sensitivity, outlet snapping and independent overlays informed independent authoring. Named tool recipes, universal parameter values and professional outcome claims were rejected. Intake license hint MIT; no license clearance is claimed."
+    },
+    {
+      "kind": "pattern-reference",
+      "source": "muend/geoai-skills@096e5d4e6825a128e376b017783ee4c8c7323f9b:skills/point-cloud-lidar/SKILL.md",
+      "note": "Full entrypoint reviewed after SHA-256 312980ba13d9c9b0be735c3244490017ae48f04d219838c745789b7dbd7a16f2 and Git blob identity were verified. DTM/DSM/CHM meaning and density-supported resolution informed the surface boundary. Point classification, PDAL execution and forestry metrics were rejected from this method. Intake license hint MIT."
+    },
+    {
+      "kind": "authoring",
+      "source": "artifacts/universal-product-v1/wave11-geospatial/proposed-product/skills/terrain-watershed-analysis/",
+      "note": "Independent first-party method. Upstream code and instructions were treated as inert data and never executed."
+    }
+  ]
+}

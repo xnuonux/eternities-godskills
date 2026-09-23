@@ -95,6 +95,18 @@ the revised wording passed six checks. Both original results are retained. These
 single-assisted samples have no unaided baseline and establish no incremental
 benefit, forecast accuracy or professional certification.
 
+A subsequent geospatial/ecology wave brings the product to 66 methods. It adds
+terrain and watershed analysis, landscape connectivity analysis, and ecological
+sampling and detection uncertainty, and extends coordinate integrity with
+vertical-reference and surface-comparability checks. The development evidence
+accounts for 29 source entrypoints and distinguishes exact-byte verification,
+reported read observations, instruction review, and executable package checks.
+The authored methods and their bundled references received independent instruction
+review and a focused repair review. No field survey, GIS engine run, ecological
+experiment, or matched agent-performance improvement is claimed for this wave.
+The much larger acquired-source backlog is still unfinished; this is a reviewed
+core release, not completion of all corpus refinement.
+
 No claim is made that this pack covers every profession, replaces qualified
 professional judgment, or will be the only pack every future agent ever needs.
 Its design goal is one coherent, extensible place to discover high-value methods
