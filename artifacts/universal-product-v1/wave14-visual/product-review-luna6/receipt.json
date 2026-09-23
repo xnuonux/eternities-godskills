@@ -1,0 +1,84 @@
+{
+  "schema": "wave14-visual-product-review-v1",
+  "reviewer": "luna6",
+  "reviewedAt": "2026-09-23T15:04:54Z",
+  "baseline": "6a548d9",
+  "verdict": "NOT_READY",
+  "reviewFile": "review.md",
+  "reviewSha256": "538456ce54d5ca393ac70f6e83c240f7ded2b1bb9eb291e596642496cd8aeccf",
+  "scope": {
+    "productFilesReviewed": [
+      "product/skills/eternities-muse/SKILL.md",
+      "product/skills/eternities-muse/references/methods.md",
+      "product/skills/eternities-muse/skill.json",
+      "product/catalog.json",
+      "product/INDEX.md",
+      "product/release.json"
+    ],
+    "focusedTestReviewed": "tests/universal-wave14-discovery.test.mjs",
+    "authorityDocument": "docs/godskills-completion-authority-20260922.md",
+    "wave14Packet": "artifacts/universal-product-v1/wave14-visual",
+    "trackedDiffObserved": [
+      "product/skills/eternities-muse/SKILL.md",
+      "product/skills/eternities-muse/references/methods.md",
+      "product/skills/eternities-muse/skill.json",
+      "product/catalog.json",
+      "product/INDEX.md",
+      "product/release.json"
+    ],
+    "focusedTestGitStatus": "untracked",
+    "unrelatedSharedWorktreeStatePreserved": true
+  },
+  "findings": [
+    {
+      "id": "POOL_CAPACITY_INVARIANT_AMBIGUOUS",
+      "severity": "blocking",
+      "status": "open",
+      "summary": "The pool-state reconciliation instruction does not distinguish configured maximum from allocated connections or specify when unused capacity can be derived."
+    },
+    {
+      "id": "OWNER_HANDOFFS_MISSING_FROM_RELATED_METADATA",
+      "severity": "non_blocking",
+      "status": "open",
+      "summary": "Muse names Atlas and Hermes as semantic owners, but its related metadata omits both."
+    }
+  ],
+  "verification": {
+    "focusedTest": {
+      "command": "node --test tests/universal-wave14-discovery.test.mjs",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "failed": 0,
+      "positiveRouteQueries": 5,
+      "negativeRouteQueries": [
+        "configure HTTP retries and idempotency for an API client",
+        "generate an agricultural marketing image"
+      ]
+    },
+    "productValidate": {
+      "command": "node bin/godskills.mjs validate",
+      "workingDirectory": "product/",
+      "status": "verified-content",
+      "releaseId": "2f04739090e237d9d6a3482dbef41ddda73a48adb8f7c561674e38cfb687eb8d",
+      "skillCount": 68
+    },
+    "diffWhitespaceCheck": {
+      "command": "git diff --check 6a548d9",
+      "scope": "the six product files listed above",
+      "status": "passed"
+    }
+  },
+  "instructionUseExercise": {
+    "type": "bounded synthetic connection-pool scenario",
+    "liveTelemetryUsed": false,
+    "browserRendered": false,
+    "providerCalled": false,
+    "mainResult": "Produced a field-to-mark map, timestamp-aware stale/unknown display, separate waiter queue, explicit accessible table fallback, and identified the capacity invariant ambiguity."
+  },
+  "writtenFiles": [
+    "artifacts/universal-product-v1/wave14-visual/product-review-luna6/review.md",
+    "artifacts/universal-product-v1/wave14-visual/product-review-luna6/receipt.json"
+  ],
+  "releaseOrIntegrationAuthority": false
+}

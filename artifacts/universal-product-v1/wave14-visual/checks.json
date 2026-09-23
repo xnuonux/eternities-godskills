@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "scope": "Bounded structural checks for artifacts/universal-product-v1/wave14-visual only",
+  "overallResult": "pass-with-scope-note",
+  "passCount": 8,
+  "scopeNoteCount": 1,
+  "checks": [
+    {
+      "id": "family-plan-selection",
+      "result": "pass",
+      "evidence": "Exactly five unique requested IDs resolved in family-plan.jsonl: r0019, r0038, r0206, r0247, r0248. All rows share snapshot 237e8b46c4d736ff9e68a8e58bca21e36889a4aaf6f9b84fa8e7614f71a56d9d."
+    },
+    {
+      "id": "pinned-checkout-and-git-blob",
+      "result": "pass",
+      "evidence": "Both checkout HEADs equal their family-plan commits. For each source, git rev-parse <commit>:<path> equals git hash-object of the checked-out body."
+    },
+    {
+      "id": "body-sha256",
+      "result": "pass",
+      "evidence": "All five exact body SHA-256 values equal family-plan.jsonl and are recorded with the corresponding Git blob in source-integrity.json."
+    },
+    {
+      "id": "body-and-companion-completeness",
+      "result": "pass",
+      "evidence": "All five selected SKILL.md bodies were read completely. A bounded search of those bodies found no content.md reference; no companion file was required."
+    },
+    {
+      "id": "license-evidence",
+      "result": "pass",
+      "evidence": "Both pinned repository-root LICENSE files identify MIT; each checked-out license Git blob matches the pinned tree."
+    },
+    {
+      "id": "body-disposition-coverage",
+      "result": "pass",
+      "evidence": "source-dispositions.md gives exactly one named decision and body-specific rationale for each of the five selected IDs. Decisions are four adapter and one rejected."
+    },
+    {
+      "id": "proposed-method-sections",
+      "result": "pass",
+      "evidence": "The proposed artifact contains explicit triggers, exclusions/handoffs, steps, outputs, recovery, and provenance sections."
+    },
+    {
+      "id": "artifact-boundary",
+      "result": "pass",
+      "evidence": "The target directory did not exist before this slice. Authored files are confined to wave14-visual; no product/ edits were made."
+    },
+    {
+      "id": "excluded-launcher-entries",
+      "result": "pass-with-scope-note",
+      "evidence": "No launcher-packet files or non-selected source bodies were opened or modified. The initial inventory command streamed the full family-plan file and exposed non-selected row metadata, including Eli-yu-first entries; those rows were not used or modified. The exposure is recorded in source-integrity.json and author-report.md."
+    }
+  ],
+  "not_run": [
+    "Product tests, application builds, browser rendering, upstream demos, live telemetry, and provider workflows were not run because this deliverable is a proposed source-review artifact and the user excluded product edits, upstream execution, and provider calls."
+  ]
+}

@@ -14,6 +14,7 @@ Muse turns visual ambition into a coherent system with a visual law, semantic to
 - **Motion story** gives each scene or transition a narrative job, visible cause, timing, reduced-motion equivalent, and device tier.
 - **Visual acceptance** freezes build, viewport, content, seed, camera, timing, and configuration, then checks states, temporal behavior, access, and budgets.
 - **Interface accessibility** audits or repairs semantics, keyboard order, focus, contrast, zoom, motion, async status, and fallback behavior with reproducible fixtures.
+- **Operational system visualization** maps observed freshness, capacity, retries, or partition ownership to inspectable marks without inventing telemetry or changing the system being explained.
 
 ## Working method
 
@@ -25,7 +26,7 @@ Muse turns visual ambition into a coherent system with a visual law, semantic to
 
 ## Deliverable and finish
 
-Return a visual evidence map, direction contract, motion contract, accessibility issue ledger, or acceptance receipt with source conditions, tokens, constraints, proposed changes, performed effects, and proof limits. Finish when the system has a coherent law and a condition that could reject it. The two extension procedures are in [methods.md](references/methods.md).
+Return a visual evidence map, direction contract, motion contract, accessibility issue ledger, or acceptance receipt with source conditions, tokens, constraints, proposed changes, performed effects, and proof limits. Finish when the system has a coherent law and a condition that could reject it. The extension procedures are in [methods.md](references/methods.md).
 
 A visual audit or direction contract is a checkpoint when the user also requested an authorized local repair or implementation. Continue into the component, state, or token change and rerun the relevant fixture without requesting permission already granted. Pause only for missing authority or material rights, accessibility, performance, or evidence risk.
 

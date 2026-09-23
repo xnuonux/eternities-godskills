@@ -41,7 +41,7 @@ Search metadata first; open the selected skill, then only its needed references.
 ## design
 
 - [bounded-parametric-design-iteration](skills/bounded-parametric-design-iteration/SKILL.md): Improve an existing solved parametric design through isolated changes, solver-backed comparison, hard-constraint checks, and finite accept-or-rollback evidence. Specialist of eternities-forge.
-- [eternities-muse](skills/eternities-muse/SKILL.md): Direct visual forensics, interface direction, motion, accessibility, and rendered acceptance through coherent evidence.
+- [eternities-muse](skills/eternities-muse/SKILL.md): Direct visual forensics, interface direction, operational data views, motion, accessibility, and rendered acceptance through coherent evidence.
 - [interface-localization-and-bidirectionality](skills/interface-localization-and-bidirectionality/SKILL.md): Implement and verify locale-aware content, formatting, RTL/LTR layout, mixed-direction text, controls, accessibility, and human translation review. Specialist of eternities-muse.
 - [scene-continuity-and-coverage](skills/scene-continuity-and-coverage/SKILL.md): Design storyboards and camera coverage on a shared scene timeline with expressive motion, coherent geography and continuity across edits. Specialist of eternities-muse.
 
