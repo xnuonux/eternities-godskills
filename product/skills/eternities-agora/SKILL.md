@@ -13,6 +13,7 @@ Agora turns messy service evidence into a bounded artifact. It is useful when id
 - **Account reconstruction** rebuilds one account history, a portfolio pipeline, or an operational rollup from dated records. Ambiguous identities remain separate until a disambiguating fact is available.
 - **Client deliverable** turns verified findings into a proposal, report-data contract, or local draft. Recommendations trace to evidence and approved policy; presentation polish does not increase confidence.
 - **Cross-route handoff** ends the current route with a typed packet when the next operation belongs to another domain.
+- **Cross-artifact fact consistency** maps stable facts to assertions in a named deck, memo, model summary, or update set without turning a later number into automatic authority; use [business-decision-evidence.md](references/business-decision-evidence.md).
 
 ## Working method
 

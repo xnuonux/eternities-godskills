@@ -14,6 +14,7 @@ Hermes is the automation and integration route. It turns a concrete workflow int
 - **Browser lifecycle** covers local or remote browser setup, screenshots, recordings, cleanup, and evidence retention.
 - **Protocol-server generation** defines a Java or similar server boundary, typed tool/resource schemas, generated-file manifest, error contract, and local test fixture.
 - **CLI or API bridge** separates read operations, configuration, invocation, authentication material, retries, and mutation.
+- **Incremental stream intake** turns arbitrary response-byte chunks into complete framed records with bounded buffering and explicit partial-failure states; use the stream card in [methods.md](references/methods.md).
 - **Remote-test coordination** builds a fixture matrix, prerequisites, skip rules, evidence capture, and cleanup without pretending that remote state changed.
 - **Degraded integrations** distinguish an optional adapter from a required effect; use the failure-mode card in [methods.md](references/methods.md) when an absent backend or mock fallback could look like success.
 

@@ -13,6 +13,7 @@ Daedalus is the practical engineering route. It can inspect, plan, implement, re
 - **Refactoring and quality** improves structure, maintainability, test value, and reviewability while preserving behavior.
 - **Language or framework work** keeps runtime, type, lifecycle, and version-specific constraints explicit.
 - **Integration and observability** connects components or instrumentation with schemas, ownership, failure behavior, and effect classification.
+- **Partial-commit recovery** maps durable effects, uncertain commits, and authorized compensation when a workflow must retain one effect while another fails; use the state-matrix card in [methods.md](references/methods.md).
 - **Migration and configuration** validates shape, precedence, compatibility, data movement, rollback, and environment boundaries before use.
 - **Performance and specialist methods** starts from a repeatable baseline and uses only evidence-supported techniques.
 

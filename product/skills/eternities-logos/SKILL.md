@@ -12,6 +12,7 @@ Logos turns source material into a durable local artifact without erasing its pr
 - **Technical writing** explains a system for a named audience with terms, examples, constraints, and review points.
 - **Editorial revision** improves clarity, order, tone, and economy while preserving meaning and recording material changes.
 - **Documentation production** updates a versioned document with owner, freshness, source boundary, and maintenance path.
+- **Evidence-bound slide artifact** maps supplied claims and counterevidence to slides, builds through an available local adapter, and checks content, package structure, and rendered pages separately; use the slide card in [methods.md](references/methods.md).
 - **Reporting and narrative** turns verified project facts into status, release, product, or stakeholder material without inflating impact.
 - **Structural review or extraction** maps headings, claims, entities, relations, decisions, gaps, and provenance without treating extraction as reproduction permission.
 - **Lessons in structure** embeds reasoning through sequence, contrast, examples, constraints, and decision points.

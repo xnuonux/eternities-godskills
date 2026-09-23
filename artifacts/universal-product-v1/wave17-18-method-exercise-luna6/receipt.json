@@ -1,0 +1,163 @@
+{
+  "schema": "eternities-owner-method-exercise-receipt-v1",
+  "candidateReleaseId": "0e8abfdfe55c0342b280975ede01e7b4321648acf87cd4109ca397fb330dbff7",
+  "result": "READY_WITHIN_DECLARED_TEXT_ONLY_BOUNDARIES",
+  "report": "artifacts/universal-product-v1/wave17-18-method-exercise-luna6/exercise.md",
+  "reportSha256": "40c63cd96f5db85e0a3eaad8688faf65b7bc25e00145425b77dbb46b929bdd7d",
+  "exerciseModel": "Single current Codex task; exact synthetic prompts and observed packets are recorded in the report. No second model/worker or runtime execution.",
+  "methodSources": [
+    {
+      "path": "product/skills/eternities-hermes/SKILL.md",
+      "sha256": "435d81f1cfaeea64ebb85ad9cd00d1dae22e8bde77edeaa9e009c315e7ce69ba",
+      "matchesPinnedRelease": true
+    },
+    {
+      "path": "product/skills/eternities-hermes/references/methods.md",
+      "sha256": "3f0a33559aba81a728d7aa47ab6f5d5c9686490d8d7e68a83b1ddf3136747aa4",
+      "matchesPinnedRelease": true
+    },
+    {
+      "path": "product/skills/eternities-daedalus/SKILL.md",
+      "sha256": "89b1e2c543293cb61da0f812d62562997a2b3d16553c30f70ae430a32c02fd3b",
+      "matchesPinnedRelease": true
+    },
+    {
+      "path": "product/skills/eternities-daedalus/references/methods.md",
+      "sha256": "63a645492a920f87f1a2393ad9fa99c957b9d51dbf27a390fa3c5964124272ce",
+      "matchesPinnedRelease": true
+    },
+    {
+      "path": "product/skills/eternities-daedalus/references/test-design-and-evidence.md",
+      "sha256": "276208dc309c3eb9058e0acf966b29ce2268876df48e36e0fe641d2a07534814",
+      "matchesPinnedRelease": true
+    },
+    {
+      "path": "product/skills/eternities-logos/SKILL.md",
+      "sha256": "d328744d143ac0ed336be2c185cf8b4c08863fd2791f334287c66855990f36f7",
+      "matchesPinnedRelease": true
+    },
+    {
+      "path": "product/skills/eternities-logos/references/methods.md",
+      "sha256": "6599f2d5d8f4453e275942de2e25da2f509be69326f58b69c6cc56bb6cacd61c",
+      "matchesPinnedRelease": true
+    },
+    {
+      "path": "product/skills/eternities-agora/SKILL.md",
+      "sha256": "a6602a256f8ad9e598947e18c057fd10c3b82f0ed6a44f7915fc439586c6225f",
+      "matchesPinnedRelease": true
+    },
+    {
+      "path": "product/skills/eternities-agora/references/business-decision-evidence.md",
+      "sha256": "9effd0372e4be72da4d9fdcd454e5b4c3ea313764f118f429b175e103f4ec188",
+      "matchesPinnedRelease": true
+    }
+  ],
+  "cases": [
+    {
+      "id": "hermes-byte-framing",
+      "method": "incremental-byte-to-record-stream-intake",
+      "promptSection": "Case 1 — Hermes",
+      "verdict": "READY",
+      "gapFound": false,
+      "observed": "Two complete NDJSON records emitted across a split UTF-8 code point; final 18-byte partial withheld; frame-error; no retry of non-idempotent operation.",
+      "limitations": [
+        "Synthetic ByteIterator v1 only; platform compatibility untested.",
+        "Malformed UTF-8, cap breach, backpressure, cancellation, and other failure paths not exercised.",
+        "No live operation reconciliation or replay."
+      ]
+    },
+    {
+      "id": "daedalus-partial-commit",
+      "method": "partial-commit-and-compensation-state-matrix",
+      "promptSection": "Case 2 — Daedalus",
+      "verdict": "READY",
+      "gapFound": false,
+      "observed": "Primary lookup confirms payment commit; provisioning and prior compensation remain separately unknown; coordinator rollback assertion rejected; no retry or new compensation.",
+      "limitations": [
+        "Synthetic trace only; no database or provider connection.",
+        "Pre-commit failures, concurrent replay, confirmed compensation, and authoritative provider recovery not exercised."
+      ]
+    },
+    {
+      "id": "logos-sourced-deck",
+      "method": "evidence-bound-slide-artifact-handoff",
+      "promptSection": "Case 3 — Logos",
+      "verdict": "READY_WITHIN_TEXT_ONLY_PREBUILD_BOUNDARY",
+      "gapFound": false,
+      "observed": "Text claim register and slide map preserve incompatible cohorts, descriptive-only support arithmetic, unsupported ARR claim, internal-only rights, and separate unperformed package/render/accessibility states.",
+      "fixtureBodies": [
+        {
+          "id": "Pilot-brief-r2",
+          "sha256": "4e476191a2c63cfc147830223a77721f584566467d4c6d098630eb4b327fdf81",
+          "canonicalization": "UTF-8 without BOM; LF between lines; no trailing LF"
+        },
+        {
+          "id": "Board-deck-r7",
+          "sha256": "33296552f5f2e56d1390280fef2ecb2faf4705558bac231b85b22b3b7b6b2fbd",
+          "canonicalization": "UTF-8 without BOM; LF between lines; no trailing LF"
+        },
+        {
+          "id": "Support-analysis-r1",
+          "sha256": "6c886a939d44f9bee9b5b5a4b62d6a696135946241b4d13dd84457969271a5b7",
+          "canonicalization": "UTF-8 without BOM; LF between lines; no trailing LF"
+        },
+        {
+          "id": "Rights-note-r1",
+          "sha256": "c3a941addbfc6f574259a46b96947881d7b820d81cbae65cdfc9e410f564ed01",
+          "canonicalization": "UTF-8 without BOM; LF between lines; no trailing LF"
+        }
+      ],
+      "limitations": [
+        "No slide file, package, adapter, render, visual inspection, accessibility review, or output artifact hash; full deck delivery not exercised."
+      ]
+    },
+    {
+      "id": "agora-cross-artifact-fact-register",
+      "method": "cross-artifact-business-fact-register",
+      "promptSection": "Case 4 — Agora",
+      "verdict": "READY",
+      "gapFound": false,
+      "observed": "Three exact synthetic artifact bodies mapped to stable facts and locators; ask, arithmetic, ARR definition, TAM evidence, and runway assumptions remain unresolved with explicit owners/status; no corrections.",
+      "fixtureBodies": [
+        {
+          "id": "PitchDeck-v4",
+          "sha256": "c1332c2b0eafa96b828ab0ce0ddde0940d0e63315751b9d9f4eec22782b092a4",
+          "canonicalization": "UTF-8 without BOM; LF between lines; no trailing LF"
+        },
+        {
+          "id": "InvestorMemo-v2",
+          "sha256": "b3f4d8875d587be811f043ead3c3071c86b277533ea03a363872b6055b2db4fb",
+          "canonicalization": "UTF-8 without BOM; LF between lines; no trailing LF"
+        },
+        {
+          "id": "Model-M-3-v1",
+          "sha256": "91e8d375d6cdbfbbbe40e1f3a8efc9f653099febfe91970f75fd0f0f4d4b5b23",
+          "canonicalization": "UTF-8 without BOM; LF between lines; no trailing LF"
+        }
+      ],
+      "limitations": [
+        "Synthetic text only; BILL-31 extract and workbook formulas were not supplied or validated.",
+        "No financial decision, artifact edit, approval, or distribution."
+      ]
+    }
+  ],
+  "effects": {
+    "productEdits": 0,
+    "ledgerEdits": 0,
+    "sourceEdits": 0,
+    "gitOperations": 0,
+    "providerCalls": 0,
+    "networkAcquisition": 0,
+    "databaseOrUpstreamExecution": 0,
+    "slideBuildOrRendering": 0,
+    "onlyOwnedArtifactsWritten": [
+      "artifacts/universal-product-v1/wave17-18-method-exercise-luna6/exercise.md",
+      "artifacts/universal-product-v1/wave17-18-method-exercise-luna6/receipt.json"
+    ]
+  },
+  "claimsNotMade": [
+    "No comparative or superiority evidence.",
+    "No live compatibility, database/provider behavior, rendered deck quality, deployment, or certification evidence.",
+    "READY applies only to each prompt's declared text-only packet boundary."
+  ]
+}
