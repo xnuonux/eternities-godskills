@@ -54,3 +54,22 @@ No paid provider calls were made during final inline verification.
 
 The finite source-refinement backlog, including the interrupted ML/audio slice,
 is still open. The installed skill count is not a completion percentage for it.
+
+## Publication and installation receipt
+
+The release commit `eaaeac1574765e061b33f09194456ad24e28174d` was fast-forwarded
+into canonical main and pushed; a remote reference read confirmed that exact
+commit. A fresh full suite on main (excluding the unshipped ledger) ran 1,083
+tests: **1,081 passed, zero failed, two skipped**, with the same skip reasons.
+
+The guarded installer then upgraded the local host from 63 to 66 methods. A
+separate post-install audit verified every installed skill against the release
+manifest, the complete installed runtime, every previous skill backup, and the
+previous runtime's original release identity. All 56 unrelated files matched the
+pre-install snapshot. The 63 previous skills and runtime remain recoverable;
+nothing was discarded. Three installed discovery queries ranked their new
+terrain, ecological-sampling and connectivity methods first.
+
+The private installation journal is retained by the host. This verifies disk
+installation and CLI discovery, not discovery metadata already cached in an open
+agent task. The pack remains portable and requires no host-specific paths.
