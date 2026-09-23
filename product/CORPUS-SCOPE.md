@@ -107,6 +107,26 @@ experiment, or matched agent-performance improvement is claimed for this wave.
 The much larger acquired-source backlog is still unfinished; this is a reviewed
 core release, not completion of all corpus refinement.
 
+The ML and audio source wave adds scientific surrogate validation as a 67th
+instruction-reviewed method. Twenty-one exact source entrypoints were accounted
+for; the audio lane adds no duplicate method. Independent review found and then
+rechecked repairs for decision-time feature leakage, calibration influenced by
+the final holdout, and biased labeling of an adaptive candidate pool. This is
+an instruction and routing review, not a trained-model result, scientific
+performance qualification, audio render, or deployment certification. The
+source identities, rejected material, and unresolved licensing limits remain
+in the development evidence.
+
+The next bounded molecular source slice adds interatomic model validation as
+an instruction-reviewed specialist of scientific surrogate validation,
+bringing this release to 68 methods. Eight exact entrypoints were reviewed;
+the method preserves model lineage, held-out validation, physical constraints,
+and failure evidence without reproducing source-specific runtime commands.
+Independent review required a repair before product integration. No model was
+trained, simulation was run, or scientific performance was certified. The
+separately reviewed farm-water evidence extension remains on a documented
+routing hold and is not part of this release.
+
 No claim is made that this pack covers every profession, replaces qualified
 professional judgment, or will be the only pack every future agent ever needs.
 Its design goal is one coherent, extensible place to discover high-value methods

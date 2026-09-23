@@ -1,0 +1,50 @@
+{
+  "schema": "wave12-ml-audio-independent-review-sol6-v1",
+  "date": "2026-09-23",
+  "baseline": "7438872d9ac89762608f4b05ef213298eb4b1a50",
+  "scope": {
+    "familyIds": ["ml-training-evaluation", "audio-production-analysis"],
+    "fixedSourceIds": ["r0000", "r0014", "r0034", "r0090", "r0097", "r0100", "r0146", "r0154", "r0164", "r0197", "r0212", "r0216", "r0220", "r0237", "r0246", "r0258", "r0260", "r0306", "r0307", "r0319", "r0368"],
+    "changedSurfaces": ["artifacts/universal-product-v1/wave12-ml-audio/independent-review-sol6/probe.mjs", "artifacts/universal-product-v1/wave12-ml-audio/independent-review-sol6/review.md", "artifacts/universal-product-v1/wave12-ml-audio/independent-review-sol6/receipt.json"]
+  },
+  "verdict": "not-ready-for-product-integration; distinct portable draft worth revision",
+  "maturity": "independent source-and-instruction review; no runtime scientific or agent evaluation",
+  "candidate": {
+    "id": "scientific-surrogate-validation",
+    "skillSha256": "c1651ef52894e250c69d5035fc08100cf5b202bee1b7a8631522093490d79420",
+    "metadataSha256": "2af6dac2521c7cc11f82277f034038f19a8d5b4a6058ef5fba5f40203037f244",
+    "skillBytes": 4664,
+    "skillWordsWhitespaceCount": 647,
+    "effects": "None outside this independent review folder; proposed product remains a draft."
+  },
+  "sourceEvidence": {
+    "familyPlanSha256": "4e68ad4b393440c5f602e6331ae9f824a9f17672d939a347fd00d3ef8d53c6a6",
+    "recoveryLogSha256": "921e31a6e01181ce9ff6609abc02112577663cf08d221fe4e9fedec04041ad84",
+    "currentPlanIndexBytesGitAndPinnedTreeMatches": 21,
+    "exactCompleteRecoveredTextMatches": 18,
+    "exactPriorWave5ReviewRowsMatched": ["r0100", "r0306", "r0319"],
+    "currentBodyMismatches": [],
+    "undocumentedBodyReadRoutes": [],
+    "limits": ["Captured tool output does not prove the failed worker consumed it.", "Wave5 historical reading is attested by its report; an independent raw wave5 read log was not checked.", "Source identity is not correctness, upstream authenticity, or license clearance."]
+  },
+  "checks": [
+    {"command": "node artifacts/universal-product-v1/wave12-ml-audio/validate-wave12.mjs", "exitCode": 0, "result": "PASS: 21 exact plan leads, source bindings, draft portability, and five static contract cases.", "limit": "Author fields and authored-case structure, not live source or routing behavior."},
+    {"command": "node artifacts/universal-product-v1/wave12-ml-audio/independent-review-sol6/probe.mjs", "exitCode": 0, "result": "passed=true; 21 sources; 18 exact complete captured bodies; 3 exact wave5 rows; 0 integrity errors", "limit": "Deterministic identity/read-evidence check only."}
+  ],
+  "independentAdversarialCases": {
+    "count": 14,
+    "covered": 11,
+    "gaps": ["F1 decision-time feature leakage", "F2 final-holdout calibration reuse", "F3 partially labeled unselected pool"],
+    "evidenceClass": "static contract reading, not agent execution"
+  },
+  "findings": [
+    {"id": "F1", "severity": "critical", "topic": "Decision-time feature availability and target-derived leakage missing", "status": "open"},
+    {"id": "F2", "severity": "important", "topic": "Calibration fit and selection not explicitly separated from final assessment", "status": "open"},
+    {"id": "F3", "severity": "important", "topic": "Partial unselected labels can bias full-pool inference", "status": "open"},
+    {"id": "F4", "severity": "minor", "topic": "Author validator PASS only checks internal source flags and case shape", "status": "documented; independent probe fills provenance gap"}
+  ],
+  "installationAuthorized": false,
+  "integrationOwner": "parent",
+  "performanceCertified": false,
+  "fullCorpusClaim": false
+}

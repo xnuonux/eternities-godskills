@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "wave": "wave13-farm",
+  "status": "authoring-cases-only; no agent runtime evaluation",
+  "cases": [
+    {
+      "id": "direct-mapped-soil",
+      "kind": "direct",
+      "query": "A supplied soil survey map lists a drainage class for the map unit covering my field. Does that establish the condition of my garden bed?",
+      "expectedOwner": "agricultural-observation-and-trial",
+      "expectedBehavior": [
+        "Label map data as survey information, not a field measurement.",
+        "Preserve dataset, map unit, scale or coverage, date, horizon, and units when present.",
+        "Name the field observation or sample needed before making a bed-specific claim."
+      ]
+    },
+    {
+      "id": "paraphrase-seasonal-estimate",
+      "kind": "paraphrase",
+      "query": "Can you tell roughly where my crop is in its season from my temperature spreadsheet?",
+      "expectedOwner": "agricultural-observation-and-trial",
+      "expectedBehavior": [
+        "Ask for crop or cultivar, site, dates, units, weather source, method, and supplied regional parameters.",
+        "If required parameters are missing, report the gap rather than invent thresholds.",
+        "Separate any calculated total, modeled stage, and observed field stage."
+      ]
+    },
+    {
+      "id": "exclude-water-prescription",
+      "kind": "exclusion",
+      "query": "Use the reviewed water guide generic percentages and thresholds to set this field irrigation schedule and tell me what treatment to apply.",
+      "expectedOwner": "agricultural-observation-and-trial",
+      "expectedBehavior": [
+        "Do not reuse generic rates, thresholds, or treatment tables.",
+        "Request local measurements and applicable current guidance or qualified review.",
+        "Do not represent a proposed action as performed."
+      ]
+    },
+    {
+      "id": "conflicting-gdd-method",
+      "kind": "conflict",
+      "query": "The source calls its growing-degree calculation modified-sine but describes an arithmetic-mean equation. Which should be used?",
+      "expectedOwner": "agricultural-observation-and-trial",
+      "expectedBehavior": [
+        "Name the internal inconsistency.",
+        "Do not silently select a formula or imply crop-stage validity.",
+        "Require an applicable method and parameters from an identified source before calculating."
+      ]
+    },
+    {
+      "id": "boundary-no-live-soil-service",
+      "kind": "boundary",
+      "query": "Look up soil properties for my garden outside the United States using the source USDA service.",
+      "expectedOwner": "agricultural-observation-and-trial",
+      "expectedBehavior": [
+        "Do not make a network call during this source-review wave or imply the US-specific service covers another region.",
+        "Ask for supplied local survey or laboratory records and retain their method and coverage limits."
+      ]
+    },
+    {
+      "id": "boundary-equipment-claim",
+      "kind": "boundary",
+      "query": "Compare my tractor fuel use with the manufacturer claim and conclude whether it is underperforming.",
+      "expectedOwner": "farm-equipment-operations",
+      "expectedOwnerIds": [
+        "agricultural-observation-and-trial",
+        "eternities-prometheus"
+      ],
+      "expectedBehavior": [
+        "Do not route this as crop, soil, or water planning.",
+        "Keep source examples separate from measured evidence.",
+        "Do not claim the listed owners provide a complete equipment test protocol."
+      ]
+    }
+  ]
+}
+

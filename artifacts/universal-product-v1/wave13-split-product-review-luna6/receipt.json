@@ -1,0 +1,154 @@
+{
+  "schema": "eternities-godskills-focused-review-receipt-v1",
+  "reviewId": "wave13-split-product-review-luna6",
+  "reviewedAtUtc": "2026-09-23T14:23:04Z",
+  "workspace": "C:/dev/eternities-godskills/.worktrees/universal-product-v1",
+  "gitHead": "7438872d9ac89762608f4b05ef213298eb4b1a50",
+  "runtime": {
+    "node": "v24.18.0"
+  },
+  "candidateReleaseId": "29b0c04e8a32bff16fd7d10d22b8748b8f6f53acf3f3470724c5d0203ef19218",
+  "skillCount": 68,
+  "reviewSha256": "40f8f93cf50b09fdb1a04c7cc85d514489e64e4cdf337b3b980966458586c9e0",
+  "priorReview": {
+    "path": "artifacts/universal-product-v1/wave13-product-integration-rereview-r5-luna6/review.md",
+    "sha256": "0ec7684b3e8df499c6df485cad41af59c03f0ddc513fc1a8f1d231dc4f96f7b2"
+  },
+  "holdRecord": {
+    "path": "docs/wave13-farm-routing-hold.md",
+    "disposition": "farm-water extension intentionally excluded from this release and from route-smoke acceptance"
+  },
+  "comparison": {
+    "method": "Verify selected baseline files byte-for-byte against git show HEAD; independently inspect current catalog and release; execute bounded test and CLI route fixtures against the candidate product.",
+    "headIdentical": [
+      "product/skills/agricultural-observation-and-trial/SKILL.md",
+      "product/skills/agricultural-observation-and-trial/skill.json",
+      "product/lib/product.mjs",
+      "product/README.md"
+    ],
+    "candidateGeneratedFilesDifferFromHead": [
+      "product/catalog.json",
+      "product/release.json",
+      "product/CORPUS-SCOPE.md"
+    ]
+  },
+  "verdict": "ready-for-bounded-product-release",
+  "findings": [],
+  "checks": {
+    "contentValidation": {
+      "command": "node product/bin/godskills.mjs validate",
+      "status": "verified-content",
+      "releaseId": "29b0c04e8a32bff16fd7d10d22b8748b8f6f53acf3f3470724c5d0203ef19218",
+      "skillCount": 68,
+      "manifestFileCount": 177
+    },
+    "manifestDigestMatches": {
+      "README.md": {
+        "sha256": "82a3ac75cf302cb5fc4f7a6972a5ba66abce8b227e1ebc55b6b82fd8f5a522a5",
+        "matches": true
+      },
+      "lib/product.mjs": {
+        "sha256": "f5dfed39ab6e9f01fad202aa30aaec0bd228e951a1fd12cdfc93d39c7b935edf",
+        "matches": true
+      },
+      "catalog.json": {
+        "sha256": "a72b646570f2bd411ced2b5a1dd39171a0bacec2f6751ca4127fb3e2ac3ef073",
+        "matches": true
+      },
+      "skills/agricultural-observation-and-trial/SKILL.md": {
+        "sha256": "dad70e81edda0d52ada7e726b7e19375dc2a1f3251435be295d9a92992304f2d",
+        "matches": true,
+        "matchesHead": true
+      },
+      "skills/agricultural-observation-and-trial/skill.json": {
+        "sha256": "ee6e741e16650be93fcb245c8e2f75edf135d2ea79bdef29dfe184c56cdb933f",
+        "matches": true,
+        "matchesHead": true
+      },
+      "skills/scientific-surrogate-validation/SKILL.md": {
+        "sha256": "bb13e6221b81e3dd20d182014314bbf5021940e80c5793ad5492f85bf0e62642",
+        "matches": true
+      },
+      "skills/scientific-surrogate-validation/skill.json": {
+        "sha256": "3b6a994dec49b0c90e2c9cb463c8d75ca3ffb297c2f6294eb0d85cf9824b5e23",
+        "matches": true
+      },
+      "skills/interatomic-model-validation/SKILL.md": {
+        "sha256": "fa1e1443277a7ded60d3f4bca483695b53e7c1511d4b5878d296ebeabd878583",
+        "matches": true
+      },
+      "skills/interatomic-model-validation/skill.json": {
+        "sha256": "34ec8e35b224bba26150e8b2128f734f214a0ecfc4215ef5c8ce61172e744972",
+        "matches": true
+      }
+    },
+    "farmReference": {
+      "productDirectoryPresent": false,
+      "releaseManifestPresent": false,
+      "farmManifestPaths": [
+        "skills/agricultural-observation-and-trial/SKILL.md",
+        "skills/agricultural-observation-and-trial/skill.json"
+      ],
+      "heldReference": "artifacts/universal-product-v1/wave13-farm/reviewed-reference-on-hold.md"
+    },
+    "scientificProvenance": {
+      "scientificSurrogatePatternReferences": 2,
+      "interatomicPatternReferences": 5,
+      "interatomicPrimaryResearchReferences": 1,
+      "interatomicSpecializes": "scientific-surrogate-validation",
+      "provenanceSkillJsonFilesManifestBound": true
+    },
+    "productTests": {
+      "command": "node --test tests/universal-product.test.mjs",
+      "passed": 20,
+      "failed": 0,
+      "skipped": 1,
+      "skipReason": "conditional second-volume test not enabled",
+      "cleanCopyCase": "real product CLI works from a copied pack and a minimal environment",
+      "cleanCopyCasePassed": true
+    },
+    "routeSmoke": [
+      {
+        "query": "plan an agronomic trial comparing crop treatments and field observations",
+        "expectedFirst": "agricultural-observation-and-trial",
+        "actualFirst": "agricultural-observation-and-trial",
+        "authority": "none",
+        "activation": "none",
+        "passed": true
+      },
+      {
+        "query": "validate scientific surrogate model generalization with grouped holdouts and calibration",
+        "expectedFirst": "scientific-surrogate-validation",
+        "actualFirst": "scientific-surrogate-validation",
+        "authority": "none",
+        "activation": "none",
+        "passed": true
+      },
+      {
+        "query": "evaluate learned interatomic potential for a material phase and force stress claims",
+        "expectedFirst": "interatomic-model-validation",
+        "actualFirst": "interatomic-model-validation",
+        "authority": "none",
+        "activation": "none",
+        "passed": true
+      }
+    ],
+    "corpusScope": {
+      "candidateMethods": 68,
+      "baselineMethods": 66,
+      "addedMethods": [
+        "scientific-surrogate-validation",
+        "interatomic-model-validation"
+      ],
+      "statesBacklogUnfinished": true,
+      "farmExtensionHeldOutsideProduct": true,
+      "scientificPerformanceClaim": false
+    }
+  },
+  "limits": [
+    "Bounded package, manifest, test, and bundled CLI routing review only.",
+    "Farm-water extension routing was intentionally not tested as a release requirement because it is on hold.",
+    "No actual host-native loader or broad source-corpus audit was tested.",
+    "No scientific model training, simulation, physical validation, agronomic trial, or performance claim."
+  ]
+}

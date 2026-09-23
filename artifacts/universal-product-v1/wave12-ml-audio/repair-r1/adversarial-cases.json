@@ -1,0 +1,21 @@
+{
+  "schema": "godskills-wave12-scientific-repair-cases-v1",
+  "boundary": "Author-written contract cases, not model-performance or live agent evaluation.",
+  "cases": [
+    {
+      "id": "F1-target-derived",
+      "request": "A molecular predictor scored well on a family-held-out set, but one descriptor was computed from an assay result obtained only after screening. Can we claim it generalizes?",
+      "expectedBoundary": "No. Audit feature origin and decision-time availability, remove the target-derived descriptor, rebuild affected features, and repeat validation on an untouched design."
+    },
+    {
+      "id": "F2-holdout-calibration",
+      "request": "We chose a prediction-interval width after reading the final holdout outcomes and now report 90 percent coverage on that same holdout. Is the uncertainty claim valid?",
+      "expectedBoundary": "No. Fit and choose calibration within training or dedicated calibration folds, freeze the interval policy before final scoring, and obtain an untouched estimate or withhold the claim."
+    },
+    {
+      "id": "F3-biased-partial-pool",
+      "request": "We labeled a convenient tenth of rejected candidates after selection and want to claim accuracy on the full pool. The remaining unselected outcomes are unknown. Is this enough?",
+      "expectedBoundary": "No full-pool claim. Record labeled and unlabeled counts and the observation mechanism; require a representative audit sample or defensible selection analysis, otherwise restrict conclusions to the observed subset."
+    }
+  ]
+}

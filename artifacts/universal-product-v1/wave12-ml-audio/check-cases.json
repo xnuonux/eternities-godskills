@@ -1,0 +1,36 @@
+{
+  "schema": "wave12-ml-audio-static-routing-cases-v1",
+  "evidenceClass": "author-authored contract cases; not runtime agent evaluation",
+  "cases": [
+    {
+      "id": "direct",
+      "input": "Before using this materials predictor to rank a new composition family, check grouped holdouts, calibration, and how the model behaves outside training coverage.",
+      "expected": "scientific-surrogate-validation",
+      "assertions": ["declare intended domain", "group-aware split", "uncertainty evidence", "coverage limits"]
+    },
+    {
+      "id": "paraphrase",
+      "input": "We have a model choosing which candidates to measure next. Tell me whether its track record is trustworthy across the whole pool, including the ones it did not pick and calculations that failed.",
+      "expected": "scientific-surrogate-validation",
+      "assertions": ["full candidate pool", "selected and unselected outcomes", "failed evaluations", "selection-bias boundary"]
+    },
+    {
+      "id": "exclusion",
+      "input": "Can this checkpoint and feature cache be resumed without changing the prior experiment?",
+      "expected": "experiment-artifact-lineage",
+      "assertions": ["reuse and resume are outside this method"]
+    },
+    {
+      "id": "conflict",
+      "input": "The random split looks excellent, but the declared use is a new source and every candidate measured so far was selected by the model.",
+      "expected": "scientific-surrogate-validation",
+      "assertions": ["split follows intended use", "selection bias blocks full-pool claim", "do not let aggregate score erase failure"]
+    },
+    {
+      "id": "boundary",
+      "input": "Only training scores exist, the holdout was used for tuning, or negative candidates were removed after seeing their outcomes.",
+      "expected": "no generalization claim; name missing evidence",
+      "assertions": ["stop without generalization claim", "holdout contamination", "negative outcomes", "smallest missing evidence"]
+    }
+  ]
+}

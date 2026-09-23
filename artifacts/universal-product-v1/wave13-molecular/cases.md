@@ -1,0 +1,13 @@
+# Interatomic model validation contract cases
+
+These cases specify expected routing and dispositions for independent review. They are not executions by an agent and do not measure capability or model performance.
+
+| Class | Request or evidence | Expected behavior |
+|---|---|---|
+| Direct | “Review this learned potential for bulk relaxation over the stated alloy compositions; the checkpoint, reference convention, grouped holdout, and property results are supplied.” | Route to interatomic-model-validation. Check identity, partition independence, label compatibility, target-domain coverage, and whether the supplied properties support only the stated bulk claim. |
+| Paraphrase | “We adapted a pretrained atomic model to a new chemistry. Does the improvement carry to the new phase, and did the update damage its earlier use?” | Route to the same skill. Compare base and adapted checkpoints on the same independent target set; assess the prior domain separately if it remains an intended use. |
+| Exclusion | “Write Quantum ESPRESSO inputs, launch the DFT calculations on the cluster, and train the potential on a GPU.” | Do not perform these operations through this skill. It can state what evidence is needed after authorized calculations exist; platform execution and training are outside this contract. |
+| Conflict | The training manifest and evaluation manifest report different functionals or pseudopotential conventions, but the results are pooled into one force score. | Do not accept the pooled comparison. Reconcile conventions with a documented independent basis or keep the results separate; otherwise report inconclusive. |
+| Boundary | A model has low aggregate error on bulk structures, while the proposed use is adsorption on a surface and no independent surface structures or reference quantities are supplied. | Surface support is not established. Bulk evidence does not transfer automatically; report not evaluated or inconclusive for the surface claim. |
+| Boundary | The requested output is a diffusion coefficient from a periodic molecular trajectory with ambiguous image history and correlated frames. | Route observable integrity to molecular-observable-integrity. Do not substitute this model-validation skill for coordinate reconstruction or uncertainty analysis. |
+| Conflict | An example workflow proposes one universal error cutoff, while the stated use, reference uncertainty, and material regime require a different predeclared decision rule. | Do not import the example cutoff. Require an application-specific criterion chosen before final evaluation, and report the conflict if none exists. |

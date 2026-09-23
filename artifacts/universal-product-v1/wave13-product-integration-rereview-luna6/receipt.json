@@ -1,0 +1,178 @@
+{
+  "schema": "godskills-wave13-product-integration-rereview-v1",
+  "reviewedAt": "2026-09-23T09:37:26Z",
+  "reviewer": "Luna6 independent product-integration reviewer",
+  "workspace": "C:/dev/eternities-godskills/.worktrees/universal-product-v1",
+  "baseline": {
+    "commit": "7438872d9ac89762608f4b05ef213298eb4b1a50",
+    "branch": "feat/universal-product-v1",
+    "gitIndexHadStagedPaths": false,
+    "reviewCompared": "Named release candidate in current product worktree"
+  },
+  "rereviewOf": {
+    "reviewPath": "artifacts/universal-product-v1/wave13-product-integration-review-luna6/review.md",
+    "reviewSha256": "b5b1a86057abe84b9d6ffe3a970c2c1bb922be050e66cee9ef0f086becb10379",
+    "receiptPath": "artifacts/universal-product-v1/wave13-product-integration-review-luna6/receipt.json",
+    "receiptSha256": "a7e97150ee7104dd96bbbed85f0901754b063c8f1a3419f60e164fb02c2873531",
+    "originalCandidateReleaseId": "19b799aab5a20db1d9c4c290e1fd89f453d2b2da1a2663115baf083defa3b666"
+  },
+  "candidate": {
+    "releaseId": "49236eb74ecd2e14ee4d7d897c2739b45e3488eada141037d6a982bccc7f7225",
+    "skillCount": 68,
+    "releaseValidation": "passed"
+  },
+  "verdict": {
+    "status": "not-ready",
+    "scope": "focused farm repair rereview for product integration acceptance only",
+    "scientificOrAgronomicPerformanceClaim": false,
+    "resolvedPriorFindings": [
+      {
+        "id": "farm-search-discovery-gap",
+        "status": "resolved-for-tested-positive-routes",
+        "summary": "Farm water-quality, growing-degree-day, and mapped-soil queries now return the agricultural owner at rank 1."
+      },
+      {
+        "id": "farm-hazard-boundary-dropped",
+        "status": "resolved-in-product-content",
+        "summary": "The integrated reference now explicitly rejects diagnosing a hazard from one value and promising a guaranteed agronomic outcome. The test asserts the hazard clause but does not separately lock the guarantee clause."
+      }
+    ],
+    "blockingFindings": [
+      {
+        "id": "farm-water-query-domain-collision",
+        "severity": "blocking",
+        "summary": "Two municipal-water queries rank agricultural-observation-and-trial first despite no farm context; one asks for municipal treatment-plant design, which the integrated farm reference excludes.",
+        "requiredResolution": "Disambiguate farm-water discovery from generic/municipal water requests and add negative route regression assertions while preserving the tested farm positives."
+      }
+    ],
+    "componentStatus": {
+      "farmPositiveDiscoverability": "passed-for-three-tested-queries",
+      "farmHazardAndGuaranteeBoundaryContent": "passed-content-check; guarantee assertion is not separately tested",
+      "farmNegativeDiscoverability": "failed-two-municipal-water-probes",
+      "interatomicSpecialistParentStructuralAssertion": "passed-in-focused-test-only",
+      "68SkillManifestAndPackIntegrity": "passed"
+    }
+  },
+  "reviewedPaths": [
+    "product/skills/agricultural-observation-and-trial/SKILL.md",
+    "product/skills/agricultural-observation-and-trial/skill.json",
+    "product/skills/agricultural-observation-and-trial/references/site-data-and-water-triage.md",
+    "product/INDEX.md",
+    "product/catalog.json",
+    "product/release.json",
+    "tests/universal-wave13-integration.test.mjs",
+    "artifacts/universal-product-v1/wave13-product-integration-review-luna6/review.md",
+    "artifacts/universal-product-v1/wave13-product-integration-review-luna6/receipt.json"
+  ],
+  "resourceBinding": {
+    "owner": "agricultural-observation-and-trial",
+    "ownerEntrypoint": "product/skills/agricultural-observation-and-trial/SKILL.md",
+    "ownerEntrypointSha256": "8d20459d4e35d929daef5ddc2ad48b46300ed263783161e76df580b2cc2385cb",
+    "metadataPath": "product/skills/agricultural-observation-and-trial/skill.json",
+    "metadataSha256": "8f1c8f92fef81bc7168a18a992e8390963577d6df55e8c3e43b2bc1ed9741316",
+    "resourcePath": "product/skills/agricultural-observation-and-trial/references/site-data-and-water-triage.md",
+    "resourceSha256": "094dddf4fa8da9f16e396e5faa90c8794757b9bdc241eed2fbdbc9efd3e063b3",
+    "resourceDeclaredByOwner": true,
+    "resourceDigestRegisteredInCatalogAndReleaseManifest": true,
+    "indexEntryPresent": true,
+    "provenance": {
+      "patternReferenceCount": 4,
+      "wave13WaterMappedSoilAndGddSourcesHaveStructuredBodyDigests": true,
+      "earlierSoilSourceDigestRecordedInProvenanceNote": true,
+      "upstreamContentsOrLicensingReaudited": false
+    }
+  },
+  "discoverabilityProbes": [
+    {
+      "query": "triage a farm water quality result from a supplied laboratory report",
+      "expectedSkill": "agricultural-observation-and-trial",
+      "observedRank": 1,
+      "score": 153.315,
+      "authority": "none",
+      "activation": "none",
+      "pass": true
+    },
+    {
+      "query": "calculate growing degree days from supplied weather records",
+      "expectedSkill": "agricultural-observation-and-trial",
+      "observedRank": 1,
+      "score": 160.79,
+      "authority": "none",
+      "activation": "none",
+      "pass": true
+    },
+    {
+      "query": "compare mapped soil survey data with site measurements for this field",
+      "expectedSkill": "agricultural-observation-and-trial",
+      "observedRank": 1,
+      "score": 162.368,
+      "authority": "none",
+      "activation": "none",
+      "pass": true
+    },
+    {
+      "query": "design a municipal drinking water treatment plant",
+      "expectedSkill": "not agricultural-observation-and-trial",
+      "observedSkill": "agricultural-observation-and-trial",
+      "observedRank": 1,
+      "score": 35.553,
+      "matchedTerms": [
+        "water"
+      ],
+      "pass": false
+    },
+    {
+      "query": "triage municipal drinking water quality from a laboratory report",
+      "expectedSkill": "not agricultural-observation-and-trial",
+      "observedSkill": "agricultural-observation-and-trial",
+      "observedRank": 1,
+      "score": 100.176,
+      "matchedTerms": [
+        "laboratory",
+        "quality",
+        "triage",
+        "water"
+      ],
+      "pass": false
+    }
+  ],
+  "verification": [
+    {
+      "command": "node product/bin/godskills.mjs validate",
+      "status": "passed",
+      "exitCode": 0,
+      "result": "verified-content; releaseId 49236eb74ecd2e14ee4d7d897c2739b45e3488eada141037d6a982bccc7f7225; skillCount 68"
+    },
+    {
+      "command": "node --test tests/universal-wave13-integration.test.mjs",
+      "status": "passed",
+      "exitCode": 0,
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "command": "node product/bin/godskills.mjs search <query> --limit 5",
+      "status": "mixed",
+      "offline": true,
+      "positiveRoutesPassed": 3,
+      "negativeRoutesPassed": 0,
+      "positiveAndNegativeQueryResultsRecordedAbove": true
+    }
+  ],
+  "notPerformed": [
+    "broad test suite",
+    "installation or publication",
+    "external calls",
+    "source-wave workflows or full source review",
+    "scientific, agronomic, hydrologic, public-health, or professional outcome validation"
+  ],
+  "reviewerWrites": {
+    "preexistingFilesModified": 0,
+    "createdFiles": [
+      "artifacts/universal-product-v1/wave13-product-integration-rereview-luna6/review.md",
+      "artifacts/universal-product-v1/wave13-product-integration-rereview-luna6/receipt.json"
+    ],
+    "reviewSha256": "ea8616d2f4fcba707738abf6914bf2d5a305ac931b81198bc4a68223921c01fe",
+    "receiptSelfHash": "omitted"
+  }
+}

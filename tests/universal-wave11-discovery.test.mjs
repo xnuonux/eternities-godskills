@@ -29,9 +29,9 @@ const routes = [
   },
 ];
 
-test('wave11 integration expands the portable catalog to 66 methods', async () => {
+test('the current portable catalog retains at least the 66-method wave11 milestone', async () => {
   const catalog = JSON.parse(await readFile(catalogUrl, 'utf8'));
-  assert.equal(catalog.skills.length, 66);
+  assert.ok(catalog.skills.length >= 66);
 });
 
 for (const route of routes) {

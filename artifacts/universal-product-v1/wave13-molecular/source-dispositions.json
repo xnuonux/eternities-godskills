@@ -1,0 +1,230 @@
+{
+  "schema": "godskills-wave-source-dispositions-v1",
+  "familyId": "molecular-materials-modeling",
+  "candidate": "proposed-product/interatomic-model-validation",
+  "basis": {
+    "sourceSet": "Exactly the eight user-assigned IDs; no adjacent family members were added.",
+    "bodyReview": "Disposition is based on complete entrypoint bodies or the exact prior complete body review for r0113, never on family classification alone.",
+    "authoring": "The proposed skill is independently authored. No source prose, code, commands, configurations, thresholds, or performance claims were carried over."
+  },
+  "sharedLicenseEvidence": {
+    "reference": "source-integrity.json#/licenseEvidence",
+    "perFileNoticeReview": "not performed",
+    "legalClearance": "not claimed"
+  },
+  "sources": [
+    {
+      "id": "r0020",
+      "sourceId": "SFETNI/Deep-Matter-Chem-Skills@2d90941a2985ca177f96e200f0708d31b53dc1f7:skills/electronic-structure/dft-phonons/SKILL.md",
+      "planGapLabel": "electronic-structure phonons",
+      "planDisposition": "method-candidate",
+      "planReason": "DFT phonon calculations are a recognizable electronic-structure/materials research lead with no named platform.",
+      "bodyReview": {
+        "status": "complete-current-entrypoint-read",
+        "integrityRecord": "source-integrity.json#/sources/0"
+      },
+      "bodyDisposition": "pattern-reference",
+      "retainedMechanisms": [
+        "Treat a derived property such as a phonon spectrum as a separate validation lane from static energy and force errors.",
+        "Compare the learned model and reference on aligned structures and compatible calculation definitions; preserve qualitative instability findings for investigation."
+      ],
+      "rejectedMechanisms": [
+        "VASP, Quantum ESPRESSO, Phonopy, and DFPT-specific input files, commands, schedulers, and post-processing.",
+        "Fixed supercell sizes, displacement settings, convergence limits, imaginary-mode cutoffs, and model-quality bins.",
+        "Source scripts, code, and source wording."
+      ],
+      "ownerMapping": [
+        "proposed interatomic-model-validation for claim-relevant property comparison",
+        "physics-constrained-numerical-validation for general numerical and convergence checks",
+        "eternities-athena for appraisal of the scientific claim"
+      ],
+      "bodyLevelReason": "The body contains a distinct reminder that local fit metrics do not establish a derived lattice-dynamics property. Its platform recipes and multiple explicitly expert-review-dependent numeric rules are not portable acceptance criteria."
+    },
+    {
+      "id": "r0022",
+      "sourceId": "SFETNI/Deep-Matter-Chem-Skills@2d90941a2985ca177f96e200f0708d31b53dc1f7:skills/ml-interatomic-potentials/fine-tuning-mlp/SKILL.md",
+      "planGapLabel": "interatomic-potential fine-tuning",
+      "planDisposition": "method-candidate",
+      "planReason": "Interatomic-potential fine-tuning is a specialized materials-modeling method not established in the frozen product.",
+      "bodyReview": {
+        "status": "complete-current-entrypoint-read",
+        "integrityRecord": "source-integrity.json#/sources/1"
+      },
+      "bodyDisposition": "pattern-reference",
+      "retainedMechanisms": [
+        "Preserve the identity and reference convention of the base checkpoint, adaptation data, and candidate checkpoint.",
+        "Compare the adapted candidate and its base on an independent target-domain set; assess retention outside the adaptation domain when the intended use requires it.",
+        "Keep final evaluation evidence separate from data used to tune the adaptation."
+      ],
+      "rejectedMechanisms": [
+        "MACE flags, model-specific freezing modes, optimizer settings, training schedules, sample-count rules, and committee recipes.",
+        "Fixed error thresholds, data-size heuristics, forgetting limits, and claims that a particular adaptation strategy is safest or best.",
+        "Source code, command construction, and source wording."
+      ],
+      "ownerMapping": [
+        "proposed interatomic-model-validation for evidence review of adaptation and transfer",
+        "physics-constrained-numerical-validation for general numerical-model checks",
+        "diagnostic-statistical-model-inference for model-specific statistical diagnostics when needed"
+      ],
+      "bodyLevelReason": "The body provides a useful two-domain evaluation idea for adapted potentials, including the risk that target improvement can coexist with lost coverage elsewhere. Its numeric heuristics and MACE-specific instructions are not generalized."
+    },
+    {
+      "id": "r0048",
+      "sourceId": "SFETNI/Deep-Matter-Chem-Skills@2d90941a2985ca177f96e200f0708d31b53dc1f7:skills/ml-interatomic-potentials/mlp-validation/SKILL.md",
+      "planGapLabel": "interatomic-potential validation",
+      "planDisposition": "owner-extension",
+      "planReason": "Interatomic-potential validation is a materials-modeling quality workflow adjacent to numerical validation.",
+      "bodyReview": {
+        "status": "complete-current-entrypoint-read",
+        "integrityRecord": "source-integrity.json#/sources/2"
+      },
+      "bodyDisposition": "pattern-reference",
+      "retainedMechanisms": [
+        "Evaluate distinct evidence layers: held-out structure errors, claim-relevant derived properties, and trajectory or execution-path behavior where those are part of intended use.",
+        "Stratify results by the chemical and structural regimes named by the claim instead of allowing a pooled average to hide a weak subgroup.",
+        "Keep final evaluation data independent from training, active selection, and model selection."
+      ],
+      "rejectedMechanisms": [
+        "The source's numeric thresholds for force, energy, stress, phonon, EOS, trajectory drift, and cross-engine differences.",
+        "MACE, ASE, LAMMPS, or Phonopy implementation recipes and source code.",
+        "The source's universal or definitive interpretation of any one metric or test."
+      ],
+      "ownerMapping": [
+        "proposed interatomic-model-validation as the narrow learned-potential evaluation specialization",
+        "physics-constrained-numerical-validation as the general numerical validation base",
+        "molecular-observable-integrity for trajectory-derived molecular observables"
+      ],
+      "bodyLevelReason": "The body establishes a multi-lane validation need for learned interatomic models that is absent from the current generic numerical owner. Its many fixed acceptance limits are marked or function as system-dependent and are not adopted."
+    },
+    {
+      "id": "r0056",
+      "sourceId": "SFETNI/Deep-Matter-Chem-Skills@2d90941a2985ca177f96e200f0708d31b53dc1f7:skills/ml-interatomic-potentials/nequip-training/SKILL.md",
+      "planGapLabel": "interatomic-potential training",
+      "planDisposition": "method-candidate",
+      "planReason": "NequIP interatomic-potential training is a specialized materials ML lead not established in the frozen product.",
+      "bodyReview": {
+        "status": "complete-current-entrypoint-read",
+        "integrityRecord": "source-integrity.json#/sources/3"
+      },
+      "bodyDisposition": "pattern-reference",
+      "retainedMechanisms": [
+        "Record the model family and material-domain assumptions that limit where a learned local potential may be interpreted.",
+        "Choose held-out groups that reflect the claimed transfer axis, including chemistry, structure family, or condition where relevant."
+      ],
+      "rejectedMechanisms": [
+        "NequIP, Allegro, e3nn, PyTorch, ASE, or LAMMPS setup, training, deployment, or GPU requirements.",
+        "Architecture settings, dataset-size heuristics, configuration templates, and source-specific performance claims.",
+        "Source scripts, code, and source wording."
+      ],
+      "ownerMapping": [
+        "proposed interatomic-model-validation for model-scope and test-domain declaration",
+        "physics-constrained-numerical-validation for numerical behavior and independent references"
+      ],
+      "bodyLevelReason": "The body makes model locality and domain coverage material limits on interpretation. The source is a NequIP training workflow, while this artifact only evaluates existing evidence and does not add a training method."
+    },
+    {
+      "id": "r0077",
+      "sourceId": "SFETNI/Deep-Matter-Chem-Skills@2d90941a2985ca177f96e200f0708d31b53dc1f7:skills/electronic-structure/dft-surfaces/SKILL.md",
+      "planGapLabel": "DFT surface calculations",
+      "planDisposition": "method-candidate",
+      "planReason": "DFT surface calculations are a recognizable materials/electronic-structure research lead; no platform is named.",
+      "bodyReview": {
+        "status": "complete-current-entrypoint-read",
+        "integrityRecord": "source-integrity.json#/sources/4"
+      },
+      "bodyDisposition": "pattern-reference",
+      "retainedMechanisms": [
+        "Treat surfaces and adsorption as separate structural regimes from bulk and state the termination, composition, coverage, and reference-state basis when they define the claim.",
+        "Do not infer surface performance from bulk-only evaluation."
+      ],
+      "rejectedMechanisms": [
+        "Slab-construction, VASP/QE, dipole-correction, k-point, pseudopotential, work-function, and adsorption-calculation recipes.",
+        "Fixed slab and vacuum sizes, convergence values, reference corrections, and MLP surface-error cutoffs.",
+        "Source code and source wording."
+      ],
+      "ownerMapping": [
+        "proposed interatomic-model-validation for surface-domain scope and reference matching",
+        "physics-constrained-numerical-validation for general convergence and model-form limits",
+        "eternities-athena for claim and reference appraisal"
+      ],
+      "bodyLevelReason": "The body shows that surface and adsorption claims depend on a distinct domain and reference definition. The platform-specific DFT workflow is not needed for this portable evaluation contract."
+    },
+    {
+      "id": "r0084",
+      "sourceId": "SFETNI/Deep-Matter-Chem-Skills@2d90941a2985ca177f96e200f0708d31b53dc1f7:skills/electronic-structure/quantum-espresso/SKILL.md",
+      "planGapLabel": "quantum electronic-structure workflow",
+      "planDisposition": "platform-adapter",
+      "planReason": "The source is explicitly a Quantum ESPRESSO electronic-structure workflow.",
+      "bodyReview": {
+        "status": "complete-current-entrypoint-read",
+        "integrityRecord": "source-integrity.json#/sources/5"
+      },
+      "bodyDisposition": "rejected",
+      "retainedMechanisms": [],
+      "rejectedMechanisms": [
+        "The complete Quantum ESPRESSO input, pseudopotential, SCF, relaxation, band, DOS, phonon, and HPC parallelization adapter.",
+        "The QE-specific examples, version claims, code, and commands."
+      ],
+      "ownerMapping": [
+        "physics-constrained-numerical-validation remains the existing general route for convergence and numerical-reference checks",
+        "No new platform adapter is proposed in this family wave"
+      ],
+      "bodyLevelReason": "The body is a named-platform workflow rather than a distinct portable evaluation method. Reference identity and label consistency are already covered by the candidate through general source mechanisms without carrying QE-specific setup."
+    },
+    {
+      "id": "r0111",
+      "sourceId": "SFETNI/Deep-Matter-Chem-Skills@2d90941a2985ca177f96e200f0708d31b53dc1f7:skills/electrochemistry-corrosion/corrosion-electrochemistry/SKILL.md",
+      "planGapLabel": "corrosion electrochemistry",
+      "planDisposition": "unclear",
+      "planReason": "Corrosion electrochemistry is a clear materials/chemistry topic, but the empty description leaves the research method under-specified.",
+      "bodyReview": {
+        "status": "complete-current-entrypoint-read",
+        "integrityRecord": "source-integrity.json#/sources/6"
+      },
+      "bodyDisposition": "rejected",
+      "retainedMechanisms": [],
+      "rejectedMechanisms": [
+        "Electrochemical laboratory interpretation, electrode-reference conversion, polarization and impedance analysis, Pourbaix interpretation, corrosion transport, and coupled degradation workflows.",
+        "Source-specific experimental examples, model settings, numeric limits, code, and wording."
+      ],
+      "ownerMapping": [
+        "eternities-athena remains available for general appraisal of supplied evidence",
+        "No corrosion or electrochemistry owner extension is proposed by this task"
+      ],
+      "bodyLevelReason": "Reading the body resolves the plan's scope uncertainty as a broad electrochemistry and corrosion workflow, much of it experimental or multiphysics. That domain exceeds the narrow learned-potential evaluation gap and would need separate owner and expert review."
+    },
+    {
+      "id": "r0113",
+      "sourceId": "SFETNI/Deep-Matter-Chem-Skills@2d90941a2985ca177f96e200f0708d31b53dc1f7:skills/atomistic-md/md-equilibration/SKILL.md",
+      "planGapLabel": "molecular-dynamics equilibration",
+      "planDisposition": "unclear",
+      "planReason": "Molecular-dynamics equilibration is identifiable from name/path, but the empty description does not reveal its exact method scope.",
+      "bodyReview": {
+        "status": "reused-exact-prior-complete-review",
+        "integrityRecord": "source-integrity.json#/sources/7",
+        "priorDisposition": "artifacts/universal-product-v1/wave5/molecular-review.md and artifacts/universal-product-v1/wave5/source-dispositions.json"
+      },
+      "bodyDisposition": "pattern-reference",
+      "retainedMechanisms": [
+        "The prior complete review retained staged equilibration, ensemble caveats, and momentum or structural diagnostics as pattern references.",
+        "The existing molecular-observable-integrity skill owns trajectory equilibration context and observable-specific sampling; the proposed interatomic-model-validation routes trajectory observables there."
+      ],
+      "rejectedMechanisms": [
+        "Engine-specific equilibration commands, schedules, fixed thresholds, and source prose.",
+        "Duplicating the existing molecular-observable-integrity method in this draft."
+      ],
+      "ownerMapping": [
+        "molecular-observable-integrity remains the existing product owner for molecular trajectory observables",
+        "proposed interatomic-model-validation only routes to that owner when trajectory observables are part of the claim"
+      ],
+      "bodyLevelReason": "The prior wave5 artifact records a complete 601/601-line read and a digest-matched body-level disposition. The current raw SHA-256 and Git blob match that evidence exactly, so the disposition is reused instead of duplicated."
+    }
+  ],
+  "summary": {
+    "patternReferences": ["r0020", "r0022", "r0048", "r0056", "r0077", "r0113"],
+    "rejected": ["r0084", "r0111"],
+    "newDrafts": 1,
+    "existingProductFilesChanged": false,
+    "adoptionOrInstallationAuthorized": false
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "schema": "eternities-godskills-focused-review-receipt-v1",
+  "reviewId": "wave13-product-integration-rereview-r5-luna6",
+  "reviewedAtUtc": "2026-09-23T14:07:22Z",
+  "workspace": "C:/dev/eternities-godskills/.worktrees/universal-product-v1",
+  "gitHead": "7438872d9ac89762608f4b05ef213298eb4b1a50",
+  "runtime": {
+    "node": "v24.18.0"
+  },
+  "candidateReleaseId": "65af12738bf3c9804c74a9b8ebd53d9ed913990261571d8bc8e1321d04b000dd",
+  "skillCount": 68,
+  "reviewSha256": "0ec7684b3e8df499c6df485cad41af59c03f0ddc513fc1a8f1d231dc4f96f7b2",
+  "priorReview": {
+    "path": "artifacts/universal-product-v1/wave13-product-integration-rereview-r4-luna6/review.md",
+    "sha256": "87243dae05022c800aec1f2070c386de9e8490234e5ce0be98af03199c07883e"
+  },
+  "comparison": {
+    "method": "Directly exercise the current bundled searchCatalog with the current generated catalog and identical review probes under Node v24.18.0, top-20 limit; compare results and matched terms without a separately built control.",
+    "controlIsSeparateBuild": false,
+    "limit": 20
+  },
+  "verdict": "not-ready-for-bounded-product-release",
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocking",
+      "summary": "Nearby explicit municipal/potable water-purification design queries bypass the precise phrase exclusions and rank the agricultural skill first when incidental garden or park context is present.",
+      "evidence": [
+        {
+          "query": "design a municipal water purification facility for a school garden",
+          "rank": 1,
+          "score": 60.441,
+          "matchedTerms": ["garden", "water"]
+        },
+        {
+          "query": "design potable-water purification works for a town garden",
+          "rank": 1,
+          "score": 60.441,
+          "matchedTerms": ["garden", "water"]
+        },
+        {
+          "query": "plan city water purification for a public park garden",
+          "rank": 1,
+          "score": 67.5,
+          "matchedTerms": ["garden", "plan", "water"]
+        }
+      ],
+      "suggestedAcceptanceGate": "Explicit civic, municipal, public-park, or potable water treatment/purification design requests remain excluded despite incidental farm/garden/field anchors, including facility and works paraphrases."
+    },
+    {
+      "id": "F2",
+      "severity": "material-coverage-risk",
+      "summary": "The phrase veto suppresses explicit farm-water evidence triage when a municipal treatment phrase describes the report source or occurs in a negated clause.",
+      "evidence": [
+        {
+          "query": "assess farm irrigation water quality from a municipal water treatment plant report",
+          "agriculturalRank": null,
+          "overlappingAntiTriggers": ["municipal water treatment", "water treatment plant"]
+        },
+        {
+          "query": "triage farm irrigation water quality; this is not a municipal drinking-water treatment request, only a crop-use lab report",
+          "agriculturalRank": null,
+          "overlappingAntiTriggers": ["municipal drinking water"]
+        },
+        {
+          "query": "review crop irrigation sample results supplied by the municipal water treatment plant; assess only farm use, not treatment design",
+          "agriculturalRank": null,
+          "overlappingAntiTriggers": ["municipal water treatment", "water treatment plant"]
+        }
+      ],
+      "disposition": "README accurately limits anti-trigger behavior to exact normalized phrases and disclaims general semantic negation, but the concrete farm-source queries expose a relevant route-loss tradeoff for this water-routing slice."
+    }
+  ],
+  "checks": {
+    "focusedTest": {
+      "command": "node --test tests/universal-wave13-integration.test.mjs",
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0
+    },
+    "contentValidation": {
+      "command": "node product/bin/godskills.mjs validate",
+      "status": "verified-content",
+      "releaseId": "65af12738bf3c9804c74a9b8ebd53d9ed913990261571d8bc8e1321d04b000dd",
+      "skillCount": 68,
+      "manifestFileCount": 178
+    },
+    "manifestDigests": {
+      "README.md": {
+        "sha256": "fb1eded036df7b510eff4b4941e76631dad14a8018578d59feac289b0ed1338d",
+        "matches": true
+      },
+      "lib/product.mjs": {
+        "sha256": "c04fa1a84a7c007aa5d1d2d206635c4d7d5739efae0804fdd1ed03874ed6a3cf",
+        "matches": true
+      },
+      "catalog.json": {
+        "sha256": "9d7351a53fd42525534882f9baf7ced612d240c0acccb1e4123c64bf3ebcf161",
+        "matches": true
+      },
+      "skills/agricultural-observation-and-trial/SKILL.md": {
+        "sha256": "11fda37651b7153f2696167e6f5e38130c35006c24394e27f71880b59a7e2e5f",
+        "matches": true
+      },
+      "skills/agricultural-observation-and-trial/skill.json": {
+        "sha256": "38535fa5899dbe24af8fda0ecba98b5ff54f2ae8d4b0adb55b8cc783ac1764b7",
+        "matches": true
+      },
+      "skills/agricultural-observation-and-trial/references/site-data-and-water-triage.md": {
+        "sha256": "094dddf4fa8da9f16e396e5faa90c8794757b9bdc241eed2fbdbc9efd3e063b3",
+        "matches": true
+      }
+    },
+    "civicNegativeQueriesExcluded": [
+      "design a municipal drinking water treatment plant",
+      "triage municipal drinking water quality from a laboratory report",
+      "plan a public drinking water treatment system",
+      "assess potable water quality for a city utility",
+      "design a municipal drinking-water treatment plant",
+      "design a city drinking water purification plant",
+      "interpret a drinking water laboratory result for a city utility",
+      "design a municipal drinking-water treatment plant for a school garden",
+      "design a city drinking-water purification system for a field station",
+      "plan potable water treatment for a community garden"
+    ],
+    "nearbyCivicFalsePositives": [
+      {
+        "query": "design a municipal water purification facility for a school garden",
+        "rank": 1,
+        "score": 60.441,
+        "matchedTerms": ["garden", "water"]
+      },
+      {
+        "query": "design potable-water purification works for a town garden",
+        "rank": 1,
+        "score": 60.441,
+        "matchedTerms": ["garden", "water"]
+      },
+      {
+        "query": "plan city water purification for a public park garden",
+        "rank": 1,
+        "score": 67.5,
+        "matchedTerms": ["garden", "plan", "water"]
+      }
+    ],
+    "farmPositiveRoutes": [
+      {"query": "triage a farm water quality result from a supplied laboratory report", "rank": 1, "score": 153.315},
+      {"query": "calculate growing degree days from supplied weather records", "rank": 1, "score": 160.79},
+      {"query": "compare mapped soil survey data with site measurements for this field", "rank": 1, "score": 162.368},
+      {"query": "triage farm irrigation water quality results from a municipal supply", "rank": 1, "score": 176.645},
+      {"query": "assess farm crop irrigation water report from city utility; not drinking water", "rank": 1, "score": 131.548},
+      {"query": "review irrigation laboratory results from a municipal utility for crops on this farm", "rank": 1, "score": 104.096},
+      {"query": "evaluate farm irrigation water quality using a city utility report; not for drinking", "rank": 1, "score": 113.581},
+      {"query": "triage water quality results from a laboratory report for vegetable crops in a greenhouse", "rank": 1, "score": 118.943},
+      {"query": "evaluate farm irrigation water quality from a city utility report; not for drinking water", "rank": 1, "score": 113.581},
+      {"query": "review crop water test results from the town water department for irrigation use", "rank": 1, "score": 130.7},
+      {"query": "interpret orchard irrigation lab results from a village water utility", "rank": 1, "score": 79.208},
+      {"query": "triage greenhouse irrigation water sample results supplied by the county water department", "rank": 1, "score": 118.943}
+    ],
+    "anchorMetadata": {
+      "catalogSkills": 68,
+      "skillsWithAnchors": 1,
+      "skillsWithoutAnchors": 67,
+      "agriculturalAnchorCount": 16,
+      "optional": true,
+      "bundledSearchOnly": true
+    }
+  },
+  "limits": [
+    "Focused candidate release review only.",
+    "Anchor behavior was tested only in the bundled Node search implementation; another host retriever may ignore optional metadata.",
+    "No claim about general semantic routing, corpus completion, or agronomic performance."
+  ]
+}

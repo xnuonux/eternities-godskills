@@ -1,0 +1,86 @@
+{
+  "schema": "eternities-godskills-focused-review-receipt-v1",
+  "reviewId": "wave13-product-integration-rereview-r2-luna6",
+  "reviewedAtUtc": "2026-09-23T12:48:55Z",
+  "workspace": "C:/dev/eternities-godskills/.worktrees/universal-product-v1",
+  "gitHead": "7438872d9ac89762608f4b05ef213298eb4b1a50",
+  "candidateState": "working-tree files bound by validated release ID and file digests",
+  "candidateReleaseId": "da91d43418b094cbc358352d270db510a71bf4c82c6021aa51ac6e66a8ca1620",
+  "skillCount": 68,
+  "reviewSha256": "491a9b0df849d322be1f1f3f4847a213da7bbe52c089ea1623c1743c6a04804c",
+  "priorReview": {
+    "path": "artifacts/universal-product-v1/wave13-product-integration-rereview-luna6/review.md",
+    "sha256": "ea8616d2f4fcba707738abf6914bf2d5a305ac931b81198bc4a68223921c01fe"
+  },
+  "verdict": "not-ready-for-focused-product-integration-acceptance",
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocking",
+      "summary": "The single-word municipal anti-trigger suppresses an in-scope farm irrigation water-quality query when its source is municipal.",
+      "evidence": [
+        {
+          "query": "triage farm irrigation water quality results from a municipal supply",
+          "agriculturalOwnerReturned": false,
+          "searchLimit": 20
+        },
+        {
+          "query": "assess farm crop irrigation water report from city utility; not drinking water",
+          "agriculturalOwnerReturned": false,
+          "searchLimit": 20
+        }
+      ],
+      "suggestedAcceptanceGate": "Preserve the explicit civic/public-water negative routes and add a positive regression for farm irrigation using municipal supply."
+    }
+  ],
+  "checks": {
+    "focusedTest": {
+      "command": "node --test tests/universal-wave13-integration.test.mjs",
+      "passed": 4,
+      "failed": 0
+    },
+    "contentValidation": {
+      "command": "node product/bin/godskills.mjs validate",
+      "status": "verified-content",
+      "releaseId": "da91d43418b094cbc358352d270db510a71bf4c82c6021aa51ac6e66a8ca1620",
+      "skillCount": 68
+    },
+    "negativeSearchQueries": [
+      "design a municipal drinking water treatment plant",
+      "triage municipal drinking water quality from a laboratory report",
+      "plan a public drinking water treatment system",
+      "assess potable water quality for a city utility"
+    ],
+    "positiveSearchResults": [
+      {
+        "query": "triage a farm water quality result from a supplied laboratory report",
+        "rank": 1,
+        "score": 153.315
+      },
+      {
+        "query": "calculate growing degree days from supplied weather records",
+        "rank": 1,
+        "score": 160.79
+      },
+      {
+        "query": "compare mapped soil survey data with site measurements for this field",
+        "rank": 1,
+        "score": 162.368
+      }
+    ],
+    "manifestDigests": {
+      "entrypointPath": "skills/agricultural-observation-and-trial/SKILL.md",
+      "entrypointCatalogSha256": "11fda37651b7153f2696167e6f5e38130c35006c24394e27f71880b59a7e2e5f",
+      "entrypointActualSha256": "11fda37651b7153f2696167e6f5e38130c35006c24394e27f71880b59a7e2e5f",
+      "referencePath": "skills/agricultural-observation-and-trial/references/site-data-and-water-triage.md",
+      "referenceCatalogSha256": "094dddf4fa8da9f16e396e5faa90c8794757b9bdc241eed2fbdbc9efd3e063b3",
+      "referenceReleaseSha256": "094dddf4fa8da9f16e396e5faa90c8794757b9bdc241eed2fbdbc9efd3e063b3",
+      "referenceActualSha256": "094dddf4fa8da9f16e396e5faa90c8794757b9bdc241eed2fbdbc9efd3e063b3"
+    }
+  },
+  "limits": [
+    "Focused integration scope only; no broad product or corpus review.",
+    "No agronomic or scientific performance claim.",
+    "Offline lexical search probes establish only the stated query behavior."
+  ]
+}

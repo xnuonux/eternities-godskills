@@ -1,0 +1,179 @@
+{
+  "schema": "godskills-wave13-product-integration-review-v1",
+  "reviewedAt": "2026-09-23T09:17:39Z",
+  "reviewer": "Luna6 independent product-integration reviewer",
+  "workspace": "C:/dev/eternities-godskills/.worktrees/universal-product-v1",
+  "baseline": {
+    "commit": "7438872d9ac89762608f4b05ef213298eb4b1a50",
+    "branch": "feat/universal-product-v1",
+    "gitIndexHadStagedPaths": false,
+    "reviewCompared": "HEAD to current product worktree candidate"
+  },
+  "candidate": {
+    "releaseId": "19b799aab5a20db1d9c4c290e1fd89f453d2b2da1a2663115baf083defa3b666",
+    "skillCount": 68,
+    "releaseValidation": "passed"
+  },
+  "verdict": {
+    "status": "not-ready",
+    "scope": "wave13 product integration acceptance only",
+    "blockingFindings": [
+      {
+        "id": "farm-search-discovery-gap",
+        "severity": "blocking",
+        "summary": "Water-quality and growing-degree-day queries do not return agricultural-observation-and-trial within the top 20 offline search results.",
+        "requiredResolution": "Add query metadata for the new use cases and focused positive/negative search tests."
+      },
+      {
+        "id": "farm-hazard-boundary-dropped",
+        "severity": "blocking",
+        "summary": "The product-edited reference omits the source-reviewed prohibition on diagnosing a hazard from one value and the warning against guaranteed agronomic outcomes.",
+        "requiredResolution": "Restore an equivalent explicit evidence boundary in the product resource and assert it in the integration test."
+      }
+    ],
+    "componentStatus": {
+      "farmIntegration": "not-ready",
+      "interatomicSpecialistAndScientificSurrogateParent": "ready within reviewed instruction-integration scope",
+      "68SkillManifestAndPackIntegrity": "passed"
+    }
+  },
+  "reviewedPaths": [
+    "product/CORPUS-SCOPE.md",
+    "product/INDEX.md",
+    "product/catalog.json",
+    "product/release.json",
+    "product/skills/agricultural-observation-and-trial/SKILL.md",
+    "product/skills/agricultural-observation-and-trial/skill.json",
+    "product/skills/agricultural-observation-and-trial/references/site-data-and-water-triage.md",
+    "product/skills/interatomic-model-validation/SKILL.md",
+    "product/skills/interatomic-model-validation/skill.json",
+    "product/skills/scientific-surrogate-validation/SKILL.md",
+    "product/skills/scientific-surrogate-validation/skill.json",
+    "tests/universal-wave11-discovery.test.mjs",
+    "tests/universal-wave13-integration.test.mjs",
+    "product/lib/product.mjs",
+    "artifacts/universal-product-v1/wave13-farm/author-report.md",
+    "artifacts/universal-product-v1/wave13-farm/author-receipt.json",
+    "artifacts/universal-product-v1/wave13-farm/source-dispositions.json",
+    "artifacts/universal-product-v1/wave13-farm/proposed-product/skills/agricultural-observation-and-trial/references/site-data-and-water-triage.md",
+    "artifacts/universal-product-v1/wave13-molecular/author-report.md",
+    "artifacts/universal-product-v1/wave13-molecular/author-receipt.json",
+    "artifacts/universal-product-v1/wave13-molecular/repair-r1/interatomic-model-validation/SKILL.md",
+    "artifacts/universal-product-v1/wave13-molecular/repair-r1/interatomic-model-validation/skill.json",
+    "artifacts/universal-product-v1/wave13-repair-independent-luna6/review.md",
+    "artifacts/universal-product-v1/wave13-repair-independent-luna6/receipt.json"
+  ],
+  "sourceBindings": {
+    "farmReference": {
+      "authorArtifactSha256": "8f34c4ef56787ab198e486818d6a9e933009f7d859fad828e45d89cdbc46cc2b",
+      "productResourceSha256": "1bd54f25cfa3f475c164e93ac3b6a3ca84b1b6096c67721742d6c09337f92d76",
+      "sourceDispositionsSha256": "62006ba6a2acee9092692ccdd37c3a12638dbf887e93b0c1c52e865b3083f843",
+      "classification": "edited derivative; comparison found loss of explicit single-value hazard-diagnosis and guaranteed-outcome boundaries"
+    },
+    "interatomicSpecialist": {
+      "repairR1SkillSha256": "fa1e1443277a7ded60d3f4bca483695b53e7c1511d4b5878d296ebeabd878583",
+      "productSkillSha256": "fa1e1443277a7ded60d3f4bca483695b53e7c1511d4b5878d296ebeabd878583",
+      "repairR1MetadataSha256": "e1225c8573114875733d41445aad4128e37531089e1ac160ed9338777dfe6e9e",
+      "productMetadataSha256": "34ec8e35b224bba26150e8b2128f734f214a0ecfc4215ef5c8ce61172e744972",
+      "metadataDifference": "maturity draft to instruction-reviewed only",
+      "specializes": "scientific-surrogate-validation"
+    },
+    "stagedParent": {
+      "id": "scientific-surrogate-validation",
+      "skillSha256": "bb13e6221b81e3dd20d182014314bbf5021940e80c5793ad5492f85bf0e62642",
+      "parent": "eternities-athena"
+    }
+  },
+  "discoverabilityProbes": [
+    {
+      "query": "triage a farm water quality result from a supplied laboratory report",
+      "expectedSkill": "agricultural-observation-and-trial",
+      "limit": 20,
+      "observedRank": null,
+      "pass": false
+    },
+    {
+      "query": "calculate growing degree days from supplied weather records",
+      "expectedSkill": "agricultural-observation-and-trial",
+      "limit": 20,
+      "observedRank": null,
+      "pass": false
+    },
+    {
+      "query": "compare mapped soil survey data with site measurements for this field",
+      "expectedSkill": "agricultural-observation-and-trial",
+      "limit": 20,
+      "observedRank": 1,
+      "pass": true
+    },
+    {
+      "query": "Evaluate a learned interatomic potential for a declared material phase surface structure family or condition range",
+      "expectedSkill": "interatomic-model-validation",
+      "limit": 5,
+      "observedRank": 1,
+      "pass": true
+    },
+    {
+      "query": "validate scientific surrogate model generalization",
+      "expectedSkill": "scientific-surrogate-validation",
+      "limit": 5,
+      "observedRank": 1,
+      "pass": true
+    },
+    {
+      "query": "Evaluate a machine learning potential for material screening",
+      "expectedSkill": "interatomic-model-validation",
+      "limit": 5,
+      "observedRank": 1,
+      "pass": true,
+      "scientificSurrogateValidationRank": 3
+    }
+  ],
+  "portability": {
+    "integratedSkillAndReferenceFilesHadMachineLocalDriveOrUncPaths": false,
+    "productCliImportsOnlyNodeBuiltins": true,
+    "markdownUseRequiresNode": false,
+    "cleanRoomTest": "passed with empty PATH and Node invoked by process.execPath; not a no-Node CLI test",
+    "externalRuntimeDependencyFound": false
+  },
+  "verification": [
+    {
+      "command": "node product/bin/godskills.mjs validate",
+      "status": "passed",
+      "exitCode": 0,
+      "result": "verified-content; releaseId 19b799aab5a20db1d9c4c290e1fd89f453d2b2da1a2663115baf083defa3b666; skillCount 68"
+    },
+    {
+      "command": "node --test tests/universal-wave13-integration.test.mjs tests/universal-wave11-discovery.test.mjs",
+      "status": "passed",
+      "exitCode": 0,
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "command": "node --test --test-name-pattern=\"real product CLI works from a copied pack and a minimal environment\" tests/universal-product.test.mjs",
+      "status": "passed",
+      "exitCode": 0,
+      "selectedTests": 1,
+      "failures": 0
+    }
+  ],
+  "notPerformed": [
+    "broad test suite",
+    "product installation or rollback",
+    "publication",
+    "external calls",
+    "farm or scientific model execution",
+    "wave13 author validators and source scripts",
+    "legal clearance, agronomic or hydrologic outcome validation, scientific performance validation"
+  ],
+  "reviewerWrites": {
+    "preexistingFilesModified": 0,
+    "createdFiles": [
+      "artifacts/universal-product-v1/wave13-product-integration-review-luna6/review.md",
+      "artifacts/universal-product-v1/wave13-product-integration-review-luna6/receipt.json"
+    ],
+    "reviewSha256": "b5b1a86057abe84b9d6ffe3a970c2c1bb922be050e66cee9ef0f086becb10379",
+    "receiptSelfHash": "omitted"
+  }
+}

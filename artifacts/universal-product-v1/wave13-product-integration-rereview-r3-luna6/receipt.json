@@ -1,0 +1,114 @@
+{
+  "schema": "eternities-godskills-focused-review-receipt-v1",
+  "reviewId": "wave13-product-integration-rereview-r3-luna6",
+  "reviewedAtUtc": "2026-09-23T13:10:00Z",
+  "workspace": "C:/dev/eternities-godskills/.worktrees/universal-product-v1",
+  "gitHead": "7438872d9ac89762608f4b05ef213298eb4b1a50",
+  "candidateState": "working-tree files bound by validated release ID and manifest digests",
+  "candidateReleaseId": "22cd6b728ee53617395eaff23e2a37f9c5850869ce0dbd5be1aaebdea92ef32c",
+  "skillCount": 68,
+  "reviewSha256": "620804e692f89d9c4f062fe8e36bcd891d97a2145ad26d7c5a2ca60e017942e8",
+  "priorReview": {
+    "path": "artifacts/universal-product-v1/wave13-product-integration-rereview-r2-luna6/review.md",
+    "sha256": "491a9b0df849d322be1f1f3f4847a213da7bbe52c089ea1623c1743c6a04804c"
+  },
+  "verdict": "not-ready-for-bounded-product-integration-acceptance",
+  "resolvedR2Finding": {
+    "summary": "Farm irrigation queries naming municipal or city-utility supply now return the agricultural owner first.",
+    "queries": [
+      "triage farm irrigation water quality results from a municipal supply",
+      "assess farm crop irrigation water report from city utility; not drinking water"
+    ]
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocking",
+      "summary": "Two nearby civic-water infrastructure paraphrases rank the agricultural owner first by matching only the generic token water.",
+      "evidence": [
+        {
+          "query": "design a municipal drinking-water treatment plant",
+          "agriculturalOwnerRank": 1,
+          "score": 35.553,
+          "matchedTerms": ["water"]
+        },
+        {
+          "query": "design a city drinking water purification plant",
+          "agriculturalOwnerRank": 1,
+          "score": 35.553,
+          "matchedTerms": ["water"]
+        }
+      ],
+      "suggestedAcceptanceGate": "Keep all five positive farm routes green and verify these two paraphrases no longer rank the agricultural owner first."
+    }
+  ],
+  "checks": {
+    "focusedTest": {
+      "command": "node --test tests/universal-wave13-integration.test.mjs",
+      "passed": 5,
+      "failed": 0
+    },
+    "contentValidation": {
+      "command": "node product/bin/godskills.mjs validate",
+      "status": "verified-content",
+      "releaseId": "22cd6b728ee53617395eaff23e2a37f9c5850869ce0dbd5be1aaebdea92ef32c",
+      "skillCount": 68
+    },
+    "specifiedNegativeRoutes": [
+      "design a municipal drinking water treatment plant",
+      "triage municipal drinking water quality from a laboratory report",
+      "plan a public drinking water treatment system",
+      "assess potable water quality for a city utility"
+    ],
+    "specifiedPositiveRoutes": [
+      {
+        "query": "triage a farm water quality result from a supplied laboratory report",
+        "rank": 1,
+        "score": 153.315
+      },
+      {
+        "query": "calculate growing degree days from supplied weather records",
+        "rank": 1,
+        "score": 160.79
+      },
+      {
+        "query": "compare mapped soil survey data with site measurements for this field",
+        "rank": 1,
+        "score": 162.368
+      },
+      {
+        "query": "triage farm irrigation water quality results from a municipal supply",
+        "rank": 1,
+        "score": 176.645
+      },
+      {
+        "query": "assess farm crop irrigation water report from city utility; not drinking water",
+        "rank": 1,
+        "score": 131.548
+      }
+    ],
+    "additionalFarmParaphrases": [
+      {
+        "query": "review irrigation laboratory results from a municipal utility for crops on this farm",
+        "rank": 1,
+        "score": 104.096
+      },
+      {
+        "query": "evaluate farm irrigation water quality using a city utility report; not for drinking",
+        "rank": 1,
+        "score": 113.581
+      }
+    ],
+    "manifestDigests": {
+      "entrypointPath": "skills/agricultural-observation-and-trial/SKILL.md",
+      "entrypointSha256": "11fda37651b7153f2696167e6f5e38130c35006c24394e27f71880b59a7e2e5f",
+      "referencePath": "skills/agricultural-observation-and-trial/references/site-data-and-water-triage.md",
+      "referenceSha256": "094dddf4fa8da9f16e396e5faa90c8794757b9bdc241eed2fbdbc9efd3e063b3"
+    }
+  },
+  "limits": [
+    "Focused candidate review only; no broad product or corpus review.",
+    "No general semantic routing or agronomic/scientific performance claim.",
+    "Offline lexical probes establish only the stated query behavior."
+  ]
+}
