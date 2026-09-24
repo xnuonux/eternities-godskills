@@ -1,7 +1,7 @@
 {
   "id": "eternities-atlas",
   "category": "data",
-  "summary": "Build reproducible analytics, query, schema, migration, synchronization, telemetry, and experiment artifacts from bounded data evidence.",
+  "summary": "Build reproducible analytics, finite trade-off frontiers, simulation-artifact handoffs, query, schema, migration, synchronization, telemetry, and experiment artifacts from bounded data evidence.",
   "triggers": [
     "data analysis",
     "query performance",
@@ -9,7 +9,11 @@
     "schema design",
     "schema migration",
     "telemetry design",
-    "product experiment"
+    "product experiment",
+    "pareto frontier",
+    "nondominated alternatives",
+    "multiobjective trade-offs",
+    "simulation artifact handoff"
   ],
   "antiTriggers": [
     "production mutation without migration and rollback evidence",
@@ -31,7 +35,18 @@
     "eternities-aegis"
   ],
   "resources": [
-    "references/methods.md"
+    "references/methods.md",
+    "references/pareto-frontier-decision.md",
+    "references/simulation-artifact-handoff.md",
+    "resources/pareto/pareto-gate.mjs",
+    "resources/pareto/pareto-oracle.mjs",
+    "resources/pareto/verify-output-v1.mjs",
+    "resources/pareto/oracle.test.mjs",
+    "resources/pareto/package-self-containment.test.mjs",
+    "resources/pareto/restrict-sibling-reads.mjs",
+    "resources/pareto/frozen-independent-fixtures.json",
+    "resources/pareto/example-input.json",
+    "resources/pareto/verify-output-v1.test.mjs"
   ],
   "maturity": "instruction-reviewed",
   "provenance": [
@@ -59,6 +74,16 @@
       "kind": "authoring",
       "source": "product/skills/eternities-atlas/SKILL.md",
       "note": "Independent-authoring note: this entrypoint and reference are newly written for the universal product; no superiority or certification claim is made."
+    },
+    {
+      "kind": "pattern-reference",
+      "source": "cxcscmu/SkillLearnBench@a0da045a8bf64b8a8ff20730c4d6ef10dc4e2c5b:skills/b1-one-shot-claude-sonnet-4-6/dbscan-parameter-tuning/pareto-optimization/SKILL.md",
+      "note": "Exact body SHA-256 6f5d07789ce02f020e609f622a2e68740c476ee8aedd5e62e668fcbbd5dc8023 informed only the finite-frontier problem; the source implementation and prose are not imported, and rights are not certified."
+    },
+    {
+      "kind": "pattern-reference",
+      "source": "HeshamFS/materials-simulation-skills@fa1ce8de76b2ab7a856f81891525cfa227fadfe9:skills/data-management/fair-simulation-packager/SKILL.md",
+      "note": "Exact body SHA-256 4abc6b0c6d2758f8f66a02285e328a3ab751f43b6f4f04408f5df2d3a2667bdd informed the simulation-artifact handoff problem. The executable helper and upstream prose are not imported; scientific, FAIR, rights, and rerun claims are not certified."
     }
   ]
 }

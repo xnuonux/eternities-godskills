@@ -1,0 +1,103 @@
+{
+  "schema": "wave21-pareto-independent-fixtures-v1",
+  "cases": [
+    {
+      "caseId": "equal-first",
+      "objectives": [{"key":"quality","direction":"max"},{"key":"cost","direction":"min"}],
+      "invalidPolicy": "reject-row",
+      "rows": [
+        {"id":"E1","quality":0.8,"cost":7,"feasible":true},
+        {"id":"E2","quality":0.8,"cost":5,"feasible":true},
+        {"id":"E3","quality":0.9,"cost":9,"feasible":true},
+        {"id":"E4","quality":0.7,"cost":6,"feasible":true},
+        {"id":"E5","quality":0.85,"cost":8,"feasible":true}
+      ],
+      "expected": {"status":"ok","frontierIds":["E2","E3","E5"],"dominated":{"E1":"E2","E4":"E2"},"rejected":{}}
+    },
+    {
+      "caseId": "duplicate-vectors",
+      "objectives": [{"key":"quality","direction":"max"},{"key":"cost","direction":"min"}],
+      "invalidPolicy": "reject-row",
+      "rows": [
+        {"id":"D1","quality":4,"cost":6,"feasible":true},
+        {"id":"D2","quality":4,"cost":6,"feasible":true},
+        {"id":"D3","quality":3,"cost":8,"feasible":true},
+        {"id":"D4","quality":5,"cost":7,"feasible":true},
+        {"id":"D5","quality":4,"cost":9,"feasible":true}
+      ],
+      "expected": {"status":"ok","frontierIds":["D1","D2","D4"],"dominated":{"D3":"D1","D5":"D1"},"rejected":{}}
+    },
+    {
+      "caseId": "reversed-directions",
+      "objectives": [{"key":"latency","direction":"min"},{"key":"reliability","direction":"max"}],
+      "invalidPolicy": "reject-row",
+      "rows": [
+        {"id":"R1","latency":10,"reliability":0.90,"feasible":true},
+        {"id":"R2","latency":8,"reliability":0.88,"feasible":true},
+        {"id":"R3","latency":10,"reliability":0.85,"feasible":true},
+        {"id":"R4","latency":12,"reliability":0.92,"feasible":true},
+        {"id":"R5","latency":9,"reliability":0.89,"feasible":true},
+        {"id":"R6","latency":11,"reliability":0.86,"feasible":true}
+      ],
+      "expected": {"status":"ok","frontierIds":["R1","R2","R4","R5"],"dominated":{"R3":"R1","R6":"R1"},"rejected":{}}
+    },
+    {
+      "caseId": "three-objectives",
+      "objectives": [{"key":"accuracy","direction":"max"},{"key":"cost","direction":"min"},{"key":"risk","direction":"min"}],
+      "invalidPolicy": "reject-row",
+      "rows": [
+        {"id":"T1","accuracy":8,"cost":4,"risk":4,"feasible":true},
+        {"id":"T2","accuracy":8,"cost":5,"risk":5,"feasible":true},
+        {"id":"T3","accuracy":9,"cost":6,"risk":3,"feasible":true},
+        {"id":"T4","accuracy":7,"cost":3,"risk":5,"feasible":true},
+        {"id":"T5","accuracy":8,"cost":4,"risk":3,"feasible":true},
+        {"id":"T6","accuracy":6,"cost":6,"risk":6,"feasible":true}
+      ],
+      "expected": {"status":"ok","frontierIds":["T3","T4","T5"],"dominated":{"T1":"T5","T2":"T5","T6":"T5"},"rejected":{}}
+    },
+    {
+      "caseId": "nonfinite-reject",
+      "objectives": [{"key":"value","direction":"max"},{"key":"cost","direction":"min"}],
+      "invalidPolicy": "reject-row",
+      "markerRule": "The string NaN denotes a nonfinite numeric field; null denotes missing.",
+      "rows": [
+        {"id":"N1","value":7,"cost":3,"feasible":true},
+        {"id":"N2","value":8,"cost":null,"feasible":true},
+        {"id":"N3","value":"NaN","cost":2,"feasible":true},
+        {"id":"N4","value":8,"cost":4,"feasible":true},
+        {"id":"N5","value":6,"cost":5,"feasible":true}
+      ],
+      "expected": {"status":"ok","frontierIds":["N1","N4"],"dominated":{"N5":"N1"},"rejected":{"N2":"invalid","N3":"invalid"}}
+    },
+    {
+      "caseId": "nonfinite-no-policy",
+      "objectives": [{"key":"value","direction":"max"},{"key":"cost","direction":"min"}],
+      "invalidPolicy": "undeclared",
+      "markerRule": "The string NaN denotes a nonfinite numeric field; null denotes missing.",
+      "rows": [
+        {"id":"H1","value":7,"cost":3,"feasible":true},
+        {"id":"H2","value":8,"cost":null,"feasible":true},
+        {"id":"H3","value":"NaN","cost":2,"feasible":true}
+      ],
+      "expected": {"status":"hold","frontierIds":[],"dominated":{},"rejected":{}}
+    },
+    {
+      "caseId": "infeasible-before-frontier",
+      "objectives": [{"key":"benefit","direction":"max"},{"key":"cost","direction":"min"}],
+      "invalidPolicy": "reject-row",
+      "rows": [
+        {"id":"F1","benefit":10,"cost":1,"feasible":false},
+        {"id":"F2","benefit":8,"cost":3,"feasible":true},
+        {"id":"F3","benefit":7,"cost":4,"feasible":true},
+        {"id":"F4","benefit":9,"cost":5,"feasible":true},
+        {"id":"F5","benefit":6,"cost":2,"feasible":true},
+        {"id":"F6","benefit":10,"cost":0,"feasible":false}
+      ],
+      "expected": {"status":"ok","frontierIds":["F2","F4","F5"],"dominated":{"F3":"F2"},"rejected":{"F1":"infeasible","F6":"infeasible"}}
+    }
+  ],
+  "blocks": [
+    {"id":"A","caseIds":["equal-first","duplicate-vectors","reversed-directions"],"order":["unassisted","assisted"]},
+    {"id":"B","caseIds":["three-objectives","nonfinite-reject","nonfinite-no-policy","infeasible-before-frontier"],"order":["assisted","unassisted"]}
+  ]
+}

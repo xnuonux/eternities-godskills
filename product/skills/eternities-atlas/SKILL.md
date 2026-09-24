@@ -10,6 +10,8 @@ Atlas is the data-infrastructure route. It connects a data question to the small
 ## Choose the route
 
 - **Analytics and experimentation** defines the estimand, population, leakage controls, uncertainty, and reproducible result.
+- **Finite trade-off frontier** computes a bounded nondominated set across predeclared objectives, never a winner. Use the [finite-frontier method](references/pareto-frontier-decision.md) only for that question. Its optional Node checker verifies declared-input arithmetic, not sources or rights.
+- **Simulation-artifact handoff** binds a declared file set, run context, access limits, per-measurement units, stable-source evidence, and receiver byte checks. Use the [portable handoff contract](references/simulation-artifact-handoff.md); it provides no executable snapshot or security guarantee.
 - **Query and performance** discovers the schema and dialect, establishes a comparable workload and baseline, inspects plans, and distinguishes a measured gain from a hypothesis.
 - **Reconciliation and quality** compares records or structures with explicit keys and null semantics, then classifies clean, changed, missing, conflicting, and unknown.
 - **Schema and migration** models entities and invariants, stages additive compatibility work, and requires dry-run, backup, recovery, and owner evidence before mutation.
@@ -26,7 +28,9 @@ Atlas is the data-infrastructure route. It connects a data question to the small
 
 ## Deliverable and finish
 
-Return one route-owned packet with inputs, evidence ledger, method, output, checks, discrepancies, uncertainty, performed local effects, proposed effects, and next owner. Finish when the result is reproducible and no production or external mutation is implied. The three extension methods are collected in [methods.md](references/methods.md).
+Return one route-owned packet with inputs, evidence ledger, method, output, checks, discrepancies, uncertainty, performed local effects, proposed effects, and next owner. Finish when the result is reproducible and no production or external mutation is implied. The three existing extension methods are collected in [methods.md](references/methods.md). Read the separate [finite-frontier method](references/pareto-frontier-decision.md) or [simulation handoff contract](references/simulation-artifact-handoff.md) only when its route applies.
+
+For a consequential real-world choice, HOLD any recommendation until an externally authorized evidence owner has reviewed the exact input, measurements, comparability, hard feasibility, and rights. Neither the calculating agent nor a caller-supplied reviewer name can self-certify that review. A passing finite checker is only a declared-input partition. Node is required for that optional executable route, not for Atlas's other routes.
 
 The data model, query plan, or experiment contract is a checkpoint when the user also requested an authorized local implementation. Continue into the migration fixture, query change, instrumentation, or analysis and verify it without re-requesting permission. Pause only when authority, rollback, consent, or material live-data risk is unresolved.
 
