@@ -13,6 +13,7 @@ Beacon handles growth questions where customer evidence, product claims, commerc
 - **Offer architecture** turns verified value into an outcome, scope, mechanism, packaging, qualification, objection map, and economic hypothesis while leaving final terms to the decision owner.
 - **Discoverability** audits crawlability, rendering, information architecture, structured data, content, and entity signals from supplied evidence; it does not promise ranking.
 - **Go-to-market** builds a channel portfolio, launch sequence, partnerships, capacity, budget boundary, content inputs, experiments, and owners.
+- **Creator sponsorship lifecycle** organizes a dated, evidence-linked obligation register and internal recap. Require human-owner review of chronology, decisions, evidence, and exact usage scope; unresolved rights assertions are never permission. See [creator-sponsorship-lifecycle.md](references/creator-sponsorship-lifecycle.md). This route does not authorize outreach, acceptance, publication, payment, disclosure, or media use.
 - **Conversion and lifecycle** maps friction across acquisition, activation, onboarding, retention, expansion, referral, or recovery and designs reversible tests.
 - **Measurement and stewardship** defines metrics, cohorts, denominators, attribution limits, guardrails, anomaly handling, and scale-or-stop decisions.
 

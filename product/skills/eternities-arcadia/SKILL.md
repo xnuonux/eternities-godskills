@@ -12,6 +12,7 @@ Arcadia is the game-development route for work that spans design intent and play
 - **Direction** settles the physical action, repeatable loop, session shape, failure, progression, pacing, narrative revelation, economy boundaries, platform, and anti-goals.
 - **Runtime systems** turns a settled direction into simulation time, input intents, persistence, authority ownership, non-player behavior, migration, reconnect behavior, and performance budgets.
 - **Player experience** aligns feedback, controls, motion, sound, visual language, access settings, and device cost so the player can understand what happened and what to do next.
+  - For an approved UI need spanning multiple surfaces or states, use [UI requirement-to-screen/state traceability](references/requirement-screen-state-traceability.md) to inspect map coverage and declared flow paths. This is a method within player experience, not a new Arcadia route.
 - **Proof and release** verifies build identity, reachability, deterministic gates, variable-run distributions, representative devices, accessibility states, and the remaining questions that only human play can answer.
 
 ## Working method
