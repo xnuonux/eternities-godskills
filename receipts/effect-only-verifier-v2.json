@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "protocolId": "eternities-godskills-effect-only-verifier-v2",
+  "status": "verified-structural-only",
+  "sourceCommit": "1b60a03d5784f20b5fcaabd889e5561442f86a4b",
+  "parent": {
+    "path": "receipts/effect-only-executable-v2.json",
+    "sha256": "f4baee63d9d802f7a985b5570deb81bbf174dbad3d7aea3d3aba67d546851e04",
+    "receiptDigest": "03fe45aeb133b715354174867a05781fac9b3cfa5353edf020cecdafa1a88a73"
+  },
+  "entrypoint": {
+    "path": "scripts/verify-effect-only-v2.mjs",
+    "sha256": "bedfcf57bcff9b7d780c30c933cdef709a4a5c042973449d07fe0a4cc78857a8"
+  },
+  "sources": [
+    {
+      "path": "scripts/verify-effect-only-v2.mjs",
+      "sha256": "bedfcf57bcff9b7d780c30c933cdef709a4a5c042973449d07fe0a4cc78857a8"
+    },
+    {
+      "path": "src/effect-intent-v2.mjs",
+      "sha256": "d0364093f47b5b7f874134c5a24c51c53e5db4c1d53bd7455fe5caaa0fd90cdc"
+    },
+    {
+      "path": "src/intent-contracts.mjs",
+      "sha256": "0a78ae1a36b1e02b94bfd9593e057ed900ec8acbec4d35c5d1c804a5f6b8f6d5"
+    },
+    {
+      "path": "src/io.mjs",
+      "sha256": "48dca2b203947e12ca3d5500b70a25066a8166d86bc2284aaeed6abf622a5c37"
+    },
+    {
+      "path": "src/routing-contracts.mjs",
+      "sha256": "ac4c6812b58fad715c27491e48fc4c8465da048fbdd91d8386fed0987d80373b"
+    }
+  ],
+  "builder": {
+    "path": "scripts/build-effect-only-verifier-receipt.mjs",
+    "sha256": "eea9e8f390f95f7df16c56ae1ec167aee040575af172b39656e5ea8d99496bd5"
+  },
+  "tests": [
+    {
+      "path": "tests/effect-only-verifier-cli.test.mjs",
+      "sha256": "b15c018482fe4e5ea08ea524d19a84b6193dfda1e0bd1a0f6a7d26e3ec6808b5"
+    },
+    {
+      "path": "tests/effect-only-verifier-receipt.test.mjs",
+      "sha256": "4a070f575a3c241051024207ccf1000001e970aab6c2efbee051cac398584ca8"
+    }
+  ],
+  "vectors": [
+    {
+      "role": "input",
+      "path": "data/effect-only-golden-vector-v2.json",
+      "sha256": "55817a3754c4f55247f5dba77a0f4f361bb13a3b90a204c6a05566bc6e872420"
+    },
+    {
+      "role": "result",
+      "path": "data/effect-only-result-v2.json",
+      "sha256": "1ee21038641043ac5e6f796490179021d83ff5c53216957c7113572357467f65"
+    }
+  ],
+  "verification": {
+    "targeted": {
+      "tests": 34,
+      "pass": 34,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec",
+        "tests/effect-only-verifier-cli.test.mjs",
+        "tests/effect-only-verifier-receipt.test.mjs"
+      ],
+      "logPath": "artifacts/effect-only-verifier-v2/targeted.log",
+      "logSha256": "6818049cc6f98c3563e9cf64d309c785fe447b43fdbee5698d2d99e0258a98f9"
+    },
+    "full": {
+      "tests": 966,
+      "pass": 964,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 1,
+      "todo": 0,
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=spec"
+      ],
+      "logPath": "artifacts/effect-only-verifier-v2/full.log",
+      "logSha256": "7f71e638e9d9dd26e5f7bcdf6faf39a8a8bbbc83d4c5bfc3b0171b10bce8bacb",
+      "knownFailures": [
+        {
+          "test": "tests/codex-routing-policy.test.mjs",
+          "category": "installed-host-wording",
+          "baselineReproduced": true
+        }
+      ]
+    },
+    "review": {
+      "implementationCommit": "1b60a03d5784f20b5fcaabd889e5561442f86a4b",
+      "reviewerTaskId": "01a04a0c-ae62-7c83-8f77-9d7b1614f390",
+      "disposition": "approved-structural-scope"
+    }
+  },
+  "proofLimits": [
+    "captured-test-evidence-not-rerun-by-builder",
+    "does-not-authenticate-producer-or-reviewer-origin",
+    "does-not-certify-model-quality-or-arbitrary-language-understanding",
+    "does-not-enable-native-dispatch-or-adopt-host-pins",
+    "exit-zero-is-consistency-not-admission-or-effect-authorization",
+    "host-must-verify-pinned-source-and-execute-isolated-snapshot",
+    "known-full-suite-failure-is-not-a-passing-release-gate",
+    "source-commit-membership-is-a-separate-issuance-check"
+  ],
+  "receiptDigest": "a4c2ef29dc626d45e57cce361185b5c43a6065dd602236fe38385cc28b025f81"
+}
