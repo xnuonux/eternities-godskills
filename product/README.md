@@ -42,6 +42,11 @@ match is not an instruction to force a skill into the work.
 An exact normalized phrase from a skill's declared anti-triggers suppresses that
 match. This is a limited negative-match rule, not general semantic negation or an
 authorization decision; the host still checks applicability and permission.
+Negated discovery words may still shortlist a broad skill such as Atlas, even
+when a supplied file makes connected-source discovery unnecessary. Read its
+entrypoint before choosing a subroute: a catalog hit is not permission to
+discover, load, or use connected data. Keep the skill's local-analysis route
+available when the user's supplied file actually needs analysis.
 
 No result means use ordinary agent competence, refine the query, or browse a
 category. Do not invent an installed capability or load the entire library.
