@@ -163,6 +163,37 @@ export function searchCatalog(catalog,query,{limit=5,category,taskType}={}) {
   return {schema:'eternities-godskills-discovery-v1',authority:'none',activation:'none',method:'offline-weighted-terms-v1',query,results:candidates.slice(0,limit)};
 }
 
+// Host-supplied task facts, not keyword inference. A shortlist never grants this subroute.
+export function decideAtlasConnectedSource(context) {
+  const hold=reason=>({state:'hold',reason});
+  const reject=reason=>({state:'rejected',reason});
+  if(!context||typeof context!=='object'||Array.isArray(context))return hold('task-facts-unavailable');
+  if(context.discovery==='prohibited')return reject('discovery-prohibited');
+  if(context.inputScope==='supplied-only')return reject('supplied-only');
+  const scopes=new Set(['sufficient','missing-input','open','unknown']);
+  const purposes=new Set(['none','inventory','fill-missing','named-run','unknown']);
+  const discoveryStates=new Set(['not-prohibited','unknown']);
+  if(!scopes.has(context.inputScope)||!purposes.has(context.connectedPurpose)||
+      !discoveryStates.has(context.discovery))return hold('task-facts-unavailable');
+  if(context.connectedPurpose==='none')return reject('no-connected-question');
+  if(context.inputScope==='unknown'||context.connectedPurpose==='unknown'||context.discovery==='unknown')return hold('task-facts-unavailable');
+  if(context.connectedPurpose==='fill-missing'&&context.inputScope!=='missing-input'){
+    return hold('missing-input-not-established');
+  }
+  return {state:'candidate',reason:'explicit-connected-question'};
+}
+
+export function routeTask(catalog,query,context,searchOptions={}) {
+  const search=searchCatalog(catalog,query,searchOptions);
+  const atlas=catalog.skills.find(item=>item.id==='eternities-atlas');
+  return {
+    schema:'eternities-godskills-host-route-v1',query,search,
+    atlas:{shortlisted:search.results.some(item=>item.id==='eternities-atlas'),
+      localAnalysisAvailable:Boolean(atlas),
+      connectedSource:atlas?decideAtlasConnectedSource(context):{state:'hold',reason:'atlas-unavailable'}}
+  };
+}
+
 function validateRoots(pack,skillsDir,runtimeDir,backupDir) {
   const roots=[pack,skillsDir,runtimeDir,backupDir].map(x=>resolve(x));
   for(const root of roots)check(root!==parse(root).root,'Drive/filesystem root is not an installation target');

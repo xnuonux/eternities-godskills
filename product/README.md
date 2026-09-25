@@ -30,6 +30,7 @@ With Node.js 24 or newer, no dependency installation is needed:
 node bin/godskills.mjs validate
 node bin/godskills.mjs search "test audio DSP discontinuities" --limit 3
 node bin/godskills.mjs search "release readiness" --task verify
+node bin/godskills.mjs route "Analyze the supplied report only; do not discover connected data" --input-scope supplied-only --connected-purpose none --discovery prohibited
 ```
 
 Search combines weighted terms, a small explicit synonym vocabulary, and stable
@@ -47,6 +48,23 @@ when a supplied file makes connected-source discovery unnecessary. Read its
 entrypoint before choosing a subroute: a catalog hit is not permission to
 discover, load, or use connected data. Keep the skill's local-analysis route
 available when the user's supplied file actually needs analysis.
+
+The optional `route` command makes that host decision callable. Its Atlas
+`connectedSource` state is `rejected`, `hold`, or `candidate`; `candidate`
+means only that the connected-source *method* may be considered, not that any
+connector, metadata, probe, load, or credential use is authorized. The host
+must supply three explicit task facts: `--input-scope` (`supplied-only`,
+`sufficient`, `missing-input`, `open`, or `unknown`), `--connected-purpose` (`none`,
+`inventory`, `fill-missing`, `named-run`, or `unknown`), and `--discovery`
+(`prohibited`, `not-prohibited`, or `unknown`). `not-prohibited` is not a
+permission grant. `open` means the host established no supplied-only limit;
+it is not source access permission. Absent a decisive rejection, omitted,
+unknown, malformed, or contradictory facts hold;
+an explicit discovery prohibition or supplied-only scope rejects the connected
+subroute even if lexical search shortlists Atlas. Local Atlas analysis remains
+available. The command does not infer these facts from wording: a host must
+establish them from the user's task or ask when they are unclear. Neither
+`route` nor `search` calls a connector or observes a provider.
 
 No result means use ordinary agent competence, refine the query, or browse a
 category. Do not invent an installed capability or load the entire library.

@@ -1,0 +1,9 @@
+# Atlas host-route v4 parent acceptance
+
+Observed 2026-09-25. **Accept the independent review's narrow READY for integration consideration of the optional host-route contract.** The candidate is not a connector, natural-language classifier, permission grant, agent-host integration, or rights clearance.
+
+The exact author DRAFT receipt is SHA-256 `f35be280419ef1d8e3515b2f867a8db5892228df5868477c1786188bb94787fe`; the independent v4 review receipt is SHA-256 `cdf85b11e45a93d405a261c2d29a66ea1763cacff442078667309dab8c053257`. Parent reran the review's read-only verifier (12 base-to-candidate paths, five v4 changes, four unchanged protected product files, 21 direct and eight CLI/validation cases), its held-out route probes, the author's exact-file verifier, and the two relevant test files (9/9). Product content validation reported 68 skills and release ID `50484f4c4af2b3fc7ea170082e19979cb2155f4cecd5ce551efa08ff66281f88`. The full feature-worktree suite passed with 1,174 tests, zero failures and two skips out of 1,176.
+
+The observed improvement is a callable decision that rejects connected-source eligibility when structured host facts say `supplied-only` or `discovery: prohibited`, even if keyword search shortlists Atlas. Missing, invalid, and contradictory facts hold; positive cases are only `candidate` for considering a method. Local Atlas analysis remains available. These checks do not show that an unmodified agent calls the route, correctly derives structured facts from arbitrary user wording, or has access to a connector. `candidate` is never source-discovery or data-use authority.
+
+The prior v1-v3 REPAIR receipts remain separate historical evidence. No R10 outcome, source rights, provider action, or external data access follows from this acceptance. Merge, push, backed-up installation and post-install validation remain separate gates.
