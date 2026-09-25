@@ -17,6 +17,7 @@ Atlas is the data-infrastructure route. It connects a data question to the small
 - **Schema and migration** models entities and invariants, stages additive compatibility work, and requires dry-run, backup, recovery, and owner evidence before mutation.
 - **Synchronization** treats offsets, retries, deduplication, ordering, conflicts, optimistic writes, and failure recovery as an explicit state machine.
 - **Decision telemetry** links collection to one question, purpose, consent state, retention, and a decision owner.
+- **Connected-source discovery** is a conditional route when a task needs an authorized source beyond sufficient supplied inputs, or asks what a connected source offers. Follow [connector-discovery.md](references/connector-discovery.md) to separate discovery, bounded probing, exact loading, active-input verification, and named-analysis consumption. This is not a default analytics preflight or permission to load data.
 
 ## Working method
 
@@ -29,6 +30,8 @@ Atlas is the data-infrastructure route. It connects a data question to the small
 ## Deliverable and finish
 
 Return one route-owned packet with inputs, evidence ledger, method, output, checks, discrepancies, uncertainty, performed local effects, proposed effects, and next owner. Finish when the result is reproducible and no production or external mutation is implied. The three existing extension methods are collected in [methods.md](references/methods.md). Read the separate [finite-frontier method](references/pareto-frontier-decision.md) or [simulation handoff contract](references/simulation-artifact-handoff.md) only when its route applies.
+
+Use the conditional [connected-source method](references/connector-discovery.md) only for an actual connected-source question. Do not run connected-source discovery as a default preflight when supplied inputs already answer the task.
 
 For a consequential real-world choice, HOLD any recommendation until an externally authorized evidence owner has reviewed the exact input, measurements, comparability, hard feasibility, and rights. Neither the calculating agent nor a caller-supplied reviewer name can self-certify that review. A passing finite checker is only a declared-input partition. Node is required for that optional executable route, not for Atlas's other routes.
 
